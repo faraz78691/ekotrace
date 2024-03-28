@@ -1,0 +1,213 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:wght@200;300;400;500;600&display=swap');
+
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: "Open Sans", sans-serif;
+
+}
+a{
+    text-decoration:none;
+}
+.ct_fw_500{
+    font-weight: 500;
+}
+.ct_dashboard_right {
+    margin-top: 24px;
+    flex: 1;
+}
+.ct_dashboard_main {
+    display: flex;
+    background-color: rgb(91 114 83 / 3%) !important 
+    /* color: #a2afa3; */
+}
+.ct_emission_menu_link ul li{
+    display: inline-block;
+}
+.ct_emission_menu_link ul li + li{
+    margin-left: 15px;
+}
+.ct_emission_menu_link ul li a {
+    font-size: 14px;
+    font-weight: 500;
+    color: #fff;
+    border-radius: 5px;
+    padding: 7px 15px;
+    width: 180px;
+    display: block;
+    text-align: center;
+    transition: 0.4s ease all;
+}
+
+.ct_emission_menu_link ul li a.ct_active {
+    background-color: #B0D3AF ;
+    box-shadow: 0px 4px 4px rgba(0,0,0,0.38);
+    color: #fff;
+}
+.ct_emission_menu_link ul li a:hover{
+    background-color: #B0D3AF ;
+    box-shadow: 0px 4px 4px rgba(0,0,0,0.38);
+    color: #fff;
+}
+.ct_period_select {
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #DDDDDD;
+    width: 170px;
+}
+.ct_reduction_title h4{
+    font-size: 24px;
+    font-weight: 700;
+    color: #fff;
+}
+.ct_d_flex_1{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.ct_total_emission_card {
+    border-radius: 10px;
+    border: 1px solid #EEEEEE;
+    padding: 25px 15px;
+    background-color: #fff;
+    box-shadow: 0px 0px 25px rgba(0,0,0,0.09);
+}
+.ct_reduction_title p{
+    color: #fff;
+}
+.ct_grey_878787{
+    color: #878787;
+}
+button.ct_scope_btn {
+    display: block;
+    background-color: #075101;
+    padding: 5px 10px;
+    width: 100%;
+    border: 1px solid #075101;
+    color: #fff;
+    border-radius: 10px;
+    margin-top: 10px;
+    transition: 0.4s ease all;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+.ct_scope_btn:before{
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    z-index: -1;
+    inset: 0px;
+    transition: 0.4s ease all;
+    transform: scale(0);
+}
+.ct_scope_btn:hover:before{
+    transform: scale(1);
+}
+.ct_scope_btn:hover{
+    color: #075101;
+}
+.ct_total_emission_card h6{
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: 600;
+}
+.ct_info_icon {
+    width: 30px;
+    height: 30px;
+    background-color: #BDBDBD;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    border-radius: 100px;
+}
+.ct_info_icon i{
+    font-size: 15px;
+}
+
+.ct_grey_border_1 {
+    border: 1px solid #EEEEEE;
+    padding: 30px;
+    border-radius: 15px;
+    height: 100%;
+    box-shadow: 0px 0px 25px rgba(0,0,0,0.09);
+    background-color: #fff;
+}
+.ct_grey_brdr_btm1{
+    border-bottom: 2px solid #F0F0F0;
+}
+.ct_view_all_link{
+    color: #367BCC;
+    font-weight: 600;
+}
+
+.ct_short_down{
+    color: #816164;
+}
+.ct_short_up {
+    color: #A2C8BB;
+    top: 6px;
+    position: relative;
+}
+.ct_emission_vender_list h5 {
+    font-weight: 600;
+    font-size: 18px;
+}
+.ct_emission_vender_list p {
+    font-weight: 500;
+    color: #d8d8d8;
+    font-size: 14px;
+    gap: 6px;
+}
+.ct_emission_tab {
+    background-color: #D4D4D4;
+    border-radius: 10px;
+}
+.ct_emission_tab.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: #fff!important;
+    background-color: #17B4B4;
+}
+.ct_emission_tab.nav-pills .nav-link {
+    color: #777777;
+    width: 100%;
+}
+
+.ct_emission_tab li {
+    flex: 1;
+}
+
+select.ct_all_vender_select {
+    background-color: #fff ;
+    width: 100%;
+    color: #333;
+    padding: 10px 15px;
+    border-radius: 10px;
+    outline: none;
+    border: 1px solid #eee;
+}
+.ct_font_16{
+    font-size: 16px;
+}
+
+.ct_font_12{
+    font-size: 12px;
+}
+.ct_gap_2{
+    gap: 20px;
+}
+@media screen and (max-width:575px){
+    .ct_emission_menu_link ul li a{
+        width: 100%;
+        text-align: left;
+    }
+    .ct_emission_menu_link ul li {
+        display: block;
+       
+    }
+}
