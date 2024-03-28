@@ -1,0 +1,12 @@
+#chart {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .chart-container {
+    order: 1;
+  }
+  
+  .legend-container {
+    order: 2;
+  }

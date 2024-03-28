@@ -381,7 +381,9 @@ export class FacilityComponent {
     //display a dialog for adding a facility
     showAddFacilityDialog() {
         this.visible = true;
+        console.log(this.facilityDetails);
         this.facilityDetails = new Facility();
+        console.log(this.facilityDetails);
         this.isEdit = false;
         this.resetForm();
     }
@@ -478,11 +480,11 @@ export class FacilityComponent {
                 //         "items": [
                 //             {
                 //                 "label": "Liquid Fuels",
-                //                 "value": '1,1'
+                //                 "value":1
                 //             },
                 //             {
                 //                 "label": "Solid Fuels",
-                //                 "value": '2,1'
+                //                 "value": 2
                 //             },
                 //             {
                 //                 "label": "Gaseous Fuels",
@@ -762,6 +764,7 @@ export class FacilityComponent {
 
             const scope3Stringy = JSON.stringify(scope3)
             fomdata.set('Scope3', scope3Stringy);
+            
         }
 
 
@@ -870,11 +873,13 @@ export class FacilityComponent {
         //     });
         // });
         // }
+       
+        
 
         const isSubcategoryEmptyForAllCategories = this.selectedScope1.length == 0 && this.selectedScope2.length == 0 && this.selectedScope3.length == 0
         if (isSubcategoryEmptyForAllCategories == true) {
             this.notification.showInfo(
-                'Please select any data point othervise close this!',
+                'Please select any data point otherwise close this!',
                 'Info'
             );
         } else {

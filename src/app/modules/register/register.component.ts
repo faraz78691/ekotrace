@@ -81,15 +81,15 @@ export class RegisterComponent implements OnInit {
         
     }
 
-    async registerByAuth() {
-        if (this.registerForm.valid) {
-            this.isAuthLoading = true;
-            await this.appService.registerByAuth(this.registerForm.value);
-            this.isAuthLoading = false;
-        } else {
-            this.toastr.error('Form is not valid!');
-        }
-    }
+    // async registerByAuth() {
+    //     if (this.registerForm.valid) {
+    //         this.isAuthLoading = true;
+    //         await this.appService.registerByAuth(this.registerForm.value);
+    //         this.isAuthLoading = false;
+    //     } else {
+    //         this.toastr.error('Form is not valid!');
+    //     }
+    // }
 
     //method for register a new company
     onSubmit(userForm: NgForm) {

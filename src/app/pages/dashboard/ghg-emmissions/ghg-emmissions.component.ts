@@ -47,9 +47,9 @@ export type ChartOptions = {
 export type ChartOptions2 = {
   series: ApexNonAxisChartSeries;
   chart: ApexChart;
+  responsive: ApexResponsive[];
   dataLabels: ApexDataLabels;
   plotOptions: ApexPlotOptions;
-  responsive: ApexResponsive[];
   xaxis: ApexXAxis;
   legend: ApexLegend;
   fill: ApexFill;
@@ -117,217 +117,6 @@ export class GhgEmmissionsComponent {
     private dashboardService: DashboardService) {
     this.year = new Date();
     this.loginInfo = new LoginInfo();
-
-
-    this.areaBusinesschart = {
-      colors: ['#213D49', '#46A5CD'],
-      series: [{
-        name: 'Type 1',
-        data: [44, 55, 41, 64, 22, 43, 21, 43, 21]
-      }, {
-        name: 'Type 2',
-        data: [53, 32, 33, 52, 13, 44, 32, 44, 32]
-      }],
-      chart: {
-        type: 'bar',
-        height: 430
-      },
-      plotOptions: {
-        bar: {
-          horizontal: true,
-          dataLabels: {
-            position: 'top',
-          },
-        }
-      },
-      dataLabels: {
-        enabled: true,
-        offsetX: -6,
-        style: {
-          fontSize: '12px',
-          colors: ['#fff']
-        }
-      },
-      stroke: {
-        show: true,
-        width: 1,
-        colors: ['#fff']
-      },
-      tooltip: {
-        shared: true,
-        intersect: false
-      },
-      xaxis: {
-        categories: [0, 1.25, 2.5, 3.75, 5, 6.25, 7.5, 8.75, 10],
-      },
-
-    };
-
-
-    this.carbonFootvarOptions = {
-      series: [{
-        name: 'Carbon Footprint',
-        data: [1.45, 5.42, 5.9, -0.42, -12.6, -18.1, -18.2, -14.16, -11.1, -6.09, 0.34, 3.88, 13.07,
-          5.8, 2, 7.37, 8.1, 13.57, 15.75, 17.1, 19.8, -27.03, -54.4, -47.2, -43.3, -18.6, -
-          48.6, -41.1, -39.6, -37.6, -29.4, -21.4, -2.4
-        ]
-      }],
-      chart: {
-        type: 'bar',
-        height: 350
-      },
-      plotOptions: {
-        bar: {
-          colors: {
-            ranges: [{
-              from: -100,
-              to: -46,
-              color: '#F94144'
-            }, {
-              from: -45,
-              to: 0,
-              color: '#90BE6D'
-            }, {
-              from: -40,
-              to: 0,
-              color: '#2D9CDB'
-            }]
-          },
-          columnWidth: '25%',
-        }
-      },
-      dataLabels: {
-        enabled: false,
-      },
-      yaxis: {
-
-        labels: {
-          formatter: function (y) {
-            return y.toFixed(0) + "%";
-          }
-        }
-      },
-      xaxis: {
-        type: 'datetime',
-        categories: [
-          '2011-01-01', '2011-02-01', '2011-03-01', '2011-04-01', '2011-05-01', '2011-06-01',
-          '2011-07-01', '2011-08-01', '2011-09-01', '2011-10-01', '2011-11-01', '2011-12-01',
-          '2012-01-01', '2012-02-01', '2012-03-01', '2012-04-01', '2012-05-01', '2012-06-01',
-          '2012-07-01', '2012-08-01', '2012-09-01', '2012-10-01', '2012-11-01', '2012-12-01',
-          '2013-01-01', '2013-02-01', '2013-03-01', '2013-04-01', '2013-05-01', '2013-06-01',
-          '2013-07-01', '2013-08-01', '2013-09-01'
-        ],
-        labels: {
-          rotate: -90
-        }
-      }
-    };
-
-
-
-
-    this.lineoptions = {
-      series: [
-        {
-          name: "Scope 1",
-          data: [28, 29, 33, 36, 32, 32, 33]
-        },
-        {
-          name: "Scope 2",
-          data: [12, 11, 14, 18, 17, 13, 13]
-        }
-      ],
-      chart: {
-        height: 350,
-        type: 'line',
-        dropShadow: {
-          enabled: true,
-          color: '#000',
-          top: 18,
-          left: 7,
-          blur: 10,
-          opacity: 0.2
-        },
-        toolbar: {
-          show: false
-        }
-      },
-      colors: ['#075101', '#0534AD'],
-      dataLabels: {
-        enabled: true,
-      },
-      stroke: {
-        curve: 'smooth'
-      },
-      title: {
-        text: 'Average High & Low Temperature',
-        align: 'left'
-      },
-      grid: {
-        borderColor: '#e7e7e7',
-        row: {
-          colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-          opacity: 0.5
-        },
-      },
-      markers: {
-        size: 1
-      },
-      xaxis: {
-        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-        title: {
-          text: 'Month'
-        }
-      },
-      yaxis: {
-        title: {
-          text: 'Temperature'
-        },
-        min: 5,
-        max: 40
-      },
-      legend: {
-        position: 'top',
-        horizontalAlign: 'right',
-        floating: true,
-        offsetY: -25,
-        offsetX: -5
-      }
-    };
-
-    this.donotoptions = {
-      series: [44, 55],
-      chart: {
-        width: 360,
-        height: 900,
-        type: 'donut',
-      },
-      dataLabels: {
-        enabled: true
-      },
-      legend: {
-        formatter: function(val, opts) {
-          return val + " - " + opts.w.globals.series[opts.seriesIndex];
-        }
-      },
-      fill: {
-        type: "gradient"
-      },
-      colors: ['#DC6B52', '#17B4B4'],
-     
-
-      labels: ['Reductions 1', 'Emissions'],
-      responsive: [{
-        breakpoint: 480,
-        options: {
-          chart: {
-            width: 260
-          },
-
-        }
-      }]
-    };
-  
 
   };
 
@@ -500,19 +289,22 @@ export class GhgEmmissionsComponent {
       this.donotOptions1 = {
         series: this.seriesScopeDonut1,
         chart: {
-          width: 450,
+          width: 380,
           type: "donut"
         },
         dataLabels: {
-          enabled: true
+          enabled: false
         },
         fill: {
           type: "gradient"
         },
         legend: {
-          formatter: function(val, opts) {
-            return val + " - " + opts.w.globals.series[opts.seriesIndex];
-          }
+          position: 'bottom',
+          // horizontalAlign: 'center', 
+
+          // formatter: function(val, opts) {
+          //   return val + " - " + opts.w.globals.series[opts.seriesIndex];
+          // }
         },
         labels: this.labelScopeDonut1,
         responsive: [
@@ -605,7 +397,8 @@ export class GhgEmmissionsComponent {
     this.GScopeWiseE(this.selectedFacility)
     this.getTopFiveE(this.selectedFacility);
     this.getVendorE(this.selectedFacility)
-
+this.getScopeDonnutsE(this.selectedFacility)
+this.getActivityE(this.selectedFacility)
   };
 
   getActivityE(facility) {

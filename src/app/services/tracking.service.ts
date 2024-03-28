@@ -398,7 +398,7 @@ export class TrackingService {
 
     public newPostSCDataEntry(data): Observable<any> {
         return this.http.post(
-            'http://13.200.247.29:4000/stationaryCombustionEmission',
+            environment.baseUrl + '/stationaryCombustionEmission',
             data
         );
     }
@@ -565,7 +565,7 @@ export class TrackingService {
         .set('Access-Control-Allow-Origin', '*');  
         ; 
         return this.http.post(
-            'http://13.200.247.29:4000/uploadTemplate',
+            environment.baseUrl + '/uploadTemplate',
             formData
         );
     };
@@ -576,7 +576,7 @@ export class TrackingService {
         .set('Access-Control-Allow-Origin', '*');  
         ; 
         return this.http.post(
-            'http://13.200.247.29:4000/getCalcPurchaseGood',
+            environment.baseUrl + '/getCalcPurchaseGood',
             formData
         );
     };
@@ -584,23 +584,23 @@ export class TrackingService {
     // http://http://13.200.247.29/:4000/getAllBatches
     getBatches(): Observable<any> {
         return this.http.get(
-            'http://13.200.247.29:4000/getAllBatches',
+            environment.baseUrl + '/getAllBatches',
             
         );
     };
 
     getAirportCodes(): Observable<any> {
         return this.http.get(
-            'http://13.200.247.29:4000/getflightairportcode',
+            environment.baseUrl + '/getflightairportcode',
             
         );
     };
 
     getVehicleType(): Observable<any> {
-        return this.http.get('http://13.200.247.29:4000/vehicleCategories')
+        return this.http.get(environment.baseUrl + '/vehicleCategories')
     };
     getSubVehicleCat(id:any): Observable<any> {
-        return this.http.get(`http://13.200.247.29:4000/vehicleSubCategories?id=${id}`)
+        return this.http.get(environment.baseUrl + `/vehicleSubCategories?id=${id}`)
     };
 
     upStreamTransportation(formData: any): Observable<any> {
@@ -609,174 +609,174 @@ export class TrackingService {
         .set('Access-Control-Allow-Origin', '*');  
         ; 
         return this.http.post(
-            'http://13.200.247.29:4000/upStreamTransportation',
+            environment.baseUrl + '/upStreamTransportation',
             formData,{'headers':headers}
         );
     };
 
     downStreamTransportation(formData: any): Observable<any> {
         return this.http.post(
-            'http://13.200.247.29:4000/downStreamTransportation',
+            environment.baseUrl + '/downStreamTransportation',
             formData
         );
     };
     calculateInvestmentEmission(formData: any): Observable<any> {
         return this.http.post(
-            'http://13.200.247.29:4000/calculateInvestmentEmission',
+            environment.baseUrl + '/calculateInvestmentEmission',
             formData
         );
     };
     uploadFranchise(formData: any): Observable<any> {
         return this.http.post(
-            'http://13.200.247.29:4000/franchiseEmissionCalculate',
+            environment.baseUrl + '/franchiseEmissionCalculate',
             formData
         );
     };
     uploadflightTravel(formData: any): Observable<any> {
         return this.http.post(
-            'http://13.200.247.29:4000/flightTravel',
+            environment.baseUrl + '/flightTravel',
             formData
         );
     };
 
     uploadHotelStay(formData: any): Observable<any> {
         return this.http.post(
-            'http://13.200.247.29:4000/hotelStay',
+            environment.baseUrl + '/hotelStay',
             formData
         );
     };
     uploadOtherModes(formData: any): Observable<any> {
         return this.http.post(
-            'http://13.200.247.29:4000/Othermodes_of_transport',
+            environment.baseUrl + '/Othermodes_of_transport',
             formData
         );
     };
     uploadupLeaseEmissionCalculate(formData: any): Observable<any> {
         return this.http.post(
-            'http://13.200.247.29:4000/upLeaseEmissionCalculate',
+            environment.baseUrl + '/upLeaseEmissionCalculate',
             formData
         );
     };
     downstreamLeaseEmissionCalculate(formData: any): Observable<any> {
         return this.http.post(
-            'http://13.200.247.29:4000/downLeaseEmissionCalculate',
+            environment.baseUrl + '/downLeaseEmissionCalculate',
             formData
         );
     };
     uploadHomeOffice(formData: any): Observable<any> {
         return this.http.post(
-            'http://13.200.247.29:4000/AddhomeofficeCategory',
+            environment.baseUrl + '/AddhomeofficeCategory',
             formData
         );
     };
     uploadEmployeeCommunity(formData: any): Observable<any> {
         return this.http.post(
-            'http://13.200.247.29:4000/AddemployeeCommuting',
+            environment.baseUrl + '/AddemployeeCommuting',
             formData
         );
     };
     AddwatersupplytreatmentCategory(formData: any): Observable<any> {
         return this.http.post(
-            'http://13.200.247.29:4000/AddwatersupplytreatmentCategory',
+            environment.baseUrl + '/AddwatersupplytreatmentCategory',
             formData
         );
     };
     AddSoldProductsCategory(formData: any): Observable<any> {
         return this.http.post(
-            'http://13.200.247.29:4000/AddSoldProductsCategory',
+            environment.baseUrl + '/AddSoldProductsCategory',
             formData
         );
     };
     Addprocessing_of_sold_productsCategory(formData: any): Observable<any> {
         return this.http.post(
-            'http://13.200.247.29:4000/Addprocessing_of_sold_productsCategory',
+            environment.baseUrl + '/Addprocessing_of_sold_productsCategory',
             formData
         );
     };
     AddendoflifeCategory(formData: any): Observable<any> {
         return this.http.post(
-            'http://13.200.247.29:4000/AddendoflifeCategory',
+            environment.baseUrl + '/AddendoflifeCategory',
             formData
         );
     };
     wasteGeneratedEmission(formData: any): Observable<any> {
         return this.http.post(
-            'http://13.200.247.29:4000/wasteGeneratedEmission',
+            environment.baseUrl + '/wasteGeneratedEmission',
             formData
         );
     };
 
     
     getFranchiseType(): Observable<any> {
-        return this.http.get('http://13.200.247.29:4000/franchiseCategories')
+        return this.http.get(environment.baseUrl + '/franchiseCategories')
     };
     getWasteType(): Observable<any> {
-        return this.http.get('http://13.200.247.29:4000/getendoflife_waste_type')
+        return this.http.get(environment.baseUrl + '/getendoflife_waste_type')
     };
 
     getflight_types(): Observable<any> {
-        return this.http.get('http://13.200.247.29:4000/flight_types')
+        return this.http.get(environment.baseUrl + '/flight_types')
     };
     getInvestmentCategories(): Observable<any> {
-        return this.http.get('http://13.200.247.29:4000/getAllCategories')
+        return this.http.get(environment.baseUrl + '/getAllCategories')
     };
     getBusinessUnit(): Observable<any> {
-        return this.http.get('http://13.200.247.29:4000/getAllbussinessUnit')
+        return this.http.get(environment.baseUrl + '/getAllbussinessUnit')
     };
     getFlightTimes(): Observable<any> {
-        return this.http.get('http://13.200.247.29:4000/flight_types')
+        return this.http.get(environment.baseUrl + '/flight_types')
     };
 
     getSubFranchiseCat(categoryName:any): Observable<any> {
-        return this.http.get(`http://13.200.247.29:4000/franchiseSubCategories?category=${categoryName}`)
+        return this.http.get(environment.baseUrl + `/franchiseSubCategories?category=${categoryName}`)
     };
     getInvestmentSubCategory(categoryName:any): Observable<any> {
-        return this.http.get(`http://13.200.247.29:4000/getInvestmentSubCategory?category=${categoryName}`)
+        return this.http.get(environment.baseUrl + `/getInvestmentSubCategory?category=${categoryName}`)
     };
     
 
     getStatus(url:any):Observable<any>{
-        return this.http.get(`http://13.200.247.29:4000/${url}`);
+        return this.http.get(environment.baseUrl + `/${url}`);
       };
 
       getPurchaseGoodEmissions(formData: any): Observable<any> {
         return this.http.post(
-            'http://13.200.247.29:4000/getPurchaseGoodEmissions',
+            environment.baseUrl + '/getPurchaseGoodEmissions',
             formData
         );
     };
       getProductsEnergy(formData: any): Observable<any> {
         return this.http.post(
-            'http://13.200.247.29:4000/getsoldproductCategory',
+            environment.baseUrl + '/getsoldproductCategory',
             formData
         );
     };
       getPurchaseGoodsActivity(formData: any): Observable<any> {
         return this.http.post(
-            'http://13.200.247.29:4000/getsectorCategory',
+            environment.baseUrl + '/getsectorCategory',
             formData
         );
     };
       getWasteSubCategory(formData: any): Observable<any> {
         return this.http.post(
-            'http://13.200.247.29:4000/getendoflife_waste_type_subcategory',
+            environment.baseUrl + '/getendoflife_waste_type_subcategory',
             formData
         );
     };
     getsubsectorCategory(formData: any): Observable<any> {
         return this.http.post(
-            'http://13.200.247.29:4000/getsubsectorCategory',
+            environment.baseUrl + '/getsubsectorCategory',
             formData
         );
     };
 
     getEnergyFuelType(): Observable<any> {
-        return this.http.get('http://13.200.247.29:4000/getsoldproductFuelType')
+        return this.http.get(environment.baseUrl + '/getsoldproductFuelType')
     };
     getPurchaseGoodsType(): Observable<any> {
-        return this.http.get('http://13.200.247.29:4000/getintermediateCategory')
+        return this.http.get(environment.baseUrl + '/getintermediateCategory')
     };
     getrefrigents(): Observable<any> {
-        return this.http.get('http://13.200.247.29:4000/getrefrigents')
+        return this.http.get(environment.baseUrl + '/getrefrigents')
     };
 }

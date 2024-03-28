@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
-import {Gatekeeper} from 'gatekeeper-client-sdk';
+// import {Gatekeeper} from 'gatekeeper-client-sdk';
 import {environment} from 'environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {LoginInfo} from '@/models/loginInfo';
@@ -57,74 +57,74 @@ export class AppService {
         );
     }
 
-    public async registerByAuth({email, password}) {
-        try {
-            const token = await Gatekeeper.registerByAuth(email, password);
-            localStorage.setItem('accessToken', token);
-            await this.getProfile();
-            this.router.navigate(['/']);
-            this.toastr.success('Register success');
-        } catch (error) {
-            this.toastr.error(error.message);
-        }
-    }
+    // public async registerByAuth({email, password}) {
+    //     try {
+    //         const token = await Gatekeeper.registerByAuth(email, password);
+    //         localStorage.setItem('accessToken', token);
+    //         await this.getProfile();
+    //         this.router.navigate(['/']);
+    //         this.toastr.success('Register success');
+    //     } catch (error) {
+    //         this.toastr.error(error.message);
+    //     }
+    // }
 
-    public async loginByGoogle() {
-        try {
-            const token = await Gatekeeper.loginByGoogle();
-            localStorage.setItem('accessToken', token);
-            await this.getProfile();
-            this.router.navigate(['/']);
-            this.toastr.success('Login success');
-        } catch (error) {
-            this.toastr.error(error.message);
-        }
-    }
+    // public async loginByGoogle() {
+    //     try {
+    //         const token = await Gatekeeper.loginByGoogle();
+    //         localStorage.setItem('accessToken', token);
+    //         await this.getProfile();
+    //         this.router.navigate(['/']);
+    //         this.toastr.success('Login success');
+    //     } catch (error) {
+    //         this.toastr.error(error.message);
+    //     }
+    // }
 
-    public async registerByGoogle() {
-        try {
-            const token = await Gatekeeper.registerByGoogle();
-            localStorage.setItem('accessToken', token);
-            await this.getProfile();
-            this.router.navigate(['/']);
-            this.toastr.success('Register success');
-        } catch (error) {
-            this.toastr.error(error.message);
-        }
-    }
+    // public async registerByGoogle() {
+    //     try {
+    //         const token = await Gatekeeper.registerByGoogle();
+    //         localStorage.setItem('accessToken', token);
+    //         await this.getProfile();
+    //         this.router.navigate(['/']);
+    //         this.toastr.success('Register success');
+    //     } catch (error) {
+    //         this.toastr.error(error.message);
+    //     }
+    // }
 
-    public async loginByFacebook() {
-        try {
-            const token = await Gatekeeper.loginByFacebook();
-            localStorage.setItem('accessToken', token);
-            await this.getProfile();
-            this.router.navigate(['/']);
-            this.toastr.success('Login success');
-        } catch (error) {
-            this.toastr.error(error.message);
-        }
-    }
+    // public async loginByFacebook() {
+    //     try {
+    //         const token = await Gatekeeper.loginByFacebook();
+    //         localStorage.setItem('accessToken', token);
+    //         await this.getProfile();
+    //         this.router.navigate(['/']);
+    //         this.toastr.success('Login success');
+    //     } catch (error) {
+    //         this.toastr.error(error.message);
+    //     }
+    // }
 
-    public async registerByFacebook() {
-        try {
-            const token = await Gatekeeper.registerByFacebook();
-            localStorage.setItem('accessToken', token);
-            await this.getProfile();
-            this.router.navigate(['/']);
-            this.toastr.success('Register success');
-        } catch (error) {
-            this.toastr.error(error.message);
-        }
-    }
+    // public async registerByFacebook() {
+    //     try {
+    //         const token = await Gatekeeper.registerByFacebook();
+    //         localStorage.setItem('accessToken', token);
+    //         await this.getProfile();
+    //         this.router.navigate(['/']);
+    //         this.toastr.success('Register success');
+    //     } catch (error) {
+    //         this.toastr.error(error.message);
+    //     }
+    // }
 
-    public async getProfile() {
-        try {
-            this.user = await Gatekeeper.getProfile();
-        } catch (error) {
-            this.logout();
-            throw error;
-        }
-    }
+    // public async getProfile() {
+    //     try {
+    //         this.user = await Gatekeeper.getProfile();
+    //     } catch (error) {
+    //         this.logout();
+    //         throw error;
+    //     }
+    // }
 
     public logout() {
         localStorage.clear();

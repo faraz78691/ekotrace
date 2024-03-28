@@ -5,10 +5,10 @@
 export const environment = {
     production: false,
     // baseUrl: 'http://localhost:5000/api/',
-    baseUrl: 'http://192.168.1.31:4003',
+    // baseUrl: 'http://192.168.1.31:4003',
 
     // scope 3 url
-    // baseUrl: 'http://13.200.247.29:4000',
+    baseUrl: 'http://13.200.247.29:4000',
     // baseUrl: 'http://192.168.1.49:5000/api/',
     //baseUrl: 'http://ec2-13-232-86-195.ap-south-1.compute.amazonaws.com/api/',
 

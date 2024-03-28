@@ -42,7 +42,7 @@ export class FacilityService {
         return this.http.post(environment.baseUrl + 'Facilities/addFacility', data);
     }
     public newFacilityDataPost(data): Observable<any> {
-        return this.http.post('http://192.168.1.31:4003/Addfacilities', data);
+        return this.http.post( environment.baseUrl +'/Addfacilities', data);
     }
     public FacilityDataPut(id, data): Observable<any> {
         return this.http.put(environment.baseUrl + 'Facilities/' + id, data);

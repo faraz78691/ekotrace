@@ -42,6 +42,7 @@ import { GhgEmmissionsComponent } from '@pages/dashboard/ghg-emmissions/ghg-emmi
 import { EnergyEmmsionsComponent } from '@pages/dashboard/energy-emmsions/energy-emmsions.component';
 import { BusinessTravelComponent } from '@pages/dashboard/business-travel/business-travel.component';
 import { NewBillingComponent } from '@pages/new-billing/new-billing.component';
+import { WaterUsageComponent } from '@pages/dashboard/water-usage/water-usage.component';
 
 const routes: Routes = [
     {
@@ -68,7 +69,8 @@ const routes: Routes = [
                     {path:'',redirectTo:'ghgEmision', pathMatch:'full'},
                     {path:'ghgEmision',component: GhgEmmissionsComponent},
                     {path:'energyEmission',component: EnergyEmmsionsComponent},
-                    {path:'businessTravel',component: BusinessTravelComponent}
+                    {path:'businessTravel',component: BusinessTravelComponent},
+                    {path:'waterUsage',component: WaterUsageComponent},
                 ]
             },
             {

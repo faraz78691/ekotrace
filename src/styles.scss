@@ -665,7 +665,11 @@ box-shadow: 0px 4px 10.2px 0px rgba(0, 0, 0, 0.17);
 // .p-multiselect:not(.p-disabled):hover {
 //     border-color: #ffffff;
 // }
-
+.ct_modal_scrool_121 {
+    overflow-y: auto;
+    height: auto;
+    max-height: 500px;
+}
 
 
 .p-button {

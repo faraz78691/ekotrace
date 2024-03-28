@@ -352,6 +352,9 @@ export class DashboardService {
     public GScopeWiseEimssion(admininfo) {
         return this.http.post(this.localapiURL + '/dashboardScope', admininfo);
     };
+    public GEByTravel(admininfo) {
+        return this.http.post(this.localapiURL + '/businessdashboardemssionByTravel', admininfo);
+    };
     public GTopWiseEimssion(admininfo) {
         return this.http.post(this.localapiURL + '/dashboardTopEmssion', admininfo);
     };

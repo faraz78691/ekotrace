@@ -36,14 +36,14 @@ export class UserService {
         return this.http.post<UserInfo[]>(this.apiURL + 'register', admininfo);
     };
     public newSaveUsers(admininfo) {
-        return this.http.post<newUserInfo[]>(this.localapiURL + '/register', admininfo);
+        return this.http.post<newUserInfo[]>(this.apiURL + '/register', admininfo);
     };
 
     public getUsers(tenantId) {
         return this.http.get<UserInfo[]>(this.apiURL + 'user/' + tenantId);
     }
     public newgetUsers(tenantId) {
-        return this.http.post<UserInfo[]>('http://192.168.1.31:4003/getAllusers', tenantId);
+        return this.http.post<UserInfo[]>(this.apiURL+ '/getAllusers', tenantId);
     };
     public UpdateUsers(admininfo) {
         return this.http.put<UserInfo[]>(this.apiURL + admininfo.id, admininfo);
@@ -55,22 +55,22 @@ export class UserService {
         return this.http.get<RoleModel[]>(this.apiURL + 'role-all');
     }
     public newGetAllRoles(): Observable<any[]> {
-        return this.http.get<any[]>(this.localapiURL + '/getAllroles');
+        return this.http.get<any[]>(this.apiURL+ '/getAllroles');
     }
     public CheckUserExist(username) {
         return this.http.get<boolean>(this.checkuserURL + username);
     }
     public getPackageDetails() {
-        return this.http.get<boolean>('http//192.168.1.31:4003/getpackages');
+        return this.http.get<boolean>(this.apiURL + '/getpackages');
     }
     public getNewPackageDetails() {
-        return this.http.get('http://192.168.1.31:4003/getpackages');
+        return this.http.get(this.apiURL + '/getpackages');
     }
     public getBillingUsers(data) {
-        return this.http.post('http://192.168.1.31:4003/getAllusers', data);
+        return this.http.post(this.apiURL + '/getAllusers', data);
     }
 
     public newSavepackages(packagedetails): Observable<any> {
-        return this.http.post('http://192.168.1.31:4003' + '/addpackage', packagedetails);
+        return this.http.post(this.apiURL + '/addpackage', packagedetails);
     }
 }

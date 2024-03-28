@@ -102,6 +102,7 @@ import { GhgEmmissionsComponent } from './pages/dashboard/ghg-emmissions/ghg-emm
 import { EnergyEmmsionsComponent } from './pages/dashboard/energy-emmsions/energy-emmsions.component';
 import { BusinessTravelComponent } from './pages/dashboard/business-travel/business-travel.component';
 import { NewBillingComponent } from './pages/new-billing/new-billing.component';
+import { WaterUsageComponent } from './pages/dashboard/water-usage/water-usage.component';
 
 defineCustomElements();
 registerLocaleData(localeEn, 'en-EN');
@@ -161,7 +162,8 @@ registerLocaleData(localeEn, 'en-EN');
         GhgEmmissionsComponent,
         EnergyEmmsionsComponent,
         BusinessTravelComponent,
-        NewBillingComponent
+        NewBillingComponent,
+        WaterUsageComponent
     ],
     imports: [
         BrowserModule,
