@@ -1,0 +1,50 @@
+<div class="row">
+    <div class="col-lg-6 mb-4">
+        <div class="ct_grey_border_1 ">
+            <div class="ct_d_flex_1 ct_grey_brdr_btm1 pb-3 mb-3">
+                <div>
+                    <h5 class="ct_font_16"><strong>Energy Consumption</strong></h5>
+                    <h3><strong>568995 KWh</strong></h3>
+                    <p class="mb-0">FY 2023-2024</p>
+                </div>
+                <div class="ct_info_icon">
+                    <i class="fa-solid fa-info"></i>
+                </div>
+            </div>
+            <div id="energy_Consumption">
+                <apx-chart
+                [series]="areachart.series"
+                [chart]="areachart.chart"
+                [xaxis]="areachart.xaxis"
+                [stroke]="areachart.stroke"
+                [tooltip]="areachart.tooltip"
+                [dataLabels]="areachart.dataLabels"
+              ></apx-chart>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 mb-4">
+        <div class="ct_grey_border_1 ">
+            <div class="ct_d_flex_1 ct_grey_brdr_btm1 pb-3 mb-3">
+                <div>
+                    <h5 class="ct_font_16"><strong>Energy Type</strong></h5>
+                    <h3><strong>658689</strong></h3>
+                    <p class="mb-0">tCO2e</p>
+                </div>
+                <div class="ct_info_icon">
+                    <i class="fa-solid fa-info"></i>
+                </div>
+            </div>
+            <div id="energy_type">
+                <apx-chart
+                [series]="secondChart.series"
+                [chart]="secondChart.chart"
+                [labels]="secondChart.labels"
+                [responsive]="secondChart.responsive"
+              ></apx-chart>
+            </div>
+        </div>
+    </div>
+   
+</div>
+
