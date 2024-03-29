@@ -355,6 +355,15 @@ export class DashboardService {
     public GEByTravel(admininfo) {
         return this.http.post(this.localapiURL + '/businessdashboardemssionByTravel', admininfo);
     };
+    public businessdashboardemssionByAir(admininfo) {
+        return this.http.post(this.localapiURL + '/businessdashboardemssionByAir', admininfo);
+    };
+    public BygroundTravel(admininfo) {
+        return this.http.post(this.localapiURL + '/businessdashboardemssionBygroundTravel', admininfo);
+    };
+    public businessTravelByMonth(admininfo) {
+        return this.http.post(this.localapiURL + '/businessdashboardemssion', admininfo);
+    };
     public GTopWiseEimssion(admininfo) {
         return this.http.post(this.localapiURL + '/dashboardTopEmssion', admininfo);
     };

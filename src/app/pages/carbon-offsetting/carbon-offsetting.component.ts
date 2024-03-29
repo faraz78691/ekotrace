@@ -12,21 +12,20 @@ import { FacilityService } from '@services/facility.service';
 import { NotificationService } from '@services/notification.service';
 import { ThemeService } from '@services/theme.service';
 import { environment } from 'environments/environment';
-import {UserService} from '@services/user.service';
 import {GroupService} from '@services/group.service';
-// import { UserInfo } from 'os';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import {UserService} from '@services/user.service';
 
 interface groupby {
   name: string;
-}
+};
 
 @Component({
-  selector: 'app-new-billing',
-  templateUrl: './new-billing.component.html',
-  styleUrls: ['./new-billing.component.scss']
+  selector: 'app-carbon-offsetting',
+  templateUrl: './carbon-offsetting.component.html',
+  styleUrls: ['./carbon-offsetting.component.scss']
 })
-export class NewBillingComponent {
+export class CarbonOffsettingComponent {
   @ViewChild('GroupForm', {static: false}) GroupForm: NgForm;
   public companyDetails: CompanyDetails;
   companyData: CompanyDetails = new CompanyDetails();
@@ -34,15 +33,11 @@ export class NewBillingComponent {
   public admininfo: UserInfo;
   public userdetails: UserInfo;
   public groupdetails: any;
-  public packagedetails: any;
   public groupMappingDetails: GroupMapping;
   public admininfoList: UserInfo[] = [];
   facilityList: Facility[] = [];
   RolesList: RoleModel[] = [];
   public groupsList: Group[] = [];
-  public packageList: any[] = [];
-  public usersList: any[] = [];
-  
   display = 'none';
   visible: boolean;
   selectedRole = '';
@@ -65,14 +60,12 @@ export class NewBillingComponent {
   stateData: Location[] = [];
   selectedValue: string;
   selectedCountry: any[] = [];
+  scopeList: any[] = [];
   editBindedCountry: any[] = [];
   id: any;
-  selectedUsers: any[]=[];
-  selectedFacility: any;
   isgroupExist: boolean = false;
   selectedFaciltiy: any;
   selectedState: any;
-  packageID: any;
   GroupByValue: string;
   countryUnique: string[];
   stateUnique: string[];
@@ -80,6 +73,9 @@ export class NewBillingComponent {
   ischecked = true;
   selectedRowIndex = 0;  
   filledgroup: any;
+  project_details = '';
+  carbon_offset = '';
+  selectedScope:any;
   constructor(
       private companyService: CompanyService,
       private UserService: UserService,
@@ -92,7 +88,7 @@ export class NewBillingComponent {
   ) {
       this.admininfo = new UserInfo();
       this.userdetails = new UserInfo();
-      this.groupdetails = new Group();
+      this.groupdetails = new Array();
       this.groupMappingDetails = new GroupMapping();
       this.loginInfo = new LoginInfo();
       this.companyDetails = new CompanyDetails();
@@ -110,6 +106,17 @@ export class NewBillingComponent {
               name: 'Facility'
           }
       ];
+      this.scopeList = [
+          { id: 1,
+              name: 'Scope 1'
+          },
+          { id:2,
+              name: 'Scope 2'
+          },
+          { id:3,
+              name: 'Scope 3'
+          }
+      ];
   }
   ngOnInit() {
       if (localStorage.getItem('LoginInfo') != null) {
@@ -119,13 +126,9 @@ export class NewBillingComponent {
           // this.facilityGet(this.loginInfo.tenantID);
       }
       this.getTenantsDetailById(Number(this.loginInfo.tenantID));
-      this.GetAllFacility();
-      this.GetAllPackages();
+      // this.GetAllFacility();
       let tenantID = this.loginInfo.tenantID;
-   
-      this.GetAllUsersPack()
-   
-        //
+      this.getOffset(tenantID);
       this.updatedtheme = this.themeservice.getValue('theme');
   }
   //checks upadated theme
@@ -155,30 +158,60 @@ export class NewBillingComponent {
   //     localStorage.setItem('GroupCount', String(this.groupsList.length));
   //     this.unlock = this.groupdetails.id.toString();
   // }
- 
+   getOffset(tenantID:any) {
+
+      let formData = new URLSearchParams();
+
+      formData.set('tenant_id', tenantID.toString());
+  
+      this.GroupService.getuser_offseting(formData.toString()).subscribe({
+          next: (response) => {
+             
+              if(response.success == true)
+              {
+                  this.groupsList = response.categories;
+                  if (this.groupsList.length > 0) {
+                      this.groupdetails = this.groupsList[0];
+                      this.groupdata = true;
+                  } else {
+                      this.groupdata = false;
+                  }
+                  localStorage.setItem('GroupCount', String(this.groupsList.length));
+                  this.unlock = this.groupdetails.id.toString();
+              }
+            
+          },
+          error: (err) => {
+              console.error('errrrrrr>>>>>>', err);
+          },
+          complete: () => console.info('Group Added')
+      });
+  }
 
   //method to add new group
-  saveGroup(data: NgForm) {
-
-     const billingForm = new URLSearchParams();
-     billingForm.set('package_id', this.packageID)
-     billingForm.set('facility_id', [this.selectedFacility].toString())
-      
-
-      this.UserService.newSavepackages(billingForm.toString()).subscribe({
+  saveOffset(data: NgForm) {
+     
+      // this.groupdetails.tenantID = this.loginInfo.tenantID;
+      let formData = new URLSearchParams();
+      formData.set('project_detail',this.project_details);
+      formData.set('offset',  this.carbon_offset);
+      formData.set('scope',this.selectedScope);
+      formData.set('tenant_id',this.loginInfo.tenantID.toString());
+  
+      this.GroupService.Adduser_offseting(formData.toString()).subscribe({
           next: (response) => {
               console.log(response);
               if(response.success == true)
               {
                   this.visible = false;
                   this.notification.showSuccess(
-                      'Package Assigned successfully',
+                      ' Offset Added successfully',
                       'Success'
                   );
-                  this.GetAllUsersPack();
+                  this.getOffset(this.loginInfo.tenantID);
               }
-             
-              this.GetAllUsersPack();
+              // return
+              this.getOffset(this.loginInfo.tenantID);
               this.visible = false;
               if (localStorage.getItem('FacilityGroupCount') != null) {
                   let fgcount = localStorage.getItem('FacilityGroupCount');
@@ -196,7 +229,7 @@ export class NewBillingComponent {
           },
           complete: () => console.info('Group Added')
       });
-  };
+  }
   
   //method for update group detail by id
   updateGroup(id: any, data: NgForm) {
@@ -238,7 +271,7 @@ export class NewBillingComponent {
       this.GroupService.newEditGroup(formData.toString()).subscribe({
           next: (response) => {
               console.log(response);
-            //   this.newGetAllGroups(tenantID);
+              this.getOffset(tenantID);
 
               this.visible = false;
               this.notification.showSuccess(
@@ -255,57 +288,19 @@ export class NewBillingComponent {
   }
 
   //retrieves all facilities for a given tenant
-  GetAllFacility() {
-      let tenantId = this.loginInfo.tenantID;
-      this.facilitydata = false;
-      this.facilityService.nFacilityDataGet().subscribe((response:any) => {
 
-          this.facilityList = response.categories;
-          if (this.facilityList.length === 0) {
-              this.facilitydata = true;
-          }
-      });
-  };
-
-  GetAllPackages() {
-      let tenantId = this.loginInfo.tenantID;
-      this.facilitydata = false;
-      this.UserService.getNewPackageDetails().subscribe((response:any) => {
-          this.packageList = response.categories;
-          this.groupdata = true;
-           this.groupdetails = this.packageList[0]
-           console.log(this.groupdetails);
-          if (this.packageList.length === 0) {
-              this.facilitydata = true;
-          }
-      });
-  };
-
-  GetAllUsersPack() {
-      let tenantId = this.loginInfo.tenantID;
-      const formdata = new URLSearchParams();
-      formdata.set('tenantId',tenantId.toString());
-      this.facilitydata = false;
-      this.UserService.getBillingUsers(formdata.toString()).subscribe((response:any) => {
-          this.usersList = response;
-         
-          
-          // if (this.packageList.length === 0) {
-          //     this.facilitydata = true;
-          // }
-      });
-  };
   //handles the closing of a dialog
   onCloseHandled() {
       this.visible = false;
       this.isloading = false;
       let tenantID = this.loginInfo.tenantID;
-    //   this.newGetAllGroups(tenantID);
+      this.getOffset(tenantID);
   }
   //display a dialog for editing a group
   showEditGroupDialog(groupdetails) {
       this.visible = true;
       this.FormEdit = true;
+
       this.filledgroup = groupdetails as GroupMapping;
 
       if (this.filledgroup.groupBy === 'Country') {
@@ -330,12 +325,10 @@ export class NewBillingComponent {
       this.visible = true;
       this.groupdetails = new Group();
       this.FormEdit = false;
-      this.GetAllFacility();
       this.resetForm();
   }
   //sets the selected group details
   selectGroup(group: Group,index: number) {
-    console.log(group);
       this.selectedRowIndex = index;
       this.groupdetails = group;
       console.log(
@@ -388,7 +381,7 @@ export class NewBillingComponent {
                           String(newcount)
                       );
                   }
-                //   this.newGetAllGroups(tenantID);
+                  this.getOffset(tenantID);
               });
 
               this.messageService.add({
@@ -398,7 +391,7 @@ export class NewBillingComponent {
               });
           },
           reject: () => {
-            //   this.newGetAllGroups(tenantID);
+              this.getOffset(tenantID);
               this.messageService.add({
                   severity: 'error',
                   summary: 'Rejected',

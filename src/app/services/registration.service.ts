@@ -19,5 +19,12 @@ export class RegistrationService {
             environment.baseUrl + 'Tenants/' + companyData.id,
             companyData
         );
-    }
+    };
+
+    public addCompany(companyData: CompanyDetails): Observable<any> {
+        return this.http.put(
+            environment.baseUrl + '/AddComapnyDetail/' + companyData.id,
+            companyData
+        );
+    };
 }

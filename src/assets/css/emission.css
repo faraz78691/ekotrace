@@ -33,7 +33,7 @@ a{
     background-color: #fff !important;
     border-radius: 15px;
 
-    /* / color: #a2afa3; / */
+    /* color: #a2afa3; */
 }
 .ct_emission_menu_link ul li{
     display: inline-block;
@@ -153,7 +153,7 @@ button.ct_scope_btn {
     padding: 15px 30px;
     border-radius: 15px;
     height: 100%;
-    /* / box-shadow: 0px 10px 25px rgba(0,0,0,0.09); / */
+    /* box-shadow: 0px 10px 25px rgba(0,0,0,0.09); */
     background-color: transparent;
 }
 .ct_font_24{

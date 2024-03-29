@@ -41,7 +41,7 @@
                                 <!-- scope 3 govind categories -->
                                 <!-- {{AssignedDataPoint | json}} -->
                                 <ng-container *ngFor="let seed of AssignedDataPoint; let i = index">
-                                    <p-tabPanel *ngIf="i !==2">
+                                    <p-tabPanel *ngIf="seed.ScopeID !==3">
 
                                         <ng-template pTemplate="header">
                                             {{ seed.scopeName }}
@@ -137,7 +137,7 @@
                                         </div>
 
                                     </p-tabPanel>
-                                    <p-tabPanel *ngIf="i ==2">
+                                    <p-tabPanel *ngIf="seed.ScopeID ==3">
                                         <ng-template pTemplate="header">
                                             {{ seed.scopeName }}
                                         </ng-template>

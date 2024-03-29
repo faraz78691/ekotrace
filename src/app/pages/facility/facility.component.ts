@@ -344,7 +344,9 @@ export class FacilityComponent {
         formdata.set('ID', id)
         this.facilityService.newUsersByFacilityID(formdata.toString()).subscribe((result) => {
             console.log(result);
-
+this.selectedScope1 = result[0].scope1;
+this.selectedScope2 = result[0].scope2;
+this.selectedScope3 = result[0].scope3;
             this.facilityDetails = result[0];
             const facilityUsers = result[0].userInfoModels;
             console.log("facilityUsers", facilityUsers);
@@ -766,7 +768,7 @@ export class FacilityComponent {
             fomdata.set('Scope3', scope3Stringy);
             
         }
-
+            
 
         // console.log(this.selectedScope3);
 

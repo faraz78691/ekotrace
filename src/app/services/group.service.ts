@@ -20,6 +20,11 @@ export class GroupService {
             environment.baseUrl + '/getGroups',tenantID
         );
     }
+    public getuser_offseting(tenantID:any): Observable<any> {
+        return this.http.post(
+            environment.baseUrl + '/getuser_offseting',tenantID
+        );
+    };
 
     public EditGroup( groupdetails): Observable<any> {
         return this.http.post(environment.baseUrl + '/Updategroupmapping' , groupdetails);
@@ -30,9 +35,12 @@ export class GroupService {
 
     public SaveGroups(groupdetails): Observable<any> {
         return this.http.post(environment.baseUrl + 'Group/', groupdetails);
-    }
+    };
     public newSaveGroups(groupdetails): Observable<any> {
         return this.http.post(environment.baseUrl + '/Addgroup', groupdetails);
+    }
+    public Adduser_offseting(groupdetails): Observable<any> {
+        return this.http.post(environment.baseUrl + '/Adduser_offseting', groupdetails);
     }
 
     public deleteGroups(id) {

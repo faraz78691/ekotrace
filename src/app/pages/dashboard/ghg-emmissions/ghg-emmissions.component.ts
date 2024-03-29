@@ -47,9 +47,9 @@ export type ChartOptions = {
 export type ChartOptions2 = {
   series: ApexNonAxisChartSeries;
   chart: ApexChart;
-  responsive: ApexResponsive[];
   dataLabels: ApexDataLabels;
   plotOptions: ApexPlotOptions;
+  responsive: ApexResponsive[];
   xaxis: ApexXAxis;
   legend: ApexLegend;
   fill: ApexFill;
@@ -206,10 +206,12 @@ export class GhgEmmissionsComponent {
           opacity: 1
         }
       };
+      
        this.previoucsOptions = {
         dataLabels: {
           enabled: false
         },
+        
         series: this.series_graph,
         chart: {
           // width: 380,
@@ -293,20 +295,20 @@ export class GhgEmmissionsComponent {
           type: "donut"
         },
         dataLabels: {
-          enabled: false
+          enabled: true
         },
-        fill: {
-          type: "gradient"
-        },
-        legend: {
-          position: 'bottom',
-          // horizontalAlign: 'center', 
+        // fill: {
+        //   type: "gradient"
+        // },
 
-          // formatter: function(val, opts) {
-          //   return val + " - " + opts.w.globals.series[opts.seriesIndex];
-          // }
+        legend: {
+          position:"bottom",
+          fontSize: '15px',
+          floating: false,
+          horizontalAlign: 'left', 
         },
         labels: this.labelScopeDonut1,
+        colors: ['#F3722C', '#0068F2', '#F8961E'],
         responsive: [
           {
             breakpoint: 480,
@@ -330,14 +332,16 @@ export class GhgEmmissionsComponent {
         dataLabels: {
           enabled: true
         },
-        fill: {
-          type: "gradient"
-        },
+        // fill: {
+        //   type: "gradient"
+        // },
         legend: {
-          formatter: function(val, opts) {
-            return val + " - " + opts.w.globals.series[opts.seriesIndex];
-          }
+          position:"bottom",
+          fontSize: '15px',
+          floating: false,
+          horizontalAlign: 'left', 
         },
+        colors: ['#F3722C', '#0068F2', '#F8961E'],
         labels: this.labelScopeDonut2,
         responsive: [
           {
@@ -356,20 +360,23 @@ export class GhgEmmissionsComponent {
       this.donotOptions3 = {
         series: this.seriesScopeDonut3,
         chart: {
-          width: 540,
+          width: 380,
           type: "donut"
         },
         dataLabels: {
           enabled: true
         },
-        fill: {
-          type: "gradient"
-        },
+        // fill: {
+        //   type: "gradient"
+        // },
         legend: {
-          formatter: function(val, opts) {
-            return val + " - " + opts.w.globals.series[opts.seriesIndex];
-          }
+          position:"bottom",
+          fontSize: '15px',
+          floating: false,
+          horizontalAlign: 'left', 
+
         },
+        colors: ['#F3722C', '#0068F2', '#F8961E'],
         labels: this.labelScopeDonut3,
         responsive: [
           {
@@ -379,7 +386,7 @@ export class GhgEmmissionsComponent {
                 width: 200
               },
               legend: {
-                position: "top"
+                position: "bottom"
               }
             }
           }
@@ -397,8 +404,7 @@ export class GhgEmmissionsComponent {
     this.GScopeWiseE(this.selectedFacility)
     this.getTopFiveE(this.selectedFacility);
     this.getVendorE(this.selectedFacility)
-this.getScopeDonnutsE(this.selectedFacility)
-this.getActivityE(this.selectedFacility)
+
   };
 
   getActivityE(facility) {

@@ -43,6 +43,7 @@ import { EnergyEmmsionsComponent } from '@pages/dashboard/energy-emmsions/energy
 import { BusinessTravelComponent } from '@pages/dashboard/business-travel/business-travel.component';
 import { NewBillingComponent } from '@pages/new-billing/new-billing.component';
 import { WaterUsageComponent } from '@pages/dashboard/water-usage/water-usage.component';
+import { CarbonOffsettingComponent } from '@pages/carbon-offsetting/carbon-offsetting.component';
 
 const routes: Routes = [
     {
@@ -159,6 +160,16 @@ const routes: Routes = [
                 canActivate: [RoleGuard],
                 component: NewBillingComponent,
                 data: { roles: ['Super Admin'] }
+            },
+            {
+                path: 'carbonOffset',
+                canActivate: [RoleGuard],
+                component: CarbonOffsettingComponent,
+                data: { roles: [  'Super Admin',
+                'Admin',
+                'Manager',
+                'Preparer',
+                'Approver'] }
             },
             {
                 path: 'tracking',

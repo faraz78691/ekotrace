@@ -4,11 +4,11 @@ export class Group {
     id: number;
     groupname: string;
     groupBy: string;
-    tenantID: number; 
+    tenantID: number;
     CreatedDate = new Date();
     modifiedDate = new Date();
     active = true;
     groupMappings: GroupMapping[];
     facilities: any[];
-package_name: any;
+    package_name: any;
 }

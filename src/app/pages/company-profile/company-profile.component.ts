@@ -31,7 +31,7 @@ export class CompanyProfileComponent {
     updatedtheme: string;
     multiselectcolor: any;
     selectedFile: File;
-    uploadedImageUrl: string;
+    uploadedImageUrl:string | ArrayBuffer | null = null;
     companyName: string;
     constructor(
         private companyService: CompanyService,
@@ -171,10 +171,19 @@ export class CompanyProfileComponent {
         }
     }
     //triggered when a file is selected from the file input
-    onFileSelected(files: FileList) {
-        const file = files.item(0);
-        if (file) {
-            this.uploadImage(files);
+    onFileSelected(event) {
+        // const file = files.item(0);
+        this.selectedFile = event.target.files[0];
+        if (this.selectedFile) {
+           this.loadSelectedImage()
+       
         }
     }
+    loadSelectedImage() {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          this.uploadedImageUrl = event.target?.result;
+        };
+        reader.readAsDataURL(this.selectedFile);
+      }
 }

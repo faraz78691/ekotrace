@@ -1,3 +1,4 @@
+<!-- <p>water-usage works!</p> -->
 <div class="row">
     <div class="col-xl-8 mb-4">
        
@@ -33,27 +34,30 @@
         <div class="row">
 
             <div class="col-xl-3 mb-4">
-                <div class="ct_grey_border_1 ">
-                    <div class="ct_d_flex_1 ct_grey_brdr_btm1 pb-3 mb-3">
-                        <div>
-                            <h5 class="ct_font_16"><strong>Emissions by travel</strong></h5>
-                            <h3 class="ct_fs_24"><strong>5.987,34</strong></h3>
-                            <p class="mb-0">tCO2e</p>
-                        </div>
-                        <div class="ct_info_icon">
-                            <i class="fa-solid fa-info"></i>
-                        </div>
+              <div class="ct_dark_grey_bg1" >
+                <h4>Waste disposed  (tonnes)</h4>
+                <div class="row pt-3">
+                    <div class="col-lg-6 mb-2">
+                        <h5>5.3 K</h5>
                     </div>
-                    <div id="ct_emission_by_travel" *ngIf="donotOptions1">
-                        <apx-chart
-                        [series]="donotOptions1.series"
-                        [chart]="donotOptions1.chart"
-                        [labels]="donotOptions1.labels"
-                        [legend]="donotOptions1.legend"
-                        [responsive]="donotOptions1.responsive"
-                      ></apx-chart>
+                    <div class="col-lg-6 mb-2">
+                        <h5><i class="fa-solid fa-caret-up ct_green_up" ></i> 23%</h5>
                     </div>
+                    
                 </div>
+              </div>
+              <div class="ct_dark_grey_bg1 " >
+                <h4>Waste disposed  (tonnes)</h4>
+                <div class="row  pt-3">
+                    <div class="col-lg-6 mb-2">
+                        <h5>5.3 K</h5>
+                    </div>
+                    <div class="col-lg-6 mb-2">
+                        <h5><i class="fa-solid fa-caret-up ct_green_up" ></i> 23%</h5>
+                    </div>
+                    
+                </div>
+              </div>
             </div>
             <!-- <div class="col-xl-3 mb-4">
                 <div class="ct_grey_border_1 ">
@@ -81,13 +85,11 @@
                 <div class="ct_grey_border_1">
                     <div class="ct_d_flex_1 ct_grey_brdr_btm1 pb-3 mb-3">
                         <div>
-                            <h5 class="ct_font_16"><strong>Cost centre</strong></h5>
-                            <h3><strong>5,887,34</strong></h3>
+                            <h5 class="ct_font_16">Waste types</h5>
+                            <h3><strong>5.987,34</strong></h3>
                             <p class="mb-0">tCO2e</p>
                         </div>
-                        <div class="ct_info_icon">
-                            <i class="fa-solid fa-info"></i>
-                        </div>
+                       
                     </div>
                     <div id="ct_cost_center" *ngIf="donotOptions2">
                         <apx-chart
@@ -96,6 +98,7 @@
                         [labels]="donotOptions2.labels"
                         [legend]="donotOptions2.legend"
                         [responsive]="donotOptions2.responsive"
+                        [colors]="donotOptions2.colors"
                       ></apx-chart>
                     </div>
                 </div>
@@ -104,12 +107,11 @@
                 <div class="ct_grey_border_1 ">
                     <div class="ct_d_flex_1 ct_grey_brdr_btm1 pb-3 mb-3">
                         <div>
-                            <h5 class="ct_font_16"><strong>Total emissions by month</strong></h5>
-                            <p class="mb-0">FY 2023-2024</p>
+                            <h5 class="ct_font_16">Hazardous & Non Hazardous waste</h5>
+                            <h3><strong>5.987,34</strong></h3>
+                            <p class="mb-0">tCO2e</p>
                         </div>
-                        <div class="ct_info_icon">
-                            <i class="fa-solid fa-info"></i>
-                        </div>
+                        
                     </div>
                     <div id="ct_emission_by_month" *ngIf="chartOptions">
                         <apx-chart
@@ -120,6 +122,7 @@
             [yaxis]="chartOptions.yaxis"
             [xaxis]="chartOptions.xaxis"
             [fill]="chartOptions.fill"
+            [colors]="chartOptions.colors"
           
           ></apx-chart>
                     </div>
@@ -131,13 +134,11 @@
              <div class="ct_grey_border_1 ">
                 <div class="ct_d_flex_1 ct_grey_brdr_btm1 pb-3 mb-3">
                     <div>
-                        <h5 class="ct_font_16"><strong>Emissions by business divisions</strong></h5>
-                        <h3><strong>5.987,34 mt CO2e</strong></h3>
-                        <p class="mb-0">FY 2023-2024</p>
+                        <h5 class="ct_font_16"><strong>2</strong></h5>
+                        <h3><strong>2,563</strong></h3>
+                        <p class="mb-0">tCO2e</p>
                     </div>
-                    <div class="ct_info_icon">
-                        <i class="fa-solid fa-info"></i>
-                    </div>
+                  
                 </div>
                 <div id="ct_business_divisions">
                  <div id="ct_cost_center" *ngIf="donotOptions1">
@@ -156,13 +157,11 @@
             <div class="ct_grey_border_1">
                 <div class="ct_d_flex_1 ct_grey_brdr_btm1 pb-3 mb-3">
                     <div>
-                        <h5 class="ct_font_16"><strong>By employee location</strong></h5>
+                        <h5 class="ct_font_16"><strong>22</strong></h5>
                         <h3><strong>2,563</strong></h3>
                         <p class="mb-0">tCO2e</p>
                     </div>
-                    <div class="ct_info_icon">
-                        <i class="fa-solid fa-info"></i>
-                    </div>
+                   
                 </div>
                 <div id="By_employee_location" *ngIf="pieChart">
                     <apx-chart
@@ -179,17 +178,18 @@
             <div class="ct_grey_border_1">
                 <div class="ct_d_flex_1 ct_grey_brdr_btm1 pb-3 mb-3">
                     <div>
-                        <h5 class="mb-0"><strong>Path to net-zero</strong></h5>
+                        <h5 class="ct_font_16"><strong>22</strong></h5>
+                        <h3><strong>2,563</strong></h3>
+                        <p class="mb-0">tCO2e</p>
                     </div>
-                    <div class="ct_info_icon">
-                        <i class="fa-solid fa-info"></i>
-                    </div>
+                  
                 </div>
                 <div id="ct_net_zeo_donut" *ngIf="groupChart">
                     <apx-chart
                         [series]="donotOptions1.series"
                         [chart]="donotOptions1.chart"
                         [labels]="donotOptions1.labels"
+                        [colors]="donotOptions1.colors"
                         [legend]="donotOptions1.legend"
                         [responsive]="donotOptions1.responsive"
                       ></apx-chart>

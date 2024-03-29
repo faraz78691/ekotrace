@@ -64,10 +64,12 @@ export class MenuSidebarComponent implements OnInit {
             this.getTenantsById(Number(this.loginInfo.tenantID));
             this.getTenantsById(Number(this.loginInfo.tenantID)).then(() => {
                 console.log("menu", menu);
+                console.log("this.isExpired", this.isExpired);
                 if (this.loginInfo.role === 'Super Admin' && this.isExpired) {
                     this.menu =
                         menu.find((item) => item.role === this.loginInfo.role)
                             ?.items || [];
+                            console.log(this.menu);
                 } else {
                     if (this.brsrdata.docPath != null || this.brsrdata.docPath != undefined) {
                         this.isBRSRDoc = true;
@@ -224,6 +226,12 @@ export const menu = [
                 path: ['report']
             },
             {
+                name: 'Carbon Offset',
+                iconClasses: 'fas fa-folder',
+                iconSRC :'assets/img/co2.svg',
+                path: ['carbonOffset']
+            },
+            {
                 head: 'Reporting',
                 name: 'BRSR',
                 iconClasses: 'fas fa-table',
@@ -303,6 +311,12 @@ export const menu = [
                 name: 'Tracking',
                 iconClasses: 'fas fa-star',
                 path: ['Ntracking']
+            },
+            {
+                name: 'Carbon Offset',
+                iconClasses: 'fas fa-folder',
+                iconSRC :'assets/img/report_icon.svg',
+                path: ['carbonOffset']
             },
             {
                 name: 'Report',
@@ -399,6 +413,12 @@ export const menu = [
                 path: ['report']
             },
             {
+                name: 'Carbon Offset',
+                iconClasses: 'fas fa-folder',
+                iconSRC :'assets/img/report_icon.svg',
+                path: ['carbonOffset']
+            },
+            {
                 head: 'Reporting',
                 name: 'BRSR',
                 iconClasses: 'fas fa-table',
@@ -458,6 +478,12 @@ export const menu = [
                 iconClasses: 'fas fa-star',
                 iconSRC :'assets/img/tracking_icon.svg',
                 path: ['Ntracking']
+            },
+            {
+                name: 'Carbon Offset',
+                iconClasses: 'fas fa-folder',
+                iconSRC :'assets/img/report_icon.svg',
+                path: ['carbonOffset']
             },
             {
                 name: 'Report',
@@ -536,6 +562,12 @@ export const menu = [
                 iconSRC :'assets/img/report_icon.svg',
                 path: ['report']
             },
+            {
+                name: 'Carbon Offset',
+                iconClasses: 'fas fa-folder',
+                iconSRC :'assets/img/report_icon.svg',
+                path: ['carbonOffset']
+            },
 
             // {
             //     name: 'User',
@@ -560,7 +592,13 @@ export const menu = [
                 iconClasses: 'fas fa-star',
                 iconSRC :'assets/img/tracking_icon.svg',
                 path: ['Ntracking']
-            }
+            },
+            {
+                name: 'Carbon Offset',
+                iconClasses: 'fas fa-folder',
+                iconSRC :'assets/img/report_icon.svg',
+                path: ['carbonOffset']
+            },
         ]
     },
     {
@@ -579,7 +617,13 @@ export const menu = [
                 iconClasses: 'fas fa-star',
                 iconSRC :'assets/img/tracking_icon.svg',
                 path: ['Ntracking']
-            }
+            },
+            {
+                name: 'Carbon Offset',
+                iconClasses: 'fas fa-folder',
+                iconSRC :'assets/img/report_icon.svg',
+                path: ['carbonOffset']
+            },
         ]
     }
 ];

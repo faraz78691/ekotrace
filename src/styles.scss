@@ -1166,9 +1166,7 @@ span.p-datepicker-decade.ng-tns-c40-11.ng-star-inserted{
 .ct_upload_btn1 .p-button {
     border-radius: 0px;
 }
-.p-icon-wrapper{
-    // display: block;
-}
+
  .p-icon.pi-filter-icon path {
     fill: #fff !important;
 }
@@ -1387,11 +1385,40 @@ color: #fff!important;
 .ct_position_unset .p-tabview-nav-container {
     position: unset;
   }
+
+  app-header.main-header.navbar.navbar-expand.navbar-light {
+    position: fixed;
+    width: 100%;
+}
+.sidebar-mini .content-wrapper.content-wrapperL {
+    padding-top: 100px !important;
+}
+  @media screen and (max-width:991px){
+    app-root.sidebar-mini.layout-fixed.sidebar-open .sidebar {
+        width: 0px;
+    }
+    body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-wrapper, body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-footer, body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-header{
+        transition: margin-left .3s ease-in-out;
+        margin-left: 0px !important;
+      }
+   
+       .sidebar-mini.sidebar-collapse .main-sidebar, .sidebar-mini.sidebar-collapse .main-sidebar::before {
+        margin-left: 0;
+        width: 200px !important;
+    }
+      .sidebar-open .main-sidebar, .main-sidebar::before{
+        width: 0px;
+      }
+      .sidebar-collapse .main-sidebar, .main-sidebar::before{
+        width: 200px;
+      }
+  }
   @media (min-width: 768px){
     body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-wrapper, body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-footer, body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-header{
         transition: margin-left .3s ease-in-out;
         margin-left: 200px;
       }
+   
   }
   
 
@@ -1501,7 +1528,9 @@ padding-block: 7px;
   .ct_border_none_input ~ .icon-wrapper{
     color: #88ad47;
   }
-
+  .ct_input_dark_text_145 .p-inputtext {
+    color: #333 !important;
+}
 //   .ct_scrool_none_121 .p-component.p-dialog-resizable.ng-star-inserted {
 //     height: 100%;
 //     max-height: 200px;
@@ -1526,7 +1555,43 @@ padding-block: 7px;
     width: 100%;
 }
 
-
+.sidebar-open app-header.main-header.navbar.navbar-expand.navbar-light {
+    width: calc(100% - 200px);
+}
+.ct_animation_btn_121{
+    position: relative;
+    z-index: 1;
+    transition: 0.4s ease all;
+    overflow: hidden;
+    border:1px solid #679f54 !important ;
+}
+.ct_animation_btn_121:before{
+    content: "";
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-color: #fff;
+    transform: scale(0);
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    transition: 0.4s ease all;
+}
+.ct_animation_btn_121:hover:before{
+    transform: scale(1);
+}
+.ct_animation_btn_121.rounded.span-color:hover{
+    color: #333 !important;
+}
+.ct_animation_btn_121:hover{
+    color: #000 !important;
+}
+.ct_animation_btn_121:hover:before{
+    border-color: #679f54;
+}
+.ct_month_select_clr input.p-multiselect-filter.p-inputtext.p-component {
+    color: #000 !important;
+  }
 // multiselect css
 .p-multiselect.p-multiselect-chip .p-multiselect-token {
     padding: 3px 0.75rem !important;
@@ -1569,3 +1634,8 @@ padding-block: 7px;
         }
     }
 }
+
+
+
+
+

@@ -36,7 +36,7 @@
                 <div class="ct_grey_border_1 ">
                     <div class="ct_d_flex_1 ct_grey_brdr_btm1 pb-3 mb-3">
                         <div>
-                            <h5 class="ct_font_16"><strong>Emissions by travel</strong></h5>
+                            <h5 class="ct_font_16">Emissions by travel</h5>
                             <h3 class="ct_fs_24"><strong>5.987,34</strong></h3>
                             <p class="mb-0">tCO2e</p>
                         </div>
@@ -50,6 +50,7 @@
                         [chart]="donotOptions1.chart"
                         [labels]="donotOptions1.labels"
                         [legend]="donotOptions1.legend"
+                        [colors]="donotOptions1.colors"
                         [responsive]="donotOptions1.responsive"
                       ></apx-chart>
                     </div>
@@ -81,7 +82,7 @@
                 <div class="ct_grey_border_1">
                     <div class="ct_d_flex_1 ct_grey_brdr_btm1 pb-3 mb-3">
                         <div>
-                            <h5 class="ct_font_16"><strong>Cost centre</strong></h5>
+                            <h5 class="ct_font_16">Cost centre</h5>
                             <h3><strong>5,887,34</strong></h3>
                             <p class="mb-0">tCO2e</p>
                         </div>
@@ -95,6 +96,7 @@
                         [chart]="donotOptions2.chart"
                         [labels]="donotOptions2.labels"
                         [legend]="donotOptions2.legend"
+                        [colors]="donotOptions2.colors"
                         [responsive]="donotOptions2.responsive"
                       ></apx-chart>
                     </div>
@@ -104,7 +106,7 @@
                 <div class="ct_grey_border_1 ">
                     <div class="ct_d_flex_1 ct_grey_brdr_btm1 pb-3 mb-3">
                         <div>
-                            <h5 class="ct_font_16"><strong>Total emissions by month</strong></h5>
+                            <h5 class="ct_font_16">Total emissions by month</h5>
                             <p class="mb-0">FY 2023-2024</p>
                         </div>
                         <div class="ct_info_icon">
@@ -115,11 +117,14 @@
                         <apx-chart
             [series]="chartOptions.series"
             [chart]="chartOptions.chart"
+            
             [dataLabels]="chartOptions.dataLabels"
             [plotOptions]="chartOptions.plotOptions"
             [yaxis]="chartOptions.yaxis"
             [xaxis]="chartOptions.xaxis"
             [fill]="chartOptions.fill"
+       
+            
           
           ></apx-chart>
                     </div>
@@ -127,81 +132,99 @@
             </div>
         </div>
         <div class="row">
-           <div class="col-xl-6 mb-4">
-             <div class="ct_grey_border_1 ">
-                <div class="ct_d_flex_1 ct_grey_brdr_btm1 pb-3 mb-3">
-                    <div>
-                        <h5 class="ct_font_16"><strong>Emissions by business divisions</strong></h5>
-                        <h3><strong>5.987,34 mt CO2e</strong></h3>
-                        <p class="mb-0">FY 2023-2024</p>
+           
+          <div class="col-xl-6">
+            <h4 class="text-center mb-4">Air Travel</h4>
+            <div class="row">
+                <div class="col-xl-6 mb-4">
+                    <div class="ct_grey_border_1 ">
+                       <div class="ct_d_flex_1 ct_grey_brdr_btm1 pb-3 mb-3">
+                           <div>
+                               <h5 class="ct_font_16">By Flight type</h5>
+                               <h3><strong>2,563</strong></h3>
+                               <p class="mb-0">tCO2e</p>
+                           </div>
+                           <div class="ct_info_icon">
+                               <i class="fa-solid fa-info"></i>
+                           </div>
+                       </div>
+                       <div id="ct_business_divisions">
+                        <div id="ct_cost_center" *ngIf="donotOptions1">
+                               <apx-chart
+                               [series]="donotOptions1.series"
+                               [chart]="donotOptions1.chart"
+                               [labels]="donotOptions1.labels"
+                               [legend]="donotOptions1.legend"
+                               [colors]="donotOptions1.colors"
+                               [responsive]="donotOptions1.responsive"
+                             ></apx-chart>
+                           </div>
+                       </div> 
+                   </div> 
+                  </div>
+                  <div class="col-xl-6 mb-4">
+                   <div class="ct_grey_border_1">
+                       <div class="ct_d_flex_1 ct_grey_brdr_btm1 pb-3 mb-3">
+                           <div>
+                               <h5 class="ct_font_16">By Flight Class</h5>
+                               <h3><strong>1,463</strong></h3>
+                               <p class="mb-0">tCO2e</p>
+                           </div>
+                           <div class="ct_info_icon">
+                               <i class="fa-solid fa-info"></i>
+                           </div>
+                       </div>
+                       <div id="By_employee_location" *ngIf="pieChart">
+                           <apx-chart
+                           [series]="pieChart.series"
+                           [chart]="pieChart.chart"
+                           [labels]="pieChart.labels"
+                           [legend]="pieChart.legend"
+                           [responsive]="pieChart.responsive"
+                           [colors]="pieChart.colors"
+                         ></apx-chart>
+                       </div>
+                   </div>
+               </div>
+
+            </div>
+          </div>
+          <div class="col-xl-6">
+            <h4 class="text-center mb-4">Ground Travel</h4>
+            <div class="row">
+              
+                <div class="col-xl-12 mb-4">
+                    <div class="ct_grey_border_1">
+                        <div class="ct_d_flex_1 ct_grey_brdr_btm1 pb-3 mb-3">
+                            <div>
+                                <h5 class="ct_font_16">Total Emission</h5>
+                                <h3><strong>987,34</strong></h3>
+                                <p class="mb-0">tCO2e</p>
+                            </div>
+                            <div class="ct_info_icon">
+                                <i class="fa-solid fa-info"></i>
+                            </div>
+                        </div>
+                        <div id="ct_net_zeo_donut" *ngIf="groupChart">
+                            <apx-chart
+                            [series]="groupChart.series"
+                            [chart]="groupChart.chart"
+                            [dataLabels]="groupChart.dataLabels"
+                            [plotOptions]="groupChart.plotOptions"
+                            [yaxis]="groupChart.yaxis"
+                            [xaxis]="groupChart.xaxis"
+                            [legend]="groupChart.legend"
+                            [colors]="groupChart.colors"
+                            [grid]="groupChart.grid"
+                          ></apx-chart>
+                        </div>
                     </div>
-                    <div class="ct_info_icon">
-                        <i class="fa-solid fa-info"></i>
-                    </div>
-                </div>
-                <div id="ct_business_divisions">
-                 <div id="ct_cost_center" *ngIf="donotOptions1">
-                        <apx-chart
-                        [series]="donotOptions1.series"
-                        [chart]="donotOptions1.chart"
-                        [labels]="donotOptions1.labels"
-                        [legend]="donotOptions1.legend"
-                        [responsive]="donotOptions1.responsive"
-                      ></apx-chart>
-                    </div>
-                </div> 
-            </div> 
-           </div>
-           <div class="col-xl-3 mb-4">
-            <div class="ct_grey_border_1">
-                <div class="ct_d_flex_1 ct_grey_brdr_btm1 pb-3 mb-3">
-                    <div>
-                        <h5 class="ct_font_16"><strong>By employee location</strong></h5>
-                        <h3><strong>2,563</strong></h3>
-                        <p class="mb-0">tCO2e</p>
-                    </div>
-                    <div class="ct_info_icon">
-                        <i class="fa-solid fa-info"></i>
-                    </div>
-                </div>
-                <div id="By_employee_location" *ngIf="pieChart">
-                    <apx-chart
-                    [series]="pieChart.series"
-                    [chart]="pieChart.chart"
-                    [labels]="pieChart.labels"
-                    [legend]="pieChart.legend"
-                    [responsive]="pieChart.responsive"
-                  ></apx-chart>
                 </div>
             </div>
-        </div>
-        <div class="col-xl-3 mb-4">
-            <div class="ct_grey_border_1">
-                <div class="ct_d_flex_1 ct_grey_brdr_btm1 pb-3 mb-3">
-                    <div>
-                        <h5 class="mb-0"><strong>Path to net-zero</strong></h5>
-                    </div>
-                    <div class="ct_info_icon">
-                        <i class="fa-solid fa-info"></i>
-                    </div>
-                </div>
-                <div id="ct_net_zeo_donut" *ngIf="groupChart">
-                    <apx-chart
-                    [series]="groupChart.series"
-                    [chart]="groupChart.chart"
-                    [dataLabels]="groupChart.dataLabels"
-                    [plotOptions]="groupChart.plotOptions"
-                    [yaxis]="groupChart.yaxis"
-                    [xaxis]="groupChart.xaxis"
-                    [legend]="groupChart.legend"
-                    [colors]="groupChart.colors"
-                    [grid]="groupChart.grid"
-                  ></apx-chart>
-                </div>
-            </div>
-        </div>
+          </div>
         
         </div>
     </div>
 
 </div>
+
