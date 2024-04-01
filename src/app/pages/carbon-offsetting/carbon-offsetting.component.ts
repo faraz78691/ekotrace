@@ -191,7 +191,6 @@ export class CarbonOffsettingComponent {
   //method to add new group
   saveOffset(data: NgForm) {
      
-      // this.groupdetails.tenantID = this.loginInfo.tenantID;
       let formData = new URLSearchParams();
       formData.set('project_detail',this.project_details);
       formData.set('offset',  this.carbon_offset);

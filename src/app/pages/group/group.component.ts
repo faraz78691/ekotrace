@@ -18,6 +18,7 @@ import {GroupService} from '@services/group.service';
 import {Location} from '@/models/Location';
 import {GroupMapping} from '@/models/group-mapping';
 import {Country} from '@pages/admin-dashboard/customer';
+import { Observable, catchError, observable, of, tap, throwError } from 'rxjs';
 interface groupby {
     name: string;
 }
@@ -28,7 +29,9 @@ interface groupby {
     styleUrls: ['./group.component.scss']
 })
 export class GroupComponent {
+     source$ = of(1, 2, 3);
     @ViewChild('GroupForm', {static: false}) GroupForm: NgForm;
+    groupList$ = new Observable();
     public companyDetails: CompanyDetails;
     companyData: CompanyDetails = new CompanyDetails();
     public loginInfo: LoginInfo;
@@ -84,6 +87,12 @@ export class GroupComponent {
         private messageService: MessageService,
         private themeservice: ThemeService
     ) {
+
+        this.source$
+  .pipe(
+    tap(value => console.log(`1: ${value}`))
+  )
+  .subscribe(value => console.log(`Final value: ${value}`));
         this.admininfo = new UserInfo();
         this.userdetails = new UserInfo();
         this.groupdetails = new Group();
@@ -112,67 +121,71 @@ export class GroupComponent {
             this.loginInfo = jsonObj as LoginInfo;
             // this.facilityGet(this.loginInfo.tenantID);
         }
-        this.getTenantsDetailById(Number(this.loginInfo.tenantID));
+        // this.getTenantsDetailById(Number(this.loginInfo.tenantID));
         this.GetAllFacility();
         let tenantID = this.loginInfo.tenantID;
         this.newGetAllGroups(tenantID);
         this.updatedtheme = this.themeservice.getValue('theme');
+
+        // this.groupList$ = this.GroupService.newGetGroups(tenantID).pipe()
     }
     //checks upadated theme
     ngDoCheck() {
         this.updatedtheme = this.themeservice.getValue('theme');
     }
 
-    getTenantsDetailById(id: number) {}
+ 
 
-    //method to get list of All groups
-    // async GetAllGroups(tenantID:any) {
-    //     try {
-    //         const response = await this.GroupService.newGetGroups(
-    //             tenantID
-    //         ).toPromise();
-    //         this.groupsList = response;
-    //         if (this.groupsList.length > 0) {
-    //             this.groupdetails = this.groupsList[0];
-    //             this.groupdata = true;
-    //         } else {
-    //             this.groupdata = false;
-    //         }
-    //     } catch (error) {
-    //         // Handle any errors that occurred during the request
-    //         console.error('Error fetching groups:', error);
-    //     }
-    //     localStorage.setItem('GroupCount', String(this.groupsList.length));
-    //     this.unlock = this.groupdetails.id.toString();
-    // }
+ 
+    
      newGetAllGroups(tenantID:any) {
-
+console.log("Dsg")
         let formData = new URLSearchParams();
 
         formData.set('tenantID', tenantID.toString());
-    
-        this.GroupService.newGetGroups(formData.toString()).subscribe({
-            next: (response) => {
-                console.log(response);
-                if(response.success == true)
-                {
+
+        this.groupList$ = this.GroupService.newGetGroups(formData.toString()).pipe(
+            tap(response => {
+                if(response.success){
                     this.groupsList = response.categories;
-                    if (this.groupsList.length > 0) {
-                        this.groupdetails = this.groupsList[0];
-                        this.groupdata = true;
-                    } else {
-                        this.groupdata = false;
-                    }
-                    localStorage.setItem('GroupCount', String(this.groupsList.length));
-                    this.unlock = this.groupdetails.id.toString();
+                    this.groupdetails = this.groupsList[0];
+                    this.groupdata = true;
                 }
               
-            },
-            error: (err) => {
-                console.error('errrrrrr>>>>>>', err);
-            },
-            complete: () => console.info('Group Added')
-        });
+            }),
+            catchError((error: any) => {
+                // Log the error
+                console.error('An error occurred:', error);
+        
+                // Rethrow the error or return a new observable with a default value
+                return throwError('Something went wrong. Please try again later.');
+                // Alternatively, you can return an observable with a default value
+                // return of([]);
+            })
+        );
+    
+        // this.GroupService.newGetGroups(formData.toString()).subscribe({
+        //     next: (response) => {
+        //         console.log(response);
+        //         if(response.success == true)
+        //         {
+        //             this.groupsList = response.categories;
+        //             if (this.groupsList.length > 0) {
+        //                 this.groupdetails = this.groupsList[0];
+        //                 this.groupdata = true;
+        //             } else {
+        //                 this.groupdata = false;
+        //             }
+        //             localStorage.setItem('GroupCount', String(this.groupsList.length));
+        //             this.unlock = this.groupdetails.id.toString();
+        //         }
+              
+        //     },
+        //     error: (err) => {
+        //         console.error('errrrrrr>>>>>>', err);
+        //     },
+        //     complete: () => console.info('Group Added')
+        // });
     }
 
     //method to add new group
@@ -250,35 +263,7 @@ export class GroupComponent {
     }
     //method for update group detail by id
     updateGroup(id: any, data: NgForm) {
-        // this.groupdetails.groupMappings = [];
-        // if (this.groupdetails.groupBy === 'Country') {
-        //     this.selectedCountry.forEach((val) => {
-        //         this.groupMappingDetails = new GroupMapping();
-        //         this.groupMappingDetails.stateId = 0;
-        //         this.groupMappingDetails.groupId = 0;
-        //         this.groupMappingDetails.facilityId = 0;
-        //         this.groupMappingDetails.countryId = val;
-        //         this.groupdetails.groupMappings.push(this.groupMappingDetails);
-        //     });
-        // } else if (this.groupdetails.groupBy === 'State') {
-        //     this.selectedState.forEach((val) => {
-        //         this.groupMappingDetails = new GroupMapping();
-        //         this.groupMappingDetails.stateId = val;
-        //         this.groupMappingDetails.countryId = 0;
-        //         this.groupMappingDetails.groupId = 0;
-        //         this.groupMappingDetails.facilityId = 0;
-        //         this.groupdetails.groupMappings.push(this.groupMappingDetails);
-        //     });
-        // } else {
-        //     this.selectedFaciltiy.forEach((val) => {
-        //         this.groupMappingDetails = new GroupMapping();
-        //         this.groupMappingDetails.stateId = 0;
-        //         this.groupMappingDetails.countryId = 0;
-        //         this.groupMappingDetails.groupId = 0;
-        //         this.groupMappingDetails.facilityId = val;
-        //         this.groupdetails.groupMappings.push(this.groupMappingDetails);
-        //     });
-        // }
+        
         let tenantID = this.loginInfo.tenantID;
         let formData = new URLSearchParams();
         formData.set('groupId',id);
@@ -426,39 +411,5 @@ export class GroupComponent {
             }
         });
     };
-    //method for get facility by id
-    // facilityGet(tenantId) {
-    //     this.facilityService.FacilityDataGet(tenantId).subscribe((response) => {
-    //         this.facilityList = response;
-    //         console.log(
-    //             '🚀 ~ file: group.component.ts:370 ~ GroupComponent ~ this.facilityService.FacilityDataGet ~ this.facilityList:',
-    //             this.facilityList
-    //         );
-    //         const uniqueCountries = new Set(
-    //             this.facilityList.map((item) => item.countryName)
-    //         );
-    //         this.countryData = Array.from(uniqueCountries).map((country) => {
-    //             return {
-    //                 name: country,
-    //                 shortName: '', // Provide the appropriate value for shortName
-    //                 id: this.facilityList.find(
-    //                     (item) => item.countryName === country
-    //                 ).countryID
-    //             };
-    //         });
-
-    //         const uniqueStates = new Set(
-    //             this.facilityList.map((item) => item.stateName)
-    //         );
-    //         this.stateData = Array.from(uniqueStates).map((state) => {
-    //             return {
-    //                 name: state,
-    //                 shortName: '', // Provide the appropriate value for shortName
-    //                 id: this.facilityList.find(
-    //                     (item) => item.stateName === state
-    //                 ).stateID
-    //             };
-    //         });
-    //     });
-    // }
+    
 }

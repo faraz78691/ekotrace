@@ -29,9 +29,10 @@ a{
     flex: 1;
 }
 .ct_dashboard_main {
-    display: flex;
+    /* display: flex; */
     background-color: #fff !important;
     border-radius: 15px;
+    padding: 15px;
 
     /* color: #a2afa3; */
 }
@@ -91,6 +92,7 @@ a{
     padding: 25px 15px;
     background-color: #fff;
     box-shadow: 0px 0px 25px rgba(0,0,0,0.09);
+    height: 100%;
 }
 .ct_reduction_title p{
     color: #fff;
@@ -160,7 +162,7 @@ button.ct_scope_btn {
     font-size: 24px;
 }
 .ct_py_padd {
-    padding-block: 35px;
+    padding-block: 24px;
 }
 /* span.apexcharts-legend-text {
     font-size: 16px !important;
@@ -227,7 +229,7 @@ select.ct_all_vender_select {
 }
 select.ct_all_vender_select option{
     background-color: #fff;
-    color: #333;
+    color: #333 !important;
 }
 .ct_font_16{
     font-size: 16px;
@@ -302,7 +304,7 @@ display: block;
         margin-top: -68px;
     }
 }
-@media (min-width: 1500px){
+@media (min-width: 1400px){
 .ct_colo_2{
     flex: 0 0 20% !important;
     max-width: 20% !important;

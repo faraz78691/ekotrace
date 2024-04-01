@@ -200,10 +200,10 @@
 #DPRow{
   transition: 0.4s ease;
 }
-#DPRow:hover ,#DPRow.ct_active{
-  background-color: #B0D3AF  !important;
-  color: rgb(21, 80, 0) !important;
-}
+// #DPRow:hover ,#DPRow.ct_active{
+//   background-color: #B0D3AF  !important;
+//   color: rgb(21, 80, 0) !important;
+// }
 
 
 .DivRowclicked {
@@ -510,7 +510,7 @@ border-left: 4px solid rgb(103, 159, 84);
   position: relative;
   padding-left: 0px;
   background-color: rgb(238 238 238 / 94%);
-  padding: 10px;
+  // padding: 10px;
   width: 100%;
   left: 0px;
   margin-top: 13px;
@@ -526,7 +526,7 @@ transform: rotate(180deg);
 .ct_dropdwon_item li + li{
   padding-top: 8px;
   border-top: 1px solid #679f546b;
-  margin-top: 8px 
+  margin-top: 0px 
 }
 .ct_custom_dropdown span{
   display: flex;
@@ -638,12 +638,12 @@ overflow-y: auto;
 padding-block: 15px;
 }
 
-#DPRow.ct_scope_3_cata_list {
-border-left: 4px solid #679f54;
-margin: 2px 10px;
-border-radius: 5px;
-background-color: #679f5445 !important;
-padding-block: 2px!important;
+#DPRow.ct_scope_3_cata_list[_ngcontent-wcg-c190] {
+  /* border-left: 4px solid #679f54; */
+  margin: 3px 10px;
+  border-radius: 5px;
+  background-color: #eee;
+  padding-block: 4px !important;
 }
 .p-paginator {
 background-color: #fff!important;
@@ -651,12 +651,19 @@ background-color: #fff!important;
 
 .ct_scoope_1_tab {
   // padding: 6px 10px;
-  padding-block: 2px!important;
-  border-radius: 5px;
+  padding-block: 4px!important;
+  border-radius: 3px;
   font-size: 14px;
   transition: 0.4s ease all;
 }
-.ct_scoope_1_tab.ct_tab_active_12 {
-  background-color: #b0d3af !important;
+// .ct_scoope_1_tab.ct_tab_active_12 {
+//   background-color: #b0d3af !important;
 
+// }
+
+@media screen and (max-width:991px){
+  .ct_px_0_232{
+      padding-inline: 0px !important;
+  }
 }
+

@@ -104,6 +104,7 @@ import { BusinessTravelComponent } from './pages/dashboard/business-travel/busin
 import { NewBillingComponent } from './pages/new-billing/new-billing.component';
 import { WaterUsageComponent } from './pages/dashboard/water-usage/water-usage.component';
 import { CarbonOffsettingComponent } from './pages/carbon-offsetting/carbon-offsetting.component';
+import { WasteComponent } from './pages/dashboard/waste/waste.component';
 
 defineCustomElements();
 registerLocaleData(localeEn, 'en-EN');
@@ -165,7 +166,8 @@ registerLocaleData(localeEn, 'en-EN');
         BusinessTravelComponent,
         NewBillingComponent,
         WaterUsageComponent,
-        CarbonOffsettingComponent
+        CarbonOffsettingComponent,
+        WasteComponent
     ],
     imports: [
         BrowserModule,

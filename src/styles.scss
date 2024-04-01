@@ -542,11 +542,11 @@ label:not(.form-check-label):not(.custom-file-label) {
 
 }
 
-.p-paginator {
-    background-color: #454149 !important;
+// .p-paginator {
+//     background-color: #454149 !important;
 
 
-}
+// }
 
 .p-paginator .p-paginator-current {
     color: white !important;
@@ -783,13 +783,13 @@ box-shadow: 0px 4px 10.2px 0px rgba(0, 0, 0, 0.17);
 
 ::-webkit-scrollbar {
     width: 8px;
-    background-color: transparent !important;
+    // background-color: transparent !important;
 }
 
 /* Track */
-::-webkit-scrollbar-track {
-    background-color: transparent;
-}
+// ::-webkit-scrollbar-track {
+//     background-color: transparent;
+// }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
@@ -808,7 +808,7 @@ body:not(.layout-fixed) .main-sidebar {
 }
 .nav-pills .nav-link.active {
     color: #333!important;
-    background-color: #88ad4787 !important;
+    background-color: #c1c756a6 !important;
     // box-shadow: 0px 4px 10.2px 0px rgba(0, 0, 0, 0.9);
 
     /* border: 2px solid #5a870a; */
@@ -998,7 +998,7 @@ span.p-ripple.p-element.p-button.p-component.p-fileupload-choose{
 
 [class*=sidebar-dark-] .nav-treeview>.nav-item>.nav-link:focus, [class*=sidebar-dark-] .nav-treeview>.nav-item>.nav-link:hover{
     color: #333 !important;
-    background-color: rgba(36, 139, 1, 0.2) !important;
+    background-color: rgba(193, 199, 86, 0.6509803922) !important;
     box-shadow: 0px 4px 10.2px 0px rgba(0, 0, 0, 0.17);
     
     // border: 2px solid #5a870a;
@@ -1012,7 +1012,7 @@ span.p-ripple.p-element.p-button.p-component.p-fileupload-choose{
 // }
 .nav-pills .nav-link:hover,.nav-pills .nav-link:focus {
     // color: #fff !important;
-    background-color: rgba(36, 139, 1, 0.2) !important;
+    background-color: #c1c756a6 !important;
     box-shadow: 0px 4px 10.2px 0px rgba(0, 0, 0, 0.17);
 }
 .nav-pills .nav-link:hover .naviconL,.nav-pills .nav-link:focus .naviconL,.nav-pills .nav-link.active .naviconL{
@@ -1262,7 +1262,7 @@ span.p-datepicker-decade.ng-tns-c40-11.ng-star-inserted{
   }
   body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-wrapper, body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-footer, body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-header{
     transition: margin-left .3s ease-in-out;
-    margin-left: 200px;
+    margin-left: 220px;
   }
   .p-accordion .p-accordion-header .p-accordion-header-link .p-accordion-toggle-icon {
     margin-right: 0.5rem;
@@ -1346,6 +1346,7 @@ span.p-datepicker-decade.ng-tns-c40-11.ng-star-inserted{
 .gap-2.text-dark.ct_open_bar {
     position: fixed;
     left: 200px;
+    cursor: pointer;
 }
 a.brand-link.ct_logo_collape {
     position: fixed;
@@ -1353,7 +1354,12 @@ a.brand-link.ct_logo_collape {
     z-index: 99999999999999;
     top: 8px;
 }
-
+.ct_calander_input_box_white_bg20 input#yearpicker {
+    background-color: #fff !important;
+}
+.ct_calander_input_box_white_bg20 button.p-element.p-ripple.p-datepicker-trigger.p-button-icon-only.ng-tns-c142-0.p-button.p-component.ng-star-inserted {
+    right: 0px !important;
+}
 
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item {
     font-size: 14px !important;
@@ -1393,30 +1399,11 @@ color: #fff!important;
 .sidebar-mini .content-wrapper.content-wrapperL {
     padding-top: 100px !important;
 }
-  @media screen and (max-width:991px){
-    app-root.sidebar-mini.layout-fixed.sidebar-open .sidebar {
-        width: 0px;
-    }
-    body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-wrapper, body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-footer, body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-header{
-        transition: margin-left .3s ease-in-out;
-        margin-left: 0px !important;
-      }
-   
-       .sidebar-mini.sidebar-collapse .main-sidebar, .sidebar-mini.sidebar-collapse .main-sidebar::before {
-        margin-left: 0;
-        width: 200px !important;
-    }
-      .sidebar-open .main-sidebar, .main-sidebar::before{
-        width: 0px;
-      }
-      .sidebar-collapse .main-sidebar, .main-sidebar::before{
-        width: 200px;
-      }
-  }
+  
   @media (min-width: 768px){
     body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-wrapper, body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-footer, body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-header{
         transition: margin-left .3s ease-in-out;
-        margin-left: 200px;
+        margin-left: 220px;
       }
    
   }
@@ -1577,6 +1564,9 @@ padding-block: 7px;
     z-index: -1;
     transition: 0.4s ease all;
 }
+.ct_label_position .p-multiselect-label {
+    padding-top: 7px;
+}
 .ct_animation_btn_121:hover:before{
     transform: scale(1);
 }
@@ -1635,7 +1625,78 @@ padding-block: 7px;
     }
 }
 
+nav{
+    width: 220px;
+    margin-bottom: 30px;
+    
+}
+.nav{
+    display: block!important;
+}
 
 
+@media screen and (max-width:1199px){
+    app-root.sidebar-mini.layout-fixed.sidebar-open .sidebar {
+        width: 0px !important;
+    }
+    .sidebar-open app-header.main-header.navbar.navbar-expand.navbar-light {
+        width: 100%
+    }
+    body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-wrapper, body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-footer, body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-header{
+        transition: margin-left .3s ease-in-out;
+        margin-left: 0px !important;
+      }
+   
+       .sidebar-mini.sidebar-collapse .main-sidebar, .sidebar-mini.sidebar-collapse .main-sidebar::before {
+        margin-left: 0;
+        width: 220px !important;
+    }
+      .sidebar-mini.sidebar-open .main-sidebar, .main-sidebar::before{
+        width: 0px;
+      }
+      .sidebar-mini.sidebar-collapse .main-sidebar, .main-sidebar::before{
+        width: 220px !important;
+      }
+  
+    // .sidebarcolorL.elevation-4.main-sidebar.sidebar-dark-primary {
+    //     width: 0px !important;
+    // }
+    
+  }
+
+//   .apexcharts-canvas {
+//     position: absolute;
+//     left: 50%;
+//     transform: translateX(-50%);
+// }
+// .apexcharts-legend.apexcharts-align-left.apx-legend-position-bottom {
+//     flex-wrap: wrap;
+//     display: grid;
+//     grid-template-columns: repeat(3, 1fr);
+//     font-size: 16px;
+// }
+.globalsearch .p-input-icon-left.ct_search_input_321 input.ct_search_dark33 {
+    outline: none;
+    color: #333 !important;
+}
+.globalsearch .ct_search_dark33 {
+    background-color: #fff !important;
+    border-color: #d8d8d8 !important;
+    outline: none;
+}
+.ct_custom_drop_white .p-dropdown.p-component {
+    background-color: #fff !important;
+}
+.ct_input_dark_text_145 .p-inputtext {
+    color: #333 !important;
+}
+.ct_input_dark_text_14 span.p-dropdown-label.p-inputtext.p-placeholder.p-dropdown-label-empty.ng-star-inserted {
+    color: #000 !important;
+}
 
 
+@media screen and (max-width:500px){
+    .ct_logo_collape pf-image.pl-4.ng-star-inserted.hydrated {
+        padding-left: 0px !important;
+    }
+}

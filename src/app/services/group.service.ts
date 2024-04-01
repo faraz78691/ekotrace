@@ -2,7 +2,7 @@ import {Group} from '@/models/group';
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {environment} from 'environments/environment';
-import {Observable} from 'rxjs/internal/Observable';
+import {Observable} from 'rxjs';
 import {Location} from '@/models/Location';
 @Injectable({
     providedIn: 'root'
@@ -16,6 +16,7 @@ export class GroupService {
         );
     }
     public newGetGroups(tenantID:any): Observable<any> {
+        console.log("service called")
         return this.http.post(
             environment.baseUrl + '/getGroups',tenantID
         );
@@ -29,7 +30,7 @@ export class GroupService {
     public EditGroup( groupdetails): Observable<any> {
         return this.http.post(environment.baseUrl + '/Updategroupmapping' , groupdetails);
     }
-    public newEditGroup( groupdetails): Observable<any> {
+    public newEditGroup( groupdetails) {
         return this.http.post(environment.baseUrl + '/Updategroupmapping' , groupdetails);
     }
 

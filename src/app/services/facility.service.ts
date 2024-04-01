@@ -128,7 +128,7 @@ export class FacilityService {
             environment.baseUrl + 'Facilities/GetFacilityGroups/' + tenantId
         );
     }
-    public newGetFacilityGroupList(tenantId) {
+    public newGetFacilityGroupList(tenantId) :Observable<any>{
         return this.http.get<any>(
             environment.baseUrl + '/GetFacilityGroups/' + tenantId
         );

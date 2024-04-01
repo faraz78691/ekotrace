@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-md-8" >
+    <div class="col-xl-8" >
        
         <div class="ct_reduction_graph_main mt-1 pt-2">
             <!-- <div class="ct_d_flex_1">
@@ -81,12 +81,12 @@
         <div class="ct_right_sidebar">
             <div class="mb-4">
                 <div>
-                    <select class="ct_all_vender_select" [(ngModel)]="selectedFacility" (change)="onFacilityChange($event)" >
-                        <option value="" *ngFor="let items of dashboardData" [value]="items.ID">{{items.AssestName}}</option>
+                    <select class="ct_all_vender_select" [(ngModel)]="selectedFacility" *ngIf="dashboardFacilities$ | async as dashboardData" (change)="onFacilityChange($event)" >
+                        <option value="" *ngFor="let items of dashboardData.categories" [value]="items.ID">{{items.AssestName}}</option>
                     </select>
                     <div class="mt-4">
                         <p class="mb-1 ct_fw_500">Financial Year</p>
-                        <p-calendar class="w-100" [(ngModel)]="year" ngModel name="year" year 
+                        <p-calendar class="w-100 ct_input_dark_text_145" [(ngModel)]="year" ngModel name="year" year 
                          view="year" dateFormat="yy"   inputId="yearpicker"
                          styleClass="pcalender"
                         [showIcon]="true"></p-calendar>

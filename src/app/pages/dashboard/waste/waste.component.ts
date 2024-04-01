@@ -1,95 +1,38 @@
-import { Component, OnDestroy, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { LoginInfo } from '@/models/loginInfo';
+import { Component, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { DashboardService } from '@services/dashboard.service';
 import { FacilityService } from '@services/facility.service';
 import { TrackingService } from '@services/tracking.service';
-
-import {
-  ApexAxisChartSeries,
-  ApexChart,
-  ChartComponent,
-  ApexDataLabels,
-  ApexPlotOptions,
-  ApexResponsive,
-  ApexXAxis,
-  ApexLegend,
-  ApexFill,
-  ApexNonAxisChartSeries,
-  ApexGrid,
-  ApexStroke,
-  ApexTitleSubtitle,
-  ApexMarkers,
-  ApexYAxis,
-  ApexTooltip
-} from "ng-apexcharts";
-
-import { DashboardService } from '@services/dashboard.service';
-import { LoginInfo } from '@/models/loginInfo';
-import { Observable, Subscription, catchError, combineLatest, forkJoin, of, switchMap, tap } from 'rxjs';
+import { ChartComponent } from 'ng-apexcharts';
+import { Chart3Options } from '../business-travel/business-travel.component';
+import { ChartOptions, ChartAreaOptions, ChartOptions2 } from '../ghg-emmissions/ghg-emmissions.component';
+import { Observable, Subscription, catchError, combineLatest, of, tap } from 'rxjs';
 import { facilities } from '@/models/dashboardFacilities';
 
-
-export type ChartOptions = {
-  series: ApexAxisChartSeries;
-  chart: ApexChart;
-  dataLabels: ApexDataLabels;
-  plotOptions: ApexPlotOptions;
-  responsive: ApexResponsive[];
-  xaxis: ApexXAxis;
-  yaxis: ApexYAxis;
-  legend: ApexLegend;
-  fill: ApexFill;
-  tooltip: ApexTooltip;
-  colors: any;
-  stroke: ApexStroke;
-  labels: any;
-  title: ApexTitleSubtitle;
-  grid: ApexGrid;
-  markers: ApexMarkers
-};
-export type ChartOptions2 = {
-  series: ApexNonAxisChartSeries;
-  chart: ApexChart;
-  dataLabels: ApexDataLabels;
-  plotOptions: ApexPlotOptions;
-  responsive: ApexResponsive[];
-  xaxis: ApexXAxis;
-  legend: ApexLegend;
-  fill: ApexFill;
-  grid: ApexGrid;
-  stroke: ApexStroke;
-  colors: any;
-  labels: any;
-};
-export type ChartAreaOptions = {
-  series: ApexAxisChartSeries;
-  chart: ApexChart;
-  xaxis: ApexXAxis;
-  stroke: ApexStroke;
-  tooltip: ApexTooltip;
-  dataLabels: ApexDataLabels;
-  plotOptions: ApexPlotOptions;
-  colors: any
-};
 @Component({
-  selector: 'app-ghg-emmissions',
-  templateUrl: './ghg-emmissions.component.html',
-  styleUrls: ['./ghg-emmissions.component.scss']
+  selector: 'app-waste',
+  templateUrl: './waste.component.html',
+  styleUrls: ['./waste.component.scss']
 })
-export class GhgEmmissionsComponent implements OnDestroy {
+export class WasteComponent {
   dashboardFacilities$ = new Observable<facilities>();
-  @ViewChild("chart") chart: ChartComponent;
+  @ViewChild("ct_emission_by_travel") ct_emission_by_travel: ChartComponent;
   public chartOptions: Partial<ChartOptions>;
-  public carbonFootvarOptions: Partial<ChartOptions>;
-  public donotoptions: Partial<ChartOptions2>;
-  public lineoptions: Partial<ChartOptions>;
-  public previoucsOptions: Partial<ChartOptions2>;
+  public secondChart: Partial<ChartOptions>;
+  public thirdChart: Partial<ChartOptions>;
+  public fourChart: Partial<ChartOptions>;
+  public areachart: Partial<ChartAreaOptions>;
   public areaBusinesschart: Partial<ChartAreaOptions>;
   public donotOptions1: Partial<ChartOptions2>;
   public donotOptions2: Partial<ChartOptions2>;
-  public donotOptions3: Partial<ChartOptions2>;
+  public pieChart: Partial<ChartOptions2>;
+  public groupChart: Partial<Chart3Options>;
   dashboardData: any[] = [];
   public loginInfo: LoginInfo;
-  selectedFacility: number;
+  selectedFacility:number;
+  combinedSubscription: Subscription;
+;
   year: Date;
   scopeWiseSeries: any[] = [];
   progress1: any = '';
@@ -110,16 +53,170 @@ export class GhgEmmissionsComponent implements OnDestroy {
   upstreamArray: any[] = [];
   downstreamArray: any[] = [];
   vendorData: any[] = [];
-  combinedSubscription: Subscription;
+  UpWaste:string;
+  downWaste:string;
 
-
-  constructor(private router: Router,
-    private route: ActivatedRoute,
+  constructor(private route: ActivatedRoute,
     private facilityService: FacilityService,
     private trackingService: TrackingService,
     private dashboardService: DashboardService) {
-    this.year = new Date();
-    this.loginInfo = new LoginInfo();
+      this.year = new Date();
+
+    this.groupChart = {
+      series: [
+        {
+          name: "distibuted",
+          data: [21, 21, 13, 30]
+        }
+      ],
+      chart: {
+        height: 350,
+        type: "bar",
+        events: {
+          click: function (chart, w, e) {
+            // console.log(chart, w, e)
+          }
+        }
+      },
+      colors: [
+        "#008FFB",
+        "#00E396",
+        "#FEB019",
+        "#D10CE8"
+      ],
+      plotOptions: {
+        bar: {
+          columnWidth: "45%",
+          distributed: true
+        }
+      },
+      dataLabels: {
+        enabled: false
+      },
+      legend: {
+        show: false
+      },
+      grid: {
+        show: false
+      },
+      xaxis: {
+        categories: [
+          ["John"],
+          ["Joe"],
+          ["Jake"],
+          ["Peter"],
+      
+        ],
+        labels: {
+          style: {
+            colors: [
+              "#008FFB",
+              "#00E396",
+              "#FEB019",
+              "#FF4560",
+              "#775DD0",
+              "#546E7A",
+              "#26a69a",
+              "#D10CE8"
+            ],
+            fontSize: "12px"
+          }
+        }
+      }
+    };
+
+    this.chartOptions = {
+      series: [
+        {
+          name: "Net Profit",
+          data: [44, 55, 57, 56, 61, 58, 63]
+        },
+        {
+          name: "Revenue",
+          data: [76, 85, 101, 98, 87, 105, 91]
+        }
+  
+      ],
+      chart: {
+        type: "bar",
+        height: 350
+      },
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: "55%",
+          
+        }
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        show: true,
+        width: 2,
+        colors: ["transparent"]
+      },
+      xaxis: {
+        categories: [
+          "Feb",
+          "Mar",
+          "Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Oct"
+        ]
+      },
+      yaxis: {
+        title: {
+          text: "$ (thousands)"
+        }
+      },
+      fill: {
+        opacity: 1
+      },
+      tooltip: {
+        y: {
+          formatter: function(val) {
+            return "$ " + val + " thousands";
+          }
+        }
+      }
+    };
+    this.pieChart = {
+      series: [44, 55, 13, 43, 22],
+      chart: {
+        width: 380,
+        type: "pie",
+        
+      },
+      legend: {
+        position: "bottom"
+      },
+      labels: ["Team A", "Team B", "Team C", "Team D", "Team E"],
+      responsive: [
+        {
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200
+            },
+            legend: {
+              position: "bottom"
+            }
+          }
+        }
+      ]
+    };
+    
+   
+
+
+
+
+
 
   };
 
@@ -137,12 +234,8 @@ export class GhgEmmissionsComponent implements OnDestroy {
         this.selectedFacility = response.categories[0].ID;
         this.makeCombinedApiCall(this.selectedFacility)
       })
-    );
-  
-        
+    ); 
   };
-
-
   private createFormData(facility) {
     const formData = new URLSearchParams();
     formData.set('year', this.year.getFullYear().toString());
@@ -157,56 +250,40 @@ export class GhgEmmissionsComponent implements OnDestroy {
     const formData = this.createFormData(facility);
 
     // Create observables for both API calls
-    const scopeWiseEmission$ = this.dashboardService.GScopeWiseEimssion(formData.toString()).pipe(
+    const scopeWiseEmission$ = this.dashboardService.updownWasteTotal(formData.toString()).pipe(
       catchError(error => {
         console.error('Error occurred in scopeWiseEmission API call:', error);
         return of(null); // Return null or default value in case of error
       })
     );
-    const topWiseEmission$ = this.dashboardService.GTopWiseEimssion(formData.toString()).pipe(
+    const topWiseEmission$ = this.dashboardService.wasteTopFive(formData.toString()).pipe(
       catchError(error => {
         console.error('Error occurred in topWiseEmission API call:', error);
         return of(null); // Return null or default value in case of error
       })
     );
-    const getScopeSDonuts$ = this.dashboardService.getScopeDonutsER(formData.toString()).pipe(
+    const getScopeSDonuts$ = this.dashboardService.wasteTypeEmission(formData.toString()).pipe(
       catchError(error => {
         console.error('Error occurred in topWiseEmission API call:', error);
         return of(null); // Return null or default value in case of error
-      })
-    );
-    const getScopeActivity$ = this.dashboardService.GemissionActivity(formData.toString()).pipe(
-      catchError(error => {
-        console.error('Error occurred in topWiseEmission API call:', error);
-        return of(null);
       })
     );
 
-    const formVendorData = new URLSearchParams();
-    formVendorData.set('facilities', facility);
-    const GVEndorActivity$ = this.dashboardService.GVEndorActivity(formVendorData.toString()).pipe(
-      catchError(error => {
-        console.error('Error occurred in topWiseEmission API call:', error);
-        return of(null);
-      })
-    );
 
     // Combine both observables using combineLatest and return the combined observable
    this.combinedSubscription =  combineLatest([
       scopeWiseEmission$,
       topWiseEmission$,
-      getScopeSDonuts$,
-      getScopeActivity$,
-      GVEndorActivity$
-    ]).subscribe((results: [any, any, any, any, any]) => {
-      const [scopeWiseResult, topWiseResult, getScopeSDonuts, getScopeActivity, getVendorE] = results;
+      getScopeSDonuts$
+ 
+    ]).subscribe((results: [any, any, any]) => {
+      const [scopeWiseResult, topWiseResult, getScopeSDonuts] = results;
   
-
-
       // Process the results of both API calls here
       if (scopeWiseResult) {
-        // Handle scopeWise result
-        this.handleScopeWiseResult(scopeWiseResult);
+        this.UpWaste = scopeWiseResult.waste_disposed
+        this.downWaste = scopeWiseResult.waste_emissions
+   
       } else {
         // Handle absence of scopeWise result or error
       }
@@ -214,6 +291,8 @@ export class GhgEmmissionsComponent implements OnDestroy {
       if (topWiseResult) {
         // Handle topWise result
         this.topFIveE = topWiseResult.top5Emissions;
+        this.seriesScopeDonut2 = topWiseResult.top5Emissions;
+        this.labelScopeDonut2 = topWiseResult.category;
       } else {
         // Handle absence of topWise result or error
       }
@@ -297,54 +376,52 @@ export class GhgEmmissionsComponent implements OnDestroy {
           ]
         };
 
-        this.donotOptions3 = {
-          series: this.seriesScopeDonut3,
-          chart: {
-            width: "100%",
-            height:350,
-            type: "donut"
-          },
-          dataLabels: {
-            enabled: true
-          },
-          // fill: {
-          //   type: "gradient"
-          // },
-          legend: {
-            position: "bottom",
-            fontSize: '15px',
-            floating: false,
-            horizontalAlign: 'left',
-          },
-          colors: ['#F3722C', '#0068F2', '#F8961E'],
-          labels: this.labelScopeDonut3,
-          responsive: [
-            {
-              breakpoint: 480,
-              options: {
-                chart: {
-                  width: 200
-                },
-                legend: {
-                  position: "bottom"
-                }
-              }
-            }
-          ]
-        };
+        // this.donotOptions3 = {
+        //   series: this.seriesScopeDonut3,
+        //   chart: {
+        //     width: "100%",
+        //     height:350,
+        //     type: "donut"
+        //   },
+        //   dataLabels: {
+        //     enabled: true
+        //   },
+        //   // fill: {
+        //   //   type: "gradient"
+        //   // },
+        //   legend: {
+        //     position: "bottom",
+        //     fontSize: '15px',
+        //     floating: false,
+        //     horizontalAlign: 'left',
+        //   },
+        //   colors: ['#F3722C', '#0068F2', '#F8961E'],
+        //   labels: this.labelScopeDonut3,
+        //   responsive: [
+        //     {
+        //       breakpoint: 480,
+        //       options: {
+        //         chart: {
+        //           width: 200
+        //         },
+        //         legend: {
+        //           position: "bottom"
+        //         }
+        //       }
+        //     }
+        //   ]
+        // };
       }
-      if (getScopeActivity) {
-        this.upstreamArray = getScopeActivity.upstream;
-        this.downstreamArray = getScopeActivity.downstrem;
-      }
-      if (getVendorE) {
-        this.vendorData = getVendorE.purchaseGoods
-      }
+
     });
   };
 
-  // Handle the scopeWiseResult
-  handleScopeWiseResult(scopeWiseResult: any) {
+ 
+
+
+
+   // Handle the scopeWiseResult
+   handleScopeWiseResult(scopeWiseResult: any) {
     console.log(scopeWiseResult)
     this.scopeWiseSeries = scopeWiseResult.series;
     this.series_graph = scopeWiseResult.series_graph;
@@ -414,52 +491,41 @@ export class GhgEmmissionsComponent implements OnDestroy {
         opacity: 1
       }
     };
-    this.previoucsOptions = {
-      dataLabels: {
-        enabled: false
-      },
+    // this.previoucsOptions = {
+    //   dataLabels: {
+    //     enabled: false
+    //   },
 
-      series: this.series_graph,
-      chart: {
-        // width: 380,
-        width: '220',
-        // height:'200',
-        type: 'pie',
-      },
-      legend: {
-        show: true,
-        position: 'bottom',
-        offsetY: 0
-      },
-      colors: ['#213D49', '#46A5CD', '#FFD914'],
-      labels: ['Scope 1', 'Scope 2', 'Scope 3'],
-      responsive: [{
-        breakpoint: 480,
-        options: {
-          chart: {
-            width: 200
-          },
-        }
-      }]
-    };
+    //   series: this.series_graph,
+    //   chart: {
+    //     // width: 380,
+    //     width: '220',
+    //     // height:'200',
+    //     type: 'pie',
+    //   },
+    //   legend: {
+    //     show: true,
+    //     position: 'bottom',
+    //     offsetY: 0
+    //   },
+    //   colors: ['#213D49', '#46A5CD', '#FFD914'],
+    //   labels: ['Scope 1', 'Scope 2', 'Scope 3'],
+    //   responsive: [{
+    //     breakpoint: 480,
+    //     options: {
+    //       chart: {
+    //         width: 200
+    //       },
+    //     }
+    //   }]
+    // };
   }
-
 
 
   onFacilityChange(event: any) {
     this.makeCombinedApiCall(this.selectedFacility)
     // console.log(event.target.value)
     // console.log(this.selectedFacility);
-    // this.GScopeWiseE(this.selectedFacility)
-    // this.getTopFiveE(this.selectedFacility);
-
-
+    // this.emssionByTravel(this.selectedFacility)
   };
-
-  ngOnDestroy(): void {
-    this.combinedSubscription.unsubscribe();
-  }
-
-
-
 }

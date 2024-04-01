@@ -26,6 +26,8 @@ export class MenuItemComponent implements OnInit {
     public isMainActive: boolean = false;
     public isOneOfChildrenActive: boolean = false;
     updatedtheme: string;
+    isDashboard:string;
+    activeDahboard:boolean = false;
 
     constructor(
         private router: Router,
@@ -47,9 +49,12 @@ export class MenuItemComponent implements OnInit {
         this.router.events
             .pipe(filter((event) => event instanceof NavigationEnd))
             .subscribe((event: NavigationEnd) => {
+              
+              
+             
                 this.calculateIsActive(event.url);
             });
-
+          
         this.updatedtheme = localStorage.getItem('theme');
         this.loginInfo = new LoginInfo();
         if (localStorage.getItem('LoginInfo') != null) {
@@ -103,8 +108,12 @@ export class MenuItemComponent implements OnInit {
             if ('/' + this.menuItem.path[0] === url) {
                 this.isOneOfChildrenActive = true;
                 this.isMenuExtended = true;
+            }else if(url.includes(this.menuItem.path[0])){
+                this.isOneOfChildrenActive = true;
+                this.isMenuExtended = true;
             }
         } else if (this.menuItem.path[0] === url) {
+            console.log("jajjjjj")
             this.isMainActive = true;
         }
         if (!this.isMainActive && !this.isOneOfChildrenActive) {

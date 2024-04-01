@@ -8,12 +8,13 @@ import {
     TopCarbonConsumingByMonthModel,
     TopCarbonConsumingModel
 } from '@/models/Dashboard';
+import { facilities } from '@/models/dashboardFacilities';
 @Injectable({
     providedIn: 'root'
 })
 export class DashboardService {
     apiURL = environment.baseUrl;
-    localapiURL = 'http://192.168.1.31:4003';
+    localUrl = 'http://192.168.1.31:4003';
     constructor(private http: HttpClient) { }
 
     public GetDataForEnvironment(
@@ -346,35 +347,45 @@ export class DashboardService {
         );
     };
 
-    public getdashboardfacilities(admininfo) {
-        return this.http.post(this.localapiURL + '/getdashboardfacilities', admininfo);
+    public getdashboardfacilities(admininfo):Observable<facilities> {
+        return this.http.post<facilities>(this.apiURL + '/getdashboardfacilities', admininfo);
     };
+    
     public GScopeWiseEimssion(admininfo) {
-        return this.http.post(this.localapiURL + '/dashboardScope', admininfo);
+        return this.http.post(this.apiURL + '/dashboardScope', admininfo);
+    };
+    public updownWasteTotal(admininfo) {
+        return this.http.post(this.apiURL + '/dashboardWasteTotal', admininfo);
     };
     public GEByTravel(admininfo) {
-        return this.http.post(this.localapiURL + '/businessdashboardemssionByTravel', admininfo);
+        return this.http.post(this.apiURL + '/businessdashboardemssionByTravel', admininfo);
     };
     public businessdashboardemssionByAir(admininfo) {
-        return this.http.post(this.localapiURL + '/businessdashboardemssionByAir', admininfo);
+        return this.http.post(this.apiURL + '/businessdashboardemssionByAir', admininfo);
     };
     public BygroundTravel(admininfo) {
-        return this.http.post(this.localapiURL + '/businessdashboardemssionBygroundTravel', admininfo);
+        return this.http.post(this.apiURL + '/businessdashboardemssionBygroundTravel', admininfo);
     };
     public businessTravelByMonth(admininfo) {
-        return this.http.post(this.localapiURL + '/businessdashboardemssion', admininfo);
+        return this.http.post(this.apiURL + '/businessdashboardemssion', admininfo);
     };
     public GTopWiseEimssion(admininfo) {
-        return this.http.post(this.localapiURL + '/dashboardTopEmssion', admininfo);
+        return this.http.post(this.apiURL + '/dashboardTopEmssion', admininfo);
+    };
+    public wasteTopFive(admininfo) {
+        return this.http.post(this.apiURL + '/dashboardWastetop5', admininfo);
     };
     public GemissionActivity(admininfo) {
-        return this.http.post(this.localapiURL + '/dashboardEmssionByactivities', admininfo);
+        return this.http.post(this.apiURL + '/dashboardEmssionByactivities', admininfo);
     };
     public GVEndorActivity(admininfo) {
-        return this.http.post(this.localapiURL + '/dashboardEmssionByVendors', admininfo);
+        return this.http.post(this.apiURL + '/dashboardEmssionByVendors', admininfo);
     };
     public getScopeDonutsER(admininfo) {
-        return this.http.post(this.localapiURL + '/ScopewiseEmssion', admininfo);
+        return this.http.post(this.apiURL + '/ScopewiseEmssion', admininfo);
+    };
+    public wasteTypeEmission(admininfo) {
+        return this.http.post(this.apiURL + '/dashboardWasteEmission', admininfo);
     };
 
 }

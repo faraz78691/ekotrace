@@ -12,7 +12,7 @@
 <ul class="nav nav-treeview" *ngFor="let item of menuItem.children" [@openClose]="isMenuExtended">
 
     <li class="nav-item">
-        <a [routerLink]="item.path" routerLinkActive="active" [routerLinkActiveOptions]="{exact: false}" ariaCurrentWhenActive="page" class="nav-link" [queryParams]="item.queryParams">
+        <a [routerLink]="item.path"    ariaCurrentWhenActive="page" class="nav-link" [queryParams]="item.queryParams">
             <i class="nav-icon {{ item.iconClasses }}"></i>
             <p>{{ item.name }}</p>
         </a>

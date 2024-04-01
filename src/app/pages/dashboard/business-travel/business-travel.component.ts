@@ -87,6 +87,7 @@ export class BusinessTravelComponent {
   public areaBusinesschart: Partial<ChartAreaOptions>;
   public donotOptions1: Partial<ChartOptions2>;
   public donotOptions2: Partial<ChartOptions2>;
+  public donotOptions3: Partial<ChartOptions2>;
   public pieChart: Partial<ChartOptions2>;
   public groupChart: Partial<Chart3Options>;
   dashboardData: any[] = [];
@@ -126,10 +127,11 @@ export class BusinessTravelComponent {
 
    
 
-    this.donotOptions2 = {
+    this.donotOptions3 = {
       series:[21, 21, 13, 30],
       chart: {
-        width: 380,
+        width: "100%",
+        height : 350,
         type: "donut"
       },
       dataLabels: {
@@ -218,7 +220,8 @@ export class BusinessTravelComponent {
       this.donotOptions1 = {
         series: this.scopeWiseSeries,
         chart: {
-          width: 380,
+          width: "100%",
+          height : 350,
           type: "donut"
         },
         dataLabels: {
@@ -237,10 +240,10 @@ export class BusinessTravelComponent {
         labels: this.labelScopeDonut1,
         responsive: [
           {
-            breakpoint: 480,
+            breakpoint: 400,
             options: {
               chart: {
-                width: 300
+                width: 250
               },
               legend: {
                 position: "bottom"
@@ -397,10 +400,11 @@ export class BusinessTravelComponent {
       this.labelScopeDonut1 = result.flight_type;
       this.labelScopeDonut2 = result.flight_class;
 
-      this.donotOptions1 = {
+      this.donotOptions2 = {
         series: this.businessType,
         chart: {
-          width: 380,
+          width: "100%",
+          height: 350,
           type: "donut"
         },
         dataLabels: {
@@ -436,7 +440,8 @@ export class BusinessTravelComponent {
       this.pieChart = {
         series: this.businessClass,
         chart: {
-          width: 380,
+          width: "100%",
+        height:350,
           type: "pie",
           
         },

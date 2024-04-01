@@ -44,6 +44,7 @@ import { BusinessTravelComponent } from '@pages/dashboard/business-travel/busine
 import { NewBillingComponent } from '@pages/new-billing/new-billing.component';
 import { WaterUsageComponent } from '@pages/dashboard/water-usage/water-usage.component';
 import { CarbonOffsettingComponent } from '@pages/carbon-offsetting/carbon-offsetting.component';
+import { WasteComponent } from '@pages/dashboard/waste/waste.component';
 
 const routes: Routes = [
     {
@@ -72,6 +73,7 @@ const routes: Routes = [
                     {path:'energyEmission',component: EnergyEmmsionsComponent},
                     {path:'businessTravel',component: BusinessTravelComponent},
                     {path:'waterUsage',component: WaterUsageComponent},
+                    {path:'waste',component: WasteComponent},
                 ]
             },
             {
