@@ -22,17 +22,22 @@ export class CompanyService {
         return this.http.get<CompanyDetails>(
             environment.baseUrl + 'Tenants/' + id
         );
-    }
+    };
+    public newgetTenantsDataById(id: string): Observable<CompanyDetails> {
+        return this.http.post<CompanyDetails>(
+            environment.baseUrl +  '/getComapnyDetail', id
+        );
+    };
 
     sendmailForPlanRenewal() {
         let url = this.rootUrl + 'sendplanrenewalmail';
         return this.http.post(url, String);
-    }
+    };
 
     UploadComapnyLogo(formData: FormData, tenantId: number): Observable<any> {
         const url = `${this.rootUrl}UploadLogo?id=${tenantId}`;
         return this.http.post<any>(url, formData);
-    }
+    };
 
     public GetCountryCode(): Observable<CountryCode[]> {
         return this.http.get<CountryCode[]>(

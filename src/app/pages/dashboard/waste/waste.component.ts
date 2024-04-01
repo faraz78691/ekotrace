@@ -55,6 +55,8 @@ export class WasteComponent {
   vendorData: any[] = [];
   UpWaste:string;
   downWaste:string;
+  hazardLabel:any[]= [];
+  hazardSeries:any[]= [];
 
   constructor(private route: ActivatedRoute,
     private facilityService: FacilityService,
@@ -62,68 +64,7 @@ export class WasteComponent {
     private dashboardService: DashboardService) {
       this.year = new Date();
 
-    this.groupChart = {
-      series: [
-        {
-          name: "distibuted",
-          data: [21, 21, 13, 30]
-        }
-      ],
-      chart: {
-        height: 350,
-        type: "bar",
-        events: {
-          click: function (chart, w, e) {
-            // console.log(chart, w, e)
-          }
-        }
-      },
-      colors: [
-        "#008FFB",
-        "#00E396",
-        "#FEB019",
-        "#D10CE8"
-      ],
-      plotOptions: {
-        bar: {
-          columnWidth: "45%",
-          distributed: true
-        }
-      },
-      dataLabels: {
-        enabled: false
-      },
-      legend: {
-        show: false
-      },
-      grid: {
-        show: false
-      },
-      xaxis: {
-        categories: [
-          ["John"],
-          ["Joe"],
-          ["Jake"],
-          ["Peter"],
-      
-        ],
-        labels: {
-          style: {
-            colors: [
-              "#008FFB",
-              "#00E396",
-              "#FEB019",
-              "#FF4560",
-              "#775DD0",
-              "#546E7A",
-              "#26a69a",
-              "#D10CE8"
-            ],
-            fontSize: "12px"
-          }
-        }
-      }
-    };
+   
 
     this.chartOptions = {
       series: [
@@ -190,7 +131,6 @@ export class WasteComponent {
       chart: {
         width: 380,
         type: "pie",
-        
       },
       legend: {
         position: "bottom"
@@ -277,8 +217,7 @@ export class WasteComponent {
       getScopeSDonuts$
  
     ]).subscribe((results: [any, any, any]) => {
-      const [scopeWiseResult, topWiseResult, getScopeSDonuts] = results;
-  
+      const [scopeWiseResult, topWiseResult, getALLEmisions] = results;
       // Process the results of both API calls here
       if (scopeWiseResult) {
         this.UpWaste = scopeWiseResult.waste_disposed
@@ -296,16 +235,12 @@ export class WasteComponent {
       } else {
         // Handle absence of topWise result or error
       }
-      if (getScopeSDonuts) {
-        this.seriesScopeDonut1 = getScopeSDonuts.seriesScope1;
-        this.seriesScopeDonut2 = getScopeSDonuts.seriesScope2;
-        this.seriesScopeDonut3 = getScopeSDonuts.seriesScope3;
-        this.labelScopeDonut1 = getScopeSDonuts.labelScope1;
-        this.labelScopeDonut2 = getScopeSDonuts.labelScope2;
-        this.labelScopeDonut3 = getScopeSDonuts.labelScope3;
-
+      if (getALLEmisions) {
+        this.hazardSeries = getALLEmisions.series[0].data;
+        this.hazardLabel = getALLEmisions.hazardousmonth;
+       
         this.donotOptions1 = {
-          series: this.seriesScopeDonut1,
+          series: this.hazardSeries,
           chart: {
             width: "100%",
             height:350,
@@ -324,7 +259,7 @@ export class WasteComponent {
             floating: false,
             horizontalAlign: 'left',
           },
-          labels: this.labelScopeDonut1,
+          labels: this.hazardLabel,
           colors: ['#F3722C', '#0068F2', '#F8961E'],
           responsive: [
             {
@@ -374,6 +309,63 @@ export class WasteComponent {
               }
             }
           ]
+        };
+
+        this.groupChart = {
+          series: [
+            {
+              name: "distibuted",
+              data: this.hazardSeries
+            }
+          ],
+          chart: {
+            height: 350,
+            type: "bar",
+            events: {
+              click: function (chart, w, e) {
+                // console.log(chart, w, e)
+              }
+            }
+          },
+          colors: [
+            "#008FFB",
+            "#00E396",
+            "#FEB019",
+            "#D10CE8"
+          ],
+          plotOptions: {
+            bar: {
+              columnWidth: "30%",
+              // distributed: true
+            }
+          },
+          dataLabels: {
+            enabled: false
+          },
+          legend: {
+            show: false
+          },
+          grid: {
+            show: false
+          },
+          xaxis: {
+            categories: this.hazardLabel,
+            labels: {
+              style: {
+                colors: [
+                  "#008FFB",
+                  "#00E396",
+                  "#FEB019",
+                  "#FF4560",
+                  "#775DD0",
+                  "#546E7A",
+                  "#26a69a",
+                  "#D10CE8"
+                ],
+                fontSize: "12px"
+              }
+            }
+          }
         };
 
         // this.donotOptions3 = {

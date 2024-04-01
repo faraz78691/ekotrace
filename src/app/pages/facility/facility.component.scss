@@ -90,8 +90,8 @@
 .has-search .form-controlL {
   padding-left: 2.375rem;
   border-radius: 5px;
-  border-color: #242529 !important;
-  background-color: #E9edf2;
+  border-color: #d8d8d8 !important;
+  background-color: #fff;
   color: #242529;
 }
 
@@ -511,7 +511,7 @@ tr.border-bottom td button {
 
 .facilitygrid {
   height: 100% !important;
-  display: grid;
+  // display: grid;
 }
 .ct_facility_2_main button {
   background-color: #f5f5f5 !important;

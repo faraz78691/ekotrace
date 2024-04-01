@@ -344,12 +344,12 @@ export class FacilityComponent {
         formdata.set('ID', id)
         this.facilityService.newUsersByFacilityID(formdata.toString()).subscribe((result) => {
             console.log(result);
-this.selectedScope1 = result[0].scope1;
-this.selectedScope2 = result[0].scope2;
-this.selectedScope3 = result[0].scope3;
+            this.selectedScope1 = result[0].scope1;
+            this.selectedScope2 = result[0].scope2;
+            this.selectedScope3 = result[0].scope3;
             this.facilityDetails = result[0];
             const facilityUsers = result[0].userInfoModels;
-            console.log("facilityUsers", facilityUsers);
+        
             this.managerList1 = [];
             this.staffList1 = [];
             if (facilityUsers.length > 0) {
@@ -766,9 +766,9 @@ this.selectedScope3 = result[0].scope3;
 
             const scope3Stringy = JSON.stringify(scope3)
             fomdata.set('Scope3', scope3Stringy);
-            
+
         }
-            
+
 
         // console.log(this.selectedScope3);
 
@@ -875,8 +875,8 @@ this.selectedScope3 = result[0].scope3;
         //     });
         // });
         // }
-       
-        
+
+
 
         const isSubcategoryEmptyForAllCategories = this.selectedScope1.length == 0 && this.selectedScope2.length == 0 && this.selectedScope3.length == 0
         if (isSubcategoryEmptyForAllCategories == true) {

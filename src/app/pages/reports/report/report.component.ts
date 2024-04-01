@@ -24,12 +24,7 @@ export class ReportComponent {
                 button: 'view',
                 route: '/custom-report'
             },
-            {
-                heading: 'Status',
-                pera: 'Review the status of the data entry forms across location for various months.',
-                button: 'view',
-                route: '/report-status'
-            }
+          
         ];
     }
 

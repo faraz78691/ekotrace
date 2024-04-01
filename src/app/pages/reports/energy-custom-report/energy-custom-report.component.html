@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="row pt-3">
         <div
-            class="d-flex text-white mt-2 pointer"
+            class="d-flex  mt-2 pointer"
             [routerLink]="['/custom-report']"
         >
             <div class="backicon">
@@ -22,7 +22,7 @@
                         <p-calendar
                             placeholder="Select Year"
                             #calendarRef
-                            class="calenderinput"
+                            class="calenderinput ct_border_none_input ct_input_dark_text_145"
                             [(ngModel)]="date"
                             view="year"
                             dateFormat="yy"
@@ -38,12 +38,36 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="col">
+                    <label for="fyear" class="text-dark">Month</label>
+                    <div
+                                                    class="selectmonth col card justify-content-center ct_month_select_clr ct_multi_input_38 ct_month_light_green">
+                                                    <p-multiSelect [options]="reportmonths" placeholder="Months" name="months"
+                                                        [(ngModel)]="selectMonths" styleClass="pcalender"
+                                                        optionLabel="name"></p-multiSelect>
+                                                </div>
+                </div>
+
+                
+            </div>
+            <div class="row mt-4 mx-2 text-white">
+                <div class="col-6">
+                    <label for="fname " class="text-dark">Data points</label>
+                     
+                    <p-multiSelect class="ct_select_2_drop_white ct_select_2_drop_white ct_input_dark_text_145"
+                        [options]="stationaryCombustionCategory()"
+                        defaultLabel="Select Data Points"
+                        [(ngModel)]="selectedDataPoints"
+                        optionLabel="subCatName"
+                        display="chip"
+                        name="datapoint"
+                    ></p-multiSelect>
+                </div>
+                <div class="col-6">
                     <label for="fname" class="text-dark">Facility</label>
                     <div class="row facilityrow">
                         <p-dropdown
-                            class="mx-2 finput ct_input_white_bg13"
+                            class="mx-2 finput ct_input_white_bg13 ct_select_2_drop_white ct_input_dark_text_145"
                             name="facility"
                             #facility="ngModel"
                             [options]="facilityData"
@@ -58,34 +82,11 @@
                     </div>
                 </div>
             </div>
-            <div class="row mt-4 mx-2 text-white">
-                <div class="col-12">
-                    <label for="fname " class="text-dark">Data points</label>
-                     
-                    <p-multiSelect class="ct_select_2_drop_white"
-                        [options]="stationaryCombustionCategory()"
-                        defaultLabel="Select Data Points"
-                        [(ngModel)]="selectedDataPoints"
-                        optionLabel="subCatName"
-                        display="chip"
-                        name="datapoint"
-                    ></p-multiSelect>
-                </div>
-                <div class="col-12 mt-4"    >
-                    <label for="fname " class="text-dark">Note</label>
-
-                    <textarea class="ct_dark_text_area_text"
-                        rows="4"
-                        pInputTextarea
-                        [(ngModel)]="notevalue"
-                    ></textarea>
-                </div>
-            </div>
             <div class="row">
                 <div class="pt-3">
                     <button 
                         (click)="generateReport()"
-                        class="generateReportButton ct_report_button_12"
+                        class="generateReportButton ct_report_button_12 ct_animation_btn_121"
                     >
                         Generate Report
                     </button>

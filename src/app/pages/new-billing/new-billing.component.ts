@@ -123,7 +123,7 @@ export class NewBillingComponent {
       this.GetAllPackages();
       let tenantID = this.loginInfo.tenantID;
    
-      this.GetAllUsersPack()
+     
    
         //
       this.updatedtheme = this.themeservice.getValue('theme');
@@ -175,10 +175,11 @@ export class NewBillingComponent {
                       'Package Assigned successfully',
                       'Success'
                   );
-                  this.GetAllUsersPack();
+                
+                  this.GetAllPackages();
               }
-             
-              this.GetAllUsersPack();
+              this.GetAllPackages()
+            
               this.visible = false;
               if (localStorage.getItem('FacilityGroupCount') != null) {
                   let fgcount = localStorage.getItem('FacilityGroupCount');
@@ -289,10 +290,6 @@ export class NewBillingComponent {
       this.UserService.getBillingUsers(formdata.toString()).subscribe((response:any) => {
           this.usersList = response;
          
-          
-          // if (this.packageList.length === 0) {
-          //     this.facilitydata = true;
-          // }
       });
   };
   //handles the closing of a dialog

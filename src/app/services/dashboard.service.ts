@@ -360,6 +360,15 @@ export class DashboardService {
     public GEByTravel(admininfo) {
         return this.http.post(this.apiURL + '/businessdashboardemssionByTravel', admininfo);
     };
+    public Waterwithdrawnby_source(admininfo) {
+        return this.http.post('/http://192.168.1.31:4003/dashboardWaterwithdrawnby_source', admininfo);
+    };
+    public WaterDischargedbydestination(admininfo) {
+        return this.http.post('http://192.168.1.31:4003/dashboardWaterDischargedbydestination', admininfo);
+    };
+    public dashboardWaterTreated_nonTreated(admininfo) {
+        return this.http.post('http://192.168.1.31:4003/dashboardWaterTreated_nonTreated', admininfo);
+    };
     public businessdashboardemssionByAir(admininfo) {
         return this.http.post(this.apiURL + '/businessdashboardemssionByAir', admininfo);
     };

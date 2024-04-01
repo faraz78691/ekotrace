@@ -76,6 +76,9 @@ export class CarbonOffsettingComponent {
   project_details = '';
   carbon_offset = '';
   selectedScope:any;
+  carbon_credit_value:string;
+  type:string;
+  standard:string;
   constructor(
       private companyService: CompanyService,
       private UserService: UserService,
@@ -159,7 +162,6 @@ export class CarbonOffsettingComponent {
   //     this.unlock = this.groupdetails.id.toString();
   // }
    getOffset(tenantID:any) {
-
       let formData = new URLSearchParams();
 
       formData.set('tenant_id', tenantID.toString());
@@ -179,7 +181,6 @@ export class CarbonOffsettingComponent {
                   localStorage.setItem('GroupCount', String(this.groupsList.length));
                   this.unlock = this.groupdetails.id.toString();
               }
-            
           },
           error: (err) => {
               console.error('errrrrrr>>>>>>', err);
@@ -196,10 +197,12 @@ export class CarbonOffsettingComponent {
       formData.set('offset',  this.carbon_offset);
       formData.set('scope',this.selectedScope);
       formData.set('tenant_id',this.loginInfo.tenantID.toString());
+      formData.set('carbon_credit_value',this.carbon_credit_value);
+      formData.set('standard',this.standard);
+      formData.set('type',this.type);
   
       this.GroupService.Adduser_offseting(formData.toString()).subscribe({
           next: (response) => {
-              console.log(response);
               if(response.success == true)
               {
                   this.visible = false;
@@ -220,7 +223,6 @@ export class CarbonOffsettingComponent {
                       String(newcount)
                   );
               }
-           
           },
           error: (err) => {
               this.notification.showError('Group added failed.', 'Error');

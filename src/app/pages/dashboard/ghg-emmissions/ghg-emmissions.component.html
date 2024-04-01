@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row ct_responsive_reverse">
     <div class="col-xl-8" >
        
         <div class="ct_reduction_graph_main mt-1 pt-2">
@@ -145,11 +145,11 @@
                     </div>
                     <div class="progress mt-4" style="height: 10px;">
                         <div class="progress-bar" role="progressbar"
-                            style="width: 25%; background-color: #A6A6A6; border-radius: 2px;" aria-valuenow="25"
+                            style="width: 25%; " aria-valuenow="25"
                             aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                 </div>
-                <div class="ct_grey_border_1 ct_py_padd mt-3" style="background-color: #F4FFF4; border-width: 2px; border-color: #075101;">
+                <div class="ct_grey_border_1 ct_py_padd mt-3 ct_progress_active1" >
                     <div class="ct_d_flex_1">
                         <div class="d-flex align-items-center ct_gap_20 flex-wrap">
                             <h5 class="mb-0"><strong>{{scope1E}}</strong></h5>
@@ -289,7 +289,7 @@
                [labels]="donotOptions2.labels"
                [fill]="donotOptions2.fill"
                [colors] = "donotOptions2.colors"
-               [legend]="donotOptions1.legend"
+               [legend]="donotOptions2.legend"
                [dataLabels]="donotOptions2.dataLabels"
                [responsive]="donotOptions2.responsive"
              ></apx-chart>
@@ -308,7 +308,7 @@
                [labels]="donotOptions3.labels"
                [fill]="donotOptions3.fill"
                [colors]="donotOptions3.colors"
-               [legend]="donotOptions1.legend"
+               [legend]="donotOptions3.legend"
                [dataLabels]="donotOptions3.dataLabels"
                [responsive]="donotOptions3.responsive"
              ></apx-chart>
@@ -362,7 +362,7 @@
                     <h5><strong>Top emissions by vendor</strong></h5>
                 </div>
                 <div>
-                    <a href="#" class="ct_view_all_link">View All</a>
+                    <!-- <a href="#" class="ct_view_all_link">View All</a> -->
                 </div>
             </div>
             <div class="ct_emission_vender_list">
@@ -387,7 +387,7 @@
                     <h5><strong>Emission by Activity</strong></h5>
                 </div>
                 <div>
-                    <a href="#" class="ct_view_all_link">View All</a>
+                    <!-- <a href="#" class="ct_view_all_link">View All</a> -->
                 </div>
             </div>
 
@@ -411,7 +411,7 @@
                         <div class="d-flex  align-items-center gap-2 justify-content-between ct_grey_brdr_btm1" *ngFor="let items of upstreamArray">
                             <div>
                                 <h5 class="mb-1">{{items.category}}</h5>
-                                <p class="mb-2">33 Units</p>
+                                <!-- <p class="mb-2">33 Units</p> -->
                             </div>
                             <div>
                                 <p class="mb-0 d-flex align-items-center">{{items.emission}} </p>
@@ -424,7 +424,7 @@
                         <div class="d-flex  align-items-center gap-2 justify-content-between ct_grey_brdr_btm1" *ngFor="let items of downstreamArray">
                             <div>
                                 <h5 class="mb-1">{{items.category}}</h5>
-                                <p class="mb-2">33 Units</p>
+                                <!-- <p class="mb-2">33 Units</p> -->
                             </div>
                             <div>
                                 <p class="mb-0 d-flex align-items-center">{{items.emission}} <i
@@ -440,17 +440,16 @@
         <div class="ct_grey_border_1">
             <div class="ct_d_flex_1 ct_grey_brdr_btm1 pb-3 mb-3">
                 <div>
-                    <h5 class="mb-0"><strong>Path to net-zero</strong></h5>
+                    <h5 class="mb-0"><strong>Emissions by Activity </strong></h5>
                 </div>
-                <div class="ct_info_icon">
-                    <i class="fa-solid fa-info"></i>
-                </div>
+            
             </div>
             <div id="ct_net_zeo_donut" *ngIf="donotoptions">
                 <apx-chart
                 [series]="donotoptions.series"
                 [chart]="donotoptions.chart"
                 [labels]="donotoptions.labels"
+                [legend]="donotoptions.legend"
                 [responsive]="donotoptions.responsive"
               ></apx-chart>
             </div>
@@ -462,15 +461,16 @@
                 <div>
                     <h5 class="mb-0"><strong>Path to net-zero</strong></h5>
                 </div>
-                <div class="ct_info_icon">
+                <!-- <div class="ct_info_icon">
                     <i class="fa-solid fa-info"></i>
-                </div>
+                </div> -->
             </div>
             <div id="ct_net_zeo_donut" *ngIf="donotoptions">
                 <apx-chart
                 [series]="donotoptions.series"
                 [chart]="donotoptions.chart"
                 [labels]="donotoptions.labels"
+                [legend]="donotoptions.legend"
                 [responsive]="donotoptions.responsive"
               ></apx-chart>
             </div>

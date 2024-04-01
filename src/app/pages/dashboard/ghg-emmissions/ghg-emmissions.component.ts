@@ -138,8 +138,45 @@ export class GhgEmmissionsComponent implements OnDestroy {
         this.makeCombinedApiCall(this.selectedFacility)
       })
     );
-  
-        
+
+    this.donotoptions = {
+      series: [55, 45],
+      chart: {
+        width: "100%",
+        height: 350,
+        type: "donut"
+      },
+      dataLabels: {
+        enabled: true
+      },
+      // fill: {
+      //   type: "gradient"
+      // },
+
+      legend: {
+        position: "bottom",
+        fontSize: '15px',
+        floating: false,
+        horizontalAlign: 'left',
+      },
+      labels: ['Reduction', "Emission"],
+      colors: ['#F3722C', '#0068F2', '#F8961E', '#ACE1AF', '#7BAFD4', '#B284BE'],
+      responsive: [
+        {
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200
+            },
+            legend: {
+              position: "bottom"
+            }
+          }
+        }
+      ]
+    };
+
+
   };
 
 
@@ -192,7 +229,7 @@ export class GhgEmmissionsComponent implements OnDestroy {
     );
 
     // Combine both observables using combineLatest and return the combined observable
-   this.combinedSubscription =  combineLatest([
+    this.combinedSubscription = combineLatest([
       scopeWiseEmission$,
       topWiseEmission$,
       getScopeSDonuts$,
@@ -200,7 +237,7 @@ export class GhgEmmissionsComponent implements OnDestroy {
       GVEndorActivity$
     ]).subscribe((results: [any, any, any, any, any]) => {
       const [scopeWiseResult, topWiseResult, getScopeSDonuts, getScopeActivity, getVendorE] = results;
-  
+
 
 
       // Process the results of both API calls here
@@ -229,7 +266,7 @@ export class GhgEmmissionsComponent implements OnDestroy {
           series: this.seriesScopeDonut1,
           chart: {
             width: "100%",
-            height:350,
+            height: 350,
             type: "donut"
           },
           dataLabels: {
@@ -265,7 +302,7 @@ export class GhgEmmissionsComponent implements OnDestroy {
           series: this.seriesScopeDonut2,
           chart: {
             width: "100%",
-            height:350,
+            height: 350,
             type: "donut"
           },
           dataLabels: {
@@ -280,7 +317,7 @@ export class GhgEmmissionsComponent implements OnDestroy {
             floating: false,
             horizontalAlign: 'left',
           },
-          colors: ['#F3722C', '#0068F2', '#F8961E'],
+          colors: ['#F3722C', '#0068F2', '#F8961E', '#ACE1AF', '#7BAFD4', '#B284BE'],
           labels: this.labelScopeDonut2,
           responsive: [
             {
@@ -296,12 +333,16 @@ export class GhgEmmissionsComponent implements OnDestroy {
             }
           ]
         };
-
+        if (this.seriesScopeDonut3.length > 5) {
+          var height = 410;
+        } else {
+          height = 360;
+        };
         this.donotOptions3 = {
           series: this.seriesScopeDonut3,
           chart: {
             width: "100%",
-            height:350,
+            height: height,
             type: "donut"
           },
           dataLabels: {
@@ -312,11 +353,11 @@ export class GhgEmmissionsComponent implements OnDestroy {
           // },
           legend: {
             position: "bottom",
-            fontSize: '15px',
+            fontSize: '12px',
             floating: false,
             horizontalAlign: 'left',
           },
-          colors: ['#F3722C', '#0068F2', '#F8961E'],
+          colors: ['#F3722C', '#0068F2', '#F8961E', '#ACE1AF', '#7BAFD4', '#B284BE'],
           labels: this.labelScopeDonut3,
           responsive: [
             {

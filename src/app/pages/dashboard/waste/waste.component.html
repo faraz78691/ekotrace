@@ -115,14 +115,14 @@
                     </div>
                     <div id="ct_emission_by_month" *ngIf="chartOptions">
                         <apx-chart
-            [series]="chartOptions.series"
-            [chart]="chartOptions.chart"
-            [dataLabels]="chartOptions.dataLabels"
-            [plotOptions]="chartOptions.plotOptions"
-            [yaxis]="chartOptions.yaxis"
-            [xaxis]="chartOptions.xaxis"
-            [fill]="chartOptions.fill"
-            [colors]="chartOptions.colors"
+            [series]="groupChart.series"
+            [chart]="groupChart.chart"
+            [dataLabels]="groupChart.dataLabels"
+            [plotOptions]="groupChart.plotOptions"
+            [yaxis]="groupChart.yaxis"
+            [xaxis]="groupChart.xaxis"
+          
+            [colors]="groupChart.colors"
           
           ></apx-chart>
                     </div>

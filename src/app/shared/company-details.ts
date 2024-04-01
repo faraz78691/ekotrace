@@ -22,5 +22,6 @@ export class CompanyDetails {
     name: string;
     dialCode: string;
     currencySymbol:string;
+    categories:any[]
 
 }

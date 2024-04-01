@@ -55,7 +55,7 @@ export class FacilityService {
     };
     public nFacilityDataGet(): Observable<Facility[]> {
         return this.http.get<Facility[]>(
-            'http://192.168.1.31:4003/allfacilitiesbyRole'
+            environment.baseUrl +  '/allfacilitiesbyRole'
         );
     };
     public newFacilityDataGet(tenantId): Observable<Facility[]> {
@@ -99,7 +99,7 @@ export class FacilityService {
     }
     public getNewSeedData(): Observable<ManageDataPoint[]> {
         return this.http.get<ManageDataPoint[]>(
-           'http://192.168.1.31:4003/GetcategoryByScope'
+            environment.baseUrl + '/GetcategoryByScope'
         );
     }
 
@@ -140,7 +140,7 @@ export class FacilityService {
     };
     public newUsersByFacilityID(Id) {
         return this.http.post<Facility>(
-            'http://192.168.1.31:4003/allfacilitiesbyId' , Id
+              environment.baseUrl  + '/allfacilitiesbyId' , Id
         );
     };
 }

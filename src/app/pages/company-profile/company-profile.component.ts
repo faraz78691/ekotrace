@@ -14,6 +14,7 @@ import {environment} from 'environments/environment';
 
 import {ThemeService} from '@services/theme.service';
 
+
 @Component({
     selector: 'app-company-profile',
     templateUrl: './company-profile.component.html',
@@ -60,18 +61,22 @@ export class CompanyProfileComponent {
             this.loginInfo = jsonObj as LoginInfo;
         }
         this.getTenantsDetailById(Number(this.loginInfo.tenantID));
-    }
+    };
    //method to get tenants details by id
     getTenantsDetailById(id: number) {
-        this.companyService.getTenantsDataById(id).subscribe((response) => {
-            this.companyDetails = response;
-            console.log("response>>>",response);
+       console.log("calling")
+        const formdata = new URLSearchParams();
+        formdata.set('tenant_id',this.loginInfo.tenantID.toString())
+        this.companyService.newgetTenantsDataById(formdata.toString()).subscribe((response) => {
+            this.companyDetails = response.categories[0];
+            this.uploadedImageUrl = this.companyDetails.logoPath
+           
             this.uploadedImageUrl =
                 this.rootUrl +
                 (response.logoName === '' || response.logoName === null
                     ? 'defaultimg.png'
                     : response.logoName);
-                    
+
             localStorage.setItem('companyName', response.companyName);
             this.selectedSecondaryIndustryTypes = JSON.parse(
                 this.companyDetails.secondIndustryTypeID
@@ -88,15 +93,29 @@ export class CompanyProfileComponent {
     }
   //method to update company profile
     saveChanges() {
-        this.companyDetails.industryTypeID = JSON.stringify(
-            this.selectedIndustryTypes
-        );
-        this.companyDetails.secondIndustryTypeID = JSON.stringify(
-            this.selectedSecondaryIndustryTypes
-        );
-        this.registrationService.updateCompany(this.companyDetails).subscribe({
+        console.log(this.selectedIndustryTypes);
+        const stringifySelectedIndustryTypes = JSON.stringify(this.selectedIndustryTypes) ;
+        const stringifySelectedSecondaryIndustryTypes = JSON.stringify(this.selectedSecondaryIndustryTypes) ;
+       
+        const formData: FormData = new FormData();
+        if(this.selectedFile){
+            formData.append('file', this.selectedFile, this.selectedFile.name);
+        }
+        formData.append('companyName', this.companyDetails.companyName);
+        formData.append('industryTypeID', stringifySelectedIndustryTypes);
+        formData.append('secondIndustryTypeID', stringifySelectedSecondaryIndustryTypes);
+        formData.append('tenant_id', this.loginInfo.tenantID.toString());
+        formData.append('location', this.companyDetails.location);
+        formData.append('companyBio', this.companyDetails.companyBio);
+        // this.companyDetails.industryTypeID = JSON.stringify(
+        //     this.selectedIndustryTypes
+        // );
+        // this.companyDetails.secondIndustryTypeID = JSON.stringify(
+        //     this.selectedSecondaryIndustryTypes
+        // );
+        this.registrationService.updateCompany(formData).subscribe({
             next: (response) => {
-                this.getTenantsDetailById(Number(this.loginInfo.tenantID));
+                // this.getTenantsDetailById(Number(this.loginInfo.tenantID));
                 this.notification.showSuccess(
                     'Profile Updated successfully',
                     'Success'

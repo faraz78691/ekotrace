@@ -1694,6 +1694,12 @@ nav{
     color: #000 !important;
 }
 
+.ct_vertically_scroll{
+    height: auto;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
 
 @media screen and (max-width:500px){
     .ct_logo_collape pf-image.pl-4.ng-star-inserted.hydrated {

@@ -76,7 +76,22 @@ export class EnergyCustomReportComponent {
     yearRangeOptions: string;
     kgCO2e: number;
     lfcount: number = 0;
+    selectMonths: any[] = [];
     CustomReportData: CustomReportModel[] = [];
+    reportmonths: any[] = [
+        { name: 'Jan', value: 'Jan' },
+        { name: 'Feb', value: 'Feb' },
+        { name: 'Mar', value: 'Mar' },
+        { name: 'Apr', value: 'Apr' },
+        { name: 'May', value: 'May' },
+        { name: 'June', value: 'Jun' },
+        { name: 'July', value: 'July' },
+        { name: 'Aug', value: 'Aug' },
+        { name: 'Sep', value: 'Sep' },
+        { name: 'Oct', value: 'Oct' },
+        { name: 'Nov', value: 'Nov' },
+        { name: 'Dec', value: 'Dec' }
+    ];
     @ViewChild('calendarRef') calendarRef!: Calendar;
     date: Date;
     constructor(
@@ -84,7 +99,9 @@ export class EnergyCustomReportComponent {
         private trackingService: TrackingService
     ) {
         this.AssignedDataPoint = [];
-    }
+    };
+
+  
 
     ngOnInit() {
         this.loginInfo = new LoginInfo();

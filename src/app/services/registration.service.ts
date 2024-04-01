@@ -14,9 +14,15 @@ export class RegistrationService {
         return this.http.post(environment.baseUrl + 'Tenants', companyData);
     }
 
-    public updateCompany(companyData: CompanyDetails): Observable<any> {
-        return this.http.put(
-            environment.baseUrl + 'Tenants/' + companyData.id,
+    // public updateCompany(companyData: CompanyDetails): Observable<any> {
+    //     return this.http.put(
+    //         environment.baseUrl + 'Tenants/' + companyData.id,
+    //         companyData
+    //     );
+    // };
+    public updateCompany(companyData: any): Observable<any> {
+        return this.http.post(
+            environment.baseUrl + '/AddComapnyDetail',
             companyData
         );
     };
