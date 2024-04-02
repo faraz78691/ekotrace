@@ -228,18 +228,19 @@ export class FacilityComponent {
             city.Name === this.facilityDetails.city_name
             
         );
-        this.facilityDetails.CityId = this.selectedCity.ID;
+        // this.facilityDetails.CityId = this.selectedCity.ID;
         let tenantId = this.loginInfo.tenantID;
         let formdata = new URLSearchParams();
         formdata.set('AssestName', this.facilityDetails.AssestName)
-        formdata.set('tenantID', this.facilityDetails.tenantID.toString())
+        formdata.set('tenantID', (tenantId).toString())
         formdata.set('AssestType', this.facilityDetails.AssestType)
         formdata.set('EquityPercentage', (this.facilityDetails.EquityPercentage).toString());
         formdata.set('Address', this.facilityDetails.Address);
         formdata.set('IsWaterStreenArea', (this.facilityDetails.IsWaterStreenArea).toString());
-        formdata.set('CityId', (this.selectedCity.ID).toString());
+        // formdata.set('CityId', (this.selectedCity.ID).toString());
         formdata.set('CountryId', this.selectedCountry.ID);
         formdata.set('StateId', (this.selectedState.ID).toString());
+        formdata.set('ID', this.id_var);
         this.facilityService
             .FacilityDataUpdate(formdata.toString())
             .subscribe({

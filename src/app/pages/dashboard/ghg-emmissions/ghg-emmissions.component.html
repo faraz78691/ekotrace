@@ -49,7 +49,7 @@
                 <div class="ct_d_flex_1">
                     <div class="ct_reduction_title">
                         <h4 class="text-dark">Top 5 Contributors of Total Emissions</h4>
-                        <p class="mb-0 text-dark">FY - 2023-24</p>
+                        <!-- <p class="mb-0 text-dark">FY - 2023-24</p> -->
                     </div>
                     <!-- <div>
                         <p class="mb-1 ct_fw_500 text-white">Type</p>
@@ -87,8 +87,8 @@
                     <div class="mt-4">
                         <p class="mb-1 ct_fw_500">Financial Year</p>
                         <p-calendar class="w-100 ct_input_dark_text_145" [(ngModel)]="year" ngModel name="year" year 
-                         view="year" dateFormat="yy"   inputId="yearpicker"
-                         styleClass="pcalender"
+                         view="year" dateFormat="yy" inputId="yearpicker"  (ngModelChange)="onFacilityChange($event)"
+                         styleClass="pcalender" 
                         [showIcon]="true"></p-calendar>
                         <!-- <select class="ct_period_select w-100">
                             <option value="">2023-2024</option>
@@ -101,13 +101,13 @@
                 <div class="d-flex align-items-center justify-content-between flex-wrap">
                     <div>
                         <div class="d-flex align-items-center gap-3 p mb-2 justify-content-between ct_gap_20">
-                            <h4 class="mb-0"><strong>7856</strong></h4>
-                            <h6 class="mb-0">tCO2e</h6>
+                            <h4 class="mb-0"><strong>{{sumofScope2 | number :'1.2-2'}}</strong>&nbsp;tCO2e</h4>
+                          
                         </div>
-                        <div class="d-flex align-items-center gap-2 justify-content-between ct_gap_20">
+                        <!-- <div class="d-flex align-items-center gap-2 justify-content-between ct_gap_20">
                             <h6 class="mb-0"><strong>+12%</strong></h6>
                             <h6 class="mb-0"><strong>From previous year</strong></h6>
-                        </div>
+                        </div> -->
                         <div class="ct_graph_lable">
                             <ul class="ps-0 mb-0">
                                 <li>
@@ -132,7 +132,7 @@
 
 
             <div class="mt-4">
-                <div class="ct_grey_border_1 ct_py_padd">
+                <!-- <div class="ct_grey_border_1 ct_py_padd">
                     <div class="ct_d_flex_1">
                         <div class="d-flex align-items-center ct_gap_20 flex-wrap">
                             <h5 class="mb-0"><strong>876.465</strong></h5>
@@ -148,7 +148,7 @@
                             style="width: 25%; " aria-valuenow="25"
                             aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
-                </div>
+                </div> -->
                 <div class="ct_grey_border_1 ct_py_padd mt-3 ct_progress_active1" >
                     <div class="ct_d_flex_1">
                         <div class="d-flex align-items-center ct_gap_20 flex-wrap">
@@ -355,7 +355,7 @@
 
 
 <div class="row">
-    <div class="col-xl-3 mb-3">
+    <div class="col-xl-4 mb-4">
         <div class="ct_grey_border_1 ">
             <div class="ct_d_flex_1  pb-3">
                 <div>
@@ -380,7 +380,7 @@
             </div>
         </div>
     </div>
-    <div class="col-xl-3 mb-3">
+    <div class="col-xl-4 mb-4">
         <div class="ct_grey_border_1">
             <div class="ct_d_flex_1  pb-3">
                 <div>
@@ -436,7 +436,7 @@
             </div>
         </div>
     </div>
-    <div class="col-xl-3 mb-4">
+    <!-- <div class="col-xl-3 mb-4">
         <div class="ct_grey_border_1">
             <div class="ct_d_flex_1 ct_grey_brdr_btm1 pb-3 mb-3">
                 <div>
@@ -454,8 +454,8 @@
               ></apx-chart>
             </div>
         </div>
-    </div>
-    <div class="col-xl-3 mb-4">
+    </div> -->
+    <div class="col-xl-4 mb-4">
         <div class="ct_grey_border_1">
             <div class="ct_d_flex_1 ct_grey_brdr_btm1 pb-3 mb-3">
                 <div>

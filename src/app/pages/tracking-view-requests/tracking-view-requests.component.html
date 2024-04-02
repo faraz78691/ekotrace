@@ -2,8 +2,8 @@
     <div class="d-flex justify-content-center"></div>
     <div class="row d-flex justify-content-center mx-3 my-2">
         <!-- <input type="date" name="" id="" /> -->
-        <div class="col-2 mt-2 d-flex selectyear justify-content-between">
-            <p-calendar class="ct_calender_input_1234" ngModel name="year" year [(ngModel)]="year" styleClass="pcalender" view="year" dateFormat="yy"
+        <div class="col-2 mt-2 d-flex  justify-content-between">
+            <p-calendar class="ct_calender_input_1234   ct_calander_input_box_white_bg20" ngModel name="year" year [(ngModel)]="year" styleClass="pcalender" view="year" dateFormat="yy"
                 inputId="yearpicker" [showIcon]="true" (ngModelChange)="FilterByYear()"></p-calendar>
         </div>
         <div class="col-10">
@@ -124,20 +124,20 @@
             <form #sendApprovalForm="ngForm">
                 <div class="row mx-2 border-bottom mt-3 pb-3">
 
-                    <div class="row d-flex align-items-center ">
-                        <p class="contents">View Details of- </p>
+                    <div class="row d-flex align-items-center ml-0">
+                      
 
-                        <p-dropdown class="ct_custom_drop_white" ngModel [options]="AllCategory" optionLabel="catName" optionValue="id" name="DEMode"
+                        <p-dropdown class="ct_custom_drop_white ct_input_dark_text_14 " ngModel [options]="AllCategory" optionLabel="catName" optionValue="id" name="DEMode"
                             #DEMode="ngModel" [(ngModel)]="selectedCategory" (onChange)="getEntry()"></p-dropdown>
                     </div>
 
-                    <div class="col text-right pt-0 d-flex justify-content-end">
+                    <div class="col text-right pt-0 d-flex justify-content-end pr-0">
                         <!-- <span class="mr-2 countrequest"></span> -->
                         <div class="mr-2 globalsearch">
                             <div class="table-header">
                                 <span class="p-input-icon-left">
-                                    <i class="pi pi-search text-white"></i>
-                                    <input pInputText class="pl-5 py-1" type="text" (input)="
+                                    <i class="pi pi-search "></i>
+                                    <input pInputText class="pl-5 py-1 ct_search_dark33" type="text" (input)="
                                             dt.filterGlobal(
                                                 $event.target.value,
                                                 'contains'
@@ -395,7 +395,7 @@
 
                                 </th>
                                 <th >Action</th>
-                                <th >Details</th>
+                                <!-- <th >Details</th> -->
                             </tr>
 
                         </ng-template>
@@ -656,7 +656,7 @@
                                             de.status === Pending
                                         ">Sent for Approval</label>
                                 </td>
-                                <td>
+                                <!-- <td>
                                     <div class="view-details">
                                         <i class="pi pi-eye pt-2 text-white" title="info"
                                             [routerLink]="['/tracking-status']"
@@ -664,7 +664,7 @@
                                         <a *ngIf="de.fileName" (click)="downloadFile(de.fileName)">
                                             <i class="pi pi-download text-white pl-2" title="download"></i></a>
                                     </div>
-                                </td>
+                                </td> -->
                             </tr>
                         </ng-template>
                     </p-table>

@@ -186,11 +186,11 @@ button.ct_scope_btn {
 }
 .ct_emission_vender_list h5 {
     font-weight: 400;
-    font-size: 13px;
+    font-size: 15px;
 }
 .ct_emission_vender_list p {
     font-weight: 500;
-    color: #d8d8d8;
+    color:#333;
     font-size: 14px;
     gap: 6px;
 }

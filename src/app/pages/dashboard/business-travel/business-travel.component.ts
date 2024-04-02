@@ -118,6 +118,10 @@ export class BusinessTravelComponent {
   businessType:any[]= [];
   groundLabel:any[]= [];
   groundSeries:any[]= [];
+  groundTotal:any;
+  flightTotal:any;
+  flightTypeTotal:any
+  airTotal:any
 
   constructor(private route: ActivatedRoute,
     private facilityService: FacilityService,
@@ -215,6 +219,7 @@ export class BusinessTravelComponent {
 
       this.scopeWiseSeries = result.series;
       this.labelScopeDonut1 = result.categories;
+      this.airTotal = result.totalEmssion;
 
 
       this.donotOptions1 = {
@@ -399,6 +404,8 @@ export class BusinessTravelComponent {
       this.businessClass = result.flight_class_series;
       this.labelScopeDonut1 = result.flight_type;
       this.labelScopeDonut2 = result.flight_class;
+      this.flightTotal = result.totalflight_class;
+   this.flightTypeTotal = result.totalflight_type;
 
       this.donotOptions2 = {
         series: this.businessType,
@@ -485,6 +492,7 @@ export class BusinessTravelComponent {
 
       this.groundSeries = result.series;
       this.groundLabel = result.categories;
+      this.groundTotal = result.totalEmssion;
      
 
       this.groupChart = {

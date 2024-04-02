@@ -194,7 +194,7 @@ export class HeaderComponent implements OnInit {
             return;
         }
         this.facilityService
-            .newGetFacilityGroupList(tenantID)
+            .newGetFacilityByTenant(tenantID)
             .subscribe((res) => {
              
                 this.facilitygrouplist = res;

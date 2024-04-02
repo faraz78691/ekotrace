@@ -48,7 +48,7 @@ export class FacilityService {
         return this.http.put(environment.baseUrl + 'Facilities/' + id, data);
     };
     public FacilityDataUpdate( data): Observable<any> {
-        return this.http.post(environment.baseUrl + 'Updatefacilities/' ,data);
+        return this.http.post(environment.baseUrl + '/Updatefacilities' ,data);
     };
 
     public FacilityDataGet(tenantId): Observable<Facility[]> {
@@ -134,6 +134,11 @@ export class FacilityService {
     public newGetFacilityGroupList(tenantId) :Observable<any>{
         return this.http.get<any>(
             environment.baseUrl + '/GetFacilityGroups/' + tenantId
+        );
+    }
+    public newGetFacilityByTenant(tenantId) :Observable<any>{
+        return this.http.get<any>(
+            environment.baseUrl + '/getFacilityByTenantId/' + tenantId
         );
     }
     public GetFacilityByID(Id) {

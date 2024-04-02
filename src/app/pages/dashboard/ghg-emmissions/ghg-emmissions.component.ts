@@ -190,7 +190,7 @@ export class GhgEmmissionsComponent implements OnDestroy {
 
   // Combined method to make both API calls
   makeCombinedApiCall(facility) {
-    console.log(facility)
+   
     const formData = this.createFormData(facility);
 
     // Create observables for both API calls
@@ -334,7 +334,7 @@ export class GhgEmmissionsComponent implements OnDestroy {
           ]
         };
         if (this.seriesScopeDonut3.length > 5) {
-          var height = 410;
+          var height = 430;
         } else {
           height = 360;
         };
@@ -357,7 +357,7 @@ export class GhgEmmissionsComponent implements OnDestroy {
             floating: false,
             horizontalAlign: 'left',
           },
-          colors: ['#F3722C', '#0068F2', '#F8961E', '#ACE1AF', '#7BAFD4', '#B284BE'],
+          colors: ['#F3722C', '#0068F2', '#F4C430', '#ACE1AF', '#7BAFD4', '#B284BE'],
           labels: this.labelScopeDonut3,
           responsive: [
             {
@@ -386,7 +386,7 @@ export class GhgEmmissionsComponent implements OnDestroy {
 
   // Handle the scopeWiseResult
   handleScopeWiseResult(scopeWiseResult: any) {
-    console.log(scopeWiseResult)
+  
     this.scopeWiseSeries = scopeWiseResult.series;
     this.series_graph = scopeWiseResult.series_graph;
     this.sumofScope2 = scopeWiseResult.scope1 + scopeWiseResult.scope2 + scopeWiseResult.scope3;
@@ -402,11 +402,11 @@ export class GhgEmmissionsComponent implements OnDestroy {
       dataLabels: {
         enabled: false
       },
-      legend: {
-        show: false,
-        position: 'top',
-        offsetY: 0
-      },
+      // legend: {
+      //   show: false,
+      //   position: 'top',
+      //   offsetY: 0
+      // },
       colors: ['#213D49', '#46A5CD', '#FFD914'],
       series: this.scopeWiseSeries,
       chart: {
@@ -442,12 +442,15 @@ export class GhgEmmissionsComponent implements OnDestroy {
               style: {
                 fontSize: '13px',
                 fontWeight: 900
+              },
+              formatter: function(val) {
+                const numericValue = parseFloat(val);
+                return numericValue.toFixed(2);
               }
             }
           }
         },
       },
-
       xaxis: {
         categories: ['Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar']
       },
@@ -488,13 +491,12 @@ export class GhgEmmissionsComponent implements OnDestroy {
 
 
   onFacilityChange(event: any) {
+  
     this.makeCombinedApiCall(this.selectedFacility)
     // console.log(event.target.value)
     // console.log(this.selectedFacility);
     // this.GScopeWiseE(this.selectedFacility)
     // this.getTopFiveE(this.selectedFacility);
-
-
   };
 
   ngOnDestroy(): void {

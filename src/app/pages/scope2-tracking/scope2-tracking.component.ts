@@ -1505,8 +1505,8 @@ export class Scope2TrackingComponent {
                 console.error('errrrrrr>>>>>>', err);
             }
         })
-
     };
+
     onInputEdit() {
         this.isInputEdited = true;
     };
@@ -1528,6 +1528,13 @@ export class Scope2TrackingComponent {
             );
             return
         }
+        if (this.selectMonths.length == 0) {
+            this.notification.showInfo(
+                'Select month',
+                ''
+            );
+            return
+        }
         if (this.categoryId == 1) {
             if (
                 this.dataEntry.readingValue <= 0 ||
@@ -1535,6 +1542,13 @@ export class Scope2TrackingComponent {
                 this.dataEntry.readingValue === undefined
             ) {
                 return;
+            }
+            if (this.selectMonths.length == 0) {
+                this.notification.showInfo(
+                    'Select month',
+                    ''
+                );
+                return
             }
             let formData = new URLSearchParams();
             if (this.dataEntryForm.value.calorificValue != '') {
@@ -1702,14 +1716,16 @@ export class Scope2TrackingComponent {
             });
         }
         if (this.categoryId == 2) {
+            if (this.selectMonths.length == 0) {
+                this.notification.showInfo(
+                    'Select month',
+                    ''
+                );
+                return
+            }
             let formData = new URLSearchParams();
             this.RefrigerantDE.typeID = this.dataEntry.typeID;
-            // this.EmissionFactor.forEach(ef => {
-            //     if (ef.subCatTypeID == this.dataEntry.typeID) {
-            //         this.RefrigerantDE.gHGEmission = ef.kgCO2e_kg;
-            //     }
-
-            // })
+         
             formData.set('subCategoryTypeId', (this.dataEntry.typeID).toString());
             formData.set('SubCategorySeedID', this.SubCatAllData
                 .manageDataPointSubCategorySeedID.toString());
@@ -1720,18 +1736,7 @@ export class Scope2TrackingComponent {
 
             formData.set('months', monthString);
             formData.set('year', this.dataEntry.year);
-            // this.RefrigerantDE.unit = this.dataEntry.unit;
-            // this.RefrigerantDE.note = this.dataEntry.note;
-            // this.RefrigerantDE.fileName = this.dataEntry.fileName;
-            // this.RefrigerantDE.filePath = this.dataEntry.filePath;
-            // this.RefrigerantDE.month = this.dataEntry.month;
-            // this.RefrigerantDE.year = this.dataEntry.year;
-            // this.RefrigerantDE.status = environment.pending;
-            // this.RefrigerantDE.manageDataPointSubCategoriesID =
-            //     this.SubCatAllData.id;
-            // this.RefrigerantDE.tenantID = this.loginInfo.tenantID;
-            // this.RefrigerantDE.submissionDate = new Date();
-
+        
             this.trackingService.newPostRegrigerantDataEntry(formData.toString()).subscribe({
                 next: (response) => {
                     if (response.success == true) {
@@ -1761,6 +1766,13 @@ export class Scope2TrackingComponent {
             });
         }
         if (this.categoryId == 3) {
+            if (this.selectMonths.length == 0) {
+                this.notification.showInfo(
+                    'Select month',
+                    ''
+                );
+                return
+            }
             let formData = new URLSearchParams();
             formData.set('NumberOfExtinguisher', this.FireExtinguisherDE.numberOfExtinguisher.toString());
             formData.set('unit', this.dataEntry.unit);
@@ -1771,7 +1783,6 @@ export class Scope2TrackingComponent {
             formData.set('year', this.dataEntry.year);
             formData.set('SubCategorySeedID', this.SubCatAllData
                 .manageDataPointSubCategorySeedID.toString());
-
 
             this.trackingService.newPostFireExtinguisherDataEntry(formData.toString()).subscribe({
                 next: (response) => {
@@ -1802,27 +1813,19 @@ export class Scope2TrackingComponent {
             });
         }
         if (this.categoryId == 6) {
+            if (this.selectMonths.length == 0) {
+                this.notification.showInfo(
+                    'Select month',
+                    ''
+                );
+                return
+            }
             if (this.VehicleDE.modeOfDE == 'Distance Travelled') {
                 this.VehicleDE.modeofDEID = 1;
-                // this.EmissionFactor.forEach(ef => {
-                //     if (ef.vehicleTypeID == this.VehicleDE.vehicleTypeID) {
-                //         this.VehicleDE.gHGEmission = ef.kgCO2e_km;
-                //     }
-                // })
+               
             }
             else {
                 this.VehicleDE.modeofDEID = 2;
-
-                // this.EmissionFactor.forEach(ef => {
-                //     if (ef.vehicleTypeID == this.VehicleDE.vehicleTypeID) {
-                //         if (ef.kgCO2e_litre != null) {
-                //             this.VehicleDE.gHGEmission = ef.kgCO2e_litre;
-                //         }
-                //         else {
-                //             this.VehicleDE.gHGEmission = ef.kgCO2e_kg;
-                //         }
-                //     }
-                // })
             }
             let formData = new URLSearchParams();
             formData.set('NoOfVehicles', this.VehicleDE.noOfVehicles.toString());
@@ -1851,37 +1854,11 @@ export class Scope2TrackingComponent {
                         else {
                             this.getDeliveryVehicleType();
                         }
-                        //this.GetAssignedDataPoint(this.facilityID);
-                        // this.trackingService.getrefdataentry(this.SubCatAllData.id, this.loginInfo.tenantID).subscribe({
-                        //     next: (response) => {
-                        //         this.commonDE = response;
-                        //     }
-                        // });
+                      
 
                         this.activeindex = 0;
                     }
-                }
-                // if (response == environment.DataEntrySaved) {
-                //     //this.GetAssignedDataPoint(this.facilityID);
-                //     this.trackingService.getvehicledataentry(this.SubCatAllData.id, this.loginInfo.tenantID).subscribe({
-                //         next: (response) => {
-                //             this.commonDE = response;
-                //             if (this.SubCatAllData.manageDataPointSubCategorySeedID == 10) {
-                //                 this.getPassengerVehicleType();
-                //             }
-                //             else {
-                //                 this.getDeliveryVehicleType();
-                //             }
-                //         }
-                //     });
-                //     this.activeindex = 0;
-                //     this.notification.showSuccess(
-                //         'Data entry added successfully',
-                //         'Success'
-                //     );
-                //     this.resetForm();
-                // }
-                ,
+                },
                 error: (err) => {
                     this.notification.showError(
                         'Data entry added failed.',
@@ -1893,6 +1870,13 @@ export class Scope2TrackingComponent {
             });
         }
         if (this.categoryId == 5) {
+            if (this.selectMonths.length == 0) {
+                this.notification.showInfo(
+                    'Select month',
+                    ''
+                );
+                return
+            }
             if (this.SubCatAllData.manageDataPointSubCategorySeedID == 9) {
                 var formData = new URLSearchParams();
                 formData.set('RegionID', this.RenewableElectricity.electricityRegionID.toString());
@@ -1903,12 +1887,7 @@ export class Scope2TrackingComponent {
                 formData.set('year', this.dataEntry.year);
                 formData.set('SubCategorySeedID', this.SubCatAllData
                     .manageDataPointSubCategorySeedID.toString());
-                // this.EmissionFactor.forEach(ef => {
-                //     if (ef.regionID == this.RenewableElectricity.electricityRegionID) {
-                //         this.RenewableElectricity.gHGEmission = ef.kgCO2e_kwh;
-                //     }
-
-                // })
+              
             }
             else {
                 var formData = new URLSearchParams();
@@ -1958,7 +1937,6 @@ export class Scope2TrackingComponent {
             formData.set('SubCategorySeedID', this.SubCatAllData
                 .manageDataPointSubCategorySeedID.toString());
 
-
             this.trackingService.newPostHeatandSteamDataEntry(formData.toString()).subscribe({
                 next: (response) => {
                     if (response.success == true) {
@@ -1990,6 +1968,8 @@ export class Scope2TrackingComponent {
             let formData = new URLSearchParams();
             formData.set('batch', this.batchId);
             formData.set('facility_id', this.facilityID);
+            formData.set('month', monthString);
+            formData.set('year', this.dataEntry.year);
             this.trackingService.submitPurchaseGoods(formData.toString()).subscribe({
                 next: (response) => {
                     console.log("api response", response);
@@ -2036,11 +2016,15 @@ export class Scope2TrackingComponent {
                 formData.set('area_occupied', form.value.area_occupied);
                 formData.set('averageNoOfDays', form.value.averageNoOfDays);
                 formData.set('facility_id', this.facilityID);
+                formData.set('month', monthString);
+                formData.set('year', this.dataEntry.year);
             } else if (this.storageTransporationChecked === true) {
                 formData.set('storagef_type', form.value.storage_type);
                 formData.set('area_occupied', form.value.area_occupied);
                 formData.set('averageNoOfDays', form.value.averageNoOfDays);
                 formData.set('facility_id', this.facilityID);
+                formData.set('month', monthString);
+                formData.set('year', this.dataEntry.year);
             } else if (this.vehcilestransporationchecked == true) {
                 formData.set('vehicle_type', this.selectedVehicleType);
                 formData.set('sub_category', this.subVehicleCategoryValue);
@@ -2048,6 +2032,8 @@ export class Scope2TrackingComponent {
                 formData.set('mass_of_products', form.value.mass_of_products);
                 formData.set('distanceInKms', form.value.distanceInKms);
                 formData.set('facility_id', this.facilityID);
+                formData.set('month', monthString);
+                formData.set('year', this.dataEntry.year);
             }
 
 
@@ -2245,7 +2231,8 @@ export class Scope2TrackingComponent {
             formData.set('workingdays', form.value.workingdays);
             formData.set('typeoftransport', typeoftransportStringfy);
             formData.set('facilities', this.facilityID);
-
+            formData.set('month', monthString);
+            formData.set('year', this.dataEntry.year);
 
             this.trackingService.uploadEmployeeCommunity(formData.toString()).subscribe({
                 next: (response) => {
@@ -2301,8 +2288,8 @@ export class Scope2TrackingComponent {
             formData.set('batch', this.batchId);
             formData.set('typeofhomeoffice', typeofhomeofficeStringfy);
             formData.set('facilities', this.facilityID);
-
-
+            formData.set('month', monthString);
+            formData.set('year', this.dataEntry.year);
             this.trackingService.uploadHomeOffice(formData.toString()).subscribe({
                 next: (response) => {
                     console.log("api response", response);
@@ -2489,11 +2476,15 @@ export class Scope2TrackingComponent {
                 formData.set('area_occupied', form.value.area_occupied);
                 formData.set('averageNoOfDays', form.value.averageNoOfDays);
                 formData.set('facility_id', this.facilityID);
+                formData.set('month', monthString);
+                formData.set('year', this.dataEntry.year);
             } else if (this.storageTransporationChecked === true) {
                 formData.set('storagef_type', form.value.storage_type);
                 formData.set('area_occupied', form.value.area_occupied);
                 formData.set('averageNoOfDays', form.value.averageNoOfDays);
                 formData.set('facility_id', this.facilityID);
+                formData.set('month', monthString);
+                formData.set('year', this.dataEntry.year);
             } else if (this.vehcilestransporationchecked == true) {
                 formData.set('vehicle_type', this.selectedVehicleType);
                 formData.set('sub_category', this.subVehicleCategoryValue);
@@ -2501,6 +2492,8 @@ export class Scope2TrackingComponent {
                 formData.set('mass_of_products', form.value.mass_of_products);
                 formData.set('distanceInKms', form.value.distanceInKms);
                 formData.set('facility_id', this.facilityID);
+                formData.set('month', monthString);
+                formData.set('year', this.dataEntry.year);
             }
 
 
@@ -2934,6 +2927,9 @@ export class Scope2TrackingComponent {
                 formData.set('franchise_space', form.value.franchise_space);
                 formData.set('facility_id', this.facilityID);
                 formData.set('unit', form.value.upfacilityUnits);
+                formData.set('month', monthString);
+                formData.set('year', this.dataEntry.year);
+               
             } if (this.franchiseMethodValue == 'Investment Specific method') {
                 formData.set('franchise_type', this.franchiseCategoryValue);
                 formData.set('sub_category', form.value.sub_categories);
@@ -2942,6 +2938,8 @@ export class Scope2TrackingComponent {
                 formData.set('scope2_emission', form.value.scope2_emission);
                 formData.set('facility_id', this.facilityID);
                 formData.set('unit', form.value.upfacilityUnits);
+                formData.set('month', monthString);
+                formData.set('year', this.dataEntry.year);
             }
 
 
@@ -2999,7 +2997,9 @@ export class Scope2TrackingComponent {
                 formData.set('scope1_emission', form.value.scope1_emission);
                 formData.set('scope2_emission', form.value.scope2_emission);
                 formData.set('equity_share', form.value.share_Equity);
-                formData.set('facility_id', this.facilityID);
+                formData.set('facilities', this.facilityID);
+                formData.set('month', monthString);
+                formData.set('year', this.dataEntry.year);
             } else if (this.investmentTypeValue == 'Equity investments' && this.franchiseMethodValue == 'Average data method') {
                 formData.set('investment_type', form.value.investment_type);
                 formData.set('category', form.value.investment_sector);
@@ -3007,7 +3007,9 @@ export class Scope2TrackingComponent {
                 formData.set('calculation_method', form.value.calculationmethod);
                 formData.set('investee_company_total_revenue', form.value.investe_company_revenue);
                 formData.set('equity_share', form.value.share_Equity);
-                formData.set('facility_id', this.facilityID);
+                formData.set('facilities', this.facilityID);
+                formData.set('month', monthString);
+                formData.set('year', this.dataEntry.year);
             } else if ((this.investmentTypeValue == 'Debt investments' || this.investmentTypeValue == 'Project finance') && this.franchiseMethodValue == 'Average data method') {
                 formData.set('investment_type', form.value.investment_type);
                 formData.set('category', form.value.investment_sector);
@@ -3016,7 +3018,9 @@ export class Scope2TrackingComponent {
                 formData.set('project_phase', form.value.projectPhase);
                 formData.set('project_construction_cost', form.value.project_construction_cost);
                 formData.set('equity_project_cost', form.value.equity_project_cost);
-                formData.set('facility_id', this.facilityID);
+                formData.set('facilities', this.facilityID);
+                formData.set('month', monthString);
+                formData.set('year', this.dataEntry.year);
             } else if ((this.investmentTypeValue == 'Debt investments' || this.investmentTypeValue == 'Project finance') && this.franchiseMethodValue == 'Investment Specific method') {
                 console.log(form.value.scope1_emission);
                 formData.set('investment_type', form.value.investment_type);
@@ -3026,7 +3030,9 @@ export class Scope2TrackingComponent {
                 formData.set('scope1_emission', form.value.scope1_emission);
                 formData.set('scope2_emission', form.value.scope2_emission);
                 formData.set('equity_project_cost', form.value.project_cost);
-                formData.set('facility_id', this.facilityID);
+                formData.set('facilities', this.facilityID);
+                formData.set('month', monthString);
+                formData.set('year', this.dataEntry.year);
 
             }
 

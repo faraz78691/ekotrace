@@ -14,7 +14,7 @@
                     </select>
                     <div class="mt-4">
                         <p class="mb-1 ct_fw_500 ">Financial Year</p>
-                        <p-calendar class="w-100 ct_input_dark_text_145" [(ngModel)]="year" ngModel name="year" year 
+                        <p-calendar class="w-100 ct_input_dark_text_145" [(ngModel)]="year" ngModel name="year" year   (ngModelChange)="onFacilityChange($event)"
                          view="year" dateFormat="yy"   inputId="yearpicker"
                          styleClass="pcalender"
                         [showIcon]="true"></p-calendar>
@@ -86,7 +86,7 @@
                     <div class="ct_d_flex_1 ct_grey_brdr_btm1 pb-3 mb-3">
                         <div>
                             <h5 class="ct_font_16">Waste types</h5>
-                            <h3><strong>5.987,34</strong></h3>
+                            <h3><strong>{{totaltype | number:'1.2-2'}}</strong></h3>
                             <p class="mb-0">tCO2e</p>
                         </div>
                        
@@ -108,12 +108,12 @@
                     <div class="ct_d_flex_1 ct_grey_brdr_btm1 pb-3 mb-3">
                         <div>
                             <h5 class="ct_font_16">Hazardous & Non Hazardous waste</h5>
-                            <h3><strong>5.987,34</strong></h3>
+                            <h3><strong>{{hazardTotal | number:'1.2-2'}}</strong></h3>
                             <p class="mb-0">tCO2e</p>
                         </div>
                         
                     </div>
-                    <div id="ct_emission_by_month" *ngIf="chartOptions">
+                    <div id="ct_emission_by_month" *ngIf="groupChart">
                         <apx-chart
             [series]="groupChart.series"
             [chart]="groupChart.chart"
@@ -135,7 +135,7 @@
                 <div class="ct_d_flex_1 ct_grey_brdr_btm1 pb-3 mb-3">
                     <div>
                         <h5 class="ct_font_16"><strong>Treatment methods</strong></h5>
-                        <h3><strong>2,563</strong></h3>
+                        <h3><strong>{{hazardTotal | number:'1.2-2'}}</strong></h3>
                         <p class="mb-0">tCO2e</p>
                     </div>
                   
@@ -163,7 +163,7 @@
                     </div>
                    
                 </div>
-                <div id="By_employee_location" *ngIf="pieChart">
+                <div id="By_employee_location" *ngIf="donotOptions1">
                     <apx-chart
                         [series]="donotOptions1.series"
                         [chart]="donotOptions1.chart"
@@ -184,7 +184,7 @@
                     </div>
                   
                 </div>
-                <div id="ct_net_zeo_donut" *ngIf="groupChart">
+                <div id="ct_net_zeo_donut" *ngIf="donotOptions1">
                     <apx-chart
                         [series]="donotOptions1.series"
                         [chart]="donotOptions1.chart"

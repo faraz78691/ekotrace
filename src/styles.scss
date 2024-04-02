@@ -717,7 +717,7 @@ box-shadow: 0px 4px 10.2px 0px rgba(0, 0, 0, 0.17);
 }
 
 .p-inputtext {
-    color: #fff !important;
+    color: #000000 !important;
 }
 
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
@@ -1497,6 +1497,7 @@ padding-block: 7px;
 .ct_group_select_dark_124 .p-dropdown.p-component span#pr_id_4_label {
     color: #333 !important;
 }
+
 .ct_input_dark_text_121 span {
     color: #333 !important;
   }
@@ -1700,7 +1701,22 @@ nav{
     overflow-y: auto;
 }
 
+.ct_input_dark_text_14 .p-inputtext{
+    color: #000!important;
+  }
 
+.tooltip-inner {
+    max-width: 200px;
+    padding: 3px 8px;
+    color: #fff;
+    text-align: center;
+    background-color: #aaa;
+    border-radius: .25rem;
+}
+.p-tooltip .p-tooltip-text {
+    background-color: #fff !important;
+    color: #000 !important;
+}
 @media screen and (max-width:500px){
     .ct_logo_collape pf-image.pl-4.ng-star-inserted.hydrated {
         padding-left: 0px !important;

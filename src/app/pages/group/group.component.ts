@@ -293,7 +293,7 @@ console.log("Dsg")
     GetAllFacility() {
         let tenantId = this.loginInfo.tenantID;
         this.facilitydata = false;
-        this.facilityService.newGetFacilityGroupList(tenantId).subscribe((response) => {
+        this.facilityService.newGetFacilityByTenant(tenantId).subscribe((response) => {
             this.facilityList = response;
             if (this.facilityList.length === 0) {
                 this.facilitydata = true;

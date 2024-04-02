@@ -57,6 +57,8 @@ export class WasteComponent {
   downWaste:string;
   hazardLabel:any[]= [];
   hazardSeries:any[]= [];
+  totaltype:any
+  hazardTotal:any
 
   constructor(private route: ActivatedRoute,
     private facilityService: FacilityService,
@@ -66,66 +68,66 @@ export class WasteComponent {
 
    
 
-    this.chartOptions = {
-      series: [
-        {
-          name: "Net Profit",
-          data: [44, 55, 57, 56, 61, 58, 63]
-        },
-        {
-          name: "Revenue",
-          data: [76, 85, 101, 98, 87, 105, 91]
-        }
+    // this.chartOptions = {
+    //   series: [
+    //     {
+    //       name: "Net Profit",
+    //       data: [44, 55, 57, 56, 61, 58, 63]
+    //     },
+    //     {
+    //       name: "Revenue",
+    //       data: [76, 85, 101, 98, 87, 105, 91]
+    //     }
   
-      ],
-      chart: {
-        type: "bar",
-        height: 350
-      },
-      plotOptions: {
-        bar: {
-          horizontal: false,
-          columnWidth: "55%",
+    //   ],
+    //   chart: {
+    //     type: "bar",
+    //     height: 350
+    //   },
+    //   plotOptions: {
+    //     bar: {
+    //       horizontal: false,
+    //       columnWidth: "55%",
           
-        }
-      },
-      dataLabels: {
-        enabled: false
-      },
-      stroke: {
-        show: true,
-        width: 2,
-        colors: ["transparent"]
-      },
-      xaxis: {
-        categories: [
-          "Feb",
-          "Mar",
-          "Apr",
-          "May",
-          "Jun",
-          "Jul",
-          "Aug",
-          "Sep",
-          "Oct"
-        ]
-      },
-      yaxis: {
-        title: {
-          text: "$ (thousands)"
-        }
-      },
-      fill: {
-        opacity: 1
-      },
-      tooltip: {
-        y: {
-          formatter: function(val) {
-            return "$ " + val + " thousands";
-          }
-        }
-      }
-    };
+    //     }
+    //   },
+    //   dataLabels: {
+    //     enabled: false
+    //   },
+    //   stroke: {
+    //     show: true,
+    //     width: 2,
+    //     colors: ["transparent"]
+    //   },
+    //   xaxis: {
+    //     categories: [
+    //       "Feb",
+    //       "Mar",
+    //       "Apr",
+    //       "May",
+    //       "Jun",
+    //       "Jul",
+    //       "Aug",
+    //       "Sep",
+    //       "Oct"
+    //     ]
+    //   },
+    //   yaxis: {
+    //     title: {
+    //       text: "$ (thousands)"
+    //     }
+    //   },
+    //   fill: {
+    //     opacity: 1
+    //   },
+    //   tooltip: {
+    //     y: {
+    //       formatter: function(val) {
+    //         return "$ " + val + " thousands";
+    //       }
+    //     }
+    //   }
+    // };
     this.pieChart = {
       series: [44, 55, 13, 43, 22],
       chart: {
@@ -232,12 +234,16 @@ export class WasteComponent {
         this.topFIveE = topWiseResult.top5Emissions;
         this.seriesScopeDonut2 = topWiseResult.top5Emissions;
         this.labelScopeDonut2 = topWiseResult.category;
+        this.totaltype = topWiseResult.totalemission;
       } else {
         // Handle absence of topWise result or error
       }
       if (getALLEmisions) {
         this.hazardSeries = getALLEmisions.series[0].data;
         this.hazardLabel = getALLEmisions.hazardousmonth;
+        this.hazardTotal = getALLEmisions.totalemssion;
+    
+
        
         this.donotOptions1 = {
           series: this.hazardSeries,

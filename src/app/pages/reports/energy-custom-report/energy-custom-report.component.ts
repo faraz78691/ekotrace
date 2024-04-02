@@ -120,19 +120,21 @@ export class EnergyCustomReportComponent {
                 this.GetAllFacility();
             }
         }
-    }
+    };
+
     //Retrieves all facilities for a tenant
     GetAllFacility() {
         let tenantId = this.loginInfo.tenantID;
-        this.facilityService.FacilityDataGet(tenantId).subscribe((response) => {
+        this.facilityService.newGetFacilityByTenant(tenantId).subscribe((response) => {
             this.facilityData = response;
+            this.GetAssignedDataPoint(this.facilityData[0].ID)
             this.lfcount = this.facilityData.length;
         });
     }
     //opens calendar
     openCalendar(calendar: Calendar) {
         calendar.toggle();
-    }
+    };
     //Checks the facility ID and calls the GetAssignedDataPoint function with the provided ID.
     checkFacilityID(id) {
         this.GetAssignedDataPoint(id);
@@ -233,7 +235,7 @@ export class EnergyCustomReportComponent {
         });
 
         doc.save('report.pdf');
-    }
+    };
     //method for generate a report
     generateReport() {
         this.CustomReportData = [];
