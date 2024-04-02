@@ -114,7 +114,7 @@ export class FacilityService {
     }
     public newManageDataPointSave(data: any): Observable<any> {
         return this.http.post(
-            'http://192.168.1.31:4003/AddassignedDataPointbyfacility',
+               environment.baseUrl + '/AddassignedDataPointbyfacility',
             data
         );
     }

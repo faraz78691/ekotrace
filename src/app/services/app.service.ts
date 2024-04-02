@@ -38,15 +38,15 @@ export class AppService {
 
         this.loginInfo = new LoginInfo();
   
-        // return this.http.post<any>(
-        //     `${environment.baseUrl}/login`,
-        //     credentials
-        // );
-  
         return this.http.post<any>(
-            `http://192.168.1.31:4003/login`,
+            `${environment.baseUrl}/login`,
             credentials
         );
+  
+        // return this.http.post<any>(
+        //     `http://192.168.1.31:4003/login`,
+        //     credentials
+        // );
     }
 
     public refreshToken(tokenModel): Observable<LoginInfo> {
