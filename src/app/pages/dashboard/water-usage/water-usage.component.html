@@ -14,7 +14,7 @@
                     </select>
                     <div class="mt-4">
                         <p class="mb-1 ct_fw_500">Financial Year</p>
-                        <p-calendar class="w-100" [(ngModel)]="year" ngModel name="year" year 
+                        <p-calendar class="w-100 ct_input_dark_text_145" [(ngModel)]="year" ngModel name="year" year 
                          view="year" dateFormat="yy"   inputId="yearpicker"
                          styleClass="pcalender"
                         [showIcon]="true"></p-calendar>
@@ -38,11 +38,11 @@
                     <h4>Waste disposed  (tonnes)</h4>
                     <div class="row pt-3">
                         <div class="col-lg-6 mb-2">
-                            <h5>5.3 K</h5>
+                            <h5>{{totalDisposed}}</h5>
                         </div>
-                        <div class="col-lg-6 mb-2">
+                        <!-- <div class="col-lg-6 mb-2">
                             <h5><i class="fa-solid fa-caret-up ct_green_up" ></i> 23%</h5>
-                        </div>
+                        </div> -->
                         
                     </div>
                   </div>
@@ -52,11 +52,11 @@
                     <h4>Total water consumed</h4>
                     <div class="row  pt-3">
                         <div class="col-lg-6 mb-2">
-                            <h5>5.3 K</h5>
+                            <h5>{{totalConsumed}}</h5>
                         </div>
-                        <div class="col-lg-6 mb-2">
+                        <!-- <div class="col-lg-6 mb-2">
                             <h5><i class="fa-solid fa-caret-up ct_green_up" ></i> 23%</h5>
-                        </div>
+                        </div> -->
                         
                     </div>
                   </div>
@@ -66,11 +66,11 @@
                     <h4>Total water  Discharged</h4>
                     <div class="row  pt-3">
                         <div class="col-lg-6 mb-2">
-                            <h5>5.3 K</h5>
+                            <h5>{{totalDischarged}}</h5>
                         </div>
-                        <div class="col-lg-6 mb-2">
+                        <!-- <div class="col-lg-6 mb-2">
                             <h5><i class="fa-solid fa-caret-up ct_green_up" ></i> 23%</h5>
-                        </div>
+                        </div> -->
                         
                     </div>
                   </div>
@@ -80,11 +80,11 @@
                     <h4>Total water treated</h4>
                     <div class="row  pt-3">
                         <div class="col-lg-6 mb-2">
-                            <h5>5.3 K</h5>
+                            <h5>{{totalTreated}}</h5>
                         </div>
-                        <div class="col-lg-6 mb-2">
+                        <!-- <div class="col-lg-6 mb-2">
                             <h5><i class="fa-solid fa-caret-up ct_green_up" ></i> 23%</h5>
-                        </div>
+                        </div> -->
                         
                     </div>
                   </div>

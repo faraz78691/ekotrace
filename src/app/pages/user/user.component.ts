@@ -71,7 +71,7 @@ export class UserComponent {
             let jsonObj = JSON.parse(userInfo);
             this.loginInfo = jsonObj as LoginInfo;
         }
-        this.getTenantsDetailById(Number(this.loginInfo.tenantID));
+        // this.getTenantsDetailById(Number(this.loginInfo.tenantID));
         this.GetAllFacility();
         this.GetAllUsers();
         this.GetAllRoles();
@@ -96,7 +96,7 @@ export class UserComponent {
                     ? 'defaultimg.png'
                     : response.logoName);
         });
-    }
+    };
     //The onSubmit function handles form submission, including validation, user addition, and user update, with success/error notifications.
     onSubmit(x: any) {
         if (
@@ -120,18 +120,7 @@ export class UserComponent {
                 if (this.loginInfo.role == 'Manager') {
                     this.admininfo.facilityID = this.loginInfo.facilityID;
                 }
-                // let json = {
-                //     username: this.admininfo.username,
-                //     email: this.admininfo.email,
-                //     password: 'Test@12345',
-                //     firstName: this.admininfo.firstName,
-                //     lastName: this.admininfo.lastName,
-                //     roleID: this.admininfo.roleID,
-                //     role: this.admininfo.role,
-                //     tenantId: this.loginInfo.tenantID,
-                //     facilityID: this.admininfo.facilityID
-                // };
-
+         
                 const  formData = new URLSearchParams();
                 formData.set('email',this.admininfo.email)
                 formData.set('username',this.admininfo.username)
@@ -176,22 +165,7 @@ export class UserComponent {
                     'Warning'
                 );
             } else {
-                let json = {
-                    username: this.admininfo.username,
-                    email: this.admininfo.email,
-                    password: 'Test@12345',
-                    firstName: this.admininfo.firstname,
-                    lastName: this.admininfo.lastname,
-                    roleID: this.admininfo.roleID,
-                    role: this.admininfo.role,
-                    tenantId: this.loginInfo.tenantID,
-                    facilityID:
-                        this.admininfo.facilityID == null
-                            ? 0
-                            : this.admininfo.facilityID,
-                    id: this.admininfo.userID
-                };
-
+            
                 const  formData = new URLSearchParams();
                 formData.set('email',this.admininfo.email)
                 formData.set('username',this.admininfo.username)
@@ -201,7 +175,7 @@ export class UserComponent {
                 formData.set('roleID',this.admininfo.roleID)
                 formData.set('tenantId',this.loginInfo.tenantID.toString())
                 formData.set('facilityID',this.admininfo.facilityID.toString())
-                this.UserService.UpdateUsers(json).subscribe({
+                this.UserService.NUpdateUsers(formData.toString()).subscribe({
                     next: (response) => {
                         this.notification.showSuccess(
                             'User Update successfully',
@@ -212,11 +186,11 @@ export class UserComponent {
                         this.GetAllUsers();
                     },
                     error: (err) => {
+                        console.error(err);
                         this.notification.showError(
                             'Update User failed.',
                             'Error'
                         );
-                        console.error(err);
                         this.isloading = false;
                     },
                     complete: () => console.info('User Updated')

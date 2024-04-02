@@ -302,7 +302,7 @@ export class GhgEmmissionsComponent implements OnDestroy {
           series: this.seriesScopeDonut2,
           chart: {
             width: "100%",
-            height: 350,
+            height: 320,
             type: "donut"
           },
           dataLabels: {
@@ -317,7 +317,7 @@ export class GhgEmmissionsComponent implements OnDestroy {
             floating: false,
             horizontalAlign: 'left',
           },
-          colors: ['#F3722C', '#0068F2', '#F8961E', '#ACE1AF', '#7BAFD4', '#B284BE'],
+          colors: ['#F3722C', '#0068F2', '#F8961E', '#ACE1AF', '#7BAFD4', '#B284BE','#98817B'],
           labels: this.labelScopeDonut2,
           responsive: [
             {

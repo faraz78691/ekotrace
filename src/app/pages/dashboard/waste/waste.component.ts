@@ -368,7 +368,6 @@ export class WasteComponent {
           }
         };
 
-        // this.donotOptions3 = {
         //   series: this.seriesScopeDonut3,
         //   chart: {
         //     width: "100%",
@@ -483,7 +482,7 @@ export class WasteComponent {
         opacity: 1
       }
     };
-    // this.previoucsOptions = {
+
     //   dataLabels: {
     //     enabled: false
     //   },

@@ -32,6 +32,9 @@ export class GroupService {
     }
     public newEditGroup( groupdetails) {
         return this.http.post(environment.baseUrl + '/Updategroupmapping' , groupdetails);
+    };
+    public newUpdatePackage( packageDetails) {
+        return this.http.post(environment.baseUrl + '/Updategroupmapping' , packageDetails);
     }
 
     public SaveGroups(groupdetails): Observable<any> {

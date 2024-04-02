@@ -201,51 +201,24 @@ export class NewBillingComponent {
   
   //method for update group detail by id
   updateGroup(id: any, data: NgForm) {
-      // this.groupdetails.groupMappings = [];
-      // if (this.groupdetails.groupBy === 'Country') {
-      //     this.selectedCountry.forEach((val) => {
-      //         this.groupMappingDetails = new GroupMapping();
-      //         this.groupMappingDetails.stateId = 0;
-      //         this.groupMappingDetails.groupId = 0;
-      //         this.groupMappingDetails.facilityId = 0;
-      //         this.groupMappingDetails.countryId = val;
-      //         this.groupdetails.groupMappings.push(this.groupMappingDetails);
-      //     });
-      // } else if (this.groupdetails.groupBy === 'State') {
-      //     this.selectedState.forEach((val) => {
-      //         this.groupMappingDetails = new GroupMapping();
-      //         this.groupMappingDetails.stateId = val;
-      //         this.groupMappingDetails.countryId = 0;
-      //         this.groupMappingDetails.groupId = 0;
-      //         this.groupMappingDetails.facilityId = 0;
-      //         this.groupdetails.groupMappings.push(this.groupMappingDetails);
-      //     });
-      // } else {
-      //     this.selectedFaciltiy.forEach((val) => {
-      //         this.groupMappingDetails = new GroupMapping();
-      //         this.groupMappingDetails.stateId = 0;
-      //         this.groupMappingDetails.countryId = 0;
-      //         this.groupMappingDetails.groupId = 0;
-      //         this.groupMappingDetails.facilityId = val;
-      //         this.groupdetails.groupMappings.push(this.groupMappingDetails);
-      //     });
-      // }
+   
       let tenantID = this.loginInfo.tenantID;
-      let formData = new URLSearchParams();
-      formData.set('groupId',id);
-      formData.set('groupname',this.groupdetails.groupname);
+      const billingForm = new URLSearchParams();
+      billingForm.set('package_id', this.packageID)
+      billingForm.set('facility_id', [this.selectedFacility].toString())
       // formData.set('tenantID',  this.groupdetails.tenantID.toString());
-      formData.set('facility',this.selectedFaciltiy);
-      this.GroupService.newEditGroup(formData.toString()).subscribe({
+   
+      this.UserService.newSavepackages(billingForm.toString()).subscribe({
           next: (response) => {
               console.log(response);
             //   this.newGetAllGroups(tenantID);
 
               this.visible = false;
               this.notification.showSuccess(
-                  'Group Edited successfully',
+                  'Package Assigned successfully',
                   'Success'
               );
+              this.GetAllPackages()
           },
           error: (err) => {
               this.notification.showError('Group edited failed.', 'Error');
@@ -331,14 +304,16 @@ export class NewBillingComponent {
       this.resetForm();
   }
   //sets the selected group details
-  selectGroup(group: Group,index: number) {
+  selectGroup(group: any,index: number) {
     console.log(group);
+   const IDS = group.packageusers.map(items => items.ID);
+   console.log(IDS)
+   this.selectedFacility = IDS;
       this.selectedRowIndex = index;
+      this.packageID = group.id;
+      console.log(this.packageID);
       this.groupdetails = group;
-      console.log(
-          '🚀 ~ file: group.component.ts:304 ~ GroupComponent ~ selectGroup ~ this.groupdetails:',
-          this.groupdetails
-      );
+     
   }
   //The removeCss function is used to remove CSS styles applied to the body element
   removeCss() {

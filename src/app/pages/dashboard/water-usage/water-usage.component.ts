@@ -51,6 +51,11 @@ export class WaterUsageComponent {
   downstreamArray: any[] = [];
   vendorData: any[] = [];
   labelSeries1: any[] = [];
+  waterDisposed:any;
+  totalConsumed:any;
+  totalDischarged:any;
+  totalTreated:any;  
+  totalDisposed:any;  
 
   constructor(private route: ActivatedRoute,
     private facilityService: FacilityService,
@@ -238,8 +243,9 @@ export class WaterUsageComponent {
         this.Waterwithdrawnby_source(this.selectedFacility);
         this.dashboardWaterDischargedbydestination(this.selectedFacility);
         this.dashboardWaterTreated_nonTreated(this.selectedFacility);
+        this.waterWaste(this.selectedFacility);
         // this.getTopFiveE(this.selectedFacility);
-        //  this.getScopeDonnutsE(this.selectedFacility);
+        //  this.getScopeDonnutsE(this.selectedFacility);85
         //  this.getActivityE(this.selectedFacility);
         //  this.getVendorE(this.selectedFacility)
       }
@@ -280,7 +286,12 @@ export class WaterUsageComponent {
           }
         },
         dataLabels: {
-          enabled: false
+          enabled: false,
+          style: {
+            fontSize: "140px",
+            fontFamily: "Helvetica, Arial, sans-serif",
+            fontWeight: "bold"
+          }
         },
         stroke: {
           show: true,
@@ -301,12 +312,24 @@ export class WaterUsageComponent {
             "Jan",
             "Feb",
             "Mar"
-          ]
-        },
+          ],
+          labels: {
+            style: {
+              fontSize: '14px',
+              fontWeight: 500,
+            }
+        }
+      },
         yaxis: {
-          title: {
-            text: "$ (thousands)"
-          }
+          labels: {
+            style: {
+              fontSize: '14px',
+              fontWeight: 500,
+            }
+        }
+          // title: {
+          //   text: "$ (thousands)"
+          // }
         },
         fill: {
           opacity: 1
@@ -328,6 +351,23 @@ export class WaterUsageComponent {
 
 
 
+    });
+  };
+
+  waterWaste(facility) {
+    console.log(this.selectedFacility);
+    let tenantId = this.loginInfo.tenantID;
+    const formData = new URLSearchParams();
+   
+    // formData.set('year', this.year.getFullYear().toString());
+    formData.set('year', this.year.getFullYear().toString());
+    formData.set('facilities', facility);
+    this.dashboardService.waterWaste(formData.toString()).subscribe((result: any) => {
+      this.totalDischarged = result.water_discharge
+      this.totalConsumed = result.water_consumed
+       this.totalTreated =result.water_treated
+       this.totalDisposed =result.water_withdrawn;
+   
     });
   };
  dashboardWaterDischargedbydestination(facility) {
@@ -384,12 +424,19 @@ export class WaterUsageComponent {
             "Jan",
             "Feb",
             "Mar"
-          ]
-        },
+          ],
+          labels: {
+            style: {
+              fontSize: '14px',
+              fontWeight: 500,
+            }
+        }
+        }
+      ,
         yaxis: {
-          title: {
-            text: "$ (thousands)"
-          }
+          // title: {
+          //   text: "$ (thousands)"
+          // }
         },
         fill: {
           opacity: 1
@@ -466,6 +513,10 @@ export class WaterUsageComponent {
   };
 
   onFacilityChange(event: any) {
+    this.waterWaste(this.selectedFacility);
+    this.dashboardWaterDischargedbydestination(this.selectedFacility);
+    this.dashboardWaterTreated_nonTreated(this.selectedFacility);
+    this.Waterwithdrawnby_source(this.selectedFacility);
     // console.log(event.target.value)
     // console.log(this.selectedFacility);
     // this.emssionByTravel(this.selectedFacility)

@@ -47,6 +47,9 @@ export class FacilityService {
     public FacilityDataPut(id, data): Observable<any> {
         return this.http.put(environment.baseUrl + 'Facilities/' + id, data);
     };
+    public FacilityDataUpdate( data): Observable<any> {
+        return this.http.post(environment.baseUrl + 'Updatefacilities/' ,data);
+    };
 
     public FacilityDataGet(tenantId): Observable<Facility[]> {
         return this.http.get<Facility[]>(
@@ -68,7 +71,7 @@ export class FacilityService {
     }
     public GetCountry(): Observable<Location[]> {
         return this.http.get<Location[]>(
-            this.localapiURL + '/getcountries'
+          environment.baseUrl + '/getcountries'
         );
     }
     public GetState(id): Observable<Location[]> {
@@ -78,7 +81,7 @@ export class FacilityService {
     }
     public newGetState(data): Observable<Location[]> {
         return this.http.post<Location[]>(
-            this.localapiURL  + '/getstateByCountries', data
+          environment.baseUrl  + '/getstateByCountries', data
         );
     }
     public GetCity(id): Observable<Location[]> {
@@ -88,7 +91,7 @@ export class FacilityService {
     };
     public newGetCity(id): Observable<Location[]> {
         return this.http.post<Location[]>(
-            this.localapiURL + '/getcityBystate' , id
+          environment.baseUrl + '/getcityBystate' , id
         );
     };
 

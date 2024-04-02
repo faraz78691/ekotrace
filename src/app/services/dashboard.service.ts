@@ -361,13 +361,16 @@ export class DashboardService {
         return this.http.post(this.apiURL + '/businessdashboardemssionByTravel', admininfo);
     };
     public Waterwithdrawnby_source(admininfo) {
-        return this.http.post('/http://192.168.1.31:4003/dashboardWaterwithdrawnby_source', admininfo);
+        return this.http.post('http://13.200.247.29:4000/dashboardWaterwithdrawnby_source', admininfo);
+    };
+    public waterWaste(admininfo) {
+        return this.http.post('http://13.200.247.29:4000/dashboardWaterTotal', admininfo);
     };
     public WaterDischargedbydestination(admininfo) {
-        return this.http.post('http://192.168.1.31:4003/dashboardWaterDischargedbydestination', admininfo);
+        return this.http.post('http://13.200.247.29:4000/dashboardWaterDischargedbydestination', admininfo);
     };
     public dashboardWaterTreated_nonTreated(admininfo) {
-        return this.http.post('http://192.168.1.31:4003/dashboardWaterTreated_nonTreated', admininfo);
+        return this.http.post('http://13.200.247.29:4000/dashboardWaterTreated_nonTreated', admininfo);
     };
     public businessdashboardemssionByAir(admininfo) {
         return this.http.post(this.apiURL + '/businessdashboardemssionByAir', admininfo);

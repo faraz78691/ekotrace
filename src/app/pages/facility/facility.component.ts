@@ -217,18 +217,31 @@ export class FacilityComponent {
         this.selectedCountry = this.countryData.find(
             (country) => country.Name === this.facilityDetails.country_name
         );
-        this.facilityDetails.CountryId = this.selectedCountry.id;
+        this.facilityDetails.CountryId = this.selectedCountry.ID;
         this.selectedState = this.stateData.find(
             (state) => state.Name === this.facilityDetails.state_name
         );
-        this.facilityDetails.StateId = this.selectedState.id;
+        this.facilityDetails.StateId = this.selectedState.ID;
         this.selectedCity = this.cityData.find(
-            (city) => city.Name === this.facilityDetails.city_name
+         
+            (city)  =>
+            city.Name === this.facilityDetails.city_name
+            
         );
-        this.facilityDetails.CityId = this.selectedCity.id;
+        this.facilityDetails.CityId = this.selectedCity.ID;
         let tenantId = this.loginInfo.tenantID;
+        let formdata = new URLSearchParams();
+        formdata.set('AssestName', this.facilityDetails.AssestName)
+        formdata.set('tenantID', this.facilityDetails.tenantID.toString())
+        formdata.set('AssestType', this.facilityDetails.AssestType)
+        formdata.set('EquityPercentage', (this.facilityDetails.EquityPercentage).toString());
+        formdata.set('Address', this.facilityDetails.Address);
+        formdata.set('IsWaterStreenArea', (this.facilityDetails.IsWaterStreenArea).toString());
+        formdata.set('CityId', (this.selectedCity.ID).toString());
+        formdata.set('CountryId', this.selectedCountry.ID);
+        formdata.set('StateId', (this.selectedState.ID).toString());
         this.facilityService
-            .FacilityDataPut(id, this.facilityDetails)
+            .FacilityDataUpdate(formdata.toString())
             .subscribe({
                 next: (response) => {
                     this.facilityGet(tenantId);
@@ -442,7 +455,7 @@ export class FacilityComponent {
         formdata.set('CountryID', this.selectedCountry.ID)
         this.facilityService.newGetState(formdata.toString()).subscribe({
             next: (response) => {
-                console.log(response);
+             
                 this.stateData = response;
                 // this.searchCity();
             }
@@ -546,7 +559,7 @@ export class FacilityComponent {
                 // ],
 
 
-                console.log(this.scope1Category);
+             
                 this.scope2Category = response.scope2;
                 this.scope3Category = response.scope3;
                 // this.seedData.forEach((seed) => {
