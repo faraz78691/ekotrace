@@ -1,5 +1,5 @@
-<div class="container-fluid">
-    <div class="row mb-4 pt-4">
+<div class="container-fluid px-0">
+    <div class="row mb-0 pt-0">
         <!-- <div class="col-sm-12" [ngClass]="
                 this.updatedtheme === 'dark' ? 'headlinetextD' : 'headlinetextL'
             ">
@@ -8,9 +8,9 @@
 
 
     </div>
-    <div class="row pt-2 ml-0 mx-0 px-4">
+    <div class="row pt-2 ml-0 mx-0 px-0">
         <div class="col-4  mb-4  px-2">
-            <div class=" TrackingDiv-border Dashboard-tab ct_dash_board_tab "
+            <div class=" TrackingDiv-border Dashboard-tab ct_dash_board_tab ct_hide_scroll_239"
                 [ngClass]="facilitynothavedp === 'block' ? 'fornodata' : ''">
 
 
@@ -564,10 +564,8 @@
 
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="trackingFooter"
-                                *ngIf="categoryId ==1 || categoryId == 2 ||   categoryId == 3  || categoryId == 4 || categoryId == 5 || categoryId == 6 || categoryId == 6 || categoryId == 7">
+                                <div class="trackingFooter"
+                                *ngIf="categoryId ==1 || categoryId == 2 ||   categoryId == 3  || categoryId == 4 || categoryId == 5 || categoryId == 6 ||  categoryId == 7">
                                 <div class="row my-3 mb-5 pb-5 mx-2">
                                     <div class="col-12">
                                         <label for="fname ">Attachments</label>
@@ -586,6 +584,9 @@
                                     </div>
                                 </div>
                             </div>
+                            </div>
+
+                            
 
                             <!-- scope 3 categores stats from here -->
                             <div class="trackingFooter" *ngIf="categoryId ==8">

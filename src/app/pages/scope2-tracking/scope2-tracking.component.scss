@@ -302,7 +302,7 @@
 
 ::-webkit-scrollbar {
   background-color: transparent !important;
-  width: 10px !important;
+  width: 5px !important;
 }
 
 // .tabviewclass {
@@ -337,8 +337,10 @@
 }
 
 .trackingContent {
-  height: 350px !important;
-  overflow-y: scroll !important;
+  height: auto !important;
+  // max-height: 350px;
+  overflow-y: auto !important;
+  overflow-x: hidden;
 
 }
 
@@ -633,9 +635,9 @@ margin-top: -37px;
 }
 .ct_overflow_box {
 height: auto;
-max-height: 410px;
+max-height: 338px;
 overflow-y: auto;
-padding-block: 15px;
+// padding-block: 15px;
 }
 
 #DPRow.ct_scope_3_cata_list[_ngcontent-wcg-c190] {

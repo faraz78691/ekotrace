@@ -20,7 +20,7 @@ export class CompanyService {
 
     public getTenantsDataById(id: number): Observable<CompanyDetails> {
         return this.http.get<CompanyDetails>(
-            environment.baseUrl + 'Tenants/' + id
+            environment.baseUrl + '/getFacilityByTenantId/' + id
         );
     };
     public newgetTenantsDataById(id: string): Observable<CompanyDetails> {
