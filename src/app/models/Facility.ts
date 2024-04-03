@@ -18,6 +18,7 @@ export class Facility {
     modifiedDate = new Date();
     Active = true;
     ID: number;
+    id: number;
     UserList: AssignedUser[];
     userInfoModels: AssignedUser[];
     manageDataPoints: ManageDataPoint[];

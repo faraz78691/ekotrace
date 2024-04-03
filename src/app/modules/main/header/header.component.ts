@@ -75,7 +75,7 @@ export class HeaderComponent implements OnInit {
             ) {
                 // this.getTenantById(Number(this.loginInfo.tenantID));
              
-                this.GetFacilityGroupList(Number(this.loginInfo.tenantID));
+                // this.GetFacilityGroupList(Number(this.loginInfo.tenantID));
             }
                   this.GetFacilityGroupList(this.loginInfo.tenantID);
         }
@@ -119,7 +119,7 @@ export class HeaderComponent implements OnInit {
     }
 
     checkFacilityID() {
-        console.log("this.selectedID",this.selectedFacilityID);
+    
         localStorage.setItem('SelectedfacilityID', this.selectedFacilityID.id);
         localStorage.setItem('Flag', this.selectedFacilityID.flag);
     };

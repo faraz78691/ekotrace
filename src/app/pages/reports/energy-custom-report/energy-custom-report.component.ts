@@ -70,13 +70,15 @@ export class EnergyCustomReportComponent {
     facilitynothavedp = 'flex';
     facilityData: Facility[] = [];
     years: number[] = [];
-    selectedDataPoints: any[];
+    selectedDataPoints: number;
     isDropdownOpen = false;
     StationaryCombustion: EmissionFactor = new EmissionFactor();
     yearRangeOptions: string;
     kgCO2e: number;
+    selectedCategory: any;
     lfcount: number = 0;
     selectMonths: any[] = [];
+    reportData: any[] = [];
     CustomReportData: CustomReportModel[] = [];
     reportmonths: any[] = [
         { name: 'Jan', value: 'Jan' },
@@ -101,7 +103,6 @@ export class EnergyCustomReportComponent {
         this.AssignedDataPoint = [];
     };
 
-  
 
     ngOnInit() {
         this.loginInfo = new LoginInfo();
@@ -112,14 +113,15 @@ export class EnergyCustomReportComponent {
             this.facilityID = localStorage.getItem('SelectedfacilityID');
             this.GetAllFacility();
         }
-    }
+    };
+
     ngDoCheck() {
-        if (localStorage.getItem('FacilityCount') != null) {
-            let fcount = localStorage.getItem('FacilityCount');
-            if (this.lfcount != Number(fcount)) {
-                this.GetAllFacility();
-            }
-        }
+        // if (localStorage.getItem('FacilityCount') != null) {
+        //     let fcount = localStorage.getItem('FacilityCount');
+        //     if (this.lfcount != Number(fcount)) {
+        //         this.GetAllFacility();
+        //     }
+        // }
     };
 
     //Retrieves all facilities for a tenant
@@ -127,10 +129,10 @@ export class EnergyCustomReportComponent {
         let tenantId = this.loginInfo.tenantID;
         this.facilityService.newGetFacilityByTenant(tenantId).subscribe((response) => {
             this.facilityData = response;
-            this.GetAssignedDataPoint(this.facilityData[0].ID)
+            this.GetAssignedDataPoint(this.facilityData[0].id)
             this.lfcount = this.facilityData.length;
         });
-    }
+    };
     //opens calendar
     openCalendar(calendar: Calendar) {
         calendar.toggle();
@@ -138,21 +140,35 @@ export class EnergyCustomReportComponent {
     //Checks the facility ID and calls the GetAssignedDataPoint function with the provided ID.
     checkFacilityID(id) {
         this.GetAssignedDataPoint(id);
-    }
+    };
     //method for get assigned datapoint to a facility by facility id
+    // GetAssignedDataPoint(facilityID: number) {
+    //     this.trackingService
+    //         .getSavedDataPointforTracking(facilityID)
+    //         .subscribe({
+    //             next: (response) => {
+    //                 if (response === environment.NoData) {
+    //                     this.AssignedDataPoint = [];
+    //                 } else {
+    //                     this.AssignedDataPoint = response;
+    //                 }
+    //             },
+    //             error: (err) => { }
+    //         });
+    // };
+
     GetAssignedDataPoint(facilityID: number) {
         this.trackingService
-            .getSavedDataPointforTracking(facilityID)
+            .getDataPointsByFacility(facilityID)
             .subscribe({
                 next: (response) => {
+                    console.log(response);
                     if (response === environment.NoData) {
                         this.AssignedDataPoint = [];
                     } else {
-                        this.AssignedDataPoint = response;
+                        this.AssignedDataPoint = response.categories;
                     }
-
                 },
-
                 error: (err) => { }
             });
     }
@@ -237,115 +253,215 @@ export class EnergyCustomReportComponent {
         doc.save('report.pdf');
     };
     //method for generate a report
-    generateReport() {
+    // generateReport() {
+    //     this.CustomReportData = [];
+
+    //     this.selectedDataPoints.forEach((element) => {
+    //         var entry: CustomReportModel = {
+    //             dataPoint: element.subCatName,
+    //             April: '',
+    //             May: '',
+    //             June: '',
+    //             July: '',
+    //             August: '',
+    //             September: '',
+    //             October: '',
+    //             November: '',
+    //             December: '',
+    //             January: '',
+    //             February: '',
+    //             March: ''
+    //         };
+
+    //         element.dataEntries.forEach((subelement) => {
+    //             const month = subelement.month;
+    //             const year = subelement.year;
+    //             const reportYear = this.date.getFullYear().toString();
+    //             const readingValue = parseFloat(subelement.readingValue);
+    //             if (!isNaN(readingValue) && year === reportYear) {
+    //                 switch (month) {
+    //                     case 'April':
+    //                         entry.April = this.calculateMonthTotal(
+    //                             entry.April,
+    //                             readingValue
+    //                         );
+    //                         break;
+    //                     case 'May':
+    //                         entry.May = this.calculateMonthTotal(
+    //                             entry.May,
+    //                             readingValue
+    //                         );
+    //                         break;
+    //                     case 'June':
+    //                         entry.June = this.calculateMonthTotal(
+    //                             entry.June,
+    //                             readingValue
+    //                         );
+    //                         break;
+    //                     case 'July':
+    //                         entry.July = this.calculateMonthTotal(
+    //                             entry.July,
+    //                             readingValue
+    //                         );
+    //                         break;
+    //                     case 'August':
+    //                         entry.August = this.calculateMonthTotal(
+    //                             entry.August,
+    //                             readingValue
+    //                         );
+    //                         break;
+    //                     case 'September':
+    //                         entry.September = this.calculateMonthTotal(
+    //                             entry.September,
+    //                             readingValue
+    //                         );
+    //                         break;
+    //                     case 'October':
+    //                         entry.October = this.calculateMonthTotal(
+    //                             entry.October,
+    //                             readingValue
+    //                         );
+    //                         break;
+    //                     case 'November':
+    //                         entry.November = this.calculateMonthTotal(
+    //                             entry.November,
+    //                             readingValue
+    //                         );
+    //                         break;
+    //                     case 'December':
+    //                         entry.December = this.calculateMonthTotal(
+    //                             entry.December,
+    //                             readingValue
+    //                         );
+    //                         break;
+    //                     case 'January':
+    //                         entry.January = this.calculateMonthTotal(
+    //                             entry.January,
+    //                             readingValue
+    //                         );
+    //                         break;
+    //                     case 'February':
+    //                         entry.February = this.calculateMonthTotal(
+    //                             entry.February,
+    //                             readingValue
+    //                         );
+    //                         break;
+    //                     case 'March':
+    //                         entry.March = this.calculateMonthTotal(
+    //                             entry.March,
+    //                             readingValue
+    //                         );
+    //                         break;
+    //                     default:
+    //                         // Handle unknown month value
+    //                         break;
+    //                 }
+    //             }
+    //         });
+
+    //         this.CustomReportData.push(entry);
+    //     });
+    // }
+
+    newgenerateReport() {
+      
+        this.dataEntry.month = this.selectMonths.map((month) => month.value).join(', '); //this.getMonthName();
+        this.dataEntry.year = this.date.getFullYear().toString();
+        console.log(this.selectedDataPoints);
         this.CustomReportData = [];
+        // this.selectedDataPoints = 'Stationary Combustion';
+        let url = ''
+        switch (this.selectedDataPoints) {
+            case 1:
+                url = 'reportStationaryCombustion'
+                break;
+            case 2:
+                url = 'reportRegfriegrant'
+                break;
+            case 3:
+                url = 'reportFireExtinguisher'
+                break;
+            case 6:
+                url = 'reportStationaryCombustion'
+                break;
+            case 5:
+                url = 'reportRenewableElectricity'
+                break;
+            case 7:
+                url = 'reportHeatandSteam'
+                break;
+            case 8:
+                url = 'reportFilterPurchaseGoods'
+                break;
+            case 9:
+                url = 'reportStationaryCombustion'
+                break;
+            case 10:
+                url = 'reportUpStreamVehicles'
+                break;
+            case 11:
+                url = 'reportStationaryCombustion'
+                break;
+            case 12:
+                url = 'reportWasteGeneratedEmission'
+                break;
+            case 13:
+                url = 'reportStationaryCombustion'
+                break;
+            case 14:
+            // case 'Employee Commuting':
+                url = 'reportStationaryCombustion'
+                break;
+            case 15:
+                url = 'reportHomeOffice'
+                break;
+            case 16:
+                url = 'reportUpstreamLeaseEmission'
+                break;
+            case 17:
+            // case 'Downstream Transportation and Distribution':
+                url = 'reportStationaryCombustion'
+                break;
+            case 18:
+                url = 'reportProOfSoldProducts'
+                break;
+            case 19:
+            // case 'Use of Sold Products':
+                url = 'reportStationaryCombustion'
+                break;
+            case 20:
+                url = 'reportEndOfLifeTreatment'
+                break;
+            case 21:
+                url = 'reportDownstreamLeaseEmission'
+                break;
+            case 22:
+                url = 'reportFranchiseEmission'
+                break;
+            case 23:
+                url = 'reportInvestmentEmission'
+                break;
+            default:
+                // Handle unknown month value
+                break;
+        }
 
-        this.selectedDataPoints.forEach((element) => {
-            var entry: CustomReportModel = {
-                dataPoint: element.subCatName,
-                April: '',
-                May: '',
-                June: '',
-                July: '',
-                August: '',
-                September: '',
-                October: '',
-                November: '',
-                December: '',
-                January: '',
-                February: '',
-                March: ''
-            };
+        const reportFormData = new URLSearchParams();
+        reportFormData.set('facility', this.selectedFacilityID)
+        reportFormData.set('year', this.dataEntry.year)
+        reportFormData.set('month', this.dataEntry.month)
+        reportFormData.set('page', '1')
+        reportFormData.set('page_size', '10')
 
-            element.dataEntries.forEach((subelement) => {
-                const month = subelement.month;
-                const year = subelement.year;
-                const reportYear = this.date.getFullYear().toString();
-                const readingValue = parseFloat(subelement.readingValue);
-                if (!isNaN(readingValue) && year === reportYear) {
-                    switch (month) {
-                        case 'April':
-                            entry.April = this.calculateMonthTotal(
-                                entry.April,
-                                readingValue
-                            );
-                            break;
-                        case 'May':
-                            entry.May = this.calculateMonthTotal(
-                                entry.May,
-                                readingValue
-                            );
-                            break;
-                        case 'June':
-                            entry.June = this.calculateMonthTotal(
-                                entry.June,
-                                readingValue
-                            );
-                            break;
-                        case 'July':
-                            entry.July = this.calculateMonthTotal(
-                                entry.July,
-                                readingValue
-                            );
-                            break;
-                        case 'August':
-                            entry.August = this.calculateMonthTotal(
-                                entry.August,
-                                readingValue
-                            );
-                            break;
-                        case 'September':
-                            entry.September = this.calculateMonthTotal(
-                                entry.September,
-                                readingValue
-                            );
-                            break;
-                        case 'October':
-                            entry.October = this.calculateMonthTotal(
-                                entry.October,
-                                readingValue
-                            );
-                            break;
-                        case 'November':
-                            entry.November = this.calculateMonthTotal(
-                                entry.November,
-                                readingValue
-                            );
-                            break;
-                        case 'December':
-                            entry.December = this.calculateMonthTotal(
-                                entry.December,
-                                readingValue
-                            );
-                            break;
-                        case 'January':
-                            entry.January = this.calculateMonthTotal(
-                                entry.January,
-                                readingValue
-                            );
-                            break;
-                        case 'February':
-                            entry.February = this.calculateMonthTotal(
-                                entry.February,
-                                readingValue
-                            );
-                            break;
-                        case 'March':
-                            entry.March = this.calculateMonthTotal(
-                                entry.March,
-                                readingValue
-                            );
-                            break;
-                        default:
-                            // Handle unknown month value
-                            break;
-                    }
-                }
-            });
 
-            this.CustomReportData.push(entry);
-        });
-    }
+        this.facilityService.gerReport(url, reportFormData).subscribe({
+            next: res => {
+                console.log(res);
+                this.reportData = res.result
+            }
+        })
+    };
+
 
     //Calculates the total value by adding the existing value and the new value for each datapoint
     calculateMonthTotal(existingValue: string, newValue: number): string {
@@ -356,7 +472,26 @@ export class EnergyCustomReportComponent {
         return totalValue.toString();
     }
     //retrieves the subcategories under the Stationary Combustion category from the AssignedDataPoint object
-    stationaryCombustionCategory() {
+    // stationaryCombustionCategory() {
+    //     let subCategories: any[] = [];
+    //     this.AssignedDataPoint.forEach(scope => {
+    //         if (scope.manageDataPointCategories !== undefined) {
+    //             const category =
+    //                 scope.manageDataPointCategories.find(
+    //                     (category) => category.catName === 'Stationary Combustion'
+    //                 );
+    //             if (category) {
+    //                 let subCategories = category.manageDataPointSubCategories;
+    //                 return subCategories;
+    //             } else {
+    //                 console.log('Category not found');
+    //                 return [];
+    //             }
+    //         }
+    //     })
+
+    // }
+    DataPoints() {
         let subCategories: any[] = [];
         this.AssignedDataPoint.forEach(scope => {
             if (scope.manageDataPointCategories !== undefined) {

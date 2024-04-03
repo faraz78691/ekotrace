@@ -38,6 +38,9 @@ export class FacilityService {
         withCredentials?: boolean;
     };
 
+    public gerReport( url,data): Observable<any> {
+        return this.http.post(environment.baseUrl + `/report/${url}`, data);
+    }
     public FacilityDataPost(data): Observable<any> {
         return this.http.post(environment.baseUrl + 'Facilities/addFacility', data);
     }

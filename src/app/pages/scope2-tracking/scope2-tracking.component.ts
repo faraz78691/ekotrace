@@ -671,7 +671,7 @@ export class Scope2TrackingComponent {
     ngOnInit() {
         $(document).ready(function () {
             $('.ct_custom_dropdown').click(function () {
-                console.log("xffgdct");
+        
                 $('.ct_custom_dropdown').toggleClass('ct_open_modal')
             })
 
@@ -700,7 +700,7 @@ export class Scope2TrackingComponent {
             if (this.flag === 'F') {
                 this.GetAssignedDataPoint(this.facilityID);
             } else {
-                console.log("herere");
+            
                 // this.GetAssignedDataPoint(this.loginInfo.facilityID);
                 // this.GetAssignedDataPoint(this.facilityID);
                 if (this.facilityID == 0 || this.facilityID == '') {
@@ -840,10 +840,10 @@ export class Scope2TrackingComponent {
 
                                         const subCatID = response.categories[i].manageDataPointCategories[j].manageDataPointSubCategories[0].manageDataPointSubCategorySeedID;
                                         this.SubCatAllData = response.categories[i].manageDataPointCategories[j].manageDataPointSubCategories[0];
-                                        console.log("subCatID", subCatID);
+                                    
                                         this.id_var = subCatID;
                                         if ((response.categories)[i].manageDataPointCategories[j].manageDataPointCategorySeedID == 1) {
-                                            console.log("1st categpru");
+                                          
                                             this.categoryId = 1;
                                             this.getsubCategoryType(this.SubCatAllData
                                                 .manageDataPointSubCategorySeedID);
@@ -868,7 +868,7 @@ export class Scope2TrackingComponent {
                                         }
 
                                         if ((response.categories)[i].manageDataPointCategories[j].manageDataPointCategorySeedID == 2) {
-                                            console.log("2nd categpru");
+                                         
 
                                             this.trackingService.getrefdataentry(subCatID, this.loginInfo.tenantID).subscribe({
                                                 next: (response) => {
@@ -1024,9 +1024,9 @@ export class Scope2TrackingComponent {
     //Updates selected data point and category, fetches emission factor, checks for existing entries, and resets the form.
     SubCatData(data: any, catID: any) {
         this.isVisited = false;
-        console.log(data);
+      
         this.id_var = data.manageDataPointSubCategorySeedID;
-        console.log("id_var", this.id_var);
+      
         this.categoryId = catID;
         this.SubCatAllData = data;
 
@@ -1097,7 +1097,7 @@ export class Scope2TrackingComponent {
         }
 
         if (catID == 6) {
-            console.log("delivertt");
+         
             if (data.manageDataPointSubCategorySeedID == 10) {
                 this.getPassengerVehicleType();
             }
@@ -1222,7 +1222,7 @@ export class Scope2TrackingComponent {
     getBusineesUnit() {
         this.trackingService.getBusinessUnit().subscribe({
             next: (response) => {
-                console.log(response, "sdgs");
+             
                 if (response.success == true) {
                     this.busineessGrid = response.categories;
                     // this.franchiseCategoryValue = this.franchiseGrid[0].categories
@@ -1294,7 +1294,7 @@ export class Scope2TrackingComponent {
     getFlightType() {
         this.trackingService.getflight_types().subscribe({
             next: (response) => {
-                console.log(response, "sdgs");
+            
                 if (response.success == true) {
                     this.wasteGrid = response.batchIds;
                     // this.franchiseCategoryValue = this.franchiseGrid[0].categories
@@ -1318,7 +1318,7 @@ export class Scope2TrackingComponent {
     getFlightTimeTypes() {
         this.trackingService.getFlightTimes().subscribe({
             next: (response) => {
-                console.log(response, "sdgs");
+             
                 if (response.success == true) {
                     this.flightTime = response.batchIds;
                     // this.franchiseCategoryValue = this.franchiseGrid[0].categories
@@ -1360,10 +1360,7 @@ export class Scope2TrackingComponent {
                     },
                     error: (err) => {
                         this.EmissionFactor = [];
-                        console.log(
-                            '🚀 ~ file: tracking.component.ts:512 ~ TrackingComponent ~ getEmissionfactor ~ err:',
-                            err
-                        );
+                       
                     }
                 });
         }
@@ -1488,7 +1485,7 @@ export class Scope2TrackingComponent {
         this.trackingService.newgetsubCatType(subCatID).subscribe({
             next: (response) => {
                 this.SubCategoryType = response.categories;
-                console.log(this.dataEntry.typeID);
+              
             },
             error: (err) => {
                 console.error('errrrrrr>>>>>>', err);
@@ -1513,7 +1510,7 @@ export class Scope2TrackingComponent {
 
     //entrysave function to save dataentry
     EntrySave(form: NgForm) {
-        console.log(this.categoryId);
+     
         this.dataEntry.month = this.selectMonths
             .map((month) => month.value)
             .join(', '); //this.getMonthName();
@@ -1972,7 +1969,7 @@ export class Scope2TrackingComponent {
             formData.set('year', this.dataEntry.year);
             this.trackingService.submitPurchaseGoods(formData.toString()).subscribe({
                 next: (response) => {
-                    console.log("api response", response);
+                    
                     if (response.success == true) {
                         this.notification.showSuccess(
                             response.message,
@@ -2039,7 +2036,7 @@ export class Scope2TrackingComponent {
 
             this.trackingService.upStreamTransportation(formData.toString()).subscribe({
                 next: (response) => {
-                    console.log("api response", response);
+                    
                     if (response.success == true) {
                         this.notification.showSuccess(
                             response.message,
@@ -2113,7 +2110,7 @@ export class Scope2TrackingComponent {
 
             this.trackingService.AddwatersupplytreatmentCategory(formData.toString()).subscribe({
                 next: (response) => {
-                    console.log("api response", response);
+                    
                     if (response.success == true) {
                         this.notification.showSuccess(
                             response.message,
@@ -2170,7 +2167,7 @@ export class Scope2TrackingComponent {
 
             this.trackingService.wasteGeneratedEmission(formData.toString()).subscribe({
                 next: (response) => {
-                    console.log("api response", response);
+                    
                     if (response.success == true) {
                         this.notification.showSuccess(
                             response.message,
@@ -2236,7 +2233,7 @@ export class Scope2TrackingComponent {
 
             this.trackingService.uploadEmployeeCommunity(formData.toString()).subscribe({
                 next: (response) => {
-                    console.log("api response", response);
+                    
                     if (response.success == true) {
                         this.notification.showSuccess(
                             response.message,
@@ -2292,7 +2289,7 @@ export class Scope2TrackingComponent {
             formData.set('year', this.dataEntry.year);
             this.trackingService.uploadHomeOffice(formData.toString()).subscribe({
                 next: (response) => {
-                    console.log("api response", response);
+                    
                     if (response.success == true) {
                         this.notification.showSuccess(
                             response.message,
@@ -2426,7 +2423,7 @@ export class Scope2TrackingComponent {
 
             this.trackingService.uploadupLeaseEmissionCalculate(formData.toString()).subscribe({
                 next: (response) => {
-                    console.log("api response", response);
+                    
                     if (response.success == true) {
                         this.notification.showSuccess(
                             response.message,
@@ -2499,7 +2496,7 @@ export class Scope2TrackingComponent {
 
             this.trackingService.downStreamTransportation(formData.toString()).subscribe({
                 next: (response) => {
-                    console.log("api response", response);
+                    
                     if (response.success == true) {
                         this.notification.showSuccess(
                             response.message,
@@ -2607,7 +2604,7 @@ export class Scope2TrackingComponent {
 
             this.trackingService.Addprocessing_of_sold_productsCategory(formData.toString()).subscribe({
                 next: (response) => {
-                    console.log("api response", response);
+                    
                     if (response.success == true) {
                         this.notification.showSuccess(
                             response.message,
@@ -2693,7 +2690,7 @@ export class Scope2TrackingComponent {
 
             this.trackingService.AddSoldProductsCategory(formData.toString()).subscribe({
                 next: (response) => {
-                    console.log("api response", response);
+                    
                     if (response.success == true) {
                         this.notification.showSuccess(
                             response.message,
@@ -2756,7 +2753,7 @@ export class Scope2TrackingComponent {
 
             this.trackingService.AddendoflifeCategory(formData.toString()).subscribe({
                 next: (response) => {
-                    console.log("api response", response);
+                    
                     if (response.success == true) {
                         this.notification.showSuccess(
                             response.message,
@@ -2798,7 +2795,7 @@ export class Scope2TrackingComponent {
             }
             var spliteedMonth = this.dataEntry.month.split(",");
             var monthString = JSON.stringify(spliteedMonth)
-            console.log(monthString);
+        
             var is_vehicle = 0;
             var is_facility = 0;
             if (this.leasefacilitieschecked === true) {
@@ -2880,7 +2877,7 @@ export class Scope2TrackingComponent {
 
             this.trackingService.downstreamLeaseEmissionCalculate(formData.toString()).subscribe({
                 next: (response) => {
-                    console.log("api response", response);
+                  
                     if (response.success == true) {
                         this.notification.showSuccess(
                             response.message,
@@ -2945,7 +2942,7 @@ export class Scope2TrackingComponent {
 
             this.trackingService.uploadFranchise(formData.toString()).subscribe({
                 next: (response) => {
-                    console.log("api response", response);
+                 
                     if (response.success == true) {
                         this.notification.showSuccess(
                             response.message,
@@ -3022,7 +3019,7 @@ export class Scope2TrackingComponent {
                 formData.set('month', monthString);
                 formData.set('year', this.dataEntry.year);
             } else if ((this.investmentTypeValue == 'Debt investments' || this.investmentTypeValue == 'Project finance') && this.franchiseMethodValue == 'Investment Specific method') {
-                console.log(form.value.scope1_emission);
+           
                 formData.set('investment_type', form.value.investment_type);
                 formData.set('category', form.value.investment_sector);
                 formData.set('sub_category_id', form.value.broad_categoriesId);
@@ -3039,7 +3036,7 @@ export class Scope2TrackingComponent {
 
             this.trackingService.calculateInvestmentEmission(formData.toString()).subscribe({
                 next: (response) => {
-                    console.log("api response", response);
+             
                     if (response.success == true) {
                         this.notification.showSuccess(
                             response.message,
@@ -3142,7 +3139,7 @@ export class Scope2TrackingComponent {
 
             this.trackingService.uploadflightTravel(formData.toString()).subscribe({
                 next: (response) => {
-                    console.log("api response", response);
+               
                     if (response.success == true) {
                         this.notification.showSuccess(
                             response.message,
@@ -3202,7 +3199,7 @@ export class Scope2TrackingComponent {
 
             this.trackingService.uploadHotelStay(formData.toString()).subscribe({
                 next: (response) => {
-                    console.log("api response", response);
+              
                     if (response.success == true) {
                         this.notification.showSuccess(
                             response.message,
@@ -3272,7 +3269,7 @@ export class Scope2TrackingComponent {
 
             this.trackingService.uploadOtherModes(formData.toString()).subscribe({
                 next: (response) => {
-                    console.log("api response", response);
+                
                     if (response.success == true) {
                         this.notification.showSuccess(
                             response.message,
@@ -3315,14 +3312,13 @@ export class Scope2TrackingComponent {
     checkEntry(month, year, subcatID) {
         this.trackingService.checkEntry(month, year, subcatID).subscribe({
             next: (response) => {
-                console.log("mil gyeee yeee ", response);
+               
                 if (response == environment.NoEntry) {
                     this.entryExist = false;
                     this.dataEntry = new DataEntry();
                 } else {
                     this.entryExist = true;
-                    console.log("mil gyeee yeee ", response);
-                    console.log("mil gyeee ======= ", this.dataEntry);
+                 
                     this.dataEntry = response;
                     this.dataEntry = new DataEntry();
                 }
@@ -3428,7 +3424,7 @@ export class Scope2TrackingComponent {
         formData.append('batch', this.batchId);
         this.trackingService.UploadTemplate(formData).subscribe({
             next: (response) => {
-                console.log("api response", response);
+            
                 if (response.success == true) {
                     this.notification.showSuccess(
                         response.message,
@@ -3606,7 +3602,7 @@ export class Scope2TrackingComponent {
             next: (Response) => {
                 if (Response) {
                     this.units = Response['categories'];
-                    console.log("this.", this.units);
+           
                 }
                 else {
                     this.units = [];
@@ -3801,12 +3797,12 @@ export class Scope2TrackingComponent {
     getVehicleTypes() {
         this.trackingService.getVehicleType().subscribe({
             next: (response) => {
-                console.log(response);
+            
                 if (response.success == true) {
                     this.VehicleGrid = response.categories;
                     const selectedIndex = this.selectedVehicleIndex;
                     this.selectedVehicleType = this.VehicleGrid[selectedIndex - 1].vehicle_type
-                    console.log("this seelcted type", this.selectedVehicleType);
+                  
                 }
             }
         })
@@ -3815,7 +3811,7 @@ export class Scope2TrackingComponent {
     onVehicleTypeChange(event: any) {
         const selectedIndex = event.value;
         this.selectedVehicleType = this.VehicleGrid[selectedIndex - 1].vehicle_type
-        console.log("cahnged seelcted type", this.selectedVehicleType);
+   
         this.getSubVehicleCategory(selectedIndex)
     };
 
@@ -3837,7 +3833,7 @@ export class Scope2TrackingComponent {
     onWasteTypeChange(event: any) {
         const energyMethod = event.value;
         this.waterWasteProduct = this.wasteGrid[energyMethod - 1].type
-        console.log("cahnged seelcted type", this.waterWasteProduct);
+  
         this.getWasteSubCategory(energyMethod);
 
     };
@@ -3848,7 +3844,7 @@ export class Scope2TrackingComponent {
         formData.set('type', typeId);
         this.trackingService.getWasteSubCategory(formData).subscribe({
             next: (response) => {
-                console.log(response);
+            
                 if (response.success == true) {
                     this.wasteSubTypes = response.categories;
 
@@ -3859,7 +3855,7 @@ export class Scope2TrackingComponent {
     onCityChange(event: any) {
         // event.value will contain the selected city object
         this.selectedflightsTravel = event.value;
-        console.log('Selected City:', this.selectedflightsTravel);
+    
         if (this.selectedflightsTravel == 'Generic') {
 
             this.flightDisplay1 = 'block'
@@ -3882,7 +3878,7 @@ export class Scope2TrackingComponent {
     getFranchiseType() {
         this.trackingService.getFranchiseType().subscribe({
             next: (response) => {
-                console.log(response, "sdgs");
+              
                 if (response.success == true) {
                     this.franchiseGrid = response.categories;
                     this.franchiseCategoryValue = this.franchiseGrid[0].categories
@@ -3893,7 +3889,7 @@ export class Scope2TrackingComponent {
 
     onFranchiseChange(event: any) {
         const frachiseTypevalue = event.value;
-        console.log(frachiseTypevalue);
+     
         this.franchiseCategoryValue = frachiseTypevalue
         this.getSubFranchiseCategory(frachiseTypevalue)
     };
@@ -3929,14 +3925,14 @@ export class Scope2TrackingComponent {
 
     onpurchaseGoodsCategoryChange(event: any) {
         const energyMethod = event.value;
-        console.log(energyMethod);
+
         this.onActivitySelected = false;
         if (energyMethod == 'Other') {
             this.onIndustrySelected = false;
             this.OthersSecledted = true;
             return;
         }
-        console.log("its coming here also");
+      
         this.onIndustrySelected = true;
         this.getProcessingActivityCategory(energyMethod);
     };
@@ -3968,7 +3964,7 @@ export class Scope2TrackingComponent {
         formData.set('sector', sector);
         this.trackingService.getsubsectorCategory(formData).subscribe({
             next: (response) => {
-                console.log(response);
+            
                 if (response.success == true) {
                     this.activitySubTypes = response.categories;
 
@@ -3995,7 +3991,7 @@ export class Scope2TrackingComponent {
         formData.set('industry', industry);
         this.trackingService.getPurchaseGoodsActivity(formData).subscribe({
             next: (response) => {
-                // console.log(response);
+            
                 if (response.success == true) {
                     this.productActivitySubTypes = response.categories;
 
@@ -4006,7 +4002,7 @@ export class Scope2TrackingComponent {
 
     onQuantitySoldUnitChange(event: any) {
         const energyMethod = event.value;
-        console.log(energyMethod);
+    
         if (energyMethod == 1) {
             this.noOfItems = true;
             this.getFuelEnergyCategory();
@@ -4021,7 +4017,7 @@ export class Scope2TrackingComponent {
 
     onExpectedLifetimeUnitChange(event: any) {
         const energyMethod = event.value;
-        console.log(energyMethod);
+       
         if (energyMethod == 1) {
             this.subElectricityUnits = "Per usage"
         } else if (energyMethod == 2) {
@@ -4040,7 +4036,7 @@ export class Scope2TrackingComponent {
     getFuelEnergyCategory() {
         this.trackingService.getEnergyFuelType().subscribe({
             next: (response) => {
-                // console.log(response);
+              
                 if (response.success == true) {
                     this.fuelEnergyTypes = response.categories;
 
@@ -4051,7 +4047,7 @@ export class Scope2TrackingComponent {
     getRefrigerants() {
         this.trackingService.getrefrigents().subscribe({
             next: (response) => {
-                // console.log(response);
+              
                 if (response.success == true) {
                     this.refrigeratedTypes = response.categories;
 
@@ -4148,7 +4144,7 @@ export class Scope2TrackingComponent {
     getInvestmentSubCategory(category: any) {
         this.trackingService.getInvestmentSubCategory(category).subscribe({
             next: (response) => {
-                console.log(response);
+          
                 if (response.success == true) {
                     this.subFranchiseCategory = response.sub_categories;
 
@@ -4184,7 +4180,7 @@ export class Scope2TrackingComponent {
     getInvestmentCategories() {
         this.trackingService.getInvestmentCategories().subscribe({
             next: (response) => {
-                console.log(response, "sdgs");
+        
                 if (response.success == true) {
                     this.wasteGrid = response.categories;
                     // this.franchiseCategoryValue = this.franchiseGrid[0].categories
@@ -4199,7 +4195,7 @@ export class Scope2TrackingComponent {
                 if (response.success == true) {
                     this.batchId = response.batchIds[0].batch_id;
                     // this.getStatusData(1)
-                    console.log("this is batch", this.batchId);
+          
                 } else {
 
                 }

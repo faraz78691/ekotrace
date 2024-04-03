@@ -37,8 +37,15 @@ export class TrackingService {
     ) { }
     public getSavedDataPointforTracking(facilityID: any): Observable<any> {
         return this.http.get<any>(
-            environment.baseUrl +
+            'http://192.168.1.31:4003' +
             'Tracking/getAssignedDataPointbyfacility/' +
+            facilityID
+        );
+    };
+    public getDataPointsByFacility(facilityID: any): Observable<any> {
+        return this.http.get<any>(
+            'http://192.168.1.31:4003'+
+            '/getAllcategoryByfacility/' +
             facilityID
         );
     };

@@ -61,7 +61,7 @@ export class MenuItemComponent implements OnInit {
             let userInfo = localStorage.getItem('LoginInfo');
             let jsonObj = JSON.parse(userInfo); // string to "any" object first
             this.loginInfo = jsonObj as LoginInfo;
-            this.getTenantsById(Number(this.loginInfo.tenantID));
+            // this.getTenantsById(Number(this.loginInfo.tenantID));
         }
     }
 
