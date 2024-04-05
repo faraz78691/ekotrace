@@ -16,7 +16,7 @@
                             ? 'User-headD'
                             : 'User-headL'
                     ">
-                    <p class="ml-3">Groups List</p>
+                    <p class="ml-3">Carbon Offset List</p>
                 </div>
                 <div class="d-flex justify-content-between text-style text-light scope-Div">
                     <div class="form-group has-search">
@@ -53,7 +53,7 @@
             <p-dialog (click)="removeCss()" [(visible)]="visible" [breakpoints]="{'960px': '75vw'}" [closable]="false"
                 [style]="{width: '50vw'}">
                 <p-header *ngIf="FormEdit === false"> Add New Offset </p-header>
-                <p-header *ngIf="FormEdit === true"> Edit Group </p-header>
+                <p-header *ngIf="FormEdit === true"> Edit Carbon Offset </p-header>
 
                 <div class="modal-body text-white text-style Dashboard-tab ct_vertically_scroll">
                     <form #GroupForm="ngForm" class="col-12" (ngSubmit)="

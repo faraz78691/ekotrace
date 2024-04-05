@@ -105,6 +105,7 @@ import { NewBillingComponent } from './pages/new-billing/new-billing.component';
 import { WaterUsageComponent } from './pages/dashboard/water-usage/water-usage.component';
 import { CarbonOffsettingComponent } from './pages/carbon-offsetting/carbon-offsetting.component';
 import { WasteComponent } from './pages/dashboard/waste/waste.component';
+import { TreeComponent } from './pages/tree/tree.component';
 
 defineCustomElements();
 registerLocaleData(localeEn, 'en-EN');
@@ -167,7 +168,8 @@ registerLocaleData(localeEn, 'en-EN');
         NewBillingComponent,
         WaterUsageComponent,
         CarbonOffsettingComponent,
-        WasteComponent
+        WasteComponent,
+        TreeComponent
     ],
     imports: [
         BrowserModule,

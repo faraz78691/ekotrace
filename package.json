@@ -28,6 +28,7 @@
     "@angular/platform-browser-dynamic": "15.2.9",
     "@angular/router": "15.2.9",
     "@auth0/angular-jwt": "^5.1.2",
+    "@balkangraph/familytree.js": "^1.9.17",
     "@ngrx/store": "14.3.0",
     "@profabric/angular-components": "0.1.2",
     "@swimlane/ngx-charts": "^20.1.2",

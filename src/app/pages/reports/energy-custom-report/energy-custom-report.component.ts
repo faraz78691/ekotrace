@@ -70,15 +70,17 @@ export class EnergyCustomReportComponent {
     facilitynothavedp = 'flex';
     facilityData: Facility[] = [];
     years: number[] = [];
-    selectedDataPoints: number;
+    selectedCategory: number;
+    selectMode: number;
     isDropdownOpen = false;
     StationaryCombustion: EmissionFactor = new EmissionFactor();
     yearRangeOptions: string;
     kgCO2e: number;
-    selectedCategory: any;
     lfcount: number = 0;
     selectMonths: any[] = [];
     reportData: any[] = [];
+    Modes: any[] = [];
+    modeShow = false;
     CustomReportData: CustomReportModel[] = [];
     reportmonths: any[] = [
         { name: 'Jan', value: 'Jan' },
@@ -101,6 +103,23 @@ export class EnergyCustomReportComponent {
         private trackingService: TrackingService
     ) {
         this.AssignedDataPoint = [];
+        this.Modes =
+            [
+
+                {
+                    "id": 1,
+                    "modeType": "Flight"
+                },
+                {
+                    "id": 2,
+                    "modeType": "Hotel Stay"
+                },
+                {
+                    "id": 3,
+                    "modeType": "Other Modes"
+                }
+
+            ];
     };
 
 
@@ -139,7 +158,20 @@ export class EnergyCustomReportComponent {
     };
     //Checks the facility ID and calls the GetAssignedDataPoint function with the provided ID.
     checkFacilityID(id) {
+        console.log("faciliyt cahnged call");
+      
+
         this.GetAssignedDataPoint(id);
+    };
+
+    dataPointChangedID(id) {
+        if (id == 13) {
+            this.modeShow = true
+        } else {
+            this.modeShow = false
+        }
+
+      
     };
     //method for get assigned datapoint to a facility by facility id
     // GetAssignedDataPoint(facilityID: number) {
@@ -158,6 +190,7 @@ export class EnergyCustomReportComponent {
     // };
 
     GetAssignedDataPoint(facilityID: number) {
+        console.log(facilityID);
         this.trackingService
             .getDataPointsByFacility(facilityID)
             .subscribe({
@@ -171,7 +204,7 @@ export class EnergyCustomReportComponent {
                 },
                 error: (err) => { }
             });
-    }
+    };
 
 
     //method for download generated report in pdf format
@@ -256,7 +289,7 @@ export class EnergyCustomReportComponent {
     // generateReport() {
     //     this.CustomReportData = [];
 
-    //     this.selectedDataPoints.forEach((element) => {
+    //     this.selectedCategory.forEach((element) => {
     //         var entry: CustomReportModel = {
     //             dataPoint: element.subCatName,
     //             April: '',
@@ -364,14 +397,14 @@ export class EnergyCustomReportComponent {
     // }
 
     newgenerateReport() {
-      
+
         this.dataEntry.month = this.selectMonths.map((month) => month.value).join(', '); //this.getMonthName();
         this.dataEntry.year = this.date.getFullYear().toString();
-        console.log(this.selectedDataPoints);
+        console.log(this.selectedCategory);
         this.CustomReportData = [];
-        // this.selectedDataPoints = 'Stationary Combustion';
+        // this.selectedCategory = 'Stationary Combustion';
         let url = ''
-        switch (this.selectedDataPoints) {
+        switch (this.selectedCategory) {
             case 1:
                 url = 'reportStationaryCombustion'
                 break;
@@ -406,10 +439,20 @@ export class EnergyCustomReportComponent {
                 url = 'reportWasteGeneratedEmission'
                 break;
             case 13:
-                url = 'reportStationaryCombustion'
+                switch (this.selectMode) {
+                    case 1:
+                        url = 'reportFlightTravel'
+                        break;
+                    case 2:
+                        url = 'reportStationaryCombustion'
+                        break;
+                    case 3:
+                        url = 'reportOtherTransport'
+                        break;
+                }
                 break;
             case 14:
-            // case 'Employee Commuting':
+                // case 'Employee Commuting':
                 url = 'reportStationaryCombustion'
                 break;
             case 15:
@@ -419,14 +462,14 @@ export class EnergyCustomReportComponent {
                 url = 'reportUpstreamLeaseEmission'
                 break;
             case 17:
-            // case 'Downstream Transportation and Distribution':
+                // case 'Downstream Transportation and Distribution':
                 url = 'reportStationaryCombustion'
                 break;
             case 18:
                 url = 'reportProOfSoldProducts'
                 break;
             case 19:
-            // case 'Use of Sold Products':
+                // case 'Use of Sold Products':
                 url = 'reportStationaryCombustion'
                 break;
             case 20:
@@ -454,10 +497,11 @@ export class EnergyCustomReportComponent {
         reportFormData.set('page_size', '10')
 
 
-        this.facilityService.gerReport(url, reportFormData).subscribe({
+        this.facilityService.gerReport(url, reportFormData.toString()).subscribe({
             next: res => {
-                console.log(res);
                 this.reportData = res.result
+                // console.log( this.reportData );
+                console.log(this.selectedCategory);
             }
         })
     };
@@ -491,23 +535,5 @@ export class EnergyCustomReportComponent {
     //     })
 
     // }
-    DataPoints() {
-        let subCategories: any[] = [];
-        this.AssignedDataPoint.forEach(scope => {
-            if (scope.manageDataPointCategories !== undefined) {
-                const category =
-                    scope.manageDataPointCategories.find(
-                        (category) => category.catName === 'Stationary Combustion'
-                    );
-                if (category) {
-                    let subCategories = category.manageDataPointSubCategories;
-                    return subCategories;
-                } else {
-                    console.log('Category not found');
-                    return [];
-                }
-            }
-        })
 
-    }
 }

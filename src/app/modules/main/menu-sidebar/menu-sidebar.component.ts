@@ -214,6 +214,12 @@ export const menu = [
             //     path: ['scope3tracking']
             // },
             {
+                name: 'Tree',
+                iconClasses: 'fas fa-star',
+                iconSRC :'assets/img/tracking_icon.svg',
+                path: ['tree']
+            },
+            {
                 name: 'Tracking',
                 iconClasses: 'fas fa-star',
                 iconSRC :'assets/img/tracking_icon.svg',

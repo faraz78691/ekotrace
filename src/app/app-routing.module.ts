@@ -45,6 +45,7 @@ import { NewBillingComponent } from '@pages/new-billing/new-billing.component';
 import { WaterUsageComponent } from '@pages/dashboard/water-usage/water-usage.component';
 import { CarbonOffsettingComponent } from '@pages/carbon-offsetting/carbon-offsetting.component';
 import { WasteComponent } from '@pages/dashboard/waste/waste.component';
+import { TreeComponent } from '@pages/tree/tree.component';
 
 const routes: Routes = [
     {
@@ -73,7 +74,7 @@ const routes: Routes = [
                     {path:'energyEmission',component: EnergyEmmsionsComponent},
                     {path:'businessTravel',component: BusinessTravelComponent},
                     {path:'waterUsage',component: WaterUsageComponent},
-                    {path:'waste',component: WasteComponent},
+                    {path:'waste',component: WasteComponent}
                 ]
             },
             {
@@ -138,6 +139,12 @@ const routes: Routes = [
                 component: UserComponent,
                 canActivate: [RoleGuard],
                 data: { roles: ['Super Admin', 'Admin', 'Manager'] }
+            },
+            {
+                path: 'tree',
+                component: TreeComponent,
+                canActivate: [RoleGuard],
+                data: { roles: ['Super Admin', 'Admin'] }
             },
             {
                 path: 'group',
