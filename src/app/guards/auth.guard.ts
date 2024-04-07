@@ -7,7 +7,7 @@ import {
     HttpRequest
 } from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {CanActivate, Router} from '@angular/router';
+import { Router } from '@angular/router';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {catchError, mapTo, switchMap, tap} from 'rxjs/operators';
 import {Observable, of, throwError} from 'rxjs';
@@ -20,7 +20,7 @@ import {AppService} from '@services/app.service';
 @Injectable({
     providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
+export class AuthGuard  {
     public loginInfo: LoginInfo;
     public jwtHelper: JwtHelperService = new JwtHelperService();
 

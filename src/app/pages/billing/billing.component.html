@@ -39,7 +39,7 @@
             <div class="dataTable scrollit" [ngStyle]="{display: FacilityData}">
                 <table class="table_loc">
                     <tbody>
-                        <tr clickable (click)="tableData(d.id)" *ngFor="let d of LocData | filter: searchData"
+                        <tr clickable (click)="tableData(d.id)" *ngFor="let d of LocData"
                             class="col-12 tableRow border-bottom rounded pointer"
                             [ngClass]="{tableRowclicked: id_var === d.id}">
                             <td class="col-4 td text-initial">

@@ -44,7 +44,7 @@ export class TrackingService {
     };
     public getDataPointsByFacility(facilityID: any): Observable<any> {
         return this.http.get<any>(
-            'http://192.168.1.31:4003'+
+            environment.baseUrl +
             '/getAllcategoryByfacility/' +
             facilityID
         );

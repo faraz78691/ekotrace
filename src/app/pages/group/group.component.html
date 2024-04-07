@@ -144,7 +144,7 @@
                 <table class="table_loc">
                     <tbody *ngIf="groupList$ | async as groupList">
                         <tr clickable (click)="selectGroup(group,index)" *ngFor="
-                                let group of groupList.categories | filter: searchData;let index = index
+                                let group of groupList.categories;let index = index
                             " class="col-12 tableRow border-bottom rounded pointer" (click)="UnlockComplete(group.id)"
                             [ngClass]="{ 'tableRowclicked': index === selectedRowIndex }">
                             <td class="col-4 td text-initial">

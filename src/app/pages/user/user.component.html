@@ -196,7 +196,7 @@
             </p-dialog>
 
             <div class="row mx-2 overflow-auto Updateuser rounded"
-                *ngFor="let user of admininfoList | filter: searchData" (click)="selectUser(user)"
+                *ngFor="let user of admininfoList" (click)="selectUser(user)"
                 (click)="UnlockComplete(user.user_id)" [ngClass]="{colorchange: unlock == user.user_id}">
 
                 <div class="col pt-2 d-flex text-style">

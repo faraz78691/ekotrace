@@ -5,7 +5,7 @@ import { EmissionFactor } from '@/models/EmissionFactorALL';
 import { TrackingDataPoint } from '@/models/TrackingDataPoint';
 import { ManageDataPointSubCategories } from '@/models/TrackingDataPointSubCategories';
 import { LoginInfo } from '@/models/loginInfo';
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, effect } from '@angular/core';
 import { FacilityService } from '@services/facility.service';
 import { TrackingService } from '@services/tracking.service';
 import { environment } from 'environments/environment';
@@ -82,6 +82,7 @@ export class EnergyCustomReportComponent {
     Modes: any[] = [];
     modeShow = false;
     CustomReportData: CustomReportModel[] = [];
+    
     reportmonths: any[] = [
         { name: 'Jan', value: 'Jan' },
         { name: 'Feb', value: 'Feb' },
@@ -99,9 +100,12 @@ export class EnergyCustomReportComponent {
     @ViewChild('calendarRef') calendarRef!: Calendar;
     date: Date;
     constructor(
-        private facilityService: FacilityService,
+        public facilityService: FacilityService,
         private trackingService: TrackingService
     ) {
+ 
+
+      
         this.AssignedDataPoint = [];
         this.Modes =
             [
@@ -122,15 +126,27 @@ export class EnergyCustomReportComponent {
             ];
     };
 
+    ngAfterContentInit(){
+        console.log("working")
+    }
 
-    ngOnInit() {
+   async ngOnInit() {
         this.loginInfo = new LoginInfo();
         if (localStorage.getItem('LoginInfo') != null) {
             let userInfo = localStorage.getItem('LoginInfo');
             let jsonObj = JSON.parse(userInfo); // string to "any" object first
             this.loginInfo = jsonObj as LoginInfo;
             this.facilityID = localStorage.getItem('SelectedfacilityID');
-            this.GetAllFacility();
+       
+           
+            setTimeout(()=>{
+                    if(this.facilityService.facilitiesSignal()){
+                         this.GetAssignedDataPoint(this.facilityService
+                            .facilitiesSignal()[0].id
+                        )
+                    }
+            },1000)
+      
         }
     };
 
@@ -142,6 +158,10 @@ export class EnergyCustomReportComponent {
         //     }
         // }
     };
+
+    ngAfterViewInit(){
+      
+    }
 
     //Retrieves all facilities for a tenant
     GetAllFacility() {
@@ -195,7 +215,7 @@ export class EnergyCustomReportComponent {
             .getDataPointsByFacility(facilityID)
             .subscribe({
                 next: (response) => {
-                    console.log(response);
+               
                     if (response === environment.NoData) {
                         this.AssignedDataPoint = [];
                     } else {

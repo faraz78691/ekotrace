@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 
 import { environment } from 'environments/environment';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
@@ -9,11 +9,13 @@ import { Location } from '@/models/Location';
 import { ManageDataPoint } from '@/models/ManageDataPoint';
 import { savedDataPoint } from '@/models/savedDataPoint';
 import { FacilityGroupList } from '@/models/FacilityGroupList';
+import { facilities } from '@/models/facilities';
 
 @Injectable({
     providedIn: 'root'
 })
 export class FacilityService {
+    facilitiesSignal = signal<facilities[]>([])
     localapiURL = 'http://192.168.1.31:4003';
     totalAngularPackages;
     errorMessage;
@@ -38,20 +40,30 @@ export class FacilityService {
         withCredentials?: boolean;
     };
 
-    public gerReport( url,data): Observable<any> {
+    public newGetFacilityByTenant(tenantId): Observable<any> {
+        return this.http.get<any>(
+            environment.baseUrl + '/getFacilityByTenantId/' + tenantId
+        );
+    };
+
+    AddFacilites(facilities: facilities[]) {
+     this.facilitiesSignal.set(facilities)
+    };
+
+    public gerReport(url, data): Observable<any> {
         return this.http.post(environment.baseUrl + `/report/${url}`, data);
     }
     public FacilityDataPost(data): Observable<any> {
         return this.http.post(environment.baseUrl + 'Facilities/addFacility', data);
     }
     public newFacilityDataPost(data): Observable<any> {
-        return this.http.post( environment.baseUrl +'/Addfacilities', data);
+        return this.http.post(environment.baseUrl + '/Addfacilities', data);
     }
     public FacilityDataPut(id, data): Observable<any> {
         return this.http.put(environment.baseUrl + 'Facilities/' + id, data);
     };
-    public FacilityDataUpdate( data): Observable<any> {
-        return this.http.post(environment.baseUrl + '/Updatefacilities' ,data);
+    public FacilityDataUpdate(data): Observable<any> {
+        return this.http.post(environment.baseUrl + '/Updatefacilities', data);
     };
 
     public FacilityDataGet(tenantId): Observable<Facility[]> {
@@ -61,7 +73,7 @@ export class FacilityService {
     };
     public nFacilityDataGet(): Observable<Facility[]> {
         return this.http.get<Facility[]>(
-            environment.baseUrl +  '/allfacilitiesbyRole'
+            environment.baseUrl + '/allfacilitiesbyRole'
         );
     };
     public newFacilityDataGet(tenantId): Observable<Facility[]> {
@@ -74,7 +86,7 @@ export class FacilityService {
     }
     public GetCountry(): Observable<Location[]> {
         return this.http.get<Location[]>(
-          environment.baseUrl + '/getcountries'
+            environment.baseUrl + '/getcountries'
         );
     }
     public GetState(id): Observable<Location[]> {
@@ -84,7 +96,7 @@ export class FacilityService {
     }
     public newGetState(data): Observable<Location[]> {
         return this.http.post<Location[]>(
-          environment.baseUrl  + '/getstateByCountries', data
+            environment.baseUrl + '/getstateByCountries', data
         );
     }
     public GetCity(id): Observable<Location[]> {
@@ -94,7 +106,7 @@ export class FacilityService {
     };
     public newGetCity(id): Observable<Location[]> {
         return this.http.post<Location[]>(
-          environment.baseUrl + '/getcityBystate' , id
+            environment.baseUrl + '/getcityBystate', id
         );
     };
 
@@ -117,7 +129,7 @@ export class FacilityService {
     }
     public newManageDataPointSave(data: any): Observable<any> {
         return this.http.post(
-               environment.baseUrl + '/AddassignedDataPointbyfacility',
+            environment.baseUrl + '/AddassignedDataPointbyfacility',
             data
         );
     }
@@ -134,16 +146,12 @@ export class FacilityService {
             environment.baseUrl + 'Facilities/GetFacilityGroups/' + tenantId
         );
     }
-    public newGetFacilityGroupList(tenantId) :Observable<any>{
+    public newGetFacilityGroupList(tenantId): Observable<any> {
         return this.http.get<any>(
             environment.baseUrl + '/GetFacilityGroups/' + tenantId
         );
     }
-    public newGetFacilityByTenant(tenantId) :Observable<any>{
-        return this.http.get<any>(
-            environment.baseUrl + '/getFacilityByTenantId/' + tenantId
-        );
-    }
+
     public GetFacilityByID(Id) {
         return this.http.get<Facility>(
             environment.baseUrl + 'Facilities/' + Id
@@ -151,7 +159,7 @@ export class FacilityService {
     };
     public newUsersByFacilityID(Id) {
         return this.http.post<Facility>(
-              environment.baseUrl  + '/allfacilitiesbyId' , Id
+            environment.baseUrl + '/allfacilitiesbyId', Id
         );
     };
 }

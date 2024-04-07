@@ -212,7 +212,6 @@ registerLocaleData(localeEn, 'en-EN');
         ToggleButtonModule,
         RadioButtonModule,
         InputSwitchModule,
-        Ng2SearchPipeModule,
         ProgressSpinnerModule,
         TabViewModule,
         CalendarModule,

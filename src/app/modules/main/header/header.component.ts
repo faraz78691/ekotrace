@@ -1,5 +1,6 @@
 import { Facility } from '@/models/Facility';
 import { FacilityGroupList } from '@/models/FacilityGroupList';
+import { facilities } from '@/models/facilities';
 import { LoginInfo } from '@/models/loginInfo';
 import { CompanyDetails } from '@/shared/company-details';
 import { AppState } from '@/store/state';
@@ -44,7 +45,7 @@ export class HeaderComponent implements OnInit {
     excludedRole = 'Platform Admin';
     ProfileMenu: MenuItem[] | undefined;
     public facilityGroup: FacilityGroupList;
-    facilitygrouplist: any[] = [];
+    facilitygrouplist: facilities[] = [];
     @ViewChild('menu', { static: true }) menu: any;
     constructor(
         private appService: AppService,
@@ -196,11 +197,12 @@ export class HeaderComponent implements OnInit {
         this.facilityService
             .newGetFacilityByTenant(tenantID)
             .subscribe((res) => {
-             
+
                 this.facilitygrouplist = res;
+                this.addFacilitesToSignal(this.facilitygrouplist)
                 const allOption: FacilityGroupList = {
                     id: 0,
-                    name: 'All',
+                    name: 'Select',
                     flag: ''
                 };
 
@@ -213,5 +215,11 @@ export class HeaderComponent implements OnInit {
 
 
     };
+
+    addFacilitesToSignal(facilites:facilities[]){
+        
+        const editedfacility = facilites.slice(0);
+        this.facilityService.AddFacilites(editedfacility)
+    }
 
 }

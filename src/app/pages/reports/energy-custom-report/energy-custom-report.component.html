@@ -40,7 +40,7 @@
                     <div class="row facilityrow">
                         <p-dropdown
                             class="mx-2 finput ct_input_white_bg13 ct_select_2_drop_white ct_input_dark_text_145"
-                            name="facility" #facility="ngModel" [options]="facilityData" optionLabel="name"
+                            name="facility" #facility="ngModel" [options]="facilityService.facilitiesSignal()" optionLabel="name"
                             optionValue="id" styleClass="facilitydropdown" [(ngModel)]="selectedFacilityID"
                             (onChange)="checkFacilityID(selectedFacilityID)">
                         </p-dropdown>
@@ -401,7 +401,9 @@
                                     {{ de.year }}
                                 </td>
                                 <td
-                                    *ngIf="selectedCategory == 10 || selectedCategory == 13 || selectedCategory ==23">
+                                    *ngIf="selectedCategory == 10 || selectedCategory == 13 || selectedCategory ==23 || selectedCategory ==1
+                                    
+                                    ">
                                     {{ de.month }}
                                 </td>
                                 <td  *ngIf="selectedCategory != 10 && selectedCategory != 13 && selectedCategory !=23" >
