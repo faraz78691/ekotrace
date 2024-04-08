@@ -14,10 +14,10 @@
             <div class="row mt-4 pl-2 text-white">
                 <div class="col">
                     <label for="fyear" class="text-dark">Financial Year</label>
-                    <div class="selectyear">
+                    <div class="selectyear mx-0">
 
                         <p-calendar placeholder="Select Year" #calendarRef
-                            class="calenderinput ct_border_none_input ct_input_dark_text_145" [(ngModel)]="date"
+                            class="calenderinput ct_border_none_input ct_input_dark_text_145 ct_year_input_full_w" [(ngModel)]="date"
                             view="year" dateFormat="yy" inputId="yearpicker"></p-calendar>
 
                         <div class="icon-wrapper">
@@ -28,25 +28,25 @@
                 <div class="col">
                     <label for="fyear" class="text-dark">Month</label>
                     <div
-                        class="selectmonth col card justify-content-center ct_month_select_clr ct_multi_input_38 ct_month_light_green">
+                        class="ct_box_shadow_none selectmonth col card justify-content-center ct_month_select_clr ct_multi_input_38 ct_input_white_bg13 ct_select_2_drop_white ct_input_dark_text_145 ct_month_light_green">
                         <p-multiSelect [options]="reportmonths" placeholder="Months" name="months"
                             [(ngModel)]="selectMonths" styleClass="pcalender" optionLabel="name"></p-multiSelect>
                     </div>
                 </div>
             </div>
             <div class="row mt-4 mx-2 text-white">
-                <div class="col-6">
+                <div class="col">
                     <label for="fname" class="text-dark">Facility</label>
                     <div class="row facilityrow">
                         <p-dropdown
-                            class="mx-2 finput ct_input_white_bg13 ct_select_2_drop_white ct_input_dark_text_145"
+                        class="mx-2 finput ct_input_white_bg13 ct_select_2_drop_white ct_input_dark_text_145"
                             name="facility" #facility="ngModel" [options]="facilityService.facilitiesSignal()" optionLabel="name"
                             optionValue="id" styleClass="facilitydropdown" [(ngModel)]="selectedFacilityID"
                             (onChange)="checkFacilityID(selectedFacilityID)">
                         </p-dropdown>
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col">
                     <label for="fname " class="text-dark">Data points</label>
                     <p-dropdown class="ct_input_white_bg13 ct_select_2_drop_white ct_input_dark_text_145"
                         [options]="AssignedDataPoint" defaultLabel="Select Data Points" [(ngModel)]="selectedCategory"
@@ -132,7 +132,7 @@
                     </div>
                 </div> -->
 
-                <div class="" *ngIf="reportData.length >0">
+                <div class="col-md-12" *ngIf="reportData.length >0">
 
                     <p-table class="ct_bottom_table_tr" #dt [value]="reportData" [rowHover]="true"
                         styleClass="p-datatable-striped" editMode="row">

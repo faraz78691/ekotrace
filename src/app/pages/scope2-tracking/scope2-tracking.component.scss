@@ -130,7 +130,7 @@
 
 .view-request {
   background-color: #88AD47;
-  font-size: 12px;
+  font-size: 16px;
   border-radius: 5px;
   padding-top: 5px;
   padding-bottom: 5px;
@@ -233,7 +233,7 @@
   display: flex;
   justify-content: center;
   color: #88AD47;
-  font-size: 13px;
+  font-size: 16px;
 }
 
 .icon {
@@ -344,10 +344,10 @@
 
 }
 
-.trackingFooter {
-  height: 90px !important;
-  margin-bottom: 5px;
-}
+// .trackingFooter {
+//   height: 90px !important;
+//   margin-bottom: 5px;
+// }
 
 .iicon {
   width: 20px !important;
@@ -653,9 +653,9 @@ background-color: #fff!important;
 
 .ct_scoope_1_tab {
   // padding: 6px 10px;
-  padding-block: 4px!important;
+  padding-block: 8px!important;
   border-radius: 3px;
-  font-size: 14px;
+  font-size: 16px;
   transition: 0.4s ease all;
 }
 // .ct_scoope_1_tab.ct_tab_active_12 {

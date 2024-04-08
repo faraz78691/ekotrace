@@ -16,7 +16,7 @@
                             ? 'User-headD'
                             : 'User-headL'
                     ">
-                    <p class="ml-3">PackageList</p>
+                    <p class="ml-3 ct_fw_600">PackageList</p>
                 </div>
                 <div class="d-flex justify-content-between text-style text-light scope-Div">
                     <div class="form-group has-search">
@@ -33,7 +33,7 @@
                             " class="form-control" placeholder="Search" [(ngModel)]="searchData" />
                     </div>
                     <div class="form-group has-search text-light">
-                        <button class="GroupButton w-auto px-3" (click)="showAddGroupDialog()">
+                        <button class="GroupButton w-auto px-3 ct_animation_btn_121" (click)="showAddGroupDialog()">
                             Assign Package
                         </button>
                     </div>
@@ -72,6 +72,7 @@
                                 group already exist please use other groupname
                             </p> -->
 
+                          <div class="mb-3">
                             <label for="fname" class="mt-2 w-100"> Package</label>
 
 
@@ -81,6 +82,8 @@
                             <p *ngIf="GroupForm.submitted && group.errors?.['required']" class="text-danger mb-0">
                                 Group By is required
                             </p>
+                          </div>
+                          <div >
                             <label for="fname" class="mt-2 w-100">Facility</label>
 
 
@@ -89,6 +92,7 @@
                             <p *ngIf="GroupForm.submitted && group.errors?.['required']" class="text-danger mb-0">
                                 Group By is required
                             </p>
+                          </div>
          
 
                           
@@ -100,12 +104,12 @@
                                         facilitydata === true) ||
                                     usernameIsExist === true ||
                                     emailIstExist === true
-                                " class="rounded span-color px-3 text-white text-style loading ">
+                                " class="rounded span-color px-3 text-white text-style loading ct_animation_btn_121 ">
                                 <p-progressSpinner strokeWidth="8" *ngIf="isloading === true"></p-progressSpinner>
                                 Save
                             </Button>
                             <Button *ngIf="FormEdit === true" type="submit "
-                                class="rounded span-color px-3 text-white text-style ">
+                                class="rounded span-color px-3 text-white text-style ct_animation_btn_121">
                                 <p-progressSpinner strokeWidth="8" *ngIf="isloading === true"></p-progressSpinner>
                                 Update
                             </Button>
@@ -139,7 +143,7 @@
                                 <a style="
                                         cursor: pointer;
                                         color: #88ad47;
-                                        font-size: 13px;
+                                        font-size: 16px;
                                     ">view details</a>
                             </td>
                         </tr>

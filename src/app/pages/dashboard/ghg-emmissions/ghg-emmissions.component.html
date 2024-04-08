@@ -365,7 +365,7 @@
                 </div>
             </div>
             <div class="ct_emission_vender_list">
-                <div class="d-flex  align-items-center gap-2 justify-content-between ct_grey_brdr_btm1" *ngFor="let vendorItems of vendorData">
+                <div class="d-flex  ct_emission_vender_list_item_12 align-items-center gap-2 justify-content-between " *ngFor="let vendorItems of vendorData">
                     <div>
                         <h5 class="mb-1">{{vendorItems.supplier}}</h5>
                         
@@ -390,7 +390,7 @@
                 </div>
             </div>
 
-            <ul class="nav nav-pills mb-3 ct_emission_tab" id="pills-tab" role="tablist">
+            <ul class="nav nav-pills mb-3 ct_emission_tab " id="pills-tab" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="pills-Personal-tab" data-toggle="pill"
                         data-target="#pills-Personal" type="button" role="tab" aria-controls="pills-Personal"
@@ -407,7 +407,7 @@
                 <div class="tab-pane fade show active" id="pills-Personal" role="tabpanel"
                     aria-labelledby="pills-Personal-tab">
                     <div class="ct_emission_vender_list">
-                        <div class="d-flex  align-items-center gap-2 justify-content-between ct_grey_brdr_btm1" *ngFor="let items of upstreamArray">
+                        <div class="d-flex  align-items-center gap-2 justify-content-between  ct_emission_vender_list_item_12" *ngFor="let items of upstreamArray">
                             <div>
                                 <h5 class="mb-1">{{items.category}}</h5>
                                 <!-- <p class="mb-2">33 Units</p> -->
@@ -420,9 +420,9 @@
                 </div>
                 <div class="tab-pane fade" id="pills-Company" role="tabpanel" aria-labelledby="pills-Company-tab">
                     <div class="ct_emission_vender_list">
-                        <div class="d-flex  align-items-center gap-2 justify-content-between ct_grey_brdr_btm1" *ngFor="let items of downstreamArray">
+                        <div class="d-flex  align-items-center gap-2 justify-content-between  ct_emission_vender_list_item_12" *ngFor="let items of downstreamArray">
                             <div>
-                                <h5 class="mb-1">{{items.category}}</h5>
+                                <h5 class="mb-0">{{items.category}}</h5>
                                 <!-- <p class="mb-2">33 Units</p> -->
                             </div>
                             <div>

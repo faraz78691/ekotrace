@@ -52,19 +52,20 @@ a{
     display: block;
     text-align: center;
     transition: 0.4s ease all;
+    background-color: #f5f5f5;
 }
 
 .ct_gap_20{
     gap: 20px;
 }
 .ct_emission_menu_link ul li a.ct_active {
-    background-color: var(--darkblue) ;
-    box-shadow: 0px 4px 4px rgba(0,0,0,0.38);
+    background-color: #9abb4e;
+    /* box-shadow: 0px 4px 4px rgba(0,0,0,0.38); */
     color: #fff;
 }
 .ct_emission_menu_link ul li a:hover{
-    background-color:  var(--darkblue) ;
-    box-shadow: 0px 4px 4px rgba(0,0,0,0.38);
+    background-color:  #9abb4e;
+    /* box-shadow: 0px 4px 4px rgba(0,0,0,0.38); */
     color: #fff;
 }
 .ct_period_select {
@@ -155,7 +156,7 @@ button.ct_scope_btn {
     padding: 15px 30px;
     border-radius: 15px;
     height: 100%;
-    /* box-shadow: 0px 10px 25px rgba(0,0,0,0.09); */
+    box-shadow: 0px 10px 25px rgba(0,0,0,0.09);
     background-color: transparent;
 }
 .ct_font_24{
@@ -185,25 +186,27 @@ button.ct_scope_btn {
     position: relative;
 }
 .ct_emission_vender_list h5 {
-    font-weight: 400;
-    font-size: 15px;
+    font-weight: 500;
+    font-size: 16px;
 }
 .ct_emission_vender_list p {
     font-weight: 500;
     color:#333;
-    font-size: 14px;
+    font-size: 16px;
     gap: 6px;
 }
 .ct_emission_tab {
     background-color: #D4D4D4;
     border-radius: 10px;
+   display: flex !important;
+
 }
 .ct_emission_tab.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
     color: #fff!important;
-    background-color: #17B4B4 !important;
+    background-color: #9abb4e !important;
 }
 .ct_emission_tab.nav-pills .nav-link:hover{
-    background-color: #17B4B4 !important;
+    background-color: #9abb4e !important;
     color: #fff!important;
 }
 .ct_emission_tab.nav-pills .nav-link:not(.active):hover{
@@ -219,7 +222,7 @@ button.ct_scope_btn {
 }
 
 select.ct_all_vender_select {
-    background-color: var(--darkblue) ;
+    background-color: #9abb4e ;
     width: 100%;
     color: #fff;
     padding: 10px 15px;
@@ -298,7 +301,16 @@ display: block;
 .ct_yellow_dots{
     background-color: var(--yellow);
 }
-
+ul#pills-tab.ct_emission_tab {
+    display: flex !important;
+}
+.ct_emission_vender_list_item_12 {
+    padding: 8px;
+    background-color: #fff;
+    box-shadow: 0px 10px 25px rgba(0,0,0,0.09);
+    margin-bottom: 6px;
+    border-radius: 6px;
+}
 @media (min-width:1200px){
     .ct_mt_top_68{
         margin-top: -68px;

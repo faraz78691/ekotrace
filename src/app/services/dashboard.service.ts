@@ -360,6 +360,9 @@ export class DashboardService {
     public GEByTravel(admininfo) {
         return this.http.post(this.apiURL + '/businessdashboardemssionByTravel', admininfo);
     };
+    public GEByFuelType(admininfo) {
+        return this.http.post(this.localUrl + '/dashboardenergyConsumption', admininfo);
+    };
     public Waterwithdrawnby_source(admininfo) {
         return this.http.post('http://13.200.247.29:4000/dashboardWaterwithdrawnby_source', admininfo);
     };
@@ -375,11 +378,20 @@ export class DashboardService {
     public businessdashboardemssionByAir(admininfo) {
         return this.http.post(this.apiURL + '/businessdashboardemssionByAir', admininfo);
     };
+    public dashboardenergyConsumptionWellTank(admininfo) {
+        return this.http.post(this.apiURL + '/dashboardenergyConsumptionWellTank', admininfo);
+    };
     public BygroundTravel(admininfo) {
         return this.http.post(this.apiURL + '/businessdashboardemssionBygroundTravel', admininfo);
     };
+    public ByEnergyRenewable(admininfo) {
+        return this.http.post(this.localUrl + '/dashboardenergyConsumptionRenewable', admininfo);
+    };
     public businessTravelByMonth(admininfo) {
         return this.http.post(this.apiURL + '/businessdashboardemssion', admininfo);
+    };
+    public EnergyByMonth(admininfo) {
+        return this.http.post(this.localUrl + '/dashboardenergyConsumptionMonth', admininfo);
     };
     public GTopWiseEimssion(admininfo) {
         return this.http.post(this.apiURL + '/dashboardTopEmssion', admininfo);

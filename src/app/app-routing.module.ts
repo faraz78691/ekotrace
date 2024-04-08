@@ -46,6 +46,7 @@ import { WaterUsageComponent } from '@pages/dashboard/water-usage/water-usage.co
 import { CarbonOffsettingComponent } from '@pages/carbon-offsetting/carbon-offsetting.component';
 import { WasteComponent } from '@pages/dashboard/waste/waste.component';
 import { TreeComponent } from '@pages/tree/tree.component';
+import { TreeListComponent } from '@pages/tree/tree-list/tree-list.component';
 
 const routes: Routes = [
     {
@@ -141,8 +142,14 @@ const routes: Routes = [
                 data: { roles: ['Super Admin', 'Admin', 'Manager'] }
             },
             {
-                path: 'tree',
+                path: 'tree/:id',
                 component: TreeComponent,
+                canActivate: [RoleGuard],
+                data: { roles: ['Super Admin', 'Admin'] }
+            },
+            {
+                path: 'treeList',
+                component: TreeListComponent,
                 canActivate: [RoleGuard],
                 data: { roles: ['Super Admin', 'Admin'] }
             },
@@ -355,10 +362,7 @@ const routes: Routes = [
                     ]
                 }
 
-
             }
-
-
         ]
     },
     {
@@ -397,7 +401,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes, {})],
+    imports: [RouterModule.forRoot(routes, { bindToComponentInputs: true })],
     exports: [RouterModule]
 })
 export class AppRoutingModule { }

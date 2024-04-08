@@ -217,7 +217,7 @@ export const menu = [
                 name: 'Tree',
                 iconClasses: 'fas fa-star',
                 iconSRC :'assets/img/tracking_icon.svg',
-                path: ['tree']
+                path: ['treeList']
             },
             {
                 name: 'Tracking',

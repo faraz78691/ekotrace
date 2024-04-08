@@ -1,5 +1,10 @@
-import { Component } from '@angular/core';
+
+import { Component, Input } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import FamilyTree from '@balkangraph/familytree.js';
+import { NotificationService } from '@services/notification.service';
+import { TrackingService } from '@services/tracking.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-tree',
@@ -7,19 +12,55 @@ import FamilyTree from '@balkangraph/familytree.js';
   styleUrls: ['./tree.component.scss']
 })
 export class TreeComponent {
-
-
+    @Input() id!:string;
+    constructor(
+        private route: ActivatedRoute,
+        private router: Router,
+        private trackingService: TrackingService,
+        private notification: NotificationService,
+        private toastr: ToastrService
+    ) {
+        console.info("id:",this.id);
+    }
   ngOnInit() {
     const tree = document.getElementById('tree');
     if (tree) {
         var family = new FamilyTree(tree, {
+            editForm: {
+                generateElementsFromFields: false,
+                titleBinding: "name", photoBinding: null,
+                elements: [
+                    { type: 'textbox', label: 'Full Name', binding: 'Name' },
+                    { type: 'textbox', label: 'Phone number', binding: 'phone' }        
+                ],
+                addMore:null,
+                buttons:  {
+                    edit: {
+                        icon: FamilyTree.icon.edit(24,24,'#fff'),
+                        text: 'Editd',
+                        hideIfEditMode: true,
+                        hideIfDetailsMode: false
+                    },
+                    share: null,
+                    pdf: null,
+        
+                }
+            },
+            
+            
+            nodeMenu:{
+                details: {text:"Details"},
+                edit: {text:"Edit"},
+            
+            },
             nodeBinding: {
             field_0: "name",
             field_1: "relation",
             },
         });
 
-         family.load([
+         family.load(
+            [
             // { id: 1, pids: [2], name: "Amber McKenzie", gender: "female", img: "https://cdn.balkan.app/shared/2.jpg"  },
             // { id: 2, pids: [1], name: "Ava Field", gender: "male", img: "https://cdn.balkan.app/shared/m30/5.jpg" },
             // { id: 3, mid: 1, fid: 2, name: "Peter Stevens", gender: "male", img: "https://cdn.balkan.app/shared/m10/2.jpg" },

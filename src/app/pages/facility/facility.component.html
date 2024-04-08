@@ -27,7 +27,7 @@
                             " class="form-control" placeholder="Search" />
                     </div>
                     <div class="form-group has-search text-light">
-                        <button class="LocButton" (click)="showAddFacilityDialog()">
+                        <button class="LocButton ct_animation_btn_121" (click)="showAddFacilityDialog()">
                             Add Facility
                         </button>
                     </div>
@@ -188,13 +188,13 @@
 
 
             <div class="justify-content-center">
-                <p-dialog [(visible)]="visible" [breakpoints]="{'960px': '75vw'}" styleClass="facilityDialog"
+                <p-dialog [(visible)]="visible" [breakpoints]="{'960px': '75vw'}" styleClass="facilityDialog ct_h_none_143"
                     [style]="{width: '50vw'}" [draggable]="false" [resizable]="false" [closable]="false">
                     <p-header *ngIf="isEdit === false">
                         Add new Facility
                     </p-header>
                     <p-header *ngIf="isEdit === true"> Edit Facility </p-header>
-                    <div style="height: 95%;" class="modal-body text-white text-style">
+                    <div class="modal-body text-white text-style">
                         <form style="height: 100%;" #addCompForm="ngForm" class="col-12" (ngSubmit)="
                                 isEdit === false
                                     ? saveFacility(addCompForm.value)
@@ -203,9 +203,9 @@
                                           addCompForm.value
                                       )
                             ">
-                            <div style="height: 98%;" class="d-flex row">
-                                <div class="facilitygrid col-6">
-                                    <div>
+                            <div  class="d-flex row">
+                                <div class="facilitygrid col-6 mb-4">
+                                    <div class="mb-4">
                                         <label for="Aname" class="text-dark">Asset name</label>
                                         <input required ngModel name="assetName" type="text"
                                             class="form-control Dashboard-tab text-white"
@@ -218,7 +218,7 @@
 
                                     </div>
                                     
-                                    <div class="ct_input_white_bg13 ct_input_dark_text_121 ct_city_name_select_2_search">
+                                    <div class="ct_input_white_bg13 mb-4 ct_input_dark_text_121 ct_city_name_select_2_search">
                                         <label for="country" class=" text-dark">Country Name</label>
                                         <p-dropdown required ngModel name="country" #country="ngModel"
                                             [options]="countryData" optionLabel="Name" [filter]="true" filterBy="Name"
@@ -233,7 +233,7 @@
                                         </p>
 
                                     </div>
-                                    <div class="ct_input_white_bg13 ct_input_dark_text_121 ct_city_name_select_2_search">
+                                    <div class="ct_input_white_bg13 mb-4 ct_input_dark_text_121 ct_city_name_select_2_search">
                                         <label for="state" class=" text-dark">State Name</label>
                                         <p-dropdown required ngModel name="state" #state="ngModel" [options]="stateData"
                                             optionLabel="Name" optionValue="Name" [filter]="true" filterBy="Name"
@@ -245,7 +245,7 @@
                                             State Name is required
                                         </p>
                                     </div>
-                                    <div class="ct_input_white_bg13 ct_input_dark_text_121 ct_city_name_select_2_search">
+                                    <div class="ct_input_white_bg13 mb-4 ct_input_dark_text_121 ct_city_name_select_2_search">
                                         <label for="city" class=" text-dark">City Name</label>
                                         <p-dropdown required ngModel name="city" #city="ngModel" [options]="cityData"
                                             optionLabel="Name" optionValue="Name" [filter]="true" filterBy="Name"
@@ -259,8 +259,8 @@
 
                                 </div>
 
-                                <div class="facilitygrid col-6">
-                                    <div>
+                                <div class="facilitygrid col-6 ">
+                                    <div class="mb-4">
                                         <label for="atype" class=" text-dark">Asset type / Department</label>
                                         <input required ngModel name="assetType" type="text"
                                             class="form-control Dashboard-tab text-white"
@@ -273,7 +273,7 @@
 
                                     </div>
                                    
-                                    <div>
+                                    <div class="mb-4">
                                         <label for="equity" class=" text-dark">Equity percentage</label>
                                         <input ngModel name="equity" type="number"
                                             class="form-control Dashboard-tab text-white"
@@ -282,7 +282,7 @@
                                             " #equity="ngModel" />
 
                                     </div>
-                                    <div>
+                                    <div class="mb-4">
                                         <label for="address" class=" text-dark">Address</label>
                                         <input required ngModel name="address" type="text"
                                             class="form-control Dashboard-tab text-white"
@@ -294,7 +294,7 @@
                                             Address is required
                                         </p>
                                     </div>
-                                    <div>
+                                    <div class="mb-4">
                                         <label for="fname" class="text-dark">Water stress area</label>
                                         <div class="form-check">
                                             <input ngModel class="form-check-input" type="checkbox" name="yes"
@@ -310,10 +310,10 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <Button *ngIf="isEdit == false" type="submit" class="LocButton">
+                                <Button *ngIf="isEdit == false" type="submit" class="LocButton ct_animation_btn_121">
                                     Save
                                 </Button>
-                                <Button *ngIf="isEdit == true" type="submit" class="LocButton">
+                                <Button *ngIf="isEdit == true" type="submit" class="LocButton ct_animation_btn_121">
                                     Update
                                 </Button>
                                 <span type="button" class="text-white font-weight-light ct_close_btn1231" (click)="
@@ -345,7 +345,7 @@
             <!-- open manage data point model dialog -->
             <div class="justify-content-center">
                 <p-dialog class="dpDIv ct_scrool_none_121" header="Manage Data Point" [visible]="DP_BoxVisible"
-                    [breakpoints]="{'2460px': '85vw'}" [style]="{width: '80vw'}" [draggable]="false"
+                    [breakpoints]="{'2460px': '50vw'}" [style]="{width: '45vw'}" [draggable]="false"
                     [(visible)]="DP_BoxVisible">
                     <div class="modal-body text-white text-style">
                         <form #DataPointForm="ngForm" class="col-12" (ngSubmit)="SaveManageDataPoint()">
@@ -403,7 +403,7 @@
                                 </p-tabView> -->
 
                                 <div class="row" *ngIf="scope1Category">
-                                    <div class="col-md-4 mb-4">
+                                    <div class="col-md-12 mb-4">
                                         <div class="">
                                             <label for="" class="text-dark w-100">Scope 1</label>
                                             <!-- <p-multiSelect class="ct_drop_scroll" [options]="scope1Category" name="Item" defaultLabel="Select a template"
@@ -420,7 +420,7 @@
                                            
                                         </div>
                                     </div>
-                                    <div class="col-md-4 mb-4">
+                                    <div class="col-md-12 mb-4">
                                         <div class="">
                                             <label for="" class="text-dark w-100">Scope 2</label>
                                             <p-multiSelect class="ct_calender_input_1234 ct_drop_scroll" [options]="scope2Category" [group]="true" [(ngModel)]="selectedScope2" [ngModelOptions]="{standalone: true}"  defaultLabel="Select category" scrollHeight="250px" display="chip">
@@ -433,7 +433,7 @@
                                             </p-multiSelect>
                                         </div>
                                     </div>
-                                    <div class="col-md-4 mb-4">
+                                    <div class="col-md-12 mb-4">
                                         <div class="">
                                             <label for="" class="text-dark w-100">Scope 3</label>
                                             <!-- <p-multiSelect class="ct_calender_input_1234 ct_drop_scroll" [options]="scope3Category" [group]="true" [(ngModel)]="selectedScope3" [ngModelOptions]="{standalone: true}"  defaultLabel="Select category" scrollHeight="250px" display="chip">
@@ -454,7 +454,7 @@
 
 
                             <div class="modal-footer ct_mt_60">
-                                <Button type="submit" class="LocButton">
+                                <Button type="submit" class="LocButton ct_animation_btn_121">
                                     Save
                                 </Button>
                                 <span type="button" class="text-white font-weight-light" (click)="closeDp_Dialog()">

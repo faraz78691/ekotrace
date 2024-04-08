@@ -353,7 +353,7 @@ export class GhgEmmissionsComponent implements OnDestroy {
           // },
           legend: {
             position: "bottom",
-            fontSize: '12px',
+            fontSize: '14px',
             floating: false,
             horizontalAlign: 'left',
           },
@@ -402,11 +402,9 @@ export class GhgEmmissionsComponent implements OnDestroy {
       dataLabels: {
         enabled: false
       },
-      // legend: {
-      //   show: false,
-      //   position: 'top',
-      //   offsetY: 0
-      // },
+      legend: {
+    fontSize:'14px'
+      },
       colors: ['#213D49', '#46A5CD', '#FFD914'],
       series: this.scopeWiseSeries,
       chart: {
@@ -424,6 +422,7 @@ export class GhgEmmissionsComponent implements OnDestroy {
         breakpoint: 480,
         options: {
           legend: {
+            fontSize:'14px',
             position: 'bottom',
             offsetX: -10,
             offsetY: 0
@@ -452,7 +451,19 @@ export class GhgEmmissionsComponent implements OnDestroy {
         },
       },
       xaxis: {
+        labels:{
+          style:{
+            fontSize:'13px'
+          }
+        },
         categories: ['Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar']
+      },
+      yaxis:{
+        labels:{
+          style:{
+            fontSize:'13px'
+          }
+        },
       },
       fill: {
         opacity: 1

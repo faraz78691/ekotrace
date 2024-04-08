@@ -106,6 +106,7 @@ import { WaterUsageComponent } from './pages/dashboard/water-usage/water-usage.c
 import { CarbonOffsettingComponent } from './pages/carbon-offsetting/carbon-offsetting.component';
 import { WasteComponent } from './pages/dashboard/waste/waste.component';
 import { TreeComponent } from './pages/tree/tree.component';
+import { TreeListComponent } from './pages/tree/tree-list/tree-list.component';
 
 defineCustomElements();
 registerLocaleData(localeEn, 'en-EN');
@@ -169,7 +170,8 @@ registerLocaleData(localeEn, 'en-EN');
         WaterUsageComponent,
         CarbonOffsettingComponent,
         WasteComponent,
-        TreeComponent
+        TreeComponent,
+        TreeListComponent
     ],
     imports: [
         BrowserModule,

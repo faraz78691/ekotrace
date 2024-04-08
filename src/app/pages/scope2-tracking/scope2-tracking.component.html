@@ -263,7 +263,7 @@
                 <p-tabView [ngStyle]="{display: facilityhavedp}" #dataentryTab activeIndex="{{ activeindex }}">
                     <p-tabPanel header="Data Entry">
                         <div class="row text-white border-bottom">
-                            <p *ngIf="categoryId !=24 && categoryId !=25 && categoryId !=26" class="mb-2 mt-3 ml-4 text-dark">
+                            <p *ngIf="categoryId !=24 && categoryId !=25 && categoryId !=26" class="mb-2 mt-3 ml-4 text-dark ct_fw_600">
                                 {{ SubCatAllData.subCatName }}
                             </p>
                             <p *ngIf="categoryId ==24" class="mb-2 mt-3 ml-4 text-dark">
@@ -565,7 +565,7 @@
                                 </div>
                                 <div class="trackingFooter"
                                 *ngIf="categoryId ==1 || categoryId == 2 ||   categoryId == 3  || categoryId == 4 || categoryId == 5 || categoryId == 6 ||  categoryId == 7">
-                                <div class="row my-3 mb-5 pb-5 mx-2">
+                                <div class="row my-3 mb-0 pb-3 mx-2">
                                     <div class="col-12">
                                         <label for="fname ">Attachments</label>
                                         <p-toast></p-toast>
@@ -604,6 +604,7 @@
                                                     <a class="trackingsubmitb d-block" href="assets/template.xlsx"
                                                         download="">Click here to
                                                         download template</a>
+                                                   
                                                 </div>
 
                                             </div>
@@ -1017,7 +1018,7 @@
                                 </div>
                             </div>
                             <div class="trackingFooter" *ngIf="categoryId ==12">
-                                <div class="row mt-4 mb-3 mb-5 pb-5 mx-2">
+                                <div class="row mt-4 mb-3 mb-0 pb-3 mx-2">
 
                                     <div class="col-12">
                                         <div class=" mt-0">
@@ -1093,7 +1094,7 @@
                                 </div>
                             </div>
                             <div class="trackingFooter" *ngIf="categoryId ==14">
-                                <div class="row mt-4 mb-3 mb-5 pb-5 mx-2">
+                                <div class="row mt-4 mb-3 mb-0 pb-3 mx-2">
 
                                     <div class="col-12">
                                         <div class=" mt-0">
@@ -1307,7 +1308,7 @@
                                 </div>
                             </div>
                             <div class="trackingFooter" *ngIf="categoryId ==15">
-                                <div class="row mt-4 mb-3 mb-5 pb-5 mx-2">
+                                <div class="row mt-4 mb-0 pb-3 mx-2">
 
                                     <div class="col-12">
                                         <div class=" mt-0">
@@ -3501,7 +3502,7 @@
                     </div> -->
                     </p-tabPanel>
 
-                    <p-tabPanel header="Settings" class="ct_height_100vh">
+                    <p-tabPanel header="Settings" >
                         <!-- <div class="row text-white border-bottom">
                             <p class="mb-2 mt-3 ml-4 text-dark">
                                 {{ SubCatAllData.subCatName }}
