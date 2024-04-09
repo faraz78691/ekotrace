@@ -60,7 +60,7 @@ export class AuthGuard  {
 
         if (!token || !refreshToken) {
             return of(false);
-        }
+        };
 
         const tokenModel = JSON.stringify({
             accessToken: token,

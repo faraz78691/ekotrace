@@ -245,29 +245,29 @@ export const menu = [
                 path: ['brsr-report'],
                 children: [
                     {
-                        name: 'Principle 1',
+                        name: 'Fd set',
                         iconClasses: 'fas fa-file',
                         path: ['brsr-report'],
                         queryParams: { defaultTab: 0 }
                     },
                     {
-                        name: 'Principle 2',
+                        name: 'HR set',
                         iconClasses: 'fas fa-file',
                         path: ['brsr-report'],
                         queryParams: { defaultTab: 1 }
                     },
                     {
-                        name: 'Principle 3',
+                        name: 'CS set',
                         iconClasses: 'fas fa-file',
                         path: ['brsr-report'],
                         queryParams: { defaultTab: 2 }
-                    },
-                    {
-                        name: 'Principle 4',
-                        iconClasses: 'fas fa-file',
-                        path: ['brsr-report'],
-                        queryParams: { defaultTab: 3 }
                     }
+                    // {
+                    //     name: 'Principle 4',
+                    //     iconClasses: 'fas fa-file',
+                    //     path: ['brsr-report'],
+                    //     queryParams: { defaultTab: 3 }
+                    // }
                 ]
             },
             {

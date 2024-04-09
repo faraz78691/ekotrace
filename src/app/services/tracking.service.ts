@@ -580,7 +580,8 @@ export class TrackingService {
     submitPurchaseGoods(formData: any): Observable<any> {
         const headers = new HttpHeaders()
         .set('content-type','application/x-www-form-urlencoded')
-        .set('Access-Control-Allow-Origin', '*');  
+        .set('Access-Control-Allow-Origin', '*')
+        ;  
         ; 
         return this.http.post(
             environment.baseUrl + '/getCalcPurchaseGood',
