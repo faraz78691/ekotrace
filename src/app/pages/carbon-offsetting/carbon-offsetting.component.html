@@ -319,37 +319,22 @@
                 </div>
                 <div class="col-6">
                     <p>{{ groupdetails.project_name }}</p>
-                    <p>{{ groupdetails.project_type}}</p>
+                    <p>{{ groupdetails.type}}</p>
                     <p>{{ groupdetails.date_of_purchase }}</p>
                     <p>{{ groupdetails.vintage }}</p>
                     <p>{{ groupdetails.standard }}</p>
                     <p>{{ groupdetails.offset }}</p>
                     <p>{{ groupdetails.carbon_credit_value }}</p>
-                
-                   
+                    <p>{{'' }}</p>
                     <p>{{ groupdetails.scope1 }}</p>
                     <p>{{ groupdetails.scope2 }}</p>
                     <p>{{ groupdetails.scope3 }}</p>
-                    <p>{{ groupdetails.comments }}</p>
+                    <p>{{ groupdetails.comments || '-'}}</p>
                     <p>{{ groupdetails.file }}</p>
 
                 </div>
             </div>
-            <!-- <div class="d-flex text-light text-style font-pera mb-2" *ngIf="groupdata === true">
-                <div class="ct_edit_btn_white_text">
-                    <i *ngIf="userdetails.isDisabledEdit !== true"
-                        class="LocButtonEdit pi pi-user-edit pointer d-flex text-white"
-                        (click)="showEditGroupDialog(groupdetails)">
-                        <p class="pl-2">Edit</p>
-                    </i>
-                </div>
-                <div class="form-group has-search text-light pointer ct_edit_btn_white_text">
-                    <i (click)="deleteGroup($event, groupdetails.id)"
-                        class="deleteButton pi pi-trash pointer d-flex text-white">
-                        <p class="pl-2">Delete</p>
-                    </i>
-                </div>
-            </div> -->
+         
             <div class="text-light noData" *ngIf="groupdata === false">
                 <div class="icon mt-3">
                     <i class="fa fa-info-circle" style="font-size: 20px" aria-hidden="true"></i>

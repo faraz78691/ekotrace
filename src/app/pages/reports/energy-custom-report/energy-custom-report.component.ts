@@ -15,6 +15,7 @@ import jsPDF from 'jspdf';
 import { months } from '@/models/months';
 import { DatePipe } from '@angular/common';
 import { DataEntry } from '@/models/DataEntry';
+import { NotificationService } from '@services/notification.service';
 interface financialyear {
     financialyear: string;
 }
@@ -100,6 +101,7 @@ export class EnergyCustomReportComponent {
     @ViewChild('calendarRef') calendarRef!: Calendar;
     date: Date;
     constructor(
+        private notification: NotificationService,
         public facilityService: FacilityService,
         private trackingService: TrackingService
     ) {
@@ -519,7 +521,14 @@ export class EnergyCustomReportComponent {
 
         this.facilityService.gerReport(url, reportFormData.toString()).subscribe({
             next: res => {
-                this.reportData = res.result
+                if(res.success){
+                    this.reportData = res.result
+                }else{
+                    this.notification.showSuccess(
+                        'No data found',
+                        'Success'
+                    );
+                }
                 // console.log( this.reportData );
                 console.log(this.selectedCategory);
             }

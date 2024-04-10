@@ -48,7 +48,7 @@ export class GroupService {
         // .set('content-type','multipart/form-data;')
         // .set('Access-Control-Allow-Origin', '*');  
         // ; 
-        return this.http.post('http://192.168.29.14:4003'+ '/Adduser_offseting', groupdetails);
+        return this.http.post( environment.baseUrl + '/Adduser_offseting', groupdetails);
     }
 
     public deleteGroups(id) {

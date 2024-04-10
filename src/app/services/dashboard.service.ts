@@ -14,7 +14,7 @@ import { facilities } from '@/models/dashboardFacilities';
 })
 export class DashboardService {
     apiURL = environment.baseUrl;
-    localUrl = 'http://192.168.1.31:4003';
+    // apiURL = 'http://192.168.1.31:4003';
     constructor(private http: HttpClient) { }
 
     public GetDataForEnvironment(
@@ -361,7 +361,7 @@ export class DashboardService {
         return this.http.post(this.apiURL + '/businessdashboardemssionByTravel', admininfo);
     };
     public GEByFuelType(admininfo) {
-        return this.http.post(this.localUrl + '/dashboardenergyConsumption', admininfo);
+        return this.http.post(this.apiURL + '/dashboardenergyConsumption', admininfo);
     };
     public Waterwithdrawnby_source(admininfo) {
         return this.http.post('http://13.200.247.29:4000/dashboardWaterwithdrawnby_source', admininfo);
@@ -385,13 +385,13 @@ export class DashboardService {
         return this.http.post(this.apiURL + '/businessdashboardemssionBygroundTravel', admininfo);
     };
     public ByEnergyRenewable(admininfo) {
-        return this.http.post(this.localUrl + '/dashboardenergyConsumptionRenewable', admininfo);
+        return this.http.post(this.apiURL + '/dashboardenergyConsumptionRenewable', admininfo);
     };
     public businessTravelByMonth(admininfo) {
         return this.http.post(this.apiURL + '/businessdashboardemssion', admininfo);
     };
     public EnergyByMonth(admininfo) {
-        return this.http.post(this.localUrl + '/dashboardenergyConsumptionMonth', admininfo);
+        return this.http.post(this.apiURL + '/dashboardenergyConsumptionMonth', admininfo);
     };
     public GTopWiseEimssion(admininfo) {
         return this.http.post(this.apiURL + '/dashboardTopEmssion', admininfo);
