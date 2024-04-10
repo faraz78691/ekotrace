@@ -20,16 +20,16 @@ public getTreeById(id): Observable<any> {
   return this.http.post(environment.baseUrl + `/allTreedata`, id);
 }
 public getTreeList(): Observable<any> {
-  return this.http.get('http://192.168.1.31:4003' + `/getAllFamilyMembers`);
+  return this.http.get(environment.baseUrl + `/getAllFamilyMembers`);
 };
 public createTree(data): Observable<any> {
-  return this.http.post('http://192.168.1.31:4003' + `/addMainTree`, data);
+  return this.http.post(environment.baseUrl + `/addMainTree`, data);
 };
 
 public createChildTree(data): Observable<any> {
-  return this.http.post('http://192.168.1.31:4003' + `/addChildInTree`, data);
+  return this.http.post(environment.baseUrl + `/addChildInTree`, data);
 };
 public deleteChildTree(data): Observable<any> {
-  return this.http.post('http://192.168.1.31:4003' + `/deleteNode`, data);
+  return this.http.post(environment.baseUrl + `/deleteNode`, data);
 };
 }

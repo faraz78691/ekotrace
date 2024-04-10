@@ -34,7 +34,14 @@ export class TreeComponent {
     }
     ngOnInit() {
         this.getTreeViewByID();
+        $(document).ready(
+            $('#btnTest').on('click', function (e) {
 
+                console.log("node");
+                // do something...
+              })
+
+        )
 
     };
 
@@ -82,24 +89,47 @@ export class TreeComponent {
                             add: {
                                 text: "Add",
                                 onClick: function (node: string) {
-                                    const ActionData = JSON.stringify({ 'id': node, 'action': 'add' })
-                                    console.log(node);
-                                    $('#myModal').modal('show');
-                                    localStorage.setItem("selectedNode", ActionData)
+                                 $(".ct_custom_modal_120").show(500)
+                                 
+                                    localStorage.setItem("selectedNode", node)
+                               
 
                                 }
                             },
                             remove: {
-                                text: "Remove", onClick: this.onRemove
+                                text: "Remove", onClick: callHandler
                             }
                         },
                         nodeBinding: {
                             field_0: "name",
                             field_1: "relation",
                         },
-                    });
 
-               
+                    });
+                    function callHandler(nodeId) {
+                        var nodeData = family.get(nodeId);
+                        console.log(nodeData);
+                        const formData = new URLSearchParams();
+                        formData.append('id', nodeData['id'].toString());
+                        formData.append('family_id', nodeData['family_id'].toString());
+ 
+                    }
+                    family.onUpdateNode((args) => {
+                        var updateNode = args.updateNodesData[0];
+                        console.log(updateNode);
+
+                        fetch('http://13.200.247.29:4000/UpdateChildInTree', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded'
+                            },
+                            body: JSON.stringify(updateNode)
+                        })
+                            .then(response => response.json())
+                            .then(data => console.log(data))
+                            .catch(error => console.error('Error:', error));
+                    }
+                    )
 
                     family.load(
                         this.loadFamilyData
@@ -108,6 +138,7 @@ export class TreeComponent {
             },
         })
     };
+
 
 
     onSubmit(data) {
@@ -139,12 +170,12 @@ export class TreeComponent {
         const nodeForm = new URLSearchParams();
         nodeForm.set('id', nodeid);
         nodeForm.set('family_id', this.id);
-  
+
 
         this.familyService.deleteChildTree(nodeForm.toString()).subscribe({
             next: res => {
                 console.log(res);
-              
+
                 this.nodeForm.reset()
                 if (res.success) {
                     this.getTreeViewByID();
@@ -154,8 +185,6 @@ export class TreeComponent {
                 console.log(err)
         })
     };
-
-
 
 
 

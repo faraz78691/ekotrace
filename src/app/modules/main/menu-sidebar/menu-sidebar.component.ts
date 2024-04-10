@@ -152,7 +152,7 @@ export class MenuSidebarComponent implements OnInit {
         this.reportService.getBRSRdata(tenantID).subscribe((response) => {
             if (response != null) {
                 console.log(
-                    '🚀 ~ file: brsr-report.component.ts:280 ~ this.reportService.getBRSRdata ~ response:',
+                    '🚀 ~ file: brsrReport.component.ts:280 ~ this.reportService.getBRSRdata ~ response:',
                     response
                 );
                 this.brsrdata = response;
@@ -242,33 +242,33 @@ export const menu = [
                 name: 'BRSR',
                 iconClasses: 'fas fa-table',
                 iconSRC :'assets/img/BRSR.svg',
-                path: ['brsr-report'],
-                children: [
-                    {
-                        name: 'Fd set',
-                        iconClasses: 'fas fa-file',
-                        path: ['brsr-report'],
-                        queryParams: { defaultTab: 0 }
-                    },
-                    {
-                        name: 'HR set',
-                        iconClasses: 'fas fa-file',
-                        path: ['brsr-report'],
-                        queryParams: { defaultTab: 1 }
-                    },
-                    {
-                        name: 'CS set',
-                        iconClasses: 'fas fa-file',
-                        path: ['brsr-report'],
-                        queryParams: { defaultTab: 2 }
-                    }
-                    // {
-                    //     name: 'Principle 4',
-                    //     iconClasses: 'fas fa-file',
-                    //     path: ['brsr-report'],
-                    //     queryParams: { defaultTab: 3 }
-                    // }
-                ]
+                path: ['brsrReport'],
+                // children: [
+                //     {
+                //         name: 'Fd set',
+                //         iconClasses: 'fas fa-file',
+                //         path: ['brsrReport'],
+                //         queryParams: { defaultTab: 0 }
+                //     },
+                //     {
+                //         name: 'HR set',
+                //         iconClasses: 'fas fa-file',
+                //         path: ['brsrReport'],
+                //         queryParams: { defaultTab: 1 }
+                //     },
+                //     {
+                //         name: 'CS set',
+                //         iconClasses: 'fas fa-file',
+                //         path: ['brsrReport'],
+                //         queryParams: { defaultTab: 2 }
+                //     }
+                //     // {
+                //     //     name: 'Principle 4',
+                //     //     iconClasses: 'fas fa-file',
+                //     //     path: ['brsrReport'],
+                //     //     queryParams: { defaultTab: 3 }
+                //     // }
+                // ]
             },
             {
                 head: 'Admin Setting',
@@ -343,25 +343,25 @@ export const menu = [
                     {
                         name: 'Principle 1',
                         iconClasses: 'fas fa-file',
-                        path: ['brsr-report'],
+                        path: ['brsrReport'],
                         queryParams: { defaultTab: 0 }
                     },
                     {
                         name: 'Principle 2',
                         iconClasses: 'fas fa-file',
-                        path: ['brsr-report'],
+                        path: ['brsrReport'],
                         queryParams: { defaultTab: 1 }
                     },
                     {
                         name: 'Principle 3',
                         iconClasses: 'fas fa-file',
-                        path: ['brsr-report'],
+                        path: ['brsrReport'],
                         queryParams: { defaultTab: 2 }
                     },
                     {
                         name: 'Principle 4',
                         iconClasses: 'fas fa-file',
-                        path: ['brsr-report'],
+                        path: ['brsrReport'],
                         queryParams: { defaultTab: 3 }
                     }
                 ]
@@ -428,30 +428,30 @@ export const menu = [
                 head: 'Reporting',
                 name: 'BRSR',
                 iconClasses: 'fas fa-table',
-                path: ['/brsr-report'],
+                path: ['/brsrReport'],
                 children: [
                     {
                         name: 'Principle 1',
                         iconClasses: 'fas fa-file',
-                        path: ['brsr-report'],
+                        path: ['brsrReport'],
                         queryParams: { defaultTab: 0 }
                     },
                     {
                         name: 'Principle 2',
                         iconClasses: 'fas fa-file',
-                        path: ['brsr-report'],
+                        path: ['brsrReport'],
                         queryParams: { defaultTab: 1 }
                     },
                     {
                         name: 'Principle 3',
                         iconClasses: 'fas fa-file',
-                        path: ['brsr-report'],
+                        path: ['brsrReport'],
                         queryParams: { defaultTab: 2 }
                     },
                     {
                         name: 'Principle 4',
                         iconClasses: 'fas fa-file',
-                        path: ['brsr-report'],
+                        path: ['brsrReport'],
                         queryParams: { defaultTab: 3 }
                     }
                 ]
@@ -505,25 +505,25 @@ export const menu = [
                     {
                         name: 'Principle 1',
                         iconClasses: 'fas fa-file',
-                        path: ['brsr-report'],
+                        path: ['brsrReport'],
                         queryParams: { defaultTab: 0 }
                     },
                     {
                         name: 'Principle 2',
                         iconClasses: 'fas fa-file',
-                        path: ['brsr-report'],
+                        path: ['brsrReport'],
                         queryParams: { defaultTab: 1 }
                     },
                     {
                         name: 'Principle 3',
                         iconClasses: 'fas fa-file',
-                        path: ['brsr-report'],
+                        path: ['brsrReport'],
                         queryParams: { defaultTab: 2 }
                     },
                     {
                         name: 'Principle 4',
                         iconClasses: 'fas fa-file',
-                        path: ['brsr-report'],
+                        path: ['brsrReport'],
                         queryParams: { defaultTab: 3 }
                     }
                 ]

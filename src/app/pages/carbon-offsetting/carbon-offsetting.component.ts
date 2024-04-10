@@ -67,6 +67,7 @@ export class CarbonOffsettingComponent {
   selectedFaciltiy: any;
   selectedState: any;
   GroupByValue: string;
+  project_type: string;
   countryUnique: string[];
   stateUnique: string[];
   unlock: string = '';
@@ -78,7 +79,9 @@ export class CarbonOffsettingComponent {
   selectedScope:any;
   carbon_credit_value:string;
   type:string;
+  date3:string;
   standard:string;
+  selectedFile:File
   constructor(
       private companyService: CompanyService,
       private UserService: UserService,
@@ -100,15 +103,26 @@ export class CarbonOffsettingComponent {
       
       this.Groupby = [
           {
-              name: 'Country'
+              name: 'Renewable Energy'
           },
           {
-              name: 'State'
+              name: 'Nature Based'
           },
           {
-              name: 'Facility'
+              name: 'Energy Efficiency'
+          },
+          {
+              name: 'Community Project'
+          },
+          {
+              name: 'Carbon Sequestration'
+          },
+          {
+              name: 'Others'
           }
       ];
+      
+ 
       this.scopeList = [
           { id: 1,
               name: 'Scope 1'
@@ -139,28 +153,9 @@ export class CarbonOffsettingComponent {
       this.updatedtheme = this.themeservice.getValue('theme');
   }
 
-  getTenantsDetailById(id: number) {}
+  getTenantsDetailById(id: number) {};
 
-  //method to get list of All groups
-  // async GetAllGroups(tenantID:any) {
-  //     try {
-  //         const response = await this.GroupService.newGetGroups(
-  //             tenantID
-  //         ).toPromise();
-  //         this.groupsList = response;
-  //         if (this.groupsList.length > 0) {
-  //             this.groupdetails = this.groupsList[0];
-  //             this.groupdata = true;
-  //         } else {
-  //             this.groupdata = false;
-  //         }
-  //     } catch (error) {
-  //         // Handle any errors that occurred during the request
-  //         console.error('Error fetching groups:', error);
-  //     }
-  //     localStorage.setItem('GroupCount', String(this.groupsList.length));
-  //     this.unlock = this.groupdetails.id.toString();
-  // }
+
    getOffset(tenantID:any) {
       let formData = new URLSearchParams();
 
@@ -187,21 +182,30 @@ export class CarbonOffsettingComponent {
           },
           complete: () => console.info('Group Added')
       });
-  }
+  };
 
   //method to add new group
   saveOffset(data: NgForm) {
-     
-      let formData = new URLSearchParams();
-      formData.set('project_detail',this.project_details);
-      formData.set('offset',  this.carbon_offset);
-      formData.set('scope',this.selectedScope);
-      formData.set('tenant_id',this.loginInfo.tenantID.toString());
-      formData.set('carbon_credit_value',this.carbon_credit_value);
-      formData.set('standard',this.standard);
-      formData.set('type',this.type);
-  
-      this.GroupService.Adduser_offseting(formData.toString()).subscribe({
+
+    const formData: FormData = new FormData();
+    if(this.selectedFile){
+        formData.append('file', this.selectedFile, this.selectedFile.name);
+    }
+      formData.append('project_name',data.value.project_details);
+      formData.append('project_type',this.project_type);
+      formData.append('date_of_purchase',this.date3);
+      formData.append('vintage',data.value.vintage);
+      formData.append('standard',data.value.standard);
+      formData.append('offset',  data.value.carbon_offset);
+      formData.append('carbon_credit_value',data.value.carbon_credit_value);
+      formData.append('scope1',data.value.scope_1);
+      formData.append('scope2',data.value.scope_2);
+      formData.append('scope3', data.value.scope_3);
+      formData.append('tenant_id',this.loginInfo.tenantID.toString());
+      formData.append('comments',data.value.comments);
+   
+
+      this.GroupService.Adduser_offseting(formData).subscribe({
           next: (response) => {
               if(response.success == true)
               {
@@ -230,7 +234,11 @@ export class CarbonOffsettingComponent {
           },
           complete: () => console.info('Group Added')
       });
-  }
+  };
+
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0];
+};
   
   //method for update group detail by id
   updateGroup(id: any, data: NgForm) {

@@ -1,5 +1,5 @@
 import {Group} from '@/models/group';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {environment} from 'environments/environment';
 import {Observable} from 'rxjs';
@@ -44,7 +44,11 @@ export class GroupService {
         return this.http.post(environment.baseUrl + '/Addgroup', groupdetails);
     }
     public Adduser_offseting(groupdetails): Observable<any> {
-        return this.http.post(environment.baseUrl + '/Adduser_offseting', groupdetails);
+        // const headers = new HttpHeaders()
+        // .set('content-type','multipart/form-data;')
+        // .set('Access-Control-Allow-Origin', '*');  
+        // ; 
+        return this.http.post('http://192.168.29.14:4003'+ '/Adduser_offseting', groupdetails);
     }
 
     public deleteGroups(id) {

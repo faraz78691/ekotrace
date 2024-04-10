@@ -337,7 +337,7 @@ const routes: Routes = [
                 }
             },
             {
-                path: 'brsr-report',
+                path: 'brsrReport',
                 component: BrsrReportComponent,
                 canActivate: [RoleGuard],
                 data: {

@@ -1,20 +1,113 @@
 <div class="container-fluid">
-    <div class="container-fluid">
-        <div class="row pt-3">
-            <div class="d-flex mt-2 pointer" [routerLink]="['/report-doc']" [ngClass]="
-                    this.updatedtheme === 'dark' ? 'HeadtextD' : 'HeadtextL'
+  
+        <div class="row pt-4">
+            <div class="col-sm-6" [ngClass]="
+                    this.updatedtheme === 'dark' ? 'headlinetextD' : 'headlinetextL'
                 ">
-                <div class="backicon">
-                    <i class="fa fa-arrow-left text-white"></i>
-                </div>
-                <h3 class="pl-4 text-white">BRSR Report</h3>
+                <h3 class="m-0 pl-4">BRSR Report</h3>
             </div>
         </div>
-    </div>
+ 
 
-    <div class="row" [ngClass]="this.updatedtheme === 'dark' ? 'firstboxD' : 'firstboxL'">
+    <div class="row d-flex justify-content-between gap-1 mx-3 pt-3 pb-5" [ngClass]="this.updatedtheme === 'dark' ? 'firstboxD' : 'firstboxL'">
         <div class="col">
-
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Principles</th>
+                    <th scope="col">HR</th>
+                    <th scope="col">CS</th>
+                    <th scope="col">FD</th>
+              
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">General Disclosures</th>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Management and Process </th>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>@fat</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Transparency and Account (P1)</th>
+                    <td>Larry</td>
+                    <td>the Bird</td>
+                    <td>@twitter</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Sustainability and Safety (P2)</th>
+                    <td>Larry</td>
+                    <td>the Bird</td>
+                    <td>@twitter</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Well-being of Employees (P3)</th>
+                    <td>Larry</td>
+                    <td>the Bird</td>
+                    <td>@twitter</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Stakeholders Interests (P4)</th>
+                    <td>Larry</td>
+                    <td>the Bird</td>
+                    <td>@twitter</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Human Rights (P5)</th>
+                    <td>Larry</td>
+                    <td>the Bird</td>
+                    <td>@twitter</td>
+                  </tr>
+                  <tr>
+                    <th scope="col">Environment (P6)</th>
+                    <td>Larry</td>
+                    <td>the Bird</td>
+                    <td>@twitter</td>
+                  </tr>
+                  <tr>
+                    <th scope="col">Public and Regulatory (P7)</th>
+                    <td>Larry</td>
+                    <td>the Bird</td>
+                    <td>@twitter</td>
+                  </tr>
+                  <tr>
+                    <th scope="col">Inclusive Growth Dev (P9)</th>
+                    <td>Larry</td>
+                    <td>the Bird</td>
+                    <td>@twitter</td>
+                  </tr>
+                  <tr>    
+                     <th scope="row">Consumer Engagement (P10)</th>
+                    <td>Larry</td>
+                    <td>the Bird</td>
+                    <td>@twitter</td>
+                  </tr>
+                  <tr>    
+                     <th scope="row"></th>
+                    <td>  <a class="trackingsubmitb d-block" href="assets/template.xlsx"
+                        download="">Click here to
+                        download template</a></td>
+                    <td>  <a class="trackingsubmitb d-block" href="assets/template.xlsx"
+                        download="">Click here to
+                        download template</a></td>
+                    <td>  <a class="trackingsubmitb d-block" href="assets/template.xlsx"
+                        download="">Click here to
+                        download template</a></td>
+                  </tr>
+                  <tr>    
+                     <th scope="row"></th>
+                    <td>Uplaod</td>
+                    <td>Upload</td>
+                    <td>Upload</td>
+                  </tr>
+                </tbody>
+              </table>
             <!-- <div class="row mt-2">
                 <div class="tab-header togglewidth d-flex align-items-center">
                     <p-inputSwitch [(ngModel)]="showUnansweredFields"></p-inputSwitch>
@@ -49,7 +142,7 @@
             </div> -->
 
 
-            <div class="row mt-2">
+            <!-- <div class="row mt-2">
 
                 <p-tabView [activeIndex]="defaultTabIndex">
                     <p-tabPanel *ngFor="let brsr of brsrPrinciplesandQA; let i = index"
@@ -88,37 +181,18 @@
                         </div>
                     </p-tabPanel>
                 </p-tabView>
-            </div>
+            </div> -->
 
 
-            <div class="row text-white mt-2">
-                <div class="pt-3 reportbuttons">
-                    <button *ngIf="nobrsrSaved == true && islock == false" (click)="saveReport()"
-                        class="generateReportButton ct_report_button_12" [disabled]="!isAnyFieldAnswered()">
-                        Save Report
-                    </button>
-                    <button *ngIf="nobrsrSaved == false && AcceptDoc === false && islock == false"
-                        (click)="updateReport()" class="generateReportButton ct_report_button_12">
-                        Update Report
-                    </button>
-                    <button *ngIf="nobrsrSaved == true && islock == false" (click)="sendReportToPA()"
-                        class="generateReportButton ct_report_button_12" [disabled]="!isAnyFieldAnswered()">
-                        Submit Report
-                    </button>
-                    <button *ngIf="nobrsrSaved == false && islock == false" (click)="SendupdatedReporttoPA()"
-                        class="generateReportButton ct_report_button_12">
-                        Submit updated Report
-                    </button>
-                </div>
-            </div>
+         
         </div>
     </div>
-    <p-confirmDialog #cd [style]="{width: '60vw'}">
+    <!-- <p-confirmDialog #cd [style]="{width: '60vw'}">
         <ng-template pTemplate="footer">
             <button pButton icon="pi pi-check" label="Yes" (click)="cd.accept()"
                 class="span-color cancel-button p-button-success"></button>
             <button pButton icon="pi pi-times" label="Cancel" (click)="cd.reject()"
                 class="p-button-raised p-button-danger"></button>
         </ng-template>
-    </p-confirmDialog>
+    </p-confirmDialog> -->
 </div>

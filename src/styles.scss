@@ -1665,6 +1665,18 @@ nav{
     app-root.sidebar-mini.layout-fixed.sidebar-open .sidebar {
         width: 0px !important;
     }
+    .sidebarcolorL:before {
+        content: "";
+        position: absolute;
+        top: 0px;
+        width: 100%;
+        height: 199%;
+        background-color: rgba(134, 175, 72, 0.22) !important;
+        z-index: -1;
+    }
+    .main-sidebar.sidebarcolorL.sidebar-dark-primary{
+        background-color: #fff!important;
+    }
     .sidebar-open app-header.main-header.navbar.navbar-expand.navbar-light {
         width: 100%
     }
@@ -1852,8 +1864,48 @@ nav{
           
         }
         rect {
-            fill: rebeccapurple;
+            fill: #86af48;
         } 
+        #tree.bft-light .bft-family-menu [data-item]:hover {
+            background-color: #86af48 !important;
+            color: #fff !important;
+        }
+        #tree .bft-edit-form-header,#tree .bft-img-button , #tree .bft-button{
+            background-color: #86af48;
+        }
+
+        #tree .bft-button{
+            border-color: #86af48;
+        }
+        #tree .bft-button.transparent{
+            background-color: transparent;
+            color: #000 !important;
+        }
+        #bft-avatar svg {
+            width: 100%;
+        }
+        .bft-form-fieldset label.hasval {
+            font-size: 16px;
+            top: -6px !important;
+            color: #000;
+        }
+        .bft-light .bft-input>input, .bft-light .bft-input>select {
+            border: 0px;
+        }
+        h1.bft-edit-form-title {
+            font-size: 24px;
+        }
+        use {
+            stroke: #ffff;
+            padding: 0px;
+            stroke-width: 1px;
+        }
+        .ct_custom_btn121 {
+            background-color: #679f54;
+            color: #fff;
+            width: 100px;
+            border-radius: 5px;
+        }
 @media screen and (max-width:500px){
     .ct_logo_collape pf-image.pl-4.ng-star-inserted.hydrated {
         padding-left: 0px !important;

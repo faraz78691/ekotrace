@@ -8,7 +8,7 @@
     </div>
 
     <div class="row d-flex justify-content-between mx-3 pt-3">
-        <div class="col-7 myCol overflow-auto mb-5"
+        <div class="col-8 myCol overflow-auto mb-5 ct_custom_flex_basisc"
             [ngClass]="this.updatedtheme === 'dark' ? 'User-tabD' : 'User-tabL'">
             <div class="row p-2">
                 <div class="" [ngClass]="
@@ -58,77 +58,154 @@
                 <div class="modal-body text-white text-style Dashboard-tab ct_vertically_scroll">
                     <form #GroupForm="ngForm" class="col-12" (ngSubmit)="
                             FormEdit === false
-                                ? saveOffset(GroupForm.value)
+                                ? saveOffset(GroupForm)
                                 : updateGroup(groupdetails.id, GroupForm.value)
                         ">
-                        <div class="mb-5 pb-0 row" >
-                           <div class="col-md-6 mb-3">
-                            <label for="fname">Project Name</label>
-                            <input ngModel name="project_details" id="search-input" type="text"
-                                class="form-control Dashboard-tab text-white" placeholder="Enter Project Name"
-                                #groupName="ngModel" [(ngModel)]="project_details" [disabled]="isloading"
-                                required />
-                            <p class="text-danger mb-0" *ngIf="GroupForm.submitted && groupName.errors?.['required']">
-                                Group name is required
-                            </p>
-                            <p class="text-danger mb-0" *ngIf="
+                        <div class="mb-5 pb-0 row">
+                            <div class="col-md-6 mb-3">
+                                <label for="fname">Project Name</label>
+                                <input  name="project_details" ngModel id="search-input" type="text"
+                                    class="form-control Dashboard-tab text-white" placeholder="Enter Project Name"
+                                    #groupName="ngModel"  [disabled]="isloading"
+                                    required />
+                                <p class="text-danger mb-0"
+                                    *ngIf="GroupForm.submitted && groupName.errors?.['required']">
+                                    Group name is required
+                                </p>
+                                <p class="text-danger mb-0" *ngIf="
                                     isgroupExist === true && groupName.touched
                                 ">
-                                group already exist please use other groupname
-                            </p>
-                           </div>
-                           <div class="col-md-6 mb-3">
-                            <label for="fname" >Carbon Offset</label>
-                            <input ngModel name="project_details" id="search-input" type="text"
-                                class="form-control Dashboard-tab text-white" placeholder="Enter Carbon Offset"
-                                #groupName="ngModel" [(ngModel)]="carbon_offset" [disabled]="isloading"
-                                required />
-                           </div>
-                           <div class="col-md-6 mb-3">
-                            <label for="fname">Carbon Credit Value</label>
-
-
-                            <input ngModel name="project_details" id="search-input" type="text"
-                                class="form-control Dashboard-tab text-white" placeholder="Enter carbon credit value"
-                                #groupName="ngModel" [(ngModel)]="carbon_credit_value" [disabled]="isloading"
-                                required />
-                           </div>
-                           <div class="col-md-6 mb-3">
-                            <label for="fname">Standard</label>
-
-
-                            <input ngModel name="project_details" id="search-input" type="text"
-                                class="form-control Dashboard-tab text-white" placeholder="Enter standard"
-                                #groupName="ngModel" [(ngModel)]="standard" [disabled]="isloading"
-                                required />
+                                    group already exist please use other groupname
+                                </p>
                             </div>
                             <div class="col-md-6 mb-3">
+                                <label for="fname">Project Type</label>
+                                <p-dropdown class="ct_grop_select_2_drop_white123 ct_group_select_dark_124" required
+                                    ngModel placeholder="Select" [options]="Groupby" [(ngModel)]="project_type"
+                                    optionLabel="name" optionValue="name" name="group" #group="ngModel"></p-dropdown>
+                                <p class="text-danger mb-0"
+                                    *ngIf="GroupForm.submitted && groupName.errors?.['required']">
+                                    Group name is required
+                                </p>
+                                <p class="text-danger mb-0" *ngIf="
+                                    isgroupExist === true && groupName.touched
+                                ">
+                                    group already exist please use other groupname
+                                </p>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="fname">Date of Purchase</label>
+                                <div class="field">
+                                    <p-calendar [(ngModel)]="date3" [showIcon]="true" inputId="icon" class="ct_year_input_full_w "></p-calendar>
+                                </div>
+                                <p class="text-danger mb-0"
+                                    *ngIf="GroupForm.submitted && groupName.errors?.['required']">
+                                    Group name is required
+                                </p>
+                                <p class="text-danger mb-0" *ngIf="
+                                    isgroupExist === true && groupName.touched
+                                ">
+                                    group already exist please use other groupname
+                                </p>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="fname">Vintage</label>
+                                <input ngModel name="vintage" id="search-input" type="text" 
+                                    class="form-control Dashboard-tab text-white " placeholder="Enter Vintage"
+                                    #groupName="ngModel" [disabled]="isloading" required />
+                                <p class="text-danger mb-0"
+                                    *ngIf="GroupForm.submitted && groupName.errors?.['required']">
+                                    Group name is required
+                                </p>
+                                <p class="text-danger mb-0" *ngIf="
+                                    isgroupExist === true && groupName.touched
+                                ">
+                                    group already exist please use other groupname
+                                </p>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="fname">Standard</label>
+
+
+                                <input ngModel name="standard" id="search-input" type="text"
+                                    class="form-control Dashboard-tab text-white " placeholder="Enter standard"
+                                    #groupName="ngModel"  [disabled]="isloading" required />
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="fname">Carbon Offset</label>
+                                <input ngModel name="carbon_offset" id="search-input" type="text"
+                                    class="form-control Dashboard-tab text-white " placeholder="Enter Carbon Offset"
+                                    #groupName="ngModel"  [disabled]="isloading" required />
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="fname">Carbon Credit Value</label>
+
+                                <input ngModel name="carbon_credit_value" id="search-input" type="text"
+                                    class="form-control Dashboard-tab text-white "
+                                    placeholder="Enter carbon credit value" #groupName="ngModel"
+                                    [disabled]="isloading" required />
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="fname">Attachments</label>
+
+                                <input ngModel name="comments" id="search-input" style="padding: 3px;"  type="file"
+                                    class="form-control Dashboard-tab text-white " (change)="onFileSelected($event)"
+                                    placeholder="Enter carbon credit value" #groupName="ngModel"
+                                   [disabled]="isloading" required />
+                            </div>
+
+                       <div class="row px-3 w-100">
+                        
+                        <div class="col-md-12">
+                            <label for="fname">Allocation</label>
+                            <div class="row">
                                 
-                            <label for="fname">Type</label>
+                            <div class="col-md-4 mb-3">
 
+                               
 
-                            <input ngModel name="project_details" id="search-input" type="text"
-                                class="form-control Dashboard-tab text-white" placeholder="Enter type"
-                                #groupName="ngModel" [(ngModel)]="type" [disabled]="isloading"
-                                required />
-                            <!-- <p *ngIf="GroupForm.submitted && group.errors?.['required']" class="text-danger mb-0">
-                                Group By is required
-                            </p> -->
+                                <label for="fname">Scope 1</label>
+                                <input ngModel name="scope_1" id="search-input" type="text"
+                                    class="form-control Dashboard-tab text-white " placeholder="Enter Scope 1 Allocation"
+                                    #groupName="ngModel"  [disabled]="isloading" required />
+                               
                             </div>
-                            <div class="col-md-6 mb-3">
-
-                                <label for="fname" >Select Scope</label>
-
-                                <p-multiSelect class="ct_calender_input_1234 ct_drop_scroll" [options]="scopeList" [(ngModel)]="selectedScope"  [ngModelOptions]="{standalone: true}" defaultLabel="Select Scope" optionLabel="name" optionValue="name">
-                                </p-multiSelect>
+                            <div class="col-md-4 mb-3">
+                                <label for="fname">Scope 2</label>
+                                <input ngModel name="scope_2" id="search-input" type="text"
+                                    class="form-control Dashboard-tab text-white " placeholder="Enter Scope 2 Allocation"
+                                    #groupName="ngModel"  [disabled]="isloading" required />
                             </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="fname">Scope 3</label>
+                                <input ngModel name="scope_3" id="search-input" type="text"
+                                    class="form-control Dashboard-tab text-white " placeholder="Enter Scope 3 Allocation"
+                                    #groupName="ngModel"  [disabled]="isloading" required />
+                              
+                            </div>
+                            </div>
+                        </div>
 
+                       </div>
+                            <div class="col-md-12 mb-3">
+                                <label for="fname">Comments</label>
+<!-- 
+                                <input ngModel name="comments" id="search-input"  type="text"
+                                    class="form-control Dashboard-tab text-white "
+                                    placeholder="Enter carbon credit value" #groupName="ngModel"
+                                   [disabled]="isloading" required /> -->
+                                   <textarea rows="4" class="form-control ct_text bg-white"></textarea>
+
+                            </div>
                            
-                       
-                            
-                            
 
-                       
+
+
+
+
+
+
+
                         </div>
 
                         <div class="mt-3 ct_modal_btns_12">
@@ -159,26 +236,53 @@
 
 
             <div class="dataTable scrollit">
-                <table class="table_loc">
+                <table class="table_loc ct_space_table_21">
+                    <thead>
+                        <tr>
+
+                            <th scope="col">Project Name</th>
+                            <th scope="col">Project type</th>
+                            <th scope="col">Standard</th>
+                            <th scope="col">Date of Purchase</th>
+                            <th scope="col">Carbon offset </th>
+                            <th scope="col">Carbon credit </th>
+                        </tr>
+                    </thead>
                     <tbody>
                         <tr clickable (click)="selectGroup(group,index)" *ngFor="
                                 let group of groupsList;let index = index
                             " class="col-12 tableRow border-bottom rounded pointer" (click)="UnlockComplete(group.id)"
                             [ngClass]="{ 'tableRowclicked': index === selectedRowIndex }">
-                            <td class="col-4 td text-initial">
-                                {{ group.project_detail }}
+                            <td class="td text-initial">
+                                {{ group.project_name }}
                             </td>
-                            <td class="col-4 td text-center pb-1">
+                            <td class="td ">
+                                {{ group.type }}
+
+                            </td>
+                            <td class="td text-center pb-1">
+                                {{ group.standard }}
+
+                            </td>
+                            <td class="td text-center pb-1">
+                                {{ group.date_of_purchase }}
+
+                            </td>
+                            <td class="td text-center pb-1">
                                 {{ group.offset }}
 
                             </td>
-                            <td class="col-4 td text-right">
+                            <td class="td text-center pb-1">
+                                {{ group.carbon_credit_value }}
+
+                            </td>
+                            <!-- <td class="td text-right">
                                 <a style="
                                         cursor: pointer;
                                         color: #88ad47;
                                         font-size: 13px;
                                     ">view details</a>
-                            </td>
+                            </td> -->
                         </tr>
                     </tbody>
                 </table>
@@ -192,26 +296,43 @@
             </div>
         </div>
 
-        <div class="col-5" [ngClass]="this.updatedtheme === 'dark' ? 'User-tabD' : 'User-tabL'" style="height: 350px">
+        <div class="col-4" [ngClass]="this.updatedtheme === 'dark' ? 'User-tabD' : 'User-tabL'" style="height: 350px">
             <h5 class="pl-3 mt-3">Carbon Offset Details</h5>
             <div class="row font-UserProfile mt-4" *ngIf="groupdata === true">
                 <div class="col-5 ml-3">
                     <p>Project Detals:</p>
-                    <p>Created Date :</p>
+                    <p>Project type :</p>
+                    <p>Date of Purchase:</p>
+                    <p>Vintage:</p>
+                    <p>Standard:</p>
+                    <p>Carbon offset  :</p>
                     <p>Offset:</p>
                     <p>Carbon Credit Value:</p>
-                    <hr />
-                    <p>Scope :</p>
+                    <p>Allocation:</p>
+
+                    <p>Scope 1:</p>
+                    <p>Scope 2:</p>
+                    <p>Scope 3:</p>
+                    <p>Comments</p>
+                    <p>Attachments</p>
 
                 </div>
                 <div class="col-6">
-                    <p>{{ groupdetails.project_detail }}</p>
-                    <p>{{ groupdetails.created_at | date: 'dd/MM/yyyy' }}</p>
+                    <p>{{ groupdetails.project_name }}</p>
+                    <p>{{ groupdetails.project_type}}</p>
+                    <p>{{ groupdetails.date_of_purchase }}</p>
+                    <p>{{ groupdetails.vintage }}</p>
+                    <p>{{ groupdetails.standard }}</p>
                     <p>{{ groupdetails.offset }}</p>
                     <p>{{ groupdetails.carbon_credit_value }}</p>
-                    <hr />
-                    <p>{{ groupdetails.scope }}</p>
                 
+                   
+                    <p>{{ groupdetails.scope1 }}</p>
+                    <p>{{ groupdetails.scope2 }}</p>
+                    <p>{{ groupdetails.scope3 }}</p>
+                    <p>{{ groupdetails.comments }}</p>
+                    <p>{{ groupdetails.file }}</p>
+
                 </div>
             </div>
             <!-- <div class="d-flex text-light text-style font-pera mb-2" *ngIf="groupdata === true">
