@@ -22,7 +22,7 @@ export class ReportComponent {
                 heading: 'Custom Report',
                 pera: ' Pick and choose the data and analysis for review and audits from the array of options provided.',
                 button: 'view',
-                route: '/custom-report'
+                route: '/energy-custom-report'
             },
           
         ];
