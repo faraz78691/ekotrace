@@ -1,5 +1,5 @@
 
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, Renderer2, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import FamilyTree from '@balkangraph/familytree.js';
 import { FamilyService } from '@services/family.service';
@@ -16,6 +16,7 @@ declare var $: any;
 })
 export class TreeComponent {
     @ViewChild('nodeForm') nodeForm: any;
+    @ViewChild('cancel2') hideModal: any
     nodeTitle: string;
     nodeSubtitle: string;
     selectedId: number;
@@ -23,6 +24,7 @@ export class TreeComponent {
     selectedNode: number;
     loadFamilyData: any[] = [];
     constructor(
+        private renderer: Renderer2,
         private route: ActivatedRoute,
         private router: Router,
         private trackingService: TrackingService,
@@ -33,17 +35,21 @@ export class TreeComponent {
         this.onRemove = this.onRemove.bind(this)
     }
     ngOnInit() {
+
         this.getTreeViewByID();
-        $(document).ready(
-            $('#btnTest').on('click', function (e) {
-
-                console.log("node");
-                // do something...
-              })
-
-        )
 
     };
+
+    onCancel() {
+        $(".ct_custom_modal_120").hide()
+        const targetElement = document.getElementById('#cancel2');
+        if (targetElement) {
+            console.log('fd')
+            this.renderer.addClass(targetElement, 'none');
+        }
+        this.hideModal.nativeElement
+
+    }
 
     getTreeViewByID() {
         const formData = new URLSearchParams();
@@ -89,11 +95,9 @@ export class TreeComponent {
                             add: {
                                 text: "Add",
                                 onClick: function (node: string) {
-                                 $(".ct_custom_modal_120").show(500)
-                                 
-                                    localStorage.setItem("selectedNode", node)
-                               
+                                    $(".ct_custom_modal_120").show(500)
 
+                                    localStorage.setItem("selectedNode", node)
                                 }
                             },
                             remove: {
@@ -112,7 +116,7 @@ export class TreeComponent {
                         const formData = new URLSearchParams();
                         formData.append('id', nodeData['id'].toString());
                         formData.append('family_id', nodeData['family_id'].toString());
- 
+
                     }
                     family.onUpdateNode((args) => {
                         var updateNode = args.updateNodesData[0];
@@ -130,7 +134,6 @@ export class TreeComponent {
                             .catch(error => console.error('Error:', error));
                     }
                     )
-
                     family.load(
                         this.loadFamilyData
                     );
@@ -152,12 +155,10 @@ export class TreeComponent {
 
         this.familyService.createChildTree(nodeForm.toString()).subscribe({
             next: res => {
-                console.log(res);
-                $('#myModal').modal('hide');
+
+                $(".ct_custom_modal_120").hide()
                 this.nodeForm.reset()
-                if (res.success) {
-                    this.getTreeViewByID();
-                }
+                this.getTreeViewByID();
             },
             error: err =>
                 console.log(err)
@@ -171,10 +172,8 @@ export class TreeComponent {
         nodeForm.set('id', nodeid);
         nodeForm.set('family_id', this.id);
 
-
         this.familyService.deleteChildTree(nodeForm.toString()).subscribe({
             next: res => {
-                console.log(res);
 
                 this.nodeForm.reset()
                 if (res.success) {

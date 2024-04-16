@@ -33,7 +33,7 @@
                             " class="form-control" placeholder="Search" [(ngModel)]="searchData" />
                     </div>
                     <div class="form-group has-search text-light">
-                        <button class="GroupButton ct_animation_btn_121" (click)="showAddGroupDialog()">
+                        <button class="GroupButton ct_animation_btn_121 ct_assign_package_btn129" (click)="showAddGroupDialog()">
                             Add Group
                         </button>
                     </div>
@@ -143,8 +143,16 @@
 
 
             <div class="dataTable scrollit">
-                <table class="table_loc">
+                <table class="table_loc ct_billing_table_bg_120">
+                    <thead>
+                        <tr>
+                            <th>Group Name</th>
+                            <th class="text-center ">Group By</th>
+                            <th class="text-right">Action</th>
+                        </tr>
+                    </thead>
                     <tbody *ngIf="groupList$ | async as groupList">
+                        
                         <tr clickable (click)="selectGroup(group,index)" *ngFor="
                                 let group of groupList.categories;let index = index
                             " class="col-12 tableRow border-bottom rounded pointer" (click)="UnlockComplete(group.id)"
@@ -161,7 +169,7 @@
                                         cursor: pointer;
                                         color: #88ad47;
                                         font-size: 16px;
-                                    ">view details</a>
+                                    "><i class="fa-solid fa-eye mr-2"></i>view</a>
                             </td>
                         </tr>
                     </tbody>
@@ -179,7 +187,43 @@
         <div class="col-5" [ngClass]="this.updatedtheme === 'dark' ? 'User-tabD' : 'User-tabL'" style="height: 350px">
             <h5 class="pl-3 mt-3">Group Details</h5>
             <div class="row font-UserProfile mt-4" *ngIf="groupdata === true">
-                <div class="col-5 ml-3">
+                <table class="table ct_billing_border_0_none">
+                    <tr>
+                        <td>
+                            <p class="mb-0">Group Name :</p>
+                        </td>
+                        <td>
+                            <p class="mb-0">{{ groupdetails.groupname }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class="mb-0">Group By :</p>
+                        </td>
+                        <td>
+                            <p class="mb-0">{{ groupdetails.groupBy }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class="mb-0">Created Date :</p>
+                        </td>
+                        <td>
+                            <p class="mb-2">{{ groupdetails.CreatedDate | date: 'dd/MM/yyyy' }}</p>
+                  
+                    <p class="mb-2" *ngFor="let gm of groupdetails.groupMappings" ngif="groupdetails.groupBy === 'Country'">
+                        {{ gm.countryName }}
+                    </p>
+                    <p  class="mb-2"  *ngFor="let gm of groupdetails.groupMappings" ngif="groupdetails.groupBy === 'State'">
+                        {{ gm.stateName }}
+                    </p>
+                    <p  class="mb-2"  *ngFor="let gm of groupdetails.facilities" ngif="groupdetails.groupBy === 'Facitliy'">
+                        {{ gm.name }}
+                    </p> 
+                        </td>
+                    </tr>
+                </table>
+                <!-- <div class="col-5 ml-3">
                     <p>Group Name :</p>
                     <p>Group By :</p>
                     <p>Created Date :</p>
@@ -190,7 +234,7 @@
 
                     <p>{{ groupdetails.groupBy }}</p>
                     <p>{{ groupdetails.CreatedDate | date: 'dd/MM/yyyy' }}</p>
-                    <hr />
+                  
                     <p *ngFor="let gm of groupdetails.groupMappings" ngif="groupdetails.groupBy === 'Country'">
                         {{ gm.countryName }}
                     </p>
@@ -200,7 +244,7 @@
                     <p *ngFor="let gm of groupdetails.facilities" ngif="groupdetails.groupBy === 'Facitliy'">
                         {{ gm.name }}
                     </p>
-                </div>
+                </div> -->
             </div>
             <div class="d-flex text-light text-style font-pera mb-2" *ngIf="groupdata === true">
                 <div class="ct_edit_btn_white_text">

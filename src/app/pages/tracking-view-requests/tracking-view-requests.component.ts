@@ -153,7 +153,7 @@ export class TrackingViewRequestsComponent {
             this.facilityID = fId;
         }
 
-    }
+    };
     getAllDataentries(facilityID: any) {
         //this.getAllDataentries()
     }

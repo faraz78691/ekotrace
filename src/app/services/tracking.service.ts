@@ -744,6 +744,7 @@ export class TrackingService {
     
 
     getStatus(url:any):Observable<any>{
+       
         return this.http.get(environment.baseUrl + `/${url}`);
       };
 

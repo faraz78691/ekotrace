@@ -3,7 +3,7 @@
         <div class="col-sm-6" [ngClass]="
                 this.updatedtheme === 'dark' ? 'headlinetextD' : 'headlinetextL'
             ">
-            <h3 class="m-0 pl-4">Facilities</h3>
+            <h3 class="m-0 pl-4 ">Facilities</h3>
         </div>
     </div>
 
@@ -15,7 +15,7 @@
                 <div class="loc-head" [ngClass]="
                         this.updatedtheme === 'dark' ? 'loc-headD' : 'loc-headL'
                     ">
-                    <p class="">Facility</p>
+                    <p class="ct_fw_600">Facility</p>
                 </div>
                 <div class="d-flex justify-content-between text-style text-light scope-Div">
                     <div class="searchWidth form-group has-search">
@@ -35,8 +35,16 @@
             </div>
 
             <div class="dataTable scrollit" [ngStyle]="{display: FacilityData}">
-                <table class="table_loc">
+                <table class="table_loc ct_billing_table_bg_120">
+                    <thead>
+                        <tr>
+                            <th>Assest Name</th>
+                            <th class="text-center">Assest Type</th>
+                            <th class="text-right">City Name</th>
+                        </tr>
+                    </thead>
                     <tbody>
+                    
                         <tr clickable (click)="tableData(d.ID)" *ngFor="let d of LocData"
                             class="col-12 tableRow border-bottom rounded pointer"
                             [ngClass]="{tableRowclicked: id_var === d.ID}">
@@ -77,13 +85,146 @@
                 <div class="loc-head" [ngClass]="
                         this.updatedtheme === 'dark' ? 'loc-headD' : 'loc-headL'
                     ">
-                    <p class="">Facility Details:</p>
+                    <p class="ct_fw_600">Facility Details:</p>
                 </div>
             </div>
 
             <div class="col d-flex justify-content-end mt-3"></div>
-            <div class="row font-LocProfile mt-4" [ngStyle]="{display: FacilityFullData}">
-                <div class="col ml-3">
+            <div class="row font-LocProfile mt-0" [ngStyle]="{display: FacilityFullData}">
+                <table class="table ct_billing_border_0_none">
+                    <tr>
+                        <td>
+                            <p class="mb-0" *ngIf="facilityDetails.AssestName != undefined">Asset Name :</p>
+                        </td>
+                        <td>
+                            <p class="mb-0">{{ facilityDetails.AssestName }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class="mb-0" *ngIf="facilityDetails.AssestType != undefined">Asset Type :</p>
+                        </td>
+                        <td>
+                            <p class="mb-0">{{ facilityDetails.AssestType }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class="mb-0" *ngIf="facilityDetails.IsWaterStreenArea != undefined">Water Stress Area :</p>
+                        </td>
+                        <td>
+                            <p class="mb-0">{{ facilityDetails.IsWaterStreenArea }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class="mb-0" *ngIf="facilityDetails.EquityPercentage != undefined">Equity Percentage :</p>
+                        </td>
+                        <td>
+                            <p class="mb-0" *ngIf="facilityDetails.EquityPercentage != undefined">{{ facilityDetails.EquityPercentage }}%</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class="mb-0" *ngIf="facilityDetails.Address != undefined">Address :</p>
+                        </td>
+                        <td>
+                            <p class="mb-0">{{ facilityDetails.Address }}</p> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class="mb-0" *ngIf="facilityDetails.city_name != undefined">City :</p>
+                        </td>
+                        <td>
+                            <p class="mb-0">{{ facilityDetails.city_name }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class="mb-0" *ngIf="facilityDetails.state_name != undefined">State :</p>
+                        </td>
+                        <td>
+                            <p class="mb-0">{{ facilityDetails.state_name }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class="mb-0" *ngIf="facilityDetails.country_name != undefined">Country :</p>
+                        </td>
+                        <td>
+                            <p class="mb-0">{{ facilityDetails.country_name }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class="mb-0">Assigned User :</p>
+                        </td>
+                        <td>
+                            <div class="row gap-4">
+                                <div class="dropdown ct_facility_2_main">
+                                    <button [ngClass]="
+                                            this.updatedtheme === 'dark'
+                                                ? 'dropbtnD'
+                                                : 'dropbtnL'
+                                        " class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <div>
+                                            Manager
+        
+                                            <!-- <span class="badge badgespan">{{
+                                                dropCountManager.length
+                                            }}</span> -->
+                                            <span class="badge badgespan" *ngIf="managerList1">{{ managerList1.length
+                                                }}</span>
+        
+                                        </div>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-content" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item dropItemManager" *ngFor="let d of managerList1">{{ d.username }}</a>
+                                    </div>
+                                </div>
+                                <div class="dropdown ct_facility_2_main">
+                                    <button [ngClass]="
+                                            this.updatedtheme === 'dark'
+                                                ? 'dropbtnD'
+                                                : 'dropbtnL'
+                                        " class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <div>
+                                            Staff
+                                            <span class="badge badgespan">{{
+                                                staffList1.length
+                                                }}</span>
+                                        </div>
+                                    </button>
+                                    <div class="dropdown-content dropdown-menu">
+                                        <a class="dropdown-item dropItemStaff" *ngFor="let s of staffList1">{{ s.username }}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>Data Points</p>
+                        </td>
+                        <td>
+                            <div class="row dataPointDiv">
+                                <div class="ct_facility_2_main">
+                                    <button type="button" [ngClass]="
+                                            this.updatedtheme === 'dark'
+                                                ? 'dataPointD'
+                                                : 'dataPointL'
+                                        " (click)="showDP_Dialog()">
+                                        Manage Data Points
+                                    </button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <!-- <div class="col ml-3">
                     <p *ngIf="facilityDetails.AssestName != undefined">Asset Name :</p>
                     <p *ngIf="facilityDetails.AssestType != undefined">Asset Type :</p>
                     <p *ngIf="facilityDetails.IsWaterStreenArea != undefined">Water Stress Area :</p>
@@ -115,9 +256,6 @@
                                 <div>
                                     Manager
 
-                                    <!-- <span class="badge badgespan">{{
-                                        dropCountManager.length
-                                    }}</span> -->
                                     <span class="badge badgespan" *ngIf="managerList1">{{ managerList1.length
                                         }}</span>
 
@@ -157,7 +295,7 @@
                             </button>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <div class="d-flex text-light text-style scope-Div">
                     <div>

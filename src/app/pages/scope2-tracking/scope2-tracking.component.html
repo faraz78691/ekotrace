@@ -109,7 +109,8 @@
 
                                                                         <div id="DPRow" *ngFor="
                                                                             let child of head.manageDataPointSubCategories
-                                                                        " class="py-2 px-4 border-bottom ct_scoope_1_tab " [ngClass]="{
+                                                                        " class="py-2 px-4 border-bottom ct_scoope_1_tab "
+                                                                            [ngClass]="{
                                                                             ct_tab_active_12:
                                                                                 id_var === child.manageDataPointSubCategorySeedID
                                                                         }">
@@ -122,7 +123,7 @@
                                                                                 pTooltip="{{ child.subCatName }}"
                                                                                 tooltipPosition="bottom">
                                                                                 {{ child.subCatName}}
-                                                                        
+
                                                                             </div>
 
                                                                         </div>
@@ -164,12 +165,13 @@
                                             </div>
                                             <div class="ct_overflow_box">
 
-                                                <div class="card ct_shadow_none  flex justify-content-center ct_scope_3cata_list">
+                                                <div
+                                                    class="card ct_shadow_none  flex justify-content-center ct_scope_3cata_list">
                                                     <p-accordion styleClass="accordianclass"
                                                         [activeIndex]="accordianIndex" [multiple]="false">
                                                         <ng-container>
 
-                                                            <ng-container  *ngFor="
+                                                            <ng-container *ngFor="
                                                         let head of seed.manageDataPointCategories
                                                     ">
                                                                 <ng-container *ngIf="
@@ -181,7 +183,9 @@
 
                                                                     <div id="DPRow" *ngFor="
                                                                             let child of head.manageDataPointSubCategories
-                                                                        " class="py-2 px-4 border-bottom ct_scope_3_cata_list ct_scoope_1_tab" [ngClass]="{
+                                                                        "
+                                                                        class="py-2 px-4 border-bottom ct_scope_3_cata_list ct_scoope_1_tab"
+                                                                        [ngClass]="{
                                                                             ct_tab_active_12:
                                                                                 id_var === child.manageDataPointSubCategorySeedID
                                                                         }">
@@ -196,20 +200,24 @@
                                                                             tooltipPosition="bottom">
                                                                             {{ child.subCatName}}
                                                                         </div>
-                                                                        <div  *ngIf="head.manageDataPointCategorySeedID ==13"
+                                                                        <div *ngIf="head.manageDataPointCategorySeedID ==13"
                                                                             clickable (click)="
                                                                                 ToggleClick(
                                                                                     )
-                                                                            " class="col pointer d-flex ct_custom_dropdown"
+                                                                            "
+                                                                            class="col pointer d-flex ct_custom_dropdown"
                                                                             pTooltip="{{ child.subCatName }}"
                                                                             tooltipPosition="bottom">
                                                                             {{ child.subCatName}}
-                                                                            <ul class="ct_dropdwon_item" [class.ct_open_modal] = "isVisited == true">
-                                                                                <li (click)="setActive(24)" >Flight</li>
-                                                                                <li (click)="setActive(25)">Hotel Stay</li>
-                                                                                <li (click)="setActive(26)">Other Modes of Transport
+                                                                            <ul class="ct_dropdwon_item"
+                                                                                [class.ct_open_modal]="isVisited == true">
+                                                                                <li (click)="setActive(24)">Flight</li>
+                                                                                <li (click)="setActive(25)">Hotel Stay
                                                                                 </li>
-                                                                                </ul>
+                                                                                <li (click)="setActive(26)">Other Modes
+                                                                                    of Transport
+                                                                                </li>
+                                                                            </ul>
                                                                         </div>
 
                                                                     </div>
@@ -263,7 +271,8 @@
                 <p-tabView [ngStyle]="{display: facilityhavedp}" #dataentryTab activeIndex="{{ activeindex }}">
                     <p-tabPanel header="Data Entry">
                         <div class="row text-white border-bottom">
-                            <p *ngIf="categoryId !=24 && categoryId !=25 && categoryId !=26" class="mb-2 mt-3 ml-4 text-dark ct_fw_600">
+                            <p *ngIf="categoryId !=24 && categoryId !=25 && categoryId !=26"
+                                class="mb-2 mt-3 ml-4 text-dark ct_fw_600">
                                 {{ SubCatAllData.subCatName }}
                             </p>
                             <p *ngIf="categoryId ==24" class="mb-2 mt-3 ml-4 text-dark">
@@ -318,8 +327,8 @@
                                         class="col-4">
                                         <label for="fname">Grid</label>
                                         <p-dropdown class="ct_select_op_input" ngModel [options]="SubCategoryType"
-                                            optionLabel="RegionName" optionValue="RegionID"
-                                            name="RegionID" #RegionID="ngModel"
+                                            optionLabel="RegionName" optionValue="RegionID" name="RegionID"
+                                            #RegionID="ngModel"
                                             [(ngModel)]="RenewableElectricity.electricityRegionID"></p-dropdown>
                                     </div>
 
@@ -385,11 +394,21 @@
                                             Quantity of CO2 MakeUp value required.
                                         </p>
                                     </div>
-                                    <div *ngIf="categoryId==6" class="col-4">
+                                    <div *ngIf="categoryId==6" class="col">
+                                        <div
+                                            [ngClass]="typeEV == true ? 'col-3': typeBusCoach == true ? 'col-3': 'col-4'">
+                                            <label for="fname">Vehicle Type</label>
+                                            <p-dropdown class="ct_select_op_input" id="vehicleType"
+                                                [options]="VehicleType" optionLabel="VehicleType" optionValue="ID"
+                                                name="VehicleType" #vehicletype="ngModel"
+                                                [(ngModel)]="VehicleDE.vehicleTypeID"
+                                                (onChange)="enableCharging(SubCatAllData.subCatName)"></p-dropdown>
+                                        </div>
                                         <label for="fname">No. of Vehicles</label>
                                         <input required ngModel name="NoOfVehicles" #NoOfVehicles="ngModel"
                                             [(ngModel)]="VehicleDE.noOfVehicles" NoOfVehicles id="search-input"
-                                            type="text" class="form-control Dashboard-tab text-white" placeholder="Enter no of vehicles" />
+                                            type="text" class="form-control Dashboard-tab text-white"
+                                            placeholder="Enter no of vehicles" />
                                         <p class="validation" *ngIf="
                                         VehicleDE.noOfVehicles < 0 &&
                                                 dataEntryForm.submitted
@@ -401,9 +420,7 @@
                                             *ngIf="NoOfVehicles.errors?.['required'] && dataEntryForm.submitted">
                                             No Of Vehicles value required.
                                         </p>
-                                    </div>
 
-                                    <div *ngIf="categoryId==6" class="col-4">
                                         <label pTooltip="Total number of trips per vehicle" tooltipPosition="top"
                                             for="TotalnoOftripsPerVehicle">Trips per vehicle</label>
                                         <div class="position-relative">
@@ -412,13 +429,18 @@
                                                 #TotalnoOftripsPerVehicle="ngModel"
                                                 [(ngModel)]="VehicleDE.totalnoOftripsPerVehicle"
                                                 TotalnoOftripsPerVehicle id="search-input" type="text"
-                                                class="form-control Dashboard-tab text-white" placeholder="Enter trips per vehicle" />
+                                                class="form-control Dashboard-tab text-white"
+                                                placeholder="Enter trips per vehicle" />
                                             <p-dropdown
                                                 class="ct_select_op_input ct_select_op_input ct_position_small_quantity"
                                                 ngModel [options]="units" optionLabel="UnitName" optionValue="UnitName"
                                                 [(ngModel)]="dataEntry.unit" name="unitSet"
                                                 #unitSet="ngModel"></p-dropdown>
                                         </div>
+                                    </div>
+
+                                    <div *ngIf="categoryId==6" class="col-4">
+
                                     </div>
                                     <!-- <div class="col-8" *ngIf="categoryId==8">
                                         <label for="fname">No. of Vehicles</label>
@@ -486,13 +508,7 @@
                                             #DEMode="ngModel" [(ngModel)]="VehicleDE.modeOfDE"
                                             (onChange)="setUnit()"></p-dropdown>
                                     </div>
-                                    <div [ngClass]="typeEV == true ? 'col-3': typeBusCoach == true ? 'col-3': 'col-4'">
-                                        <label for="fname">Vehicle Type</label>
-                                        <p-dropdown class="ct_select_op_input" id="vehicleType" [options]="VehicleType"
-                                            optionLabel="VehicleType" optionValue="ID" name="VehicleType"
-                                            #vehicletype="ngModel" [(ngModel)]="VehicleDE.vehicleTypeID"
-                                            (onChange)="enableCharging(SubCatAllData.subCatName)"></p-dropdown>
-                                    </div>
+
                                     <div *ngIf="typeEV == true" class="col-3">
                                         <label pTooltip="Charging done outside company campus (%)" tooltipPosition="top"
                                             for="fname">Charging %
@@ -524,8 +540,9 @@
                                 <div class="row mt-4 mx-2" *ngIf="categoryId==5">
                                     <div *ngIf="SubCatAllData.manageDataPointSubCategorySeedID == 1002" class="col-4">
                                         <label for="fname">Source(Optional)</label>
-                                        <p-dropdown class="ct_select_op_input" ngModel [options]="ElectricitySource" optionLabel="sourceName"
-                                            optionValue="sourceName" name="Source" #Source="ngModel"
+                                        <p-dropdown class="ct_select_op_input" ngModel [options]="ElectricitySource"
+                                            optionLabel="sourceName" optionValue="sourceName" name="Source"
+                                            #Source="ngModel"
                                             [(ngModel)]="RenewableElectricity.sourceName"></p-dropdown>
                                     </div>
 
@@ -564,28 +581,28 @@
                                     </div>
                                 </div>
                                 <div class="trackingFooter"
-                                *ngIf="categoryId ==1 || categoryId == 2 ||   categoryId == 3  || categoryId == 4 || categoryId == 5 || categoryId == 6 ||  categoryId == 7">
-                                <div class="row my-3 mb-0 pb-3 mx-2">
-                                    <div class="col-12">
-                                        <label for="fname ">Attachments</label>
-                                        <p-toast></p-toast>
-                                        <div class="d-flex justify-content-end border rounded ct_upload_btn1">
-                                            <p-fileUpload #fileUpload mode="basic" accept=".jpg,.png,.pdf"
-                                                chooseLabel="Please select a File" (onSelect)="
+                                    *ngIf="categoryId ==1 || categoryId == 2 ||   categoryId == 3  || categoryId == 4 || categoryId == 5 || categoryId == 6 ||  categoryId == 7">
+                                    <div class="row my-3 mb-0 pb-3 mx-2">
+                                        <div class="col-12">
+                                            <label for="fname ">Attachments</label>
+                                            <p-toast></p-toast>
+                                            <div class="d-flex justify-content-end border rounded ct_upload_btn1">
+                                                <p-fileUpload #fileUpload mode="basic" accept=".jpg,.png,.pdf"
+                                                    chooseLabel="Please select a File" (onSelect)="
                                                     onFileSelected($event.files)
                                                 "></p-fileUpload>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-12 mt-4 pt-3 ml-3 text-center">
-                                        <button type="submit" class="px-4 trackingsubmitb">
-                                            Submit
-                                        </button>
+                                        <div class="col-12 mt-4 pt-3 ml-3 text-center">
+                                            <button type="submit" class="px-4 trackingsubmitb">
+                                                Submit
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            </div>
 
-                            
+
 
                             <!-- scope 3 categores stats from here -->
                             <div class="trackingFooter" *ngIf="categoryId ==8">
@@ -604,7 +621,7 @@
                                                     <a class="trackingsubmitb d-block" href="assets/template.xlsx"
                                                         download="">Click here to
                                                         download template</a>
-                                                   
+
                                                 </div>
 
                                             </div>
@@ -717,9 +734,9 @@
                                                     <div class="mb-4" style="gap: 10px;">
                                                         <label class=" ct_text_wrape">Distance Travelled by
                                                             Product</label>
-                                                      
+
                                                         <div class="position-relative">
-                                                            
+
                                                             <input type="number"
                                                                 class="form-control Dashboard-tab text-white"
                                                                 placeholder="Enter Distance" name="distanceInKms"
@@ -748,8 +765,9 @@
                                                         <div class="position-relative">
                                                             <input type="number"
                                                                 class="form-control Dashboard-tab text-white"
-                                                                 name="noOfVehicles"
-                                                                required ngModel #noOfVehicles="ngModel" placeholder="Enter no of vehicles" />
+                                                                name="noOfVehicles" required ngModel
+                                                                #noOfVehicles="ngModel"
+                                                                placeholder="Enter no of vehicles" />
                                                             <!-- <p class="validation"
                                                                 *ngIf="noOfVehicles.invalid && dataEntryForm.submitted">
                                                                 No. of Vehicles value required
@@ -798,7 +816,7 @@
                                                             <input type="number"
                                                                 placeholder="Enter No. of Days of Storage"
                                                                 class="form-control Dashboard-tab text-white"
-                                                                name="averageNoOfDays" ngModel  />
+                                                                name="averageNoOfDays" ngModel />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -2908,10 +2926,9 @@
                                                     <div class="mb-4" style="gap: 10px;">
                                                         <label class=" ct_text_wrape">Flight calc mode</label>
                                                         <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
-                                                            [options]="flightsTravelTypes"
-                                                            optionLabel="flightType" optionValue="flightType"
-                                                            name="flightMode" #flightMode="ngModel"
-                                                            (onChange)="onCityChange($event)">
+                                                            [options]="flightsTravelTypes" optionLabel="flightType"
+                                                            optionValue="flightType" name="flightMode"
+                                                            #flightMode="ngModel" (onChange)="onCityChange($event)">
                                                         </p-dropdown>
                                                     </div>
                                                 </div>
@@ -2924,9 +2941,8 @@
                                                     <div class="col-md-4">
                                                         <div class="mb-4" style="gap: 10px;">
                                                             <label class=" ct_text_wrape">Flight Type</label>
-                                                            <p-dropdown class="ct_select_op_input ct_flex_1"
-                                                                ngModel [options]="wasteGrid"
-                                                                optionLabel="flight_type"
+                                                            <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
+                                                                [options]="wasteGrid" optionLabel="flight_type"
                                                                 optionValue="flight_type" name="flight_type"
                                                                 #flight_type="ngModel">
                                                             </p-dropdown>
@@ -2935,20 +2951,18 @@
                                                     <div class="col-md-4">
                                                         <div class="mb-4" style="gap: 10px;">
                                                             <label class=" ct_text_wrape">Flight Class</label>
-                                                            <p-dropdown class="ct_select_op_input ct_flex_1"
-                                                                ngModel [options]="flightClassGrid"
-                                                                optionLabel="classs" optionValue="classs"
-                                                                name="classs" #classs="ngModel">
+                                                            <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
+                                                                [options]="flightClassGrid" optionLabel="classs"
+                                                                optionValue="classs" name="classs" #classs="ngModel">
                                                             </p-dropdown>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="mb-4" style="gap: 10px;">
                                                             <label class=" ct_text_wrape">Return Flight</label>
-                                                            <p-dropdown class="ct_select_op_input ct_flex_1"
-                                                                ngModel [options]="returnGrid"
-                                                                optionLabel="return" optionValue="return"
-                                                                name="return" #return="ngModel">
+                                                            <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
+                                                                [options]="returnGrid" optionLabel="return"
+                                                                optionValue="return" name="return" #return="ngModel">
                                                             </p-dropdown>
                                                         </div>
                                                     </div>
@@ -2956,8 +2970,7 @@
                                                         <div class="mb-4  " style="gap: 10px;">
                                                             <label class=" ct_text_wrape">No. of Trips</label>
                                                             <div class="position-relative">
-                                                                <input type="text"
-                                                                    placeholder="Enter no of trips"
+                                                                <input type="text" placeholder="Enter no of trips"
                                                                     name="no_of_trips" ngModel
                                                                     class="form-control Dashboard-tab text-white" />
                                                             </div>
@@ -2977,10 +2990,10 @@
                                                     <div class="col-md-4">
                                                         <div class="mb-4" style="gap: 10px;">
                                                             <label class=" ct_text_wrape">Business unit</label>
-                                                            <p-dropdown class="ct_select_op_input ct_flex_1"
-                                                                ngModel [options]="busineessGrid"
-                                                                optionLabel="units" optionValue="units"
-                                                                name="businessunits" #return="ngModel">
+                                                            <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
+                                                                [options]="busineessGrid" optionLabel="units"
+                                                                optionValue="units" name="businessunits"
+                                                                #return="ngModel">
                                                             </p-dropdown>
                                                         </div>
                                                     </div>
@@ -2993,20 +3006,18 @@
                                                     <div class="col-md-4">
                                                         <div class="mb-4" style="gap: 10px;">
                                                             <label class=" ct_text_wrape">From</label>
-                                                            <p-dropdown class="ct_select_op_input ct_flex_1"
-                                                                ngModel [options]="airportGrid"
-                                                                optionLabel="airport_code"
-                                                                optionValue="airport_code"
-                                                                name="airport_codefrom" #airport_code="ngModel">
+                                                            <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
+                                                                [options]="airportGrid" optionLabel="airport_code"
+                                                                optionValue="airport_code" name="airport_codefrom"
+                                                                #airport_code="ngModel">
                                                             </p-dropdown>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="mb-4" style="gap: 10px;">
                                                             <label class=" ct_text_wrape">To</label>
-                                                            <p-dropdown class="ct_select_op_input ct_flex_1"
-                                                                ngModel [options]="airportGrid"
-                                                                optionLabel="airport_code"
+                                                            <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
+                                                                [options]="airportGrid" optionLabel="airport_code"
                                                                 optionValue="airport_code" name="airport_codeto"
                                                                 #airport_code="ngModel">
                                                             </p-dropdown>
@@ -3015,11 +3026,9 @@
                                                     <div class="col-md-4">
                                                         <div class="mb-4" style="gap: 10px;">
                                                             <label class=" ct_text_wrape">Via (optional)</label>
-                                                            <p-dropdown class="ct_select_op_input ct_flex_1"
-                                                                ngModel [options]="airportGrid"
-                                                                placeholder="Select via"
-                                                                optionLabel="airport_code"
-                                                                optionValue="airport_code"
+                                                            <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
+                                                                [options]="airportGrid" placeholder="Select via"
+                                                                optionLabel="airport_code" optionValue="airport_code"
                                                                 name="airport_codevia" #airport_code="ngModel">
                                                             </p-dropdown>
                                                         </div>
@@ -3027,10 +3036,9 @@
                                                     <div class="col-md-4">
                                                         <div class="mb-4" style="gap: 10px;">
                                                             <label class=" ct_text_wrape">Flight Class</label>
-                                                            <p-dropdown class="ct_select_op_input ct_flex_1"
-                                                                ngModel [options]="flightClassGrid"
-                                                                optionLabel="classs" optionValue="classs"
-                                                                name="classs" #classs="ngModel">
+                                                            <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
+                                                                [options]="flightClassGrid" optionLabel="classs"
+                                                                optionValue="classs" name="classs" #classs="ngModel">
                                                             </p-dropdown>
                                                         </div>
                                                     </div>
@@ -3038,8 +3046,7 @@
                                                         <div class="mb-4" style="gap: 10px;">
                                                             <label class=" ct_text_wrape">No of
                                                                 passengers</label>
-                                                            <input type="number"
-                                                                placeholder="Enter No of Passengers"
+                                                            <input type="number" placeholder="Enter No of Passengers"
                                                                 name="no_of_passengers" ngModel
                                                                 class="form-control Dashboard-tab text-white" />
                                                         </div>
@@ -3048,10 +3055,9 @@
                                                     <div class="col-md-4">
                                                         <div class="mb-4" style="gap: 10px;">
                                                             <label class=" ct_text_wrape">Return Flight</label>
-                                                            <p-dropdown class="ct_select_op_input ct_flex_1"
-                                                                ngModel [options]="returnGrid"
-                                                                optionLabel="return" optionValue="return"
-                                                                name="return" #return="ngModel">
+                                                            <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
+                                                                [options]="returnGrid" optionLabel="return"
+                                                                optionValue="return" name="return" #return="ngModel">
                                                             </p-dropdown>
                                                         </div>
                                                     </div>
@@ -3072,10 +3078,10 @@
                                                     <div class="col-md-4">
                                                         <div class="mb-4" style="gap: 10px;">
                                                             <label class=" ct_text_wrape">Business unit</label>
-                                                            <p-dropdown class="ct_select_op_input ct_flex_1"
-                                                                ngModel [options]="busineessGrid"
-                                                                optionLabel="units" optionValue="units"
-                                                                name="businessunits" #return="ngModel">
+                                                            <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
+                                                                [options]="busineessGrid" optionLabel="units"
+                                                                optionValue="units" name="businessunits"
+                                                                #return="ngModel">
                                                             </p-dropdown>
                                                         </div>
                                                     </div>
@@ -3090,9 +3096,8 @@
                                                     <div class="col-md-4">
                                                         <div class="mb-4" style="gap: 10px;">
                                                             <label class=" ct_text_wrape">Flight Time</label>
-                                                            <p-dropdown class="ct_select_op_input ct_flex_1"
-                                                                ngModel [options]="flightTime"
-                                                                optionLabel="flight_type"
+                                                            <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
+                                                                [options]="flightTime" optionLabel="flight_type"
                                                                 optionValue="flight_type" name="flight_type"
                                                                 #flight_type="ngModel">
                                                             </p-dropdown>
@@ -3110,10 +3115,9 @@
                                                     <div class="col-md-4">
                                                         <div class="mb-4" style="gap: 10px;">
                                                             <label class=" ct_text_wrape">Flight Class</label>
-                                                            <p-dropdown class="ct_select_op_input ct_flex_1"
-                                                                ngModel [options]="flightClassGrid"
-                                                                optionLabel="classs" optionValue="classs"
-                                                                name="classs" #classs="ngModel">
+                                                            <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
+                                                                [options]="flightClassGrid" optionLabel="classs"
+                                                                optionValue="classs" name="classs" #classs="ngModel">
                                                             </p-dropdown>
                                                         </div>
                                                     </div>
@@ -3121,8 +3125,7 @@
                                                         <div class="mb-4" style="gap: 10px;">
                                                             <label class=" ct_text_wrape">No of
                                                                 passengers</label>
-                                                            <input type="number"
-                                                                placeholder="Enter No of Passengers"
+                                                            <input type="number" placeholder="Enter No of Passengers"
                                                                 class="form-control Dashboard-tab text-white"
                                                                 name="no_of_passengers" ngModel />
                                                         </div>
@@ -3130,10 +3133,9 @@
                                                     <div class="col-md-4">
                                                         <div class="mb-4" style="gap: 10px;">
                                                             <label class=" ct_text_wrape">Return Flight</label>
-                                                            <p-dropdown class="ct_select_op_input ct_flex_1"
-                                                                ngModel [options]="returnGrid"
-                                                                optionLabel="return" optionValue="return"
-                                                                name="return" #return="ngModel">
+                                                            <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
+                                                                [options]="returnGrid" optionLabel="return"
+                                                                optionValue="return" name="return" #return="ngModel">
                                                             </p-dropdown>
                                                         </div>
                                                     </div>
@@ -3141,8 +3143,7 @@
                                                     <div class="col-md-4">
                                                         <div class="mb-4" style="gap: 10px;">
                                                             <label class=" ct_text_wrape">Reference id</label>
-                                                            <input type="number"
-                                                                placeholder="Enter Reference id"
+                                                            <input type="number" placeholder="Enter Reference id"
                                                                 class="form-control Dashboard-tab text-white"
                                                                 name="reference_id" ngModel />
                                                         </div>
@@ -3151,10 +3152,10 @@
                                                     <div class="col-md-4">
                                                         <div class="mb-4" style="gap: 10px;">
                                                             <label class=" ct_text_wrape">Business Unit</label>
-                                                            <p-dropdown class="ct_select_op_input ct_flex_1"
-                                                                ngModel [options]="busineessGrid"
-                                                                optionLabel="units" optionValue="units"
-                                                                name="businessunits" #return="ngModel">
+                                                            <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
+                                                                [options]="busineessGrid" optionLabel="units"
+                                                                optionValue="units" name="businessunits"
+                                                                #return="ngModel">
                                                             </p-dropdown>
                                                         </div>
                                                     </div>
@@ -3194,8 +3195,7 @@
                                                         <label class=" ct_text_wrape">Type of hotel</label>
                                                         <p-dropdown class="ct_select_op_input" ngModel
                                                             [options]="hotelTypeGrid" optionLabel="hoteltype"
-                                                            optionValue="id" name="hoteltype"
-                                                            #hoteltype="ngModel">
+                                                            optionValue="id" name="hoteltype" #hoteltype="ngModel">
                                                         </p-dropdown>
                                                     </div>
                                                 </div>
@@ -3237,7 +3237,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="trackingFooter"  *ngIf="categoryId ==26">
+                            <div class="trackingFooter" *ngIf="categoryId ==26">
                                 <div class="row mt-4 mb-3 mb-5 pb-5 mx-2">
 
                                     <div class="col-12">
@@ -3249,9 +3249,9 @@
                                                         <label class=" ct_text_wrape">Mode of trasport</label>
                                                         <p-dropdown class="ct_select_op_input" ngModel
                                                             [options]="ModesTravelGrid"
-                                                            placeholder="Select mode of travel"
-                                                            optionLabel="modes" optionValue="modes" name="modes"
-                                                            #modes="ngModel" (onChange)="onModesChange($event)">
+                                                            placeholder="Select mode of travel" optionLabel="modes"
+                                                            optionValue="modes" name="modes" #modes="ngModel"
+                                                            (onChange)="onModesChange($event)">
                                                         </p-dropdown>
                                                     </div>
                                                 </div>
@@ -3267,8 +3267,7 @@
                                                             <label class=" ct_text_wrape">Type</label>
                                                             <p-dropdown class="ct_select_op_input" ngModel
                                                                 [options]="mode_type" optionLabel="type"
-                                                                optionValue="type" name="cartype"
-                                                                #cartype="ngModel">
+                                                                optionValue="type" name="cartype" #cartype="ngModel">
                                                             </p-dropdown>
                                                         </div>
                                                     </div>
@@ -3311,8 +3310,7 @@
                                                         <div class="mb-4" style="gap: 10px;">
                                                             <label class=" ct_text_wrape">No. of trips</label>
                                                             <div class="position-relative">
-                                                                <input type="number"
-                                                                    placeholder="Enter No. of trips"
+                                                                <input type="number" placeholder="Enter No. of trips"
                                                                     class="form-control Dashboard-tab text-white"
                                                                     name="no_ofTrips" ngModel />
 
@@ -3353,156 +3351,624 @@
                             </p>
                         </div>
 
-                        <!-- <div class="ElectricityTable mt-4">
-                            <p-table styleClass="statusTable ct_status_table_main" #dt1 [value]="commonDE" dataKey="id">
+                        <div class="ElectricityTable mt-4">
+                            <p-table styleClass="statusTable ct_status_table_main" #dt1 [value]="dataEntriesPending"
+                                dataKey="id">
                                 <ng-template pTemplate="header">
                                     <tr>
+                                        <th>Category</th>
+                                        <!-- <th *ngIf="categoryId==13 && selectMode==1">Flight Class</th>
+                                        <th *ngIf="categoryId==13 && (selectMode==3)">Type</th>
+                                        <th *ngIf="categoryId==13 && (selectMode==3)">Fuel Type</th>
+                                        <th *ngIf="categoryId==13 && (selectMode==3 || selectMode ==1)">No of Passengers</th>
+                                        <th *ngIf="categoryId==13 && (selectMode==3 || selectMode ==1)">Distance</th>
+                                        <th *ngIf="categoryId==13 && (selectMode==3 )">No of Trips</th>
+                                        <th *ngIf="categoryId==13 && (selectMode ==1)">Business unit</th> -->
+                                        <th *ngIf="categoryId==18 ">Sub Activity</th>
+                                        <th *ngIf="categoryId==18">Processing Activity</th>
+                                        <th *ngIf="categoryId==18">Calculation Method</th>
+                                        <th *ngIf="categoryId==20 || categoryId ==16 || categoryId ==22 || categoryId ==21 ||  categoryId ==1 || categoryId ==23 || categoryId ==8 || categoryId ==23">
+                                            Sub Category</th>
+                                        <th *ngIf="categoryId==20">Total Waste</th>
+                                        <th *ngIf="categoryId==20">Landfill</th>
+                                        <th *ngIf="categoryId==20">Combustion</th>
+                                        <th *ngIf="categoryId==20">Recycling</th>
+                                        <th *ngIf="categoryId==20">Composing</th>
+                                        <th>Year</th>
                                         <th>Month</th>
-                                        <th>
-                                            <div class="flex align-items-center">
-                                                Year
-                                                <p-columnFilter field="year" matchMode="equals" display="menu"
-                                                    [showMenu]="true" [showMatchModes]="false" [showOperator]="false"
-                                                    [showAddButton]="false">
-                                                    <ng-template pTemplate="filter" let-value
-                                                        let-filter="filterCallback">
-                                                        <p-dropdown [ngModel]="value" [options]="yearOptions"
-                                                            (onChange)="filter($event.value)" placeholder="All"
-                                                            [showClear]="false">
-                                                        </p-dropdown>
-                                                    </ng-template>
-                                                </p-columnFilter>
-                                            </div>
+                                        <th *ngIf="categoryId==2">
+                                            Refrigerant Amount
                                         </th>
-                                        <th *ngIf="categoryId==1 || categoryId==5 || categoryId==7"
-                                            pTooltip="Reading Value" tooltipPosition="top">
-                                            Value
+                                        <th
+                                            *ngIf="categoryId==1 || categoryId==3 || categoryId ==16 || categoryId ==23 || categoryId ==22 ||  categoryId ==1 || categoryId ==23 || categoryId ==8">
+                                            Quantity
                                         </th>
-                                        <th *ngIf="categoryId == 1 || categoryId == 2 || categoryId == 5 || categoryId == 7"
-                                            pTooltip="Fuel Type" tooltipPosition="top">
-                                            Type
+                                        <th *ngIf="categoryId==15">
+                                            No of employees
                                         </th>
-                                        <th *ngIf="(SubCatAllData.subCatName=='Diesel' || SubCatAllData.subCatName=='Petrol')"
-                                            pTooltip="Blend Type" tooltipPosition="top">
-                                            Blend
+                                        <th *ngIf="categoryId==15">
+                                            No of days
                                         </th>
-                                        <th *ngIf="SubCatAllData.subCatName=='Diesel' || SubCatAllData.subCatName=='Petrol'"
-                                            pTooltip="Blend Percent" tooltipPosition="top">
-                                            %
+                                        <th *ngIf="categoryId==5 || categoryId==7">
+                                            Reading Value
                                         </th>
-                                        <th *ngIf="categoryId==2" pTooltip="Amount of refrigent used"
+                                        <th *ngIf="categoryId==5">
+                                            Source Name
+                                        </th>
+                                        <th *ngIf="categoryId==7 || categoryId == 5"
+                                            pSortableColumn="noofairconnUnits" pTooltip="Amount of refrigent used"
                                             tooltipPosition="top">
-                                            Refrierant Amount..
+                                            Energy
                                         </th>
-                                        <th *ngIf="categoryId==3" pTooltip="Number of fire extinguisher"
-                                            tooltipPosition="top">
-                                            Extinguisher
+                                        <th *ngIf="categoryId==3" tooltipPosition="top">
+                                            No of Extinguisher
                                         </th>
-                                        <th *ngIf="categoryId==3" pTooltip="Quantity of CO2 makeup per unit"
-                                            tooltipPosition="top">
-                                            CO2 Makeup
+                                        <th pTooltip="Amount of Emission" tooltipPosition="top">
+                                            Emission
                                         </th>
-                                        <th *ngIf="categoryId==6" pTooltip="Number of vehicles" tooltipPosition="top">
-                                            Vehicles
+                                        <th *ngIf="categoryId !=13">
+                                            Unit
                                         </th>
-                                        <th *ngIf="categoryId==6" pTooltip="Mode of data entry" tooltipPosition="top">
-                                            Mode
+        
+                                        <!-- <th  *ngIf="categoryId == 11">
+                                            Water Treatment
+                                           
                                         </th>
-                                        <th *ngIf="categoryId==6" pTooltip="Average people per trip"
-                                            tooltipPosition="top">
-                                            Avg people
+                                        <th  *ngIf="categoryId == 11">
+                                            Water Supply
                                         </th>
-                                        <th *ngIf="categoryId==6" pTooltip="Total no Of trips Per Vehicle "
-                                            tooltipOptions="top">
-                                            Total no.
-                                        </th>
-                                        <th *ngIf="categoryId==6" pTooltip="Charging done outside company campus (%)"
-                                            tooltipOptions="top">
-                                            %
-                                        </th>
-                                        <th *ngIf="categoryId==6" pTooltip="Amount" tooltipPosition="top">
-                                            Value
-                                        </th>
-                                        <th *ngIf="categoryId==5" pTooltip="Source types" tooltipPosition="top">
-                                            Source
-                                        </th>
-                                        <th>Unit</th>
-                                         <th *ngIf="categoryId==2" pTooltip="CO2 Leakage per unit" tooltipPosition="top">
-                                        CO2
-                                    </th>
-                                    <th *ngIf="categoryId==2" pTooltip="Capacity(tonnes)" tooltipPosition="top">
-                                        Capacity
-                                    </th>
-                                    <th *ngIf="categoryId==2" pTooltip="Leakage(% of capacity)" tooltipPosition="top">
-                                        Leakage
-                                    </th> -->
-                        <!-- <th pTooltip="Total GHG Emission(tco2e)" tooltipPosition="top">
-                                            tCO2e </th> -->
-                        <!-- <th pTooltip="Energy(kwh)" tooltipPosition="top">
-                                        Energy
-                                    </th> -->
-                        <!-- <th>
-                                            <div class="flex align-items-center">
-                                                Status
-
-                                                <p-columnFilter field="status" matchMode="equals" display="menu"
-                                                    [showMenu]="true" [showMatchModes]="false" [showOperator]="false"
-                                                    [showAddButton]="false">
-                                                    <ng-template pTemplate="filter" let-value
-                                                        let-filter="filterCallback">
-                                                        <p-dropdown [ngModel]="value" [options]="statusOptions"
-                                                            (onChange)="filter($event.value)" placeholder="All"
-                                                            [showClear]="false">
-                                                        </p-dropdown>
-                                                    </ng-template>
-                                                </p-columnFilter>
-
-                                            </div>
-                                        </th>
-
-                                    </tr>
-                                </ng-template> -->
-                        <!-- <ng-template pTemplate="body" let-status>
-                                    <tr *ngIf="accordianIndex ==2">
-                                    
-                                        <td *ngIf="categoryId==1 || categoryId==5 || categoryId==7">{{
-                                            status.readingValue
-                                            }}</td>
-                                  
-                                        <td>{{ status.unit }}</td>
                                      
-                                        <td>{{ status.ghgEmission }}</td>
-                                       <td>
+                                        <th  *ngIf="categoryId == 20">
+                                            Combustion
+                                        </th>
+                                        <th  *ngIf="categoryId == 20">
+                                            Composing
+                                        </th>
+                                        <th  *ngIf="categoryId == 20">
+                                            Landfill
+                                        </th>
+                                        <th  *ngIf="categoryId == 20">
+                                            Recycling
+                                        </th>
+                                        <th 
+                                            *ngIf="categoryId == 16 || categoryId == 21 || categoryId == 22 || categoryId == 23">
+                                            Sub Category
+                                           
+                                        </th> -->
+                                        <!-- <th  *ngIf="categoryId == 18">
+                                            Sub Activity
+                                           
+                                        </th>
+                                        <th  *ngIf="categoryId == 23">
+                                            Investment type
+                                           
+                                        </th>
+                                        <th  *ngIf="categoryId == 18">
+                                            Processing Activity
+                                            
+                                         </th> -->
+                                        <!-- <th 
+                                            *ngIf="categoryId == 16 || categoryId ==18 || categoryId == 21 ||categoryId == 22 ||categoryId == 23">
+                                            Calculation Method
+                                           
+                                        </th>
+                                        <th 
+                                            *ngIf="categoryId == 16 || categoryId == 21 ||categoryId == 22">
+                                            Franchise Space
+                                           
+                                        </th>
+                                        <th 
+                                            *ngIf="categoryId == 16 || categoryId ==18 || categoryId == 21 ||categoryId == 22">
+                                            Scope 1 Emission
+                                           
+                                        </th>
+                                        <th 
+                                            *ngIf="categoryId == 16 || categoryId ==18 || categoryId == 21 ||categoryId == 22">
+                                            Scope 2 Emission
+                                           
+                                        </th> -->
+                                        <!-- <th  *ngIf="categoryId == 15">
+                                            Type of Home Office
+                                           
+                                        </th>
+                                        <th  *ngIf="categoryId == 15">
+                                            No of days
+                                           
+                                        </th>
+                                        <th  *ngIf="categoryId == 15">
+                                            No of employees
+                                           
+                                        </th> -->
+                                        <!-- <th  *ngIf="categoryId == 15">
+                                            No of months
+                                           
+                                        </th>
+                                        <th  *ngIf="categoryId == 14">
+                                            Type
+                                           
+                                        </th>
+                                        <th  *ngIf="categoryId == 14">
+                                            Average Employee Commute
+                                           
+                                        </th> -->
+                                        <!-- <th  *ngIf="categoryId == 14">
+                                            Average Commuted Distance
+                                           
+                                        </th>
+                                        <th  *ngIf="categoryId == 14">
+                                            Working Days
+                                           
+                                        </th>
+                                        <th  *ngIf="categoryId == 10 || categoryId == 17">
+                                            Vehicle Type
+                                           
+                                        </th>
+                                        <th  *ngIf="categoryId == 12">
+                                            Method
+                                           
+                                        </th>
+                                        <th  *ngIf="categoryId == 12">
+                                            Waste Type
+                                           
+                                        </th>
+                                        <th  *ngIf="categoryId == 10 || categoryId == 17">
+                                            Sub Category
+                                           
+                                        </th>
+                                        <th  *ngIf="categoryId == 10 || categoryId == 17">
+                                            Distance Travelled
+                                           
+                                        </th>
+                                        <th  *ngIf="categoryId == 10 || categoryId == 17">
+                                            Mass of Product
+                                           
+                                        </th>
+                                        <th  *ngIf="categoryId == 10 || categoryId == 17">
+                                            Storage facility
+                                           
+                                        </th>
+                                        <th pTooltip="Data Points" tooltipPosition="top" pSortableColumn="subcatName"
+                                            *ngIf="categoryId == 1 || categoryId == 2 || categoryId == 3 || categoryId == 4 || categoryId == 5 || categoryId == 6">
+                                            D.P
+                                           
+                                        </th>
+        
+                                        <th *ngIf="categoryId==1 || categoryId==5 || categoryId==7 || categoryId==8"
+                                            pTooltip="Reading Value" tooltipPosition="top" pSortableColumn="readingValue">
+                                    
+                                            Value
+        
+                                        </th>
+                                        <th *ngIf="categoryId==1" pTooltip="Blend Type" tooltipPosition="top"
+                                            pSortableColumn="BlendType">
+                                 
+                                            Blend
+        
+                                        </th> -->
+                                        <!-- <th *ngIf="categoryId==1" style="width: 15%" pTooltip="Blend percent"
+                                            tooltipPosition="top" pSortableColumn="blendPercent">
+                                            <p-sortIcon field="blendPercent"></p-sortIcon>
+                                            %
+        
+                                        </th> -->
+                                        <!-- 
+                                        <th *ngIf="categoryId==2" pSortableColumn="noofairconnUnits"
+                                            pTooltip="Amount of refrigent used" tooltipPosition="top">
+                                            Refrigerant Amount <p-sortIcon field="noofairconnUnits"></p-sortIcon>
+                                        </th>
+                                      
+                                        <th *ngIf="categoryId==3" pSortableColumn="numberOfExtinguisher"
+                                            pTooltip="Number Of Fire Extinguisher" tooltipPosition="top">
+                                            Extinguisher <p-sortIcon field="numberOfExtinguisher"></p-sortIcon>
+                                        </th>
+                                        <th *ngIf="categoryId==3" pSortableColumn="quantityOfCO2makeup"
+                                            pTooltip="Quantity Of CO2 makeup" tooltipPosition="top">
+                                            CO2 MakeUp <p-sortIcon field="quantityOfCO2makeup"></p-sortIcon>
+                                        </th>
+                                        <th *ngIf="categoryId==6" pSortableColumn="noOfVehicles"
+                                            pTooltip="Number Of Vehicles" tooltipPosition="top">
+                                            Vehicles <p-sortIcon field="noOfVehicles"></p-sortIcon>
+                                        </th>
+                                        <th *ngIf="categoryId==6" pSortableColumn="modeOfDE" pTooltip="Mode Of data entry"
+                                            tooltipPosition="top">
+                                            Mode <p-sortIcon field="modeOfDE"></p-sortIcon>
+                                        </th>
+                                        <th *ngIf="categoryId==6" pSortableColumn="amount">
+                                            Amount <p-sortIcon field="amount"></p-sortIcon>
+                                        </th>
+                                        <th *ngIf="categoryId==5" pSortableColumn="sourceName">
+                                            Source <p-sortIcon field="sourceName"></p-sortIcon>
+                                        </th> -->
+                                        <!-- <th >
+                                            <p-sortIcon pSortableColumn="status" field="status"></p-sortIcon>
+                                            Status
+                                            <p-columnFilter field="status" matchMode="equals" display="menu" [showMenu]="true"
+                                                [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                                                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                                    <p-dropdown [ngModel]="value" [options]="statusOptions"
+                                                        (onChange)="filter($event.value)" placeholder="All" [showClear]="false">
+                                                    </p-dropdown>
+                                                </ng-template>
+                                            </p-columnFilter>
+        
+                                        </th> -->
+        
+                                    </tr>
+        
+                                </ng-template>
+                                <ng-template pTemplate="body" let-de let-status>
+                                    <tr [pEditableRow]="de">
+
+                                        <td *ngIf="categoryId == 1 || categoryId ==6"> {{de.category_name}}</td>
+                                        <td *ngIf="categoryId == 2 || categoryId == 3"> {{de.item}}</td>
+                                        <!-- <td *ngIf="categoryId == 13 && (selectMode==1)"> {{de.flight_type}}</td>
+                                        <td *ngIf="categoryId == 13 && (selectMode==1)"> {{de.flight_class}}</td>
+                                        <td *ngIf="categoryId == 13 && (selectMode==3)"> {{de.vehicle_type}}</td>
+                                        <td *ngIf="categoryId == 13 && (selectMode==3)"> {{de.type}}</td>
+                                        <td *ngIf="categoryId == 13 && (selectMode==3)"> {{de.fuel_type}}</td>
+                                        <td *ngIf="categoryId == 13 && (selectMode==3 || selectMode ==1)"> {{de.no_of_passengers}}</td>
+                                        <td *ngIf="categoryId == 13 && (selectMode==3 || selectMode ==1)"> {{de.distance}}</td>
+                                        <td *ngIf="categoryId == 13 && (selectMode==3)"> {{de.no_of_trips}}</td>
+                                        <td *ngIf="categoryId == 13 && (selectMode==1)"> {{de.business_unit}}</td> -->
+                                        <td *ngIf="categoryId == 8 || categoryId == 10 || categoryId ==23"> {{de.category}}</td>
+                                    
+                                        <td *ngIf="categoryId == 1 || categoryId == 8 || categoryId == 10 || categoryId ==23">{{ de.subcategory }}</td>
+                                        <td>
+                                            {{ de.year }}
+                                        </td>
+                                        <td
+                                            *ngIf="categoryId == 10 || categoryId == 13 || categoryId == 6 || categoryId ==23 || categoryId ==1">
+                                            {{ de.month }}
+                                        </td>
+                                        <td  *ngIf="categoryId != 10 && categoryId != 13 && categoryId !=23  && categoryId !=1" >
+                                            {{ de.months }}
+                                        </td>
+                                        <td *ngIf="categoryId == 2">
+                                            {{ de.refamount }}
+                                        </td>
+                                        <td *ngIf="categoryId == 3">
+                                            {{ de.numberofextinguisher }}
+                                        </td>
+                                        <td *ngIf="categoryId==1 || categoryId==3 || categoryId == 8 || categoryId == 10 || categoryId == 23">{{ de.quantity }}</td>
+                                        <td *ngIf="categoryId==5 || categoryId==7">{{ de.reading_value }}</td>
+                                        <td *ngIf="categoryId==5">{{ de.sourcename }}</td>
+                                        <td *ngIf="categoryId==5 || categoryId==7">{{ de.energy }}</td>
+                                        <td> {{de.emission}}</td>
+                                        <td>{{ de.unit }}</td>
+        
+                                        <td *ngIf="categoryId == 8"> {{de.typeofpurchase}}</td>
+                                        <!-- <td
+                                            *ngIf="categoryId != 16 && categoryId !=18 && categoryId !=20 && categoryId !=21   && categoryId !=22 && categoryId !=23">
+                                            {{ de.catName }}</td> -->
+                                        <td *ngIf="categoryId == 11 ">{{ de.water_treatment }}</td>
+                                        <td *ngIf="categoryId == 11 ">{{ de.water_supply }}</td>
+                                        <!-- <td *ngIf="categoryId == 23 ">{{ de.category }}</td> -->
+                                        <td *ngIf="categoryId == 22 ">{{ de.franchise_type }}</td>
+                                        <td *ngIf="categoryId == 22 || categoryId == 23 ">{{ de.sub_category }}</td>
+        
+                                        <td *ngIf="categoryId == 20 ">{{ de.combustion }}</td>
+                                        <td *ngIf="categoryId == 20 ">{{ de.composing }}</td>
+                                        <td *ngIf="categoryId == 20 ">{{ de.landfill }}</td>
+                                        <td *ngIf="categoryId == 20 ">{{ de.recycling }}</td>
+                                        <td *ngIf="categoryId == 16 || categoryId == 21 ">{{ de.category }}</td>
+                                        <td *ngIf="categoryId == 18">{{ de.intermediate_category }}</td>
+                                        <td *ngIf="categoryId == 18">{{ de.sub_activity }}</td>
+                                        <td *ngIf="categoryId == 18">{{ de.processing_acitivity }}</td>
+                                        <td *ngIf="categoryId == 16 || categoryId == 21">{{ de.sub_category }}</td>
+                                        <td
+                                            *ngIf="categoryId == 16 || categoryId ==18 || categoryId == 21 ||categoryId == 22 ||categoryId == 23">
+                                            {{ de.calculation_method }}</td>
+                                        <td *ngIf="categoryId == 16 || categoryId == 21 ||categoryId ==22">{{
+                                            de.franchise_space }}</td>
+                                        <td *ngIf="categoryId == 18 ">{{ de.scope1emissions }}</td>
+                                        <td *ngIf="categoryId == 18 ">{{ de.scope2emissions }}</td>
+        
+                                        <td
+                                            *ngIf="categoryId == 16 || categoryId == 21 || categoryId == 22   ">
+                                            {{ de.scope1_emission }}</td>
+                                        <td
+                                            *ngIf="categoryId == 16 || categoryId == 21 || categoryId == 22  ">
+                                            {{ de.scope2_emission }}</td>
+                                        <td *ngIf="categoryId == 15">{{ de.typeof_homeoffice_name }}</td>
+                                        <td *ngIf="categoryId == 15">{{ de.noofdays }}</td>
+                                        <td *ngIf="categoryId == 15">{{ de.noofemployees }}</td>
+                                        <td *ngIf="categoryId == 15">{{ de.noofmonths }}</td>
+                                        <td *ngIf="categoryId == 14">{{ de.type }}</td>
+                                        <td *ngIf="categoryId == 14">{{ de.allemployeescommute }}</td>
+                                        <td *ngIf="categoryId == 14">{{ de.avgcommutedistance }}</td>
+                                        <td *ngIf="categoryId == 14">{{ de.workingdays }}</td>
+                                        <td *ngIf="categoryId == 12">{{ de.method }}</td>
+                                        <td *ngIf="categoryId == 12">{{ de.waste_type }}</td>
+                                        <!-- <td
+                                            *ngIf="categoryId != 8 && categoryId != 10 && categoryId != 12 && categoryId != 14 && categoryId != 15 && categoryId != 17 && categoryId != 18 && categoryId != 19 && categoryId != 20 && categoryId !=21 && categoryId !=22 && categoryId !=11 && categoryId !=23">
+                                            {{ de.subcatName }}</td> -->
+                                        <td *ngIf="categoryId == 10 || categoryId == 17">{{ de.vehicle_type }}</td>
+                                        <td *ngIf="categoryId == 10 || categoryId == 17">{{ de.sub_category }}</td>
+                                        <td *ngIf="categoryId == 10 || categoryId == 17">{{ de.distance_travelled_km
+                                            }}</td>
+                                        <td *ngIf="categoryId == 10 || categoryId == 17">{{ de.mass_of_product_trans
+                                            }}</td>
+                                        <td *ngIf="categoryId == 10 || categoryId == 17">{{ de.storage_facility_type
+                                            }}</td>
+        
+                                        <!-- <td *ngIf="categoryId==1 || categoryId==5 || categoryId==7">
+                                            <p-cellEditor><ng-template pTemplate="input">
+                                                    <input name="readingValue_{{ ri }}" id="{{ ri }}" pInputText type="text"
+                                                        [(ngModel)]="de.readingValue" ngModel #readingValue="ngModel">
+                                                </ng-template>
+                                                <ng-template pTemplate="output">
+                                                    {{ de.readingValue }}
+                                                </ng-template>{{ de.readingValue }}</p-cellEditor>
+                                        </td> -->
+                                        <!-- <td *ngIf="categoryId==1">{{ de.blendType }}</td> -->
+        
+                                        <!-- <td *ngIf="categoryId==1"><p-cellEditor><ng-template pTemplate="input">
+                                                    <input name="blendPercent_{{ ri }}" id="{{ ri }}" pInputText type="text"
+                                                        [(ngModel)]="de.blendPercent" ngModel #blendPercent="ngModel">
+                                                </ng-template>
+                                                <ng-template pTemplate="output">
+                                                    {{ de.blendPercent }}
+                                                </ng-template>{{ de.blendPercent }}</p-cellEditor></td> -->
+        
+                                        <!-- <td *ngIf="categoryId==2"><p-cellEditor><ng-template pTemplate="input">
+                                                    <input name="refAmount_{{ ri }}" id="{{ ri }}" pInputText type="text"
+                                                        [(ngModel)]="de.refAmount" ngModel #refAmount="ngModel">
+                                                </ng-template>
+                                                <ng-template pTemplate="output">
+                                                    {{ de.refAmount }}
+                                                </ng-template>{{ de.refAmount }}</p-cellEditor></td> -->
+                                        <!-- <td *ngIf="categoryId==2"><p-cellEditor><ng-template pTemplate="input">
+                                                    <input name="cO2LeakagePerUnit_{{ ri }}" id="{{ ri }}" pInputText
+                                                        type="text" [(ngModel)]="de.cO2LeakagePerUnit" ngModel
+                                                        #cO2LeakagePerUnit="ngModel">
+                                                </ng-template>
+                                                <ng-template pTemplate="output">
+                                                    {{ de.cO2LeakagePerUnit }}
+                                                </ng-template>{{ de.cO2LeakagePerUnit }}</p-cellEditor></td>
+                                        <td *ngIf="categoryId==2"><p-cellEditor><ng-template pTemplate="input">
+                                                    <input name="capacity_{{ ri }}" id="{{ ri }}" pInputText type="text"
+                                                        [(ngModel)]="de.capacity" ngModel #capacity="ngModel">
+                                                </ng-template>
+                                                <ng-template pTemplate="output">
+                                                    {{ de.capacity }}
+                                                </ng-template>{{ de.capacity }}</p-cellEditor></td>
+                                        <td *ngIf="categoryId==2"><p-cellEditor><ng-template pTemplate="input">
+                                                    <input name="leakagePerOfCapacity_{{ ri }}" id="{{ ri }}" pInputText
+                                                        type="text" [(ngModel)]="de.leakagePerOfCapacity" ngModel
+                                                        #leakagePerOfCapacity="ngModel">
+                                                </ng-template>
+                                                <ng-template pTemplate="output">
+                                                    {{ de.leakagePerOfCapacity }}
+                                                </ng-template>{{ de.leakagePerOfCapacity }}</p-cellEditor></td> -->
+<!--         
+                                        <td *ngIf="categoryId==3"><p-cellEditor><ng-template pTemplate="input">
+                                                    <input name="quantityOfCO2makeup_{{ ri }}" id="{{ ri }}" pInputText
+                                                        type="text" [(ngModel)]="de.quantityOfCO2makeup" ngModel
+                                                        #quantityOfCO2makeup="ngModel">
+                                                </ng-template>
+                                                <ng-template pTemplate="output">
+                                                    {{ de.quantityOfCO2makeup }}
+                                                </ng-template>{{ de.quantityOfCO2makeup }}</p-cellEditor></td> -->
+                                        <!-- <td *ngIf="categoryId==6"><p-cellEditor><ng-template pTemplate="input">
+                                                    <input name="noOfVehicles_{{ ri }}" id="{{ ri }}" pInputText type="text"
+                                                        [(ngModel)]="de.noOfVehicles" ngModel #noOfVehicles="ngModel">
+                                                </ng-template>
+                                                <ng-template pTemplate="output">
+                                                    {{ de.noOfVehicles }}
+                                                </ng-template>{{ de.noOfVehicles }}</p-cellEditor></td> -->
+                                        <td *ngIf="categoryId==6">{{ de.modeOfDE }}</td>
+                                        <!-- <td *ngIf="categoryId==6"><p-cellEditor><ng-template pTemplate="input">
+                                                    <input name="amount_{{ ri }}" id="{{ ri }}" pInputText type="text"
+                                                        [(ngModel)]="de.amount" ngModel #amount="ngModel">
+                                                </ng-template>
+                                                <ng-template pTemplate="output">
+        
+                                                    {{ de.amount }}
+                                                </ng-template>{{ de.amount }}</p-cellEditor></td> -->
+                                        <td *ngIf="categoryId==5">{{ de.sourceName }}</td>
+        
+        
+        
+                                        <!-- <td>
+                                            <div class="view-details">
+                                                <i class="pi pi-eye pt-2 text-white" title="info"
+                                                    [routerLink]="['/tracking-status']"
+                                                    [queryParams]="{data:de.subcategoryID}"></i>
+                                                <a *ngIf="de.fileName" (click)="downloadFile(de.fileName)">
+                                                    <i class="pi pi-download text-white pl-2" title="download"></i></a>
+                                            </div>
+                                        </td> -->
+                                    </tr>
+                                    <!-- <tr>
+                                        <td
+                                            *ngIf="categoryId==12 || categoryId==11 || categoryId==15  || categoryId==17">
+                                            {{ status.month }}</td>
+                                        <td
+                                            *ngIf="categoryId==12 || categoryId==11 || categoryId==15  || categoryId==17">
+                                            {{ status.year }}</td>
+                                        <td *ngIf="categoryId==1">{{status.typeofpurchase}}
+                                        </td>
+                                        <td *ngIf="categoryId==13">{{status.type}}
+                                        </td>
+                                        <td *ngIf="categoryId==17">{{status.subcategory}}
+                                        </td>
+                                        <td *ngIf="categoryId==15">{{status.intermediate_category}}
+                                        </td>
+                                        <td *ngIf="categoryId==15">{{status.processing_acitivity}}
+                                        </td>
+                                        <td *ngIf="categoryId==15">{{status.sub_activity}}
+                                        </td>
+                                        <td *ngIf="categoryId==12">{{status.waste_type}}
+                                        </td>
+                                        <td *ngIf="categoryId==11">{{status.water_supply}}
+                                        </td>
+                                        <td *ngIf="categoryId==11">{{status.water_treatment}}
+                                        </td>
+                                        <td *ngIf="categoryId==12">{{status.method}}
+                                        </td>
+                                        <td *ngIf="categoryId==12 || categoryId==17">{{status.total_waste}}
+                                        </td>
+                                        <td *ngIf="categoryId==3 || categoryId==6">{{status.month}}
+                                        </td>
+                                        <td *ngIf="categoryId==3 || categoryId==6">{{status.year}}
+                                        </td>
+                                        <td
+                                            *ngIf="categoryId==3 || categoryId==6 || categoryId==7">
+                                            {{status.category}}
+                                        </td>
+                                        <td *ngIf="categoryId==1">{{status.productcodestandard}}
+                                        </td>
+                                        <td *ngIf="categoryId==1">{{status.productcode}}
+                                        </td>
+                                        <td *ngIf="categoryId==1">{{status.valuequantity}}
+                                        </td>
+
+                                        <td *ngIf="categoryId==1 || categoryId==12">{{status.unit}}
+                                        </td>
+                                        <td *ngIf="categoryId==17">{{status.waste_unit}}
+                                        </td>
+                                        <td *ngIf="categoryId==14 && status.typeofhomeoffice == '1' ">With
+                                            Cooling</td>
+                                        <td *ngIf="categoryId==14 && status.typeofhomeoffice == '2' ">With
+                                            heating</td>
+                                        <td *ngIf="categoryId==14 && status.typeofhomeoffice == '3' ">No
+                                            cooling / no heating</td>
+                                        <td *ngIf="categoryId==2 || categoryId==4">{{
+                                            status.vehicle_type
+                                            }}</td>
+                                        <td *ngIf="categoryId==5">{{
+                                            status.franchise_type
+                                            }}</td>
+                                        <td *ngIf="categoryId==14">{{
+                                            status.noofemployees
+                                            }}</td>
+                                        <td *ngIf="categoryId==13">{{status.allemployeescommute}}
+                                        </td>
+                                        <td *ngIf="categoryId==13">{{status.avgcommutedistance}}
+                                        </td>
+                                        <td *ngIf="categoryId==14">{{
+                                            status.noofdays
+                                            }}</td>
+                                        <td *ngIf="categoryId==14">{{
+                                            status.noofmonths
+                                            }}</td>
+                                        <td
+                                            *ngIf="categoryId==2 || categoryId==4 || categoryId==5 || categoryId==7 || categoryId==3 || categoryId==6">
+                                            {{ status.sub_category
+                                            }}</td>
+                                        <td *ngIf="categoryId==7">
+                                            {{ status.investement_type
+                                            }}</td>
+                                        <td
+                                            *ngIf="categoryId==5 || categoryId==3 || categoryId==6 || categoryId==15 || categoryId==7">
+                                            {{ status.calculation_method
+                                            }}</td>
+                                        <td *ngIf="categoryId==7">
+                                            {{ status.equity_share
+                                            }}</td>
+                                        <td *ngIf="categoryId==7">
+                                            {{ status.equity_of_projectcost
+                                            }}</td>
+                                        <td *ngIf="categoryId==2 || categoryId==4">
+                                            {{ status.mass_of_product_trans
+                                            }}</td>
+                                        <td
+                                            *ngIf="categoryId==5 || categoryId==3 || categoryId==6">
+                                            {{ status.franchise_space
+                                            }}</td>
+                                        <td *ngIf="categoryId==2 || categoryId==4">
+                                            {{ status.unit_of_mass
+                                            }}</td>
+                                        <td *ngIf="categoryId==15">{{status.valueofsoldintermediate}}
+                                        </td>
+                                        <td
+                                            *ngIf="categoryId==5 || categoryId==3 || categoryId==6 || categoryId==15">
+                                            {{ status.unit
+                                            }}</td>
+                                        <td *ngIf="categoryId==15">
+                                            {{ status.scope1emissions
+                                            }}</td>
+                                        <td *ngIf="categoryId==15">
+                                            {{ status.scope2emissions
+                                            }}</td>
+                                        <td
+                                            *ngIf="categoryId==5 || categoryId==3 || categoryId==6 || categoryId==7">
+                                            {{ status.scope1_emission
+                                            }}</td>
+                                        <td
+                                            *ngIf="categoryId==5 || categoryId==3 || categoryId==6 || categoryId==7">
+                                            {{ status.scope2_emission
+                                            }}</td>
+                                        <td *ngIf="categoryId==2 || categoryId==4">
+                                            {{ status.distance_travelled_km
+                                            }}</td>
+                                        <td *ngIf="categoryId==2 || categoryId==4">
+                                            {{ status.no_of_vehicles
+                                            }}</td>
+                                        <td *ngIf="categoryId==2 || categoryId==4">
+                                            {{ status.storage_facility_type
+                                            }}</td>
+                                        <td *ngIf="categoryId==2 || categoryId==4">
+                                            {{ status.area_occupied
+                                            }}</td>
+                                        <td *ngIf="categoryId==2 || categoryId==4">
+                                            {{ status.avg_no_of_days
+                                            }}</td>
+
+                                        <td *ngIf="categoryId==7">
+                                            {{ status.project_phase
+                                            }}</td>
+                                        <td>{{ status.emission }}</td>
+                                        <td *ngIf="categoryId==2 || categoryId==4">{{
+                                            status.emission_storage }}</td>
+                                         <td></td> -->
+                                        <!-- <td *ngIf="status.status == 'S'">
                                             <span class="statusButton" [ngClass]="{
                                                 Rejected:
                                                     status.status === Rejected,
                                                 Pending:
                                                     status.status === Pending,
                                                 Approved:
-                                                    status.status === Approved
+                                                    status.status === 'S'
                                             }">
-                                                {{ status.status }}
+                                                Success
                                             </span>
                                         </td>
+                                        <td *ngIf="status.status == 'N'">
+                                            <span class="statusButton" [ngClass]="{
+                                                Rejected:
+                                                    status.status === Rejected,
+                                                Pending:
+                                                    status.status === Pending,
+                                                Approved:
+                                                    status.status === 'S'
+                                            }">
+                                                Pending
+                                            </span>
+                                        </td>
+                                        <td *ngIf="status.status == 'P'">
+                                            <span class="statusButton" [ngClass]="{
+                                                Rejected:
+                                                    status.status === Rejected,
+                                                Pending:
+                                                    status.status === 'P',
+                                                Approved:
+                                                    status.status === 'S'
+                                            }">
+                                                Processing
+                                            </span>
+                                        </td> -->
 
-                                    </tr>
+                                    <!-- </tr> --> 
                                 </ng-template>
                             </p-table>
-                        </div> -->
+                        </div>
 
-                        <!-- <div class="row text-white border-bottom mt-2">
-                        <p class="mb-2 mt-3 ml-4">Target Monitor</p>
-                    </div>
-                    <div class="mt-3 mb-5">
-                        <p class="pl-5">By Months</p>
-
-                        <p class="TragetMonitor-para">
-                            could not validate the monthly target
-                        </p>
-                    </div> -->
+                   
+          
                     </p-tabPanel>
 
-                    <p-tabPanel header="Settings" >
+                    <p-tabPanel header="Settings">
                         <!-- <div class="row text-white border-bottom">
                             <p class="mb-2 mt-3 ml-4 text-dark">
                                 {{ SubCatAllData.subCatName }}

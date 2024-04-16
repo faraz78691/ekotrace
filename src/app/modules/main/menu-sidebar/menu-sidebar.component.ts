@@ -216,7 +216,7 @@ export const menu = [
             {
                 name: 'Tree',
                 iconClasses: 'fas fa-star',
-                iconSRC :'assets/img/tracking_icon.svg',
+                iconSRC :'assets/img/trees.png',
                 path: ['treeList']
             },
             {
@@ -286,19 +286,19 @@ export const menu = [
             {
                 name: 'Group',
                 iconClasses: 'fas fa-users',
-                iconSRC :'assets/img/BRSR.svg',
+                iconSRC :'assets/img/group_121.png',
                 path: ['group']
             },
             {
                 name: 'User',
                 iconClasses: 'fas fa-user-plus',
-                iconSRC :'assets/img/BRSR.svg',
+                iconSRC :'assets/img/user_121.png',
                 path: ['user']
             },
             {
                 name: 'Billing',
                 iconClasses: 'fas fa-folder',
-                iconSRC :'assets/img/BRSR.svg',
+                iconSRC :'assets/img/biling_icon_211.png',
                 path: ['billing']
             }
         ]

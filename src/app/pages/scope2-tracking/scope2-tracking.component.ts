@@ -56,6 +56,7 @@ export class Scope2TrackingComponent {
     value_tab = 'Scope 1';
     selectedValues: string[] = [];
     selectMonths: any[] = [];
+    statusData: any;
     hotelTypeGrid: any[] = [];
     yearOptions: any[] = [];
     checked: boolean = false;
@@ -126,6 +127,7 @@ export class Scope2TrackingComponent {
     units: Units[] = [];
     monthString: string;
     VehicleType: VehicleType[] = [];
+    dataEntriesPending: any[] = [];
     SubCategoryType: SubCategoryTypes[] = [];
     isInputEdited: boolean;
     typeEV: boolean = false;
@@ -1028,20 +1030,13 @@ export class Scope2TrackingComponent {
         this.id_var = data.manageDataPointSubCategorySeedID;
       
         this.categoryId = catID;
+      
         this.SubCatAllData = data;
 
-        console.log("this.SubCatAllData", this.SubCatAllData);
+     console.log("categoryId", this.categoryId);
+        this.ALLEntries(this.SubCatAllData)
         if (catID == 1) {
-            //   this.trackingService.getSCdataentry(data.id, this.loginInfo.tenantID).subscribe({
-            //       next: (response) => {
-
-            //           this.commonDE = response;
-            //       }
-            //   });
-            //   this.getEmissionfactor(
-            //       this.SubCatAllData.manageDataPointSubCategorySeedID,
-            //       this.categoryId
-            //   );
+   
             this.getsubCategoryType(this.SubCatAllData
                 .manageDataPointSubCategorySeedID);
             this.getUnit(this.SubCatAllData
@@ -3557,7 +3552,214 @@ export class Scope2TrackingComponent {
                 }
             })
         }
-    }
+    };
+
+    getStatusData(categoryIndex: number) {
+        let url = ''
+        if (categoryIndex == 1) {
+            let formData = new URLSearchParams();
+            formData.set('batch', this.batchId);
+            url = 'getPurchaseGoodEmissions';
+            this.trackingService.getPurchaseGoodEmissions(formData).subscribe({
+                next: (response) => {
+                    console.log(response);
+                    if (response.success == true) {
+                        this.statusData = response.categories;
+                    }
+                }
+            })
+            return
+        }
+        if (categoryIndex == 2) {
+            url = 'getUpstreamEmissions'
+        }
+        if (categoryIndex == 3) {
+            url = 'getUpstreamLeaseEmission'
+        }
+        if (categoryIndex == 4) {
+            url = 'getDownstreamEmissions'
+        }
+        if (categoryIndex == 5) {
+            url = 'getFranchiseEmission'
+        }
+        if (categoryIndex == 6) {
+            url = 'getDownstreamLeaseEmission'
+        }
+        if (categoryIndex == 7) {
+            url = 'getInvestmentEmission'
+        }
+        if (categoryIndex == 8) {
+            url = 'getflight_travel'
+        }
+        if (categoryIndex == 9) {
+            url = 'gethotel_stay'
+        }
+        if (categoryIndex == 10) {
+            url = 'getothermodesofTransport'
+        }
+        if (categoryIndex == 11) {
+            url = 'getwatersupplytreatmentCategory'
+        }
+        if (categoryIndex == 12) {
+            url = 'getwasteGeneratedEmission'
+        }
+        if (categoryIndex == 13) {
+            url = 'getemployeecommutingCategory'
+        }
+        if (categoryIndex == 14) {
+            url = 'gethomeofficeCategory'
+        }
+        if (categoryIndex == 15) {
+            url = 'getprocessing_of_sold_productsCategory'
+        }
+        if (categoryIndex == 17) {
+            url = 'getendof_lifetreatment_category'
+        }
+        this.trackingService.getStatus(url).subscribe({
+            next: (response) => {
+                console.log(response);
+                if (response.success == true) {
+                    this.statusData = response.categories;
+                } else {
+                    this.statusData = []
+                }
+            }
+        })
+    };
+
+    ALLEntries(subCategory: ManageDataPointSubCategories) {
+
+        console.log(
+
+
+            "seelcted", subCategory.manageDataPointCategoriesId
+        );
+        // this.months = new months();
+        // this.convertedYear = this.trackingService.getYear(this.year);
+        // const formData = new URLSearchParams();
+        // formData.set('year', this.convertedYear)
+        // formData.set('facilities', facilityID.toString())
+        // formData.set('categoryID', this.selectedCategory);
+
+        let url = ''
+        switch (subCategory.manageDataPointSubCategorySeedID) {
+            case 1:
+                url = 'reportStationaryCombustion'
+                break;
+            case 2:
+                url = 'reportRegfriegrant'
+                break;
+            case 3:
+                url = 'reportFireExtinguisher'
+                break;
+            case 6:
+                url = 'reportStationaryCombustion'
+                break;
+            case 5:
+                url = 'reportRenewableElectricity'
+                break;
+            case 7:
+               
+                url = 'Allrefrigerant'
+                break;
+            case 8:
+                url = 'reportFilterPurchaseGoods'
+                break;
+            case 9:
+                url = 'reportStationaryCombustion'
+                break;
+            case 10:
+                url = 'reportUpStreamVehicles'
+                break;
+            case 11:
+                url = 'reportStationaryCombustion'
+                break;
+            case 12:
+                url = 'reportWasteGeneratedEmission'
+                break;
+            case 13:
+                // switch (this.selectMode) {
+                //     case 1:
+                //         url = 'reportFlightTravel'
+                //         break;
+                //     case 2:
+                //         url = 'reportStationaryCombustion'
+                //         break;
+                //     case 3:
+                //         url = 'reportOtherTransport'
+                //         break;
+                // }
+                break;
+            case 14:
+                // case 'Employee Commuting':
+                url = 'reportStationaryCombustion'
+                break;
+            case 15:
+                url = 'reportHomeOffice'
+                break;
+            case 16:
+                url = 'reportUpstreamLeaseEmission'
+                break;
+            case 17:
+                // case 'Downstream Transportation and Distribution':
+                url = 'reportStationaryCombustion'
+                break;
+            case 18:
+                url = 'reportProOfSoldProducts'
+                break;
+            case 19:
+                // case 'Use of Sold Products':
+                url = 'reportStationaryCombustion'
+                break;
+            case 20:
+                url = 'reportEndOfLifeTreatment'
+                break;
+            case 21:
+                url = 'reportDownstreamLeaseEmission'
+                break;
+            case 22:
+                url = 'reportFranchiseEmission'
+                break;
+            case 23:
+                url = 'reportInvestmentEmission'
+                break;
+            default:
+                // Handle unknown month value
+                break;
+        }
+
+
+            this.trackingService
+                .getStatus(url)
+                .subscribe({
+                    next: (response) => {
+                        if (response.success === false) {
+                            // this.dataEntriesPending = null;
+                        } else {
+                            console.log(response);
+                            this.dataEntriesPending = response.categories;
+                            // console.log("data>", this.dataEntriesPending)
+                        }
+
+                    },
+                    error: (err) => {
+                        this.notification.showError(
+                            'Get data Point failed.',
+                            'Error'
+                        );
+                        console.error('errrrrrr>>>>>>', err);
+                    }
+                });
+        
+      
+      
+     
+     
+     
+    
+      
+    };
+
     enableCharging(subcatName: any) {
         if (subcatName == "Passenger Vehicle") {
             if (this.VehicleDE.vehicleTypeID == 7 || this.VehicleDE.vehicleTypeID == 8 || this.VehicleDE.vehicleTypeID == 9 || this.VehicleDE.vehicleTypeID == 12 || this.VehicleDE.vehicleTypeID == 17) {

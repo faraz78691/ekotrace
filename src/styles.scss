@@ -1610,7 +1610,7 @@ padding-block: 7px;
     padding: 3px 0.75rem !important;
     color: #88AD47 !important;
     position: relative;
-    margin-top: -3px;
+    margin-top: 0px;
     margin-right: 8px;
 
 }
@@ -1659,8 +1659,19 @@ nav{
 .nav{
     display: block!important;
 }
-
-
+input.ct_change_choose_file_input12::file-selector-button {
+    background: #88ad47;
+    border: 1px solid #88ad47;
+    color: #fff;
+    padding: 5px 10px;
+}
+.sidebar img {
+    width: 20px !important;
+}
+.ct_drop_down_position_21 .p-overlay.p-component {
+    top: 35px !important;
+    left: -16px !important;
+}
 @media screen and (max-width:1199px){
     app-root.sidebar-mini.layout-fixed.sidebar-open .sidebar {
         width: 0px !important;
@@ -1901,13 +1912,75 @@ nav{
             stroke-width: 1px;
         }
         .ct_custom_btn121 {
-            background-color: #679f54;
+            background-color: #88AD47;
             color: #fff;
             width: 100px;
             border-radius: 5px;
+        }
+.ct_billing_table_bg_120{
+
+    border-radius: 10px;
+}
+.ct_billing_table_bg_120 tbody{
+    border: 1px solid #eee;
+}
+        .ct_billing_table_bg_120 tr th{
+            background-color: rgb(136 173 71 / 75%);
+           padding: 6px 10px;
+           color: #fff;
+           font-weight: 600;
+        }
+        .ct_billing_table_bg_120 thead tr th:first-child{
+            border-radius: 10px 0px 0px 0px;
+        }
+
+        .ct_billing_table_bg_120 thead tr th:last-child{
+            border-radius: 0px 10px 0px 0px;
+        }
+        .ct_billing_border_0_none td {
+            border-top: 1px dashed #d8d8d8 !important;
+        }
+        .ct_assign_package_btn129 {
+            height: 38px !important;
+            border-radius: 5px !important;
+            border-color: #88AD47 !important;
+          }
+          .ct_user_box_light_green_bg11 {
+            background-color: rgb(136 173 71 / 11%);
+            margin-bottom: 10px;
+            align-items: center;
+        }
+        .ct_green_text_120{
+            color: #88AD47 !important;
+        }
+        .ct_green_text_120:hover{
+            text-decoration: underline !important;
         }
 @media screen and (max-width:500px){
     .ct_logo_collape pf-image.pl-4.ng-star-inserted.hydrated {
         padding-left: 0px !important;
     }
+}
+
+.fa.fa-times{
+    color:#ff0000
+}
+
+.fa-solid.fa-check{
+    color:blue
+}
+
+.bft-input {
+    border: 1px solid #eee;
+    border-radius: 5px;
+}
+.bft-input {
+    border: 1px solid #eee;
+    border-radius: 5px;
+    // padding: 5px;
+}
+.bft-form-fieldset label.hasval {
+    font-size: 14px;
+    top: 0px !important;
+    color: #86af48;
 }

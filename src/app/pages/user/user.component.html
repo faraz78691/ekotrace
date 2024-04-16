@@ -33,7 +33,7 @@
                             " class="form-control text-white" placeholder="Search user" [(ngModel)]="searchData" />
                     </div>
                     <div class="form-group has-search text-light">
-                        <button class="UserButton ct_animation_btn_121" (click)="showDialog()" (click)="AddUser()">
+                        <button class="UserButton ct_animation_btn_121 ct_assign_package_btn129" (click)="showDialog()" (click)="AddUser()">
                             Add User
                         </button>
                     </div>
@@ -195,7 +195,7 @@
                 </div>
             </p-dialog>
 
-            <div class="row mx-2 overflow-auto Updateuser rounded"
+            <div class="row mx-2 overflow-auto Updateuser rounded ct_user_box_light_green_bg11"
                 *ngFor="let user of admininfoList" (click)="selectUser(user)"
                 (click)="UnlockComplete(user.user_id)" [ngClass]="{colorchange: unlock == user.user_id}">
 
@@ -219,8 +219,8 @@
                     </div>
                 </div>
                 <div class="col d-flex justify-content-end">
-                    <div class="mt-2 span-color border rounded Role-box mt-4 pointer">
-                        <p class="text-limit text-white ct_line_height_26" title="{{ user.facilityName }}">
+                    <div class=" span-color border rounded Role-box ointer">
+                        <p class="text-limit text-white ct_line_height_26 mb-0" style="height: 26px;" title="{{ user.facilityName }}">
                             {{ user.facilityName | slice: 0:maxCharacters
                             }}{{
                             user.facilityName?.length > maxCharacters
@@ -256,7 +256,46 @@
 
             <h5 class="pl-3 mt-3">User Profile</h5>
             <div class="row font-UserProfile mt-4">
-                <div class="col-5 ml-3">
+                <table class="table ct_billing_border_0_none">
+                    <tr>
+                        <td>
+                            <p class="mb-0">Name :</p>
+                        </td>
+                        <td>
+                            <p class="mb-2" *ngIf="userdetails.role === 'Super Admin'">
+                                {{ loginInfo.companyName }}
+                            </p>
+                            <p class="mb-0">
+                                {{ userdetails.firstname }} {{ userdetails.lastname }}
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class="mb-0">Email :</p>
+                        </td>
+                        <td>
+                            <p class="mb-0">{{ userdetails.email }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class="mb-0">Role :</p>
+                        </td>
+                        <td>
+                            <p class="mb-0">{{ userdetails.role }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class="mb-0">Facility:</p> 
+                        </td>
+                        <td>
+                            <p class="mb-0">{{ userdetails.facilityName }}</p>
+                        </td>
+                    </tr>
+                </table>
+                <!-- <div class="col-5 ml-3">
                     <p>Name :</p>
                     <p>Email :</p>
                     <p>Role :</p>
@@ -273,19 +312,19 @@
                     <p>{{ userdetails.email }}</p>
                     <p>{{ userdetails.role }}</p>
                     <p>{{ userdetails.facilityName }}</p>
-                </div>
+                </div> -->
             </div>
-            <div class="d-flex text-light text-style font-pera mb-2 ml-3 pb-3">
+            <div class="d-flex text-light text-style font-pera mb-2  ml-3 pb-3">
                 <div>
                     <i *ngIf="userdetails.isDisabledEdit !== true"
                         class="LocButtonEdit pi pi-user-edit pointer d-flex text-white" style="border-radius: 10px;" (click)="EditUser(userdetails)">
-                        <p class="pl-2">Edit</p>
+                        <p class="pl-2 ">Edit</p>
                     </i>
                 </div>
                 <div class="form-group has-search text-light pointer">
                     <i *ngIf="userdetails.isDisabledDelete !== true" (click)="deleteUser($event, userdetails.userID)"
                         class="deleteButton pi pi-trash pointer d-flex text-white">
-                        <p class="pl-2">Delete</p>
+                        <p class="pl-2 ">Delete</p>
                     </i>
                 </div>
             </div>
