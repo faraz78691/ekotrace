@@ -23,6 +23,7 @@ export class MainComponent implements OnInit {
     ) {}
 
     ngOnInit() {
+     
         this.ui = this.store.select('ui');
         this.renderer.removeClass(
             document.querySelector('app-root'),

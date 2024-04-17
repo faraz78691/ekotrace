@@ -6,8 +6,9 @@ import { CompanyDetails } from '@/shared/company-details';
 import { AppState } from '@/store/state';
 import { ToggleControlSidebar, ToggleSidebarMenu } from '@/store/ui/actions';
 import { UiState } from '@/store/ui/state';
-import { Component, HostBinding, OnInit, ViewChild } from '@angular/core';
+import { Component, HostBinding, OnInit, ViewChild, computed } from '@angular/core';
 import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppService } from '@services/app.service';
 import { CompanyService } from '@services/company.service';
@@ -47,18 +48,29 @@ export class HeaderComponent implements OnInit {
     public facilityGroup: FacilityGroupList;
     facilitygrouplist: facilities[] = [];
     @ViewChild('menu', { static: true }) menu: any;
+    public href: string = null;
+    displayTracker = false;
+    isActiveLabel = computed(() => 
+   this.facilityService.headerTracking()
+ )
     constructor(
         private appService: AppService,
         private companyService: CompanyService,
         private store: Store<AppState>,
         private themeservice: ThemeService,
-        private facilityService: FacilityService
+        private facilityService: FacilityService,
+        private router: Router
     ) {
         this.companyDetails = new CompanyDetails();
         this.rootUrl = environment.baseUrl + 'uploads/';
         this.facilityGroup = new FacilityGroupList();
+        console.log(this.isActiveLabel() , 
+            "label");
     }
     ngOnInit() {
+        this.facilityService.headerTracking();
+        this.href = this.router.url;
+        console.log(this.href);
         this.loginInfo = new LoginInfo();
         if (localStorage.getItem('LoginInfo') != null) {
             let userInfo = localStorage.getItem('LoginInfo');

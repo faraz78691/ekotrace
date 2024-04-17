@@ -10,19 +10,40 @@ import { ManageDataPoint } from '@/models/ManageDataPoint';
 import { savedDataPoint } from '@/models/savedDataPoint';
 import { FacilityGroupList } from '@/models/FacilityGroupList';
 import { facilities } from '@/models/facilities';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
 })
 export class FacilityService {
     facilitiesSignal = signal<facilities[]>([])
+    headerTracking = signal<boolean>(false);
     localapiURL = 'http://192.168.1.31:4003';
     totalAngularPackages;
     errorMessage;
     constructor(
         private http: HttpClient,
-        private notification: NotificationService
-    ) { }
+        private notification: NotificationService,
+        private router :Router
+    ) {  this.router.events
+        .pipe(filter(event => event instanceof NavigationEnd))
+        .subscribe((event: NavigationEnd) => {
+          this.checkRoute(event.urlAfterRedirects);
+        });}
+  // Function to check the current route and update the boolean variable
+  private checkRoute(currentRoute: string): void {
+    if (currentRoute.includes('/facility')) {
+        console.log("hurray");
+      // If the route is to the facility, set the boolean variable to true
+    //   this.isRouteToFacilitySubject.next(true);
+    } else {
+        console.log("Ntoasf");
+      // Otherwise, set it to false
+    //   this.isRouteToFacilitySubject.next(false);
+    }
+  }
+
     options: {
         headers?: HttpHeaders | { [header: string]: string | string[] };
         observe?: 'body' | 'events' | 'response';

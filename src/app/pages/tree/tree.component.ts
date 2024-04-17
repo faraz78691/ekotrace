@@ -62,14 +62,17 @@ export class TreeComponent {
                 if (tree) {
 
                     var family = new FamilyTree(tree, {
+                
+                        mouseScrool: FamilyTree.action.none,
+                        enableSearch: false,
                         editForm: {
                             addMoreFieldName: null,
                             addMore: null,
                             addMoreBtn: null,
                             generateElementsFromFields: false,
                             elements: [
-                                { type: 'textbox', label: 'Title', binding: 'relation' },
-                                { type: 'textbox', label: 'Sub Title', binding: 'name' }
+                                { type: 'textbox', label: 'Category', binding: 'relation' },
+                                { type: 'textbox', label: 'Name', binding: 'name' }
                             ],
                             buttons: {
                                 edit: {

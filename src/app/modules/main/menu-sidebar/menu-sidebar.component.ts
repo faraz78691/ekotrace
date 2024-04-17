@@ -200,13 +200,13 @@ export const menu = [
         role: 'Super Admin',
         isBRSRDoc: false,
         items: [
-            {
-                head: 'Monitoring',
-                name: 'Dashboard',
-                iconClasses: 'fas fa-table',
-                iconSRC :'assets/img/dashboard.svg',
-                path: ['dashboard']
-            },
+            // {
+            //     head: 'Organisation Structure',
+            //     name: 'Dashboard',
+            //     iconClasses: 'fas fa-table',
+            //     iconSRC :'assets/img/dashboard.svg',
+            //     path: ['dashboard']
+            // },
             // {
             //     name: 'Tracking Old',
             //     iconClasses: 'fas fa-star',
@@ -214,10 +214,24 @@ export const menu = [
             //     path: ['scope3tracking']
             // },
             {
+                head: 'Organisation Structure',
                 name: 'Tree',
                 iconClasses: 'fas fa-star',
                 iconSRC :'assets/img/trees.png',
                 path: ['treeList']
+            },
+            {
+                name: 'Add User',
+                iconClasses: 'fas fa-user-plus',
+                iconSRC :'assets/img/user_121.png',
+                path: ['user']
+            },
+            {
+                head: 'Disclose',
+                name: 'Dashboard',
+                iconClasses: 'fas fa-table',
+                iconSRC :'assets/img/dashboard.svg',
+                 path: ['dashboard']
             },
             {
                 name: 'Tracking',
@@ -226,23 +240,37 @@ export const menu = [
                 path: ['Ntracking']
             },
             {
+                head: 'GHG Emissions ',
+                name: 'Corprate Emissions',
+                iconClasses: 'fas fa-star',
+                iconSRC :'assets/img/trees.png',
+                path: ['treeList']
+            },
+            {
+                head: 'Reporting ',
                 name: 'Report',
                 iconClasses: 'fas fa-folder',
-                iconSRC :'assets/img/report_icon.svg',
-                path: ['report']
+                 iconSRC :'assets/img/report_icon.svg',
+                 path: ['report']
             },
             {
-                name: 'Carbon Offset',
-                iconClasses: 'fas fa-folder',
-                iconSRC :'assets/img/co2.svg',
-                path: ['carbonOffset']
-            },
-            {
-                head: 'Reporting',
                 name: 'BRSR',
                 iconClasses: 'fas fa-table',
                 iconSRC :'assets/img/BRSR.svg',
-                path: ['brsrReport'],
+                path: ['brsrReport']
+            },
+            // {
+            //     name: 'Carbon Offset',
+            //     iconClasses: 'fas fa-folder',
+            //     iconSRC :'assets/img/co2.svg',
+            //     path: ['carbonOffset']
+            // },
+            // {
+            //     head: 'Reporting',
+            //     name: 'BRSR',
+            //     iconClasses: 'fas fa-table',
+            //     iconSRC :'assets/img/BRSR.svg',
+            //     path: ['brsrReport'],
                 // children: [
                 //     {
                 //         name: 'Fd set',
@@ -269,6 +297,13 @@ export const menu = [
                 //     //     queryParams: { defaultTab: 3 }
                 //     // }
                 // ]
+            // },
+            {
+                head: 'Carbon offsetting',
+                name: 'View Live Projects',
+                iconClasses: 'fas fa-eye',
+                iconSRC :'assets/img/building.svg',
+                path: ['company-profile']
             },
             {
                 head: 'Admin Setting',
@@ -296,11 +331,18 @@ export const menu = [
                 path: ['user']
             },
             {
+                head: 'Account Details',
+                name: 'Company Profile',
+                iconClasses: 'fas fa-eye',
+                iconSRC :'assets/img/building.svg',
+                path: ['company-profile']
+            },
+            {
                 name: 'Billing',
                 iconClasses: 'fas fa-folder',
                 iconSRC :'assets/img/biling_icon_211.png',
                 path: ['billing']
-            }
+            },
         ]
     },
     {

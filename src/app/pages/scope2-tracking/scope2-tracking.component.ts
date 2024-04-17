@@ -260,6 +260,8 @@ export class Scope2TrackingComponent {
         private toastr: ToastrService,
         private confirmationService: ConfirmationService
     ) {
+        
+        this.facilityService.headerTracking.set(true);
         this.SubCatAllData = new ManageDataPointSubCategories();
         this.AssignedDataPoint = [];
         this.defaulttab = router.url;
@@ -673,7 +675,7 @@ export class Scope2TrackingComponent {
     ngOnInit() {
         $(document).ready(function () {
             $('.ct_custom_dropdown').click(function () {
-        
+
                 $('.ct_custom_dropdown').toggleClass('ct_open_modal')
             })
 
@@ -702,7 +704,7 @@ export class Scope2TrackingComponent {
             if (this.flag === 'F') {
                 this.GetAssignedDataPoint(this.facilityID);
             } else {
-            
+
                 // this.GetAssignedDataPoint(this.loginInfo.facilityID);
                 // this.GetAssignedDataPoint(this.facilityID);
                 if (this.facilityID == 0 || this.facilityID == '') {
@@ -842,10 +844,10 @@ export class Scope2TrackingComponent {
 
                                         const subCatID = response.categories[i].manageDataPointCategories[j].manageDataPointSubCategories[0].manageDataPointSubCategorySeedID;
                                         this.SubCatAllData = response.categories[i].manageDataPointCategories[j].manageDataPointSubCategories[0];
-                                    
+
                                         this.id_var = subCatID;
                                         if ((response.categories)[i].manageDataPointCategories[j].manageDataPointCategorySeedID == 1) {
-                                          
+
                                             this.categoryId = 1;
                                             this.getsubCategoryType(this.SubCatAllData
                                                 .manageDataPointSubCategorySeedID);
@@ -870,7 +872,7 @@ export class Scope2TrackingComponent {
                                         }
 
                                         if ((response.categories)[i].manageDataPointCategories[j].manageDataPointCategorySeedID == 2) {
-                                         
+
 
                                             this.trackingService.getrefdataentry(subCatID, this.loginInfo.tenantID).subscribe({
                                                 next: (response) => {
@@ -1026,17 +1028,17 @@ export class Scope2TrackingComponent {
     //Updates selected data point and category, fetches emission factor, checks for existing entries, and resets the form.
     SubCatData(data: any, catID: any) {
         this.isVisited = false;
-      
+
         this.id_var = data.manageDataPointSubCategorySeedID;
-      
+
         this.categoryId = catID;
-      
+
         this.SubCatAllData = data;
 
-     console.log("categoryId", this.categoryId);
+        console.log("categoryId", this.categoryId);
         this.ALLEntries(this.SubCatAllData)
         if (catID == 1) {
-   
+
             this.getsubCategoryType(this.SubCatAllData
                 .manageDataPointSubCategorySeedID);
             this.getUnit(this.SubCatAllData
@@ -1092,7 +1094,7 @@ export class Scope2TrackingComponent {
         }
 
         if (catID == 6) {
-         
+
             if (data.manageDataPointSubCategorySeedID == 10) {
                 this.getPassengerVehicleType();
             }
@@ -1217,7 +1219,7 @@ export class Scope2TrackingComponent {
     getBusineesUnit() {
         this.trackingService.getBusinessUnit().subscribe({
             next: (response) => {
-             
+
                 if (response.success == true) {
                     this.busineessGrid = response.categories;
                     // this.franchiseCategoryValue = this.franchiseGrid[0].categories
@@ -1289,7 +1291,7 @@ export class Scope2TrackingComponent {
     getFlightType() {
         this.trackingService.getflight_types().subscribe({
             next: (response) => {
-            
+
                 if (response.success == true) {
                     this.wasteGrid = response.batchIds;
                     // this.franchiseCategoryValue = this.franchiseGrid[0].categories
@@ -1313,7 +1315,7 @@ export class Scope2TrackingComponent {
     getFlightTimeTypes() {
         this.trackingService.getFlightTimes().subscribe({
             next: (response) => {
-             
+
                 if (response.success == true) {
                     this.flightTime = response.batchIds;
                     // this.franchiseCategoryValue = this.franchiseGrid[0].categories
@@ -1355,7 +1357,7 @@ export class Scope2TrackingComponent {
                     },
                     error: (err) => {
                         this.EmissionFactor = [];
-                       
+
                     }
                 });
         }
@@ -1480,7 +1482,7 @@ export class Scope2TrackingComponent {
         this.trackingService.newgetsubCatType(subCatID).subscribe({
             next: (response) => {
                 this.SubCategoryType = response.categories;
-              
+
             },
             error: (err) => {
                 console.error('errrrrrr>>>>>>', err);
@@ -1505,7 +1507,7 @@ export class Scope2TrackingComponent {
 
     //entrysave function to save dataentry
     EntrySave(form: NgForm) {
-     
+
         this.dataEntry.month = this.selectMonths
             .map((month) => month.value)
             .join(', '); //this.getMonthName();
@@ -1717,7 +1719,7 @@ export class Scope2TrackingComponent {
             }
             let formData = new URLSearchParams();
             this.RefrigerantDE.typeID = this.dataEntry.typeID;
-         
+
             formData.set('subCategoryTypeId', (this.dataEntry.typeID).toString());
             formData.set('SubCategorySeedID', this.SubCatAllData
                 .manageDataPointSubCategorySeedID.toString());
@@ -1728,7 +1730,7 @@ export class Scope2TrackingComponent {
 
             formData.set('months', monthString);
             formData.set('year', this.dataEntry.year);
-        
+
             this.trackingService.newPostRegrigerantDataEntry(formData.toString()).subscribe({
                 next: (response) => {
                     if (response.success == true) {
@@ -1814,7 +1816,7 @@ export class Scope2TrackingComponent {
             }
             if (this.VehicleDE.modeOfDE == 'Distance Travelled') {
                 this.VehicleDE.modeofDEID = 1;
-               
+
             }
             else {
                 this.VehicleDE.modeofDEID = 2;
@@ -1846,7 +1848,7 @@ export class Scope2TrackingComponent {
                         else {
                             this.getDeliveryVehicleType();
                         }
-                      
+
 
                         this.activeindex = 0;
                     }
@@ -1879,7 +1881,7 @@ export class Scope2TrackingComponent {
                 formData.set('year', this.dataEntry.year);
                 formData.set('SubCategorySeedID', this.SubCatAllData
                     .manageDataPointSubCategorySeedID.toString());
-              
+
             }
             else {
                 var formData = new URLSearchParams();
@@ -1964,7 +1966,7 @@ export class Scope2TrackingComponent {
             formData.set('year', this.dataEntry.year);
             this.trackingService.submitPurchaseGoods(formData.toString()).subscribe({
                 next: (response) => {
-                    
+
                     if (response.success == true) {
                         this.notification.showSuccess(
                             response.message,
@@ -2031,7 +2033,7 @@ export class Scope2TrackingComponent {
 
             this.trackingService.upStreamTransportation(formData.toString()).subscribe({
                 next: (response) => {
-                    
+
                     if (response.success == true) {
                         this.notification.showSuccess(
                             response.message,
@@ -2105,7 +2107,7 @@ export class Scope2TrackingComponent {
 
             this.trackingService.AddwatersupplytreatmentCategory(formData.toString()).subscribe({
                 next: (response) => {
-                    
+
                     if (response.success == true) {
                         this.notification.showSuccess(
                             response.message,
@@ -2162,7 +2164,7 @@ export class Scope2TrackingComponent {
 
             this.trackingService.wasteGeneratedEmission(formData.toString()).subscribe({
                 next: (response) => {
-                    
+
                     if (response.success == true) {
                         this.notification.showSuccess(
                             response.message,
@@ -2228,7 +2230,7 @@ export class Scope2TrackingComponent {
 
             this.trackingService.uploadEmployeeCommunity(formData.toString()).subscribe({
                 next: (response) => {
-                    
+
                     if (response.success == true) {
                         this.notification.showSuccess(
                             response.message,
@@ -2284,7 +2286,7 @@ export class Scope2TrackingComponent {
             formData.set('year', this.dataEntry.year);
             this.trackingService.uploadHomeOffice(formData.toString()).subscribe({
                 next: (response) => {
-                    
+
                     if (response.success == true) {
                         this.notification.showSuccess(
                             response.message,
@@ -2418,7 +2420,7 @@ export class Scope2TrackingComponent {
 
             this.trackingService.uploadupLeaseEmissionCalculate(formData.toString()).subscribe({
                 next: (response) => {
-                    
+
                     if (response.success == true) {
                         this.notification.showSuccess(
                             response.message,
@@ -2491,7 +2493,7 @@ export class Scope2TrackingComponent {
 
             this.trackingService.downStreamTransportation(formData.toString()).subscribe({
                 next: (response) => {
-                    
+
                     if (response.success == true) {
                         this.notification.showSuccess(
                             response.message,
@@ -2599,7 +2601,7 @@ export class Scope2TrackingComponent {
 
             this.trackingService.Addprocessing_of_sold_productsCategory(formData.toString()).subscribe({
                 next: (response) => {
-                    
+
                     if (response.success == true) {
                         this.notification.showSuccess(
                             response.message,
@@ -2685,7 +2687,7 @@ export class Scope2TrackingComponent {
 
             this.trackingService.AddSoldProductsCategory(formData.toString()).subscribe({
                 next: (response) => {
-                    
+
                     if (response.success == true) {
                         this.notification.showSuccess(
                             response.message,
@@ -2748,7 +2750,7 @@ export class Scope2TrackingComponent {
 
             this.trackingService.AddendoflifeCategory(formData.toString()).subscribe({
                 next: (response) => {
-                    
+
                     if (response.success == true) {
                         this.notification.showSuccess(
                             response.message,
@@ -2790,7 +2792,7 @@ export class Scope2TrackingComponent {
             }
             var spliteedMonth = this.dataEntry.month.split(",");
             var monthString = JSON.stringify(spliteedMonth)
-        
+
             var is_vehicle = 0;
             var is_facility = 0;
             if (this.leasefacilitieschecked === true) {
@@ -2872,7 +2874,7 @@ export class Scope2TrackingComponent {
 
             this.trackingService.downstreamLeaseEmissionCalculate(formData.toString()).subscribe({
                 next: (response) => {
-                  
+
                     if (response.success == true) {
                         this.notification.showSuccess(
                             response.message,
@@ -2921,7 +2923,7 @@ export class Scope2TrackingComponent {
                 formData.set('unit', form.value.upfacilityUnits);
                 formData.set('month', monthString);
                 formData.set('year', this.dataEntry.year);
-               
+
             } if (this.franchiseMethodValue == 'Investment Specific method') {
                 formData.set('franchise_type', this.franchiseCategoryValue);
                 formData.set('sub_category', form.value.sub_categories);
@@ -2937,7 +2939,7 @@ export class Scope2TrackingComponent {
 
             this.trackingService.uploadFranchise(formData.toString()).subscribe({
                 next: (response) => {
-                 
+
                     if (response.success == true) {
                         this.notification.showSuccess(
                             response.message,
@@ -3014,7 +3016,7 @@ export class Scope2TrackingComponent {
                 formData.set('month', monthString);
                 formData.set('year', this.dataEntry.year);
             } else if ((this.investmentTypeValue == 'Debt investments' || this.investmentTypeValue == 'Project finance') && this.franchiseMethodValue == 'Investment Specific method') {
-           
+
                 formData.set('investment_type', form.value.investment_type);
                 formData.set('category', form.value.investment_sector);
                 formData.set('sub_category_id', form.value.broad_categoriesId);
@@ -3031,7 +3033,7 @@ export class Scope2TrackingComponent {
 
             this.trackingService.calculateInvestmentEmission(formData.toString()).subscribe({
                 next: (response) => {
-             
+
                     if (response.success == true) {
                         this.notification.showSuccess(
                             response.message,
@@ -3134,7 +3136,7 @@ export class Scope2TrackingComponent {
 
             this.trackingService.uploadflightTravel(formData.toString()).subscribe({
                 next: (response) => {
-               
+
                     if (response.success == true) {
                         this.notification.showSuccess(
                             response.message,
@@ -3194,7 +3196,7 @@ export class Scope2TrackingComponent {
 
             this.trackingService.uploadHotelStay(formData.toString()).subscribe({
                 next: (response) => {
-              
+
                     if (response.success == true) {
                         this.notification.showSuccess(
                             response.message,
@@ -3264,7 +3266,7 @@ export class Scope2TrackingComponent {
 
             this.trackingService.uploadOtherModes(formData.toString()).subscribe({
                 next: (response) => {
-                
+
                     if (response.success == true) {
                         this.notification.showSuccess(
                             response.message,
@@ -3281,7 +3283,6 @@ export class Scope2TrackingComponent {
                         );
                         this.dataEntryForm.reset();
                         this.ModeSelected = false;
-
 
                     }
                 },
@@ -3307,13 +3308,13 @@ export class Scope2TrackingComponent {
     checkEntry(month, year, subcatID) {
         this.trackingService.checkEntry(month, year, subcatID).subscribe({
             next: (response) => {
-               
+
                 if (response == environment.NoEntry) {
                     this.entryExist = false;
                     this.dataEntry = new DataEntry();
                 } else {
                     this.entryExist = true;
-                 
+
                     this.dataEntry = response;
                     this.dataEntry = new DataEntry();
                 }
@@ -3419,7 +3420,7 @@ export class Scope2TrackingComponent {
         formData.append('batch', this.batchId);
         this.trackingService.UploadTemplate(formData).subscribe({
             next: (response) => {
-            
+
                 if (response.success == true) {
                     this.notification.showSuccess(
                         response.message,
@@ -3632,7 +3633,7 @@ export class Scope2TrackingComponent {
         console.log(
 
 
-            "seelcted", subCategory.manageDataPointCategoriesId
+            "seelcted", subCategory.manageDataPointSubCategorySeedID
         );
         // this.months = new months();
         // this.convertedYear = this.trackingService.getYear(this.year);
@@ -3650,7 +3651,7 @@ export class Scope2TrackingComponent {
                 url = 'reportRegfriegrant'
                 break;
             case 3:
-                url = 'reportFireExtinguisher'
+                url = 'Getfireextinguisher'
                 break;
             case 6:
                 url = 'reportStationaryCombustion'
@@ -3659,22 +3660,33 @@ export class Scope2TrackingComponent {
                 url = 'reportRenewableElectricity'
                 break;
             case 7:
-               
                 url = 'Allrefrigerant'
                 break;
             case 8:
-                url = 'reportFilterPurchaseGoods'
+                url = 'Getfireextinguisher'
+                break;
+            case 10:
+                url = 'Getdeliveryvehicletypes'
+                break;
+            case 11:
+                url = 'Getpassengervehicletypes'
+                break;
+            case 12:
+                url = 'getAllheatandsteam'
+                break;
+            case 1005:
+                url = 'getPurchaseGoodEmissions'
                 break;
             case 9:
                 url = 'reportStationaryCombustion'
                 break;
-            case 10:
-                url = 'reportUpStreamVehicles'
+            case 1007:
+                url = 'getUpstreamEmissions'
                 break;
-            case 11:
-                url = 'reportStationaryCombustion'
+            case 1008:
+                url = 'getwatersupplytreatmentCategory'
                 break;
-            case 12:
+            case 1009:
                 url = 'reportWasteGeneratedEmission'
                 break;
             case 13:
@@ -3690,38 +3702,38 @@ export class Scope2TrackingComponent {
                 //         break;
                 // }
                 break;
-            case 14:
+            case 1011:
                 // case 'Employee Commuting':
-                url = 'reportStationaryCombustion'
+                url = 'getemployeecommutingCategory'
                 break;
-            case 15:
-                url = 'reportHomeOffice'
+            case 1012:
+                url = 'gethomeofficeCategory'
                 break;
-            case 16:
-                url = 'reportUpstreamLeaseEmission'
+            case 1013:
+                url = 'getUpstreamLeaseEmission'
                 break;
-            case 17:
+            case 1014:
                 // case 'Downstream Transportation and Distribution':
-                url = 'reportStationaryCombustion'
+                url = 'getDownstreamEmissions'
                 break;
-            case 18:
-                url = 'reportProOfSoldProducts'
+            case 1015:
+                url = 'getprocessing_of_sold_productsCategory'
                 break;
-            case 19:
+            case 1016:
                 // case 'Use of Sold Products':
                 url = 'reportStationaryCombustion'
                 break;
-            case 20:
-                url = 'reportEndOfLifeTreatment'
+            case 1017:
+                url = 'getendof_lifetreatment_category'
                 break;
-            case 21:
-                url = 'reportDownstreamLeaseEmission'
+            case 1018:
+                url = 'getDownstreamLeaseEmission'
                 break;
-            case 22:
-                url = 'reportFranchiseEmission'
+            case 1019:
+                url = 'getFranchiseEmission'
                 break;
-            case 23:
-                url = 'reportInvestmentEmission'
+            case 1020:
+                url = 'getInvestmentEmission'
                 break;
             default:
                 // Handle unknown month value
@@ -3729,35 +3741,35 @@ export class Scope2TrackingComponent {
         }
 
 
-            this.trackingService
-                .getStatus(url)
-                .subscribe({
-                    next: (response) => {
-                        if (response.success === false) {
-                            // this.dataEntriesPending = null;
-                        } else {
-                            console.log(response);
-                            this.dataEntriesPending = response.categories;
-                            // console.log("data>", this.dataEntriesPending)
-                        }
-
-                    },
-                    error: (err) => {
-                        this.notification.showError(
-                            'Get data Point failed.',
-                            'Error'
-                        );
-                        console.error('errrrrrr>>>>>>', err);
+        this.trackingService
+            .getStatus(url)
+            .subscribe({
+                next: (response) => {
+                    if (response.success === false) {
+                        // this.dataEntriesPending = null;
+                    } else {
+                        console.log(response);
+                        this.dataEntriesPending = response.categories;
+                        // console.log("data>", this.dataEntriesPending)
                     }
-                });
-        
-      
-      
-     
-     
-     
-    
-      
+
+                },
+                error: (err) => {
+                    this.notification.showError(
+                        'Get data Point failed.',
+                        'Error'
+                    );
+                    console.error('errrrrrr>>>>>>', err);
+                }
+            });
+
+
+
+
+
+
+
+
     };
 
     enableCharging(subcatName: any) {
@@ -3804,7 +3816,7 @@ export class Scope2TrackingComponent {
             next: (Response) => {
                 if (Response) {
                     this.units = Response['categories'];
-           
+
                 }
                 else {
                     this.units = [];
@@ -3999,12 +4011,12 @@ export class Scope2TrackingComponent {
     getVehicleTypes() {
         this.trackingService.getVehicleType().subscribe({
             next: (response) => {
-            
+
                 if (response.success == true) {
                     this.VehicleGrid = response.categories;
                     const selectedIndex = this.selectedVehicleIndex;
                     this.selectedVehicleType = this.VehicleGrid[selectedIndex - 1].vehicle_type
-                  
+
                 }
             }
         })
@@ -4013,7 +4025,7 @@ export class Scope2TrackingComponent {
     onVehicleTypeChange(event: any) {
         const selectedIndex = event.value;
         this.selectedVehicleType = this.VehicleGrid[selectedIndex - 1].vehicle_type
-   
+
         this.getSubVehicleCategory(selectedIndex)
     };
 
@@ -4035,7 +4047,7 @@ export class Scope2TrackingComponent {
     onWasteTypeChange(event: any) {
         const energyMethod = event.value;
         this.waterWasteProduct = this.wasteGrid[energyMethod - 1].type
-  
+
         this.getWasteSubCategory(energyMethod);
 
     };
@@ -4046,7 +4058,7 @@ export class Scope2TrackingComponent {
         formData.set('type', typeId);
         this.trackingService.getWasteSubCategory(formData).subscribe({
             next: (response) => {
-            
+
                 if (response.success == true) {
                     this.wasteSubTypes = response.categories;
 
@@ -4057,7 +4069,7 @@ export class Scope2TrackingComponent {
     onCityChange(event: any) {
         // event.value will contain the selected city object
         this.selectedflightsTravel = event.value;
-    
+
         if (this.selectedflightsTravel == 'Generic') {
 
             this.flightDisplay1 = 'block'
@@ -4080,7 +4092,7 @@ export class Scope2TrackingComponent {
     getFranchiseType() {
         this.trackingService.getFranchiseType().subscribe({
             next: (response) => {
-              
+
                 if (response.success == true) {
                     this.franchiseGrid = response.categories;
                     this.franchiseCategoryValue = this.franchiseGrid[0].categories
@@ -4091,7 +4103,7 @@ export class Scope2TrackingComponent {
 
     onFranchiseChange(event: any) {
         const frachiseTypevalue = event.value;
-     
+
         this.franchiseCategoryValue = frachiseTypevalue
         this.getSubFranchiseCategory(frachiseTypevalue)
     };
@@ -4134,7 +4146,7 @@ export class Scope2TrackingComponent {
             this.OthersSecledted = true;
             return;
         }
-      
+
         this.onIndustrySelected = true;
         this.getProcessingActivityCategory(energyMethod);
     };
@@ -4166,7 +4178,7 @@ export class Scope2TrackingComponent {
         formData.set('sector', sector);
         this.trackingService.getsubsectorCategory(formData).subscribe({
             next: (response) => {
-            
+
                 if (response.success == true) {
                     this.activitySubTypes = response.categories;
 
@@ -4193,7 +4205,7 @@ export class Scope2TrackingComponent {
         formData.set('industry', industry);
         this.trackingService.getPurchaseGoodsActivity(formData).subscribe({
             next: (response) => {
-            
+
                 if (response.success == true) {
                     this.productActivitySubTypes = response.categories;
 
@@ -4204,7 +4216,7 @@ export class Scope2TrackingComponent {
 
     onQuantitySoldUnitChange(event: any) {
         const energyMethod = event.value;
-    
+
         if (energyMethod == 1) {
             this.noOfItems = true;
             this.getFuelEnergyCategory();
@@ -4219,7 +4231,7 @@ export class Scope2TrackingComponent {
 
     onExpectedLifetimeUnitChange(event: any) {
         const energyMethod = event.value;
-       
+
         if (energyMethod == 1) {
             this.subElectricityUnits = "Per usage"
         } else if (energyMethod == 2) {
@@ -4238,7 +4250,7 @@ export class Scope2TrackingComponent {
     getFuelEnergyCategory() {
         this.trackingService.getEnergyFuelType().subscribe({
             next: (response) => {
-              
+
                 if (response.success == true) {
                     this.fuelEnergyTypes = response.categories;
 
@@ -4249,7 +4261,7 @@ export class Scope2TrackingComponent {
     getRefrigerants() {
         this.trackingService.getrefrigents().subscribe({
             next: (response) => {
-              
+
                 if (response.success == true) {
                     this.refrigeratedTypes = response.categories;
 
@@ -4346,7 +4358,7 @@ export class Scope2TrackingComponent {
     getInvestmentSubCategory(category: any) {
         this.trackingService.getInvestmentSubCategory(category).subscribe({
             next: (response) => {
-          
+
                 if (response.success == true) {
                     this.subFranchiseCategory = response.sub_categories;
 
@@ -4382,7 +4394,7 @@ export class Scope2TrackingComponent {
     getInvestmentCategories() {
         this.trackingService.getInvestmentCategories().subscribe({
             next: (response) => {
-        
+
                 if (response.success == true) {
                     this.wasteGrid = response.categories;
                     // this.franchiseCategoryValue = this.franchiseGrid[0].categories
@@ -4397,7 +4409,7 @@ export class Scope2TrackingComponent {
                 if (response.success == true) {
                     this.batchId = response.batchIds[0].batch_id;
                     // this.getStatusData(1)
-          
+
                 } else {
 
                 }
