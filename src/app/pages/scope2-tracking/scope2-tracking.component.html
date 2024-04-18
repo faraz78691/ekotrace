@@ -10,7 +10,7 @@
     </div>
     <div class="row pt-2 ml-0 mx-0 px-0">
         <div class="col-4  mb-4  px-2">
-            <div class=" TrackingDiv-border Dashboard-tab ct_dash_board_tab ct_hide_scroll_239"
+            <div class=" TrackingDiv-border Dashboard-tab ct_dash_board_tab ct_hide_scroll_239"  style="height: calc(100vh - 160px);"
                 [ngClass]="facilitynothavedp === 'block' ? 'fornodata' : ''">
 
 
@@ -249,7 +249,7 @@
             </div>
         </div>
         <div class="col-8 mb-4 px-2">
-            <div class="TrackingDiv2-border Dashboard-tab ct_dash_board_tab text-white ct_scroll_dash">
+            <div class="TrackingDiv2-border Dashboard-tab ct_dash_board_tab text-white ct_scroll_dash" style="height: calc(100vh - 160px);">
 
                 <div [ngStyle]="{display: facilitynothavedp}" style="justify-content: center" class="noData">
                     <div>
@@ -394,9 +394,9 @@
                                             Quantity of CO2 MakeUp value required.
                                         </p>
                                     </div>
-                                    <div *ngIf="categoryId==6" class="col">
-                                        <div
-                                            [ngClass]="typeEV == true ? 'col-3': typeBusCoach == true ? 'col-3': 'col-4'">
+                                    <div *ngIf="categoryId==6" class="row">
+                                        <div class="mb-3"
+                                            [ngClass]="typeEV == true ? 'col-4': typeBusCoach == true ? 'col-4': 'col-4'">
                                             <label for="fname">Vehicle Type</label>
                                             <p-dropdown class="ct_select_op_input" id="vehicleType"
                                                 [options]="VehicleType" optionLabel="VehicleType" optionValue="ID"
@@ -404,7 +404,8 @@
                                                 [(ngModel)]="VehicleDE.vehicleTypeID"
                                                 (onChange)="enableCharging(SubCatAllData.subCatName)"></p-dropdown>
                                         </div>
-                                        <label for="fname">No. of Vehicles</label>
+                                        <div class="col-4 mb-3">
+                                            <label for="fname">No. of Vehicles</label>
                                         <input required ngModel name="NoOfVehicles" #NoOfVehicles="ngModel"
                                             [(ngModel)]="VehicleDE.noOfVehicles" NoOfVehicles id="search-input"
                                             type="text" class="form-control Dashboard-tab text-white"
@@ -420,8 +421,10 @@
                                             *ngIf="NoOfVehicles.errors?.['required'] && dataEntryForm.submitted">
                                             No Of Vehicles value required.
                                         </p>
+                                        </div>
 
-                                        <label pTooltip="Total number of trips per vehicle" tooltipPosition="top"
+                                        <div class="col-4 mb-3">
+                                            <label pTooltip="Total number of trips per vehicle" tooltipPosition="top"
                                             for="TotalnoOftripsPerVehicle">Trips per vehicle</label>
                                         <div class="position-relative">
 
@@ -436,6 +439,45 @@
                                                 ngModel [options]="units" optionLabel="UnitName" optionValue="UnitName"
                                                 [(ngModel)]="dataEntry.unit" name="unitSet"
                                                 #unitSet="ngModel"></p-dropdown>
+                                        </div>
+                                        </div>
+                                        <div *ngIf="typeEV == true" class="col-4">
+                                            <label pTooltip="Charging done outside company campus (%)" tooltipPosition="top"
+                                                for="fname">Charging %
+                                            </label>
+                                            <div class="input-group">
+                                                <input id="chargingInput" class="form-control Dashboard-tab text-white"
+                                                    required ngModel name="chargingPerc" #chargingPerc="ngModel"
+                                                    [(ngModel)]="VehicleDE.chargingPerc" />
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">%</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="typeBusCoach == true" class="col-4">
+                                            <label pTooltip="Average number of people travel in one vehicle per trip"
+                                                tooltipPosition="top" for="AvgNoPeople">Avg No. of People</label>
+                                            <input required ngModel name="AvgNoPeople" #AvgNoPeople="ngModel"
+                                                [(ngModel)]="VehicleDE.avgPeoplePerTrip" AvgNoPeople id="search-input"
+                                                type="text" class="form-control Dashboard-tab text-white" />
+    
+                                        </div>
+                                        <div [ngClass]="typeEV == true ? 'col-4': typeBusCoach == true ? 'col-4': 'col-4'">
+                                            <label pTooltip="Mode of Data Entry" tooltipPosition="top"
+                                                for="fname">Mode</label>
+                                            <p-dropdown class="ct_select_op_input" ngModel [options]="ModeType"
+                                                optionLabel="modeName" optionValue="modeName" name="DEMode"
+                                                #DEMode="ngModel" [(ngModel)]="VehicleDE.modeOfDE"
+                                                (onChange)="setUnit()"></p-dropdown>
+                                        </div>
+    
+                                       
+                                       
+                                        <div [ngClass]="typeEV == true ? 'col-4': typeBusCoach == true ? 'col-4': 'col-4'">
+                                            <label for="fname">Value</label>
+                                            <input required ngModel name="Value" #Value="ngModel"
+                                                [(ngModel)]="VehicleDE.value" Value id="search-input" type="text"
+                                                class="form-control Dashboard-tab text-white" />
                                         </div>
                                     </div>
 
@@ -500,42 +542,7 @@
                                     </div> -->
                                 </div>
                                 <div class="row mt-4 mx-2" *ngIf="categoryId==6">
-                                    <div [ngClass]="typeEV == true ? 'col-3': typeBusCoach == true ? 'col-3': 'col-4'">
-                                        <label pTooltip="Mode of Data Entry" tooltipPosition="top"
-                                            for="fname">Mode</label>
-                                        <p-dropdown class="ct_select_op_input" ngModel [options]="ModeType"
-                                            optionLabel="modeName" optionValue="modeName" name="DEMode"
-                                            #DEMode="ngModel" [(ngModel)]="VehicleDE.modeOfDE"
-                                            (onChange)="setUnit()"></p-dropdown>
-                                    </div>
-
-                                    <div *ngIf="typeEV == true" class="col-3">
-                                        <label pTooltip="Charging done outside company campus (%)" tooltipPosition="top"
-                                            for="fname">Charging %
-                                        </label>
-                                        <div class="input-group">
-                                            <input id="chargingInput" class="form-control Dashboard-tab text-white"
-                                                required ngModel name="chargingPerc" #chargingPerc="ngModel"
-                                                [(ngModel)]="VehicleDE.chargingPerc" />
-                                            <div class="input-group-append">
-                                                <span class="input-group-text">%</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div *ngIf="typeBusCoach == true" class="col-3">
-                                        <label pTooltip="Average number of people travel in one vehicle per trip"
-                                            tooltipPosition="top" for="AvgNoPeople">Avg No. of People</label>
-                                        <input required ngModel name="AvgNoPeople" #AvgNoPeople="ngModel"
-                                            [(ngModel)]="VehicleDE.avgPeoplePerTrip" AvgNoPeople id="search-input"
-                                            type="text" class="form-control Dashboard-tab text-white" />
-
-                                    </div>
-                                    <div [ngClass]="typeEV == true ? 'col-3': typeBusCoach == true ? 'col-3': 'col-4'">
-                                        <label for="fname">Value</label>
-                                        <input required ngModel name="Value" #Value="ngModel"
-                                            [(ngModel)]="VehicleDE.value" Value id="search-input" type="text"
-                                            class="form-control Dashboard-tab text-white" />
-                                    </div>
+                                 
                                 </div>
                                 <div class="row mt-4 mx-2" *ngIf="categoryId==5">
                                     <div *ngIf="SubCatAllData.manageDataPointSubCategorySeedID == 1002" class="col-4">
@@ -618,6 +625,11 @@
                                                         download template</a>
                                                 </p> -->
                                                 <div>
+                                                    <p-dropdown class="ct_select_op_input" ngModel placeholder="Select a template"
+                                                    [options]="goodsTemplates" optionLabel="template" optionValue="template"
+                                                    name="template" 
+                                                    [(ngModel)]="selectedtemplate">
+                                                </p-dropdown>
                                                     <a class="trackingsubmitb d-block" href="assets/template.xlsx"
                                                         download="">Click here to
                                                         download template</a>
@@ -877,7 +889,7 @@
 
                                     </div>
 
-                                    <div class="col-12">
+                                    <div class="col-7">
                                         <div class=" mt-0">
 
 
@@ -894,33 +906,33 @@
                                                         <tr>
 
                                                             <td>Surface water</td>
-                                                            <td><input type="text" class="form-control"
+                                                            <td><input type="text" class="form-control w-auto"
                                                                     name="surface_water" ngModel
                                                                     placeholder="Enter required value"></td>
 
                                                         <tr>
 
                                                             <td>Groundwater</td>
-                                                            <td><input type="text" class="form-control"
+                                                            <td><input type="text" class="form-control w-auto"
                                                                     name="groundwater" ngModel
                                                                     placeholder="Enter required value"></td>
 
                                                         </tr>
                                                         <tr>
                                                             <td>Third party water</td>
-                                                            <td><input type="text" class="form-control"
+                                                            <td><input type="text" class="form-control w-auto"
                                                                     name="thirdParty" ngModel
                                                                     placeholder="Enter required value"></td>
 
                                                         </tr>
                                                         <tr>
                                                             <td>Sea water/ desalinated water</td>
-                                                            <td><input type="text" class="form-control" name="seaWater"
+                                                            <td><input type="text" class="form-control w-auto" name="seaWater"
                                                                     ngModel placeholder="Enter required value"></td>
                                                         </tr>
                                                         <tr>
                                                             <td>Others</td>
-                                                            <td><input type="text" class="form-control" name="others"
+                                                            <td><input type="text" class="form-control w-auto" name="others"
                                                                     ngModel placeholder="Enter required value"></td>
 
                                                         </tr>
@@ -1024,7 +1036,6 @@
                                                     </tbody>
                                                 </table>
                                             </div>
-
                                         </div>
 
                                     </div>

@@ -35,7 +35,7 @@ export class TreeComponent {
         this.onRemove = this.onRemove.bind(this)
     }
     ngOnInit() {
-
+FamilyTree.templates.hugo.link_field_0 =  '<text width="230" style="font-size: 18px;" fill="#ffffff" x="145" y="150" text-anchor="middle" class="field_0">{val}</text>';
         this.getTreeViewByID();
 
     };
@@ -62,9 +62,29 @@ export class TreeComponent {
                 if (tree) {
 
                     var family = new FamilyTree(tree, {
-                
+                    
                         mouseScrool: FamilyTree.action.none,
+                        template: "hugo",
                         enableSearch: false,
+                        nodeBinding: {
+                            field_0: "name",
+                            field_1: "relation",
+                        },
+                        nodeMenu: {
+                            details: { text: "Details" },
+                            edit: { text: "Edit" },
+                            add: {
+                                text: "Add",
+                                onClick: function (node: string) {
+                                    $(".ct_custom_modal_120").show(500)
+
+                                    localStorage.setItem("selectedNode", node)
+                                }
+                            },
+                            remove: {
+                                text: "Remove", onClick: callHandler
+                            }
+                        },
                         editForm: {
                             addMoreFieldName: null,
                             addMore: null,
@@ -86,31 +106,14 @@ export class TreeComponent {
 
                             }
                         },
-                        nodeContextMenu: {
-                            details: { text: "Details" },
-                            edit: { text: "Edit" },
-                            add: { text: "Add" },
-                            remove: { text: "Remove" },
-                        },
-                        nodeMenu: {
-                            details: { text: "Details" },
-                            edit: { text: "Edit" },
-                            add: {
-                                text: "Add",
-                                onClick: function (node: string) {
-                                    $(".ct_custom_modal_120").show(500)
-
-                                    localStorage.setItem("selectedNode", node)
-                                }
-                            },
-                            remove: {
-                                text: "Remove", onClick: callHandler
-                            }
-                        },
-                        nodeBinding: {
-                            field_0: "name",
-                            field_1: "relation",
-                        },
+                        // nodeContextMenu: {
+                        //     details: { text: "Details" },
+                        //     edit: { text: "Edit" },
+                        //     add: { text: "Add" },
+                        //     remove: { text: "Remove" },
+                        // },
+                     
+                       
 
                     });
                     function callHandler(nodeId) {

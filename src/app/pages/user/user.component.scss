@@ -80,7 +80,7 @@ p{
 }
 
 .span-color {
-    background-color: #88AD47;
+    background-color: rgba(136, 173, 71, 0.75);
 }
 
 .span-color-delete {
@@ -235,7 +235,7 @@ label {
 .UserButton {
     border-radius: 10px;
     border-color: transparent;
-    background-color: #88AD47;
+    background-color: rgba(136, 173, 71, 0.75);
     margin-top: 3px;
     width: 100px;
     color: white;
@@ -245,7 +245,7 @@ label {
 .LocButton {
     border-radius: 10px;
     border-color: transparent;
-    background-color: #88AD47;
+    background-color: rgba(136, 173, 71, 0.75);
     margin-top: 3px;
     width: 100px;
     color: white;
@@ -257,7 +257,7 @@ label {
     // border-top-left-radius: 10px;
     // border-bottom-left-radius: 10px;
     border-color: transparent;
-    background-color: #88AD47;
+    background-color: rgba(136, 173, 71, 0.75);
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
     margin-top: 3px;
@@ -339,7 +339,7 @@ label {
     text-align: center;
 }
 .ct_user_add_modal_btn button {
-    border: 1px solid #88AD47;
+    border: 1px solid rgba(136, 173, 71, 0.75);
     padding: 4px 30px;
     width: 100px;
 }

@@ -1,294 +1,29 @@
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="container-fluid">
-    <div class="row pt-4">
-        <div class="col-sm-6" [ngClass]="
-                this.updatedtheme === 'dark' ? 'headlinetextD' : 'headlinetextL'
-            ">
-            <h3 class="m-0 pl-4 text-white">Billing</h3>
-        </div>
-    </div>
-
-    <div class="row d-flex justify-content-between gap-1 mx-3 pt-3 pb-5">
-        <div class="col-5 myCol" [ngClass]="
-                this.updatedtheme === 'dark' ? 'Location-tabD' : 'Location-tabL'
-            ">
-            <div class="row p-2">
-                <div class="loc-head" [ngClass]="
-                        this.updatedtheme === 'dark' ? 'loc-headD' : 'loc-headL'
-                    ">
-                    <p class="">Facility</p>
-                </div>
-                <div class="d-flex justify-content-between text-style text-light scope-Div">
-                    <div class="searchWidth form-group has-search">
-                        <span class="fa fa-search form-control-feedback"></span>
-                        <input [(ngModel)]="searchData" autocomplete="off" type="text" [ngClass]="
-                                this.updatedtheme === 'dark'
-                                    ? 'form-controlD'
-                                    : 'form-controlL'
-                            " class="form-control" placeholder="Search" />
-                    </div>
-                    <div class="form-group has-search text-light">
-                        <button class="LocButton" (click)="showAddFacilityDialog()">
-                            Assign Packages
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="dataTable scrollit" [ngStyle]="{display: FacilityData}">
-                <table class="table_loc">
-                    <tbody>
-                        <tr clickable (click)="tableData(d.id)" *ngFor="let d of LocData"
-                            class="col-12 tableRow border-bottom rounded pointer"
-                            [ngClass]="{tableRowclicked: id_var === d.id}">
-                            <td class="col-4 td text-initial">
-                                {{ d.package_name }}
-                            </td>
-                            <!-- <td class="col-4 td text-center">
-                                {{ d.AssestType }}
-                                <i class="fa fa-industry" style="font-size: 15px"></i>
-                            </td>
-                            <td class="col-4 td text-center">
-                                {{ d.city_name }}
-                                <i class="fa fa-map-marker-alt" style="font-size: 15px"></i>
-                            </td> -->
-                            <td class="col-4 td text-right">
-                                <button type="button" (click)="tableData(d.id)"
-                                    [ngClass]="{vdtextColor: id_var === d.id}">
-                                    view details
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="text-light noData" [ngStyle]="{display: NoData}">
-                <div class="icon mt-3">
-                    <i class="fa fa-info-circle" style="font-size: 20px" aria-hidden="true"></i>
-                </div>
-                <label class="text-center label">No facilities available. Start by adding a new facility
-                    using the add facility button.</label>
-            </div>
-        </div>
-
-        <div class="col-6 rounded" [ngClass]="
-                this.updatedtheme === 'dark' ? 'Location-tabD' : 'Location-tabL'
-            ">
-            <div class="row p-2">
-                <div class="loc-head" [ngClass]="
-                        this.updatedtheme === 'dark' ? 'loc-headD' : 'loc-headL'
-                    ">
-                    <p class="">Package Details:</p>
-                </div>
-            </div>
-
-            <div class="col d-flex justify-content-end mt-3"></div>
-            <div class="row font-LocProfile mt-4" [ngStyle]="{display: FacilityFullData}">
-                <div class="col ml-3">
-                    <p *ngIf="facilityDetails.AssestName != undefined">Asset Name :</p>
-                    <p *ngIf="facilityDetails.AssestType != undefined">Asset Type :</p>
-                    <p *ngIf="facilityDetails.IsWaterStreenArea != undefined">Water Stress Area :</p>
-                    <p *ngIf="facilityDetails.EquityPercentage != undefined">Equity Percentage :</p>
-                    <p *ngIf="facilityDetails.Address != undefined">Address :</p>
-                    <p *ngIf="facilityDetails.city_name != undefined">City :</p>
-                    <p *ngIf="facilityDetails.state_name != undefined">State :</p>
-                    <p *ngIf="facilityDetails.country_name != undefined">Country :</p>
-                    <p>Assigned User :</p>
-                    <p>Data Points</p>
-                </div>
-                <div class="col">
-                    <p>{{ facilityDetails.AssestName }}</p>
-                    <p>{{ facilityDetails.AssestType }}</p>
-                    <p>{{ facilityDetails.IsWaterStreenArea }}</p>
-                    <p *ngIf="facilityDetails.EquityPercentage != undefined">{{ facilityDetails.EquityPercentage }}%</p>
-                    <p>{{ facilityDetails.Address }}</p>
-                    <p>{{ facilityDetails.city_name }}</p>
-                    <p>{{ facilityDetails.state_name }}</p>
-                    <p>{{ facilityDetails.country_name }}</p>
-                    <!-- <div class="row gap-4">
-                        <div class="dropdown ct_facility_2_main">
-                            <button [ngClass]="
-                                    this.updatedtheme === 'dark'
-                                        ? 'dropbtnD'
-                                        : 'dropbtnL'
-                                " class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <div>
-                                    Manager
-
-                                  
-                                    <span class="badge badgespan" *ngIf="managerList1">{{ managerList1.length
-                                        }}</span>
-
-                                </div>
-                            </button>
-                            <div class="dropdown-menu dropdown-content" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item dropItemManager" *ngFor="let d of managerList1">{{ d.username }}</a>
-                            </div>
-                        </div>
-                        <div class="dropdown ct_facility_2_main">
-                            <button [ngClass]="
-                                    this.updatedtheme === 'dark'
-                                        ? 'dropbtnD'
-                                        : 'dropbtnL'
-                                " class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <div>
-                                    Staff
-                                    <span class="badge badgespan">{{
-                                        staffList1.length
-                                        }}</span>
-                                </div>
-                            </button>
-                            <div class="dropdown-content dropdown-menu">
-                                <a class="dropdown-item dropItemStaff" *ngFor="let s of staffList1">{{ s.username }}</a>
-                            </div>
-                        </div>
-                    </div> -->
-                    <div class="row dataPointDiv">
-                        <div class="ct_facility_2_main">
-                            <button type="button" [ngClass]="
-                                    this.updatedtheme === 'dark'
-                                        ? 'dataPointD'
-                                        : 'dataPointL'
-                                " >
-                                Manage Data Points
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="d-flex text-light text-style scope-Div">
-                    <div>
-                        <i class="LocButtonEdit pi pi-user-edit pointer d-flex text-white"
-                            (click)="showEditFacilityDialog()">
-                            <p class="pl-2">Assign Packages</p>
-                        </i>
-                    </div>
-                    <!-- <div class="form-group has-search text-light pointer">
-                        <i *ngIf="userdetails.isDisabledDelete !== true"
-                            (click)="deleteFacility($event, facilityDetails.ID)"
-                            class="deleteButton pi pi-trash pointer d-flex text-white">
-                            <p class="pl-2">Delete</p>
-                        </i>
-                    </div> -->
-                </div>
-
-
-            </div>
-            <div class="text-light noData" [ngStyle]="{display: NoData}">
-                <div class="icon mt-3">
-                    <i class="fa fa-info-circle" style="font-size: 20px" aria-hidden="true"></i>
-                </div>
-                <label class="text-center label">No facilities available. Start by adding a new facility
-                    using the add facility button.</label>
-            </div>
-
-
-
-            <div class="justify-content-center">
-                <p-dialog [(visible)]="visible" [breakpoints]="{'960px': '75vw'}" styleClass="facilityDialog"
-                    [style]="{width: '50vw'}" [draggable]="false" [resizable]="false" [closable]="false">
-                    <p-header *ngIf="isEdit === false">
-                        Add new Facility
-                    </p-header>
-                    <p-header *ngIf="isEdit === true"> Edit Facility </p-header>
-                    <div style="height: 95%;" class="modal-body text-white text-style">
-                        <form style="height: 100%;" #addCompForm="ngForm" class="col-12" (ngSubmit)="
-                                isEdit === false
-                                    ? saveFacility(addCompForm.value)
-                                    : editfacility(
-                                          facilityDetails.ID,
-                                          addCompForm.value
-                                      )
-                            ">
-                            <div style="height: 98%;" class="d-flex row">
-                                <div class="facilitygrid col-6">
-                                    <div>
-                                        <label for="Aname" class="text-dark">Asset name</label>
-                                        <!-- <p-multiSelect [options]="cities" [(ngModel)]="selectedCities1" defaultLabel="Select a City" optionLabel="name" optionValue="name">
-                                        </p-multiSelect> -->
-                                        <input required ngModel name="assetName" type="text"
-                                            class="form-control Dashboard-tab text-white"
-                                            placeholder="Enter Asset Name.." #assetName="ngModel"
-                                            [(ngModel)]="facilityDetails.AssestName" assetName />
-                                        <p *ngIf="addCompForm.submitted && assetName.errors?.['required']"
-                                            class="text-danger mb-0">
-                                            Asset Name is required
-                                        </p>
-
-                                    </div>
-                                    
-                                  
-                                  
-                                  
-
-                                </div>
-
-                            </div>
-                            <div class="modal-footer">
-                                <Button *ngIf="isEdit == false" type="submit" class="LocButton">
-                                    Save
-                                </Button>
-                                <Button *ngIf="isEdit == true" type="submit" class="LocButton">
-                                    Update
-                                </Button>
-                                <!-- <span type="button" class="text-white font-weight-light ct_close_btn1231" (click)="
-                                        isEdit == false
-                                            ? closeAddFacilityDialog()
-                                            : closeEditFacilityDialog()
-                                    ">
-                                    Close
-                                </span> -->
-                            </div>
-                        </form>
-                    </div>
-                </p-dialog>
-            </div>
-            <!-- close model dialog -->
-            <!-- open delete dialog -->
-
-            <!-- ghghjujhuj -->
-
-            <p-confirmDialog #cd [style]="{width: '60vw'}">
-                <ng-template pTemplate="footer">
-                    <button pButton icon="pi pi-check" label="Yes" (click)="cd.accept()"
-                        class="span-color cancel-button"></button>
-                    <button pButton icon="pi pi-times" label="Cancel" (click)="cd.reject()"
-                        class="p-button-raised p-button-danger"></button>
-                </ng-template>
-            </p-confirmDialog>
-            <!-- close delete dialog -->
-       
-        </div>
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- <div class="container-fluid">
     <p-messages [(value)]="messages" [enableService]="false" [closable]="true"></p-messages>
     <div class="row">
         <div class="col-sm-6" [ngClass]="
@@ -303,8 +38,8 @@
         </div>
     
     </div>
-    <br /> -->
-    <!-- <div class="row pt-3">
+    <br /> 
+     <div class="row pt-3">
         <div class="col">
             <div class="card rounded shadow" [ngClass]="this.updatedtheme === 'dark' ? 'cardD' : 'cardL'">
 
@@ -382,7 +117,7 @@
             </div>
         </div>
     </div> -->
-    <!-- <div class="row">
+     <div class="row">
         <div class="col">
             <div class="card rounded mt-3 shadow" [ngClass]="this.updatedtheme === 'dark' ? 'cardD' : 'cardL'">
                 <h5 class="card-header" [ngClass]="
@@ -471,4 +206,4 @@
             </div>
         </div>
     </div> -->
-<!-- </div> -->
+ </div>

@@ -31,7 +31,7 @@ body {
     height: 100vh !important;
     margin: 0px !important;
     padding: 0px !important;
-    background-color: #fff !important;
+    background-color: transparent !important;
 
 }
 
@@ -208,6 +208,7 @@ app-header .navbar {
     display: flex !important;
     //height: fit-content !important;
     justify-content: center !important;
+    box-shadow: 0px 0px 25px rgba(0,0,10,0.09);
 
 }
 
@@ -222,7 +223,7 @@ app-header .navbar {
 }
 
 .p-dialog-mask {
-    backdrop-filter: blur(12px) !important;
+    backdrop-filter: blur(1px) !important;
 }
 
 body .p-dialog-mask {
@@ -636,13 +637,14 @@ label:not(.form-check-label):not(.custom-file-label) {
     // border-bottom: 1px solid #88AD47 !important;
     // border-radius: 10px;
     border-radius: 8px;
-background: rgba(36, 139, 1, 0.20) !important;
-color: rgba(21, 80, 0, 1) !important;
+background: rgba(136, 173, 71, 0.75) !important;
+color: #fff !important;
     font-weight: 500;
 
-box-shadow: 0px 4px 10.2px 0px rgba(0, 0, 0, 0.17);
+// box-shadow: 0px 4px 10.2px 0px rgba(0, 0, 0, 0.17);
 
 }
+
 .p-tabview .p-tabview-nav li .p-tabview-nav-link{
     background-color: transparent;
     padding-block: 8px;
@@ -761,7 +763,7 @@ box-shadow: 0px 4px 10.2px 0px rgba(0, 0, 0, 0.17);
 .p-datatable .p-datatable-thead > tr > th ,.p-datatable .p-datatable-thead > tr > th{
     font-size: 13px !important;
     text-align: center !important;
-    background-color: #88AD47  !important;
+    background-color: rgba(136, 173, 71, 0.75)  !important;
     padding: 5px;
     color: #fff !important;
     vertical-align: middle !important;
@@ -927,8 +929,8 @@ body:not(.layout-fixed) .main-sidebar {
 
 }
 span.p-ripple.p-element.p-button.p-component.p-fileupload-choose{
-    background-color: #afd2ae !important;
-    border-color:#afd2ae !important ;
+    background-color: rgba(136, 173, 71, 0.75) !important;
+    border-color:rgba(136, 173, 71, 0.75) !important ;
 }
 
 .p-button-text-close {
@@ -971,8 +973,11 @@ span.p-ripple.p-element.p-button.p-component.p-fileupload-choose{
 }
 
 .p-button:enabled:hover {
-    background: none !important;
+    background: #80a745 !important;
     border-color: transparent !important;
+}
+.p-multiselect:not(.p-disabled):hover{
+    border-color:rgba(136, 173, 71, 0.75) ;
 }
 
 .dropdown-item {
@@ -1093,7 +1098,7 @@ span.p-ripple.p-element.p-button.p-component.p-fileupload-choose{
     padding-block: 0px;
 }
 .ct_select_dropdown_btn .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight{
-background-color: rgba(36, 139, 1, 0.6) !important;
+background-color: rgba(136, 173, 71, 0.75) !important;
 color: #fff !important;
 }
 .ct_filter_dropdown .ng-tns-c5-6.p-overlay.p-component.ng-star-inserted {
@@ -1103,7 +1108,7 @@ color: #fff !important;
     padding-top: 25px;
 }
 .ct_filter_dropdown .p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight):not(.p-disabled):hover{
-    background-color:rgba(36, 139, 1, 0.6) !important;
+    background-color:rgba(136, 173, 71, 0.75) !important;
     color: #fff !important;
 }
 .cardDiv{
@@ -1153,7 +1158,7 @@ input.p-multiselect-filter.p-inputtext.p-component {
     color: #333!important;
 }
 .ct_select_op_input .p-dropdown .p-dropdown-trigger {
-    background: #afd2ae;
+    // background: rgba(136, 173, 71, 0.75);
     color: #6c757d;
     width: 3rem;
     border-top-right-radius: 2px;
@@ -1170,8 +1175,8 @@ span.p-datepicker-decade.ng-tns-c40-11.ng-star-inserted{
 }
 .p-button {
     color: #ffffff;
-    background: #d3e8cc;
-    border: 1px solid #d3e8cc;
+    background: rgba(136, 173, 71, 0.75);
+    border: 1px solid rgba(136, 173, 71, 0.75);
     padding: 0.75rem 1.25rem;
     font-size: 1rem;
     transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
@@ -1399,7 +1404,7 @@ a.brand-link.ct_logo_collape {
     border-width: 0px !important;
     box-shadow: unset !important;
     border-radius: 0px !important;
-    background-color: #afd2ae !important;
+    background-color: rgba(136, 173, 71, 0.75) !important;
 }
 .ct_position_small_quantity.ct_select_op_input  .p-inputtext{
 color: #fff!important;
@@ -1551,11 +1556,11 @@ padding-block: 7px;
   .ct_mt_60{
     margin-top: 60px;
   }
-  .ct_drop_scroll ul.p-multiselect-items.p-component.ng-star-inserted{
+  .ct_drop_scroll ul.p-multiselect-items.p-component.ng-star-inserted {
     height: auto;
     overflow-y: auto;
-    max-height: 130px;
-  }
+    max-height: 232px;
+}
   .ct_drop_scroll .p-multiselect-label {
     // white-space: normal;
     color: #333;
@@ -1568,12 +1573,12 @@ padding-block: 7px;
 .sidebar-open app-header.main-header.navbar.navbar-expand.navbar-light {
     width: calc(100% - 220px);
 }
-.ct_animation_btn_121{
+.ct_animation_btn_121 {
     position: relative;
     z-index: 1;
     transition: 0.4s ease all;
     overflow: hidden;
-    border:1px solid #679f54 !important ;
+    border: 1px solid rgba(136, 173, 71, 0.75) !important;
 }
 .ct_animation_btn_121:before{
     content: "";
@@ -1612,6 +1617,7 @@ padding-block: 7px;
     position: relative;
     margin-top: 0px;
     margin-right: 8px;
+    top: -3px;
 
 }
 :host ::ng-deep .p-multiselect {
@@ -1660,8 +1666,8 @@ nav{
     display: block!important;
 }
 input.ct_change_choose_file_input12::file-selector-button {
-    background: #88ad47;
-    border: 1px solid #88ad47;
+    background: rgba(136, 173, 71, 0.75);
+    border: 1px solid rgba(136, 173, 71, 0.75);
     color: #fff;
     padding: 5px 10px;
 }
@@ -1874,9 +1880,13 @@ input.ct_change_choose_file_input12::file-selector-button {
             background: #88AD47;
           
         }
-        rect {
-            fill: #86af48;
-        } 
+        .node rect {
+            fill: rgba(134, 175, 72, 0.7);
+        }
+        g.link path {
+            stroke-dasharray: 4px !important;
+            stroke: #aac77f;
+        }
         #tree.bft-light .bft-family-menu [data-item]:hover {
             background-color: #86af48 !important;
             color: #fff !important;
@@ -1906,13 +1916,23 @@ input.ct_change_choose_file_input12::file-selector-button {
         h1.bft-edit-form-title {
             font-size: 24px;
         }
-        use {
-            stroke: #ffff;
-            padding: 0px;
-            stroke-width: 1px;
+        // use {
+        //     stroke: #ffff;
+        //     padding: 0px;
+        //     stroke-width: 1px;
+        // }
+        text {
+            /* position: relative; */
+            transform: translateY(-43px);
+            font-size: 22px !important;
+        }
+        text + text {
+            /* position: relative; */
+            transform: translateY(-35px);
+            font-size: 18px !important;
         }
         .ct_custom_btn121 {
-            background-color: #88AD47;
+            background-color: rgba(136, 173, 71, 0.75);
             color: #fff;
             width: 100px;
             border-radius: 5px;

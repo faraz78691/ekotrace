@@ -149,6 +149,7 @@ export class Scope2TrackingComponent {
     storageGrid: any[] = [];
     waterSupplyUnitGrid: any[] = [];
     wasteGrid: any[] = [];
+    goodsTemplates: any[] = [];
     waterWasteProduct: string;
     wasteSubTypes: any[] = [];
     waterWasteId = 1;
@@ -215,6 +216,7 @@ export class Scope2TrackingComponent {
     ferryMode = false;
     ModeSelected = false;
     mode_name = '';
+    selectedtemplate = '';
     mode_type: any[] = [];
     carFuel_type: any[] = [];
 
@@ -288,8 +290,10 @@ export class Scope2TrackingComponent {
         this.VehicleType = [];
         this.dataEntry.unit = "";
         this.SubCategoryType = [];
+
         this.isInputEdited;
         this.dataEntry.typeID;
+
 
         this.items = [
             {
@@ -326,6 +330,23 @@ export class Scope2TrackingComponent {
                 {
                     "id": 3,
                     "flightType": "Distance"
+                }
+
+            ];
+        this.goodsTemplates =
+            [
+
+                {
+                    "id": 1,
+                    "template": "Template 1"
+                },
+                {
+                    "id": 2,
+                    "template": "Template 2"
+                },
+                {
+                    "id": 3,
+                    "template": "Template 3"
                 }
 
             ];

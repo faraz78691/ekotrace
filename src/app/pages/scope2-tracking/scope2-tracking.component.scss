@@ -95,10 +95,10 @@
 
 .trackingsubmitb {
   padding: 8px 20px;
-  border: 1px solid #80a745;
+  border: 1px solid rgba(136, 173, 71, 0.75);
   border-radius: 5px;
   transition: 0.4s ease all;
-  background-color: rgb(103, 159, 84);
+  background-color: rgba(136, 173, 71, 0.75);
   color: #fff;
 }
 .trackingsubmitb:hover{
@@ -561,7 +561,7 @@ background-color: #b0d3af;
   font-size: 14px;
   font-weight: 500;
   border: unset;
-  background-color: #679f54 ;
+  background-color: rgba(136, 173, 71, 0.75) ;
 }
 .ct_home_office_table td{
   vertical-align: middle;
