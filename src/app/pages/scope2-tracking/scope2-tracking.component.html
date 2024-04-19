@@ -10,8 +10,8 @@
     </div>
     <div class="row pt-2 ml-0 mx-0 px-0">
         <div class="col-4  mb-4  px-2">
-            <div class=" TrackingDiv-border Dashboard-tab ct_dash_board_tab ct_hide_scroll_239"  style="height: calc(100vh - 160px);"
-                [ngClass]="facilitynothavedp === 'block' ? 'fornodata' : ''">
+            <div class=" TrackingDiv-border Dashboard-tab ct_dash_board_tab ct_hide_scroll_239"
+                style="height: calc(100vh - 160px);" [ngClass]="facilitynothavedp === 'block' ? 'fornodata' : ''">
 
 
                 <div [ngStyle]="{display: facilitynothavedp}" class="text-white noData" style="justify-content: center">
@@ -249,7 +249,8 @@
             </div>
         </div>
         <div class="col-8 mb-4 px-2">
-            <div class="TrackingDiv2-border Dashboard-tab ct_dash_board_tab text-white ct_scroll_dash" style="height: calc(100vh - 160px);">
+            <div class="TrackingDiv2-border Dashboard-tab ct_dash_board_tab text-white ct_scroll_dash"
+                style="height: calc(100vh - 160px);">
 
                 <div [ngStyle]="{display: facilitynothavedp}" style="justify-content: center" class="noData">
                     <div>
@@ -406,44 +407,44 @@
                                         </div>
                                         <div class="col-4 mb-3">
                                             <label for="fname">No. of Vehicles</label>
-                                        <input required ngModel name="NoOfVehicles" #NoOfVehicles="ngModel"
-                                            [(ngModel)]="VehicleDE.noOfVehicles" NoOfVehicles id="search-input"
-                                            type="text" class="form-control Dashboard-tab text-white"
-                                            placeholder="Enter no of vehicles" />
-                                        <p class="validation" *ngIf="
+                                            <input required ngModel name="NoOfVehicles" #NoOfVehicles="ngModel"
+                                                [(ngModel)]="VehicleDE.noOfVehicles" NoOfVehicles id="search-input"
+                                                type="text" class="form-control Dashboard-tab text-white"
+                                                placeholder="Enter no of vehicles" />
+                                            <p class="validation" *ngIf="
                                         VehicleDE.noOfVehicles < 0 &&
                                                 dataEntryForm.submitted
                                             ">
-                                            No Of Vehicles should be greater than 0
-                                        </p>
+                                                No Of Vehicles should be greater than 0
+                                            </p>
 
-                                        <p class="validation"
-                                            *ngIf="NoOfVehicles.errors?.['required'] && dataEntryForm.submitted">
-                                            No Of Vehicles value required.
-                                        </p>
+                                            <p class="validation"
+                                                *ngIf="NoOfVehicles.errors?.['required'] && dataEntryForm.submitted">
+                                                No Of Vehicles value required.
+                                            </p>
                                         </div>
 
                                         <div class="col-4 mb-3">
                                             <label pTooltip="Total number of trips per vehicle" tooltipPosition="top"
-                                            for="TotalnoOftripsPerVehicle">Trips per vehicle</label>
-                                        <div class="position-relative">
+                                                for="TotalnoOftripsPerVehicle">Trips per vehicle</label>
+                                            <div class="position-relative">
 
-                                            <input required ngModel name="TotalnoOftripsPerVehicle"
-                                                #TotalnoOftripsPerVehicle="ngModel"
-                                                [(ngModel)]="VehicleDE.totalnoOftripsPerVehicle"
-                                                TotalnoOftripsPerVehicle id="search-input" type="text"
-                                                class="form-control Dashboard-tab text-white"
-                                                placeholder="Enter trips per vehicle" />
-                                            <p-dropdown
-                                                class="ct_select_op_input ct_select_op_input ct_position_small_quantity"
-                                                ngModel [options]="units" optionLabel="UnitName" optionValue="UnitName"
-                                                [(ngModel)]="dataEntry.unit" name="unitSet"
-                                                #unitSet="ngModel"></p-dropdown>
-                                        </div>
+                                                <input required ngModel name="TotalnoOftripsPerVehicle"
+                                                    #TotalnoOftripsPerVehicle="ngModel"
+                                                    [(ngModel)]="VehicleDE.totalnoOftripsPerVehicle"
+                                                    TotalnoOftripsPerVehicle id="search-input" type="text"
+                                                    class="form-control Dashboard-tab text-white"
+                                                    placeholder="Enter trips per vehicle" />
+                                                <p-dropdown
+                                                    class="ct_select_op_input ct_select_op_input ct_position_small_quantity"
+                                                    ngModel [options]="units" optionLabel="UnitName"
+                                                    optionValue="UnitName" [(ngModel)]="dataEntry.unit" name="unitSet"
+                                                    #unitSet="ngModel"></p-dropdown>
+                                            </div>
                                         </div>
                                         <div *ngIf="typeEV == true" class="col-4">
-                                            <label pTooltip="Charging done outside company campus (%)" tooltipPosition="top"
-                                                for="fname">Charging %
+                                            <label pTooltip="Charging done outside company campus (%)"
+                                                tooltipPosition="top" for="fname">Charging %
                                             </label>
                                             <div class="input-group">
                                                 <input id="chargingInput" class="form-control Dashboard-tab text-white"
@@ -460,9 +461,10 @@
                                             <input required ngModel name="AvgNoPeople" #AvgNoPeople="ngModel"
                                                 [(ngModel)]="VehicleDE.avgPeoplePerTrip" AvgNoPeople id="search-input"
                                                 type="text" class="form-control Dashboard-tab text-white" />
-    
+
                                         </div>
-                                        <div [ngClass]="typeEV == true ? 'col-4': typeBusCoach == true ? 'col-4': 'col-4'">
+                                        <div
+                                            [ngClass]="typeEV == true ? 'col-4': typeBusCoach == true ? 'col-4': 'col-4'">
                                             <label pTooltip="Mode of Data Entry" tooltipPosition="top"
                                                 for="fname">Mode</label>
                                             <p-dropdown class="ct_select_op_input" ngModel [options]="ModeType"
@@ -470,10 +472,11 @@
                                                 #DEMode="ngModel" [(ngModel)]="VehicleDE.modeOfDE"
                                                 (onChange)="setUnit()"></p-dropdown>
                                         </div>
-    
-                                       
-                                       
-                                        <div [ngClass]="typeEV == true ? 'col-4': typeBusCoach == true ? 'col-4': 'col-4'">
+
+
+
+                                        <div
+                                            [ngClass]="typeEV == true ? 'col-4': typeBusCoach == true ? 'col-4': 'col-4'">
                                             <label for="fname">Value</label>
                                             <input required ngModel name="Value" #Value="ngModel"
                                                 [(ngModel)]="VehicleDE.value" Value id="search-input" type="text"
@@ -542,7 +545,7 @@
                                     </div> -->
                                 </div>
                                 <div class="row mt-4 mx-2" *ngIf="categoryId==6">
-                                 
+
                                 </div>
                                 <div class="row mt-4 mx-2" *ngIf="categoryId==5">
                                     <div *ngIf="SubCatAllData.manageDataPointSubCategorySeedID == 1002" class="col-4">
@@ -625,11 +628,11 @@
                                                         download template</a>
                                                 </p> -->
                                                 <div>
-                                                    <p-dropdown class="ct_select_op_input" ngModel placeholder="Select a template"
-                                                    [options]="goodsTemplates" optionLabel="template" optionValue="template"
-                                                    name="template" 
-                                                    [(ngModel)]="selectedtemplate">
-                                                </p-dropdown>
+                                                    <p-dropdown class="ct_select_op_input" ngModel
+                                                        placeholder="Select a template" [options]="goodsTemplates"
+                                                        optionLabel="template" optionValue="template" name="template"
+                                                        [(ngModel)]="selectedtemplate">
+                                                    </p-dropdown>
                                                     <a class="trackingsubmitb d-block" href="assets/template.xlsx"
                                                         download="">Click here to
                                                         download template</a>
@@ -927,13 +930,15 @@
                                                         </tr>
                                                         <tr>
                                                             <td>Sea water/ desalinated water</td>
-                                                            <td><input type="text" class="form-control w-auto" name="seaWater"
-                                                                    ngModel placeholder="Enter required value"></td>
+                                                            <td><input type="text" class="form-control w-auto"
+                                                                    name="seaWater" ngModel
+                                                                    placeholder="Enter required value"></td>
                                                         </tr>
                                                         <tr>
                                                             <td>Others</td>
-                                                            <td><input type="text" class="form-control w-auto" name="others"
-                                                                    ngModel placeholder="Enter required value"></td>
+                                                            <td><input type="text" class="form-control w-auto"
+                                                                    name="others" ngModel
+                                                                    placeholder="Enter required value"></td>
 
                                                         </tr>
 
@@ -3367,7 +3372,7 @@
                                 dataKey="id">
                                 <ng-template pTemplate="header">
                                     <tr>
-                                        <th>Category</th>
+                                        <th *ngIf="categoryId !=10 && categoryId != 11">Category</th>
                                         <!-- <th *ngIf="categoryId==13 && selectMode==1">Flight Class</th>
                                         <th *ngIf="categoryId==13 && (selectMode==3)">Type</th>
                                         <th *ngIf="categoryId==13 && (selectMode==3)">Fuel Type</th>
@@ -3378,7 +3383,8 @@
                                         <th *ngIf="categoryId==18 ">Sub Activity</th>
                                         <th *ngIf="categoryId==18">Processing Activity</th>
                                         <th *ngIf="categoryId==18">Calculation Method</th>
-                                        <th *ngIf="categoryId==20 || categoryId ==16 || categoryId ==22 || categoryId ==21 ||  categoryId ==1 || categoryId ==23 || categoryId ==8 || categoryId ==23">
+                                        <th
+                                            *ngIf="categoryId==20 || categoryId ==16 || categoryId ==22 || categoryId ==21 ||  categoryId ==1 || categoryId ==23 || categoryId ==8 || categoryId ==23">
                                             Sub Category</th>
                                         <th *ngIf="categoryId==20">Total Waste</th>
                                         <th *ngIf="categoryId==20">Landfill</th>
@@ -3406,9 +3412,8 @@
                                         <th *ngIf="categoryId==5">
                                             Source Name
                                         </th>
-                                        <th *ngIf="categoryId==7 || categoryId == 5"
-                                            pSortableColumn="noofairconnUnits" pTooltip="Amount of refrigent used"
-                                            tooltipPosition="top">
+                                        <th *ngIf="categoryId==7 || categoryId == 5" pSortableColumn="noofairconnUnits"
+                                            pTooltip="Amount of refrigent used" tooltipPosition="top">
                                             Energy
                                         </th>
                                         <th *ngIf="categoryId==3" tooltipPosition="top">
@@ -3417,35 +3422,34 @@
                                         <th pTooltip="Amount of Emission" tooltipPosition="top">
                                             Emission
                                         </th>
-                                        <th *ngIf="categoryId !=13">
+                                        <th *ngIf="categoryId !=13 && categoryId !=11">
                                             Unit
                                         </th>
-        
-                                        <!-- <th  *ngIf="categoryId == 11">
+                                        <th *ngIf="categoryId == 11">
                                             Water Treatment
-                                           
+
                                         </th>
-                                        <th  *ngIf="categoryId == 11">
+                                        <th *ngIf="categoryId == 11">
                                             Water Supply
                                         </th>
-                                     
-                                        <th  *ngIf="categoryId == 20">
+
+                                        <th *ngIf="categoryId == 20">
                                             Combustion
                                         </th>
-                                        <th  *ngIf="categoryId == 20">
+                                        <th *ngIf="categoryId == 20">
                                             Composing
                                         </th>
-                                        <th  *ngIf="categoryId == 20">
+                                        <th *ngIf="categoryId == 20">
                                             Landfill
                                         </th>
-                                        <th  *ngIf="categoryId == 20">
+                                        <th *ngIf="categoryId == 20">
                                             Recycling
                                         </th>
-                                        <th 
+                                        <th
                                             *ngIf="categoryId == 16 || categoryId == 21 || categoryId == 22 || categoryId == 23">
                                             Sub Category
-                                           
-                                        </th> -->
+
+                                        </th> 
                                         <!-- <th  *ngIf="categoryId == 18">
                                             Sub Activity
                                            
@@ -3603,9 +3607,9 @@
                                             </p-columnFilter>
         
                                         </th> -->
-        
+
                                     </tr>
-        
+
                                 </ng-template>
                                 <ng-template pTemplate="body" let-de let-status>
                                     <tr [pEditableRow]="de">
@@ -3621,32 +3625,38 @@
                                         <td *ngIf="categoryId == 13 && (selectMode==3 || selectMode ==1)"> {{de.distance}}</td>
                                         <td *ngIf="categoryId == 13 && (selectMode==3)"> {{de.no_of_trips}}</td>
                                         <td *ngIf="categoryId == 13 && (selectMode==1)"> {{de.business_unit}}</td> -->
-                                        <td *ngIf="categoryId == 8 || categoryId == 10 || categoryId ==23"> {{de.category}}</td>
-                                    
-                                        <td *ngIf="categoryId == 1 || categoryId == 8 || categoryId == 10 || categoryId ==23">{{ de.subcategory }}</td>
+                                        <td *ngIf="categoryId == 8  || categoryId ==23"> {{de.category}}</td>
+
+                                        <td *ngIf="categoryId == 1 || categoryId == 8 || categoryId ==23">{{
+                                            de.subcategory }}</td>
                                         <td>
                                             {{ de.year }}
                                         </td>
                                         <td
-                                            *ngIf="categoryId == 10 || categoryId == 13 || categoryId == 6 || categoryId ==23 || categoryId ==1">
+                                            *ngIf="categoryId == 10 || categoryId == 13 || categoryId == 6 || categoryId ==23 || categoryId ==1 || categoryId == 11">
                                             {{ de.month }}
                                         </td>
-                                        <td  *ngIf="categoryId != 10 && categoryId != 13 && categoryId !=23  && categoryId !=1" >
+                                        <td
+                                            *ngIf="categoryId != 10 && categoryId != 13 && categoryId !=23  && categoryId !=1 && categoryId != 11">
                                             {{ de.months }}
                                         </td>
                                         <td *ngIf="categoryId == 2">
-                                            {{ de.refamount }}
+                                            {{ de.RefAmount }}
                                         </td>
+                                        <td
+                                            *ngIf="categoryId==1  || categoryId == 8 || categoryId == 10 || categoryId == 23">
+                                            {{ de.quantity }}</td>
+                                        <td *ngIf=" categoryId==3 ">{{ de.quantityOfCO2makeup }}</td>
                                         <td *ngIf="categoryId == 3">
-                                            {{ de.numberofextinguisher }}
+                                            {{ de.numberOfExtinguisher }}
                                         </td>
-                                        <td *ngIf="categoryId==1 || categoryId==3 || categoryId == 8 || categoryId == 10 || categoryId == 23">{{ de.quantity }}</td>
                                         <td *ngIf="categoryId==5 || categoryId==7">{{ de.reading_value }}</td>
                                         <td *ngIf="categoryId==5">{{ de.sourcename }}</td>
                                         <td *ngIf="categoryId==5 || categoryId==7">{{ de.energy }}</td>
+
                                         <td> {{de.emission}}</td>
-                                        <td>{{ de.unit }}</td>
-        
+                                        <td *ngIf="categoryId != 11">{{ de.Unit }}</td>
+
                                         <td *ngIf="categoryId == 8"> {{de.typeofpurchase}}</td>
                                         <!-- <td
                                             *ngIf="categoryId != 16 && categoryId !=18 && categoryId !=20 && categoryId !=21   && categoryId !=22 && categoryId !=23">
@@ -3656,7 +3666,7 @@
                                         <!-- <td *ngIf="categoryId == 23 ">{{ de.category }}</td> -->
                                         <td *ngIf="categoryId == 22 ">{{ de.franchise_type }}</td>
                                         <td *ngIf="categoryId == 22 || categoryId == 23 ">{{ de.sub_category }}</td>
-        
+
                                         <td *ngIf="categoryId == 20 ">{{ de.combustion }}</td>
                                         <td *ngIf="categoryId == 20 ">{{ de.composing }}</td>
                                         <td *ngIf="categoryId == 20 ">{{ de.landfill }}</td>
@@ -3673,12 +3683,10 @@
                                             de.franchise_space }}</td>
                                         <td *ngIf="categoryId == 18 ">{{ de.scope1emissions }}</td>
                                         <td *ngIf="categoryId == 18 ">{{ de.scope2emissions }}</td>
-        
-                                        <td
-                                            *ngIf="categoryId == 16 || categoryId == 21 || categoryId == 22   ">
+
+                                        <td *ngIf="categoryId == 16 || categoryId == 21 || categoryId == 22   ">
                                             {{ de.scope1_emission }}</td>
-                                        <td
-                                            *ngIf="categoryId == 16 || categoryId == 21 || categoryId == 22  ">
+                                        <td *ngIf="categoryId == 16 || categoryId == 21 || categoryId == 22  ">
                                             {{ de.scope2_emission }}</td>
                                         <td *ngIf="categoryId == 15">{{ de.typeof_homeoffice_name }}</td>
                                         <td *ngIf="categoryId == 15">{{ de.noofdays }}</td>
@@ -3701,7 +3709,7 @@
                                             }}</td>
                                         <td *ngIf="categoryId == 10 || categoryId == 17">{{ de.storage_facility_type
                                             }}</td>
-        
+
                                         <!-- <td *ngIf="categoryId==1 || categoryId==5 || categoryId==7">
                                             <p-cellEditor><ng-template pTemplate="input">
                                                     <input name="readingValue_{{ ri }}" id="{{ ri }}" pInputText type="text"
@@ -3712,7 +3720,7 @@
                                                 </ng-template>{{ de.readingValue }}</p-cellEditor>
                                         </td> -->
                                         <!-- <td *ngIf="categoryId==1">{{ de.blendType }}</td> -->
-        
+
                                         <!-- <td *ngIf="categoryId==1"><p-cellEditor><ng-template pTemplate="input">
                                                     <input name="blendPercent_{{ ri }}" id="{{ ri }}" pInputText type="text"
                                                         [(ngModel)]="de.blendPercent" ngModel #blendPercent="ngModel">
@@ -3720,7 +3728,7 @@
                                                 <ng-template pTemplate="output">
                                                     {{ de.blendPercent }}
                                                 </ng-template>{{ de.blendPercent }}</p-cellEditor></td> -->
-        
+
                                         <!-- <td *ngIf="categoryId==2"><p-cellEditor><ng-template pTemplate="input">
                                                     <input name="refAmount_{{ ri }}" id="{{ ri }}" pInputText type="text"
                                                         [(ngModel)]="de.refAmount" ngModel #refAmount="ngModel">
@@ -3751,7 +3759,7 @@
                                                 <ng-template pTemplate="output">
                                                     {{ de.leakagePerOfCapacity }}
                                                 </ng-template>{{ de.leakagePerOfCapacity }}</p-cellEditor></td> -->
-<!--         
+                                        <!--         
                                         <td *ngIf="categoryId==3"><p-cellEditor><ng-template pTemplate="input">
                                                     <input name="quantityOfCO2makeup_{{ ri }}" id="{{ ri }}" pInputText
                                                         type="text" [(ngModel)]="de.quantityOfCO2makeup" ngModel
@@ -3777,9 +3785,9 @@
                                                     {{ de.amount }}
                                                 </ng-template>{{ de.amount }}</p-cellEditor></td> -->
                                         <td *ngIf="categoryId==5">{{ de.sourceName }}</td>
-        
-        
-        
+
+
+
                                         <!-- <td>
                                             <div class="view-details">
                                                 <i class="pi pi-eye pt-2 text-white" title="info"
@@ -3933,7 +3941,7 @@
                                         <td *ngIf="categoryId==2 || categoryId==4">{{
                                             status.emission_storage }}</td>
                                          <td></td> -->
-                                        <!-- <td *ngIf="status.status == 'S'">
+                                    <!-- <td *ngIf="status.status == 'S'">
                                             <span class="statusButton" [ngClass]="{
                                                 Rejected:
                                                     status.status === Rejected,
@@ -3970,13 +3978,13 @@
                                             </span>
                                         </td> -->
 
-                                    <!-- </tr> --> 
+                                    <!-- </tr> -->
                                 </ng-template>
                             </p-table>
                         </div>
 
-                   
-          
+
+
                     </p-tabPanel>
 
                     <p-tabPanel header="Settings">

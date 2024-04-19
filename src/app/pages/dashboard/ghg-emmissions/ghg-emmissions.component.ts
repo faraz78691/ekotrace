@@ -403,7 +403,7 @@ export class GhgEmmissionsComponent implements OnDestroy {
         enabled: false
       },
       legend: {
-    fontSize:'14px'
+    fontSize:'12px'
       },
       colors: ['#213D49', '#46A5CD', '#FFD914'],
       series: this.scopeWiseSeries,
@@ -422,7 +422,7 @@ export class GhgEmmissionsComponent implements OnDestroy {
         breakpoint: 480,
         options: {
           legend: {
-            fontSize:'14px',
+            fontSize:'12px',
             position: 'bottom',
             offsetX: -10,
             offsetY: 0
@@ -439,7 +439,7 @@ export class GhgEmmissionsComponent implements OnDestroy {
             total: {
               enabled: true,
               style: {
-                fontSize: '13px',
+                fontSize: '12px',
                 fontWeight: 900
               },
               formatter: function(val) {
