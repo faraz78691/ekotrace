@@ -355,6 +355,12 @@ export const menu = [
                 iconSRC: 'assets/img/biling_icon_211.png',
                 path: ['billing']
             },
+            // {
+            //     name: 'Billing',
+            //     iconClasses: 'fas fa-folder',
+            //     iconSRC: 'assets/img/biling_icon_211.png',
+            //     path: ['adminBilling']
+            // },
         ]
     },
     {

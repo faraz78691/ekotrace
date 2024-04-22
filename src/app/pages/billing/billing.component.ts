@@ -38,7 +38,7 @@ export class BillingComponent {
     FacilityData = 'none';
     FacilityFullData = 'none';
     NoData = 'none';
-    LocData: Facility[] = [];
+    // companyDetails: any[] = [];
     id_var: any;
     public userdetails: UserInfo;
     constructor(
@@ -60,7 +60,7 @@ export class BillingComponent {
             let jsonObj = JSON.parse(userInfo);
             this.loginInfo = jsonObj as LoginInfo;
         }
-        this.getTenantsById(Number(this.loginInfo.tenantID));
+        // this.getTenantsById(Number(this.loginInfo.tenantID));
 
         this.updatedtheme = this.themeservice.getValue('theme');
         this.getAllCountryCode();
@@ -70,36 +70,36 @@ export class BillingComponent {
     ngDoCheck() {
         this.updatedtheme = this.themeservice.getValue('theme');
     }
-    //method for get tenant details by id
-    getTenantsById(id: number) {
-        this.companyService.getTenantsDataById(id).subscribe((response) => {
-            this.companyDetails = response;
-            this.uploadedImageUrl =
-                this.rootUrl +
-                (response.logoName === '' || response.logoName === null
-                    ? 'defaultimg.png'
-                    : response.logoName);
-            this.expirationDate = new Date(this.companyDetails.licenseExpired);
-            this.expirationDate.setDate(this.expirationDate.getDate() - 1);
-            const currentDate = new Date();
-            const licenseExpiredDate = new Date(this.loginInfo.licenseExpired);
-            this.isExpired = licenseExpiredDate < currentDate;
+    // method for get tenant details by id
+    // getTenantsById(id: number) {
+    //     this.companyService.getTenantsDataById(id).subscribe((response) => {
+    //         this.companyDetails = response;
+    //         this.uploadedImageUrl =
+    //             this.rootUrl +
+    //             (response.logoName === '' || response.logoName === null
+    //                 ? 'defaultimg.png'
+    //                 : response.logoName);
+    //         this.expirationDate = new Date(this.companyDetails.licenseExpired);
+    //         this.expirationDate.setDate(this.expirationDate.getDate() - 1);
+    //         const currentDate = new Date();
+    //         const licenseExpiredDate = new Date(this.loginInfo.licenseExpired);
+    //         this.isExpired = licenseExpiredDate < currentDate;
 
-            // Calculate the difference in days
-            const timeDifference =
-                this.expirationDate.getTime() - currentDate.getTime();
-            let leftDays = Math.ceil(timeDifference / (1000 * 3600 * 24));
-            if (leftDays <= 7) {
-                this.messages = [
-                    {
-                        severity: 'warn',
-                        summary: 'Warning',
-                        detail: 'Your plan is about to expire. Please renew it. Contact the platform admin for more information.'
-                    }
-                ];
-            }
-        });
-    };
+    //         // Calculate the difference in days
+    //         const timeDifference =
+    //             this.expirationDate.getTime() - currentDate.getTime();
+    //         let leftDays = Math.ceil(timeDifference / (1000 * 3600 * 24));
+    //         if (leftDays <= 7) {
+    //             this.messages = [
+    //                 {
+    //                     severity: 'warn',
+    //                     summary: 'Warning',
+    //                     detail: 'Your plan is about to expire. Please renew it. Contact the platform admin for more information.'
+    //                 }
+    //             ];
+    //         }
+    //     });
+    // };
 
     //method for send plan renewal mail
     onClick() {
@@ -136,39 +136,60 @@ export class BillingComponent {
     };
 
     //Retrieves facility data for the specified tenant ID and updates the UI based on the data availability.
-    facilityGet(tenantId) {
-        this.userService.getPackageDetails().subscribe({
-            next: (response: any) => {
+    // facilityGet(tenantId) {
+    //     this.userService.getPackageDetails().subscribe({
+    //         next: (response: any) => {
 
-                this.LocData = response.categories;
-                if (this.LocData.length == 0) {
+    //             this.companyDetails = response.categories;
+    //             if (this.companyDetails.length == 0) {
 
-                    this.NoData = 'block';
-                    this.FacilityData = 'none';
-                    this.FacilityFullData = 'none';
-                } else {
+    //                 this.NoData = 'block';
+    //                 this.FacilityData = 'none';
+    //                 this.FacilityFullData = 'none';
+    //             } else {
 
-                    this.FacilityData = 'block';
-                    this.FacilityFullData = 'flex';
-                    this.NoData = 'none';
-                }
-                // if (this.facilityrefresh == true) this.defaultData();
-                // localStorage.setItem('FacilityCount', String(this.LocData.length));
-            }, error: err => {
-                console.log(err)
-            }
-        })
-        console.log(this.LocData);
+    //                 this.FacilityData = 'block';ata
+    //                 this.FacilityFullData = 'flex';
+    //                 this.NoData = 'none';
+    //             }
+    //             // if (this.facilityrefresh == true) this.defaultData();
+    //             // localStorage.setItem('FacilityCount', String(this.companyDetails.length));
+    //         }, error: err => {
+    //             console.log(err)
+    //         }
+    //     })
+    //     console.log(this.companyDetails);
 
-    };
+    // };
 
 
     getpackagesByusers() {
-        this.userService.getNewPackageDetails().subscribe({
+        const formData = new URLSearchParams();
+        formData.set('tenant_id', this.loginInfo.tenantID.toString())
+        this.userService.getNewPackageDetails(formData.toString()).subscribe({
             next: (response: any) => {
 
-                this.LocData = response.categories;
-                if (this.LocData.length == 0) {
+                this.companyDetails = response.userinfo[0];
+                this.expirationDate = new Date(this.companyDetails.expiration);
+                this.expirationDate.setDate(this.expirationDate.getDate() - 1);
+                const currentDate = new Date();
+                const licenseExpiredDate = new Date(this.loginInfo.licenseExpired);
+                this.isExpired = licenseExpiredDate < currentDate;
+    
+                // Calculate the difference in days
+                const timeDifference =
+                    this.expirationDate.getTime() - currentDate.getTime();
+                let leftDays = Math.ceil(timeDifference / (1000 * 3600 * 24));
+                if (leftDays <= 7) {
+                    this.messages = [
+                        {
+                            severity: 'warn',
+                            summary: 'Warning',
+                            detail: 'Your plan is about to expire. Please renew it. Contact the platform admin for more information.'
+                        }
+                    ];
+                }
+                if (this.companyDetails) {
 
                     this.NoData = 'block';
                     this.FacilityData = 'none';
@@ -180,40 +201,40 @@ export class BillingComponent {
                     this.NoData = 'none';
                 }
                 // if (this.facilityrefresh == true) this.defaultData();
-                // localStorage.setItem('FacilityCount', String(this.LocData.length));
+                // localStorage.setItem('FacilityCount', String(this.companyDetails.length));
             }, error: err => {
                 console.log(err)
             }
         })
-        console.log(this.LocData);
+        console.log(this.companyDetails);
 
     };
     
-    getUsers() {
-        this.userService.getNewPackageDetails().subscribe({
-            next: (response: any) => {
+    // getUsers() {
+    //     this.userService.getNewPackageDetails().subscribe({
+    //         next: (response: any) => {
 
-                this.LocData = response.categories;
-                if (this.LocData.length == 0) {
+    //             this.companyDetails = response.categories;
+    //             if (this.companyDetails.length == 0) {
 
-                    this.NoData = 'block';
-                    this.FacilityData = 'none';
-                    this.FacilityFullData = 'none';
-                } else {
+    //                 this.NoData = 'block';
+    //                 this.FacilityData = 'none';
+    //                 this.FacilityFullData = 'none';
+    //             } else {
 
-                    this.FacilityData = 'block';
-                    this.FacilityFullData = 'flex';
-                    this.NoData = 'none';
-                }
-                // if (this.facilityrefresh == true) this.defaultData();
-                // localStorage.setItem('FacilityCount', String(this.LocData.length));
-            }, error: err => {
-                console.log(err)
-            }
-        })
-        console.log(this.LocData);
+    //                 this.FacilityData = 'block';
+    //                 this.FacilityFullData = 'flex';
+    //                 this.NoData = 'none';
+    //             }
+    //             // if (this.facilityrefresh == true) this.defaultData();
+    //             // localStorage.setItem('FacilityCount', String(this.companyDetails.length));
+    //         }, error: err => {
+    //             console.log(err)
+    //         }
+    //     })
+    //     console.log(this.companyDetails);
 
-    };
+    // };
     showAddFacilityDialog() {
         this.visible = true;
         this.facilityDetails = new Facility();

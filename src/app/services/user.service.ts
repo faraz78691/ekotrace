@@ -66,7 +66,10 @@ export class UserService {
     public getPackageDetails() {
         return this.http.get<boolean>(this.apiURL + '/getpackages');
     }
-    public getNewPackageDetails() {
+    public getNewPackageDetails(data) {
+        return this.http.post(this.apiURL + '/packageById', data);
+    }
+    public getAdminPackageDetails() {
         return this.http.get(this.apiURL + '/getpackages');
     }
     public getBillingUsers(data) {

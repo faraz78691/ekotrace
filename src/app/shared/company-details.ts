@@ -23,5 +23,6 @@ export class CompanyDetails {
     dialCode: string;
     currencySymbol:string;
     categories:any[]
+    expiration:any;
 
 }

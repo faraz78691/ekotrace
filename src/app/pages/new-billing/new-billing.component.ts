@@ -244,7 +244,7 @@ export class NewBillingComponent {
   GetAllPackages() {
       let tenantId = this.loginInfo.tenantID;
       this.facilitydata = false;
-      this.UserService.getNewPackageDetails().subscribe((response:any) => {
+      this.UserService.getAdminPackageDetails().subscribe((response:any) => {
           this.packageList = response.categories;
           this.groupdata = true;
            this.groupdetails = this.packageList[0]

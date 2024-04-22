@@ -154,6 +154,7 @@ export class Scope2TrackingComponent {
     wasteSubTypes: any[] = [];
     waterWasteId = 1;
     waterWasteMethod: any[] = [];
+    recycleMethod: any[] = [];
     wasteUnitsGrid: any[] = [];
     noofemployees_1 = ""
     noofemployees_2 = ""
@@ -219,6 +220,9 @@ export class Scope2TrackingComponent {
     selectedtemplate = '';
     mode_type: any[] = [];
     carFuel_type: any[] = [];
+    wasteMethod: string;
+    recycle = false;
+    recycleSelectedMethod = ''
 
     storagef_typeValue: string = this.storageGrid[0]?.storagef_type;
     openDatapointDialog() {
@@ -262,7 +266,7 @@ export class Scope2TrackingComponent {
         private toastr: ToastrService,
         private confirmationService: ConfirmationService
     ) {
-        
+
         this.facilityService.headerTracking.set(true);
         this.SubCatAllData = new ManageDataPointSubCategories();
         this.AssignedDataPoint = [];
@@ -290,6 +294,7 @@ export class Scope2TrackingComponent {
         this.VehicleType = [];
         this.dataEntry.unit = "";
         this.SubCategoryType = [];
+
 
         this.isInputEdited;
         this.dataEntry.typeID;
@@ -347,6 +352,19 @@ export class Scope2TrackingComponent {
                 {
                     "id": 3,
                     "template": "Template 3"
+                }
+
+            ];
+        this.recycleMethod =
+            [
+
+                {
+                    "id": 1,
+                    "template": "Open Loop"
+                },
+                {
+                    "id": 2,
+                    "template": "Close Loop"
                 }
 
             ];
@@ -617,27 +635,31 @@ export class Scope2TrackingComponent {
             }
             ];
         this.waterWasteMethod =
-            [{
-                "id": 'recycling',
-                "water_type": "Recycling"
-            },
-            {
-                "id": 'incineration',
-                "water_type": "Incineration"
-            },
-            {
-                "id": 'composting',
-                "water_type": "Composting"
-            },
-            {
-                "id": 'landfill',
-                "water_type": "Landfill"
-            },
-            {
-                "id": 'anaerobic digestion',
-                "water_type": "Anaerobic digestion"
-            }
-
+            [
+                {
+                    "id": 'reuse',
+                    "water_type": "Reuse"
+                },
+                {
+                    "id": 'recycling',
+                    "water_type": "Recycling"
+                },
+                {
+                    "id": 'incineration',
+                    "water_type": "Incineration"
+                },
+                {
+                    "id": 'composting',
+                    "water_type": "Composting"
+                },
+                {
+                    "id": 'landfill',
+                    "water_type": "Landfill"
+                },
+                {
+                    "id": 'anaerobic digestion',
+                    "water_type": "Anaerobic digestion"
+                }
             ];
         this.expectedElectricityUnitsGrid =
             [
@@ -794,6 +816,7 @@ export class Scope2TrackingComponent {
     };
     //retrieves assigned data points for a facility and handles the response to update the UI accordingly.
     GetAssignedDataPoint(facilityID: number) {
+        this.recycle = false;
 
         if (facilityID == 0) {
             return
@@ -1048,6 +1071,7 @@ export class Scope2TrackingComponent {
 
     //Updates selected data point and category, fetches emission factor, checks for existing entries, and resets the form.
     SubCatData(data: any, catID: any) {
+        this.recycle = false;
         this.isVisited = false;
 
         this.id_var = data.manageDataPointSubCategorySeedID;
@@ -1210,6 +1234,15 @@ export class Scope2TrackingComponent {
         //   this.checkEntryexist();
         this.resetForm();
     };
+
+    wastemethodChange(event: any) {
+        console.log(event.value);
+        if (event.value == 'Recycling') {
+            this.recycle = true
+        } else {
+            this.recycle = false;
+        }
+    }
 
     setActive(index: number): void {
         this.categoryId = index;
@@ -2176,8 +2209,9 @@ export class Scope2TrackingComponent {
             formData.set('product', this.waterWasteProduct);
             formData.set('waste_type', form.value.wasteSubCategory);
             formData.set('total_waste', form.value.waste_quantity);
-            formData.set('method', form.value.waterWasteType);
+            formData.set('method', this.wasteMethod);
             formData.set('unit', form.value.wasteUnits);
+            formData.set('loop ', this.recycleSelectedMethod);
             formData.set('id', form.value.wasteType);
             formData.set('months', monthString);
             formData.set('year', this.dataEntry.year);
@@ -2204,6 +2238,7 @@ export class Scope2TrackingComponent {
                         this.getWasteSubCategory("1")
 
                     }
+                    this.recycle = false;
                 },
                 error: (err) => {
                     this.notification.showError(

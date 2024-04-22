@@ -171,12 +171,12 @@ const routes: Routes = [
                 component: BillingComponent,
                 data: { roles: ['Super Admin'] }
             },
-            // {
-            //     path: 'billing',
-            //     canActivate: [RoleGuard],
-            //     component: NewBillingComponent,
-            //     data: { roles: ['Super Admin'] }
-            // },
+            {
+                path: 'adminBilling',
+                canActivate: [RoleGuard],
+                component: NewBillingComponent,
+                data: { roles: ['Super Admin'] }
+            },
             {
                 path: 'carbonOffset',
                 canActivate: [RoleGuard],
