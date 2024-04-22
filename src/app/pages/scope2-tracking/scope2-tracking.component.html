@@ -272,33 +272,33 @@
                 <p-tabView [ngStyle]="{display: facilityhavedp}" #dataentryTab activeIndex="{{ activeindex }}">
                     <p-tabPanel header="Data Entry">
                         <div class="row text-white border-bottom">
-                            <p *ngIf="categoryId !=24 && categoryId !=25 && categoryId !=26"
+                            <p *ngIf="id_var !=24 && id_var !=25 && id_var !=26"
                                 class="mb-2 mt-3 ml-4 text-dark ct_fw_600">
                                 {{ SubCatAllData.subCatName }}
                             </p>
-                            <p *ngIf="categoryId ==24" class="mb-2 mt-3 ml-4 text-dark">
+                            <p *ngIf="id_var ==24" class="mb-2 mt-3 ml-4 text-dark">
                                 Flight
                             </p>
-                            <p *ngIf="categoryId ==25" class="mb-2 mt-3 ml-4 text-dark">
+                            <p *ngIf="id_var ==25" class="mb-2 mt-3 ml-4 text-dark">
                                 Hotel Stay
                             </p>
-                            <p *ngIf="categoryId ==26" class="mb-2 mt-3 ml-4 text-dark">
+                            <p *ngIf="id_var ==26" class="mb-2 mt-3 ml-4 text-dark">
                                 Other modes
                             </p>
                         </div>
                         <form #dataEntryForm="ngForm" (ngSubmit)="EntrySave(dataEntryForm)">
 
                             <div class="trackingContent"
-                                *ngIf="categoryId ==1 || categoryId == 2 ||   categoryId == 3  || categoryId == 4 || categoryId == 5 || categoryId == 6 || categoryId == 6 || categoryId == 7">
+                                *ngIf="id_var ==1 || id_var == 2 ||   id_var == 3  || id_var == 4 || id_var == 5 || id_var == 6 || id_var == 6 || id_var == 7">
                                 <div class="row mt-4 mx-2">
                                     <div class="col-4"
-                                        *ngIf="categoryId==1 ||categoryId==2 || SubCatAllData.manageDataPointSubCategorySeedID == 1002 || categoryId == 7 ">
+                                        *ngIf="id_var==1 ||id_var==2 || SubCatAllData.manageDataPointSubCategorySeedID == 1002 || id_var == 7 ">
                                         <label for="fname">Type</label>
                                         <p-dropdown class="ct_select_op_input" ngModel [options]="SubCategoryType"
                                             optionLabel="Item" optionValue="subCatTypeID" name="subCatType"
                                             #subCatType="ngModel" [(ngModel)]="dataEntry.typeID"></p-dropdown>
                                     </div>
-                                    <div class="col-4" *ngIf="categoryId==1 || categoryId == 5 || categoryId == 7">
+                                    <div class="col-4" *ngIf="id_var==1 || id_var == 5 || id_var == 7">
                                         <label for="fname">Reading Value</label>
                                         <div class=" position-relative">
                                             <input required ngModel name="readingvalue" #readingvalue="ngModel"
@@ -324,7 +324,7 @@
                                         </p>
                                     </div>
 
-                                    <div *ngIf="categoryId == 5 && SubCatAllData.manageDataPointSubCategorySeedID != 1002"
+                                    <div *ngIf="id_var == 5 && SubCatAllData.manageDataPointSubCategorySeedID != 1002"
                                         class="col-4">
                                         <label for="fname">Grid</label>
                                         <p-dropdown class="ct_select_op_input" ngModel [options]="SubCategoryType"
@@ -333,7 +333,7 @@
                                             [(ngModel)]="RenewableElectricity.electricityRegionID"></p-dropdown>
                                     </div>
 
-                                    <div class="col-5" *ngIf="categoryId==2">
+                                    <div class="col-5" *ngIf="id_var==2">
                                         <label for="fname">Amount of refrigent used</label>
                                         <div class=" position-relative">
                                             <input required ngModel name="refAmount" #refAmount="ngModel"
@@ -358,7 +358,7 @@
                                             Reading value required.
                                         </p>
                                     </div>
-                                    <div class="col-4" *ngIf="categoryId==3">
+                                    <div class="col-4" *ngIf="id_var==3">
                                         <label for="fname">No. of Extinguisher</label>
                                         <input required ngModel name="ExtinguisherNo" #ExtinguisherNo="ngModel"
                                             [(ngModel)]="FireExtinguisherDE.numberOfExtinguisher" ExtinguisherNo
@@ -376,7 +376,7 @@
                                             No. of Extinguisher required.
                                         </p>
                                     </div>
-                                    <div class="col-4" *ngIf="categoryId==3">
+                                    <div class="col-4" *ngIf="id_var==3">
                                         <label pTooltip="Quantity of CO2 Makeup" tooltipPosition="top" for="fname">CO2
                                             MakeUp</label>
                                         <div class="position-relative">
@@ -395,7 +395,7 @@
                                             Quantity of CO2 MakeUp value required.
                                         </p>
                                     </div>
-                                    <div *ngIf="categoryId==6" class="row">
+                                    <div *ngIf="id_var==6" class="row">
                                         <div class="mb-3"
                                             [ngClass]="typeEV == true ? 'col-4': typeBusCoach == true ? 'col-4': 'col-4'">
                                             <label for="fname">Vehicle Type</label>
@@ -484,10 +484,10 @@
                                         </div>
                                     </div>
 
-                                    <div *ngIf="categoryId==6" class="col-4">
+                                    <div *ngIf="id_var==6" class="col-4">
 
                                     </div>
-                                    <!-- <div class="col-8" *ngIf="categoryId==8">
+                                    <!-- <div class="col-8" *ngIf="id_var==8">
                                         <label for="fname">No. of Vehicles</label>
                                         <input required ngModel name="NoOfVehicles" #NoOfVehicles="ngModel"
                                             [(ngModel)]="VehicleDE.noOfVehicles" NoOfVehicles id="search-input" type="text"
@@ -512,7 +512,7 @@
                                             [(ngModel)]="dataEntry.unit" name="unitSet" #unitSet="ngModel"></p-dropdown>
                                        -->
                                     <!-- </div> -->
-                                    <div class="col-4" *ngIf="categoryId==1">
+                                    <div class="col-4" *ngIf="id_var==1">
                                         <label for="fname">Calorific value (optional)</label>
 
                                         <input required ngModel name="calorificValue" type="text"
@@ -528,7 +528,7 @@
                                     </div> -->
                                 </div>
 
-                                <div class="row mt-4 mx-2" *ngIf="categoryId==3">
+                                <div class="row mt-4 mx-2" *ngIf="id_var==3">
                                     <div class="col-6 mb-3">
                                         <label for="fname">Identity of Fire Extinguisher(Optional)</label>
                                         <input required ngModel name="ExtinguisherID" #ExtinguisherID="ngModel"
@@ -544,10 +544,10 @@
                                             <i class="pi pi-download text-white pl-2" title="download"></i></a>
                                     </div> -->
                                 </div>
-                                <div class="row mt-4 mx-2" *ngIf="categoryId==6">
+                                <div class="row mt-4 mx-2" *ngIf="id_var==6">
 
                                 </div>
-                                <div class="row mt-4 mx-2" *ngIf="categoryId==5">
+                                <div class="row mt-4 mx-2" *ngIf="id_var==5">
                                     <div *ngIf="SubCatAllData.manageDataPointSubCategorySeedID == 1002" class="col-4">
                                         <label for="fname">Source(Optional)</label>
                                         <p-dropdown class="ct_select_op_input" ngModel [options]="ElectricitySource"
@@ -558,7 +558,7 @@
 
                                 </div>
                                 <div class="row mt-4 mx-2"
-                                    *ngIf="categoryId==1 && (dataEntry.typeID == 1 || dataEntry.typeID == 2)">
+                                    *ngIf="id_var==1 && (dataEntry.typeID == 1 || dataEntry.typeID == 2)">
                                     <div class="col-12">
                                         <label for="fname">Blend Type</label>
                                         <p-dropdown class="ct_select_op_input" ngModel [options]="blendType"
@@ -591,7 +591,7 @@
                                     </div>
                                 </div>
                                 <div class="trackingFooter"
-                                    *ngIf="categoryId ==1 || categoryId == 2 ||   categoryId == 3  || categoryId == 4 || categoryId == 5 || categoryId == 6 ||  categoryId == 7">
+                                    *ngIf="id_var ==1 || id_var == 2 ||   id_var == 3  || id_var == 4 || id_var == 5 || id_var == 6 ||  id_var == 7">
                                     <div class="row my-3 mb-0 pb-3 mx-2">
                                         <div class="col-12">
                                             <label for="fname ">Attachments</label>
@@ -615,7 +615,7 @@
 
 
                             <!-- scope 3 categores stats from here -->
-                            <div class="trackingFooter" *ngIf="categoryId ==8">
+                            <div class="trackingFooter" *ngIf="id_var ==8">
                                 <div class="row p-2">
 
                                     <div class="col-md-5">
@@ -689,7 +689,7 @@
                                     </button>
                                 </div>
                             </div>
-                            <div class="trackingFooter" *ngIf="categoryId ==10">
+                            <div class="trackingFooter" *ngIf="id_var ==10">
                                 <div class="row mt-4 mb-3 mb-5 pb-5 mx-2">
                                     <label for="">VEHICLES</label>
                                     <p-inputSwitch [(ngModel)]="vehcilestransporationchecked"
@@ -846,7 +846,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="trackingFooter" *ngIf="categoryId ==11">
+                            <div class="trackingFooter" *ngIf="id_var ==11">
                                 <div class="row mt-4 mb-3 mb-5 pb-5 mx-2">
 
                                     <div class="col-12">
@@ -1051,7 +1051,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="trackingFooter" *ngIf="categoryId ==12">
+                            <div class="trackingFooter" *ngIf="id_var ==12">
                                 <div class="row mt-4 mb-3 mb-0 pb-3 mx-2">
 
                                     <div class="col-12">
@@ -1127,7 +1127,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="trackingFooter" *ngIf="categoryId ==14">
+                            <div class="trackingFooter" *ngIf="id_var ==14">
                                 <div class="row mt-4 mb-3 mb-0 pb-3 mx-2">
 
                                     <div class="col-12">
@@ -1341,7 +1341,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="trackingFooter" *ngIf="categoryId ==15">
+                            <div class="trackingFooter" *ngIf="id_var ==15">
                                 <div class="row mt-4 mb-0 pb-3 mx-2">
 
                                     <div class="col-12">
@@ -1423,7 +1423,7 @@
                                 </div>
                             </div>
 
-                            <div class="trackingFooter" *ngIf="categoryId ==16">
+                            <div class="trackingFooter" *ngIf="id_var ==16">
                                 <div class="row mt-4 mb-3 mb-5 pb-5 mx-2">
                                     <label for="">LEASED FACILITIES</label>
                                     <p-inputSwitch [(ngModel)]="leasefacilitieschecked"
@@ -1625,7 +1625,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="trackingFooter" *ngIf="categoryId ==17">
+                            <div class="trackingFooter" *ngIf="id_var ==17">
                                 <div class="row mt-4 mb-3 mb-5 pb-5 mx-2">
                                     <label for="">VEHICLES</label>
                                     <p-inputSwitch [(ngModel)]="vehcilestransporationchecked"
@@ -1779,7 +1779,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="trackingFooter" *ngIf="categoryId ==18">
+                            <div class="trackingFooter" *ngIf="id_var ==18">
                                 <div class="row mt-4 mb-3 mb-5 pb-5 mx-2">
 
                                     <div class="col-12">
@@ -1984,7 +1984,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="trackingFooter" *ngIf="categoryId ==19">
+                            <div class="trackingFooter" *ngIf="id_var ==19">
                                 <div class="row mt-4 mb-3 mb-5 pb-5 mx-2">
 
                                     <div class="col-12">
@@ -2151,7 +2151,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="trackingFooter" *ngIf="categoryId ==20">
+                            <div class="trackingFooter" *ngIf="id_var ==20">
                                 <div class="row mt-4 mb-3 mb-5 pb-5 mx-2">
 
                                     <div class="col-12">
@@ -2319,7 +2319,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="trackingFooter" *ngIf="categoryId ==21">
+                            <div class="trackingFooter" *ngIf="id_var ==21">
                                 <div class="row mt-4 mb-3 mb-5 pb-5 mx-2">
                                     <label for="">LEASED FACILITIES</label>
                                     <p-inputSwitch [(ngModel)]="leasefacilitieschecked"
@@ -2520,7 +2520,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="trackingFooter" *ngIf="categoryId ==22">
+                            <div class="trackingFooter" *ngIf="id_var ==22">
                                 <div class="row mt-4 mb-3 mb-5 pb-5 mx-2">
 
                                     <div class="col-12">
@@ -2655,7 +2655,7 @@
                                 </div>
                             </div>
 
-                            <div class="trackingFooter" *ngIf="categoryId ==23">
+                            <div class="trackingFooter" *ngIf="id_var ==23">
                                 <div class="row mt-4 mb-3 mb-5 pb-5 mx-2">
 
                                     <div class="col-12">
@@ -2931,7 +2931,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="trackingFooter" *ngIf="categoryId ==24">
+                            <div class="trackingFooter" *ngIf="id_var ==24">
                                 <div class="row mt-4 mb-3 mb-5 pb-5 mx-2">
 
                                     <div class="col-12">
@@ -3189,7 +3189,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="trackingFooter" *ngIf="categoryId ==25">
+                            <div class="trackingFooter" *ngIf="id_var ==25">
                                 <div class="row mt-4 mb-3 mb-5 pb-5 mx-2">
 
                                     <div class="col-12">
@@ -3253,7 +3253,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="trackingFooter" *ngIf="categoryId ==26">
+                            <div class="trackingFooter" *ngIf="id_var ==26">
                                 <div class="row mt-4 mb-3 mb-5 pb-5 mx-2">
 
                                     <div class="col-12">
@@ -3372,226 +3372,229 @@
                                 dataKey="id">
                                 <ng-template pTemplate="header">
                                     <tr>
-                                        <th *ngIf="categoryId !=10 && categoryId != 11">Category</th>
-                                        <!-- <th *ngIf="categoryId==13 && selectMode==1">Flight Class</th>
-                                        <th *ngIf="categoryId==13 && (selectMode==3)">Type</th>
-                                        <th *ngIf="categoryId==13 && (selectMode==3)">Fuel Type</th>
-                                        <th *ngIf="categoryId==13 && (selectMode==3 || selectMode ==1)">No of Passengers</th>
-                                        <th *ngIf="categoryId==13 && (selectMode==3 || selectMode ==1)">Distance</th>
-                                        <th *ngIf="categoryId==13 && (selectMode==3 )">No of Trips</th>
-                                        <th *ngIf="categoryId==13 && (selectMode ==1)">Business unit</th> -->
-                                        <th *ngIf="categoryId==18 ">Sub Activity</th>
-                                        <th *ngIf="categoryId==18">Processing Activity</th>
-                                        <th *ngIf="categoryId==18">Calculation Method</th>
+                                        <th *ngIf="id_var !=10 && id_var != 11">Category</th>
+                                        <!-- <th *ngIf="id_var==13 && selectMode==1">Flight Class</th>
+                                        <th *ngIf="id_var==13 && (selectMode==3)">Type</th>
+                                        <th *ngIf="id_var==13 && (selectMode==3)">Fuel Type</th>
+                                        <th *ngIf="id_var==13 && (selectMode==3 || selectMode ==1)">No of Passengers</th>
+                                        <th *ngIf="id_var==13 && (selectMode==3 || selectMode ==1)">Distance</th>
+                                        <th *ngIf="id_var==13 && (selectMode==3 )">No of Trips</th>
+                                        <th *ngIf="id_var==13 && (selectMode ==1)">Business unit</th> -->
+                                        <th *ngIf="id_var==18 ">Sub Activity</th>
+                                        <th *ngIf="id_var==18">Processing Activity</th>
+                                        <th *ngIf="id_var==18">Calculation Method</th>
                                         <th
-                                            *ngIf="categoryId==20 || categoryId ==16 || categoryId ==22 || categoryId ==21 ||  categoryId ==1 || categoryId ==23 || categoryId ==8 || categoryId ==23">
+                                            *ngIf="id_var==20 || id_var ==16 || id_var ==22 || id_var ==21 ||  id_var ==1 || id_var ==23 || id_var ==8 || id_var ==23">
                                             Sub Category</th>
-                                        <th *ngIf="categoryId==20">Total Waste</th>
-                                        <th *ngIf="categoryId==20">Landfill</th>
-                                        <th *ngIf="categoryId==20">Combustion</th>
-                                        <th *ngIf="categoryId==20">Recycling</th>
-                                        <th *ngIf="categoryId==20">Composing</th>
+                                        <th *ngIf="id_var==20">Total Waste</th>
+                                        <th *ngIf="id_var==20">Landfill</th>
+                                        <th *ngIf="id_var==20">Combustion</th>
+                                        <th *ngIf="id_var==20">Recycling</th>
+                                        <th *ngIf="id_var==20">Composing</th>
                                         <th>Year</th>
                                         <th>Month</th>
-                                        <th *ngIf="categoryId==2">
+                                        <th *ngIf="id_var==2">
                                             Refrigerant Amount
                                         </th>
                                         <th
-                                            *ngIf="categoryId==1 || categoryId==3 || categoryId ==16 || categoryId ==23 || categoryId ==22 ||  categoryId ==1 || categoryId ==23 || categoryId ==8">
+                                            *ngIf="id_var==1 || id_var==3 || id_var ==16 || id_var ==23 || id_var ==22 ||  id_var ==1 || id_var ==23 || id_var ==8">
                                             Quantity
                                         </th>
-                                        <th *ngIf="categoryId==15">
+                                        <th *ngIf="id_var==15">
                                             No of employees
                                         </th>
-                                        <th *ngIf="categoryId==15">
+                                        <th *ngIf="id_var==15">
                                             No of days
                                         </th>
-                                        <th *ngIf="categoryId==5 || categoryId==7">
+                                        <th *ngIf="id_var==5 || id_var==7">
                                             Reading Value
                                         </th>
-                                        <th *ngIf="categoryId==5">
+                                        <th *ngIf="id_var==5">
                                             Source Name
                                         </th>
-                                        <th *ngIf="categoryId==7 || categoryId == 5" pSortableColumn="noofairconnUnits"
+                                        <th *ngIf="id_var==7 || id_var == 5" pSortableColumn="noofairconnUnits"
                                             pTooltip="Amount of refrigent used" tooltipPosition="top">
                                             Energy
                                         </th>
-                                        <th *ngIf="categoryId==3" tooltipPosition="top">
+                                        <th *ngIf="id_var==3" tooltipPosition="top">
                                             No of Extinguisher
+                                        </th>
+                                        <th *ngIf="id_var !=13 && id_var !=11">
+                                            Unit
                                         </th>
                                         <th pTooltip="Amount of Emission" tooltipPosition="top">
                                             Emission
                                         </th>
-                                        <th *ngIf="categoryId !=13 && categoryId !=11">
-                                            Unit
+                                        <th pTooltip="Status" tooltipPosition="top">
+                                            Status
                                         </th>
-                                        <th *ngIf="categoryId == 11">
+                                        <th *ngIf="id_var == 11">
                                             Water Treatment
 
                                         </th>
-                                        <th *ngIf="categoryId == 11">
+                                        <th *ngIf="id_var == 11">
                                             Water Supply
                                         </th>
 
-                                        <th *ngIf="categoryId == 20">
+                                        <th *ngIf="id_var == 20">
                                             Combustion
                                         </th>
-                                        <th *ngIf="categoryId == 20">
+                                        <th *ngIf="id_var == 20">
                                             Composing
                                         </th>
-                                        <th *ngIf="categoryId == 20">
+                                        <th *ngIf="id_var == 20">
                                             Landfill
                                         </th>
-                                        <th *ngIf="categoryId == 20">
+                                        <th *ngIf="id_var == 20">
                                             Recycling
                                         </th>
                                         <th
-                                            *ngIf="categoryId == 16 || categoryId == 21 || categoryId == 22 || categoryId == 23">
+                                            *ngIf="id_var == 16 || id_var == 21 || id_var == 22 || id_var == 23">
                                             Sub Category
 
                                         </th> 
-                                        <!-- <th  *ngIf="categoryId == 18">
+                                        <!-- <th  *ngIf="id_var == 18">
                                             Sub Activity
                                            
                                         </th>
-                                        <th  *ngIf="categoryId == 23">
+                                        <th  *ngIf="id_var == 23">
                                             Investment type
                                            
                                         </th>
-                                        <th  *ngIf="categoryId == 18">
+                                        <th  *ngIf="id_var == 18">
                                             Processing Activity
                                             
                                          </th> -->
                                         <!-- <th 
-                                            *ngIf="categoryId == 16 || categoryId ==18 || categoryId == 21 ||categoryId == 22 ||categoryId == 23">
+                                            *ngIf="id_var == 16 || id_var ==18 || id_var == 21 ||id_var == 22 ||id_var == 23">
                                             Calculation Method
                                            
                                         </th>
                                         <th 
-                                            *ngIf="categoryId == 16 || categoryId == 21 ||categoryId == 22">
+                                            *ngIf="id_var == 16 || id_var == 21 ||id_var == 22">
                                             Franchise Space
                                            
                                         </th>
                                         <th 
-                                            *ngIf="categoryId == 16 || categoryId ==18 || categoryId == 21 ||categoryId == 22">
+                                            *ngIf="id_var == 16 || id_var ==18 || id_var == 21 ||id_var == 22">
                                             Scope 1 Emission
                                            
                                         </th>
                                         <th 
-                                            *ngIf="categoryId == 16 || categoryId ==18 || categoryId == 21 ||categoryId == 22">
+                                            *ngIf="id_var == 16 || id_var ==18 || id_var == 21 ||id_var == 22">
                                             Scope 2 Emission
                                            
                                         </th> -->
-                                        <!-- <th  *ngIf="categoryId == 15">
+                                        <!-- <th  *ngIf="id_var == 15">
                                             Type of Home Office
                                            
                                         </th>
-                                        <th  *ngIf="categoryId == 15">
+                                        <th  *ngIf="id_var == 15">
                                             No of days
                                            
                                         </th>
-                                        <th  *ngIf="categoryId == 15">
+                                        <th  *ngIf="id_var == 15">
                                             No of employees
                                            
                                         </th> -->
-                                        <!-- <th  *ngIf="categoryId == 15">
+                                        <!-- <th  *ngIf="id_var == 15">
                                             No of months
                                            
                                         </th>
-                                        <th  *ngIf="categoryId == 14">
+                                        <th  *ngIf="id_var == 14">
                                             Type
                                            
                                         </th>
-                                        <th  *ngIf="categoryId == 14">
+                                        <th  *ngIf="id_var == 14">
                                             Average Employee Commute
                                            
                                         </th> -->
-                                        <!-- <th  *ngIf="categoryId == 14">
+                                        <!-- <th  *ngIf="id_var == 14">
                                             Average Commuted Distance
                                            
                                         </th>
-                                        <th  *ngIf="categoryId == 14">
+                                        <th  *ngIf="id_var == 14">
                                             Working Days
                                            
                                         </th>
-                                        <th  *ngIf="categoryId == 10 || categoryId == 17">
+                                        <th  *ngIf="id_var == 10 || id_var == 17">
                                             Vehicle Type
                                            
                                         </th>
-                                        <th  *ngIf="categoryId == 12">
+                                        <th  *ngIf="id_var == 12">
                                             Method
                                            
                                         </th>
-                                        <th  *ngIf="categoryId == 12">
+                                        <th  *ngIf="id_var == 12">
                                             Waste Type
                                            
                                         </th>
-                                        <th  *ngIf="categoryId == 10 || categoryId == 17">
+                                        <th  *ngIf="id_var == 10 || id_var == 17">
                                             Sub Category
                                            
                                         </th>
-                                        <th  *ngIf="categoryId == 10 || categoryId == 17">
+                                        <th  *ngIf="id_var == 10 || id_var == 17">
                                             Distance Travelled
                                            
                                         </th>
-                                        <th  *ngIf="categoryId == 10 || categoryId == 17">
+                                        <th  *ngIf="id_var == 10 || id_var == 17">
                                             Mass of Product
                                            
                                         </th>
-                                        <th  *ngIf="categoryId == 10 || categoryId == 17">
+                                        <th  *ngIf="id_var == 10 || id_var == 17">
                                             Storage facility
                                            
                                         </th>
                                         <th pTooltip="Data Points" tooltipPosition="top" pSortableColumn="subcatName"
-                                            *ngIf="categoryId == 1 || categoryId == 2 || categoryId == 3 || categoryId == 4 || categoryId == 5 || categoryId == 6">
+                                            *ngIf="id_var == 1 || id_var == 2 || id_var == 3 || id_var == 4 || id_var == 5 || id_var == 6">
                                             D.P
                                            
                                         </th>
         
-                                        <th *ngIf="categoryId==1 || categoryId==5 || categoryId==7 || categoryId==8"
+                                        <th *ngIf="id_var==1 || id_var==5 || id_var==7 || id_var==8"
                                             pTooltip="Reading Value" tooltipPosition="top" pSortableColumn="readingValue">
                                     
                                             Value
         
                                         </th>
-                                        <th *ngIf="categoryId==1" pTooltip="Blend Type" tooltipPosition="top"
+                                        <th *ngIf="id_var==1" pTooltip="Blend Type" tooltipPosition="top"
                                             pSortableColumn="BlendType">
                                  
                                             Blend
         
                                         </th> -->
-                                        <!-- <th *ngIf="categoryId==1" style="width: 15%" pTooltip="Blend percent"
+                                        <!-- <th *ngIf="id_var==1" style="width: 15%" pTooltip="Blend percent"
                                             tooltipPosition="top" pSortableColumn="blendPercent">
                                             <p-sortIcon field="blendPercent"></p-sortIcon>
                                             %
         
                                         </th> -->
                                         <!-- 
-                                        <th *ngIf="categoryId==2" pSortableColumn="noofairconnUnits"
+                                        <th *ngIf="id_var==2" pSortableColumn="noofairconnUnits"
                                             pTooltip="Amount of refrigent used" tooltipPosition="top">
                                             Refrigerant Amount <p-sortIcon field="noofairconnUnits"></p-sortIcon>
                                         </th>
                                       
-                                        <th *ngIf="categoryId==3" pSortableColumn="numberOfExtinguisher"
+                                        <th *ngIf="id_var==3" pSortableColumn="numberOfExtinguisher"
                                             pTooltip="Number Of Fire Extinguisher" tooltipPosition="top">
                                             Extinguisher <p-sortIcon field="numberOfExtinguisher"></p-sortIcon>
                                         </th>
-                                        <th *ngIf="categoryId==3" pSortableColumn="quantityOfCO2makeup"
+                                        <th *ngIf="id_var==3" pSortableColumn="quantityOfCO2makeup"
                                             pTooltip="Quantity Of CO2 makeup" tooltipPosition="top">
                                             CO2 MakeUp <p-sortIcon field="quantityOfCO2makeup"></p-sortIcon>
                                         </th>
-                                        <th *ngIf="categoryId==6" pSortableColumn="noOfVehicles"
+                                        <th *ngIf="id_var==6" pSortableColumn="noOfVehicles"
                                             pTooltip="Number Of Vehicles" tooltipPosition="top">
                                             Vehicles <p-sortIcon field="noOfVehicles"></p-sortIcon>
                                         </th>
-                                        <th *ngIf="categoryId==6" pSortableColumn="modeOfDE" pTooltip="Mode Of data entry"
+                                        <th *ngIf="id_var==6" pSortableColumn="modeOfDE" pTooltip="Mode Of data entry"
                                             tooltipPosition="top">
                                             Mode <p-sortIcon field="modeOfDE"></p-sortIcon>
                                         </th>
-                                        <th *ngIf="categoryId==6" pSortableColumn="amount">
+                                        <th *ngIf="id_var==6" pSortableColumn="amount">
                                             Amount <p-sortIcon field="amount"></p-sortIcon>
                                         </th>
-                                        <th *ngIf="categoryId==5" pSortableColumn="sourceName">
+                                        <th *ngIf="id_var==5" pSortableColumn="sourceName">
                                             Source <p-sortIcon field="sourceName"></p-sortIcon>
                                         </th> -->
                                         <!-- <th >
@@ -3614,103 +3617,107 @@
                                 <ng-template pTemplate="body" let-de let-status>
                                     <tr [pEditableRow]="de">
 
-                                        <td *ngIf="categoryId == 1 || categoryId ==6"> {{de.category_name}}</td>
-                                        <td *ngIf="categoryId == 2 || categoryId == 3"> {{de.item}}</td>
-                                        <!-- <td *ngIf="categoryId == 13 && (selectMode==1)"> {{de.flight_type}}</td>
-                                        <td *ngIf="categoryId == 13 && (selectMode==1)"> {{de.flight_class}}</td>
-                                        <td *ngIf="categoryId == 13 && (selectMode==3)"> {{de.vehicle_type}}</td>
-                                        <td *ngIf="categoryId == 13 && (selectMode==3)"> {{de.type}}</td>
-                                        <td *ngIf="categoryId == 13 && (selectMode==3)"> {{de.fuel_type}}</td>
-                                        <td *ngIf="categoryId == 13 && (selectMode==3 || selectMode ==1)"> {{de.no_of_passengers}}</td>
-                                        <td *ngIf="categoryId == 13 && (selectMode==3 || selectMode ==1)"> {{de.distance}}</td>
-                                        <td *ngIf="categoryId == 13 && (selectMode==3)"> {{de.no_of_trips}}</td>
-                                        <td *ngIf="categoryId == 13 && (selectMode==1)"> {{de.business_unit}}</td> -->
-                                        <td *ngIf="categoryId == 8  || categoryId ==23"> {{de.category}}</td>
+                                        <td *ngIf="id_var == 1 || id_var ==6"> {{de.category_name}}</td>
+                                        <td *ngIf="id_var == 2 || id_var == 3"> {{de.item}}</td>
+                                        <td *ngIf="id_var == 1005"> {{de.typeofpurchase}}</td>
+                                        <!-- <td *ngIf="id_var == 13 && (selectMode==1)"> {{de.flight_type}}</td>
+                                        <td *ngIf="id_var == 13 && (selectMode==1)"> {{de.flight_class}}</td>
+                                        <td *ngIf="id_var == 13 && (selectMode==3)"> {{de.vehicle_type}}</td>
+                                        <td *ngIf="id_var == 13 && (selectMode==3)"> {{de.type}}</td>
+                                        <td *ngIf="id_var == 13 && (selectMode==3)"> {{de.fuel_type}}</td>
+                                        <td *ngIf="id_var == 13 && (selectMode==3 || selectMode ==1)"> {{de.no_of_passengers}}</td>
+                                        <td *ngIf="id_var == 13 && (selectMode==3 || selectMode ==1)"> {{de.distance}}</td>
+                                        <td *ngIf="id_var == 13 && (selectMode==3)"> {{de.no_of_trips}}</td>
+                                        <td *ngIf="id_var == 13 && (selectMode==1)"> {{de.business_unit}}</td> -->
+                                        <td *ngIf="id_var == 8  || id_var ==23"> {{de.category}}</td>
 
-                                        <td *ngIf="categoryId == 1 || categoryId == 8 || categoryId ==23">{{
+                                        <td *ngIf="id_var == 1 || id_var == 8 || id_var ==23">{{
                                             de.subcategory }}</td>
                                         <td>
                                             {{ de.year }}
                                         </td>
                                         <td
-                                            *ngIf="categoryId == 10 || categoryId == 13 || categoryId == 6 || categoryId ==23 || categoryId ==1 || categoryId == 11">
+                                            *ngIf="id_var == 10 || id_var == 13 || id_var == 6 || id_var ==23 || id_var ==1 || id_var == 11">
                                             {{ de.month }}
                                         </td>
                                         <td
-                                            *ngIf="categoryId != 10 && categoryId != 13 && categoryId !=23  && categoryId !=1 && categoryId != 11">
+                                            *ngIf="id_var != 10 && id_var != 13 && id_var !=23  && id_var !=1 && id_var != 11">
                                             {{ de.months }}
                                         </td>
-                                        <td *ngIf="categoryId == 2">
+                                        <td *ngIf="id_var == 2">
                                             {{ de.RefAmount }}
                                         </td>
                                         <td
-                                            *ngIf="categoryId==1  || categoryId == 8 || categoryId == 10 || categoryId == 23">
+                                            *ngIf="id_var==1  || id_var == 8 || id_var == 10 || id_var == 23">
                                             {{ de.quantity }}</td>
-                                        <td *ngIf=" categoryId==3 ">{{ de.quantityOfCO2makeup }}</td>
-                                        <td *ngIf="categoryId == 3">
+                                        <td *ngIf=" id_var==3 ">{{ de.quantityOfCO2makeup }}</td>
+                                        <td *ngIf="id_var == 3">
                                             {{ de.numberOfExtinguisher }}
                                         </td>
-                                        <td *ngIf="categoryId==5 || categoryId==7">{{ de.reading_value }}</td>
-                                        <td *ngIf="categoryId==5">{{ de.sourcename }}</td>
-                                        <td *ngIf="categoryId==5 || categoryId==7">{{ de.energy }}</td>
+                                        <td *ngIf="id_var==5 || id_var==7">{{ de.reading_value }}</td>
+                                        <td *ngIf="id_var==5">{{ de.sourcename }}</td>
+                                        <td *ngIf="id_var==5 || id_var==7">{{ de.energy }}</td>
 
+                                        <td *ngIf="id_var != 11">{{ de.Unit }}</td>
                                         <td> {{de.emission}}</td>
-                                        <td *ngIf="categoryId != 11">{{ de.Unit }}</td>
+                                        <td *ngIf="de.Status =='S'"> Accepted</td>
+                                        <td *ngIf="de.Status =='P'"> Pending</td>
+                                        <td *ngIf="de.Status =='R'"> Rejected</td>
 
-                                        <td *ngIf="categoryId == 8"> {{de.typeofpurchase}}</td>
+                                        <td *ngIf="id_var == 8"> {{de.typeofpurchase}}</td>
                                         <!-- <td
-                                            *ngIf="categoryId != 16 && categoryId !=18 && categoryId !=20 && categoryId !=21   && categoryId !=22 && categoryId !=23">
+                                            *ngIf="id_var != 16 && id_var !=18 && id_var !=20 && id_var !=21   && id_var !=22 && id_var !=23">
                                             {{ de.catName }}</td> -->
-                                        <td *ngIf="categoryId == 11 ">{{ de.water_treatment }}</td>
-                                        <td *ngIf="categoryId == 11 ">{{ de.water_supply }}</td>
-                                        <!-- <td *ngIf="categoryId == 23 ">{{ de.category }}</td> -->
-                                        <td *ngIf="categoryId == 22 ">{{ de.franchise_type }}</td>
-                                        <td *ngIf="categoryId == 22 || categoryId == 23 ">{{ de.sub_category }}</td>
+                                        <td *ngIf="id_var == 11 ">{{ de.water_treatment }}</td>
+                                        <td *ngIf="id_var == 11 ">{{ de.water_supply }}</td>
+                                        <!-- <td *ngIf="id_var == 23 ">{{ de.category }}</td> -->
+                                        <td *ngIf="id_var == 22 ">{{ de.franchise_type }}</td>
+                                        <td *ngIf="id_var == 22 || id_var == 23 ">{{ de.sub_category }}</td>
 
-                                        <td *ngIf="categoryId == 20 ">{{ de.combustion }}</td>
-                                        <td *ngIf="categoryId == 20 ">{{ de.composing }}</td>
-                                        <td *ngIf="categoryId == 20 ">{{ de.landfill }}</td>
-                                        <td *ngIf="categoryId == 20 ">{{ de.recycling }}</td>
-                                        <td *ngIf="categoryId == 16 || categoryId == 21 ">{{ de.category }}</td>
-                                        <td *ngIf="categoryId == 18">{{ de.intermediate_category }}</td>
-                                        <td *ngIf="categoryId == 18">{{ de.sub_activity }}</td>
-                                        <td *ngIf="categoryId == 18">{{ de.processing_acitivity }}</td>
-                                        <td *ngIf="categoryId == 16 || categoryId == 21">{{ de.sub_category }}</td>
+                                        <td *ngIf="id_var == 20 ">{{ de.combustion }}</td>
+                                        <td *ngIf="id_var == 20 ">{{ de.composing }}</td>
+                                        <td *ngIf="id_var == 20 ">{{ de.landfill }}</td>
+                                        <td *ngIf="id_var == 20 ">{{ de.recycling }}</td>
+                                        <td *ngIf="id_var == 16 || id_var == 21 ">{{ de.category }}</td>
+                                        <td *ngIf="id_var == 18">{{ de.intermediate_category }}</td>
+                                        <td *ngIf="id_var == 18">{{ de.sub_activity }}</td>
+                                        <td *ngIf="id_var == 18">{{ de.processing_acitivity }}</td>
+                                        <td *ngIf="id_var == 16 || id_var == 21">{{ de.sub_category }}</td>
                                         <td
-                                            *ngIf="categoryId == 16 || categoryId ==18 || categoryId == 21 ||categoryId == 22 ||categoryId == 23">
+                                            *ngIf="id_var == 16 || id_var ==18 || id_var == 21 ||id_var == 22 ||id_var == 23">
                                             {{ de.calculation_method }}</td>
-                                        <td *ngIf="categoryId == 16 || categoryId == 21 ||categoryId ==22">{{
+                                        <td *ngIf="id_var == 16 || id_var == 21 ||id_var ==22">{{
                                             de.franchise_space }}</td>
-                                        <td *ngIf="categoryId == 18 ">{{ de.scope1emissions }}</td>
-                                        <td *ngIf="categoryId == 18 ">{{ de.scope2emissions }}</td>
+                                        <td *ngIf="id_var == 18 ">{{ de.scope1emissions }}</td>
+                                        <td *ngIf="id_var == 18 ">{{ de.scope2emissions }}</td>
 
-                                        <td *ngIf="categoryId == 16 || categoryId == 21 || categoryId == 22   ">
+                                        <td *ngIf="id_var == 16 || id_var == 21 || id_var == 22   ">
                                             {{ de.scope1_emission }}</td>
-                                        <td *ngIf="categoryId == 16 || categoryId == 21 || categoryId == 22  ">
+                                        <td *ngIf="id_var == 16 || id_var == 21 || id_var == 22  ">
                                             {{ de.scope2_emission }}</td>
-                                        <td *ngIf="categoryId == 15">{{ de.typeof_homeoffice_name }}</td>
-                                        <td *ngIf="categoryId == 15">{{ de.noofdays }}</td>
-                                        <td *ngIf="categoryId == 15">{{ de.noofemployees }}</td>
-                                        <td *ngIf="categoryId == 15">{{ de.noofmonths }}</td>
-                                        <td *ngIf="categoryId == 14">{{ de.type }}</td>
-                                        <td *ngIf="categoryId == 14">{{ de.allemployeescommute }}</td>
-                                        <td *ngIf="categoryId == 14">{{ de.avgcommutedistance }}</td>
-                                        <td *ngIf="categoryId == 14">{{ de.workingdays }}</td>
-                                        <td *ngIf="categoryId == 12">{{ de.method }}</td>
-                                        <td *ngIf="categoryId == 12">{{ de.waste_type }}</td>
+                                        <td *ngIf="id_var == 15">{{ de.typeof_homeoffice_name }}</td>
+                                        <td *ngIf="id_var == 15">{{ de.noofdays }}</td>
+                                        <td *ngIf="id_var == 15">{{ de.noofemployees }}</td>
+                                        <td *ngIf="id_var == 15">{{ de.noofmonths }}</td>
+                                        <td *ngIf="id_var == 14">{{ de.type }}</td>
+                                        <td *ngIf="id_var == 14">{{ de.allemployeescommute }}</td>
+                                        <td *ngIf="id_var == 14">{{ de.avgcommutedistance }}</td>
+                                        <td *ngIf="id_var == 14">{{ de.workingdays }}</td>
+                                        <td *ngIf="id_var == 12">{{ de.method }}</td>
+                                        <td *ngIf="id_var == 12">{{ de.waste_type }}</td>
                                         <!-- <td
-                                            *ngIf="categoryId != 8 && categoryId != 10 && categoryId != 12 && categoryId != 14 && categoryId != 15 && categoryId != 17 && categoryId != 18 && categoryId != 19 && categoryId != 20 && categoryId !=21 && categoryId !=22 && categoryId !=11 && categoryId !=23">
+                                            *ngIf="id_var != 8 && id_var != 10 && id_var != 12 && id_var != 14 && id_var != 15 && id_var != 17 && id_var != 18 && id_var != 19 && id_var != 20 && id_var !=21 && id_var !=22 && id_var !=11 && id_var !=23">
                                             {{ de.subcatName }}</td> -->
-                                        <td *ngIf="categoryId == 10 || categoryId == 17">{{ de.vehicle_type }}</td>
-                                        <td *ngIf="categoryId == 10 || categoryId == 17">{{ de.sub_category }}</td>
-                                        <td *ngIf="categoryId == 10 || categoryId == 17">{{ de.distance_travelled_km
+                                        <td *ngIf="id_var == 10 || id_var == 17">{{ de.vehicle_type }}</td>
+                                        <td *ngIf="id_var == 10 || id_var == 17">{{ de.sub_category }}</td>
+                                        <td *ngIf="id_var == 10 || id_var == 17">{{ de.distance_travelled_km
                                             }}</td>
-                                        <td *ngIf="categoryId == 10 || categoryId == 17">{{ de.mass_of_product_trans
+                                        <td *ngIf="id_var == 10 || id_var == 17">{{ de.mass_of_product_trans
                                             }}</td>
-                                        <td *ngIf="categoryId == 10 || categoryId == 17">{{ de.storage_facility_type
+                                        <td *ngIf="id_var == 10 || id_var == 17">{{ de.storage_facility_type
                                             }}</td>
 
-                                        <!-- <td *ngIf="categoryId==1 || categoryId==5 || categoryId==7">
+                                        <!-- <td *ngIf="id_var==1 || id_var==5 || id_var==7">
                                             <p-cellEditor><ng-template pTemplate="input">
                                                     <input name="readingValue_{{ ri }}" id="{{ ri }}" pInputText type="text"
                                                         [(ngModel)]="de.readingValue" ngModel #readingValue="ngModel">
@@ -3719,9 +3726,9 @@
                                                     {{ de.readingValue }}
                                                 </ng-template>{{ de.readingValue }}</p-cellEditor>
                                         </td> -->
-                                        <!-- <td *ngIf="categoryId==1">{{ de.blendType }}</td> -->
+                                        <!-- <td *ngIf="id_var==1">{{ de.blendType }}</td> -->
 
-                                        <!-- <td *ngIf="categoryId==1"><p-cellEditor><ng-template pTemplate="input">
+                                        <!-- <td *ngIf="id_var==1"><p-cellEditor><ng-template pTemplate="input">
                                                     <input name="blendPercent_{{ ri }}" id="{{ ri }}" pInputText type="text"
                                                         [(ngModel)]="de.blendPercent" ngModel #blendPercent="ngModel">
                                                 </ng-template>
@@ -3729,14 +3736,14 @@
                                                     {{ de.blendPercent }}
                                                 </ng-template>{{ de.blendPercent }}</p-cellEditor></td> -->
 
-                                        <!-- <td *ngIf="categoryId==2"><p-cellEditor><ng-template pTemplate="input">
+                                        <!-- <td *ngIf="id_var==2"><p-cellEditor><ng-template pTemplate="input">
                                                     <input name="refAmount_{{ ri }}" id="{{ ri }}" pInputText type="text"
                                                         [(ngModel)]="de.refAmount" ngModel #refAmount="ngModel">
                                                 </ng-template>
                                                 <ng-template pTemplate="output">
                                                     {{ de.refAmount }}
                                                 </ng-template>{{ de.refAmount }}</p-cellEditor></td> -->
-                                        <!-- <td *ngIf="categoryId==2"><p-cellEditor><ng-template pTemplate="input">
+                                        <!-- <td *ngIf="id_var==2"><p-cellEditor><ng-template pTemplate="input">
                                                     <input name="cO2LeakagePerUnit_{{ ri }}" id="{{ ri }}" pInputText
                                                         type="text" [(ngModel)]="de.cO2LeakagePerUnit" ngModel
                                                         #cO2LeakagePerUnit="ngModel">
@@ -3744,14 +3751,14 @@
                                                 <ng-template pTemplate="output">
                                                     {{ de.cO2LeakagePerUnit }}
                                                 </ng-template>{{ de.cO2LeakagePerUnit }}</p-cellEditor></td>
-                                        <td *ngIf="categoryId==2"><p-cellEditor><ng-template pTemplate="input">
+                                        <td *ngIf="id_var==2"><p-cellEditor><ng-template pTemplate="input">
                                                     <input name="capacity_{{ ri }}" id="{{ ri }}" pInputText type="text"
                                                         [(ngModel)]="de.capacity" ngModel #capacity="ngModel">
                                                 </ng-template>
                                                 <ng-template pTemplate="output">
                                                     {{ de.capacity }}
                                                 </ng-template>{{ de.capacity }}</p-cellEditor></td>
-                                        <td *ngIf="categoryId==2"><p-cellEditor><ng-template pTemplate="input">
+                                        <td *ngIf="id_var==2"><p-cellEditor><ng-template pTemplate="input">
                                                     <input name="leakagePerOfCapacity_{{ ri }}" id="{{ ri }}" pInputText
                                                         type="text" [(ngModel)]="de.leakagePerOfCapacity" ngModel
                                                         #leakagePerOfCapacity="ngModel">
@@ -3760,7 +3767,7 @@
                                                     {{ de.leakagePerOfCapacity }}
                                                 </ng-template>{{ de.leakagePerOfCapacity }}</p-cellEditor></td> -->
                                         <!--         
-                                        <td *ngIf="categoryId==3"><p-cellEditor><ng-template pTemplate="input">
+                                        <td *ngIf="id_var==3"><p-cellEditor><ng-template pTemplate="input">
                                                     <input name="quantityOfCO2makeup_{{ ri }}" id="{{ ri }}" pInputText
                                                         type="text" [(ngModel)]="de.quantityOfCO2makeup" ngModel
                                                         #quantityOfCO2makeup="ngModel">
@@ -3768,15 +3775,15 @@
                                                 <ng-template pTemplate="output">
                                                     {{ de.quantityOfCO2makeup }}
                                                 </ng-template>{{ de.quantityOfCO2makeup }}</p-cellEditor></td> -->
-                                        <!-- <td *ngIf="categoryId==6"><p-cellEditor><ng-template pTemplate="input">
+                                        <!-- <td *ngIf="id_var==6"><p-cellEditor><ng-template pTemplate="input">
                                                     <input name="noOfVehicles_{{ ri }}" id="{{ ri }}" pInputText type="text"
                                                         [(ngModel)]="de.noOfVehicles" ngModel #noOfVehicles="ngModel">
                                                 </ng-template>
                                                 <ng-template pTemplate="output">
                                                     {{ de.noOfVehicles }}
                                                 </ng-template>{{ de.noOfVehicles }}</p-cellEditor></td> -->
-                                        <td *ngIf="categoryId==6">{{ de.modeOfDE }}</td>
-                                        <!-- <td *ngIf="categoryId==6"><p-cellEditor><ng-template pTemplate="input">
+                                        <td *ngIf="id_var==6">{{ de.modeOfDE }}</td>
+                                        <!-- <td *ngIf="id_var==6"><p-cellEditor><ng-template pTemplate="input">
                                                     <input name="amount_{{ ri }}" id="{{ ri }}" pInputText type="text"
                                                         [(ngModel)]="de.amount" ngModel #amount="ngModel">
                                                 </ng-template>
@@ -3784,7 +3791,7 @@
         
                                                     {{ de.amount }}
                                                 </ng-template>{{ de.amount }}</p-cellEditor></td> -->
-                                        <td *ngIf="categoryId==5">{{ de.sourceName }}</td>
+                                        <td *ngIf="id_var==5">{{ de.sourceName }}</td>
 
 
 
@@ -3792,7 +3799,7 @@
                                             <div class="view-details">
                                                 <i class="pi pi-eye pt-2 text-white" title="info"
                                                     [routerLink]="['/tracking-status']"
-                                                    [queryParams]="{data:de.subcategoryID}"></i>
+                                                    [queryParams]="{data:de.subid_var}"></i>
                                                 <a *ngIf="de.fileName" (click)="downloadFile(de.fileName)">
                                                     <i class="pi pi-download text-white pl-2" title="download"></i></a>
                                             </div>
@@ -3800,145 +3807,145 @@
                                     </tr>
                                     <!-- <tr>
                                         <td
-                                            *ngIf="categoryId==12 || categoryId==11 || categoryId==15  || categoryId==17">
+                                            *ngIf="id_var==12 || id_var==11 || id_var==15  || id_var==17">
                                             {{ status.month }}</td>
                                         <td
-                                            *ngIf="categoryId==12 || categoryId==11 || categoryId==15  || categoryId==17">
+                                            *ngIf="id_var==12 || id_var==11 || id_var==15  || id_var==17">
                                             {{ status.year }}</td>
-                                        <td *ngIf="categoryId==1">{{status.typeofpurchase}}
+                                        <td *ngIf="id_var==1">{{status.typeofpurchase}}
                                         </td>
-                                        <td *ngIf="categoryId==13">{{status.type}}
+                                        <td *ngIf="id_var==13">{{status.type}}
                                         </td>
-                                        <td *ngIf="categoryId==17">{{status.subcategory}}
+                                        <td *ngIf="id_var==17">{{status.subcategory}}
                                         </td>
-                                        <td *ngIf="categoryId==15">{{status.intermediate_category}}
+                                        <td *ngIf="id_var==15">{{status.intermediate_category}}
                                         </td>
-                                        <td *ngIf="categoryId==15">{{status.processing_acitivity}}
+                                        <td *ngIf="id_var==15">{{status.processing_acitivity}}
                                         </td>
-                                        <td *ngIf="categoryId==15">{{status.sub_activity}}
+                                        <td *ngIf="id_var==15">{{status.sub_activity}}
                                         </td>
-                                        <td *ngIf="categoryId==12">{{status.waste_type}}
+                                        <td *ngIf="id_var==12">{{status.waste_type}}
                                         </td>
-                                        <td *ngIf="categoryId==11">{{status.water_supply}}
+                                        <td *ngIf="id_var==11">{{status.water_supply}}
                                         </td>
-                                        <td *ngIf="categoryId==11">{{status.water_treatment}}
+                                        <td *ngIf="id_var==11">{{status.water_treatment}}
                                         </td>
-                                        <td *ngIf="categoryId==12">{{status.method}}
+                                        <td *ngIf="id_var==12">{{status.method}}
                                         </td>
-                                        <td *ngIf="categoryId==12 || categoryId==17">{{status.total_waste}}
+                                        <td *ngIf="id_var==12 || id_var==17">{{status.total_waste}}
                                         </td>
-                                        <td *ngIf="categoryId==3 || categoryId==6">{{status.month}}
+                                        <td *ngIf="id_var==3 || id_var==6">{{status.month}}
                                         </td>
-                                        <td *ngIf="categoryId==3 || categoryId==6">{{status.year}}
+                                        <td *ngIf="id_var==3 || id_var==6">{{status.year}}
                                         </td>
                                         <td
-                                            *ngIf="categoryId==3 || categoryId==6 || categoryId==7">
+                                            *ngIf="id_var==3 || id_var==6 || id_var==7">
                                             {{status.category}}
                                         </td>
-                                        <td *ngIf="categoryId==1">{{status.productcodestandard}}
+                                        <td *ngIf="id_var==1">{{status.productcodestandard}}
                                         </td>
-                                        <td *ngIf="categoryId==1">{{status.productcode}}
+                                        <td *ngIf="id_var==1">{{status.productcode}}
                                         </td>
-                                        <td *ngIf="categoryId==1">{{status.valuequantity}}
+                                        <td *ngIf="id_var==1">{{status.valuequantity}}
                                         </td>
 
-                                        <td *ngIf="categoryId==1 || categoryId==12">{{status.unit}}
+                                        <td *ngIf="id_var==1 || id_var==12">{{status.unit}}
                                         </td>
-                                        <td *ngIf="categoryId==17">{{status.waste_unit}}
+                                        <td *ngIf="id_var==17">{{status.waste_unit}}
                                         </td>
-                                        <td *ngIf="categoryId==14 && status.typeofhomeoffice == '1' ">With
+                                        <td *ngIf="id_var==14 && status.typeofhomeoffice == '1' ">With
                                             Cooling</td>
-                                        <td *ngIf="categoryId==14 && status.typeofhomeoffice == '2' ">With
+                                        <td *ngIf="id_var==14 && status.typeofhomeoffice == '2' ">With
                                             heating</td>
-                                        <td *ngIf="categoryId==14 && status.typeofhomeoffice == '3' ">No
+                                        <td *ngIf="id_var==14 && status.typeofhomeoffice == '3' ">No
                                             cooling / no heating</td>
-                                        <td *ngIf="categoryId==2 || categoryId==4">{{
+                                        <td *ngIf="id_var==2 || id_var==4">{{
                                             status.vehicle_type
                                             }}</td>
-                                        <td *ngIf="categoryId==5">{{
+                                        <td *ngIf="id_var==5">{{
                                             status.franchise_type
                                             }}</td>
-                                        <td *ngIf="categoryId==14">{{
+                                        <td *ngIf="id_var==14">{{
                                             status.noofemployees
                                             }}</td>
-                                        <td *ngIf="categoryId==13">{{status.allemployeescommute}}
+                                        <td *ngIf="id_var==13">{{status.allemployeescommute}}
                                         </td>
-                                        <td *ngIf="categoryId==13">{{status.avgcommutedistance}}
+                                        <td *ngIf="id_var==13">{{status.avgcommutedistance}}
                                         </td>
-                                        <td *ngIf="categoryId==14">{{
+                                        <td *ngIf="id_var==14">{{
                                             status.noofdays
                                             }}</td>
-                                        <td *ngIf="categoryId==14">{{
+                                        <td *ngIf="id_var==14">{{
                                             status.noofmonths
                                             }}</td>
                                         <td
-                                            *ngIf="categoryId==2 || categoryId==4 || categoryId==5 || categoryId==7 || categoryId==3 || categoryId==6">
+                                            *ngIf="id_var==2 || id_var==4 || id_var==5 || id_var==7 || id_var==3 || id_var==6">
                                             {{ status.sub_category
                                             }}</td>
-                                        <td *ngIf="categoryId==7">
+                                        <td *ngIf="id_var==7">
                                             {{ status.investement_type
                                             }}</td>
                                         <td
-                                            *ngIf="categoryId==5 || categoryId==3 || categoryId==6 || categoryId==15 || categoryId==7">
+                                            *ngIf="id_var==5 || id_var==3 || id_var==6 || id_var==15 || id_var==7">
                                             {{ status.calculation_method
                                             }}</td>
-                                        <td *ngIf="categoryId==7">
+                                        <td *ngIf="id_var==7">
                                             {{ status.equity_share
                                             }}</td>
-                                        <td *ngIf="categoryId==7">
+                                        <td *ngIf="id_var==7">
                                             {{ status.equity_of_projectcost
                                             }}</td>
-                                        <td *ngIf="categoryId==2 || categoryId==4">
+                                        <td *ngIf="id_var==2 || id_var==4">
                                             {{ status.mass_of_product_trans
                                             }}</td>
                                         <td
-                                            *ngIf="categoryId==5 || categoryId==3 || categoryId==6">
+                                            *ngIf="id_var==5 || id_var==3 || id_var==6">
                                             {{ status.franchise_space
                                             }}</td>
-                                        <td *ngIf="categoryId==2 || categoryId==4">
+                                        <td *ngIf="id_var==2 || id_var==4">
                                             {{ status.unit_of_mass
                                             }}</td>
-                                        <td *ngIf="categoryId==15">{{status.valueofsoldintermediate}}
+                                        <td *ngIf="id_var==15">{{status.valueofsoldintermediate}}
                                         </td>
                                         <td
-                                            *ngIf="categoryId==5 || categoryId==3 || categoryId==6 || categoryId==15">
+                                            *ngIf="id_var==5 || id_var==3 || id_var==6 || id_var==15">
                                             {{ status.unit
                                             }}</td>
-                                        <td *ngIf="categoryId==15">
+                                        <td *ngIf="id_var==15">
                                             {{ status.scope1emissions
                                             }}</td>
-                                        <td *ngIf="categoryId==15">
+                                        <td *ngIf="id_var==15">
                                             {{ status.scope2emissions
                                             }}</td>
                                         <td
-                                            *ngIf="categoryId==5 || categoryId==3 || categoryId==6 || categoryId==7">
+                                            *ngIf="id_var==5 || id_var==3 || id_var==6 || id_var==7">
                                             {{ status.scope1_emission
                                             }}</td>
                                         <td
-                                            *ngIf="categoryId==5 || categoryId==3 || categoryId==6 || categoryId==7">
+                                            *ngIf="id_var==5 || id_var==3 || id_var==6 || id_var==7">
                                             {{ status.scope2_emission
                                             }}</td>
-                                        <td *ngIf="categoryId==2 || categoryId==4">
+                                        <td *ngIf="id_var==2 || id_var==4">
                                             {{ status.distance_travelled_km
                                             }}</td>
-                                        <td *ngIf="categoryId==2 || categoryId==4">
+                                        <td *ngIf="id_var==2 || id_var==4">
                                             {{ status.no_of_vehicles
                                             }}</td>
-                                        <td *ngIf="categoryId==2 || categoryId==4">
+                                        <td *ngIf="id_var==2 || id_var==4">
                                             {{ status.storage_facility_type
                                             }}</td>
-                                        <td *ngIf="categoryId==2 || categoryId==4">
+                                        <td *ngIf="id_var==2 || id_var==4">
                                             {{ status.area_occupied
                                             }}</td>
-                                        <td *ngIf="categoryId==2 || categoryId==4">
+                                        <td *ngIf="id_var==2 || id_var==4">
                                             {{ status.avg_no_of_days
                                             }}</td>
 
-                                        <td *ngIf="categoryId==7">
+                                        <td *ngIf="id_var==7">
                                             {{ status.project_phase
                                             }}</td>
                                         <td>{{ status.emission }}</td>
-                                        <td *ngIf="categoryId==2 || categoryId==4">{{
+                                        <td *ngIf="id_var==2 || id_var==4">{{
                                             status.emission_storage }}</td>
                                          <td></td> -->
                                     <!-- <td *ngIf="status.status == 'S'">
@@ -4011,7 +4018,7 @@
                                                     EmissionFactor[0].unit -->
                         <!-- " class="form-control Dashboard-tab text-white" [disabled]="true" /> -->
 
-                        <!-- <div *ngIf="this.categoryId==1" class="row d-flex">
+                        <!-- <div *ngIf="this.id_var==1" class="row d-flex">
                                     <div class="col">
                                         <p class="pl-5 pt-1 PurchasedPara">
                                             Calorific Value
@@ -4071,7 +4078,7 @@
                                             <th *ngIf="SubCatAllData.subCatName=='Biofuel'" pTooltip="Kg CO2e (per Gj)">
                                                 per
                                                 Gj</th>
-                                            <th pTooltip="Kg CO2e (per tonnes)" *ngIf="categoryId==1">
+                                            <th pTooltip="Kg CO2e (per tonnes)" *ngIf="id_var==1">
                                                 per tonnes </th>
                                             <th>Unit</th>
                                         </tr>
@@ -4090,7 +4097,7 @@
                                                 {{ef.kgCO2e_km}}</td>
                                             <td>{{ef.kgCO2e_kwh}}</td>
                                             <td *ngIf="SubCatAllData.subCatName=='Biofuel'">{{ef.kgCO2e_Gj}}</td>
-                                            <td *ngIf="categoryId==1">
+                                            <td *ngIf="id_var==1">
                                                 {{ef.kgCO2e_tonnes}}</td>
                                             <td>{{ef.unit}}</td>
                                         </tr>
@@ -4105,7 +4112,7 @@
                                 </div>
                             </div> -->
                         <!-- </div> -->
-                        <!-- <div *ngIf="this.categoryId === 2" class="emissiontable2">
+                        <!-- <div *ngIf="this.id_var === 2" class="emissiontable2">
                             <p-table [value]="[EmissionFactor]">
                                 <ng-template pTemplate="header">
                                     <tr>

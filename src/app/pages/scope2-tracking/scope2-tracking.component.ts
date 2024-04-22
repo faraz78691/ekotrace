@@ -1057,6 +1057,7 @@ export class Scope2TrackingComponent {
         this.SubCatAllData = data;
 
         console.log("categoryId", this.categoryId);
+        console.log("id_var", this.id_var);
         this.ALLEntries(this.SubCatAllData)
         if (catID == 1) {
 
@@ -3651,11 +3652,7 @@ export class Scope2TrackingComponent {
 
     ALLEntries(subCategory: ManageDataPointSubCategories) {
 
-        console.log(
-
-
-            "seelcted", subCategory.manageDataPointSubCategorySeedID
-        );
+        console.log("seelcted", subCategory.manageDataPointSubCategorySeedID);
         // this.months = new months();
         // this.convertedYear = this.trackingService.getYear(this.year);
         // const formData = new URLSearchParams();
@@ -3687,16 +3684,28 @@ export class Scope2TrackingComponent {
                 url = 'Getfireextinguisher'
                 break;
             case 10:
-                url = 'Getdeliveryvehicletypes'
+                url = 'getAllcompanyownedvehicles'
                 break;
             case 11:
-                url = 'Getpassengervehicletypes'
+                url = 'getAllcompanyownedvehicles'
                 break;
             case 12:
                 url = 'getAllheatandsteam'
                 break;
             case 1005:
                 url = 'getPurchaseGoodEmissions'
+                let formData = new URLSearchParams();
+                formData.set('batch', this.batchId);
+                url = 'getPurchaseGoodEmissions';
+                this.trackingService.getPurchaseGoodEmissions(formData).subscribe({
+                    next: (response) => {
+                        console.log(response);
+                        if (response.success == true) {
+                            this.dataEntriesPending = response.categories;
+                        }
+                    }
+                })
+                return
                 break;
             case 9:
                 url = 'reportStationaryCombustion'

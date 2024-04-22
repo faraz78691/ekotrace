@@ -62,8 +62,7 @@ FamilyTree.templates.hugo.link_field_0 =  '<text width="230" style="font-size: 1
                 if (tree) {
 
                     var family = new FamilyTree(tree, {
-                    
-                        mouseScrool: FamilyTree.action.none,
+                
                         template: "hugo",
                         enableSearch: false,
                         nodeBinding: {

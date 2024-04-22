@@ -1921,16 +1921,16 @@ input.ct_change_choose_file_input12::file-selector-button {
         //     padding: 0px;
         //     stroke-width: 1px;
         // }
-        text {
-            /* position: relative; */
-            transform: translateY(-43px);
-            font-size: 22px !important;
-        }
-        text + text {
-            /* position: relative; */
-            transform: translateY(-35px);
-            font-size: 18px !important;
-        }
+        // text {
+        //     /* position: relative; */
+        //     transform: translateY(-43px);
+        //     font-size: 22px !important;
+        // }
+        // text + text {
+        //     /* position: relative; */
+        //     transform: translateY(-35px);
+        //     font-size: 18px !important;
+        // }
         .ct_custom_btn121 {
             background-color: rgba(136, 173, 71, 0.75);
             color: #fff;
@@ -2004,3 +2004,16 @@ input.ct_change_choose_file_input12::file-selector-button {
     top: 0px !important;
     color: #86af48;
 }
+
+.p-multiselect-items-wrapper{
+    max-height: 300px !important;
+}
+
+.p-dropdown-items-wrapper {
+    max-height: 300px !important;
+}
+
+.ct_chev_icon_dark230 .p-dropdown-trigger {
+    color: #6c757d !important;
+}
+

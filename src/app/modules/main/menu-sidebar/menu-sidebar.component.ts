@@ -69,7 +69,7 @@ export class MenuSidebarComponent implements OnInit {
                     this.menu =
                         menu.find((item) => item.role === this.loginInfo.role)
                             ?.items || [];
-                            console.log(this.menu);
+                    console.log(this.menu);
                 } else {
                     if (this.brsrdata.docPath != null || this.brsrdata.docPath != undefined) {
                         this.isBRSRDoc = true;
@@ -132,7 +132,7 @@ export class MenuSidebarComponent implements OnInit {
         if (this.updatedtheme === 'dark') {
             this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor =
                 '#5E6065';
-                // '#E9EDF2';
+            // '#E9EDF2';
         }
 
         if (this.updatedtheme === 'light') {
@@ -217,46 +217,58 @@ export const menu = [
                 head: 'Organisation Structure',
                 name: 'Tree',
                 iconClasses: 'fas fa-star',
-                iconSRC :'assets/img/trees.png',
+                iconSRC: 'assets/img/trees.png',
                 path: ['treeList']
             },
             {
                 name: 'Add User',
                 iconClasses: 'fas fa-user-plus',
-                iconSRC :'assets/img/user_121.png',
+                iconSRC: 'assets/img/user_121.png',
                 path: ['user']
             },
             {
                 head: 'Disclose',
                 name: 'Dashboard',
                 iconClasses: 'fas fa-table',
-                iconSRC :'assets/img/dashboard.svg',
-                 path: ['dashboard']
+                iconSRC: 'assets/img/dashboard.svg',
+                path: ['dashboard']
             },
             {
                 name: 'Tracking',
                 iconClasses: 'fas fa-star',
-                iconSRC :'assets/img/tracking_icon.svg',
+                iconSRC: 'assets/img/tracking_icon.svg',
                 path: ['Ntracking']
+            },
+            {
+                name: 'Set GHG Template',
+                iconClasses: 'fas fa-star',
+                // iconSRC :'assets/img/tracking_icon.svg',
+                path: ['facility']
             },
             {
                 head: 'GHG Emissions ',
                 name: 'Corprate Emissions',
                 iconClasses: 'fas fa-star',
-                iconSRC :'assets/img/trees.png',
-                path: ['treeList']
-            },
+                iconSRC: 'assets/img/trees.png',
+                path: ['facility']
+            }, 
+            // {
+            //     name: 'Add Vendor/Cost Centre',
+            //     iconClasses: 'fas fa-star',
+            //     // iconSRC :'assets/img/tracking_icon.svg',
+            //     path: ['']
+            // },
             {
                 head: 'Reporting ',
                 name: 'Report',
                 iconClasses: 'fas fa-folder',
-                 iconSRC :'assets/img/report_icon.svg',
-                 path: ['report']
+                iconSRC: 'assets/img/report_icon.svg',
+                path: ['report']
             },
             {
                 name: 'BRSR',
                 iconClasses: 'fas fa-table',
-                iconSRC :'assets/img/BRSR.svg',
+                iconSRC: 'assets/img/BRSR.svg',
                 path: ['brsrReport']
             },
             // {
@@ -271,76 +283,76 @@ export const menu = [
             //     iconClasses: 'fas fa-table',
             //     iconSRC :'assets/img/BRSR.svg',
             //     path: ['brsrReport'],
-                // children: [
-                //     {
-                //         name: 'Fd set',
-                //         iconClasses: 'fas fa-file',
-                //         path: ['brsrReport'],
-                //         queryParams: { defaultTab: 0 }
-                //     },
-                //     {
-                //         name: 'HR set',
-                //         iconClasses: 'fas fa-file',
-                //         path: ['brsrReport'],
-                //         queryParams: { defaultTab: 1 }
-                //     },
-                //     {
-                //         name: 'CS set',
-                //         iconClasses: 'fas fa-file',
-                //         path: ['brsrReport'],
-                //         queryParams: { defaultTab: 2 }
-                //     }
-                //     // {
-                //     //     name: 'Principle 4',
-                //     //     iconClasses: 'fas fa-file',
-                //     //     path: ['brsrReport'],
-                //     //     queryParams: { defaultTab: 3 }
-                //     // }
-                // ]
+            // children: [
+            //     {
+            //         name: 'Fd set',
+            //         iconClasses: 'fas fa-file',
+            //         path: ['brsrReport'],
+            //         queryParams: { defaultTab: 0 }
+            //     },
+            //     {
+            //         name: 'HR set',
+            //         iconClasses: 'fas fa-file',
+            //         path: ['brsrReport'],
+            //         queryParams: { defaultTab: 1 }
+            //     },
+            //     {
+            //         name: 'CS set',
+            //         iconClasses: 'fas fa-file',
+            //         path: ['brsrReport'],
+            //         queryParams: { defaultTab: 2 }
+            //     }
+            //     // {
+            //     //     name: 'Principle 4',
+            //     //     iconClasses: 'fas fa-file',
+            //     //     path: ['brsrReport'],
+            //     //     queryParams: { defaultTab: 3 }
+            //     // }
+            // ]
             // },
             {
                 head: 'Carbon offsetting',
-                name: 'View Live Projects',
+                name: 'Offset Entry',
                 iconClasses: 'fas fa-eye',
-                iconSRC :'assets/img/building.svg',
-                path: ['company-profile']
+                iconSRC: 'assets/img/building.svg',
+                path: ['carbonOffset']
             },
-            {
-                head: 'Admin Setting',
-                name: 'Company Profile',
-                iconClasses: 'fas fa-eye',
-                iconSRC :'assets/img/building.svg',
-                path: ['company-profile']
-            },
-            {
-                name: 'Facility',
-                iconClasses: 'fas fa-search-location',
-                iconSRC :'assets/img/facility_icon.svg',
-                path: ['facility']
-            },
-            {
-                name: 'Group',
-                iconClasses: 'fas fa-users',
-                iconSRC :'assets/img/group_121.png',
-                path: ['group']
-            },
-            {
-                name: 'User',
-                iconClasses: 'fas fa-user-plus',
-                iconSRC :'assets/img/user_121.png',
-                path: ['user']
-            },
+            // {
+            //     head: 'Admin Setting',
+            //     name: 'Company Profile',
+            //     iconClasses: 'fas fa-eye',
+            //     iconSRC: 'assets/img/building.svg',
+            //     path: ['company-profile']
+            // },
+            // {
+            //     name: 'Facility',
+            //     iconClasses: 'fas fa-search-location',
+            //     iconSRC: 'assets/img/facility_icon.svg',
+            //     path: ['facility']
+            // },
+            // {
+            //     name: 'Group',
+            //     iconClasses: 'fas fa-users',
+            //     iconSRC: 'assets/img/group_121.png',
+            //     path: ['group']
+            // },
+            // {
+            //     name: 'User',
+            //     iconClasses: 'fas fa-user-plus',
+            //     iconSRC: 'assets/img/user_121.png',
+            //     path: ['user']
+            // },
             {
                 head: 'Account Details',
                 name: 'Company Profile',
                 iconClasses: 'fas fa-eye',
-                iconSRC :'assets/img/building.svg',
+                iconSRC: 'assets/img/building.svg',
                 path: ['company-profile']
             },
             {
                 name: 'Billing',
                 iconClasses: 'fas fa-folder',
-                iconSRC :'assets/img/biling_icon_211.png',
+                iconSRC: 'assets/img/biling_icon_211.png',
                 path: ['billing']
             },
         ]
@@ -363,7 +375,7 @@ export const menu = [
             {
                 name: 'Carbon Offset',
                 iconClasses: 'fas fa-folder',
-                iconSRC :'assets/img/report_icon.svg',
+                iconSRC: 'assets/img/report_icon.svg',
                 path: ['carbonOffset']
             },
             {
@@ -445,25 +457,25 @@ export const menu = [
                 head: 'Monitoring',
                 name: 'Dashboard',
                 iconClasses: 'fas fa-table',
-                iconSRC :'assets/img/dashboard.svg',
+                iconSRC: 'assets/img/dashboard.svg',
                 path: ['dashboard']
             },
             {
                 name: 'Tracking',
                 iconClasses: 'fas fa-star',
-                iconSRC :'assets/img/tracking_icon.svg',
+                iconSRC: 'assets/img/tracking_icon.svg',
                 path: ['Ntracking']
             },
             {
                 name: 'Report',
                 iconClasses: 'fas fa-folder',
-                iconSRC :'assets/img/report_icon.svg',
+                iconSRC: 'assets/img/report_icon.svg',
                 path: ['report']
             },
             {
                 name: 'Carbon Offset',
                 iconClasses: 'fas fa-folder',
-                iconSRC :'assets/img/report_icon.svg',
+                iconSRC: 'assets/img/report_icon.svg',
                 path: ['carbonOffset']
             },
             {
@@ -518,19 +530,19 @@ export const menu = [
                 head: 'Monitoring',
                 name: 'Dashboard',
                 iconClasses: 'fas fa-table',
-                iconSRC :'assets/img/dashboard.svg',
+                iconSRC: 'assets/img/dashboard.svg',
                 path: ['dashboard']
             },
             {
                 name: 'Tracking',
                 iconClasses: 'fas fa-star',
-                iconSRC :'assets/img/tracking_icon.svg',
+                iconSRC: 'assets/img/tracking_icon.svg',
                 path: ['Ntracking']
             },
             {
                 name: 'Carbon Offset',
                 iconClasses: 'fas fa-folder',
-                iconSRC :'assets/img/report_icon.svg',
+                iconSRC: 'assets/img/report_icon.svg',
                 path: ['carbonOffset']
             },
             {
@@ -590,7 +602,7 @@ export const menu = [
                 head: 'Monitoring',
                 name: 'Dashboard',
                 iconClasses: 'fas fa-table',
-                iconSRC :'assets/img/dashboard.svg',
+                iconSRC: 'assets/img/dashboard.svg',
                 path: ['dashboard']
             },
             // {
@@ -601,19 +613,19 @@ export const menu = [
             {
                 name: 'Tracking',
                 iconClasses: 'fas fa-star',
-                iconSRC :'assets/img/tracking_icon.svg',
+                iconSRC: 'assets/img/tracking_icon.svg',
                 path: ['Ntracking']
             },
             {
                 name: 'Report',
                 iconClasses: 'fas fa-folder',
-                iconSRC :'assets/img/report_icon.svg',
+                iconSRC: 'assets/img/report_icon.svg',
                 path: ['report']
             },
             {
                 name: 'Carbon Offset',
                 iconClasses: 'fas fa-folder',
-                iconSRC :'assets/img/report_icon.svg',
+                iconSRC: 'assets/img/report_icon.svg',
                 path: ['carbonOffset']
             },
 
@@ -632,19 +644,19 @@ export const menu = [
                 head: 'Monitoring',
                 name: 'Dashboard',
                 iconClasses: 'fas fa-table',
-                iconSRC :'assets/img/dashboard.svg',
+                iconSRC: 'assets/img/dashboard.svg',
                 path: ['dashboard']
             },
             {
                 name: 'Tracking',
                 iconClasses: 'fas fa-star',
-                iconSRC :'assets/img/tracking_icon.svg',
+                iconSRC: 'assets/img/tracking_icon.svg',
                 path: ['Ntracking']
             },
             {
                 name: 'Carbon Offset',
                 iconClasses: 'fas fa-folder',
-                iconSRC :'assets/img/report_icon.svg',
+                iconSRC: 'assets/img/report_icon.svg',
                 path: ['carbonOffset']
             },
         ]
@@ -657,19 +669,19 @@ export const menu = [
                 head: 'Monitoring',
                 name: 'Dashboard',
                 iconClasses: 'fas fa-table',
-                iconSRC :'assets/img/dashboard.svg',
+                iconSRC: 'assets/img/dashboard.svg',
                 path: ['dashboard']
             },
             {
                 name: 'Tracking',
                 iconClasses: 'fas fa-star',
-                iconSRC :'assets/img/tracking_icon.svg',
+                iconSRC: 'assets/img/tracking_icon.svg',
                 path: ['Ntracking']
             },
             {
                 name: 'Carbon Offset',
                 iconClasses: 'fas fa-folder',
-                iconSRC :'assets/img/report_icon.svg',
+                iconSRC: 'assets/img/report_icon.svg',
                 path: ['carbonOffset']
             },
         ]

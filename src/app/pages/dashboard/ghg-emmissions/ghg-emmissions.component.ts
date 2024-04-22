@@ -453,7 +453,7 @@ export class GhgEmmissionsComponent implements OnDestroy {
       xaxis: {
         labels:{
           style:{
-            fontSize:'13px'
+            fontSize:'12px'
           }
         },
         categories: ['Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar']
