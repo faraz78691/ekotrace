@@ -456,7 +456,13 @@ export class TrackingService {
             environment.baseUrl + '/Addelectricity',
             data
         );
-    }
+    };
+    public newPostElectricityMarket(data): Observable<any> {
+        return this.http.post(
+            environment.baseUrl + '/Addrenewableelectricity',
+            data
+        );
+    };
     public PostHeatandSteamDataEntry(data): Observable<any> {
         return this.http.post(
             environment.baseUrl + 'Tracking/SaveHeatandSteamDataEntry',

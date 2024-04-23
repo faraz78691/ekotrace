@@ -149,6 +149,7 @@ export class Scope2TrackingComponent {
     storageGrid: any[] = [];
     waterSupplyUnitGrid: any[] = [];
     wasteGrid: any[] = [];
+    regionType: any[] = [];
     goodsTemplates: any[] = [];
     waterWasteProduct: string;
     wasteSubTypes: any[] = [];
@@ -197,6 +198,7 @@ export class Scope2TrackingComponent {
     calculationRow = false;
     investmentTypeValue = '';
     equityInvestmentRow = false;
+    convertedYear: string;
     debtInvesmentRow = false;
     InvestmentHeading = '';
     RevenueRow = false;
@@ -219,6 +221,9 @@ export class Scope2TrackingComponent {
     mode_name = '';
     selectedtemplate = '';
     mode_type: any[] = [];
+    LocationTypes: any[] = [];
+    
+
     carFuel_type: any[] = [];
     wasteMethod: string;
     recycle = false;
@@ -337,6 +342,19 @@ export class Scope2TrackingComponent {
                     "flightType": "Distance"
                 }
 
+            ];
+        this.LocationTypes =
+            [
+
+                {
+                    "id": 1,
+                    "Type": "Renewable Energy Cert (REC)"
+                },
+                {
+                    "id": 2,
+                    "Type": "Supplier Specific"
+                }
+              
             ];
         this.goodsTemplates =
             [
@@ -694,26 +712,7 @@ export class Scope2TrackingComponent {
         }
     }
 
-    confirm1() {
-        this.confirmationService.confirm({
-            target: event.target,
 
-            accept: () => {
-                this.messageService.add({
-                    severity: 'success',
-                    summary: 'Confirmed',
-                    detail: 'User Deleted Succesfully'
-                });
-            },
-            reject: () => {
-                this.messageService.add({
-                    severity: 'error',
-                    summary: 'Rejected',
-                    detail: 'User not Deleted'
-                });
-            }
-        });
-    }
     //runs when component intialize
     ngOnInit() {
         $(document).ready(function () {
@@ -805,251 +804,12 @@ export class Scope2TrackingComponent {
         }
     };
 
-    //method for apply a filter to the data table (dt)
-    // filter(value: any, field: string, matchMode: string) {
-    //     this.dt.filter(value, field, matchMode);
-    //     this.filteredStatus = value; // Store the selected status in a variable
-    // }
+
     //display a dialog
     showDialog() {
         this.visible = true;
     };
-    //retrieves assigned data points for a facility and handles the response to update the UI accordingly.
-    GetAssignedDataPoint(facilityID: number) {
-        this.recycle = false;
 
-        if (facilityID == 0) {
-            return
-        } else {
-
-            this.AssignedDataPoint = [];
-            this.SubCatAllData = new ManageDataPointSubCategories();
-            this.trackingService
-                .newgetSavedDataPointforTracking(facilityID)
-                .subscribe({
-                    next: (response) => {
-                        if (response.success === false) {
-                            this.facilityhavedp = environment.none;
-                            this.facilitynothavedp = environment.flex;
-                            this.forGroup = environment.none;
-                        } else {
-                            // console.log("scopees", response)
-                            this.AssignedDataPoint = response.categories;
-                            this.AssignedDataPoint.forEach(scope => {
-                                scope.manageDataPointCategories.forEach(
-                                    (cat) => {
-                                        cat.manageDataPointSubCategories.forEach(
-                                            (subcat) => {
-                                                //   var count = 0;
-                                                //   subcat.dataEntries.forEach(
-                                                //       (dataentry) => {
-                                                //           if (
-                                                //               dataentry.status ===
-                                                //               'approved'
-                                                //           ) {
-                                                //               count++;
-                                                //           }
-                                                //           subcat.approvedEntries = count;
-                                                //       }
-                                                //   );
-                                            }
-                                        );
-                                    }
-                                );
-                            })
-
-                            const isSubcategoryEmptyForAllCategories =
-
-                                (response.categories).every((scope) => {
-                                    scope.manageDataPointCategories.every(
-                                        (category) =>
-                                            category.manageDataPointSubCategories
-                                                .length === 0
-                                    );
-                                })
-
-                            if (isSubcategoryEmptyForAllCategories === true) {
-                                this.facilityhavedp = environment.none;
-                                this.facilitynothavedp = environment.flex;
-                                this.forGroup = environment.none;
-                            } else {
-
-                                this.facilitynothavedp = environment.none;
-                                this.forGroup = environment.none;
-                                this.facilityhavedp = environment.block;
-                                // this.facilityhavedp = environment.block;
-                                // this.facilitynothavedp = environment.none;
-                                // this.forGroup = environment.none;
-                            }
-                            let found = false;
-                            for (let i = 0; i < (response.categories).length; i++) { // Use < instead of <=
-                                for (let j = 0; j < (response.categories)[i].manageDataPointCategories.length; j++) { // Use < instead of <=
-                                    if ((response.categories)[i].manageDataPointCategories[j].manageDataPointSubCategories.length > 0) {
-
-                                        const subCatID = response.categories[i].manageDataPointCategories[j].manageDataPointSubCategories[0].manageDataPointSubCategorySeedID;
-                                        this.SubCatAllData = response.categories[i].manageDataPointCategories[j].manageDataPointSubCategories[0];
-
-                                        this.id_var = subCatID;
-                                        if ((response.categories)[i].manageDataPointCategories[j].manageDataPointCategorySeedID == 1) {
-
-                                            this.categoryId = 1;
-                                            this.getsubCategoryType(this.SubCatAllData
-                                                .manageDataPointSubCategorySeedID);
-                                            this.getUnit(this.SubCatAllData
-                                                .manageDataPointSubCategorySeedID);
-                                            // this.trackingService.getSCdataentry(subCatID, this.loginInfo.tenantID).subscribe({
-                                            //     next: (response) => {
-                                            //         this.commonDE = response;
-                                            //         this.categoryId = 1;
-
-                                            //         this.getEmissionfactor(
-                                            //             this.SubCatAllData
-                                            //                 .manageDataPointSubCategorySeedID,
-                                            //             this.categoryId
-                                            //         );
-                                            //         this.getsubCategoryType(this.SubCatAllData
-                                            //             .manageDataPointSubCategorySeedID);
-                                            //     }
-                                            // });
-                                            found = true; // Set the flag to true
-                                            break;
-                                        }
-
-                                        if ((response.categories)[i].manageDataPointCategories[j].manageDataPointCategorySeedID == 2) {
-
-
-                                            this.trackingService.getrefdataentry(subCatID, this.loginInfo.tenantID).subscribe({
-                                                next: (response) => {
-                                                    this.commonDE = response;
-                                                    this.categoryId = 2;
-                                                    this.getEmissionfactor(
-                                                        this.SubCatAllData
-                                                            .manageDataPointSubCategorySeedID,
-                                                        this.categoryId
-                                                    );
-                                                    this.getsubCategoryType(this.SubCatAllData
-                                                        .manageDataPointSubCategorySeedID);
-
-                                                }
-                                            });
-                                            found = true; // Set the flag to true
-                                            break;
-                                        }
-
-                                        if ((response.categories)[i].manageDataPointCategories[j].manageDataPointCategorySeedID == 3) {
-                                            this.trackingService.getfiredataentry(subCatID, this.loginInfo.tenantID).subscribe({
-                                                next: (response) => {
-                                                    this.commonDE = response;
-                                                    this.categoryId = 3;
-                                                    this.getEmissionfactor(
-                                                        this.SubCatAllData
-                                                            .manageDataPointSubCategorySeedID,
-                                                        this.categoryId
-                                                    );
-                                                    this.getsubCategoryType(this.SubCatAllData
-                                                        .manageDataPointSubCategorySeedID);
-
-                                                }
-                                            });
-                                            found = true; // Set the flag to true
-                                            break;
-                                        }
-
-                                        if ((response.categories)[i].manageDataPointCategories[j].manageDataPointCategorySeedID == 5) {
-                                            this.trackingService.getElectricdataentry(subCatID, this.loginInfo.tenantID).subscribe({
-                                                next: (response) => {
-                                                    this.commonDE = response;
-                                                    this.categoryId = 5;
-                                                    this.getEmissionfactor(
-                                                        this.SubCatAllData
-                                                            .manageDataPointSubCategorySeedID,
-                                                        this.categoryId
-                                                    );
-                                                    this.getsubCategoryType(this.SubCatAllData
-                                                        .manageDataPointSubCategorySeedID);
-
-                                                }
-                                            });
-                                            found = true; // Set the flag to true
-                                            break;
-                                        }
-
-                                        if ((response.categories)[i].manageDataPointCategories[j].manageDataPointCategorySeedID == 6) {
-
-                                            return
-                                            this.trackingService.getvehicledataentry(subCatID, this.loginInfo.tenantID).subscribe({
-                                                next: (response) => {
-                                                    this.commonDE = response;
-                                                    this.categoryId = 6;
-                                                    this.getEmissionfactor(
-                                                        this.SubCatAllData
-                                                            .manageDataPointSubCategorySeedID,
-                                                        this.categoryId
-                                                    );
-                                                    this.getsubCategoryType(this.SubCatAllData
-                                                        .manageDataPointSubCategorySeedID);
-
-                                                }
-                                            });
-                                            found = true; // Set the flag to true
-                                            break;
-                                        }
-                                        if ((response.categories)[i].manageDataPointCategories[j].manageDataPointCategorySeedID == 7) {
-                                            this.trackingService.getHeatandSteamdataentry(subCatID, this.loginInfo.tenantID).subscribe({
-                                                next: (response) => {
-                                                    this.commonDE = response;
-                                                    this.categoryId = 7;
-                                                    this.getEmissionfactor(
-                                                        this.SubCatAllData
-                                                            .manageDataPointSubCategorySeedID,
-                                                        this.categoryId
-                                                    );
-                                                    this.getsubCategoryType(this.SubCatAllData
-                                                        .manageDataPointSubCategorySeedID);
-                                                }
-                                            });
-                                            found = true; // Set the flag to true
-                                            break;
-                                        }
-                                        else {
-                                            this.commonDE = [];
-                                            this.categoryId =
-                                                (response.categories)[i].manageDataPointCategories[j].manageDataPointCategorySeedID;
-                                            this.units = [];
-                                            break;
-                                        }
-                                    }
-
-                                    if (found) { // Check the flag here
-                                        break; // Break out of the inner loop if the flag is true
-                                    }
-                                }
-
-                                if (found) { // Check the flag here
-                                    break; // Break out of the outer loop if the flag is true
-                                }
-                            }
-                            this.route.queryParams.subscribe(params => {
-                                if (params['data'] != undefined) {
-                                    debugger
-                                    this.subCatID = params['data'];
-                                    this.activeindex = 1;
-                                    this.id_var = this.subCatID;
-                                }
-
-                            })
-                        }
-                    },
-                    error: (err) => {
-                        this.notification.showError(
-                            'Get data Point failed.',
-                            'Error'
-                        );
-                        console.error('errrrrrr>>>>>>', err);
-                    }
-                });
-        }
-    };
 
     onSubCategoryVehicleChange(event: any) {
         this.subVehicleCategoryValue = event.value;
@@ -1069,8 +829,9 @@ export class Scope2TrackingComponent {
         );
     };
 
-    //Updates selected data point and category, fetches emission factor, checks for existing entries, and resets the form.
+    // getting status, units, subCategory types where ever required
     SubCatData(data: any, catID: any) {
+
         this.recycle = false;
         this.isVisited = false;
 
@@ -1082,7 +843,7 @@ export class Scope2TrackingComponent {
 
         console.log("categoryId", this.categoryId);
         console.log("id_var", this.id_var);
-        this.ALLEntries(this.SubCatAllData)
+        this.ALLEntries()
         if (catID == 1) {
 
             this.getsubCategoryType(this.SubCatAllData
@@ -1092,15 +853,7 @@ export class Scope2TrackingComponent {
         }
 
         if (catID == 2) {
-            //   this.trackingService.getrefdataentry(data.id, this.loginInfo.tenantID).subscribe({
-            //       next: (response) => {
-            //           this.commonDE = response;
-            //       }
-            //   });
-            //   this.getEmissionfactor(
-            //       this.SubCatAllData.manageDataPointSubCategorySeedID,
-            //       this.categoryId
-            //   );
+
             this.getsubCategoryType(this.SubCatAllData
                 .manageDataPointSubCategorySeedID);
             this.getUnit(this.SubCatAllData
@@ -1108,15 +861,7 @@ export class Scope2TrackingComponent {
         }
 
         if (catID == 3) {
-            //   this.trackingService.getfiredataentry(data.id, this.loginInfo.tenantID).subscribe({
-            //       next: (response) => {
-            //           this.commonDE = response;
-            //       }
-            //   });
-            //   this.getEmissionfactor(
-            //       this.SubCatAllData.manageDataPointSubCategorySeedID,
-            //       this.categoryId
-            //   );
+
             this.getsubCategoryType(this.SubCatAllData
                 .manageDataPointSubCategorySeedID);
             this.getUnit(this.SubCatAllData
@@ -1124,15 +869,8 @@ export class Scope2TrackingComponent {
         }
 
         if (catID == 5) {
-            //   this.trackingService.getElectricdataentry(data.id, this.loginInfo.tenantID).subscribe({
-            //       next: (response) => {
-            //           this.commonDE = response;
-            //       }
-            //   });
-            //   this.getEmissionfactor(
-            //       this.SubCatAllData.manageDataPointSubCategorySeedID,
-            //       this.categoryId
-            //   );
+
+            this.getRegionName(9);
             this.getsubCategoryType(this.SubCatAllData
                 .manageDataPointSubCategorySeedID);
             this.getUnit(this.SubCatAllData
@@ -1151,36 +889,10 @@ export class Scope2TrackingComponent {
             this.getUnit(this.SubCatAllData
                 .manageDataPointSubCategorySeedID);
 
-            //   this.trackingService.getvehicledataentry(data.id, this.loginInfo.tenantID).subscribe({
-            //       next: (response) => {
-            //           this.commonDE = response;
-            //           if (data.manageDataPointSubCategorySeedID == 10) {
-            //               this.getPassengerVehicleType();
-            //           }
-            //           else {
-            //               this.getDeliveryVehicleType();
-            //           }
-            //       }
-            //   });
-            //   this.getEmissionfactor(
-            //       this.SubCatAllData.manageDataPointSubCategorySeedID,
-            //       this.categoryId
-            //   );
-            // this.getsubCategoryType(this.SubCatAllData
-            //     .manageDataPointSubCategorySeedID)
-            //     this.getUnit(this.SubCatAllData
-            //         .manageDataPointSubCategorySeedID);
+
         }
         if (catID == 7) {
-            //   this.trackingService.getHeatandSteamdataentry(data.id, this.loginInfo.tenantID).subscribe({
-            //       next: (response) => {
-            //           this.commonDE = response;
-            //       }
-            //   });
-            //   this.getEmissionfactor(
-            //       this.SubCatAllData.manageDataPointSubCategorySeedID,
-            //       this.categoryId
-            //   );
+
             this.getsubCategoryType(this.SubCatAllData
                 .manageDataPointSubCategorySeedID);
             this.getUnit(this.SubCatAllData
@@ -1235,308 +947,14 @@ export class Scope2TrackingComponent {
         this.resetForm();
     };
 
-    wastemethodChange(event: any) {
-        console.log(event.value);
-        if (event.value == 'Recycling') {
-            this.recycle = true
-        } else {
-            this.recycle = false;
-        }
-    }
 
-    setActive(index: number): void {
-        this.categoryId = index;
-        // this.flightDisplay1 = 'block'
-        // this.flightDisplay2 = 'none'
-        // this.flightDisplay3 = 'none'
-        this.noOfItems = false;
-
-        // this.ModeSelected = false;
-        this.calculationRow = false;
-        this.equityInvestmentRow = false;
-
-
-
-
-        if (this.categoryId == 24) {
-
-            this.getFlightType();
-            this.getBusineesUnit()
-            // this.getSubFranchiseCategory('Banking Financial Services');
-            // this.getVehicleTypes();
-            // this.getSubVehicleCategory(1)
-        }
-
-        // this.getStatusData(this.activeCategoryIndex);
-    };
-
-
-    getBusineesUnit() {
-        this.trackingService.getBusinessUnit().subscribe({
-            next: (response) => {
-
-                if (response.success == true) {
-                    this.busineessGrid = response.categories;
-                    // this.franchiseCategoryValue = this.franchiseGrid[0].categories
-                }
-            }
-        })
-    };
-    //The saveSetting function handles the saving or editing of data entry settings.
-    saveSetting(data: NgForm) {
-        if (this.dataEntrySetting.id === undefined) {
-            this.dataEntrySetting.manageDataPointSubCategoriesID =
-                this.SubCatAllData.id;
-            this.trackingService
-                .postDataEntrySetting(this.dataEntrySetting)
-                .subscribe({
-                    next: (response) => {
-                        if (response === true) {
-                            this.activeindex = 0;
-                            this.notification.showSuccess(
-                                'Setting Added successfully',
-                                'Success'
-                            );
-                        } else {
-                            this.notification.showWarning(
-                                'Setting Added failed',
-                                'Warning'
-                            );
-                        }
-                    },
-                    error: (err) => {
-                        this.notification.showError(
-                            'Setting added failed.',
-                            'Error'
-                        );
-                        console.error('errrrrrr>>>>>>', err);
-                    },
-                    complete: () => console.info('Setting Added')
-                });
-        } else {
-            this.dataEntrySetting.manageDataPointSubCategoriesID =
-                this.SubCatAllData.id;
-            this.trackingService
-                .putDataEntrySetting(
-                    this.dataEntrySetting.id,
-                    this.dataEntrySetting
-                )
-                .subscribe({
-                    next: (response) => {
-                        if (response == true) {
-                            this.activeindex = 0;
-                            this.notification.showSuccess(
-                                'Setting edited successfully',
-                                'Success'
-                            );
-                        }
-                    },
-                    error: (err) => {
-                        this.notification.showError(
-                            'Setting editing failed.',
-                            'Error'
-                        );
-                        console.error('errrrrrr>>>>>>', err);
-                    },
-                    complete: () => console.info('Setting Edited')
-                });
-        }
-    };
-
-    getFlightType() {
-        this.trackingService.getflight_types().subscribe({
-            next: (response) => {
-
-                if (response.success == true) {
-                    this.wasteGrid = response.batchIds;
-                    // this.franchiseCategoryValue = this.franchiseGrid[0].categories
-                }
-            }
-        })
-    };
-    getAirportCodes() {
-        this.trackingService.getAirportCodes().subscribe({
-            next: (response) => {
-                if (response.success == true) {
-                    this.airportGrid = response.categories
-
-                } else {
-
-                }
-
-            }
-        })
-    };
-    getFlightTimeTypes() {
-        this.trackingService.getFlightTimes().subscribe({
-            next: (response) => {
-
-                if (response.success == true) {
-                    this.flightTime = response.batchIds;
-                    // this.franchiseCategoryValue = this.franchiseGrid[0].categories
-                }
-            }
-        })
-    };
-
-    ToggleClick() {
-        this.isVisited = true;
-    }
-    // retrieves the data entry setting for a given subcategory ID.
-    getSetting(subCatId: any) {
-        this.trackingService
-            .getdataEntrySetting(subCatId)
-            .subscribe((response) => {
-                if (response != null) {
-                    this.dataEntrySetting = response;
-                } else {
-                    this.dataEntrySetting = new DataEntrySetting();
-                }
-            });
-    }
-
-    //retrieves the emission factor for a given subcategory seed ID and category ID.
-    getEmissionfactor(subcatseedID: any, catID) {
-        if (catID === 1) {
-            this.trackingService
-                .GetEmissionFactorStationarybyID(subcatseedID)
-                .subscribe({
-                    next: (response) => {
-                        if (response) {
-                            this.EmissionFactor = response;
-                            //   this.getUnit(subcatseedID);
-                        }
-                        else {
-                            this.EmissionFactor = [];
-                        }
-                    },
-                    error: (err) => {
-                        this.EmissionFactor = [];
-
-                    }
-                });
-        }
-        if (catID === 2) {
-            this.trackingService
-                .GetEmissionFactorRefrigerantsbyID(subcatseedID)
-                .subscribe({
-                    next: (response) => {
-                        if (response) {
-                            this.EmissionFactor = response;
-                            // this.getUnit(subcatseedID);
-                        }
-                        else {
-                            this.EmissionFactor = [];
-                        }
-                    },
-                    error: (err) => {
-                        this.EmissionFactor = [];
-                        this.notification.showError(
-                            'Emission Factor failed.',
-                            'Error'
-                        );
-                        console.error('errrrrrr>>>>>>', err);
-                    }
-                });
-        }
-        if (catID === 3) {
-            this.trackingService
-                .GetEmissionFactorFirebyID(subcatseedID)
-                .subscribe({
-                    next: (response) => {
-                        if (response) {
-                            this.EmissionFactor = response;
-                            // this.getUnit(subcatseedID);
-                        }
-                        else {
-                            this.EmissionFactor = [];
-                        }
-                    },
-                    error: (err) => {
-                        this.EmissionFactor = [];
-                        this.notification.showError(
-                            'Emission Factor failed.',
-                            'Error'
-                        );
-                        console.error('errrrrrr>>>>>>', err);
-                    }
-                });
-        }
-        if (catID === 5) {
-            this.trackingService
-                .GetEmissionFactorElectricitybyID(subcatseedID)
-                .subscribe({
-                    next: (response) => {
-                        if (response) {
-                            this.EmissionFactor = response;
-                            // this.getUnit(subcatseedID);
-                        }
-                        else {
-                            this.EmissionFactor = [];
-                        }
-                    },
-                    error: (err) => {
-                        this.EmissionFactor = [];
-                        this.notification.showError(
-                            'Emission Factor failed.',
-                            'Error'
-                        );
-                        console.error('errrrrrr>>>>>>', err);
-                    }
-                });
-        }
-        if (catID === 6) {
-            this.trackingService
-                .GetEmissionFactorVehiclebyID(subcatseedID)
-                .subscribe({
-                    next: (response) => {
-                        if (response) {
-                            this.EmissionFactor = response;
-                            // this.getUnit(subcatseedID);
-                        }
-                        else {
-                            this.EmissionFactor = [];
-                        }
-                    },
-                    error: (err) => {
-                        this.EmissionFactor = [];
-                        this.notification.showError(
-                            'Emission Factor failed.',
-                            'Error'
-                        );
-                        console.error('errrrrrr>>>>>>', err);
-                    }
-                });
-        }
-        if (catID === 7) {
-            this.trackingService
-                .GetEmissionFactorHeatandSteambyID(subcatseedID)
-                .subscribe({
-                    next: (response) => {
-                        if (response) {
-                            this.EmissionFactor = response;
-                            // this.getUnit(subcatseedID);
-                        }
-                        else {
-                            this.EmissionFactor = [];
-                        }
-                    },
-                    error: (err) => {
-                        this.EmissionFactor = [];
-                        this.notification.showError(
-                            'Emission Factor failed.',
-                            'Error'
-                        );
-                        console.error('errrrrrr>>>>>>', err);
-                    }
-                });
-        }
-    };
-
+    // getting subcategory types
     getsubCategoryType(subCatID: number) {
+        this.dataEntry.typeID = null;
         this.trackingService.newgetsubCatType(subCatID).subscribe({
             next: (response) => {
                 this.SubCategoryType = response.categories;
+                this.dataEntry.typeID = this.SubCategoryType[0].subCatTypeID;
 
             },
             error: (err) => {
@@ -1545,10 +963,14 @@ export class Scope2TrackingComponent {
         })
     };
 
-    getRefrigerantsubCategoryType(subCatID: number) {
+    getRegionName(subCatID: number) {
+        this.dataEntry.typeID = null;
+        this.RenewableElectricity.electricityRegionID = null;
         this.trackingService.newgetsubCatType(subCatID).subscribe({
             next: (response) => {
-                this.SubCategoryType = response.categories;
+                this.regionType = response.categories;
+                this.RenewableElectricity.electricityRegionID = this.regionType[0].RegionID;
+
             },
             error: (err) => {
                 console.error('errrrrrr>>>>>>', err);
@@ -1556,8 +978,232 @@ export class Scope2TrackingComponent {
         })
     };
 
-    onInputEdit() {
-        this.isInputEdited = true;
+    // to get the status of subcategories in status tab
+    ALLEntries() {
+        console.log(this.facilityID);
+        if(this.facilityID == 0){
+            this.notification.showInfo(
+                'Select Facility',
+                ''
+            );
+            return 
+        }
+
+
+        const formData = new URLSearchParams();
+        this.convertedYear = this.trackingService.getYear(this.year);
+        formData.set('year', this.convertedYear.toString())
+        formData.set('facilities', this.facilityID.toString())
+        formData.set('categoryID', this.categoryId.toString())
+        if (this.categoryId == 1) {
+            this.trackingService
+                .newgetSCpendingDataEntries(formData)
+                .subscribe({
+                    next: (response) => {
+                        if (response.success === false) {
+                            this.dataEntriesPending = null;
+                        } else {
+                            this.dataEntriesPending = response.categories;
+                            console.log("data>", this.dataEntriesPending)
+
+                        }
+
+                    },
+                    error: (err) => {
+                        this.notification.showError(
+                            'Get data Point failed.',
+                            'Error'
+                        );
+                        console.error('errrrrrr>>>>>>', err);
+                    }
+                });
+        }
+        if (this.categoryId == 2) {
+            this.trackingService
+                .newgetSCpendingDataEntries(formData)
+                .subscribe({
+                    next: (response) => {
+                        if (response.success === false) {
+                            this.dataEntriesPending = null;
+                        } else {
+                            this.dataEntriesPending = response.categories;
+                            console.log("data>", this.dataEntriesPending)
+
+                        }
+
+                    },
+                    error: (err) => {
+                        this.notification.showError(
+                            'Get data Point failed.',
+                            'Error'
+                        );
+                        console.error('errrrrrr>>>>>>', err);
+                    }
+                });
+        }
+        if (this.categoryId == 3) {
+            this.trackingService
+                .newgetSCpendingDataEntries(formData)
+                .subscribe({
+                    next: (response) => {
+                        if (response.success === false) {
+                            this.dataEntriesPending = null;
+                        } else {
+                            this.dataEntriesPending = response.categories;
+                            console.log("data>", this.dataEntriesPending)
+
+                        }
+
+                    },
+                    error: (err) => {
+                        this.notification.showError(
+                            'Get data Point failed.',
+                            'Error'
+                        );
+                        console.error('errrrrrr>>>>>>', err);
+                    }
+                });
+        }
+        if (this.categoryId == 5) {
+            this.trackingService
+                .newgetSCpendingDataEntries(formData)
+                .subscribe({
+                    next: (response) => {
+                        if (response.success === false) {
+                            this.dataEntriesPending = null;
+                        } else {
+                            this.dataEntriesPending = response.categories;
+                            console.log("data>", this.dataEntriesPending)
+
+                        }
+
+                    },
+                    error: (err) => {
+                        this.notification.showError(
+                            'Get data Point failed.',
+                            'Error'
+                        );
+                        console.error('errrrrrr>>>>>>', err);
+                    }
+                });
+        }
+        if (this.categoryId == 6) {
+            this.trackingService
+                .newgetSCpendingDataEntries(formData)
+                .subscribe({
+                    next: (response) => {
+                        if (response.success === false) {
+                            this.dataEntriesPending = null;
+                        } else {
+                            this.dataEntriesPending = response.categories;
+                            console.log("data>", this.dataEntriesPending)
+
+                        }
+
+                    },
+                    error: (err) => {
+                        this.notification.showError(
+                            'Get data Point failed.',
+                            'Error'
+                        );
+                        console.error('errrrrrr>>>>>>', err);
+                    }
+                });
+        }
+        if (this.categoryId == 7) {
+            this.trackingService
+                .newgetSCpendingDataEntries(formData)
+                .subscribe({
+                    next: (response) => {
+                        if (response.success === false) {
+                            this.dataEntriesPending = null;
+                        } else {
+                            this.dataEntriesPending = response.categories;
+                            console.log("data>", this.dataEntriesPending)
+
+                        }
+
+                    },
+                    error: (err) => {
+                        this.notification.showError(
+                            'Get data Point failed.',
+                            'Error'
+                        );
+                        console.error('errrrrrr>>>>>>', err);
+                    }
+                });
+        }
+        if (this.categoryId == 8) {
+            this.trackingService
+                .newgetSCpendingDataEntries(formData)
+                .subscribe({
+                    next: (response) => {
+                        if (response.success === false) {
+                            this.dataEntriesPending = null;
+                        } else {
+                            this.dataEntriesPending = response.categories;
+                            console.log("data>", this.dataEntriesPending)
+
+                        }
+
+                    },
+                    error: (err) => {
+                        this.notification.showError(
+                            'Get data Point failed.',
+                            'Error'
+                        );
+                        console.error('errrrrrr>>>>>>', err);
+                    }
+                });
+        }
+        if (this.categoryId == 9) {
+            this.trackingService
+                .newgetSCpendingDataEntries(formData)
+                .subscribe({
+                    next: (response) => {
+                        if (response.success === false) {
+                            this.dataEntriesPending = null;
+                        } else {
+                            this.dataEntriesPending = response.categories;
+                            console.log("data>", this.dataEntriesPending)
+
+                        }
+
+                    },
+                    error: (err) => {
+                        this.notification.showError(
+                            'Get data Point failed.',
+                            'Error'
+                        );
+                        console.error('errrrrrr>>>>>>', err);
+                    }
+                });
+        }
+        if (this.categoryId == 10) {
+            this.trackingService
+                .newgetSCpendingDataEntries(formData)
+                .subscribe({
+                    next: (response) => {
+                        if (response.success === false) {
+                            this.dataEntriesPending = null;
+                        } else {
+                            this.dataEntriesPending = response.categories;
+                            console.log("data>", this.dataEntriesPending)
+
+                        }
+
+                    },
+                    error: (err) => {
+                        this.notification.showError(
+                            'Get data Point failed.',
+                            'Error'
+                        );
+                        console.error('errrrrrr>>>>>>', err);
+                    }
+                });
+        }
+
+
     };
 
     //entrysave function to save dataentry
@@ -1744,6 +1390,11 @@ export class Scope2TrackingComponent {
                             'Success'
                         );
                         this.resetForm();
+                        this.getsubCategoryType(this.SubCatAllData
+                            .manageDataPointSubCategorySeedID);
+                        this.ALLEntries();
+                        this.getUnit(this.SubCatAllData
+                            .manageDataPointSubCategorySeedID);
                         //this.GetAssignedDataPoint(this.facilityID);
                         // this.trackingService.getrefdataentry(this.SubCatAllData.id, this.loginInfo.tenantID).subscribe({
                         //     next: (response) => {
@@ -1794,6 +1445,11 @@ export class Scope2TrackingComponent {
                             'Success'
                         );
                         this.resetForm();
+                        this.getsubCategoryType(this.SubCatAllData
+                            .manageDataPointSubCategorySeedID);
+                        this.ALLEntries();
+                        this.getUnit(this.SubCatAllData
+                            .manageDataPointSubCategorySeedID);
                         //this.GetAssignedDataPoint(this.facilityID);
                         // this.trackingService.getrefdataentry(this.SubCatAllData.id, this.loginInfo.tenantID).subscribe({
                         //     next: (response) => {
@@ -1825,8 +1481,8 @@ export class Scope2TrackingComponent {
             let formData = new URLSearchParams();
             formData.set('NumberOfExtinguisher', this.FireExtinguisherDE.numberOfExtinguisher.toString());
             formData.set('unit', this.dataEntry.unit);
-            formData.set('quantityOfCO2makeup', this.FireExtinguisherDE.numberOfExtinguisher.toString());
-            formData.set('fireExtinguisherID', this.FireExtinguisherDE.numberOfExtinguisher.toString());
+            formData.set('quantityOfCO2makeup', this.FireExtinguisherDE.quantityOfCO2makeup.toString());
+            formData.set('fireExtinguisherID', this.FireExtinguisherDE.fireExtinguisherID.toString());
             formData.set('facilities', this.facilityID);
             formData.set('months', monthString);
             formData.set('year', this.dataEntry.year);
@@ -1841,6 +1497,9 @@ export class Scope2TrackingComponent {
                             'Success'
                         );
                         this.resetForm();
+                        this.ALLEntries();
+                        this.getUnit(this.SubCatAllData
+                            .manageDataPointSubCategorySeedID);
                         //this.GetAssignedDataPoint(this.facilityID);
                         // this.trackingService.getrefdataentry(this.SubCatAllData.id, this.loginInfo.tenantID).subscribe({
                         //     next: (response) => {
@@ -1862,6 +1521,8 @@ export class Scope2TrackingComponent {
             });
         }
         if (this.categoryId == 6) {
+            console.log("this.VehicleDE.vehicleTypeID", this.VehicleDE.vehicleTypeID);
+
             if (this.selectMonths.length == 0) {
                 this.notification.showInfo(
                     'Select month',
@@ -1892,19 +1553,23 @@ export class Scope2TrackingComponent {
             this.trackingService.newPostVehicleDataEntry(formData.toString()).subscribe({
                 next: (response) => {
                     if (response.success == true) {
+                        this.ALLEntries();
                         this.notification.showSuccess(
                             'Data entry added successfully',
                             'Success'
                         );
                         this.resetForm();
+                        this.getUnit(this.SubCatAllData
+                            .manageDataPointSubCategorySeedID);
+                            this.VehicleDE.modeOfDE = this.ModeType[0].modeName;
                         if (this.SubCatAllData.manageDataPointSubCategorySeedID == 10) {
+
                             this.getPassengerVehicleType();
                         }
                         else {
+
                             this.getDeliveryVehicleType();
                         }
-
-
                         this.activeindex = 0;
                     }
                 },
@@ -1937,6 +1602,36 @@ export class Scope2TrackingComponent {
                 formData.set('SubCategorySeedID', this.SubCatAllData
                     .manageDataPointSubCategorySeedID.toString());
 
+                    this.trackingService.newPostElectricityDataEntry(formData.toString()).subscribe({
+                        next: (response) => {
+                            if (response.success == true) {
+                                //this.GetAssignedDataPoint(this.facilityID);
+                                this.getUnit(this.SubCatAllData
+                                    .manageDataPointSubCategorySeedID);
+                                    this.RenewableElectricity.sourceName = this.ElectricitySource[0].sourceName;
+                                this.activeindex = 0;
+                                this.getRegionName(9);
+                                this.getsubCategoryType(this.SubCatAllData
+                                    .manageDataPointSubCategorySeedID);
+                                    this.ALLEntries();
+                        
+                                this.notification.showSuccess(
+                                    'Data entry added successfully',
+                                    'Success'
+                                );
+                                this.resetForm();
+                            }
+                        },
+                        error: (err) => {
+                            this.notification.showError(
+                                'Data entry added failed.',
+                                'Error'
+                            );
+                            console.error('errrrrrr>>>>>>', err);
+                        },
+                        complete: () => console.info('Data entry Added')
+                    });
+
             }
             else {
                 var formData = new URLSearchParams();
@@ -1950,14 +1645,19 @@ export class Scope2TrackingComponent {
                 formData.set('SubCategorySeedID', this.SubCatAllData
                     .manageDataPointSubCategorySeedID.toString());
             }
-
-
-
-            this.trackingService.newPostElectricityDataEntry(formData.toString()).subscribe({
+            this.trackingService.newPostElectricityMarket(formData.toString()).subscribe({
                 next: (response) => {
                     if (response.success == true) {
                         //this.GetAssignedDataPoint(this.facilityID);
+                        this.getUnit(this.SubCatAllData
+                            .manageDataPointSubCategorySeedID);
+                            this.RenewableElectricity.sourceName = this.ElectricitySource[0].sourceName;
                         this.activeindex = 0;
+                        this.getRegionName(9);
+                        this.getsubCategoryType(this.SubCatAllData
+                            .manageDataPointSubCategorySeedID);
+                            this.ALLEntries();
+                
                         this.notification.showSuccess(
                             'Data entry added successfully',
                             'Success'
@@ -1974,6 +1674,9 @@ export class Scope2TrackingComponent {
                 },
                 complete: () => console.info('Data entry Added')
             });
+
+
+       
         }
         if (this.categoryId == 7) {
             var formData = new URLSearchParams();
@@ -1989,6 +1692,11 @@ export class Scope2TrackingComponent {
             this.trackingService.newPostHeatandSteamDataEntry(formData.toString()).subscribe({
                 next: (response) => {
                     if (response.success == true) {
+                        this.getsubCategoryType(this.SubCatAllData
+                            .manageDataPointSubCategorySeedID);
+                            this.ALLEntries();
+                            this.getUnit(this.SubCatAllData
+                                .manageDataPointSubCategorySeedID);
                         //this.GetAssignedDataPoint(this.facilityID);'
                         // this.trackingService.getHeatandSteamdataentry(this.SubCatAllData.id, this.loginInfo.tenantID).subscribe({
                         //     next: (response) => {
@@ -3358,8 +3066,440 @@ export class Scope2TrackingComponent {
 
         }
 
+    };
+    // getting units for category 1 and 2
+    getUnit(subcatId) {
+        this.trackingService.newgetUnits(subcatId).subscribe({
+            next: (Response) => {
+                if (Response) {
+                    this.units = Response['categories'];
+                    this.dataEntry.unit = this.units[0].UnitName;
 
+                }
+                else {
+                    this.units = [];
+                }
+            }
+        })
+    };
+
+
+    //retrieves assigned data points for a facility and handles the response to update the UI accordingly.
+    GetAssignedDataPoint(facilityID: number) {
+        this.recycle = false;
+
+        if (facilityID == 0) {
+            return
+        } else {
+
+            this.AssignedDataPoint = [];
+            this.SubCatAllData = new ManageDataPointSubCategories();
+            this.trackingService
+                .newgetSavedDataPointforTracking(facilityID)
+                .subscribe({
+                    next: (response) => {
+                        if (response.success === false) {
+                            this.facilityhavedp = environment.none;
+                            this.facilitynothavedp = environment.flex;
+                            this.forGroup = environment.none;
+                        } else {
+                            // console.log("scopees", response)
+                            this.AssignedDataPoint = response.categories;
+                            this.AssignedDataPoint.forEach(scope => {
+                                scope.manageDataPointCategories.forEach(
+                                    (cat) => {
+                                        cat.manageDataPointSubCategories.forEach(
+                                            (subcat) => {
+                                                //   var count = 0;
+                                                //   subcat.dataEntries.forEach(
+                                                //       (dataentry) => {
+                                                //           if (
+                                                //               dataentry.status ===
+                                                //               'approved'
+                                                //           ) {
+                                                //               count++;
+                                                //           }
+                                                //           subcat.approvedEntries = count;
+                                                //       }
+                                                //   );
+                                            }
+                                        );
+                                    }
+                                );
+                            })
+
+                            const isSubcategoryEmptyForAllCategories =
+
+                                (response.categories).every((scope) => {
+                                    scope.manageDataPointCategories.every(
+                                        (category) =>
+                                            category.manageDataPointSubCategories
+                                                .length === 0
+                                    );
+                                })
+
+                            if (isSubcategoryEmptyForAllCategories === true) {
+                                this.facilityhavedp = environment.none;
+                                this.facilitynothavedp = environment.flex;
+                                this.forGroup = environment.none;
+                            } else {
+
+                                this.facilitynothavedp = environment.none;
+                                this.forGroup = environment.none;
+                                this.facilityhavedp = environment.block;
+                                // this.facilityhavedp = environment.block;
+                                // this.facilitynothavedp = environment.none;
+                                // this.forGroup = environment.none;
+                            }
+                            let found = false;
+                            for (let i = 0; i < (response.categories).length; i++) { // Use < instead of <=
+                                for (let j = 0; j < (response.categories)[i].manageDataPointCategories.length; j++) { // Use < instead of <=
+                                    if ((response.categories)[i].manageDataPointCategories[j].manageDataPointSubCategories.length > 0) {
+
+                                        const subCatID = response.categories[i].manageDataPointCategories[j].manageDataPointSubCategories[0].manageDataPointSubCategorySeedID;
+                                        this.SubCatAllData = response.categories[i].manageDataPointCategories[j].manageDataPointSubCategories[0];
+
+                                        this.id_var = subCatID;
+                                        if ((response.categories)[i].manageDataPointCategories[j].manageDataPointCategorySeedID == 1) {
+
+                                            this.categoryId = 1;
+                                            this.getsubCategoryType(this.SubCatAllData
+                                                .manageDataPointSubCategorySeedID);
+                                            this.getUnit(this.SubCatAllData
+                                                .manageDataPointSubCategorySeedID);
+                                            // this.trackingService.getSCdataentry(subCatID, this.loginInfo.tenantID).subscribe({
+                                            //     next: (response) => {
+                                            //         this.commonDE = response;
+                                            //         this.categoryId = 1;
+
+                                            //         this.getEmissionfactor(
+                                            //             this.SubCatAllData
+                                            //                 .manageDataPointSubCategorySeedID,
+                                            //             this.categoryId
+                                            //         );
+                                            //         this.getsubCategoryType(this.SubCatAllData
+                                            //             .manageDataPointSubCategorySeedID);
+                                            //     }
+                                            // });
+                                            found = true; // Set the flag to true
+                                            break;
+                                        }
+
+                                        if ((response.categories)[i].manageDataPointCategories[j].manageDataPointCategorySeedID == 2) {
+
+
+                                            this.trackingService.getrefdataentry(subCatID, this.loginInfo.tenantID).subscribe({
+                                                next: (response) => {
+                                                    this.commonDE = response;
+                                                    this.categoryId = 2;
+                                                    this.getEmissionfactor(
+                                                        this.SubCatAllData
+                                                            .manageDataPointSubCategorySeedID,
+                                                        this.categoryId
+                                                    );
+                                                    this.getsubCategoryType(this.SubCatAllData
+                                                        .manageDataPointSubCategorySeedID);
+
+                                                }
+                                            });
+                                            found = true; // Set the flag to true
+                                            break;
+                                        }
+
+                                        if ((response.categories)[i].manageDataPointCategories[j].manageDataPointCategorySeedID == 3) {
+                                            this.trackingService.getfiredataentry(subCatID, this.loginInfo.tenantID).subscribe({
+                                                next: (response) => {
+                                                    this.commonDE = response;
+                                                    this.categoryId = 3;
+                                                    this.getEmissionfactor(
+                                                        this.SubCatAllData
+                                                            .manageDataPointSubCategorySeedID,
+                                                        this.categoryId
+                                                    );
+                                                    this.getsubCategoryType(this.SubCatAllData
+                                                        .manageDataPointSubCategorySeedID);
+
+                                                }
+                                            });
+                                            found = true; // Set the flag to true
+                                            break;
+                                        }
+
+                                        if ((response.categories)[i].manageDataPointCategories[j].manageDataPointCategorySeedID == 5) {
+                                            this.trackingService.getElectricdataentry(subCatID, this.loginInfo.tenantID).subscribe({
+                                                next: (response) => {
+                                                    this.commonDE = response;
+                                                    this.categoryId = 5;
+                                                    this.getEmissionfactor(
+                                                        this.SubCatAllData
+                                                            .manageDataPointSubCategorySeedID,
+                                                        this.categoryId
+                                                    );
+                                                    this.getsubCategoryType(this.SubCatAllData
+                                                        .manageDataPointSubCategorySeedID);
+
+                                                }
+                                            });
+                                            found = true; // Set the flag to true
+                                            break;
+                                        }
+
+                                        if ((response.categories)[i].manageDataPointCategories[j].manageDataPointCategorySeedID == 6) {
+
+                                            return
+                                            this.trackingService.getvehicledataentry(subCatID, this.loginInfo.tenantID).subscribe({
+                                                next: (response) => {
+                                                    this.commonDE = response;
+                                                    this.categoryId = 6;
+                                                    this.getEmissionfactor(
+                                                        this.SubCatAllData
+                                                            .manageDataPointSubCategorySeedID,
+                                                        this.categoryId
+                                                    );
+                                                    this.getsubCategoryType(this.SubCatAllData
+                                                        .manageDataPointSubCategorySeedID);
+
+                                                }
+                                            });
+                                            found = true; // Set the flag to true
+                                            break;
+                                        }
+                                        if ((response.categories)[i].manageDataPointCategories[j].manageDataPointCategorySeedID == 7) {
+                                            this.trackingService.getHeatandSteamdataentry(subCatID, this.loginInfo.tenantID).subscribe({
+                                                next: (response) => {
+                                                    this.commonDE = response;
+                                                    this.categoryId = 7;
+                                                    this.getEmissionfactor(
+                                                        this.SubCatAllData
+                                                            .manageDataPointSubCategorySeedID,
+                                                        this.categoryId
+                                                    );
+                                                    this.getsubCategoryType(this.SubCatAllData
+                                                        .manageDataPointSubCategorySeedID);
+                                                }
+                                            });
+                                            found = true; // Set the flag to true
+                                            break;
+                                        }
+                                        else {
+                                            this.commonDE = [];
+                                            this.categoryId =
+                                                (response.categories)[i].manageDataPointCategories[j].manageDataPointCategorySeedID;
+                                            this.units = [];
+                                            break;
+                                        }
+                                    }
+
+                                    if (found) { // Check the flag here
+                                        break; // Break out of the inner loop if the flag is true
+                                    }
+                                }
+
+                                if (found) { // Check the flag here
+                                    break; // Break out of the outer loop if the flag is true
+                                }
+                            }
+                            this.route.queryParams.subscribe(params => {
+                                if (params['data'] != undefined) {
+                                    debugger
+                                    this.subCatID = params['data'];
+                                    this.activeindex = 1;
+                                    this.id_var = this.subCatID;
+                                }
+
+                            })
+                        }
+                    },
+                    error: (err) => {
+                        this.notification.showError(
+                            'Get data Point failed.',
+                            'Error'
+                        );
+                        console.error('errrrrrr>>>>>>', err);
+                    }
+                });
+        }
+    };
+
+
+    wastemethodChange(event: any) {
+        console.log(event.value);
+        if (event.value == 'Recycling') {
+            this.recycle = true
+        } else {
+            this.recycle = false;
+        }
     }
+
+    setActive(index: number): void {
+        this.categoryId = index;
+        // this.flightDisplay1 = 'block'
+        // this.flightDisplay2 = 'none'
+        // this.flightDisplay3 = 'none'
+        this.noOfItems = false;
+
+        // this.ModeSelected = false;
+        this.calculationRow = false;
+        this.equityInvestmentRow = false;
+
+
+
+
+        if (this.categoryId == 24) {
+
+            this.getFlightType();
+            this.getBusineesUnit()
+            // this.getSubFranchiseCategory('Banking Financial Services');
+            // this.getVehicleTypes();
+            // this.getSubVehicleCategory(1)
+        }
+
+        // this.getStatusData(this.activeCategoryIndex);
+    };
+
+
+    getBusineesUnit() {
+        this.trackingService.getBusinessUnit().subscribe({
+            next: (response) => {
+
+                if (response.success == true) {
+                    this.busineessGrid = response.categories;
+                    // this.franchiseCategoryValue = this.franchiseGrid[0].categories
+                }
+            }
+        })
+    };
+    //The saveSetting function handles the saving or editing of data entry settings.
+    saveSetting(data: NgForm) {
+        if (this.dataEntrySetting.id === undefined) {
+            this.dataEntrySetting.manageDataPointSubCategoriesID =
+                this.SubCatAllData.id;
+            this.trackingService
+                .postDataEntrySetting(this.dataEntrySetting)
+                .subscribe({
+                    next: (response) => {
+                        if (response === true) {
+                            this.activeindex = 0;
+                            this.notification.showSuccess(
+                                'Setting Added successfully',
+                                'Success'
+                            );
+                        } else {
+                            this.notification.showWarning(
+                                'Setting Added failed',
+                                'Warning'
+                            );
+                        }
+                    },
+                    error: (err) => {
+                        this.notification.showError(
+                            'Setting added failed.',
+                            'Error'
+                        );
+                        console.error('errrrrrr>>>>>>', err);
+                    },
+                    complete: () => console.info('Setting Added')
+                });
+        } else {
+            this.dataEntrySetting.manageDataPointSubCategoriesID =
+                this.SubCatAllData.id;
+            this.trackingService
+                .putDataEntrySetting(
+                    this.dataEntrySetting.id,
+                    this.dataEntrySetting
+                )
+                .subscribe({
+                    next: (response) => {
+                        if (response == true) {
+                            this.activeindex = 0;
+                            this.notification.showSuccess(
+                                'Setting edited successfully',
+                                'Success'
+                            );
+                        }
+                    },
+                    error: (err) => {
+                        this.notification.showError(
+                            'Setting editing failed.',
+                            'Error'
+                        );
+                        console.error('errrrrrr>>>>>>', err);
+                    },
+                    complete: () => console.info('Setting Edited')
+                });
+        }
+    };
+
+    getFlightType() {
+        this.trackingService.getflight_types().subscribe({
+            next: (response) => {
+
+                if (response.success == true) {
+                    this.wasteGrid = response.batchIds;
+                    // this.franchiseCategoryValue = this.franchiseGrid[0].categories
+                }
+            }
+        })
+    };
+    getAirportCodes() {
+        this.trackingService.getAirportCodes().subscribe({
+            next: (response) => {
+                if (response.success == true) {
+                    this.airportGrid = response.categories
+
+                } else {
+
+                }
+
+            }
+        })
+    };
+    getFlightTimeTypes() {
+        this.trackingService.getFlightTimes().subscribe({
+            next: (response) => {
+
+                if (response.success == true) {
+                    this.flightTime = response.batchIds;
+                    // this.franchiseCategoryValue = this.franchiseGrid[0].categories
+                }
+            }
+        })
+    };
+
+    ToggleClick() {
+        this.isVisited = true;
+    }
+    // retrieves the data entry setting for a given subcategory ID.
+    getSetting(subCatId: any) {
+        this.trackingService
+            .getdataEntrySetting(subCatId)
+            .subscribe((response) => {
+                if (response != null) {
+                    this.dataEntrySetting = response;
+                } else {
+                    this.dataEntrySetting = new DataEntrySetting();
+                }
+            });
+    }
+
+
+
+
+    getRefrigerantsubCategoryType(subCatID: number) {
+        this.trackingService.newgetsubCatType(subCatID).subscribe({
+            next: (response) => {
+                this.SubCategoryType = response.categories;
+            },
+            error: (err) => {
+                console.error('errrrrrr>>>>>>', err);
+            }
+        })
+    };
+
+    onInputEdit() {
+        this.isInputEdited = true;
+    };
+
 
     //checkEntry function for checking if an entry exists for a specific month, year, and subcategory.
     checkEntry(month, year, subcatID) {
@@ -3377,7 +3517,9 @@ export class Scope2TrackingComponent {
                 }
             }
         });
-    }
+    };
+
+
     //checkEntryexist method for checking if an entry exists for the current month, year, and selected subcategory.
     checkEntryexist() {
         this.dataEntry.month = this.trackingService.getMonthName(this.month);
@@ -3577,6 +3719,7 @@ export class Scope2TrackingComponent {
         this.trackingService.getVehicleDEMode().subscribe({
             next: (response) => {
                 this.ModeType = response;
+
             }
         })
     }
@@ -3594,23 +3737,7 @@ export class Scope2TrackingComponent {
             }
         })
     }
-    setUnit() {
-        if (this.VehicleDE.modeOfDE == 'Distance Travelled') {
-            this.units.forEach(un => {
-                if (un.unitName == "km") {
-                    this.dataEntry.unit = un.unitName;
-                }
-            })
-            //this.dataEntry.unit = "km";
-        }
-        else {
-            this.units.forEach(un => {
-                if (un.unitName == "litre" || un.unitName == 'Litre') {
-                    this.dataEntry.unit = un.unitName;
-                }
-            })
-        }
-    };
+
 
     getStatusData(categoryIndex: number) {
         let url = ''
@@ -3685,216 +3812,167 @@ export class Scope2TrackingComponent {
         })
     };
 
-    ALLEntries(subCategory: ManageDataPointSubCategories) {
-
-        console.log("seelcted", subCategory.manageDataPointSubCategorySeedID);
-        // this.months = new months();
-        // this.convertedYear = this.trackingService.getYear(this.year);
-        // const formData = new URLSearchParams();
-        // formData.set('year', this.convertedYear)
-        // formData.set('facilities', facilityID.toString())
-        // formData.set('categoryID', this.selectedCategory);
-
-        let url = ''
-        switch (subCategory.manageDataPointSubCategorySeedID) {
-            case 1:
-                url = 'reportStationaryCombustion'
-                break;
-            case 2:
-                url = 'reportRegfriegrant'
-                break;
-            case 3:
-                url = 'Getfireextinguisher'
-                break;
-            case 6:
-                url = 'reportStationaryCombustion'
-                break;
-            case 5:
-                url = 'reportRenewableElectricity'
-                break;
-            case 7:
-                url = 'Allrefrigerant'
-                break;
-            case 8:
-                url = 'Getfireextinguisher'
-                break;
-            case 10:
-                url = 'getAllcompanyownedvehicles'
-                break;
-            case 11:
-                url = 'getAllcompanyownedvehicles'
-                break;
-            case 12:
-                url = 'getAllheatandsteam'
-                break;
-            case 1005:
-                url = 'getPurchaseGoodEmissions'
-                let formData = new URLSearchParams();
-                formData.set('batch', this.batchId);
-                url = 'getPurchaseGoodEmissions';
-                this.trackingService.getPurchaseGoodEmissions(formData).subscribe({
-                    next: (response) => {
-                        console.log(response);
-                        if (response.success == true) {
-                            this.dataEntriesPending = response.categories;
-                        }
-                    }
-                })
-                return
-                break;
-            case 9:
-                url = 'reportStationaryCombustion'
-                break;
-            case 1007:
-                url = 'getUpstreamEmissions'
-                break;
-            case 1008:
-                url = 'getwatersupplytreatmentCategory'
-                break;
-            case 1009:
-                url = 'reportWasteGeneratedEmission'
-                break;
-            case 13:
-                // switch (this.selectMode) {
-                //     case 1:
-                //         url = 'reportFlightTravel'
-                //         break;
-                //     case 2:
-                //         url = 'reportStationaryCombustion'
-                //         break;
-                //     case 3:
-                //         url = 'reportOtherTransport'
-                //         break;
-                // }
-                break;
-            case 1011:
-                // case 'Employee Commuting':
-                url = 'getemployeecommutingCategory'
-                break;
-            case 1012:
-                url = 'gethomeofficeCategory'
-                break;
-            case 1013:
-                url = 'getUpstreamLeaseEmission'
-                break;
-            case 1014:
-                // case 'Downstream Transportation and Distribution':
-                url = 'getDownstreamEmissions'
-                break;
-            case 1015:
-                url = 'getprocessing_of_sold_productsCategory'
-                break;
-            case 1016:
-                // case 'Use of Sold Products':
-                url = 'reportStationaryCombustion'
-                break;
-            case 1017:
-                url = 'getendof_lifetreatment_category'
-                break;
-            case 1018:
-                url = 'getDownstreamLeaseEmission'
-                break;
-            case 1019:
-                url = 'getFranchiseEmission'
-                break;
-            case 1020:
-                url = 'getInvestmentEmission'
-                break;
-            default:
-                // Handle unknown month value
-                break;
-        }
 
 
-        this.trackingService
-            .getStatus(url)
-            .subscribe({
-                next: (response) => {
-                    if (response.success === false) {
-                        // this.dataEntriesPending = null;
-                    } else {
-                        console.log(response);
-                        this.dataEntriesPending = response.categories;
-                        // console.log("data>", this.dataEntriesPending)
-                    }
+    //     console.log("seelcted", subCategory.manageDataPointSubCategorySeedID);
+    //     // this.months = new months();
+    //     // this.convertedYear = this.trackingService.getYear(this.year);
+    //     // const formData = new URLSearchParams();
+    //     // formData.set('year', this.convertedYear)
+    //     // formData.set('facilities', facilityID.toString())
+    //     // formData.set('categoryID', this.selectedCategory);
 
-                },
-                error: (err) => {
-                    this.notification.showError(
-                        'Get data Point failed.',
-                        'Error'
-                    );
-                    console.error('errrrrrr>>>>>>', err);
-                }
-            });
+    //     let url = ''
+    //     switch (subCategory.manageDataPointSubCategorySeedID) {
+    //         case 1:
+    //             url = 'reportStationaryCombustion'
+    //             break;
+    //         case 2:
+    //             url = 'reportRegfriegrant'
+    //             break;
+    //         case 3:
+    //             url = 'Getfireextinguisher'
+    //             break;
+    //         case 6:
+    //             url = 'reportStationaryCombustion'
+    //             break;
+    //         case 5:
+    //             url = 'reportRenewableElectricity'
+    //             break;
+    //         case 7:
+    //             url = 'Allrefrigerant'
+    //             break;
+    //         case 8:
+    //             url = 'Getfireextinguisher'
+    //             break;
+    //         case 10:
+    //             url = 'getAllcompanyownedvehicles'
+    //             break;
+    //         case 11:
+    //             url = 'getAllcompanyownedvehicles'
+    //             break;
+    //         case 12:
+    //             url = 'getAllheatandsteam'
+    //             break;
+    //         case 1005:
+    //             url = 'getPurchaseGoodEmissions'
+    //             let formData = new URLSearchParams();
+    //             formData.set('batch', this.batchId);
+    //             url = 'getPurchaseGoodEmissions';
+    //             this.trackingService.getPurchaseGoodEmissions(formData).subscribe({
+    //                 next: (response) => {
+    //                     console.log(response);
+    //                     if (response.success == true) {
+    //                         this.dataEntriesPending = response.categories;
+    //                     }
+    //                 }
+    //             })
+    //             return
+    //             break;
+    //         case 9:
+    //             url = 'reportStationaryCombustion'
+    //             break;
+    //         case 1007:
+    //             url = 'getUpstreamEmissions'
+    //             break;
+    //         case 1008:
+    //             url = 'getwatersupplytreatmentCategory'
+    //             break;
+    //         case 1009:
+    //             url = 'reportWasteGeneratedEmission'
+    //             break;
+    //         case 13:
+    //             // switch (this.selectMode) {
+    //             //     case 1:
+    //             //         url = 'reportFlightTravel'
+    //             //         break;
+    //             //     case 2:
+    //             //         url = 'reportStationaryCombustion'
+    //             //         break;
+    //             //     case 3:
+    //             //         url = 'reportOtherTransport'
+    //             //         break;
+    //             // }
+    //             break;
+    //         case 1011:
+    //             // case 'Employee Commuting':
+    //             url = 'getemployeecommutingCategory'
+    //             break;
+    //         case 1012:
+    //             url = 'gethomeofficeCategory'
+    //             break;
+    //         case 1013:
+    //             url = 'getUpstreamLeaseEmission'
+    //             break;
+    //         case 1014:
+    //             // case 'Downstream Transportation and Distribution':
+    //             url = 'getDownstreamEmissions'
+    //             break;
+    //         case 1015:
+    //             url = 'getprocessing_of_sold_productsCategory'
+    //             break;
+    //         case 1016:
+    //             // case 'Use of Sold Products':
+    //             url = 'reportStationaryCombustion'
+    //             break;
+    //         case 1017:
+    //             url = 'getendof_lifetreatment_category'
+    //             break;
+    //         case 1018:
+    //             url = 'getDownstreamLeaseEmission'
+    //             break;
+    //         case 1019:
+    //             url = 'getFranchiseEmission'
+    //             break;
+    //         case 1020:
+    //             url = 'getInvestmentEmission'
+    //             break;
+    //         default:
+    //             // Handle unknown month value
+    //             break;
+    //     }
 
 
+    //     this.trackingService
+    //         .getStatus(url)
+    //         .subscribe({
+    //             next: (response) => {
+    //                 if (response.success === false) {
+    //                     // this.dataEntriesPending = null;
+    //                 } else {
+    //                     console.log(response);
+    //                     this.dataEntriesPending = response.categories;
+    //                     // console.log("data>", this.dataEntriesPending)
+    //                 }
+
+    //             },
+    //             error: (err) => {
+    //                 this.notification.showError(
+    //                     'Get data Point failed.',
+    //                     'Error'
+    //                 );
+    //                 console.error('errrrrrr>>>>>>', err);
+    //             }
+    //         });
 
 
 
 
 
 
-    };
 
-    enableCharging(subcatName: any) {
-        if (subcatName == "Passenger Vehicle") {
-            if (this.VehicleDE.vehicleTypeID == 7 || this.VehicleDE.vehicleTypeID == 8 || this.VehicleDE.vehicleTypeID == 9 || this.VehicleDE.vehicleTypeID == 12 || this.VehicleDE.vehicleTypeID == 17) {
 
-                this.typeEV = true;
-                this.typeBusCoach = false;
-                return;
+    // };
 
-            }
-            if (this.VehicleDE.vehicleTypeID == 21 || this.VehicleDE.vehicleTypeID == 22) {
-                this.typeEV = false;
-                this.typeBusCoach = true;
-                return;
 
-            }
-            else {
-                this.typeEV = false;
-                this.typeBusCoach = false;
-                return;
-
-            }
-
-        }
-        else {
-            if (this.VehicleDE.vehicleTypeID == 5) {
-
-                this.typeEV = true;
-
-            }
-            else {
-                this.typeEV = false;
-                this.typeBusCoach = false;
-
-            }
-        }
-        // if (this.VehicleDE.vehicleTypeID == ) {
-
-        // }
-    }
-    getUnit(subcatId) {
-        this.trackingService.newgetUnits(subcatId).subscribe({
-            next: (Response) => {
-                if (Response) {
-                    this.units = Response['categories'];
-
-                }
-                else {
-                    this.units = [];
-                }
-            }
-        })
-    }
     getPassengerVehicleType() {
         try {
+            this.VehicleDE.vehicleTypeID = null;
             this.trackingService.newGetPassengerVehicleType().subscribe({
                 next: (response) => {
                     if (response) {
                         this.VehicleType = response.categories;
+                        this.VehicleDE.vehicleTypeID = this.VehicleType[0].ID
                     }
                     else {
                         this.VehicleType = [];
@@ -3906,13 +3984,15 @@ export class Scope2TrackingComponent {
             console.log("error", ex);
         }
 
-    }
+    };
     getDeliveryVehicleType() {
         try {
+            this.VehicleDE.vehicleTypeID = null;
             this.trackingService.newGetDeliveryVehicleType().subscribe({
                 next: (response) => {
                     if (response) {
                         this.VehicleType = response.categories;
+                        this.VehicleDE.vehicleTypeID = this.VehicleType[0].ID
                     }
                     else {
                         this.VehicleType = [];
@@ -4048,6 +4128,47 @@ export class Scope2TrackingComponent {
             this.mode_type = optionvalue;
         }
     };
+
+    enableCharging(subcatName: any) {
+        if (subcatName == "Passenger Vehicle") {
+            if (this.VehicleDE.vehicleTypeID == 7 || this.VehicleDE.vehicleTypeID == 8 || this.VehicleDE.vehicleTypeID == 9 || this.VehicleDE.vehicleTypeID == 12 || this.VehicleDE.vehicleTypeID == 17) {
+
+                this.typeEV = true;
+                this.typeBusCoach = false;
+                return;
+
+            }
+            if (this.VehicleDE.vehicleTypeID == 21 || this.VehicleDE.vehicleTypeID == 22) {
+                this.typeEV = false;
+                this.typeBusCoach = true;
+                return;
+
+            }
+            else {
+                this.typeEV = false;
+                this.typeBusCoach = false;
+                return;
+
+            }
+
+        }
+        else {
+            if (this.VehicleDE.vehicleTypeID == 5) {
+
+                this.typeEV = true;
+
+            }
+            else {
+                this.typeEV = false;
+                this.typeBusCoach = false;
+
+            }
+        }
+        // if (this.VehicleDE.vehicleTypeID == ) {
+
+        // }
+    }
+
     downloadFireExtTemplate() {
         var fileName = 'FireExtinguisherTemplate.xlsx'
         if (fileName) {
@@ -4445,6 +4566,24 @@ export class Scope2TrackingComponent {
         })
     };
 
+    setUnit() {
+        if (this.VehicleDE.modeOfDE == 'Distance Travelled') {
+            this.units.forEach(un => {
+                if (un.unitName == "km") {
+                    this.dataEntry.unit = un.unitName;
+                }
+            })
+            //this.dataEntry.unit = "km";
+        }
+        else {
+            this.units.forEach(un => {
+                if (un.unitName == "litre" || un.unitName == 'Litre') {
+                    this.dataEntry.unit = un.unitName;
+                }
+            })
+        }
+    };
+
     getPurchaseGoodsCategory() {
         this.trackingService.getPurchaseGoodsType().subscribe({
             next: (response) => {
@@ -4483,6 +4622,144 @@ export class Scope2TrackingComponent {
         })
     };
 
+
+    //retrieves the emission factor for a given subcategory seed ID and category ID.
+    getEmissionfactor(subcatseedID: any, catID) {
+        if (catID === 1) {
+            this.trackingService
+                .GetEmissionFactorStationarybyID(subcatseedID)
+                .subscribe({
+                    next: (response) => {
+                        if (response) {
+                            this.EmissionFactor = response;
+                            //   this.getUnit(subcatseedID);
+                        }
+                        else {
+                            this.EmissionFactor = [];
+                        }
+                    },
+                    error: (err) => {
+                        this.EmissionFactor = [];
+
+                    }
+                });
+        }
+        if (catID === 2) {
+            this.trackingService
+                .GetEmissionFactorRefrigerantsbyID(subcatseedID)
+                .subscribe({
+                    next: (response) => {
+                        if (response) {
+                            this.EmissionFactor = response;
+                            // this.getUnit(subcatseedID);
+                        }
+                        else {
+                            this.EmissionFactor = [];
+                        }
+                    },
+                    error: (err) => {
+                        this.EmissionFactor = [];
+                        this.notification.showError(
+                            'Emission Factor failed.',
+                            'Error'
+                        );
+                        console.error('errrrrrr>>>>>>', err);
+                    }
+                });
+        }
+        if (catID === 3) {
+            this.trackingService
+                .GetEmissionFactorFirebyID(subcatseedID)
+                .subscribe({
+                    next: (response) => {
+                        if (response) {
+                            this.EmissionFactor = response;
+                            // this.getUnit(subcatseedID);
+                        }
+                        else {
+                            this.EmissionFactor = [];
+                        }
+                    },
+                    error: (err) => {
+                        this.EmissionFactor = [];
+                        this.notification.showError(
+                            'Emission Factor failed.',
+                            'Error'
+                        );
+                        console.error('errrrrrr>>>>>>', err);
+                    }
+                });
+        }
+        if (catID === 5) {
+            this.trackingService
+                .GetEmissionFactorElectricitybyID(subcatseedID)
+                .subscribe({
+                    next: (response) => {
+                        if (response) {
+                            this.EmissionFactor = response;
+                            // this.getUnit(subcatseedID);
+                        }
+                        else {
+                            this.EmissionFactor = [];
+                        }
+                    },
+                    error: (err) => {
+                        this.EmissionFactor = [];
+                        this.notification.showError(
+                            'Emission Factor failed.',
+                            'Error'
+                        );
+                        console.error('errrrrrr>>>>>>', err);
+                    }
+                });
+        }
+        if (catID === 6) {
+            this.trackingService
+                .GetEmissionFactorVehiclebyID(subcatseedID)
+                .subscribe({
+                    next: (response) => {
+                        if (response) {
+                            this.EmissionFactor = response;
+                            // this.getUnit(subcatseedID);
+                        }
+                        else {
+                            this.EmissionFactor = [];
+                        }
+                    },
+                    error: (err) => {
+                        this.EmissionFactor = [];
+                        this.notification.showError(
+                            'Emission Factor failed.',
+                            'Error'
+                        );
+                        console.error('errrrrrr>>>>>>', err);
+                    }
+                });
+        }
+        if (catID === 7) {
+            this.trackingService
+                .GetEmissionFactorHeatandSteambyID(subcatseedID)
+                .subscribe({
+                    next: (response) => {
+                        if (response) {
+                            this.EmissionFactor = response;
+                            // this.getUnit(subcatseedID);
+                        }
+                        else {
+                            this.EmissionFactor = [];
+                        }
+                    },
+                    error: (err) => {
+                        this.EmissionFactor = [];
+                        this.notification.showError(
+                            'Emission Factor failed.',
+                            'Error'
+                        );
+                        console.error('errrrrrr>>>>>>', err);
+                    }
+                });
+        }
+    };
 
 
 }

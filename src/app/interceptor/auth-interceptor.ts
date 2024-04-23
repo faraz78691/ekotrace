@@ -24,7 +24,8 @@ export class AuthInterceptor implements HttpInterceptor {
             request = request.clone({
                 setHeaders: {
                     authorization: `Bearer ${token}`,
-                    auth:`Bearer ${'eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6Ijc1ZGZjYWViMmY4ZGRlZTAyZjU2MTRmYThhMjRkMmMyIn0.eyJ1c2VyX2lkIjoidXVpZGQxMjQzMiJ9.lkY3ctvaxcV2Jx0d88b4gn5TJmka09BC3slDZpALe1IqoIWi4wWVkJzSTuIIM2dX1WZjLgcmZJguO-Neaz4sBQ'}`
+                    // auth:`Bearer ${'eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6Ijc1ZGZjYWViMmY4ZGRlZTAyZjU2MTRmYThhMjRkMmMyIn0.eyJ1c2VyX2lkIjoidXVpZGQxMjQzMiJ9.lkY3ctvaxcV2Jx0d88b4gn5TJmka09BC3slDZpALe1IqoIWi4wWVkJzSTuIIM2dX1WZjLgcmZJguO-Neaz4sBQ'}`
+                    auth:`Bearer ${token}`
                 }
             });
         }
