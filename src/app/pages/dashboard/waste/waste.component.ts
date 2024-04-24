@@ -243,9 +243,9 @@ export class WasteComponent {
       if (topWiseResult) {
         // Handle topWise result
         this.topFIveE = topWiseResult.top5Emissions;
-        this.seriesScopeDonut2 = topWiseResult.top5Emissions;
-        this.labelScopeDonut2 = topWiseResult.category;
-        this.totaltype = topWiseResult.totalemission;
+        // this.seriesScopeDonut2 = topWiseResult.top5Emissions;
+        // this.labelScopeDonut2 = topWiseResult.category;
+        // this.totaltype = topWiseResult.totalemission;
       } else {
         // Handle absence of topWise result or error
       }

@@ -474,7 +474,7 @@ border-left: 4px solid rgb(103, 159, 84);
   top: 50%;
   right: 0;
   transform: translateY(-50%);
-  background: #afd2ae;
+  background: rgba(136, 173, 71, 0.75);
   color: #6c757d;
   width: auto;
   border-top-right-radius: 2px;
@@ -637,7 +637,7 @@ margin-top: -37px;
 height: auto;
 max-height: 338px;
 overflow-y: auto;
-// padding-block: 15px;
+
 }
 
 #DPRow.ct_scope_3_cata_list[_ngcontent-wcg-c190] {
@@ -662,6 +662,14 @@ background-color: #fff!important;
 //   background-color: #b0d3af !important;
 
 // }
+.ct_accordian_height_48vh12{
+  height: 48vh !important;
+}
+
+// .ct_calander_input button.p-element.p-ripple.p-datepicker-trigger  svg path {
+//   fill: #fff !important;
+// }
+
 
 @media screen and (max-width:991px){
   .ct_px_0_232{

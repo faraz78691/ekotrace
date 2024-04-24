@@ -471,11 +471,12 @@ label:not(.form-check-label):not(.custom-file-label) {
     width: 1rem !important;
     height: 1rem !important;
     margin-top: -0.5rem !important;
+    left: 0px;
 
 }
 
 .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider:before {
-    transform: translateX(0.9rem) !important;
+    transform:translateX(1.1rem) !important
 
 }
 
@@ -817,7 +818,7 @@ body:not(.layout-fixed) .main-sidebar {
 }
 .nav-pills .nav-link.active {
     color: #333!important;
-    background-color: #c1c756a6 !important;
+    background-color: #eee !important;
     // box-shadow: 0px 4px 10.2px 0px rgba(0, 0, 0, 0.9);
 
     /* border: 2px solid #5a870a; */
@@ -1018,21 +1019,21 @@ span.p-ripple.p-element.p-button.p-component.p-fileupload-choose{
 [class*=sidebar-dark-] .nav-treeview>.nav-item>.nav-link:focus, [class*=sidebar-dark-] .nav-treeview>.nav-item>.nav-link:hover{
     color: #333 !important;
     background-color: rgba(193, 199, 86, 0.6509803922) !important;
-    box-shadow: 0px 4px 10.2px 0px rgba(0, 0, 0, 0.17);
+    // box-shadow: 0px 4px 10.2px 0px rgba(0, 0, 0, 0.17);
     
     // border: 2px solid #5a870a;
 }
 .sidebar-mini .main-sidebar .nav-link, .sidebar-mini-md .main-sidebar .nav-link, .sidebar-mini-xs .main-sidebar .nav-link{
     // width: 100%;
-    width:89%!important
+    width:94%!important
 }
 // .nav-pills .nav-link:hover,.nav-pills .nav-link{
 //     border: 2px solid transparent;
 // }
 .nav-pills .nav-link:hover,.nav-pills .nav-link:focus {
     // color: #fff !important;
-    background-color: #c1c756a6 !important;
-    box-shadow: 0px 4px 10.2px 0px rgba(0, 0, 0, 0.17);
+    background-color: #eee !important;
+    // box-shadow: 0px 4px 10.2px 0px rgba(0, 0, 0, 0.17);
 }
 .nav-pills .nav-link:hover .naviconL,.nav-pills .nav-link:focus .naviconL,.nav-pills .nav-link.active .naviconL{
     color: #fff;
@@ -1115,6 +1116,14 @@ color: #fff !important;
     // border: 1px solid #8fb54a;
     background-color: #fff !important;
 }
+.p-dropdown-item{
+    font-weight: 500!important;
+}
+.p-dropdown-panel {
+    border: 2px solid #d8d8d8;
+    left: -3px;
+    position: relative;
+}
 .ct_filter_dropdown .p-dropdown-panel .p-dropdown-items{
 padding-block: 0px !important;
 }
@@ -1152,7 +1161,7 @@ input.p-multiselect-filter.p-inputtext.p-component {
     border: none !important
 }
 .ct_calander_input .p-button svg path{
-    fill: #333;
+    fill: #fff;
 }
 .ct_select_op_input .p-inputtext{
     color: #333!important;
@@ -1976,6 +1985,10 @@ input.ct_change_choose_file_input12::file-selector-button {
         .ct_green_text_120:hover{
             text-decoration: underline !important;
         }
+
+        .ct_accordian_height_48vh12 {
+            height: 48vh !important;
+          }
 @media screen and (max-width:500px){
     .ct_logo_collape pf-image.pl-4.ng-star-inserted.hydrated {
         padding-left: 0px !important;
@@ -2010,18 +2023,51 @@ input.ct_change_choose_file_input12::file-selector-button {
 }
 
 .p-dropdown-items-wrapper {
-    max-height: 300px !important;
+    max-height: 345px !important;
 }
 
 .ct_chev_icon_dark230 .p-dropdown-trigger {
     color: #6c757d !important;
 }
+#toast-container .toast-info{
+    background-color: rgba(136, 173, 71, 1) !important;
+}
+.ct_how_use_tooltip_main {
+    width: 100%;
+    max-width: 300px;
+    position: relative;
+    text-align: end;
+    padding-inline: 25px;
+}
 
 
-.ct_bottom_table_tr .p-paginator-rpp-options.p-dropdown.p-component.p-disabled {
-    background-color: #fff !important;
-  }
-
-  .ct_bottom_table_tr .p-dropdown .p-dropdown-trigger{
-    color: #000!important;
-  }
+.ct_how_use_tooltip_main i{
+    color: rgba(136, 173, 71, 0.75);
+    position: relative;
+}
+.ct_how_use_tooltip_cnt {
+    position: absolute;
+    right: 25px;
+    width: 100%;
+    max-width: 300px;
+    background-color: #eee;
+    padding: 10px;
+    border-radius: 10px;
+    z-index: 999;
+    color: #000;
+    top: 28px;
+    font-size: 14px;
+    display: none;
+}
+.ct_how_use_tooltip_cnt.ct_active{
+    display: block;
+}
+.ct_how_use_tooltip_cnt:before {
+    content: "";
+    position: absolute;
+    border: 6px solid #eee;
+    top: -4px;
+    transform: rotate(45deg);
+    border-radius: 2px;
+    right: 5px;
+}

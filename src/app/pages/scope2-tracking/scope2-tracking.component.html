@@ -70,7 +70,7 @@
                                             <div>
 
                                                 <div class="card ct_shadow_none flex justify-content-center ">
-                                                    <p-accordion styleClass="accordianclass"
+                                                    <p-accordion class="ct_accordian_height_48vh12" style="background-color: #f5f5f5;" styleClass="accordianclass bg-unset"
                                                         [activeIndex]="accordianIndex" [multiple]="false">
                                                         <ng-container>
 
@@ -145,7 +145,7 @@
                                         <div class="cardDiv">
                                             <div class="calenderDiv flex row">
                                                 <div
-                                                    class="selectmonth col card justify-content-center ct_month_select_clr ct_multi_input_38 ct_month_light_green">
+                                                    class="selectmonth col card justify-content-center ct_month_select_clr ct_multi_input_38 ct_month_light_green ">
                                                     <p-multiSelect [options]="months" placeholder="Months" name="months"
                                                         [(ngModel)]="selectMonths" styleClass="pcalender"
                                                         optionLabel="name"></p-multiSelect>
@@ -163,11 +163,11 @@
                                                 <span class="fa fa-search form-control-feedback"></span>
                                                 <input type="text" class="form-control" placeholder=" Search" />
                                             </div>
-                                            <div class="ct_overflow_box">
+                                            <div class="ct_overflow_box" style="max-height: 100%;">
 
                                                 <div
                                                     class="card ct_shadow_none  flex justify-content-center ct_scope_3cata_list">
-                                                    <p-accordion styleClass="accordianclass"
+                                                    <p-accordion styleClass="accordianclass ct_accordian_height_48vh12"
                                                         [activeIndex]="accordianIndex" [multiple]="false">
                                                         <ng-container>
 
@@ -272,10 +272,24 @@
                 <p-tabView [ngStyle]="{display: facilityhavedp}" #dataentryTab activeIndex="{{ activeindex }}">
                     <p-tabPanel header="Data Entry">
                         <div class="row text-white border-bottom">
+                            <div class="d-flex align-items-center justify-content-between w-100">
+
+                           
                             <p *ngIf="categoryId !=24 && categoryId !=25 && categoryId !=26"
                                 class="mb-2 mt-3 ml-4 text-dark ct_fw_600">
-                                {{ SubCatAllData.subCatName }}
+                                {{ SubCatAllData.subCatName }} 
+                                
                             </p>
+                            <div class="ct_how_use_tooltip_main">
+                                <i class="fa-solid fa-circle-question"></i>
+                                <div  class="ct_how_use_tooltip_cnt" [class.ct_active] ="isHowtoUse"  (click)= "checkVisited()">
+                                    <p>
+                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
                             <p *ngIf="categoryId ==24" class="mb-2 mt-3 ml-4 text-dark">
                                 Flight
                             </p>
@@ -295,12 +309,15 @@
                                         *ngIf="categoryId==1 ||categoryId==2 || SubCatAllData.manageDataPointSubCategorySeedID == 1002 || categoryId == 7 ">
                                         <label for="fname">Type</label>
                                         <p-dropdown *ngIf="SubCatAllData.manageDataPointSubCategorySeedID != 1002"
-                                            class="ct_select_op_input" ngModel [options]="SubCategoryType"
+                                            class="ct_select_op_input ct_chev_icon_dark230 
+
+                                            " ngModel [options]="SubCategoryType"
                                             optionLabel="Item" optionValue="subCatTypeID" name="subCatType"
                                             #subCatType="ngModel" [(ngModel)]="dataEntry.typeID"></p-dropdown>
 
                                         <p-dropdown *ngIf="SubCatAllData.manageDataPointSubCategorySeedID == 1002"
-                                            class="ct_select_op_input" placeholder="Select type" ngModel
+                                            class="ct_select_op_input ct_chev_icon_dark230 
+                                            " placeholder="Select type" ngModel
                                             [options]="marketTypes" optionLabel="Type" optionValue="id" name="Type"
                                             #Type="ngModel" [(ngModel)]="marketEElecID"
                                             (onChange)="marktetTypeChange($event)"></p-dropdown>
@@ -335,7 +352,7 @@
                                     <div *ngIf="categoryId == 5 && SubCatAllData.manageDataPointSubCategorySeedID != 1002"
                                         class="col-4">
                                         <label for="fname">Grid</label>
-                                        <p-dropdown class="ct_select_op_input" ngModel [options]="regionType"
+                                        <p-dropdown class="ct_select_op_input ct_chev_icon_dark230 " ngModel [options]="regionType"
                                             optionLabel="RegionName" optionValue="RegionID" name="RegionID"
                                             #RegionID="ngModel"
                                             [(ngModel)]="RenewableElectricity.electricityRegionID"></p-dropdown>
@@ -407,7 +424,9 @@
                                         <div class="mb-3"
                                             [ngClass]="typeEV == true ? 'col-4': typeBusCoach == true ? 'col-4': 'col-4'">
                                             <label for="fname">Vehicle Type</label>
-                                            <p-dropdown class="ct_select_op_input" [options]="VehicleType"
+                                            <p-dropdown class="ct_select_op_input ct_chev_icon_dark230 
+
+                                            " [options]="VehicleType"
                                                 optionLabel="VehicleType" optionValue="ID" name="VehicleType"
                                                 #vehicletype="ngModel" [(ngModel)]="VehicleDE.vehicleTypeID"
                                                 (onChange)="enableCharging(SubCatAllData.subCatName)"></p-dropdown>
@@ -470,7 +489,8 @@
                                             [ngClass]="typeEV == true ? 'col-4': typeBusCoach == true ? 'col-4': 'col-4'">
                                             <label pTooltip="Mode of Data Entry" tooltipPosition="top" for="fname">Mode
                                                 of data entry</label>
-                                            <p-dropdown class="ct_select_op_input" ngModel [options]="ModeType"
+                                            <p-dropdown class="ct_select_op_input ct_chev_icon_dark230 
+                                            " ngModel [options]="ModeType"
                                                 optionLabel="modeName" optionValue="modeName" name="DEMode"
                                                 #DEMode="ngModel" [(ngModel)]="VehicleDE.modeOfDE"
                                                 (onChange)="setUnit()"></p-dropdown>
@@ -556,7 +576,7 @@
                                 <div class="row mt-4 mx-2" *ngIf="categoryId==5">
                                     <div *ngIf="SubCatAllData.manageDataPointSubCategorySeedID == 1002" class="col-4">
                                         <label for="fname">Source(Optional)</label>
-                                        <p-dropdown class="ct_select_op_input" ngModel [options]="ElectricitySource"
+                                        <p-dropdown class="ct_select_op_input ct_chev_icon_dark230 " ngModel [options]="ElectricitySource"
                                             optionLabel="sourceName" optionValue="sourceName" name="Source"
                                             #Source="ngModel"
                                             [(ngModel)]="RenewableElectricity.sourceName"></p-dropdown>
@@ -565,14 +585,15 @@
                                 </div>
                                 <div class="row mt-4 mx-2"
                                     *ngIf="categoryId==1 && (dataEntry.typeID == 1 || dataEntry.typeID == 2)">
-                                    <div class="col-12">
+                                    <div class="col-6">
                                         <label for="fname">Blend Type</label>
-                                        <p-dropdown class="ct_select_op_input" ngModel [options]="blendType"
+                                        <p-dropdown class="ct_select_op_input ct_chev_icon_dark230 
+                                        " ngModel [options]="blendType"
                                             optionLabel="typeName" optionValue="typeName" name="blend" #blend="ngModel"
                                             [(ngModel)]="SCdataEntry.blendType"></p-dropdown>
                                     </div>
 
-                                    <div class="col-4" *ngIf="SCdataEntry.blendType == 'Perc. Blend'">
+                                    <div class="col-6" *ngIf="SCdataEntry.blendType == 'Perc. Blend'">
                                         <label for="fname">Blend percent</label>
                                         <div class="input-group">
                                             <input class="form-control Dashboard-tab" required ngModel
@@ -624,7 +645,7 @@
                             <div class="trackingFooter" *ngIf="categoryId ==8">
                                 <div class="row p-2">
 
-                                    <div class="col-md-12">
+                                    <div class="col-md-5">
                                         <div class="mb-4 mt-4">
                                             <div>
                                                 <label class="mb-3">Download Template</label>
@@ -633,19 +654,15 @@
                                                         download="">Click here to
                                                         download template</a>
                                                 </p> -->
-                                                <div class="row">
-                                                    <div class="col-md-7">
-                                                        <p-dropdown class="ct_select_op_input" ngModel
+                                                <div>
+                                                    <p-dropdown class="ct_select_op_input  ct_chev_icon_dark230 " ngModel
                                                         placeholder="Select a template" [options]="goodsTemplates"
                                                         optionLabel="template" optionValue="template" name="template"
                                                         [(ngModel)]="selectedtemplate">
                                                     </p-dropdown>
-                                                    </div>
-                                                    <div class="col-md-5">
-                                                    <a class="trackingsubmitb d-block" href="assets/template.xlsx"
+                                                    <a class="trackingsubmitb d-block mt-3" href="assets/template.xlsx"
                                                         download="">Click here to
                                                         download template</a>
-                                                        </div>
 
                                                 </div>
 
@@ -714,7 +731,9 @@
                                                 <div class="col-md-6">
                                                     <div class="mb-4" style="gap: 10px;">
                                                         <label class=" ct_text_wrape">Vehicle type</label>
-                                                        <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
+                                                        <p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230 
+
+                                                        " ngModel
                                                             [options]="VehicleGrid" optionLabel="vehicle_type"
                                                             optionValue="id" name="vehicle_type"
                                                             (onChange)="onVehicleTypeChange($event)"
@@ -747,7 +766,7 @@
                                                 <div class="col-md-6">
                                                     <div class="mb-4 " style="gap: 10px;">
                                                         <label class="ct_text_wrape">Sub Category</label>
-                                                        <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
+                                                        <p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230" ngModel
                                                             [options]="subVehicleCategory" optionLabel="vehicle_type"
                                                             optionValue="vehicle_type" name="vehicle_type"
                                                             (onChange)="onSubCategoryVehicleChange($event)"
@@ -813,7 +832,7 @@
                                                     <div class="mb-4" style="gap: 10px;">
                                                         <label class=" ct_text_wrape">Storage Facility
                                                             Type</label>
-                                                        <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
+                                                        <p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230" ngModel
                                                             [options]="storageGrid" optionLabel="storagef_type"
                                                             optionValue="storagef_type" name="storage_type">
                                                         </p-dropdown>
@@ -1071,7 +1090,7 @@
                                                 <div class="col-md-6">
                                                     <div class="mb-4" style="gap: 10px;">
                                                         <label class=" ct_text_wrape">Product</label>
-                                                        <p-dropdown class="ct_select_op_input" ngModel
+                                                        <p-dropdown class="ct_select_op_input ct_chev_icon_dark230 " ngModel
                                                             [options]="wasteGrid" optionLabel="type" optionValue="id"
                                                             name="wasteType" (onChange)="onWasteTypeChange($event)"
                                                             [(ngModel)]="waterWasteId">
@@ -1081,7 +1100,7 @@
                                                 <div class="col-md-6">
                                                     <div class="mb-4" style="gap: 10px;">
                                                         <label class=" ct_text_wrape">Sub Category</label>
-                                                        <p-dropdown class="ct_select_op_input" ngModel
+                                                        <p-dropdown class="ct_select_op_input ct_chev_icon_dark230 " ngModel
                                                             [options]="wasteSubTypes" optionLabel="type"
                                                             optionValue="type" name="wasteSubCategory"
                                                             #wasteSubCategory="ngModel">
@@ -1097,7 +1116,7 @@
                                                         <label class=" ct_text_wrape">Method of Waste
                                                             Disposal</label>
                                                         <div class="position-relative">
-                                                            <p-dropdown class="ct_select_op_input" ngModel
+                                                            <p-dropdown class="ct_select_op_input ct_chev_icon_dark230 " ngModel
                                                                 [options]="waterWasteMethod" optionLabel="water_type"
                                                                 [(ngModel)]="wasteMethod"
                                                                 (onChange)="wastemethodChange($event)" optionValue="id"
@@ -1110,7 +1129,7 @@
                                                     <div class="mb-4" style="gap: 10px;">
                                                         <label class=" ct_text_wrape">If Recycling</label>
                                                         <div class="position-relative">
-                                                            <p-dropdown class="ct_select_op_input" ngModel
+                                                            <p-dropdown class="ct_select_op_input ct_chev_icon_dark230" ngModel
                                                                 [options]="recycleMethod" optionLabel="template"
                                                                 [(ngModel)]="recycleSelectedMethod" optionValue="id"
                                                                 name="template" #template="ngModel">
@@ -1128,7 +1147,7 @@
                                                                 name="waste_quantity" ngModel
                                                                 class="form-control Dashboard-tab text-white" />
                                                             <p-dropdown
-                                                                class="ct_select_op_input ct_position_small_quantity"
+                                                                class="ct_select_op_input ct_position_small_quantity "
                                                                 ngModel [options]="wasteUnitsGrid" optionLabel="units"
                                                                 optionValue="units" name="wasteUnits"
                                                                 #wasteUnits="ngModel">
@@ -1459,7 +1478,7 @@
                                                 <div class="col-md-6">
                                                     <div class="mb-4" style="gap: 10px;">
                                                         <label class=" ct_text_wrape">Facility type</label>
-                                                        <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
+                                                        <p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230" ngModel
                                                             [options]="franchiseGrid" optionLabel="categories"
                                                             optionValue="categories" name="facilityTypeValue"
                                                             #facilityTypeValue="ngModel"
@@ -1470,7 +1489,7 @@
                                                 <div class="col-md-6">
                                                     <div class="mb-4  " style="gap: 10px;">
                                                         <label class=" ct_text_wrape">Sub Category</label>
-                                                        <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
+                                                        <p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230" ngModel
                                                             [options]="subFranchiseCategory"
                                                             optionLabel="sub_categories" optionValue="sub_categories"
                                                             name="subfacilityTypeValue" #subfacilityTypeValue="ngModel">
@@ -1484,7 +1503,7 @@
                                                 <div class="col-md-6">
                                                     <div class="mb-4 " style="gap: 10px">
                                                         <label class="ct_text_wrape">Calculation Method</label>
-                                                        <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
+                                                        <p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230" ngModel
                                                             [options]="calculationUpleaseGrid"
                                                             placeholder="Select a method"
                                                             optionLabel="calculationmethod"
@@ -1577,7 +1596,9 @@
                                                 <div class="col-md-6">
                                                     <div class="mb-4" style="gap: 10px;">
                                                         <label class=" ct_text_wrape">Vehicle type</label>
-                                                        <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
+                                                        <p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230 
+
+                                                        " ngModel
                                                             [options]="VehicleGrid" optionLabel="vehicle_type"
                                                             optionValue="id" name="vehicle_type"
                                                             (onChange)="onVehicleTypeChange($event)">
@@ -1588,7 +1609,7 @@
                                                 <div class="col-md-6">
                                                     <div class="mb-4 " style="gap: 10px;">
                                                         <label class="ct_text_wrape">Sub Category</label>
-                                                        <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
+                                                        <p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230" ngModel
                                                             [options]="subVehicleCategory" optionLabel="vehicle_type"
                                                             optionValue="vehicle_type" name="subvehicle_type">
                                                         </p-dropdown>
@@ -1661,7 +1682,9 @@
                                                 <div class="col-md-6">
                                                     <div class="mb-4" style="gap: 10px;">
                                                         <label class=" ct_text_wrape">Vehicle type</label>
-                                                        <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
+                                                        <p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230 
+
+                                                        " ngModel
                                                             [options]="VehicleGrid" optionLabel="vehicle_type"
                                                             optionValue="id" name="vehicle_type"
                                                             (onChange)="onVehicleTypeChange($event)"
@@ -1696,7 +1719,7 @@
                                                 <div class="col-md-6">
                                                     <div class="mb-4 " style="gap: 10px;">
                                                         <label class="ct_text_wrape">Sub Category</label>
-                                                        <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
+                                                        <p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230" ngModel
                                                             [options]="subVehicleCategory" optionLabel="vehicle_type"
                                                             optionValue="vehicle_type" name="vehicle_type"
                                                             (onChange)="onSubCategoryVehicleChange($event)"
@@ -1756,7 +1779,7 @@
                                                     <div class="mb-4" style="gap: 10px;">
                                                         <label class=" ct_text_wrape">Storage Facility
                                                             Type</label>
-                                                        <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
+                                                        <p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230" ngModel
                                                             [options]="storageGrid" optionLabel="storagef_type"
                                                             optionValue="storagef_type" name="storage_type"
                                                             #storagef_type="ngModel">
@@ -1812,7 +1835,7 @@
                                                     <div class="mb-4" style="gap: 10px;">
                                                         <label class=" ct_text_wrape">Intermediate good
                                                             Category</label>
-                                                        <p-dropdown class="ct_select_op_input" ngModel
+                                                        <p-dropdown class="ct_select_op_input ct_chev_icon_dark230" ngModel
                                                             [options]="purchaseGoodsTypes" placeholder="Select category"
                                                             optionLabel="Industry" optionValue="Industry"
                                                             name="industry" #industry="ngModel"
@@ -1829,7 +1852,7 @@
                                                     <div class="mb-4" style="gap: 10px;">
                                                         <label class=" ct_text_wrape">Processing acitivity to
                                                             transform to final product</label>
-                                                        <p-dropdown class="ct_select_op_input" ngModel
+                                                        <p-dropdown class="ct_select_op_input ct_chev_icon_dark230" ngModel
                                                             [options]="productActivitySubTypes" optionLabel="sector"
                                                             optionValue="sector" name="sector"
                                                             placeholder="Select Activity" #sector="ngModel"
@@ -1841,7 +1864,7 @@
                                                     <div class="mb-4" style="gap: 10px;">
                                                         <label class=" ct_text_wrape">Sub activity for the
                                                             processing</label>
-                                                        <p-dropdown class="ct_select_op_input" ngModel
+                                                        <p-dropdown class="ct_select_op_input ct_chev_icon_dark230" ngModel
                                                             [options]="activitySubTypes" optionLabel="sub_sector"
                                                             optionValue="sub_sector" name="sub_sector"
                                                             #sub_sector="ngModel">
@@ -1913,7 +1936,7 @@
                                                 <div class="col-md-6">
                                                     <div class="mb-4" style="gap: 10px;">
                                                         <label class=" ct_text_wrape">Calculation method</label>
-                                                        <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
+                                                        <p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230" ngModel
                                                             [options]="calculationPurchaseGrid"
                                                             placeholder="Select a method"
                                                             optionLabel="calculationmethod"
@@ -2017,7 +2040,7 @@
                                                     <div class="mb-4" style="gap: 10px;">
                                                         <label class=" ct_text_wrape">Product energy
                                                             consumption</label>
-                                                        <p-dropdown class="ct_select_op_input" ngModel
+                                                        <p-dropdown class="ct_select_op_input ct_chev_icon_dark230" ngModel
                                                             [options]="productEnergyTypes" optionLabel="energyTypes"
                                                             optionValue="id" name="energyTypes" #energyTypes="ngModel"
                                                             (onChange)="onProductEnergyTypeChange($event)">
@@ -2027,7 +2050,7 @@
                                                 <div class="col-md-6">
                                                     <div class="mb-4" style="gap: 10px;">
                                                         <label class=" ct_text_wrape">Product category</label>
-                                                        <p-dropdown class="ct_select_op_input" ngModel
+                                                        <p-dropdown class="ct_select_op_input ct_chev_icon_dark230" ngModel
                                                             [options]="prodductEnergySubTypes" optionLabel="item"
                                                             optionValue="id" name="productCategoryitem"
                                                             #productCategoryitem="ngModel">
@@ -2112,7 +2135,7 @@
                                                             <div class="mb-4" style="gap: 10px;">
                                                                 <label class=" ct_text_wrape">Type of fuel
                                                                     consumed</label>
-                                                                <p-dropdown class="ct_select_op_input" ngModel
+                                                                <p-dropdown class="ct_select_op_input ct_chev_icon_dark230" ngModel
                                                                     [options]="fuelEnergyTypes" optionLabel="Item"
                                                                     optionValue="Item" name="fuelItem" #Item="ngModel">
                                                                 </p-dropdown>
@@ -2139,7 +2162,7 @@
                                                                 <label class=" ct_text_wrape">Refrigerant
                                                                     used in the
                                                                     product</label>
-                                                                <p-dropdown class="ct_select_op_input" ngModel
+                                                                <p-dropdown class="ct_select_op_input ct_chev_icon_dark230" ngModel
                                                                     [options]="refrigeratedTypes" optionLabel="Item"
                                                                     optionValue="Item" name="ItemRefrigerant"
                                                                     #ItemRefrigerant="ngModel">
@@ -2183,7 +2206,7 @@
                                                 <div class="col-md-6">
                                                     <div class="mb-4" style="gap: 10px;">
                                                         <label class=" ct_text_wrape">Waste type</label>
-                                                        <p-dropdown class="ct_select_op_input" ngModel
+                                                        <p-dropdown class="ct_select_op_input ct_chev_icon_dark230" ngModel
                                                             [options]="wasteGrid" optionLabel="type" optionValue="id"
                                                             name="wasteType" #wasteType="ngModel"
                                                             (onChange)="onWasteTypeChange($event)">
@@ -2193,7 +2216,7 @@
                                                 <div class="col-md-6">
                                                     <div class="mb-4" style="gap: 10px;">
                                                         <label class=" ct_text_wrape">Product category</label>
-                                                        <p-dropdown class="ct_select_op_input" ngModel
+                                                        <p-dropdown class="ct_select_op_input ct_chev_icon_dark230" ngModel
                                                             [options]="wasteSubTypes" optionLabel="type"
                                                             optionValue="type" name="wasteSubCategory"
                                                             #wasteSubCategory="ngModel">
@@ -2355,7 +2378,7 @@
                                                 <div class="col-md-6">
                                                     <div class="mb-4" style="gap: 10px;">
                                                         <label class=" ct_text_wrape">Facility type</label>
-                                                        <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
+                                                        <p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230" ngModel
                                                             [options]="franchiseGrid" optionLabel="categories"
                                                             optionValue="categories" name="facilityTypeValue"
                                                             #facilityTypeValue="ngModel"
@@ -2366,7 +2389,7 @@
                                                 <div class="col-md-6">
                                                     <div class="mb-4  " style="gap: 10px;">
                                                         <label class=" ct_text_wrape">Sub Category</label>
-                                                        <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
+                                                        <p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230" ngModel
                                                             [options]="subFranchiseCategory"
                                                             optionLabel="sub_categories" optionValue="sub_categories"
                                                             name="subfacilityTypeValue" #subfacilityTypeValue="ngModel">
@@ -2380,7 +2403,7 @@
                                                 <div class="col-md-6">
                                                     <div class="mb-4 " style="gap: 10px">
                                                         <label class="ct_text_wrape">Calculation Method</label>
-                                                        <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
+                                                        <p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230" ngModel
                                                             [options]="calculationUpleaseGrid"
                                                             placeholder="Select a method"
                                                             optionLabel="calculationmethod"
@@ -2472,7 +2495,9 @@
                                                 <div class="col-md-6">
                                                     <div class="mb-4" style="gap: 10px;">
                                                         <label class=" ct_text_wrape">Vehicle type</label>
-                                                        <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
+                                                        <p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230 
+
+                                                        " ngModel
                                                             [options]="VehicleGrid" optionLabel="vehicle_type"
                                                             optionValue="id" name="vehicle_type"
                                                             (onChange)="onVehicleTypeChange($event)">
@@ -2483,7 +2508,7 @@
                                                 <div class="col-md-6">
                                                     <div class="mb-4 " style="gap: 10px;">
                                                         <label class="ct_text_wrape">Sub Category</label>
-                                                        <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
+                                                        <p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230" ngModel
                                                             [options]="subVehicleCategory" optionLabel="vehicle_type"
                                                             optionValue="vehicle_type" name="subvehicle_type">
                                                         </p-dropdown>
@@ -2551,7 +2576,7 @@
                                                 <div class="col-md-6">
                                                     <div class="mb-4" style="gap: 10px;">
                                                         <label class=" ct_text_wrape">Franchise Type</label>
-                                                        <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
+                                                        <p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230" ngModel
                                                             [options]="franchiseGrid" optionLabel="categories"
                                                             optionValue="categories" name="categories"
                                                             #electricityRegionName="ngModel"
@@ -2564,7 +2589,7 @@
                                                     <div class="mb-4  " style="gap: 10px;">
                                                         <label class=" ct_text_wrape">Sub Category</label>
                                                         <div class="position-relative">
-                                                            <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
+                                                            <p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230" ngModel
                                                                 [options]="subFranchiseCategory"
                                                                 optionLabel="sub_categories"
                                                                 optionValue="sub_categories" name="sub_categories"
@@ -2582,7 +2607,7 @@
                                                 <div class="col-md-6">
                                                     <div class="mb-4 " style="gap: 10px">
                                                         <label class="ct_text_wrape">Calculation Method</label>
-                                                        <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
+                                                        <p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230" ngModel
                                                             [options]="calculationGrid" placeholder="Select a method"
                                                             optionLabel="calculationmethod"
                                                             optionValue="calculationmethod" name="calculationmethod"
@@ -2685,7 +2710,7 @@
                                                 <div class="col-md-6">
                                                     <div class="mb-4" style="gap: 10px;">
                                                         <label class=" ct_text_wrape">Type of investment</label>
-                                                        <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
+                                                        <p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230" ngModel
                                                             [options]="investmentTypeGrid"
                                                             placeholder="Select type of invesment" optionLabel="type"
                                                             optionValue="type" name="investment_type"
@@ -2700,7 +2725,7 @@
                                                 <div class="col-md-6">
                                                     <div class="mb-4  " style="gap: 10px;">
                                                         <label class=" ct_text_wrape">Industry Sector</label>
-                                                        <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
+                                                        <p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230" ngModel
                                                             [options]="wasteGrid" optionLabel="investment_type"
                                                             optionValue="investment_type" name="investment_sector"
                                                             #investment_sector="ngModel"
@@ -2713,7 +2738,7 @@
                                                 <div class="col-md-6">
                                                     <div class="mb-4 " style="gap: 10px">
                                                         <label class="ct_text_wrape">Sub Category</label>
-                                                        <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
+                                                        <p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230" ngModel
                                                             [options]="subFranchiseCategory"
                                                             optionLabel="broad_categories"
                                                             optionValue="broad_categoriesId" name="broad_categoriesId"
@@ -2726,7 +2751,7 @@
                                                 <div class="col-md-6">
                                                     <div class="mb-4" style="gap: 10px;">
                                                         <label class=" ct_text_wrape">Calculation method</label>
-                                                        <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
+                                                        <p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230" ngModel
                                                             [options]="calculationGrid" placeholder="Select a method"
                                                             optionLabel="calculationmethod"
                                                             optionValue="calculationmethod" name="calculationmethod"
@@ -2881,7 +2906,7 @@
 
                                                                 <label class=" ct_text_wrape">Project
                                                                     phase</label>
-                                                                <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
+                                                                <p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230" ngModel
                                                                     [options]="projectPhaseTypes"
                                                                     optionLabel="projectPhase"
                                                                     optionValue="projectPhase" name="projectPhase"
@@ -2962,7 +2987,7 @@
                                                 <div class="col-md-6">
                                                     <div class="mb-4" style="gap: 10px;">
                                                         <label class=" ct_text_wrape">Flight calc mode</label>
-                                                        <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
+                                                        <p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230" ngModel
                                                             [options]="flightsTravelTypes" optionLabel="flightType"
                                                             optionValue="flightType" name="flightMode"
                                                             #flightMode="ngModel" (onChange)="onCityChange($event)">
@@ -2978,7 +3003,7 @@
                                                     <div class="col-md-4">
                                                         <div class="mb-4" style="gap: 10px;">
                                                             <label class=" ct_text_wrape">Flight Type</label>
-                                                            <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
+                                                            <p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230" ngModel
                                                                 [options]="wasteGrid" optionLabel="flight_type"
                                                                 optionValue="flight_type" name="flight_type"
                                                                 #flight_type="ngModel">
@@ -2988,7 +3013,7 @@
                                                     <div class="col-md-4">
                                                         <div class="mb-4" style="gap: 10px;">
                                                             <label class=" ct_text_wrape">Flight Class</label>
-                                                            <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
+                                                            <p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230" ngModel
                                                                 [options]="flightClassGrid" optionLabel="classs"
                                                                 optionValue="classs" name="classs" #classs="ngModel">
                                                             </p-dropdown>
@@ -2997,7 +3022,7 @@
                                                     <div class="col-md-4">
                                                         <div class="mb-4" style="gap: 10px;">
                                                             <label class=" ct_text_wrape">Return Flight</label>
-                                                            <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
+                                                            <p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230" ngModel
                                                                 [options]="returnGrid" optionLabel="return"
                                                                 optionValue="return" name="return" #return="ngModel">
                                                             </p-dropdown>
@@ -3027,7 +3052,7 @@
                                                     <div class="col-md-4">
                                                         <div class="mb-4" style="gap: 10px;">
                                                             <label class=" ct_text_wrape">Cost Centre</label>
-                                                            <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
+                                                            <p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230" ngModel
                                                                 [options]="busineessGrid" optionLabel="units"
                                                                 optionValue="units" name="businessunits"
                                                                 #return="ngModel">
@@ -3043,7 +3068,7 @@
                                                     <div class="col-md-4">
                                                         <div class="mb-4" style="gap: 10px;">
                                                             <label class=" ct_text_wrape">From</label>
-                                                            <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
+                                                            <p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230" ngModel
                                                                 [options]="airportGrid" optionLabel="airport_code"
                                                                 optionValue="airport_code" name="airport_codefrom"
                                                                 #airport_code="ngModel">
@@ -3053,7 +3078,7 @@
                                                     <div class="col-md-4">
                                                         <div class="mb-4" style="gap: 10px;">
                                                             <label class=" ct_text_wrape">To</label>
-                                                            <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
+                                                            <p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230" ngModel
                                                                 [options]="airportGrid" optionLabel="airport_code"
                                                                 optionValue="airport_code" name="airport_codeto"
                                                                 #airport_code="ngModel">
@@ -3063,7 +3088,7 @@
                                                     <div class="col-md-4">
                                                         <div class="mb-4" style="gap: 10px;">
                                                             <label class=" ct_text_wrape">Via (optional)</label>
-                                                            <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
+                                                            <p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230" ngModel
                                                                 [options]="airportGrid" placeholder="Select via"
                                                                 optionLabel="airport_code" optionValue="airport_code"
                                                                 name="airport_codevia" #airport_code="ngModel">
@@ -3073,7 +3098,7 @@
                                                     <div class="col-md-4">
                                                         <div class="mb-4" style="gap: 10px;">
                                                             <label class=" ct_text_wrape">Flight Class</label>
-                                                            <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
+                                                            <p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230" ngModel
                                                                 [options]="flightClassGrid" optionLabel="classs"
                                                                 optionValue="classs" name="classs" #classs="ngModel">
                                                             </p-dropdown>
@@ -3092,7 +3117,7 @@
                                                     <div class="col-md-4">
                                                         <div class="mb-4" style="gap: 10px;">
                                                             <label class=" ct_text_wrape">Return Flight</label>
-                                                            <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
+                                                            <p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230" ngModel
                                                                 [options]="returnGrid" optionLabel="return"
                                                                 optionValue="return" name="return" #return="ngModel">
                                                             </p-dropdown>
@@ -3115,7 +3140,7 @@
                                                     <div class="col-md-4">
                                                         <div class="mb-4" style="gap: 10px;">
                                                             <label class=" ct_text_wrape">Business unit</label>
-                                                            <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
+                                                            <p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230" ngModel
                                                                 [options]="busineessGrid" optionLabel="units"
                                                                 optionValue="units" name="businessunits"
                                                                 #return="ngModel">
@@ -3133,7 +3158,7 @@
                                                     <div class="col-md-4">
                                                         <div class="mb-4" style="gap: 10px;">
                                                             <label class=" ct_text_wrape">Flight Time</label>
-                                                            <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
+                                                            <p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230" ngModel
                                                                 [options]="flightTime" optionLabel="flight_type"
                                                                 optionValue="flight_type" name="flight_type"
                                                                 #flight_type="ngModel">
@@ -3152,7 +3177,7 @@
                                                     <div class="col-md-4">
                                                         <div class="mb-4" style="gap: 10px;">
                                                             <label class=" ct_text_wrape">Flight Class</label>
-                                                            <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
+                                                            <p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230" ngModel
                                                                 [options]="flightClassGrid" optionLabel="classs"
                                                                 optionValue="classs" name="classs" #classs="ngModel">
                                                             </p-dropdown>
@@ -3170,7 +3195,7 @@
                                                     <div class="col-md-4">
                                                         <div class="mb-4" style="gap: 10px;">
                                                             <label class=" ct_text_wrape">Return Flight</label>
-                                                            <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
+                                                            <p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230" ngModel
                                                                 [options]="returnGrid" optionLabel="return"
                                                                 optionValue="return" name="return" #return="ngModel">
                                                             </p-dropdown>
@@ -3189,7 +3214,7 @@
                                                     <div class="col-md-4">
                                                         <div class="mb-4" style="gap: 10px;">
                                                             <label class=" ct_text_wrape">Business Unit</label>
-                                                            <p-dropdown class="ct_select_op_input ct_flex_1" ngModel
+                                                            <p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230" ngModel
                                                                 [options]="busineessGrid" optionLabel="units"
                                                                 optionValue="units" name="businessunits"
                                                                 #return="ngModel">
@@ -3220,7 +3245,7 @@
                                                 <div class="col-md-6">
                                                     <div class="mb-4" style="gap: 10px;">
                                                         <label class=" ct_text_wrape">Country Stay</label>
-                                                        <p-dropdown class="ct_select_op_input" ngModel
+                                                        <p-dropdown class="ct_select_op_input ct_chev_icon_dark230" ngModel
                                                             [options]="countriesList" optionLabel="name"
                                                             optionValue="name" name="countryname"
                                                             #countryname="ngModel">
@@ -3230,7 +3255,7 @@
                                                 <div class="col-md-6">
                                                     <div class="mb-4" style="gap: 10px;">
                                                         <label class=" ct_text_wrape">Type of hotel</label>
-                                                        <p-dropdown class="ct_select_op_input" ngModel
+                                                        <p-dropdown class="ct_select_op_input ct_chev_icon_dark230" ngModel
                                                             [options]="hotelTypeGrid" optionLabel="hoteltype"
                                                             optionValue="id" name="hoteltype" #hoteltype="ngModel">
                                                         </p-dropdown>
@@ -3284,7 +3309,7 @@
                                                 <div class="col-md-6">
                                                     <div class="mb-4" style="gap: 10px;">
                                                         <label class=" ct_text_wrape">Mode of trasport</label>
-                                                        <p-dropdown class="ct_select_op_input" ngModel
+                                                        <p-dropdown class="ct_select_op_input ct_chev_icon_dark230" ngModel
                                                             [options]="ModesTravelGrid"
                                                             placeholder="Select mode of travel" optionLabel="modes"
                                                             optionValue="modes" name="modes" #modes="ngModel"
@@ -3302,7 +3327,7 @@
                                                     <div class="col-md-6">
                                                         <div class="mb-4" style="gap: 10px;">
                                                             <label class=" ct_text_wrape">Type</label>
-                                                            <p-dropdown class="ct_select_op_input" ngModel
+                                                            <p-dropdown class="ct_select_op_input ct_chev_icon_dark230" ngModel
                                                                 [options]="mode_type" optionLabel="type"
                                                                 optionValue="type" name="cartype" #cartype="ngModel">
                                                             </p-dropdown>
@@ -3311,7 +3336,7 @@
                                                     <div class="col-md-6" *ngIf="carMode">
                                                         <div class="mb-4" style="gap: 10px;">
                                                             <label class=" ct_text_wrape">Fuel type</label>
-                                                            <p-dropdown class="ct_select_op_input" ngModel
+                                                            <p-dropdown class="ct_select_op_input ct_chev_icon_dark230" ngModel
                                                                 [options]="carFuel_type" optionLabel="mode_type"
                                                                 optionValue="mode_type" name="fuelCar_type"
                                                                 #fuelCar_type="ngModel">

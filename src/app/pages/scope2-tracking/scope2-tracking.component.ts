@@ -112,6 +112,7 @@ export class Scope2TrackingComponent {
     Rejected = environment.rejected;
     Approved = environment.approved;
     blendType: BlendType[] = [];
+    isHowtoUse = false;
     ModeType: VehicleDEmode[] = [];
     ElectricitySource: ElectricitySource[] = [];
     ElectricityGrid: ElectricityGrid[] = [];
@@ -769,6 +770,7 @@ export class Scope2TrackingComponent {
         // }
 
         this.getBatch();
+      
         // this.getBlendType();
         // this.getVehicleDEMode();
         // this.getElectricitySource();
@@ -793,6 +795,7 @@ export class Scope2TrackingComponent {
             console.log("checkssss");
             this.GetAssignedDataPoint(Number(fId));
             this.facilityID = fId;
+           
         }
         else if (this.flag === undefined || this.flag === null || this.flag == "") {
             this.facilityID = fId;
@@ -841,9 +844,6 @@ export class Scope2TrackingComponent {
         this.categoryId = catID;
 
         this.SubCatAllData = data;
-
-        console.log("categoryId", this.categoryId);
-
         this.ALLEntries()
         if (catID == 1) {
 
@@ -996,7 +996,8 @@ export class Scope2TrackingComponent {
         formData.set('year', this.convertedYear.toString())
         formData.set('facilities', this.facilityID.toString())
         formData.set('categoryID', this.categoryId.toString())
-        if (this.categoryId == 1) {
+      
+            console.log("else part")
             this.trackingService
                 .newgetSCpendingDataEntries(formData)
                 .subscribe({
@@ -1005,8 +1006,6 @@ export class Scope2TrackingComponent {
                             this.dataEntriesPending = null;
                         } else {
                             this.dataEntriesPending = response.categories;
-                            console.log("data>", this.dataEntriesPending)
-
                         }
 
                     },
@@ -1018,213 +1017,7 @@ export class Scope2TrackingComponent {
                         console.error('errrrrrr>>>>>>', err);
                     }
                 });
-        }
-        if (this.categoryId == 2) {
-            this.trackingService
-                .newgetSCpendingDataEntries(formData)
-                .subscribe({
-                    next: (response) => {
-                        if (response.success === false) {
-                            this.dataEntriesPending = null;
-                        } else {
-                            this.dataEntriesPending = response.categories;
-                            console.log("data>", this.dataEntriesPending)
-
-                        }
-
-                    },
-                    error: (err) => {
-                        this.notification.showError(
-                            'Get data Point failed.',
-                            'Error'
-                        );
-                        console.error('errrrrrr>>>>>>', err);
-                    }
-                });
-        }
-        if (this.categoryId == 3) {
-            this.trackingService
-                .newgetSCpendingDataEntries(formData)
-                .subscribe({
-                    next: (response) => {
-                        if (response.success === false) {
-                            this.dataEntriesPending = null;
-                        } else {
-                            this.dataEntriesPending = response.categories;
-                            console.log("data>", this.dataEntriesPending)
-
-                        }
-
-                    },
-                    error: (err) => {
-                        this.notification.showError(
-                            'Get data Point failed.',
-                            'Error'
-                        );
-                        console.error('errrrrrr>>>>>>', err);
-                    }
-                });
-        }
-        if (this.categoryId == 5) {
-            this.trackingService
-                .newgetSCpendingDataEntries(formData)
-                .subscribe({
-                    next: (response) => {
-                        if (response.success === false) {
-                            this.dataEntriesPending = null;
-                        } else {
-                            this.dataEntriesPending = response.categories;
-                            console.log("data>", this.dataEntriesPending)
-
-                        }
-
-                    },
-                    error: (err) => {
-                        this.notification.showError(
-                            'Get data Point failed.',
-                            'Error'
-                        );
-                        console.error('errrrrrr>>>>>>', err);
-                    }
-                });
-        }
-        if (this.categoryId == 6) {
-            this.trackingService
-                .newgetSCpendingDataEntries(formData)
-                .subscribe({
-                    next: (response) => {
-                        if (response.success === false) {
-                            this.dataEntriesPending = null;
-                        } else {
-                            this.dataEntriesPending = response.categories;
-
-
-                        }
-
-                    },
-                    error: (err) => {
-                        this.notification.showError(
-                            'Get data Point failed.',
-                            'Error'
-                        );
-                        console.error('errrrrrr>>>>>>', err);
-                    }
-                });
-        }
-        if (this.categoryId == 7) {
-            this.trackingService
-                .newgetSCpendingDataEntries(formData)
-                .subscribe({
-                    next: (response) => {
-                        if (response.success === false) {
-                            this.dataEntriesPending = null;
-                        } else {
-                            this.dataEntriesPending = response.categories;
-                            console.log("data>", this.dataEntriesPending)
-
-                        }
-
-                    },
-                    error: (err) => {
-                        this.notification.showError(
-                            'Get data Point failed.',
-                            'Error'
-                        );
-                        console.error('errrrrrr>>>>>>', err);
-                    }
-                });
-        }
-        if (this.categoryId == 8) {
-            this.trackingService
-                .newgetSCpendingDataEntries(formData)
-                .subscribe({
-                    next: (response) => {
-                        if (response.success === false) {
-                            this.dataEntriesPending = null;
-                        } else {
-                            this.dataEntriesPending = response.categories;
-                            console.log("data>", this.dataEntriesPending)
-
-                        }
-
-                    },
-                    error: (err) => {
-                        this.notification.showError(
-                            'Get data Point failed.',
-                            'Error'
-                        );
-                        console.error('errrrrrr>>>>>>', err);
-                    }
-                });
-        }
-        if (this.categoryId == 9) {
-            this.trackingService
-                .newgetSCpendingDataEntries(formData)
-                .subscribe({
-                    next: (response) => {
-                        if (response.success === false) {
-                            this.dataEntriesPending = null;
-                        } else {
-                            this.dataEntriesPending = response.categories;
-                            console.log("data>", this.dataEntriesPending)
-
-                        }
-
-                    },
-                    error: (err) => {
-                        this.notification.showError(
-                            'Get data Point failed.',
-                            'Error'
-                        );
-                        console.error('errrrrrr>>>>>>', err);
-                    }
-                });
-        }
-        if (this.categoryId == 10) {
-            this.trackingService
-                .newgetSCpendingDataEntries(formData)
-                .subscribe({
-                    next: (response) => {
-                        if (response.success === false) {
-                            this.dataEntriesPending = null;
-                        } else {
-                            this.dataEntriesPending = response.categories;
-                            console.log("data>", this.dataEntriesPending)
-
-                        }
-
-                    },
-                    error: (err) => {
-                        this.notification.showError(
-                            'Get data Point failed.',
-                            'Error'
-                        );
-                        console.error('errrrrrr>>>>>>', err);
-                    }
-                });
-        } else {
-            this.trackingService
-                .newgetSCpendingDataEntries(formData)
-                .subscribe({
-                    next: (response) => {
-                        if (response.success === false) {
-                            this.dataEntriesPending = null;
-                        } else {
-                            this.dataEntriesPending = response.categories;
-                            console.log("data>", this.dataEntriesPending)
-
-                        }
-
-                    },
-                    error: (err) => {
-                        this.notification.showError(
-                            'Get data Point failed.',
-                            'Error'
-                        );
-                        console.error('errrrrrr>>>>>>', err);
-                    }
-                });
-        }
+        
 
 
     };
@@ -3220,6 +3013,7 @@ export class Scope2TrackingComponent {
                                         if ((response.categories)[i].manageDataPointCategories[j].manageDataPointCategorySeedID == 1) {
 
                                             this.categoryId = 1;
+                                            this.ALLEntries()
                                             this.getsubCategoryType(this.SubCatAllData
                                                 .manageDataPointSubCategorySeedID);
                                             this.getUnit(this.SubCatAllData
@@ -3651,6 +3445,11 @@ export class Scope2TrackingComponent {
     //         this.uploadFiles(files);
     //     }
     // }
+
+    checkVisited() {
+        // reverse the value of property
+        this.isHowtoUse = !this.isHowtoUse;
+     }
 
     onFileSelected(event: any) {
         const selectedFile = event.target.files[0];

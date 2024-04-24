@@ -104,13 +104,13 @@
           
                      
                         <div class="ct_emission_vender_list">
-                            <div class="d-flex  ct_emission_vender_list_item_12 align-items-center gap-2 justify-content-between " *ngFor="let vendorItems of vendorData">
+                            <div class="d-flex  ct_emission_vender_list_item_12 align-items-center gap-2 justify-content-between " *ngFor="let vendorItems of topFIveE">
                                 <div>
-                                    <h5 class="mb-1">{{vendorItems.supplier}}</h5>
+                                    <h5 class="mb-1">{{vendorItems.wasteName}}</h5>
                                     
                                 </div>
                                 <div>
-                                    <p class="mb-0 d-flex align-items-center">{{vendorItems.emssion}}&nbsp; {{vendorItems.unit}} </p>
+                                    <p class="mb-0 d-flex align-items-center">{{vendorItems.emission}}&nbsp; {{vendorItems.unit}} </p>
                                 </div>
                             </div>
                          
