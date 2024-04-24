@@ -90,6 +90,8 @@ export class TrackingViewRequestsComponent {
     mandatoryVehicleDP: any[] = [];
     mandatoryElecDP: any[] = [];
     mandatoryHSDP: any[] = [];
+    dataEntry: any;
+    display = 'none'
     constructor(
         private route: ActivatedRoute,
         private router: Router,
@@ -159,7 +161,19 @@ export class TrackingViewRequestsComponent {
     }
     showDialog() {
         this.visible = true;
-    }
+    };
+
+    onUpdateUserStatus(data: any) {
+        this.dataEntry = '';
+        console.log( this.dataEntry);
+        this.display = 'block';
+        this.dataEntry = data
+
+    };
+
+    onClose2() {
+        this.display = 'none';
+    };
     sendEntryForApproval() {
 
         console.log("selcted ", this.selectedEntry);
@@ -179,7 +193,7 @@ export class TrackingViewRequestsComponent {
                 };
                 this.sendApprovalEntries.push(this.selectedObjectEntry); // Add the new object to the sendEntries array
             });
-        }else{
+        } else {
 
             this.sendSCEntries = [];
             this.selectedEntry.forEach((element) => {
@@ -528,7 +542,7 @@ export class TrackingViewRequestsComponent {
             });
         }
 
-    }
+    };
 
     ALLEntries(facilityID: number) {
         console.log(
@@ -2314,7 +2328,7 @@ export class TrackingViewRequestsComponent {
                 });
         }
 
-    }
+    };
     GetsendforApprovalDataPoint(facilityID: number) {
         this.months = new months();
         this.convertedYear = this.trackingService.getYear(this.year);
@@ -2835,11 +2849,11 @@ export class TrackingViewRequestsComponent {
                 });
         }
 
-    }
+    };
 
     isOutOfStock(data) {
         return data.inventoryStatus === 'OUTOFSTOCK';
-    }
+    };
     AcceptAllEntry() {
         if (this.selectedEntry.length === 0) {
             this.notification.showWarning('Please select any entry', 'Warning');
@@ -3253,7 +3267,8 @@ export class TrackingViewRequestsComponent {
         }
 
     }
-    AcceptSingleEntry(entry) {
+    AcceptSingleEntry() {
+        const entry = this.dataEntry;
         this.sendApprovalEntries = [];
         if (entry.ID == undefined || entry.ID == null) {
             this.selectedObjectEntry = {
@@ -3289,6 +3304,7 @@ export class TrackingViewRequestsComponent {
                             'Success'
                         );
                         this.ALLEntries(this.facilityID);
+                        this.onClose2();
                         // if (this.loginInfo.role == environment.Approver) {
                         //     this.GetsendforApprovalDataPoint(this.loginInfo.facilityID);
                         // }
@@ -3308,6 +3324,7 @@ export class TrackingViewRequestsComponent {
                             'Entry not Approved',
                             'Warning'
                         );
+                        this.onClose2();
                     }
                 },
                 error: (err) => {
@@ -3315,6 +3332,7 @@ export class TrackingViewRequestsComponent {
                         'Entry Approval Failed.',
                         'Error'
                     );
+                    this.onClose2();
                     console.error('errrrrrr>>>>>>', err);
                 }
             });
@@ -3700,8 +3718,8 @@ export class TrackingViewRequestsComponent {
 
 
     }
-    RejectSingleEntry(entry:any) {
-        
+    RejectSingleEntry(entry: any) {
+
         this.sendApprovalEntries = [];
 
         this.selectedObjectEntry = {

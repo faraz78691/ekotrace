@@ -91,7 +91,7 @@
                         </div>
                        
                     </div>
-                    <div id="ct_cost_center" *ngIf="donotOptions2">
+                    <!-- <div id="ct_cost_center" *ngIf="donotOptions2">
                         <apx-chart
                         [series]="donotOptions2.series"
                         [chart]="donotOptions2.chart"
@@ -100,7 +100,22 @@
                         [responsive]="donotOptions2.responsive"
                         [colors]="donotOptions2.colors"
                       ></apx-chart>
-                    </div>
+                    </div> -->
+          
+                     
+                        <div class="ct_emission_vender_list">
+                            <div class="d-flex  ct_emission_vender_list_item_12 align-items-center gap-2 justify-content-between " *ngFor="let vendorItems of vendorData">
+                                <div>
+                                    <h5 class="mb-1">{{vendorItems.supplier}}</h5>
+                                    
+                                </div>
+                                <div>
+                                    <p class="mb-0 d-flex align-items-center">{{vendorItems.emssion}}&nbsp; {{vendorItems.unit}} </p>
+                                </div>
+                            </div>
+                         
+                        </div>
+                  
                 </div>
             </div>
             <div class="col-xl-6 mb-4">
@@ -184,14 +199,14 @@
                     </div>
                   
                 </div>
-                <div id="ct_net_zeo_donut" *ngIf="donotOptions1">
+                <div id="ct_net_zeo_donut" *ngIf="upDowndonotOptions1">
                     <apx-chart
-                        [series]="donotOptions1.series"
-                        [chart]="donotOptions1.chart"
-                        [labels]="donotOptions1.labels"
-                        [colors]="donotOptions1.colors"
-                        [legend]="donotOptions1.legend"
-                        [responsive]="donotOptions1.responsive"
+                        [series]="upDowndonotOptions1.series"
+                        [chart]="upDowndonotOptions1.chart"
+                        [labels]="upDowndonotOptions1.labels"
+                        [colors]="upDowndonotOptions1.colors"
+                        [legend]="upDowndonotOptions1.legend"
+                        [responsive]="upDowndonotOptions1.responsive"
                       ></apx-chart>
                 </div>
             </div>

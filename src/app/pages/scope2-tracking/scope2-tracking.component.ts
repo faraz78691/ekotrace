@@ -221,8 +221,9 @@ export class Scope2TrackingComponent {
     mode_name = '';
     selectedtemplate = '';
     mode_type: any[] = [];
-    LocationTypes: any[] = [];
-    
+    marketTypes: any[] = [];
+    marketEElecID: any;;
+
 
     carFuel_type: any[] = [];
     wasteMethod: string;
@@ -343,7 +344,7 @@ export class Scope2TrackingComponent {
                 }
 
             ];
-        this.LocationTypes =
+        this.marketTypes =
             [
 
                 {
@@ -354,7 +355,7 @@ export class Scope2TrackingComponent {
                     "id": 2,
                     "Type": "Supplier Specific"
                 }
-              
+
             ];
         this.goodsTemplates =
             [
@@ -842,7 +843,7 @@ export class Scope2TrackingComponent {
         this.SubCatAllData = data;
 
         console.log("categoryId", this.categoryId);
-        console.log("id_var", this.id_var);
+
         this.ALLEntries()
         if (catID == 1) {
 
@@ -980,13 +981,13 @@ export class Scope2TrackingComponent {
 
     // to get the status of subcategories in status tab
     ALLEntries() {
-        console.log(this.facilityID);
-        if(this.facilityID == 0){
+
+        if (this.facilityID == 0) {
             this.notification.showInfo(
                 'Select Facility',
                 ''
             );
-            return 
+            return
         }
 
 
@@ -1096,7 +1097,7 @@ export class Scope2TrackingComponent {
                             this.dataEntriesPending = null;
                         } else {
                             this.dataEntriesPending = response.categories;
-                            console.log("data>", this.dataEntriesPending)
+
 
                         }
 
@@ -1201,6 +1202,28 @@ export class Scope2TrackingComponent {
                         console.error('errrrrrr>>>>>>', err);
                     }
                 });
+        } else {
+            this.trackingService
+                .newgetSCpendingDataEntries(formData)
+                .subscribe({
+                    next: (response) => {
+                        if (response.success === false) {
+                            this.dataEntriesPending = null;
+                        } else {
+                            this.dataEntriesPending = response.categories;
+                            console.log("data>", this.dataEntriesPending)
+
+                        }
+
+                    },
+                    error: (err) => {
+                        this.notification.showError(
+                            'Get data Point failed.',
+                            'Error'
+                        );
+                        console.error('errrrrrr>>>>>>', err);
+                    }
+                });
         }
 
 
@@ -1223,7 +1246,7 @@ export class Scope2TrackingComponent {
             );
             return
         }
-        if (this.selectMonths.length == 0) {
+        if (this.selectMonths.length == 0 && this.categoryId != 8) {
             this.notification.showInfo(
                 'Select month',
                 ''
@@ -1561,7 +1584,8 @@ export class Scope2TrackingComponent {
                         this.resetForm();
                         this.getUnit(this.SubCatAllData
                             .manageDataPointSubCategorySeedID);
-                            this.VehicleDE.modeOfDE = this.ModeType[0].modeName;
+                        this.VehicleDE.modeOfDE = this.ModeType[0].modeName;
+                        console.log("this.VehicleDE.modeOfDE", this.VehicleDE.modeOfDE);
                         if (this.SubCatAllData.manageDataPointSubCategorySeedID == 10) {
 
                             this.getPassengerVehicleType();
@@ -1602,40 +1626,41 @@ export class Scope2TrackingComponent {
                 formData.set('SubCategorySeedID', this.SubCatAllData
                     .manageDataPointSubCategorySeedID.toString());
 
-                    this.trackingService.newPostElectricityDataEntry(formData.toString()).subscribe({
-                        next: (response) => {
-                            if (response.success == true) {
-                                //this.GetAssignedDataPoint(this.facilityID);
-                                this.getUnit(this.SubCatAllData
-                                    .manageDataPointSubCategorySeedID);
-                                    this.RenewableElectricity.sourceName = this.ElectricitySource[0].sourceName;
-                                this.activeindex = 0;
-                                this.getRegionName(9);
-                                this.getsubCategoryType(this.SubCatAllData
-                                    .manageDataPointSubCategorySeedID);
-                                    this.ALLEntries();
-                        
-                                this.notification.showSuccess(
-                                    'Data entry added successfully',
-                                    'Success'
-                                );
-                                this.resetForm();
-                            }
-                        },
-                        error: (err) => {
-                            this.notification.showError(
-                                'Data entry added failed.',
-                                'Error'
+                this.trackingService.newPostElectricityDataEntry(formData.toString()).subscribe({
+                    next: (response) => {
+                        if (response.success == true) {
+                            this.resetForm();
+                            //this.GetAssignedDataPoint(this.facilityID);
+                            this.getUnit(this.SubCatAllData
+                                .manageDataPointSubCategorySeedID);
+                            this.RenewableElectricity.sourceName = this.ElectricitySource[0].sourceName;
+                            this.activeindex = 0;
+                            this.getRegionName(9);
+                            this.getsubCategoryType(this.SubCatAllData
+                                .manageDataPointSubCategorySeedID);
+                            this.ALLEntries();
+
+                            this.notification.showSuccess(
+                                'Data entry added successfully',
+                                'Success'
                             );
-                            console.error('errrrrrr>>>>>>', err);
-                        },
-                        complete: () => console.info('Data entry Added')
-                    });
+
+                        }
+                    },
+                    error: (err) => {
+                        this.notification.showError(
+                            'Data entry added failed.',
+                            'Error'
+                        );
+                        console.error('errrrrrr>>>>>>', err);
+                    },
+                    complete: () => console.info('Data entry Added')
+                });
 
             }
             else {
                 var formData = new URLSearchParams();
-                formData.set('typeID', this.dataEntry.typeID.toString());
+                formData.set('typeID', this.marketEElecID);
                 formData.set('readingValue', this.dataEntry.readingValue.toString());
                 formData.set('sourceName', this.RenewableElectricity.sourceName);
                 formData.set('unit', this.dataEntry.unit);
@@ -1644,39 +1669,45 @@ export class Scope2TrackingComponent {
                 formData.set('year', this.dataEntry.year);
                 formData.set('SubCategorySeedID', this.SubCatAllData
                     .manageDataPointSubCategorySeedID.toString());
-            }
-            this.trackingService.newPostElectricityMarket(formData.toString()).subscribe({
-                next: (response) => {
-                    if (response.success == true) {
-                        //this.GetAssignedDataPoint(this.facilityID);
-                        this.getUnit(this.SubCatAllData
-                            .manageDataPointSubCategorySeedID);
-                            this.RenewableElectricity.sourceName = this.ElectricitySource[0].sourceName;
-                        this.activeindex = 0;
-                        this.getRegionName(9);
-                        this.getsubCategoryType(this.SubCatAllData
-                            .manageDataPointSubCategorySeedID);
+
+                this.trackingService.newPostElectricityMarket(formData.toString()).subscribe({
+                    next: (response) => {
+                        if (response.success == true) {
+                            this.resetForm();
+                            //this.GetAssignedDataPoint(this.facilityID);
+                            this.getUnit(this.SubCatAllData
+                                .manageDataPointSubCategorySeedID);
+
+                            this.activeindex = 0;
+                            this.getRegionName(9);
+                            this.getsubCategoryType(this.SubCatAllData
+                                .manageDataPointSubCategorySeedID);
                             this.ALLEntries();
-                
-                        this.notification.showSuccess(
-                            'Data entry added successfully',
-                            'Success'
+
+                            this.notification.showSuccess(
+                                'Data entry added successfully',
+                                'Success'
+                            );
+
+
+                        }
+                        this.marketEElecID = this.marketTypes[0].id;
+
+
+                    },
+                    error: (err) => {
+                        this.notification.showError(
+                            'Data entry added failed.',
+                            'Error'
                         );
-                        this.resetForm();
-                    }
-                },
-                error: (err) => {
-                    this.notification.showError(
-                        'Data entry added failed.',
-                        'Error'
-                    );
-                    console.error('errrrrrr>>>>>>', err);
-                },
-                complete: () => console.info('Data entry Added')
-            });
+                        console.error('errrrrrr>>>>>>', err);
+                    },
+                    complete: () => console.info('Data entry Added')
+                });
+            }
 
 
-       
+
         }
         if (this.categoryId == 7) {
             var formData = new URLSearchParams();
@@ -1692,11 +1723,12 @@ export class Scope2TrackingComponent {
             this.trackingService.newPostHeatandSteamDataEntry(formData.toString()).subscribe({
                 next: (response) => {
                     if (response.success == true) {
+                        this.resetForm();
                         this.getsubCategoryType(this.SubCatAllData
                             .manageDataPointSubCategorySeedID);
-                            this.ALLEntries();
-                            this.getUnit(this.SubCatAllData
-                                .manageDataPointSubCategorySeedID);
+                        this.ALLEntries();
+                        this.getUnit(this.SubCatAllData
+                            .manageDataPointSubCategorySeedID);
                         //this.GetAssignedDataPoint(this.facilityID);'
                         // this.trackingService.getHeatandSteamdataentry(this.SubCatAllData.id, this.loginInfo.tenantID).subscribe({
                         //     next: (response) => {
@@ -1708,7 +1740,7 @@ export class Scope2TrackingComponent {
                             'Data entry added successfully',
                             'Success'
                         );
-                        this.resetForm();
+
                     }
                 },
                 error: (err) => {
@@ -1722,11 +1754,10 @@ export class Scope2TrackingComponent {
             });
         }
         if (this.categoryId == 8) {
+            console.log("hitting");
             let formData = new URLSearchParams();
             formData.set('batch', this.batchId);
-            formData.set('facility_id', this.facilityID);
-            formData.set('month', monthString);
-            formData.set('year', this.dataEntry.year);
+
             this.trackingService.submitPurchaseGoods(formData.toString()).subscribe({
                 next: (response) => {
 
@@ -1739,6 +1770,7 @@ export class Scope2TrackingComponent {
                         $(".filename").val('');
                         $(".browse-button-text").html('<i class="fa fa-folder-open"></i> Browse')
                         this.resetForm();
+                        this.ALLEntries();
                         // this.dataEntryForm.reset()
                         // this.getStatusData(1);
                         this.uploadButton = false;
@@ -1814,6 +1846,7 @@ export class Scope2TrackingComponent {
                         this.dataEntryForm.reset();
                         this.getSubVehicleCategory(1)
                     }
+                    this.ALLEntries();
                 },
                 error: (err) => {
                     this.notification.showError(
@@ -1887,6 +1920,7 @@ export class Scope2TrackingComponent {
                         this.dataEntryForm.reset();
 
                     }
+                    this.ALLEntries();
                 },
                 error: (err) => {
                     this.notification.showError(
@@ -1913,17 +1947,28 @@ export class Scope2TrackingComponent {
             var monthString = JSON.stringify(spliteedMonth)
 
             let formData = new URLSearchParams();
-
-            formData.set('product', this.waterWasteProduct);
-            formData.set('waste_type', form.value.wasteSubCategory);
-            formData.set('total_waste', form.value.waste_quantity);
-            formData.set('method', this.wasteMethod);
-            formData.set('unit', form.value.wasteUnits);
-            formData.set('loop ', this.recycleSelectedMethod);
-            formData.set('id', form.value.wasteType);
-            formData.set('months', monthString);
-            formData.set('year', this.dataEntry.year);
-            formData.set('facility_id', this.facilityID);
+            if (this.wasteMethod == 'recycling') {
+                formData.set('product', this.waterWasteProduct);
+                formData.set('waste_type', form.value.wasteSubCategory);
+                formData.set('total_waste', form.value.waste_quantity);
+                formData.set('method', this.wasteMethod);
+                formData.set('unit', form.value.wasteUnits);
+                formData.set('waste_loop', this.recycleSelectedMethod);
+                formData.set('id', form.value.wasteType);
+                formData.set('months', monthString);
+                formData.set('year', this.dataEntry.year);
+                formData.set('facility_id', this.facilityID);
+            } else {
+                formData.set('product', this.waterWasteProduct);
+                formData.set('waste_type', form.value.wasteSubCategory);
+                formData.set('total_waste', form.value.waste_quantity);
+                formData.set('method', this.wasteMethod);
+                formData.set('unit', form.value.wasteUnits);
+                formData.set('id', form.value.wasteType);
+                formData.set('months', monthString);
+                formData.set('year', this.dataEntry.year);
+                formData.set('facility_id', this.facilityID);
+            }
 
 
             this.trackingService.wasteGeneratedEmission(formData.toString()).subscribe({
@@ -1935,6 +1980,7 @@ export class Scope2TrackingComponent {
                             'Success'
                         );
                         this.dataEntryForm.reset();
+                        this.wasteMethod = this.waterWasteMethod[0].water_type
                         this.getWasteSubCategory("1")
 
                     } else {
@@ -1943,9 +1989,10 @@ export class Scope2TrackingComponent {
                             'Error'
                         );
                         this.dataEntryForm.reset();
-                        this.getWasteSubCategory("1")
+                        this.wasteMethod = this.waterWasteMethod[0].water_type
 
                     }
+                    this.ALLEntries();
                     this.recycle = false;
                 },
                 error: (err) => {
@@ -1995,7 +2042,7 @@ export class Scope2TrackingComponent {
 
             this.trackingService.uploadEmployeeCommunity(formData.toString()).subscribe({
                 next: (response) => {
-
+                    this.ALLEntries();
                     if (response.success == true) {
                         this.notification.showSuccess(
                             response.message,
@@ -2075,6 +2122,7 @@ export class Scope2TrackingComponent {
                         this.franchiseMethod = false;
 
                     }
+                    this.ALLEntries();
                 },
                 error: (err) => {
                     this.notification.showError(
@@ -2212,6 +2260,7 @@ export class Scope2TrackingComponent {
                         this.getFranchiseType();
                         this.getSubFranchiseCategory('Banking Financial Services');
                     }
+                    this.ALLEntries();
                 },
                 error: (err) => {
                     this.notification.showError(
@@ -2276,6 +2325,7 @@ export class Scope2TrackingComponent {
                         this.dataEntryForm.reset();
                         this.getSubVehicleCategory(1)
                     }
+                    this.ALLEntries();
                 },
                 error: (err) => {
                     this.notification.showError(
@@ -2391,6 +2441,7 @@ export class Scope2TrackingComponent {
                         this.franchiseMethod = false;
 
                     }
+                    this.ALLEntries();
                 },
                 error: (err) => {
                     this.notification.showError(
@@ -2473,6 +2524,7 @@ export class Scope2TrackingComponent {
                         this.noOfItems = false;
 
                     }
+                    this.ALLEntries();
                 },
                 error: (err) => {
                     this.notification.showError(
@@ -2533,6 +2585,7 @@ export class Scope2TrackingComponent {
                         this.getWasteSubCategory("1")
 
                     }
+                    this.ALLEntries();
                 },
                 error: (err) => {
                     this.notification.showError(
@@ -2645,6 +2698,7 @@ export class Scope2TrackingComponent {
                             response.message,
                             'Success'
                         );
+                        this.ALLEntries();
                         this.averageMethod = false;
                         this.franchiseMethod = false;
                         this.dataEntryForm.reset();
@@ -2710,6 +2764,7 @@ export class Scope2TrackingComponent {
                             response.message,
                             'Success'
                         );
+                        this.ALLEntries();
                         this.dataEntryForm.reset();
                         this.getFranchiseType();
                         this.getSubFranchiseCategory('Banking Financial Services');
@@ -2804,6 +2859,7 @@ export class Scope2TrackingComponent {
                             response.message,
                             'Success'
                         );
+                        this.ALLEntries();
                         this.dataEntryForm.reset();
                         this.equityInvestmentRow = false;
                         this.debtInvesmentRow = false;
@@ -2908,7 +2964,7 @@ export class Scope2TrackingComponent {
                             'Success'
                         );
                         this.dataEntryForm.reset();
-
+                        this.ALLEntries();
                         // this.getStatusData(this.activeCategoryIndex);
                         this.flightDisplay1 = 'block';
                         this.flightDisplay2 = 'none';
@@ -2967,6 +3023,7 @@ export class Scope2TrackingComponent {
                             response.message,
                             'Success'
                         );
+                        this.ALLEntries();
                         this.dataEntryForm.reset();
 
                         // this.getStatusData(this.activeCategoryIndex)
@@ -3324,7 +3381,7 @@ export class Scope2TrackingComponent {
 
     wastemethodChange(event: any) {
         console.log(event.value);
-        if (event.value == 'Recycling') {
+        if (event.value == 'recycling') {
             this.recycle = true
         } else {
             this.recycle = false;
@@ -3612,11 +3669,28 @@ export class Scope2TrackingComponent {
         }
     };
 
+    marktetTypeChange(event: any) {
+        if (event.value == 1) {
+            this.recycle = true
+        } else {
+            this.recycle = false;
+        }
+    }
+
     purchaseGoodsUpload(event: any) {
         event.preventDefault();
+        this.dataEntry.month = this.selectMonths
+            .map((month) => month.value)
+            .join(', '); //this.getMonthName();
+        this.dataEntry.year = this.year.getFullYear().toString(); //this.getYear();
+        var spliteedMonth = this.dataEntry.month.split(",");
+        var monthString = JSON.stringify(spliteedMonth);
         const formData: FormData = new FormData();
         formData.append('file', this.selectedFile, this.selectedFile.name);
         formData.append('batch', this.batchId);
+        formData.append('facilities', this.facilityID);
+        formData.append('year', this.dataEntry.year);
+        formData.append('month', monthString);
         this.trackingService.UploadTemplate(formData).subscribe({
             next: (response) => {
 
@@ -4201,7 +4275,7 @@ export class Scope2TrackingComponent {
                 if (response.success == true) {
                     this.VehicleGrid = response.categories;
                     const selectedIndex = this.selectedVehicleIndex;
-                    this.selectedVehicleType = this.VehicleGrid[selectedIndex - 1].vehicle_type
+                    this.selectedVehicleType = this.VehicleGrid[selectedIndex - 1]?.vehicle_type
 
                 }
             }

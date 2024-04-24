@@ -306,14 +306,7 @@
                                 <th  pSortableColumn="year">
                                     <p-sortIcon field="year"></p-sortIcon>
                                     Year
-                                    <!-- <p-columnFilter field="year" matchMode="equals" display="menu" [showMenu]="true"
-                                        [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
-                                        <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                                            <p-dropdown [ngModel]="value" [options]="yearOptions"
-                                                (onChange)="filter($event.value)" placeholder="All" [showClear]="false">
-                                            </p-dropdown>
-                                        </ng-template>
-                                    </p-columnFilter> -->
+                               
                                 </th>
                                 <th  pSortableColumn="month"  *ngIf="selectedCategory!=8 && selectedCategory!=14 && selectedCategory!=15">
                                     Month
@@ -552,7 +545,7 @@
                                         </ng-template>{{ de.amount }}</p-cellEditor></td>
                                 <td *ngIf="selectedCategory==5">{{ de.sourceName }}</td>
                                 <td>
-                                    <div class="d-flex">
+                                    <div class="d-flex text-white">
                                         <span [ngClass]="{
                                                 Rejected:
                                                     de.status === Rejected,
@@ -571,26 +564,7 @@
                                 </td>
 
                                 <td>
-                                    <div *ngIf="
-                                    de.sendForApproval === false &&
-                                    loginInfo.role !== Approver
-                                " class="flex align-items-center justify-content-center gap-2">
-                                        <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow
-                                            icon="pi pi-pencil" (click)="onRowEditInit(de)"
-                                            class="p-button-rounded p-button-text" name="editbutton_{{ ri }}"></button>
-                                        <!-- <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-trash"
-                                            (click)="DeleteEntry(de)"
-                                            class="p-button-rounded p-button-text p-button-danger"
-                                            name="editcancelbutton_{{ ri }}"></button> -->
-                                        <!-- <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow
-                                            icon="pi pi-check" (click)="onRowEditSave(de)"
-                                            class="p-button-rounded p-button-text p-button-success mr-2"
-                                            name="editsavebutton_{{ ri }}"></button> -->
-                                        <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow
-                                            icon="pi pi-times" (click)="onRowEditCancel(de, ri)"
-                                            class="p-button-rounded p-button-text p-button-danger"
-                                            name="editcancelbutton_{{ ri }}"></button>
-                                    </div>
+                               
 
                                     <!-- <div *ngIf="
                                             de.sendForApproval === false &&
@@ -614,12 +588,23 @@
                                     <div *ngIf="
                                     de.status === Pending
                                  "
-                                         class="d-flex font-pera text-center pl-3">
-                                        <div (click)="AcceptSingleEntry(de)">
+                                         class="d-flex font-pera text-center pl-3 pt-0">
+                                         <button
+                                         type="button"
+                                         class="btn btn-dark margin"
+                                         data-bs-toggle="modal" data-bs-target="#viewModal"
+                                         
+                                         ngbTooltip="Accept / Reject"
+                                         (click)="onUpdateUserStatus(de)"
+                                       >
+                                       <i class="fa fa-eject" aria-hidden="true"></i>
+                                       </button>
+                                       
+                                        <!-- <div (click)="AcceptSingleEntry(de)">
                                             <i class="LocButtonEdit pi pi-check pointer d-flex text-white ct_border_radius_8">
                                                 <p class="pl-2">Accept</p>
                                             </i>
-                                        </div>
+                                        </div> -->
                                         <!-- <div (click)="showDialog()" class="form-group has-search text-light pointer">
                                             <i class="deleteButton pi pi-times pointer d-flex text-white">
                                                 <p class="pl-2">Reject</p>
@@ -673,3 +658,36 @@
         </div>
     </div>
 </div>
+
+
+<div class="modal fade show" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true" [ngStyle]="{'display':display}">
+    <div class="modal-dialog ct_modal_center_120">
+        <div class="modal-content ct_modal_main_div140 ">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Update Status</h4>
+                <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+                id="closePopup"
+               (click)="onClose2()"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <p>Would you like to accept or reject?</p>
+                <button type="button" class="btn btn-primary text-white" id="acceptBtn" (click)="AcceptSingleEntry()" >Approve</button>
+                <button type="button" class="btn btn-danger ml-2 text-white" id="rejectBtn" >Reject</button>
+            </div>
+            
+            <!-- Modal Footer -->
+       
+        </div>
+    </div>
+  </div>
+  

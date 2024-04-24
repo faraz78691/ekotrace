@@ -411,5 +411,8 @@ export class DashboardService {
     public wasteTypeEmission(admininfo) {
         return this.http.post(this.apiURL + '/dashboardWasteEmission', admininfo);
     };
+    public WasteUpDownwiseEmssion(admininfo) {
+        return this.http.post(this.apiURL + '/dashboardWasteUpDownwiseEmssion', admininfo);
+    };
 
 }

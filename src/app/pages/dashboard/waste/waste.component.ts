@@ -25,6 +25,7 @@ export class WasteComponent {
   public areachart: Partial<ChartAreaOptions>;
   public areaBusinesschart: Partial<ChartAreaOptions>;
   public donotOptions1: Partial<ChartOptions2>;
+  public upDowndonotOptions1: Partial<ChartOptions2>;
   public donotOptions2: Partial<ChartOptions2>;
   public pieChart: Partial<ChartOptions2>;
   public groupChart: Partial<Chart3Options>;
@@ -56,9 +57,12 @@ export class WasteComponent {
   UpWaste:string;
   downWaste:string;
   hazardLabel:any[]= [];
+  upDownLabel:any[]= [];
   hazardSeries:any[]= [];
+  upDownSeries:any[]= [];
   totaltype:any
-  hazardTotal:any
+  hazardTotal:any;
+
 
   constructor(private route: ActivatedRoute,
     private facilityService: FacilityService,
@@ -210,16 +214,23 @@ export class WasteComponent {
         return of(null); // Return null or default value in case of error
       })
     );
+    const getUpDownDonuts$ = this.dashboardService.WasteUpDownwiseEmssion(formData.toString()).pipe(
+      catchError(error => {
+        console.error('Error occurred in topWiseEmission API call:', error);
+        return of(null); // Return null or default value in case of error
+      })
+    );
 
 
     // Combine both observables using combineLatest and return the combined observable
    this.combinedSubscription =  combineLatest([
       scopeWiseEmission$,
       topWiseEmission$,
-      getScopeSDonuts$
+      getScopeSDonuts$,
+      getUpDownDonuts$
  
-    ]).subscribe((results: [any, any, any]) => {
-      const [scopeWiseResult, topWiseResult, getALLEmisions] = results;
+    ]).subscribe((results: [any, any, any,any]) => {
+      const [scopeWiseResult, topWiseResult, getALLEmisions,getUpDownDonuts] = results;
       // Process the results of both API calls here
       if (scopeWiseResult) {
         this.UpWaste = scopeWiseResult.waste_disposed
@@ -408,6 +419,48 @@ export class WasteComponent {
         //     }
         //   ]
         // };
+      }
+      if(getUpDownDonuts){
+
+        this.upDownSeries = getUpDownDonuts.series[0].data;
+        this.upDownLabel = getUpDownDonuts.hazardousmonth;
+   
+   this.upDowndonotOptions1 = {
+          series: this.upDownSeries,
+          chart: {
+            width: "100%",
+            height:350,
+            type: "donut"
+          },
+          dataLabels: {
+            enabled: true
+          },
+          // fill: {
+          //   type: "gradient"
+          // },
+
+          legend: {
+            position: "bottom",
+            fontSize: '15px',
+            floating: false,
+            horizontalAlign: 'left',
+          },
+          labels: this.upDownLabel,
+          colors: ['#F3722C', '#0068F2', '#F8961E'],
+          responsive: [
+            {
+              breakpoint: 480,
+              options: {
+                chart: {
+                  width: 200
+                },
+                legend: {
+                  position: "bottom"
+                }
+              }
+            }
+          ]
+        };
       }
 
     });

@@ -40,7 +40,7 @@
 }
 
 .font-pera {
-  font-size: 12px;
+  font-size: 16px;
   padding-top: 13px;
   justify-content: center;
 
@@ -188,3 +188,20 @@
 .ct_custom_drop_white .p-dropdown.p-component {
   background-color: #fff !important;
 }   
+
+.ct_modal_center_120{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: auto !important;
+}
+.ct_modal_main_div140 button#closePopup {
+  background-color: #eee;
+  padding: 0px;
+  width: 30px;
+  height: 30px;
+  border-radius: 5px;
+  margin-top: -6px;
+  margin-right: -6px;
+}
