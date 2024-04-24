@@ -624,7 +624,7 @@
                             <div class="trackingFooter" *ngIf="categoryId ==8">
                                 <div class="row p-2">
 
-                                    <div class="col-md-5">
+                                    <div class="col-md-12">
                                         <div class="mb-4 mt-4">
                                             <div>
                                                 <label class="mb-3">Download Template</label>
@@ -633,15 +633,19 @@
                                                         download="">Click here to
                                                         download template</a>
                                                 </p> -->
-                                                <div>
-                                                    <p-dropdown class="ct_select_op_input" ngModel
+                                                <div class="row">
+                                                    <div class="col-md-7">
+                                                        <p-dropdown class="ct_select_op_input" ngModel
                                                         placeholder="Select a template" [options]="goodsTemplates"
                                                         optionLabel="template" optionValue="template" name="template"
                                                         [(ngModel)]="selectedtemplate">
                                                     </p-dropdown>
+                                                    </div>
+                                                    <div class="col-md-5">
                                                     <a class="trackingsubmitb d-block" href="assets/template.xlsx"
                                                         download="">Click here to
                                                         download template</a>
+                                                        </div>
 
                                                 </div>
 
