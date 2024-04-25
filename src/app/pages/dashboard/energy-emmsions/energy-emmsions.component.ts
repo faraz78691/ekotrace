@@ -121,7 +121,8 @@ export class EnergyEmmsionsComponent {
   groundTotal: any;
   flightTotal: any;
   flightTypeTotal: any
-  airTotal: any
+  airTotal: any;
+  activityTotal: any;
 
   constructor(private route: ActivatedRoute,
     private facilityService: FacilityService,
@@ -167,41 +168,41 @@ export class EnergyEmmsionsComponent {
       ]
     };
 
-    this.donotOptions2 = {
-      series: this.seriesScopeDonut2,
-      chart: {
-        width: "100%",
-        height: 320,
-        type: "donut"
-      },
-      dataLabels: {
-        enabled: true
-      },
-      // fill: {
-      //   type: "gradient"
-      // },
-      legend: {
-        position: "bottom",
-        fontSize: '15px',
-        floating: false,
-        horizontalAlign: 'left',
-      },
-      colors: ['#F3722C', '#0068F2', '#F8961E', '#ACE1AF', '#7BAFD4', '#B284BE','#98817B'],
-      labels: this.labelScopeDonut2,
-      responsive: [
-        {
-          breakpoint: 480,
-          options: {
-            chart: {
-              width: 200
-            },
-            legend: {
-              position: "bottom"
-            }
-          }
-        }
-      ]
-    };
+    // this.donotOptions2 = {
+    //   series: this.seriesScopeDonut2,
+    //   chart: {
+    //     width: "100%",
+    //     height: 320,
+    //     type: "donut"
+    //   },
+    //   dataLabels: {
+    //     enabled: true
+    //   },
+    //   // fill: {
+    //   //   type: "gradient"
+    //   // },
+    //   legend: {
+    //     position: "bottom",
+    //     fontSize: '15px',
+    //     floating: false,
+    //     horizontalAlign: 'left',
+    //   },
+    //   colors: ['#F3722C', '#0068F2', '#F8961E', '#ACE1AF', '#7BAFD4', '#B284BE','#98817B'],
+    //   labels: this.labelScopeDonut2,
+    //   responsive: [
+    //     {
+    //       breakpoint: 480,
+    //       options: {
+    //         chart: {
+    //           width: 200
+    //         },
+    //         legend: {
+    //           position: "bottom"
+    //         }
+    //       }
+    //     }
+    //   ]
+    // };
 
 
 
@@ -234,8 +235,8 @@ export class EnergyEmmsionsComponent {
         this.selectedFacility = this.dashboardData[0].ID;
         this.emssionByTravel(this.selectedFacility);
         this.totalEmissionByMonth(this.selectedFacility)
-        this.emssionByTypeANDClass(this.selectedFacility)
         this.BygroundTravel(this.selectedFacility)
+        this.emssionByActivity(this.selectedFacility)
 
       }
 
@@ -424,63 +425,7 @@ export class EnergyEmmsionsComponent {
     });
   };
 
-  emssionByTypeANDClass(facility) {
-    console.log(this.selectedFacility);
-    let tenantId = this.loginInfo.tenantID;
-    const formData = new URLSearchParams();
-    // formData.set('year', this.year.getFullYear().toString());
-    formData.set('year', this.year.getFullYear().toString());
-    formData.set('facilities', facility);
-    this.dashboardService.businessdashboardemssionByAir(formData.toString()).subscribe((result: any) => {
-    
 
-      this.businessType = result.flight_type_series;
-      this.businessClass = result.flight_class_series;
-      this.labelScopeDonut1 = result.flight_type;
-      this.labelScopeDonut2 = result.flight_class;
-      this.flightTotal = result.totalflight_class;
-      this.flightTypeTotal = result.totalflight_type;
-
-      this.donotOptions2 = {
-        series: this.businessType,
-        chart: {
-          width: "100%",
-          height: 350,
-          type: "donut"
-        },
-        dataLabels: {
-          enabled: true
-        },
-        fill: {
-          type: "gradient"
-        },
-        legend: {
-          position: "bottom",
-          fontSize: '15px',
-          floating: false,
-          horizontalAlign: 'left',
-        },
-        colors: ['#246377', '#009087', '#002828', '#F9C74F'],
-        labels: this.labelScopeDonut1,
-        responsive: [
-          {
-            breakpoint: 480,
-            options: {
-              chart: {
-                width: 300
-              },
-              legend: {
-                position: "bottom"
-              }
-            }
-          }
-        ]
-      };
-
-
-
-    });
-  };
 
   BygroundTravel(facility) {
     console.log(this.selectedFacility);
@@ -535,13 +480,74 @@ export class EnergyEmmsionsComponent {
     });
   };
 
+  emssionByActivity(facility) {
+    console.log(this.selectedFacility);
+    let tenantId = this.loginInfo.tenantID;
+    const formData = new URLSearchParams();
+    console.log(this.year);
+    // formData.set('year', this.year.getFullYear().toString());
+    formData.set('year', this.year.getFullYear().toString());
+    formData.set('facilities', facility);
+    this.dashboardService.GEByActivity(formData.toString()).subscribe((result: any) => {
+      console.log(result);
+
+      this.seriesScopeDonut2 = result.energyinuse;
+      this.labelScopeDonut2 = result.series;
+      this.activityTotal = result.totalEmssion;
+      // this.airTotal = result.totalEmssion;
+
+
+      this.donotOptions2 = {
+        series: this.seriesScopeDonut2,
+        chart: {
+          width: "100%",
+          height: 350,
+          type: "donut"
+        },
+        dataLabels: {
+          enabled: true
+        },
+        fill: {
+          type: "gradient"
+        },
+        legend: {
+          position: "bottom",
+          fontSize: '15px',
+          floating: false,
+          horizontalAlign: 'left',
+        },
+        colors: ['#246377', '#009087', '#002828', '#F9C74F'],
+        labels: this.labelScopeDonut2,
+        responsive: [
+          {
+            breakpoint: 400,
+            options: {
+              chart: {
+                width: 250
+              },
+              legend: {
+                position: "bottom"
+              }
+            }
+          }
+        ]
+      };
+
+
+
+
+
+
+    });
+  };
+
   onFacilityChange(event: any) {
     // console.log(event.target.value)
     // console.log(this.selectedFacility);
     this.emssionByTravel(this.selectedFacility)
     this.totalEmissionByMonth(this.selectedFacility)
-    this.emssionByTypeANDClass(this.selectedFacility)
     this.BygroundTravel(this.selectedFacility)
+    this.emssionByActivity(this.selectedFacility)
   };
 }
 

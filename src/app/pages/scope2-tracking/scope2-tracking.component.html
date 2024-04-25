@@ -117,7 +117,7 @@
                                                                             <div clickable (click)="
                                                                                 SubCatData(
                                                                                     child,
-                                                                                    head.manageDataPointCategorySeedID
+                                                                                    head.manageDataPointCategorySeedID, head.catName
                                                                                 )
                                                                             " class="col pointer d-flex "
                                                                                 pTooltip="{{ child.subCatName }}"
@@ -193,7 +193,7 @@
                                                                             clickable (click)="
                                                                                 SubCatData(
                                                                                     child,
-                                                                                    head.manageDataPointCategorySeedID
+                                                                                    head.manageDataPointCategorySeedID, head.catName
                                                                                 )
                                                                             " class="col pointer d-flex "
                                                                             pTooltip="{{ child.subCatName }}"
@@ -280,16 +280,6 @@
                                 {{ SubCatAllData.subCatName }} 
                                 
                             </p>
-                            <div class="ct_how_use_tooltip_main">
-                                <i class="fa-solid fa-circle-question"></i>
-                                <div  class="ct_how_use_tooltip_cnt" [class.ct_active] ="isHowtoUse"  (click)= "checkVisited()">
-                                    <p>
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
                             <p *ngIf="categoryId ==24" class="mb-2 mt-3 ml-4 text-dark">
                                 Flight
                             </p>
@@ -299,6 +289,17 @@
                             <p *ngIf="categoryId ==26" class="mb-2 mt-3 ml-4 text-dark">
                                 Other modes
                             </p>
+                            <div class="ct_how_use_tooltip_main" >
+                                <i class="fa-solid fa-circle-question"></i>
+                                <div  class="ct_how_use_tooltip_cnt" [class.ct_active] ="isHowtoUse"  (click)= "checkVisited()">
+                                    <p>
+                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                         
                         </div>
                         <form #dataEntryForm="ngForm" (ngSubmit)="EntrySave(dataEntryForm)">
 
@@ -469,7 +470,7 @@
                                                 tooltipPosition="top" for="fname">Charging %
                                             </label>
                                             <div class="input-group">
-                                                <input id="chargingInput" class="form-control Dashboard-tab text-white"
+                                                <input id="chargingInput" class="form-control Dashboard-tab text-white" placeholder="Enter value in %"
                                                     required ngModel name="chargingPerc" #chargingPerc="ngModel"
                                                     [(ngModel)]="VehicleDE.chargingPerc" />
                                                 <div class="input-group-append">
@@ -502,14 +503,16 @@
                                             [ngClass]="typeEV == true ? 'col-4': typeBusCoach == true ? 'col-4': 'col-4'">
                                             <label for="fname">Value</label>
                                             <div class="position-relative">
-                                                <input required ngModel name="Value" #Value="ngModel"
+                                                <input required ngModel name="Value" #Value="ngModel" placeholder=""
                                                     [(ngModel)]="VehicleDE.value" Value id="search-input" type="text"
                                                     class="form-control Dashboard-tab text-white" />
                                                 <p-dropdown
+
                                                     class="ct_select_op_input ct_select_op_input ct_position_small_quantity"
                                                     ngModel [options]="units" optionLabel="UnitName"
                                                     optionValue="UnitName" [(ngModel)]="dataEntry.unit" name="unitSet"
                                                     #unitSet="ngModel"></p-dropdown>
+
                                             </div>
                                         </div>
                                     </div>
@@ -642,10 +645,32 @@
 
 
                             <!-- scope 3 categores stats from here -->
+                            <div class="trackingFooter" *ngIf="categoryId ==9">
+                                <div class="row p-2">
+
+                                    <div class="col-md-12">
+                                        <div class="mb-4 mt-4">
+                                            <div>
+                                                <p>Emissions associated with extraction, refining and transportation of the raw fuel sources to an organisation's site (or asset) prior to their combustion.</p>
+                                                <!-- <p>
+                                                    <a class="trackingsubmitb" href="assets/template.xlsx"
+                                                        download="">Click here to
+                                                        download template</a>
+                                                </p> -->
+                                             
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                              
+
+                              
+                            </div>
                             <div class="trackingFooter" *ngIf="categoryId ==8">
                                 <div class="row p-2">
 
-                                    <div class="col-md-5">
+                                    <div class="col-md-12">
                                         <div class="mb-4 mt-4">
                                             <div>
                                                 <label class="mb-3">Download Template</label>
@@ -654,15 +679,20 @@
                                                         download="">Click here to
                                                         download template</a>
                                                 </p> -->
-                                                <div>
-                                                    <p-dropdown class="ct_select_op_input  ct_chev_icon_dark230 " ngModel
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <p-dropdown class="ct_select_op_input  ct_chev_icon_dark230 " ngModel
                                                         placeholder="Select a template" [options]="goodsTemplates"
                                                         optionLabel="template" optionValue="template" name="template"
                                                         [(ngModel)]="selectedtemplate">
                                                     </p-dropdown>
-                                                    <a class="trackingsubmitb d-block mt-3" href="assets/template.xlsx"
+                                                    </div>
+                                                    <div class="col-md-5">
+                                                  
+                                                    <a class="trackingsubmitb d-block mt-0" style="width: fit-content; height: 36.13px;  padding-block: 5px;" href="assets/template.xlsx"
                                                         download="">Click here to
                                                         download template</a>
+                                                        </div>
 
                                                 </div>
 
@@ -3407,14 +3437,14 @@
 
                     <!-- dhdfjhfjfgk -->
                     <p-tabPanel header="Status">
-                        <div class="row text-white border-bottom">
+                        <div class="row  border-bottom">
                             <p class="mb-2 mt-3 ml-4">
-                                {{ SubCatAllData.subCatName }}
+                                {{ categoryName }}
                             </p>
                         </div>
 
-                        <div class="ElectricityTable mt-4">
-                            <p-table styleClass="statusTable ct_status_table_main" #dt1 [value]="dataEntriesPending"
+                        <div class="ElectricityTable mt-0 ct_overflow_hidden_data_table_500" style="height: auto !important;">
+                            <p-table [paginator]="true" [rowHover]="true" style="overflow-y: unset;" [rows]="10" styleClass="statusTable ct_status_tble_230_space ct_status_table_main" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" #dt1 [value]="dataEntriesPending"
                                 dataKey="id">
                                 <ng-template pTemplate="header">
                                     <tr>
@@ -3423,7 +3453,7 @@
                                             Type of purchase
                                             <p-sortIcon field="catName"></p-sortIcon>
                                         </th>
-                                        <th pSortableColumn="catName">
+                                        <th pSortableColumn="catName" *ngIf="categoryId != 24 && categoryId != 25 && categoryId != 26">
                                             Category
                                             <p-sortIcon field="catName"></p-sortIcon>
                                         </th>
@@ -3557,6 +3587,62 @@
                                             D.P
                                             <p-sortIcon field="subcatName"></p-sortIcon>
                                         </th>
+                                        <th pSortableColumn="flightMode" *ngIf="categoryId == 24">
+                                            Flight mode
+                                            <p-sortIcon field="flightMode"></p-sortIcon>
+                                        </th>
+                                        <th pSortableColumn=" FlightType" *ngIf="categoryId == 24">
+                                            Flight Type
+                                            <p-sortIcon field=" FlightType"></p-sortIcon>
+                                        </th>
+                                        <th pSortableColumn="Class" *ngIf="categoryId == 24">
+                                            Flight Class
+                                            <p-sortIcon field="Class"></p-sortIcon>
+                                        </th>
+                                        <th pSortableColumn="Nooftrips" *ngIf="categoryId == 24">
+                                          No of Trips
+                                            <p-sortIcon field="Nooftrips"></p-sortIcon>
+                                        </th>
+                                        <th pSortableColumn="Distance" *ngIf="categoryId == 24">
+                                          Distance Travelled
+                                            <p-sortIcon field="Distance"></p-sortIcon>
+                                        </th>
+                                        <th pSortableColumn="Countryofstay" *ngIf="categoryId == 25">
+                                            Country of Stay
+                                            <p-sortIcon field="Countryofstay"></p-sortIcon>
+                                        </th>
+                        
+                                        <th pSortableColumn="typeHotel" *ngIf="categoryId == 25">
+                                            Type of Sotel
+                                            <p-sortIcon field="typeHotel"></p-sortIcon>
+                                        </th>
+                                        <th pSortableColumn="no_of_occupied_rooms" *ngIf="categoryId == 25">
+                                            Occupied Rooms
+                                            <p-sortIcon field="no_of_occupied_rooms"></p-sortIcon>
+                                        </th>
+                                        <th pSortableColumn="no_of_nights_per_room" *ngIf="categoryId == 25">
+                                            Nights per Room
+                                            <p-sortIcon field="no_of_nights_per_room"></p-sortIcon>
+                                        </th>
+
+                                        <th pSortableColumn="no_of_nights_per_room" *ngIf="categoryId == 26">
+                                            Mode of Trasport
+                                            <p-sortIcon field="no_of_nights_per_room"></p-sortIcon>
+                                        </th>
+                                        <th pSortableColumn="no_of_nights_per_room" *ngIf="categoryId == 26">
+                                            No. of Passengers
+                                            <p-sortIcon field="no_of_nights_per_room"></p-sortIcon>
+                                        </th>
+                                        <th pSortableColumn="distanceT" *ngIf="categoryId == 26">
+                                            Distance Travlled
+                                            <p-sortIcon field="distanceT"></p-sortIcon>
+                                        </th>
+                                        <th pSortableColumn="no_of_trips" *ngIf="categoryId == 26">
+                                            No of Trips
+                                            <p-sortIcon field="no_of_trips"></p-sortIcon>
+                                        </th>
+                                       
+                                      
                                         <th pSortableColumn="year">
                                             <p-sortIcon field="year"></p-sortIcon>
                                             Year
@@ -3605,39 +3691,28 @@
                                             pTooltip="Quantity Of CO2 makeup" tooltipPosition="top">
                                             CO2 MakeUp <p-sortIcon field="quantityOfCO2makeup"></p-sortIcon>
                                         </th>
-                                        <th pSortableColumn="unit">
+                                        <th *ngIf="categoryId==6" pSortableColumn="noOfVehicles" pTooltip="Vehicle Type"
+                                        tooltipPosition="top">
+                                        Type <p-sortIcon field="noOfVehicles"></p-sortIcon>
+                                    </th>
+                                    <th *ngIf="categoryId==6" pSortableColumn="noOfVehicles"
+                                        pTooltip="Number Of Vehicles" tooltipPosition="top">
+                                        Vehicles <p-sortIcon field="noOfVehicles"></p-sortIcon>
+                                    </th>
+                                    <th *ngIf="categoryId==6" pSortableColumn="modeOfDE"
+                                        pTooltip="Mode Of data entry" tooltipPosition="top">
+                                        Mode <p-sortIcon field="modeOfDE"></p-sortIcon>
+                                    </th>
+                                    <th *ngIf="categoryId==6" pSortableColumn="amount">
+                                        Value <p-sortIcon field="amount"></p-sortIcon>
+                                    </th>
+                                        <th pSortableColumn="unit" *ngIf="categoryId !=24 && categoryId !=25  && categoryId !=26">
                                             Unit <p-sortIcon field="unit"></p-sortIcon>
                                         </th>
-                                        <!-- <th *ngIf="categoryId==2"  pSortableColumn="cO2LeakagePerUnit"
-                                            pTooltip="CO2 Leakage Per Unit" tooltipPosition="top">
-                                            CO2 Leakage <p-sortIcon field="cO2LeakagePerUnit"></p-sortIcon>
-                                        </th>
-                                        <th *ngIf="categoryId==2"  pSortableColumn="capacity"
-                                            pTooltip="capacity" tooltipPosition="top">
-                                            capacity <p-sortIcon field="capacity"></p-sortIcon>
-                                        </th>
-                                        <th *ngIf="categoryId==2" 
-                                            pSortableColumn="leakagePerOfCapacity" pTooltip="Leakage Percent Of Capacity"
-                                            tooltipPosition="top">
-                                            % <p-sortIcon field="leakagePerOfCapacity"></p-sortIcon>
-                                        </th> -->
+                                      
 
 
-                                        <th *ngIf="categoryId==6" pSortableColumn="noOfVehicles" pTooltip="Vehicle Type"
-                                            tooltipPosition="top">
-                                            Type <p-sortIcon field="noOfVehicles"></p-sortIcon>
-                                        </th>
-                                        <th *ngIf="categoryId==6" pSortableColumn="noOfVehicles"
-                                            pTooltip="Number Of Vehicles" tooltipPosition="top">
-                                            Vehicles <p-sortIcon field="noOfVehicles"></p-sortIcon>
-                                        </th>
-                                        <th *ngIf="categoryId==6" pSortableColumn="modeOfDE"
-                                            pTooltip="Mode Of data entry" tooltipPosition="top">
-                                            Mode <p-sortIcon field="modeOfDE"></p-sortIcon>
-                                        </th>
-                                        <th *ngIf="categoryId==6" pSortableColumn="amount">
-                                            Value <p-sortIcon field="amount"></p-sortIcon>
-                                        </th>
+                                      
                                         <th *ngIf="categoryId==5" pSortableColumn="sourceName">
                                             Source <p-sortIcon field="sourceName"></p-sortIcon>
                                         </th>
@@ -3669,7 +3744,7 @@
 
                                         <td *ngIf="categoryId == 8"> {{de.typeofpurchase}}</td>
                                         <td
-                                            *ngIf="categoryId != 16 && categoryId !=18 && categoryId !=20 && categoryId !=21   && categoryId !=22 && categoryId !=23">
+                                            *ngIf="categoryId != 24 && categoryId != 16 && categoryId !=18 && categoryId !=20 && categoryId !=21   && categoryId !=22 && categoryId !=23 && categoryId != 25 && categoryId != 26">
                                             {{ de.catName }}</td>
 
                                         <td *ngIf="categoryId == 11 ">{{ de.water_treatment }}</td>
@@ -3677,7 +3752,7 @@
                                         <td *ngIf="categoryId == 23 ">{{ de.category }}</td>
                                         <td *ngIf="categoryId == 22 ">{{ de.franchise_type }}</td>
                                         <td *ngIf="categoryId == 22 || categoryId == 23  ">{{ de.sub_category }}</td>
-                                        <td *ngIf="categoryId == 7"> {{de.type}}</td>
+                                        <td *ngIf="categoryId == 7"> {{de.TypeName}}</td>
                                         <td *ngIf="categoryId == 20 ">{{ de.subcategory }}</td>
                                         <td *ngIf="categoryId == 20 ">{{ de.combustion }}</td>
                                         <td *ngIf="categoryId == 20 ">{{ de.composing }}</td>
@@ -3712,7 +3787,7 @@
                                         <td *ngIf="categoryId == 12">{{ de.method }}</td>
                                         <td *ngIf="categoryId == 12">{{ de.waste_type }}</td>
                                         <td
-                                            *ngIf="categoryId != 8 && categoryId != 7 && categoryId != 10 && categoryId != 12 && categoryId != 14 && categoryId != 15 && categoryId != 16 && categoryId != 17 && categoryId != 18 && categoryId != 19 && categoryId != 20 && categoryId !=21 && categoryId !=22 && categoryId !=11 && categoryId !=23">
+                                            *ngIf="categoryId != 8 && categoryId != 7 && categoryId != 10 && categoryId != 12 && categoryId != 14 && categoryId != 15 && categoryId != 16 && categoryId != 17 && categoryId != 18 && categoryId != 19 && categoryId != 20 && categoryId !=21 && categoryId !=22 && categoryId !=11 && categoryId !=23 && categoryId !=24 && categoryId != 25 && categoryId != 26">
                                             {{ de.subcatName }}</td>
                                         <td *ngIf="categoryId == 10 || categoryId == 17">{{ de.vehicle_type }}</td>
                                         <td *ngIf="categoryId == 10 || categoryId == 17">{{ de.sub_category }}</td>
@@ -3721,6 +3796,33 @@
                                         <td *ngIf="categoryId == 10 || categoryId == 17">{{ de.mass_of_product_trans }}
                                         </td>
                                         <td *ngIf="categoryId == 10 || categoryId == 17">{{ de.storage_facility_type }}
+                                        </td>
+                                        <td *ngIf="categoryId == 24">{{ de.flight_calc_mode }}
+                                        </td>
+                                        <td *ngIf="categoryId == 24">{{ de.flight_Type }}
+                                        </td>
+                                        <td *ngIf="categoryId == 24">{{ de.flight_Class }}
+                                        </td>
+                                        <td *ngIf="categoryId == 24">{{ de.no_of_trips }}
+                                        </td>
+                                        <td *ngIf="categoryId == 24">{{ de.distance }}
+                                        </td>
+                                        <td *ngIf="categoryId == 25">{{ de.country_of_stay }}
+                                        </td>
+                                        <td *ngIf="categoryId == 25">{{ de.type_of_hotel }}
+                                        </td>
+                                        <td *ngIf="categoryId == 25">{{ de.no_of_occupied_rooms }}
+                                        </td>
+                                        <td *ngIf="categoryId == 25">{{ de.no_of_nights_per_room }}
+                                        </td>
+
+                                        <td *ngIf="categoryId == 26">{{ de.mode_of_trasport }}
+                                        </td>
+                                        <td *ngIf="categoryId == 26">{{ de.no_of_passengers }}
+                                        </td>
+                                        <td *ngIf="categoryId == 26">{{ de.distance_travelled }}
+                                        </td>
+                                        <td *ngIf="categoryId == 26">{{ de.no_of_trips }}
                                         </td>
                                         <td>
                                             {{ de.year }}
@@ -3763,43 +3865,21 @@
                                                 <ng-template pTemplate="output">
                                                     {{ de.quantityOfCO2makeup }}
                                                 </ng-template>{{ de.quantityOfCO2makeup }}</p-cellEditor></td>
-                                        <td>{{ de.unit }}</td>
-                                        <td *ngIf="categoryId==2"><p-cellEditor><ng-template pTemplate="input">
-                                                    <input name="refAmount_{{ ri }}" id="{{ ri }}" pInputText
-                                                        type="text" [(ngModel)]="de.refAmount" ngModel
-                                                        #refAmount="ngModel">
-                                                </ng-template>
-                                                <ng-template pTemplate="output">
-                                                    {{ de.refAmount }}
-                                                </ng-template>{{ de.refAmount }}</p-cellEditor></td>
-                                        <!-- <td *ngIf="categoryId==2"><p-cellEditor><ng-template pTemplate="input">
-                                                    <input name="cO2LeakagePerUnit_{{ ri }}" id="{{ ri }}" pInputText
-                                                        type="text" [(ngModel)]="de.cO2LeakagePerUnit" ngModel
-                                                        #cO2LeakagePerUnit="ngModel">
-                                                </ng-template>
-                                                <ng-template pTemplate="output">
-                                                    {{ de.cO2LeakagePerUnit }}
-                                                </ng-template>{{ de.cO2LeakagePerUnit }}</p-cellEditor></td>
-                                        <td *ngIf="categoryId==2"><p-cellEditor><ng-template pTemplate="input">
-                                                    <input name="capacity_{{ ri }}" id="{{ ri }}" pInputText type="text"
-                                                        [(ngModel)]="de.capacity" ngModel #capacity="ngModel">
-                                                </ng-template>
-                                                <ng-template pTemplate="output">
-                                                    {{ de.capacity }}
-                                                </ng-template>{{ de.capacity }}</p-cellEditor></td>
-                                        <td *ngIf="categoryId==2"><p-cellEditor><ng-template pTemplate="input">
-                                                    <input name="leakagePerOfCapacity_{{ ri }}" id="{{ ri }}" pInputText
-                                                        type="text" [(ngModel)]="de.leakagePerOfCapacity" ngModel
-                                                        #leakagePerOfCapacity="ngModel">
-                                                </ng-template>
-                                                <ng-template pTemplate="output">
-                                                    {{ de.leakagePerOfCapacity }}
-                                                </ng-template>{{ de.leakagePerOfCapacity }}</p-cellEditor></td> -->
+                                                <td *ngIf="categoryId==2"><p-cellEditor><ng-template pTemplate="input">
+                                                            <input name="refAmount_{{ ri }}" id="{{ ri }}" pInputText
+                                                                type="text" [(ngModel)]="de.refAmount" ngModel
+                                                                #refAmount="ngModel">
+                                                        </ng-template>
+                                                        <ng-template pTemplate="output">
+                                                            {{ de.refAmount }}
+                                                        </ng-template>{{ de.refAmount }}</p-cellEditor></td>
+                                                        <td *ngIf="categoryId==6">{{ de.vehicleTypeID }}</td>
+                                                        <td *ngIf="categoryId==6">{{ de.NoOfVehicles }}</td>
+                                                        <td *ngIf="categoryId==6">{{ de.ModeofDEID }}</td>
+                                                        <td *ngIf="categoryId==6">{{ de.Value }}</td>
+                                        <td *ngIf="categoryId !=24 && categoryId !=25  && categoryId !=26">{{ de.unit }}</td>
+                                       
 
-                                        <td *ngIf="categoryId==6">{{ de.vehicleTypeID }}</td>
-                                        <td *ngIf="categoryId==6">{{ de.NoOfVehicles }}</td>
-                                        <td *ngIf="categoryId==6">{{ de.ModeofDEID }}</td>
-                                        <td *ngIf="categoryId==6">{{ de.Value }}</td>
                                         <td *ngIf="categoryId==5">{{ de.SourceName }}</td>
                                         <td>{{ de.status }}</td>
                                         <td>{{ de.emission | number :'1.2-2' }}</td>

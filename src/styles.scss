@@ -2071,3 +2071,44 @@ input.ct_change_choose_file_input12::file-selector-button {
     border-radius: 2px;
     right: 5px;
 }
+
+.ct_status_tble_230_space.p-datatable  tr > th {
+    padding-block: 6px !important;
+   
+  }
+ .ct_status_tble_230_space.p-datatable .p-datatable-thead > tr > th, .p-datatable .p-datatable-thead > tr > th{
+    white-space: nowrap !important;
+ }
+  .ct_status_tble_230_space.p-datatable  tr > td{
+    padding-block: 10px !important;
+    white-space: nowrap !important;
+    
+  }
+
+  .ct_status_tble_230_space button.p-ripple.p-element.p-paginator-page.p-paginator-element {
+    min-width: 30px !important;
+    height: 30px !important;
+    width: 30px !important;
+  }
+  .ct_overflow_hidden_data_table_500 .p-datatable-wrapper {
+    overflow-y: unset !important;
+  }
+
+  .ct_overflow_hidden_data_table_500 .ct_status_table_main::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  .ct_overflow_hidden_data_table_500 .ct_status_table_main::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+   
+  /* Handle */
+  .ct_overflow_hidden_data_table_500 .ct_status_table_main::-webkit-scrollbar-thumb {
+    background: #888; 
+  }
+  
+  /* Handle on hover */
+  .ct_overflow_hidden_data_table_500 .ct_status_table_main::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }

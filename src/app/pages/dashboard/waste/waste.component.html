@@ -1,23 +1,24 @@
 <!-- <p>water-usage works!</p> -->
 <div class="row">
     <div class="col-xl-9 mb-4">
-       
+
     </div>
     <div class="col-xl-3 mb-4 ct_mt_top_68">
-       
+
         <div class="ct_right_sidebar">
             <div class="mb-4">
                 <div>
-                    <select class="ct_all_vender_select" *ngIf="dashboardFacilities$ | async as dashboardData" [(ngModel)]="selectedFacility" (change)="onFacilityChange($event)"   >
-                        <option value="" *ngFor="let items of dashboardData.categories" [value]="items.ID">{{items.AssestName}}</option>
-        
+                    <select class="ct_all_vender_select" *ngIf="dashboardFacilities$ | async as dashboardData"
+                        [(ngModel)]="selectedFacility" (change)="onFacilityChange($event)">
+                        <option value="" *ngFor="let items of dashboardData.categories" [value]="items.ID">
+                            {{items.AssestName}}</option>
+
                     </select>
                     <div class="mt-4">
                         <p class="mb-1 ct_fw_500 ">Financial Year</p>
-                        <p-calendar class="w-100 ct_input_dark_text_145" [(ngModel)]="year" ngModel name="year" year   (ngModelChange)="onFacilityChange($event)"
-                         view="year" dateFormat="yy"   inputId="yearpicker"
-                         styleClass="pcalender"
-                        [showIcon]="true"></p-calendar>
+                        <p-calendar class="w-100 ct_input_dark_text_145" [(ngModel)]="year" ngModel name="year" year
+                            (ngModelChange)="onFacilityChange($event)" view="year" dateFormat="yy" inputId="yearpicker"
+                            styleClass="pcalender" [showIcon]="true"></p-calendar>
                         <!-- <select class="ct_period_select w-100">
                             <option value="">2023-2024</option>
                             <option value="">2023-2024</option>
@@ -25,8 +26,8 @@
                     </div>
                 </div>
             </div>
-            </div>
-            </div>
+        </div>
+    </div>
 </div>
 
 <div class="row">
@@ -34,30 +35,30 @@
         <div class="row">
 
             <div class="col-xl-3 mb-4">
-              <div class="ct_dark_grey_bg1" >
-                <h4>Waste disposed  (tonnes)</h4>
-                <div class="row pt-3">
-                    <div class="col-lg-6 mb-2">
-                        <h5>{{UpWaste}}</h5>
+                <div class="ct_dark_grey_bg1">
+                    <h4>Waste disposed (tonnes)</h4>
+                    <div class="row pt-3">
+                        <div class="col-lg-6 mb-2">
+                            <h5>{{UpWaste}}</h5>
+                        </div>
+                        <div class="col-lg-6 mb-2">
+                            <h5><i class="fa-solid fa-caret-up ct_green_up"></i> 23%</h5>
+                        </div>
+
                     </div>
-                    <div class="col-lg-6 mb-2">
-                        <h5><i class="fa-solid fa-caret-up ct_green_up" ></i> 23%</h5>
-                    </div>
-                    
                 </div>
-              </div>
-              <div class="ct_dark_grey_bg1 " >
-                <h4>Emissions from Waste </h4>
-                <div class="row  pt-3">
-                    <div class="col-lg-6 mb-2">
-                        <h5>{{downWaste}}</h5>
+                <div class="ct_dark_grey_bg1 ">
+                    <h4>Emissions from Waste </h4>
+                    <div class="row  pt-3">
+                        <div class="col-lg-6 mb-2">
+                            <h5>{{downWaste}}</h5>
+                        </div>
+                        <div class="col-lg-6 mb-2">
+                            <h5><i class="fa-solid fa-caret-up ct_green_up"></i> 1%</h5>
+                        </div>
+
                     </div>
-                    <div class="col-lg-6 mb-2">
-                        <h5><i class="fa-solid fa-caret-up ct_green_up" ></i> 1%</h5>
-                    </div>
-                    
                 </div>
-              </div>
             </div>
             <!-- <div class="col-xxl-3 mb-4">
                 <div class="ct_grey_border_1 ">
@@ -85,13 +86,81 @@
                 <div class="ct_grey_border_1">
                     <div class="ct_d_flex_1 ct_grey_brdr_btm1 pb-3 mb-3">
                         <div>
-                            <h5 class="ct_font_16">Waste types</h5>
+                            <h5 class="ct_font_16"><strong>Waste types</strong></h5>
                             <h3><strong>{{totaltype | number:'1.2-2'}}</strong></h3>
                             <p class="mb-0">tCO2e</p>
                         </div>
-                       
+
                     </div>
-                    <!-- <div id="ct_cost_center" *ngIf="donotOptions2">
+                 
+
+
+                    <div class="ct_emission_vender_list">
+                        <div class="d-flex  ct_emission_vender_list_item_12 align-items-center gap-2 justify-content-between "
+                            *ngFor="let vendorItems of topFIveE">
+                            <div>
+                                <h5 class="mb-1">{{vendorItems.wasteName}}</h5>
+
+                            </div>
+                            <div>
+                                <p class="mb-0 d-flex align-items-center">{{vendorItems.emission}}&nbsp;
+                                    {{vendorItems.unit}} </p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-xl-6 mb-4">
+                <div class="ct_grey_border_1 ">
+                    <div class="ct_d_flex_1 ct_grey_brdr_btm1 pb-3 mb-3">
+                        <div>
+                            <h5 class="ct_font_16"><strong>Hazardous & Non Hazardous waste</strong></h5>
+                            <!-- <h3><strong>{{hazardTotal | number:'1.2-2'}}</strong></h3> -->
+                            <p class="mb-0">tCO2e</p>
+                        </div>
+
+                    </div>
+                    <div id="ct_emission_by_month" *ngIf="groupChart">
+                        <apx-chart [series]="groupChart.series" [chart]="groupChart.chart"
+                            [dataLabels]="groupChart.dataLabels" [plotOptions]="groupChart.plotOptions"
+                            [yaxis]="groupChart.yaxis" [xaxis]="groupChart.xaxis"
+                            [colors]="groupChart.colors"></apx-chart>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-4 mb-4">
+                <div class="ct_grey_border_1 ">
+                    <div class="ct_d_flex_1 ct_grey_brdr_btm1 pb-3 mb-3">
+                        <div>
+                            <h5 class="ct_font_16"><strong>Treatment methods</strong></h5>
+                            <!-- <h3><strong>{{hazardTotal | number:'1.2-2'}}</strong></h3> -->
+                            <p class="mb-0">tCO2e</p>
+                        </div>
+
+                    </div>
+                    <div id="ct_business_divisions">
+                        <div id="ct_cost_center" *ngIf="donotOptions1">
+                            <apx-chart [series]="donotOptions1.series" [chart]="donotOptions1.chart"
+                                [labels]="donotOptions1.labels" [legend]="donotOptions1.legend"
+                                [responsive]="donotOptions1.responsive"></apx-chart>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4  mb-4">
+                <div class="ct_grey_border_1">
+                    <div class="ct_d_flex_1 ct_grey_brdr_btm1 pb-3 mb-3">
+                        <div>
+                            <h5 class="ct_font_16"><strong>Waste Diversion Breakdown</strong></h5>
+                            <p class="mb-0">tCO2e</p>
+                        </div>
+
+                    </div>
+                    <div id="ct_cost_center" *ngIf="donotOptions2">
                         <apx-chart
                         [series]="donotOptions2.series"
                         [chart]="donotOptions2.chart"
@@ -100,118 +169,27 @@
                         [responsive]="donotOptions2.responsive"
                         [colors]="donotOptions2.colors"
                       ></apx-chart>
-                    </div> -->
-          
-                     
-                        <div class="ct_emission_vender_list">
-                            <div class="d-flex  ct_emission_vender_list_item_12 align-items-center gap-2 justify-content-between " *ngFor="let vendorItems of topFIveE">
-                                <div>
-                                    <h5 class="mb-1">{{vendorItems.wasteName}}</h5>
-                                    
-                                </div>
-                                <div>
-                                    <p class="mb-0 d-flex align-items-center">{{vendorItems.emission}}&nbsp; {{vendorItems.unit}} </p>
-                                </div>
-                            </div>
-                         
-                        </div>
-                  
+                    </div>
                 </div>
             </div>
-            <div class="col-xl-6 mb-4">
-                <div class="ct_grey_border_1 ">
+            <div class="col-xl-4  mb-4">
+                <div class="ct_grey_border_1">
                     <div class="ct_d_flex_1 ct_grey_brdr_btm1 pb-3 mb-3">
                         <div>
-                            <h5 class="ct_font_16">Hazardous & Non Hazardous waste</h5>
-                            <h3><strong>{{hazardTotal | number:'1.2-2'}}</strong></h3>
+                            <h5 class="ct_font_16"><strong>Waste Emissions by Activity</strong></h5>
                             <p class="mb-0">tCO2e</p>
                         </div>
-                        
+
                     </div>
-                    <div id="ct_emission_by_month" *ngIf="groupChart">
-                        <apx-chart
-            [series]="groupChart.series"
-            [chart]="groupChart.chart"
-            [dataLabels]="groupChart.dataLabels"
-            [plotOptions]="groupChart.plotOptions"
-            [yaxis]="groupChart.yaxis"
-            [xaxis]="groupChart.xaxis"
-          
-            [colors]="groupChart.colors"
-          
-          ></apx-chart>
+                    <div id="ct_net_zeo_donut" *ngIf="upDowndonotOptions1">
+                        <apx-chart [series]="upDowndonotOptions1.series" [chart]="upDowndonotOptions1.chart"
+                            [labels]="upDowndonotOptions1.labels" [colors]="upDowndonotOptions1.colors"
+                            [legend]="upDowndonotOptions1.legend"
+                            [responsive]="upDowndonotOptions1.responsive"></apx-chart>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-           <div class="col-xl-6 mb-4">
-             <div class="ct_grey_border_1 ">
-                <div class="ct_d_flex_1 ct_grey_brdr_btm1 pb-3 mb-3">
-                    <div>
-                        <h5 class="ct_font_16"><strong>Treatment methods</strong></h5>
-                        <h3><strong>{{hazardTotal | number:'1.2-2'}}</strong></h3>
-                        <p class="mb-0">tCO2e</p>
-                    </div>
-                  
-                </div>
-                <div id="ct_business_divisions"> 
-                 <div id="ct_cost_center" *ngIf="donotOptions1">
-                        <apx-chart
-                        [series]="donotOptions1.series"
-                        [chart]="donotOptions1.chart"
-                        [labels]="donotOptions1.labels"
-                        [legend]="donotOptions1.legend"
-                        [responsive]="donotOptions1.responsive"
-                      ></apx-chart>
-                    </div>
-                </div> 
-            </div> 
-           </div>
-           <div class="col-xl-3  mb-4">
-            <div class="ct_grey_border_1">
-                <div class="ct_d_flex_1 ct_grey_brdr_btm1 pb-3 mb-3">
-                    <div>
-                        <h5 class="ct_font_16"><strong>Waste Diversion Breakdown</strong></h5>
-                        <h3><strong>2,563</strong></h3>
-                        <p class="mb-0">tCO2e</p>
-                    </div>
-                   
-                </div>
-                <div id="By_employee_location" *ngIf="donotOptions1">
-                    <apx-chart
-                        [series]="donotOptions1.series"
-                        [chart]="donotOptions1.chart"
-                        [labels]="donotOptions1.labels"
-                        [legend]="donotOptions1.legend"
-                        [responsive]="donotOptions1.responsive"
-                      ></apx-chart>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3  mb-4">
-            <div class="ct_grey_border_1">
-                <div class="ct_d_flex_1 ct_grey_brdr_btm1 pb-3 mb-3">
-                    <div>
-                        <h5 class="ct_font_16"><strong>Waste Emissions by Activity</strong></h5>
-                        <h3><strong>2,563</strong></h3>
-                        <p class="mb-0">tCO2e</p>
-                    </div>
-                  
-                </div>
-                <div id="ct_net_zeo_donut" *ngIf="upDowndonotOptions1">
-                    <apx-chart
-                        [series]="upDowndonotOptions1.series"
-                        [chart]="upDowndonotOptions1.chart"
-                        [labels]="upDowndonotOptions1.labels"
-                        [colors]="upDowndonotOptions1.colors"
-                        [legend]="upDowndonotOptions1.legend"
-                        [responsive]="upDowndonotOptions1.responsive"
-                      ></apx-chart>
-                </div>
-            </div>
-        </div>
-        
+
         </div>
     </div>
 

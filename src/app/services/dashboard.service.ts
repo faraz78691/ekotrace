@@ -363,6 +363,9 @@ export class DashboardService {
     public GEByFuelType(admininfo) {
         return this.http.post(this.apiURL + '/dashboardenergyConsumption', admininfo);
     };
+    public GEByActivity(admininfo) {
+        return this.http.post(this.apiURL + '/dashboardenergyConsumptionWellTank', admininfo);
+    };
     public Waterwithdrawnby_source(admininfo) {
         return this.http.post('http://13.200.247.29:4000/dashboardWaterwithdrawnby_source', admininfo);
     };
@@ -413,6 +416,9 @@ export class DashboardService {
     };
     public WasteUpDownwiseEmssion(admininfo) {
         return this.http.post(this.apiURL + '/dashboardWasteUpDownwiseEmssion', admininfo);
+    };
+    public BreakDownEmssion(admininfo) {
+        return this.http.post(this.apiURL + '/dashboardWasteBreakdown', admininfo);
     };
 
 }

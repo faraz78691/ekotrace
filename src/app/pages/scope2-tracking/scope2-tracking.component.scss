@@ -669,6 +669,13 @@ background-color: #fff!important;
 // .ct_calander_input button.p-element.p-ripple.p-datepicker-trigger  svg path {
 //   fill: #fff !important;
 // }
+div#DPRow.active {
+  background-color: #e9ecef !important;
+}
+.ct_status_tble_230_space.p-datatable .p-datatable-tbody > tr > td {
+  padding-block: 10px !important;
+  white-space: nowrap;
+}
 
 
 @media screen and (max-width:991px){

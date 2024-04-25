@@ -71,6 +71,7 @@ export class Scope2TrackingComponent {
     visible: boolean;
     maxCharacters: number = 9;
     defaulttab: string;
+    categoryName: string;
     updatedtheme: string;
     facilityData: Facility[] = [];
     public loginInfo: LoginInfo;
@@ -345,9 +346,19 @@ export class Scope2TrackingComponent {
                 }
 
             ];
+        this.projectPhaseTypes =
+            [
+                {
+                    "id": 1,
+                    "projectPhase": "In Construction phase"
+                },
+                {
+                    "id": 2,
+                    "projectPhase": "In Operational Phase"
+                }
+            ];
         this.marketTypes =
             [
-
                 {
                     "id": 1,
                     "Type": "Renewable Energy Cert (REC)"
@@ -420,11 +431,11 @@ export class Scope2TrackingComponent {
             [
                 {
                     "id": 1,
-                    "modeName": "Distance Travelled"
+                    "modeName": "Average distance per trip"
                 },
                 {
                     "id": 2,
-                    "modeName": "Fuel Used"
+                    "modeName": "Average qty of fuel per trip"
                 }
 
             ]
@@ -770,7 +781,7 @@ export class Scope2TrackingComponent {
         // }
 
         this.getBatch();
-      
+
         // this.getBlendType();
         // this.getVehicleDEMode();
         // this.getElectricitySource();
@@ -795,7 +806,7 @@ export class Scope2TrackingComponent {
             console.log("checkssss");
             this.GetAssignedDataPoint(Number(fId));
             this.facilityID = fId;
-           
+
         }
         else if (this.flag === undefined || this.flag === null || this.flag == "") {
             this.facilityID = fId;
@@ -834,14 +845,18 @@ export class Scope2TrackingComponent {
     };
 
     // getting status, units, subCategory types where ever required
-    SubCatData(data: any, catID: any) {
-
+    SubCatData(data: any, catID: any, categoryName) {
+        console.log(
+            "called"
+        );
+        this.categoryName = categoryName;
         this.recycle = false;
         this.isVisited = false;
 
         this.id_var = data.manageDataPointSubCategorySeedID;
 
         this.categoryId = catID;
+        console.log("subCatTypeID", this.categoryId);
 
         this.SubCatAllData = data;
         this.ALLEntries()
@@ -863,8 +878,8 @@ export class Scope2TrackingComponent {
 
         if (catID == 3) {
 
-            this.getsubCategoryType(this.SubCatAllData
-                .manageDataPointSubCategorySeedID);
+            // this.getsubCategoryType(this.SubCatAllData
+            //     .manageDataPointSubCategorySeedID);
             this.getUnit(this.SubCatAllData
                 .manageDataPointSubCategorySeedID);
         }
@@ -955,7 +970,7 @@ export class Scope2TrackingComponent {
         this.trackingService.newgetsubCatType(subCatID).subscribe({
             next: (response) => {
                 this.SubCategoryType = response.categories;
-                this.dataEntry.typeID = this.SubCategoryType[0].subCatTypeID;
+                this.dataEntry.typeID = this.SubCategoryType[0]?.subCatTypeID;
 
             },
             error: (err) => {
@@ -996,28 +1011,36 @@ export class Scope2TrackingComponent {
         formData.set('year', this.convertedYear.toString())
         formData.set('facilities', this.facilityID.toString())
         formData.set('categoryID', this.categoryId.toString())
-      
-            console.log("else part")
-            this.trackingService
-                .newgetSCpendingDataEntries(formData)
-                .subscribe({
-                    next: (response) => {
-                        if (response.success === false) {
-                            this.dataEntriesPending = null;
+
+
+        this.trackingService
+            .newgetSCpendingDataEntries(formData)
+            .subscribe({
+                next: (response) => {
+                    if (response.success === false) {
+                        this.dataEntriesPending = null;
+                    } else {
+                        if (this.categoryId == 24) {
+                            this.dataEntriesPending = (response.categories).filter(items => items.tablename == 'flight_travel');
+                        } else if (this.categoryId == 25) {
+                            this.dataEntriesPending = (response.categories).filter(items => items.tablename == 'hotel_stay');
+                        } else if (this.categoryId == 26) {
+                            console.log("hhhhh");
+                            this.dataEntriesPending = (response.categories).filter(items => items.tablename == 'other_modes_of_transport');
                         } else {
                             this.dataEntriesPending = response.categories;
                         }
-
-                    },
-                    error: (err) => {
-                        this.notification.showError(
-                            'Get data Point failed.',
-                            'Error'
-                        );
-                        console.error('errrrrrr>>>>>>', err);
                     }
-                });
-        
+                },
+                error: (err) => {
+                    this.notification.showError(
+                        'Get data Point failed.',
+                        'Error'
+                    );
+                    console.error('errrrrrr>>>>>>', err);
+                }
+            });
+
 
 
     };
@@ -1547,7 +1570,7 @@ export class Scope2TrackingComponent {
             });
         }
         if (this.categoryId == 8) {
-            console.log("hitting");
+          
             let formData = new URLSearchParams();
             formData.set('batch', this.batchId);
 
@@ -2816,8 +2839,8 @@ export class Scope2TrackingComponent {
                             response.message,
                             'Success'
                         );
-                        this.ALLEntries();
                         this.dataEntryForm.reset();
+                        this.ALLEntries();
 
                         // this.getStatusData(this.activeCategoryIndex)
                     } else {
@@ -2889,6 +2912,7 @@ export class Scope2TrackingComponent {
                         );
                         this.dataEntryForm.reset();
                         this.ModeSelected = false;
+                        this.ALLEntries();
 
                         // this.getStatusData(this.activeCategoryIndex)
                     } else {
@@ -3008,7 +3032,7 @@ export class Scope2TrackingComponent {
 
                                         const subCatID = response.categories[i].manageDataPointCategories[j].manageDataPointSubCategories[0].manageDataPointSubCategorySeedID;
                                         this.SubCatAllData = response.categories[i].manageDataPointCategories[j].manageDataPointSubCategories[0];
-
+                                        console.log(this.SubCatAllData);
                                         this.id_var = subCatID;
                                         if ((response.categories)[i].manageDataPointCategories[j].manageDataPointCategorySeedID == 1) {
 
@@ -3183,6 +3207,9 @@ export class Scope2TrackingComponent {
     }
 
     setActive(index: number): void {
+
+        this.categoryId = 13;
+        this.ALLEntries();
         this.categoryId = index;
         // this.flightDisplay1 = 'block'
         // this.flightDisplay2 = 'none'
@@ -3193,16 +3220,20 @@ export class Scope2TrackingComponent {
         this.calculationRow = false;
         this.equityInvestmentRow = false;
 
-
-
-
         if (this.categoryId == 24) {
+            this.categoryName = 'Flight'
 
             this.getFlightType();
-            this.getBusineesUnit()
+            this.getBusineesUnit();
+
             // this.getSubFranchiseCategory('Banking Financial Services');
             // this.getVehicleTypes();
             // this.getSubVehicleCategory(1)
+        } else if (this.categoryId == 25) {
+            this.categoryName = 'Hotel Stay'
+        } else if (this.categoryId == 26) {
+
+            this.categoryName = 'Other Modes of Transport'
         }
 
         // this.getStatusData(this.activeCategoryIndex);
@@ -3449,7 +3480,7 @@ export class Scope2TrackingComponent {
     checkVisited() {
         // reverse the value of property
         this.isHowtoUse = !this.isHowtoUse;
-     }
+    }
 
     onFileSelected(event: any) {
         const selectedFile = event.target.files[0];

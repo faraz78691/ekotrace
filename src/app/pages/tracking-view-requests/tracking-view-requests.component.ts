@@ -165,13 +165,14 @@ export class TrackingViewRequestsComponent {
 
     onUpdateUserStatus(data: any) {
         this.dataEntry = '';
-        console.log( this.dataEntry);
+      
         this.display = 'block';
         this.dataEntry = data
 
     };
 
     onClose2() {
+        this.dataEntry = '';
         this.display = 'none';
     };
     sendEntryForApproval() {
@@ -3718,7 +3719,8 @@ export class TrackingViewRequestsComponent {
 
 
     }
-    RejectSingleEntry(entry: any) {
+    RejectSingleEntry() {
+        const entry = this.dataEntry;
 
         this.sendApprovalEntries = [];
 
@@ -3749,6 +3751,8 @@ export class TrackingViewRequestsComponent {
                         );
                         this.ALLEntries(this.facilityID);
                         this.visible = false;
+                       
+                        this.onClose2();
                         // if (this.loginInfo.role == environment.Approver) {
                         //     this.GetsendforApprovalDataPoint(this.loginInfo.facilityID);
                         // }
@@ -3762,7 +3766,7 @@ export class TrackingViewRequestsComponent {
                         // var recipient = environment.Preparer;
                         // var message = environment.SendRejectMessage;
                         // this.SendNotification(count, recipient, message);
-                        // this.selectedEntry = [];
+                        this.selectedEntry = [];
                     } else {
                         this.notification.showWarning(
                             'Entry not Rejected',

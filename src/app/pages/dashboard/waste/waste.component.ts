@@ -31,9 +31,9 @@ export class WasteComponent {
   public groupChart: Partial<Chart3Options>;
   dashboardData: any[] = [];
   public loginInfo: LoginInfo;
-  selectedFacility:number;
+  selectedFacility: number;
   combinedSubscription: Subscription;
-;
+  ;
   year: Date;
   scopeWiseSeries: any[] = [];
   progress1: any = '';
@@ -54,23 +54,23 @@ export class WasteComponent {
   upstreamArray: any[] = [];
   downstreamArray: any[] = [];
   vendorData: any[] = [];
-  UpWaste:string;
-  downWaste:string;
-  hazardLabel:any[]= [];
-  upDownLabel:any[]= [];
-  hazardSeries:any[]= [];
-  upDownSeries:any[]= [];
-  totaltype:any
-  hazardTotal:any;
+  UpWaste: string;
+  downWaste: string;
+  hazardLabel: any[] = [];
+  upDownLabel: any[] = [];
+  hazardSeries: any[] = [];
+  upDownSeries: any[] = [];
+  totaltype: any
+  hazardTotal: any;
 
 
   constructor(private route: ActivatedRoute,
     private facilityService: FacilityService,
     private trackingService: TrackingService,
     private dashboardService: DashboardService) {
-      this.year = new Date();
+    this.year = new Date();
 
-   
+
 
     // this.chartOptions = {
     //   series: [
@@ -82,7 +82,7 @@ export class WasteComponent {
     //       name: "Revenue",
     //       data: [76, 85, 101, 98, 87, 105, 91]
     //     }
-  
+
     //   ],
     //   chart: {
     //     type: "bar",
@@ -92,7 +92,7 @@ export class WasteComponent {
     //     bar: {
     //       horizontal: false,
     //       columnWidth: "55%",
-          
+
     //     }
     //   },
     //   dataLabels: {
@@ -156,8 +156,8 @@ export class WasteComponent {
         }
       ]
     };
-    
-   
+
+
 
 
 
@@ -180,7 +180,7 @@ export class WasteComponent {
         this.selectedFacility = response.categories[0].ID;
         this.makeCombinedApiCall(this.selectedFacility)
       })
-    ); 
+    );
   };
   private createFormData(facility) {
     const formData = new URLSearchParams();
@@ -220,22 +220,29 @@ export class WasteComponent {
         return of(null); // Return null or default value in case of error
       })
     );
+    const getBRreakdownEmission$ = this.dashboardService.BreakDownEmssion(formData.toString()).pipe(
+      catchError(error => {
+        console.error('Error occurred in topWiseEmission API call:', error);
+        return of(null); // Return null or default value in case of error
+      })
+    );
 
 
     // Combine both observables using combineLatest and return the combined observable
-   this.combinedSubscription =  combineLatest([
+    this.combinedSubscription = combineLatest([
       scopeWiseEmission$,
       topWiseEmission$,
       getScopeSDonuts$,
-      getUpDownDonuts$
- 
-    ]).subscribe((results: [any, any, any,any]) => {
-      const [scopeWiseResult, topWiseResult, getALLEmisions,getUpDownDonuts] = results;
+      getUpDownDonuts$,
+      getBRreakdownEmission$
+
+    ]).subscribe((results: [any, any, any, any, any]) => {
+      const [scopeWiseResult, topWiseResult, getALLEmisions, getUpDownDonuts, getBRreakdownEmission] = results;
       // Process the results of both API calls here
       if (scopeWiseResult) {
         this.UpWaste = scopeWiseResult.waste_disposed
         this.downWaste = scopeWiseResult.waste_emissions
-   
+
       } else {
         // Handle absence of scopeWise result or error
       }
@@ -243,9 +250,7 @@ export class WasteComponent {
       if (topWiseResult) {
         // Handle topWise result
         this.topFIveE = topWiseResult.top5Emissions;
-        // this.seriesScopeDonut2 = topWiseResult.top5Emissions;
-        // this.labelScopeDonut2 = topWiseResult.category;
-        // this.totaltype = topWiseResult.totalemission;
+      
       } else {
         // Handle absence of topWise result or error
       }
@@ -253,14 +258,14 @@ export class WasteComponent {
         this.hazardSeries = getALLEmisions.series[0].data;
         this.hazardLabel = getALLEmisions.hazardousmonth;
         this.hazardTotal = getALLEmisions.totalemssion;
-    
 
-       
+
+
         this.donotOptions1 = {
           series: this.hazardSeries,
           chart: {
             width: "100%",
-            height:350,
+            height: 350,
             type: "donut"
           },
           dataLabels: {
@@ -292,41 +297,7 @@ export class WasteComponent {
             }
           ]
         };
-        this.donotOptions2 = {
-          series: this.seriesScopeDonut2,
-          chart: {
-            width: "100%",
-            height:350,
-            type: "donut"
-          },
-          dataLabels: {
-            enabled: true
-          },
-          // fill: {
-          //   type: "gradient"
-          // },
-          legend: {
-            position: "bottom",
-            fontSize: '15px',
-            floating: false,
-            horizontalAlign: 'left',
-          },
-          colors: ['#F3722C', '#0068F2', '#F8961E'],
-          labels: this.labelScopeDonut2,
-          responsive: [
-            {
-              breakpoint: 480,
-              options: {
-                chart: {
-                  width: 200
-                },
-                legend: {
-                  position: "bottom"
-                }
-              }
-            }
-          ]
-        };
+     
 
         this.groupChart = {
           series: [
@@ -420,16 +391,16 @@ export class WasteComponent {
         //   ]
         // };
       }
-      if(getUpDownDonuts){
+      if (getUpDownDonuts) {
+      
+        this.upDownSeries = getUpDownDonuts.upstream_downstream;
+        this.upDownLabel = getUpDownDonuts.series;
 
-        this.upDownSeries = getUpDownDonuts.series[0].data;
-        this.upDownLabel = getUpDownDonuts.hazardousmonth;
-   
-   this.upDowndonotOptions1 = {
+        this.upDowndonotOptions1 = {
           series: this.upDownSeries,
           chart: {
             width: "100%",
-            height:350,
+            height: 350,
             type: "donut"
           },
           dataLabels: {
@@ -462,16 +433,56 @@ export class WasteComponent {
           ]
         };
       }
+      if (getBRreakdownEmission) {
+        this.seriesScopeDonut2 = getBRreakdownEmission.series;
+        this.labelScopeDonut2 = getBRreakdownEmission.hazardousmonth;
+        this.donotOptions2 = {
+          series: this.seriesScopeDonut2,
+          chart: {
+            width: "100%",
+            height: 350,
+            type: "donut"
+          },
+          dataLabels: {
+            enabled: true
+          },
+          // fill: {
+          //   type: "gradient"
+          // },
+
+          legend: {
+            position: "bottom",
+            fontSize: '15px',
+            floating: false,
+            horizontalAlign: 'left',
+          },
+          labels: this.labelScopeDonut2,
+          colors: ['#F3722C', '#0068F2', '#F8961E','#213D49'],
+          responsive: [
+            {
+              breakpoint: 480,
+              options: {
+                chart: {
+                  width: 200
+                },
+                legend: {
+                  position: "bottom"
+                }
+              }
+            }
+          ]
+        };
+      }
 
     });
   };
 
- 
 
 
 
-   // Handle the scopeWiseResult
-   handleScopeWiseResult(scopeWiseResult: any) {
+
+  // Handle the scopeWiseResult
+  handleScopeWiseResult(scopeWiseResult: any) {
     console.log(scopeWiseResult)
     this.scopeWiseSeries = scopeWiseResult.series;
     this.series_graph = scopeWiseResult.series_graph;
