@@ -218,7 +218,7 @@ export const menu = [
                 name: 'Tree',
                 iconClasses: 'fas fa-star',
                 iconSRC: 'assets/img/trees.png',
-                path: ['treeList']
+                path: ['main_tree']
             },
             {
                 name: 'Add User',
@@ -243,7 +243,7 @@ export const menu = [
                 name: 'Set GHG Template',
                 iconClasses: 'fas fa-star',
                 // iconSRC :'assets/img/tracking_icon.svg',
-                path: ['facility']
+                path: ['setGhgTemplate']
             },
             {
                 head: 'GHG Emissions ',

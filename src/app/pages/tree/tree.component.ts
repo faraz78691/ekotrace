@@ -1,5 +1,6 @@
 
-import { Component, ElementRef, Input, Renderer2, ViewChild } from '@angular/core';
+import { LoginInfo } from '@/models/loginInfo';
+import { Component, ElementRef, Input, Renderer2, ViewChild, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import FamilyTree from '@balkangraph/familytree.js';
 import { FamilyService } from '@services/family.service';
@@ -7,6 +8,7 @@ import { NotificationService } from '@services/notification.service';
 import { TrackingService } from '@services/tracking.service';
 import { ToastrService } from 'ngx-toastr';
 import { InputTextModule } from 'primeng/inputtext';
+import { Observable } from 'rxjs';
 
 declare var $: any;
 @Component({
@@ -16,13 +18,20 @@ declare var $: any;
 })
 export class TreeComponent {
     @ViewChild('nodeForm') nodeForm: any;
-    @ViewChild('cancel2') hideModal: any
+    @ViewChild('cancel2') hideModal: any;
+    @ViewChild('GroupForm') form: any;
+    treeList$ = new Observable();
     nodeTitle: string;
     nodeSubtitle: string;
+    displayBasic: boolean;
+    selectedTree: any;
+    public loginInfo: LoginInfo;
     selectedId: number;
     @Input() id!: string;
     selectedNode: number;
     loadFamilyData: any[] = [];
+    selectedTemplateId = 1;
+
     constructor(
         private renderer: Renderer2,
         private route: ActivatedRoute,
@@ -32,13 +41,19 @@ export class TreeComponent {
         private toastr: ToastrService,
         private familyService: FamilyService
     ) {
-        this.onRemove = this.onRemove.bind(this)
+        this.treeList$ = familyService.getTreeList();
+        
     }
     ngOnInit() {
-FamilyTree.templates.hugo.link_field_0 =  '<text width="230" style="font-size: 18px;" fill="#ffffff" x="145" y="150" text-anchor="middle" class="field_0">{val}</text>';
-        this.getTreeViewByID();
+        FamilyTree.templates.hugo.link_field_0 = '<text width="230" style="font-size: 18px;" fill="#ffffff" x="145" y="150" text-anchor="middle" class="field_0">{val}</text>';
+        this.getTreeViewByID('1');
 
     };
+
+    onTemplateChange(event: any) {
+        this.getTreeViewByID(event.value);
+
+    }
 
     onCancel() {
         $(".ct_custom_modal_120").hide()
@@ -51,9 +66,9 @@ FamilyTree.templates.hugo.link_field_0 =  '<text width="230" style="font-size: 1
 
     }
 
-    getTreeViewByID() {
+    getTreeViewByID(id) {
         const formData = new URLSearchParams();
-        formData.set('family_id', this.id);
+        formData.set('family_id', id);
 
         this.familyService.getTreeById(formData.toString()).subscribe({
             next(value) {
@@ -62,7 +77,7 @@ FamilyTree.templates.hugo.link_field_0 =  '<text width="230" style="font-size: 1
                 if (tree) {
 
                     var family = new FamilyTree(tree, {
-                
+
                         template: "hugo",
                         enableSearch: false,
                         nodeBinding: {
@@ -105,22 +120,28 @@ FamilyTree.templates.hugo.link_field_0 =  '<text width="230" style="font-size: 1
 
                             }
                         },
-                        // nodeContextMenu: {
-                        //     details: { text: "Details" },
-                        //     edit: { text: "Edit" },
-                        //     add: { text: "Add" },
-                        //     remove: { text: "Remove" },
-                        // },
-                     
-                       
 
                     });
                     function callHandler(nodeId) {
+
                         var nodeData = family.get(nodeId);
-                        console.log(nodeData);
                         const formData = new URLSearchParams();
                         formData.append('id', nodeData['id'].toString());
                         formData.append('family_id', nodeData['family_id'].toString());
+                        
+                        fetch('http://13.200.247.29:4000/deleteNode', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded'
+                            },
+                            body: formData.toString()
+                        })
+                            .then(response =>response.json() )
+                            .then(data => family.removeNode(nodeId)
+                                // console.log(data)
+                            )
+                            .catch(error => console.error('Error:', error));
+
 
                     }
                     family.onUpdateNode((args) => {
@@ -147,14 +168,16 @@ FamilyTree.templates.hugo.link_field_0 =  '<text width="230" style="font-size: 1
         })
     };
 
-
+    showBasicDialog() {
+        this.displayBasic = true;
+    };
 
     onSubmit(data) {
 
         const getSelectedNode = localStorage.getItem("selectedNode");
         const nodeForm = new URLSearchParams();
         nodeForm.set('id', getSelectedNode);
-        nodeForm.set('family_id', this.id);
+        nodeForm.set('family_id', this.selectedTemplateId.toString());
         nodeForm.set('main_name', data.value.nodeTitle);
         nodeForm.set('name', data.value.nodeSubtitle);
 
@@ -163,7 +186,7 @@ FamilyTree.templates.hugo.link_field_0 =  '<text width="230" style="font-size: 1
 
                 $(".ct_custom_modal_120").hide()
                 this.nodeForm.reset()
-                this.getTreeViewByID();
+                this.getTreeViewByID(this.selectedTemplateId);
             },
             error: err =>
                 console.log(err)
@@ -171,24 +194,7 @@ FamilyTree.templates.hugo.link_field_0 =  '<text width="230" style="font-size: 1
     };
 
 
-    onRemove(nodeid) {
-
-        const nodeForm = new URLSearchParams();
-        nodeForm.set('id', nodeid);
-        nodeForm.set('family_id', this.id);
-
-        this.familyService.deleteChildTree(nodeForm.toString()).subscribe({
-            next: res => {
-
-                this.nodeForm.reset()
-                if (res.success) {
-                    this.getTreeViewByID();
-                }
-            },
-            error: err =>
-                console.log(err)
-        })
-    };
+   
 
 
 

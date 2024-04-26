@@ -47,6 +47,9 @@ import { CarbonOffsettingComponent } from '@pages/carbon-offsetting/carbon-offse
 import { WasteComponent } from '@pages/dashboard/waste/waste.component';
 import { TreeComponent } from '@pages/tree/tree.component';
 import { TreeListComponent } from '@pages/tree/tree-list/tree-list.component';
+import { MainTreeComponent } from '@pages/tree/main-tree/main-tree.component';
+import { GhgTemplateComponent } from '@pages/ghg-template/ghg-template.component';
+import { FinanceEmissionsComponent } from '@pages/finance-emissions/finance-emissions.component';
 
 const routes: Routes = [
     {
@@ -100,6 +103,13 @@ const routes: Routes = [
                 data: { roles: ['Platform Admin'] }
             },
             {
+                path: 'finance_emission',
+                canActivate: [RoleGuard],
+                component: FinanceEmissionsComponent,
+                data: { roles: ['Platform Admin','Super Admin',
+                'Admin']}
+            },
+            {
                 path: 'company-register',
                 canActivate: [RoleGuard],
                 component: AdminDashboardComponent,
@@ -110,6 +120,24 @@ const routes: Routes = [
                 canActivate: [RoleGuard],
                 component: BrsrQaComponent,
                 data: { roles: ['Platform Admin'] }
+            },
+            {
+                path: 'setGhgTemplate',
+                canActivate: [RoleGuard],
+                component: GhgTemplateComponent,
+                data: { roles: ['Platform Admin'] }
+            },
+            {
+                path: 'main_tree',
+                canActivate: [RoleGuard],
+                component: MainTreeComponent,
+                data: { roles: ['Platform Admin', 'Super Admin','Admin','Manager'] },
+                children:[
+                    {path:'',redirectTo:'view', pathMatch:'full'},
+                    {path:'view', component:TreeComponent},
+                    {path:'facility', component:FacilityComponent},
+                    {path:'group', component:GroupComponent},
+                ]
             },
             {
                 path: 'emission-section',
@@ -153,18 +181,18 @@ const routes: Routes = [
                 canActivate: [RoleGuard],
                 data: { roles: ['Super Admin', 'Admin'] }
             },
-            {
-                path: 'group',
-                component: GroupComponent,
-                canActivate: [RoleGuard],
-                data: { roles: ['Super Admin', 'Admin', 'Manager'] }
-            },
-            {
-                path: 'facility',
-                canActivate: [RoleGuard],
-                component: FacilityComponent,
-                data: { roles: ['Super Admin', 'Admin'] }
-            },
+            // {
+            //     path: 'group',
+            //     component: GroupComponent,
+            //     canActivate: [RoleGuard],
+            //     data: { roles: ['Super Admin', 'Admin', 'Manager'] }
+            // },
+            // {
+            //     path: 'facility',
+            //     canActivate: [RoleGuard],
+            //     component: FacilityComponent,
+            //     data: { roles: ['Super Admin', 'Admin'] }
+            // },
             {
                 path: 'billing',
                 canActivate: [RoleGuard],

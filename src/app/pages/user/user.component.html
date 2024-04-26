@@ -131,14 +131,14 @@
                                             (click)="onSelected(Role.Id)" [(ngModel)]="admininfo.roleID"
                                             [disabled]="isloading" #Role="ngModel"></p-radioButton>
                                         <label [for]="Role.Id" class="ml-2 mb-0">{{ Role.Name }}</label>
-                                        <p style="font-size: 10px; color: #88AD47;" *ngIf="Role.Name == 'Admin'">Admin
+                                        <p style="font-size: 10px; color: #88AD47;" *ngIf="Role.Name == 'Admin'">Admin  Access to the sub group and all facilities
                                         </p>
                                         <p style="font-size: 10px; color: #88AD47;" *ngIf="Role.Name == 'Manager'">
-                                            Manager</p>
+                                            Manager  Access to the associated facility</p>
                                         <p style="font-size: 10px; color: #88AD47;" *ngIf="Role.Name == 'Preparer'">
-                                            Preparer</p>
-                                        <p style="font-size: 10px; color: #88AD47;" *ngIf="Role.Name == 'Approver'">
-                                            Approver</p>
+                                            Preparer  Access to the associated facility</p>
+                                        <!-- <p style="font-size: 10px; color: #88AD47;" *ngIf="Role.Name == 'Approver'">
+                                            Approver</p> -->
                                         <p style="font-size: 10px; color: #88AD47;" *ngIf="Role.Name == 'User'">User</p>
                                     </div>
                                 </div>

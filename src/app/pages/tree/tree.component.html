@@ -1,14 +1,3 @@
-<p-tabView>
-    <p-tabPanel header="Header 1">
-       Content 1
-    </p-tabPanel>
-    <p-tabPanel header="Header 2">
-        Content 2
-    </p-tabPanel>
-    <p-tabPanel header="Header 3">
-        Content 3
-    </p-tabPanel>
-</p-tabView>
 
 <div id="editForm"
     style="display:none; text-align:center; position:absolute; border: 1px solid #aeaeae;width:300px;background-color:#F57C00;z-index:10000; ">
@@ -28,7 +17,77 @@
         </div>
     </div>
 </div>
-<div id="tree"></div>
+<div class="div">
+    <button (click)="showBasicDialog()">Create template</button>
+    <ng-container *ngIf="treeList$ | async as list ">
+        <p-dropdown 
+        class="ct_select_op_input ct_chev_icon_dark230" ngModel [options]="list.familyDetails" optionLabel="family_name"
+        optionValue="id" name="subCatType" #subCatType="ngModel" [(ngModel)]="selectedTemplateId" (onChange)="onTemplateChange($event)"
+      ></p-dropdown>
+    </ng-container>
+    <div  id="tree"></div>
+</div>
+
+
+<p-dialog  [(visible)]="displayBasic" [breakpoints]="{'960px': '75vw'}" [closable]="false"
+[style]="{width: '50vw'}">
+<p-header > Add New Tree </p-header>
+<!-- <p-header *ngIf="FormEdit === true"> Edit Group </p-header> -->
+
+<div class="modal-body text-white text-style Dashboard-tab">
+    <form #GroupForm="ngForm" (ngSubmit)="onSubmit(GroupForm)" class="col-12">
+        <div class="mb-5 pb-5">
+           <div class="mb-3">
+            <label for="fname" class="text-dark">Tree name</label>
+            <input ngModel name="treename" id="search-input" type="text"
+                class="form-control Dashboard-tab text-white" placeholder="Enter Tree Name"
+                #groupName="ngModel"  
+                required />
+           </div>
+          <div class="mb-3">
+            <label for="fname" class="mt-2 text-dark">Total Members</label>
+            <input ngModel name="totalMembers" id="search-input" type="text"
+            class="form-control Dashboard-tab text-white" placeholder="Enter No of Members"
+            #groupName="ngModel" 
+            required />
+          </div>
+           <div class="mb-3">
+            <label for="fname" class="mt-2 text-dark">Root Name</label>
+            <input ngModel name="rootName" id="search-input" type="text"
+            class="form-control Dashboard-tab text-white" placeholder="Enter Root Name"
+            #groupName="ngModel"
+            required />
+           </div>
+
+           <div class="mb-3">
+            <label for="fname" class="mt-2 text-dark">Name</label>
+            <input ngModel name="name" id="search-input" type="text"
+            class="form-control Dashboard-tab text-white" placeholder="Enter Name"
+            #groupName="ngModel"
+            required />
+           </div>
+       
+        </div>
+
+        <div class="mt-3 ct_modal_btns_12">
+            <Button  type="submit" class="rounded  py-2 ct_custom_btn121 ct_animation_btn_121 span-color px-3 text-white text-style loading ">
+                Save
+            </Button>
+            <!-- <Button *ngIf="FormEdit === true" type="submit "
+                class="rounded span-color px-3 text-white text-style">
+                <p-progressSpinner strokeWidth="8" ></p-progressSpinner>
+                Update
+            </Button> -->
+
+            <span type="button" class="text-dark py-2 font-weight-light ml-3 " 
+                (click)="displayBasic=false">
+                Close
+            </span>
+        </div>
+    </form>
+</div>
+</p-dialog>
+
 <div class="ct_custom_modal_120" style="display: none;" id="cancel2" #cancel2>
     <form #nodeForm="ngForm" (ngSubmit)="onSubmit(nodeForm)">
         <div class="modal-content">

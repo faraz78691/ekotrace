@@ -107,6 +107,9 @@ import { CarbonOffsettingComponent } from './pages/carbon-offsetting/carbon-offs
 import { WasteComponent } from './pages/dashboard/waste/waste.component';
 import { TreeComponent } from './pages/tree/tree.component';
 import { TreeListComponent } from './pages/tree/tree-list/tree-list.component';
+import { MainTreeComponent } from './pages/tree/main-tree/main-tree.component';
+import { GhgTemplateComponent } from './pages/ghg-template/ghg-template.component';
+import { FinanceEmissionsComponent } from './pages/finance-emissions/finance-emissions.component';
 
 defineCustomElements();
 registerLocaleData(localeEn, 'en-EN');
@@ -171,7 +174,10 @@ registerLocaleData(localeEn, 'en-EN');
         CarbonOffsettingComponent,
         WasteComponent,
         TreeComponent,
-        TreeListComponent
+        TreeListComponent,
+        MainTreeComponent,
+        GhgTemplateComponent,
+        FinanceEmissionsComponent
     ],
     imports: [
         BrowserModule,

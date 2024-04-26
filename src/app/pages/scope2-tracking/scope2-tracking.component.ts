@@ -114,6 +114,7 @@ export class Scope2TrackingComponent {
     Approved = environment.approved;
     blendType: BlendType[] = [];
     isHowtoUse = false;
+    supplierSelected = false;
     ModeType: VehicleDEmode[] = [];
     ElectricitySource: ElectricitySource[] = [];
     ElectricityGrid: ElectricityGrid[] = [];
@@ -133,6 +134,7 @@ export class Scope2TrackingComponent {
     SubCategoryType: SubCategoryTypes[] = [];
     isInputEdited: boolean;
     typeEV: boolean = false;
+    renewableSelected: boolean = false;
     typeBusCoach: boolean = false;
     // scope 3 variables starts 
     subVehicleCategoryValue: string = 'Van-Petrol';
@@ -846,12 +848,12 @@ export class Scope2TrackingComponent {
 
     // getting status, units, subCategory types where ever required
     SubCatData(data: any, catID: any, categoryName) {
-        console.log(
-            "called"
-        );
+        console.log("called");
         this.categoryName = categoryName;
         this.recycle = false;
         this.isVisited = false;
+        this.renewableSelected =false;
+        this.supplierSelected = false;
 
         this.id_var = data.manageDataPointSubCategorySeedID;
 
@@ -887,8 +889,6 @@ export class Scope2TrackingComponent {
         if (catID == 5) {
 
             this.getRegionName(9);
-            this.getsubCategoryType(this.SubCatAllData
-                .manageDataPointSubCategorySeedID);
             this.getUnit(this.SubCatAllData
                 .manageDataPointSubCategorySeedID);
         }
@@ -1321,7 +1321,7 @@ export class Scope2TrackingComponent {
             formData.set('NumberOfExtinguisher', this.FireExtinguisherDE.numberOfExtinguisher.toString());
             formData.set('unit', this.dataEntry.unit);
             formData.set('quantityOfCO2makeup', this.FireExtinguisherDE.quantityOfCO2makeup.toString());
-            formData.set('fireExtinguisherID', this.FireExtinguisherDE.fireExtinguisherID.toString());
+            formData.set('fireExtinguisherID', this.FireExtinguisherDE.fireExtinguisherID?.toString());
             formData.set('facilities', this.facilityID);
             formData.set('months', monthString);
             formData.set('year', this.dataEntry.year);
@@ -1452,10 +1452,9 @@ export class Scope2TrackingComponent {
                             this.RenewableElectricity.sourceName = this.ElectricitySource[0].sourceName;
                             this.activeindex = 0;
                             this.getRegionName(9);
-                            this.getsubCategoryType(this.SubCatAllData
-                                .manageDataPointSubCategorySeedID);
                             this.ALLEntries();
-
+                            this.renewableSelected = false; 
+                             this.supplierSelected = false;
                             this.notification.showSuccess(
                                 'Data entry added successfully',
                                 'Success'
@@ -1476,18 +1475,20 @@ export class Scope2TrackingComponent {
             }
             else {
                 var formData = new URLSearchParams();
-                formData.set('typeID', this.marketEElecID);
+                formData.set('typeID', form.value.Type);
                 formData.set('readingValue', this.dataEntry.readingValue.toString());
                 formData.set('sourceName', this.RenewableElectricity.sourceName);
                 formData.set('unit', this.dataEntry.unit);
                 formData.set('facilities', this.facilityID);
                 formData.set('months', monthString);
                 formData.set('year', this.dataEntry.year);
+                formData.set('emission_factor', form.value.emission_factorS);
                 formData.set('SubCategorySeedID', this.SubCatAllData
                     .manageDataPointSubCategorySeedID.toString());
 
                 this.trackingService.newPostElectricityMarket(formData.toString()).subscribe({
                     next: (response) => {
+                        console.log(response);
                         if (response.success == true) {
                             this.resetForm();
                             //this.GetAssignedDataPoint(this.facilityID);
@@ -1496,10 +1497,9 @@ export class Scope2TrackingComponent {
 
                             this.activeindex = 0;
                             this.getRegionName(9);
-                            this.getsubCategoryType(this.SubCatAllData
-                                .manageDataPointSubCategorySeedID);
                             this.ALLEntries();
-
+                            this.renewableSelected = false; 
+                            this.supplierSelected = false;
                             this.notification.showSuccess(
                                 'Data entry added successfully',
                                 'Success'
@@ -1507,7 +1507,7 @@ export class Scope2TrackingComponent {
 
 
                         }
-                        this.marketEElecID = this.marketTypes[0].id;
+                        // this.marketEElecID = this.marketTypes[0].id;
 
 
                     },
@@ -3501,9 +3501,12 @@ export class Scope2TrackingComponent {
 
     marktetTypeChange(event: any) {
         if (event.value == 1) {
-            this.recycle = true
-        } else {
-            this.recycle = false;
+            this.renewableSelected = true
+            this.supplierSelected = false;
+        } else if(event.value == 2) {
+        
+            this.renewableSelected = false
+            this.supplierSelected = true;
         }
     }
 
