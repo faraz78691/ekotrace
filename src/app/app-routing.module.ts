@@ -50,6 +50,9 @@ import { TreeListComponent } from '@pages/tree/tree-list/tree-list.component';
 import { MainTreeComponent } from '@pages/tree/main-tree/main-tree.component';
 import { GhgTemplateComponent } from '@pages/ghg-template/ghg-template.component';
 import { FinanceEmissionsComponent } from '@pages/finance-emissions/finance-emissions.component';
+import { SetEmissionInventoryComponent } from '@pages/target_setting/set-emission-inventory/set-emission-inventory.component';
+import { TargetSettingComponent } from '@pages/target_setting/target-setting/target-setting.component';
+import { ActionsComponent } from '@pages/target_setting/actions/actions.component';
 
 const routes: Routes = [
     {
@@ -284,6 +287,48 @@ const routes: Routes = [
                 path: 'tracking-view-requests',
                 canActivate: [RoleGuard],
                 component: TrackingViewRequestsComponent,
+                data: {
+                    roles: [
+                        'Super Admin',
+                        'Admin',
+                        'Manager',
+                        'Preparer',
+                        'Approver'
+                    ]
+                }
+            },
+            {
+                path: 'setEmissionInventory',
+                canActivate: [RoleGuard],
+                component: SetEmissionInventoryComponent,
+                data: {
+                    roles: [
+                        'Super Admin',
+                        'Admin',
+                        'Manager',
+                        'Preparer',
+                        'Approver'
+                    ]
+                }
+            },
+            {
+                path: 'targetSetting',
+                canActivate: [RoleGuard],
+                component: TargetSettingComponent,
+                data: {
+                    roles: [
+                        'Super Admin',
+                        'Admin',
+                        'Manager',
+                        'Preparer',
+                        'Approver'
+                    ]
+                }
+            },
+            {
+                path: 'actions',
+                canActivate: [RoleGuard],
+                component: ActionsComponent,
                 data: {
                     roles: [
                         'Super Admin',

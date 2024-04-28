@@ -271,6 +271,25 @@ export const menu = [
                 iconSRC: 'assets/img/BRSR.svg',
                 path: ['brsrReport']
             },
+            {
+                head: 'Target Setting',
+                name: 'Set Emission Inventory',
+                iconClasses: 'fas fa-folder',
+                iconSRC: 'assets/img/report_icon.svg',
+                path: ['setEmissionInventory']
+            },
+            {
+                name: 'Target Setting',
+                iconClasses: 'fas fa-table',
+                iconSRC: 'assets/img/BRSR.svg',
+                path: ['targetSetting']
+            },
+            {
+                name: 'Actions',
+                iconClasses: 'fas fa-table',
+                iconSRC: 'assets/img/BRSR.svg',
+                path: ['actions']
+            },
             // {
             //     name: 'Carbon Offset',
             //     iconClasses: 'fas fa-folder',
