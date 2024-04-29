@@ -1,0 +1,53 @@
+<div id="editForm"
+    style="display:none; text-align:center; position:absolute; border: 1px solid #aeaeae;width:300px;background-color:#F57C00;z-index:10000; ">
+    <div id="editForm_title" style="padding: 10px 0 10px 0; background-color:#039BE5; color: #ffffff;">Edit Form</div>
+    <div>
+        <div style="padding: 10px 0 5px 0;">
+            <label style="color:#ffffff; width:50px; display:inline-block;" for="name">Name</label>
+            <input style="background-color:#FFCA28" id="name" value="" />
+        </div>
+        <div style="padding: 5px 0 10px 0;">
+            <label style="color:#ffffff; width:50px; display:inline-block;" for="title">Title</label>
+            <input style="background-color:#FFCA28"  id="title" value="" />
+        </div>
+        <div style="padding: 5px 0 15px 0;">
+            <button style="width:108px;" id="cancel">Cancel</button>
+            <button style="width:108px;" id="save">Save</button>
+        </div>
+    </div>
+</div>
+<div id="tree"></div>
+<div class="ct_custom_modal_120" style="display: none;" id="cancel2" #cancel2>
+    <form #nodeForm="ngForm" (ngSubmit)="onSubmit(nodeForm)">
+        <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Add Node</h5>
+              <button type="button" class="btn-close ct_modal_close_10" (click)="onCancel()" data-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body mt-4">
+                <span class=" mb-3 d-none" [hidden]='true' >
+                    <label for="float-input" >ids</label>
+                    <input id="float-input" pInputText type="text" class="form-control" pInputText name="id" [(ngModel)]="selectedId"> 
+                  
+                </span>
+                <span class=" mb-3 d-block">
+                    <label for="float-input" >Title</label>
+                    <input id="float-input" pInputText type="text"  class="form-control" pInputText name="nodeTitle" ngModel> 
+                   
+                </span>
+                <span class=" mb-3 d-block">
+                    <label for="float-input" >Sub Title</label>
+                    <input id="float-input" pInputText type="text"  class="form-control" pInputText name="nodeSubtitle" ngModel> 
+                    
+                </span>
+                <div class="modal-footer border-0 justify-content-center">
+                   
+                    <button type="button" class="btn ct_animation_btn_121" data-dismiss="modal" (click)="onCancel()">Close</button>
+                    <button type="submit" class="btn ct_animation_btn_121 ct_custom_btn121 w-auto">Save changes</button>
+                    <button type="button" class="btn ct_animation_btn_121" data-dismiss="modal" (click)="onCancel()">Close</button>
+                  </div>
+            </div>
+           
+          </div>
+    </form>
+</div>

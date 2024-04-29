@@ -1,0 +1,83 @@
+<div class="container-fluid" [ngClass]="this.updatedtheme === 'dark' ? 'bg-colourD' : 'bg-colourL'">
+    
+    <div class="container-fluid row d-flex justify-content-end"
+        [ngClass]="this.updatedtheme === 'dark' ? 'headertextD' : 'headertextL'">
+        <a [routerLink]="['/']" class="brand-link ct_logo_collape">
+            <pf-image *ngIf="updatedtheme === 'dark'" class="pl-4" src="assets/img/ekobon.png" alt="Ekobon Logo"
+                height="33"></pf-image>
+        
+        
+            <pf-image *ngIf="updatedtheme !== 'dark'" class="pl-4" src="assets/img/ekobonL.png" alt="Ekobon Logo"
+                height="33"></pf-image>
+        
+        
+          
+        </a>
+        <div class="col d-flex justify-content-end">
+            <div class="row align-items-center">
+                <div class="mr-4  pl-3 pointer">
+                    <div>
+                        <!-- <app-notifications class="mt-0"></app-notifications> -->
+                    </div>
+                </div>
+
+                <div class="my-3 mr-2 pt-0 px-2 border border-dark rounded d-flex flex-row ct_select_dropdown_btn">
+                    <img class="pr-2 pointer" [src]="uploadedImageUrl" height="30vh " alt="" />
+                    <p *ngIf="loginInfo.facilityID === 0" class="mr-2 pt-1 pointer">
+                        {{ loginInfo.companyName }}
+                    </p>
+                    <!-- <p *ngIf="loginInfo.facilityID !== 0" class="mr-2 pt-1 pointer">
+                        {{ loginInfo.companyName }} ->
+                        {{ loginInfo.facilityName }} ->
+                        {{ loginInfo.userName }}
+                    </p> -->
+                    <p  class="mr-2 pt-1 pointer ct_filter_dropdown">
+                        <p-dropdown name="facility" *ngIf="loginInfo.role !== 'Platform Admin'" #facility="ngModel"
+                            [options]="facilitygrouplist" optionLabel="name" itemValue="id" styleClass="headerFacility"
+                            [(ngModel)]="selectedFacilityID" (ngModelChange)="checkFacilityID()">
+                            <ng-template let-option pTemplate="item" >
+                                <div  class="d-flex justify-content-between">
+                                    <div>{{ option.name }}</div>
+                                    <div class="d-flex justify-content-end pt-1">
+                                        <i class="fa fa-users"></i>
+                                    </div>
+                                </div>
+                                <!-- <div *ngIf="option.flag === 'F'" class="d-flex justify-content-between">
+                                    <div>{{ option.name }}</div>
+                                    <div class="d-flex justify-content-end pt-1">
+                                        <i class="pi pi-map-marker"></i>
+                                    </div>
+                                </div>
+                                <div *ngIf="option.flag === ''" class="d-flex justify-content-between">
+                                    <div>{{ option.name }}</div>
+                                    <div class="d-flex justify-content-end pt-1"></div>
+                                </div> -->
+                            </ng-template>
+                        </p-dropdown>
+                    </p>
+                </div>
+                <div class="ct_log_out_btn d-flex flex-row">
+                    <!-- <div>
+                        <i class="pi  pi-user pt-1 pl-1"></i>
+                    </div> -->
+
+                    <!-- <p-menu #menu icon="pi pi-bars" [model]="ProfileMenu" [popup]="true"></p-menu>
+                    <div (click)="toggleMenu($event)">
+                        <i class="pi  pi-user pt-1 pl-1"></i>
+                    </div> -->
+
+
+                    <a (click)="logout()" class="mr-2 pt-0 pointer d-flex" [ngClass]="
+                            this.updatedtheme === 'dark'
+                                ? 'headertextD'
+                                : 'headertextL'
+                        ">
+                        <div class="">
+                            <i class="pi pi-power-off pt-1 pl-1"></i>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

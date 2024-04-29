@@ -30,8 +30,7 @@ export class TreeComponent {
     @Input() id!: string;
     selectedNode: number;
     loadFamilyData: any[] = [];
-    selectedTemplateId = 1;
-
+    selectedTemplate = 1;
     constructor(
         private renderer: Renderer2,
         private route: ActivatedRoute,
@@ -42,18 +41,13 @@ export class TreeComponent {
         private familyService: FamilyService
     ) {
         this.treeList$ = familyService.getTreeList();
-        
+        this.onRemove = this.onRemove.bind(this)
     }
     ngOnInit() {
-        FamilyTree.templates.hugo.link_field_0 = '<text width="230" style="font-size: 18px;" fill="#ffffff" x="145" y="150" text-anchor="middle" class="field_0">{val}</text>';
+FamilyTree.templates.hugo.link_field_0 =  '<text width="230" style="font-size: 18px;" fill="#ffffff" x="145" y="150" text-anchor="middle" class="field_0">{val}</text>';
         this.getTreeViewByID('1');
 
     };
-
-    onTemplateChange(event: any) {
-        this.getTreeViewByID(event.value);
-
-    }
 
     onCancel() {
         $(".ct_custom_modal_120").hide()
@@ -77,7 +71,7 @@ export class TreeComponent {
                 if (tree) {
 
                     var family = new FamilyTree(tree, {
-
+                
                         template: "hugo",
                         enableSearch: false,
                         nodeBinding: {
@@ -120,28 +114,22 @@ export class TreeComponent {
 
                             }
                         },
+                        // nodeContextMenu: {
+                        //     details: { text: "Details" },
+                        //     edit: { text: "Edit" },
+                        //     add: { text: "Add" },
+                        //     remove: { text: "Remove" },
+                        // },
+                     
+                       
 
                     });
                     function callHandler(nodeId) {
-
                         var nodeData = family.get(nodeId);
+                        console.log(nodeData);
                         const formData = new URLSearchParams();
                         formData.append('id', nodeData['id'].toString());
                         formData.append('family_id', nodeData['family_id'].toString());
-                        
-                        fetch('http://13.200.247.29:4000/deleteNode', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/x-www-form-urlencoded'
-                            },
-                            body: formData.toString()
-                        })
-                            .then(response =>response.json() )
-                            .then(data => family.removeNode(nodeId)
-                                // console.log(data)
-                            )
-                            .catch(error => console.error('Error:', error));
-
 
                     }
                     family.onUpdateNode((args) => {
@@ -170,14 +158,14 @@ export class TreeComponent {
 
     showBasicDialog() {
         this.displayBasic = true;
-    };
+      };
 
     onSubmit(data) {
 
         const getSelectedNode = localStorage.getItem("selectedNode");
         const nodeForm = new URLSearchParams();
         nodeForm.set('id', getSelectedNode);
-        nodeForm.set('family_id', this.selectedTemplateId.toString());
+        nodeForm.set('family_id', this.id);
         nodeForm.set('main_name', data.value.nodeTitle);
         nodeForm.set('name', data.value.nodeSubtitle);
 
@@ -186,7 +174,7 @@ export class TreeComponent {
 
                 $(".ct_custom_modal_120").hide()
                 this.nodeForm.reset()
-                this.getTreeViewByID(this.selectedTemplateId);
+                // this.getTreeViewByID();
             },
             error: err =>
                 console.log(err)
@@ -194,7 +182,24 @@ export class TreeComponent {
     };
 
 
-   
+    onRemove(nodeid) {
+
+        const nodeForm = new URLSearchParams();
+        nodeForm.set('id', nodeid);
+        nodeForm.set('family_id', this.id);
+
+        this.familyService.deleteChildTree(nodeForm.toString()).subscribe({
+            next: res => {
+
+                this.nodeForm.reset()
+                if (res.success) {
+                    // this.getTreeViewByID();
+                }
+            },
+            error: err =>
+                console.log(err)
+        })
+    };
 
 
 
