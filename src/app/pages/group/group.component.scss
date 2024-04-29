@@ -281,7 +281,7 @@ label {
   height: 20%;
 }
 .User-headL {
-  border-bottom: 1px solid #242529 !important;
+  border-bottom: 1px solid #eee !important;
   width: 100%;
   height: 20%;
 }
@@ -462,4 +462,12 @@ width: 100px;
 }
 .ct_modal_btns_12 span {
 font-weight: 500 !important;
+}
+
+
+@media screen and (max-width:991px){
+  .myCol{
+    flex-basis: 100% !important;
+    max-width: 100% !important;
+  }
 }

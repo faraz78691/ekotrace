@@ -53,7 +53,7 @@
 .mandatorylabel {
   width: 100px;
   height: 10px;
-  font-size: 10px;
+  font-size: 14px;
   margin-top: 1px !important;
   margin-left: none;
 
@@ -336,13 +336,12 @@
 
 }
 
-.trackingContent {
-  height: auto !important;
-  // max-height: 350px;
-  overflow-y: auto !important;
-  overflow-x: hidden;
+// .trackingContent {
+//   height: auto !important;
+//   overflow-y: auto !important;
+//   overflow-x: hidden;
 
-}
+// }
 
 // .trackingFooter {
 //   height: 90px !important;
@@ -491,9 +490,9 @@ border-left: 4px solid rgb(103, 159, 84);
   margin-bottom: 0px;
   font-size: 14px;
 }
-.ct_scroll_dash{
-  overflow-y: auto;
-}
+// .ct_scroll_dash{
+//   overflow-y: auto;
+// }
 .ct_scroll_dash::-webkit-scrollbar {
   width: 0px;
   display: none;
@@ -676,7 +675,9 @@ div#DPRow.active {
   padding-block: 10px !important;
   white-space: nowrap;
 }
-
+.table .thead-dark th{
+  white-space: nowrap;
+}
 
 @media screen and (max-width:991px){
   .ct_px_0_232{

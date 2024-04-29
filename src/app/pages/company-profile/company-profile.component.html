@@ -50,19 +50,20 @@
             <div class="col-6">
                 <div class="mr-3 ml-5">
                     <label for="logo" class="mt-4 mb-1">Logo</label>
-                    <p style="font-size: 12px" class="mt-0">
+                    <p style="font-size: 16px" class="mt-0">
                         We suggest you upload a transparent PNG logo with a size
                         of 140px width and 50px height.
                     </p>
                 </div>
                
                 <div class="d-flex ml-5">
-                    <div class="uploadfile-div">
+                    <div class="uploadfile-div d-flex align-items-center">
                         <input type="file" class="fileinput pointer" (change)="onFileSelected($event)"
                             accept=".jpg,.png" />
                     </div>
                    
-                    <div class="logodiv">
+                    <div class="logodiv" style="    height: 200px;
+                    width: 100%;">
                         <p-image [src]="uploadedImageUrl" alt="Image" height="100" width="150"></p-image>
                     </div>
 
