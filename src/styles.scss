@@ -1363,7 +1363,7 @@ span.p-datepicker-decade.ng-tns-c40-11.ng-star-inserted{
 }
 .ct_view_request_btn.view-request {
     width: 100% !important;
-    background-color: rgba(103, 159, 84, 1) !important;
+    background-color: rgba(136, 173, 71, 0.75) !important;
     padding: 8px 10px !important;
 }
 
@@ -1626,7 +1626,7 @@ padding-block: 7px;
     position: relative;
     margin-top: 0px;
     margin-right: 8px;
-    top: -3px;
+    top: 0px;
 
 }
 :host ::ng-deep .p-multiselect {
@@ -2090,6 +2090,13 @@ input.ct_change_choose_file_input12::file-selector-button {
     height: 30px !important;
     width: 30px !important;
   }
+  .ct_status_tble_230_space button.p-ripple.p-element {
+    width: 30px;
+    height: 30px;
+    background-color: #eee;
+    min-width: 30px;
+    color: #333 !important;
+}
   .ct_overflow_hidden_data_table_500 .p-datatable-wrapper {
     overflow-y: unset !important;
   }
@@ -2112,3 +2119,24 @@ input.ct_change_choose_file_input12::file-selector-button {
   .ct_overflow_hidden_data_table_500 .ct_status_table_main::-webkit-scrollbar-thumb:hover {
     background: #555; 
   }
+
+  .ct_scope_tab_135 ul.p-tabview-nav li a {
+    font-size: 15px !important;
+    padding-inline: 8px !important;
+  }
+  .ct_status_tble_230_space.p-datatable .p-datatable-thead > tr > th, .p-datatable .p-datatable-thead > tr > th svg path {
+    fill: #fff !important;
+  }
+
+
+  .ct_select_2_full_width12 .p-multiselect-panel  {
+    border: 2px solid #ddd;
+}
+
+.ct_seprate_page_div {
+    margin-top: 30px;
+    border: 1px solid #eee;
+    background-color: #eee;
+    padding: 15px;
+    border-radius: 5px;
+}

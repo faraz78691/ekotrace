@@ -243,7 +243,7 @@ export const menu = [
                 name: 'Set GHG Template',
                 iconClasses: 'fas fa-star',
                 // iconSRC :'assets/img/tracking_icon.svg',
-                path: ['setGhgTemplate']
+                path: ['facility']
             },
             {
                 head: 'GHG Emissions ',
@@ -270,25 +270,6 @@ export const menu = [
                 iconClasses: 'fas fa-table',
                 iconSRC: 'assets/img/BRSR.svg',
                 path: ['brsrReport']
-            },
-            {
-                head: 'Target Setting',
-                name: 'Set Emission Inventory',
-                iconClasses: 'fas fa-folder',
-                iconSRC: 'assets/img/report_icon.svg',
-                path: ['setEmissionInventory']
-            },
-            {
-                name: 'Target Setting',
-                iconClasses: 'fas fa-table',
-                iconSRC: 'assets/img/BRSR.svg',
-                path: ['targetSetting']
-            },
-            {
-                name: 'Actions',
-                iconClasses: 'fas fa-table',
-                iconSRC: 'assets/img/BRSR.svg',
-                path: ['actions']
             },
             // {
             //     name: 'Carbon Offset',

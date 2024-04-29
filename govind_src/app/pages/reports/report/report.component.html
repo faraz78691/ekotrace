@@ -1,0 +1,26 @@
+<div class="container-fluid">
+    <div class="row">
+        <div
+            class="col-sm-6"
+            [ngClass]="
+                this.updatedtheme === 'dark' ? 'headlinetextD' : 'headlinetextL'
+            "
+        >
+            <h3 class="m-0 pl-2">Reports</h3>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div
+            class="col-4"
+            [ngClass]="
+                this.updatedtheme === 'dark' ? 'reportsclassD' : 'reportsclassL'
+            "
+            *ngFor="let report of reports"
+        >
+            <h5>{{ report.heading }}</h5>
+            <p>{{ report.pera }}</p>
+            <button routerLink="/energy-custom-report">{{ report.button }}</button>
+        </div>
+    </div>
+</div>

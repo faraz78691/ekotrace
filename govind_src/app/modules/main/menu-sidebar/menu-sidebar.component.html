@@ -1,0 +1,106 @@
+<!-- Brand Logo -->
+
+<div class="d-flex align-items-center gap-2">
+    <a [routerLink]="['/']" class="brand-link">
+        <pf-image *ngIf="updatedtheme === 'dark'" class="pl-4" src="assets/img/ekobon.png" alt="Ekobon Logo"
+            height="33"></pf-image>
+    
+    
+        <pf-image *ngIf="updatedtheme !== 'dark'" class="pl-4" src="assets/img/ekobonL.png" alt="Ekobon Logo"
+            height="33"></pf-image>
+    
+    
+      
+    </a>
+    <div class="gap-2 text-dark ct_open_bar" (click)="onToggleMenuSidebar()">
+        <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg>
+    </div>
+</div>
+
+
+
+
+<!-- Sidebar -->
+<div class="sidebar">
+
+    <!-- Sidebar Menu -->
+    <nav class="mt-2" style="overflow-y: scroll">
+
+        <div>
+            <ul *ngIf="IsPAdmin" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                data-accordion="false" [ngClass]="updatedtheme === 'dark'">
+                <div>
+                    <!-- <p class="text-white Text-opacity">Admin Section</p> -->
+                    <app-menu-item [menuItem]="{
+                            name: 'Dashboard',
+                            iconClasses: 'fas fa-table',
+                            path: ['dashboard']
+                        }"></app-menu-item>
+                    <app-menu-item [menuItem]="{
+                            name: 'Company Registration',
+                            iconClasses: 'fas fa-user',
+                            path: ['company-register']
+                        }"></app-menu-item>
+
+                </div>
+            </ul>
+            <ul *ngIf="!IsPAdmin" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                data-accordion="false">
+                <div *ngFor="let item of menu">
+                    <p [ngClass]="
+                            this.updatedtheme === 'dark'
+                                ? 'headtextD'
+                                : 'headtextL'
+                        ">
+                        {{ item.head }}
+                    </p>
+                    <app-menu-item [menuItem]="item"></app-menu-item>
+                </div>
+            </ul>
+        </div>
+        <div [ngClass]="
+                this.IsPAdmin === true ||
+                this.loginInfo.role === 'Preparer' ||
+                this.loginInfo.role === 'Approver'
+                    ? 'Ldarkbutton'
+                    : ''
+            ">
+            <!-- dark mode toggle Start -->
+            <!-- <div class="d-flex" [ngClass]="
+                    this.updatedtheme === 'dark'
+                        ? 'ondarkThemeButton'
+                        : 'onlightThemeButton'
+                ">
+                <div class="col" [ngClass]="
+                        this.updatedtheme === 'dark'
+                            ? 'ondarklightbutton'
+                            : 'onlightdarkbutton'
+                    " (click)="theme1()">
+                    <i class="pi pi-sun"></i>
+                    Light
+                </div>
+                <div class="col" (click)="theme2()" [ngClass]="
+                        this.updatedtheme === 'dark'
+                            ? 'ondarkdarkbutton'
+                            : 'onlightlightbutton'
+                    ">
+                    <i class="pi pi-moon"></i>
+                    Dark
+                </div>
+            </div> -->
+            <!-- dark mode toggle end -->
+            <!-- <div class="pb-5 mb-5">
+                <select
+                    name="theme"
+                    [(ngModel)]="selectedTheme"
+                    (change)="getSelectedValue()"
+                >
+                    <option value="theme1">theme1</option>
+                    <option value="theme2">theme2</option>
+                    <option value="theme3">theme3</option>
+                    <option value="theme4">theme4</option>
+                </select>
+            </div> -->
+        </div>
+    </nav>
+</div>
