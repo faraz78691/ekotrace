@@ -9,7 +9,7 @@
 
     </div>
     <div class="row pt-2 ml-0 mx-0 px-0">
-        <div class="col-lg-4  mb-4  px-2 ct_scope_tab_135">
+        <div class="col-4  mb-4  px-2">
             <div class=" TrackingDiv-border Dashboard-tab ct_dash_board_tab ct_hide_scroll_239"
                 style="height: calc(100vh - 160px);" [ngClass]="facilitynothavedp === 'block' ? 'fornodata' : ''">
 
@@ -250,7 +250,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-8 mb-4 px-2">
+        <div class="col-8 mb-4 px-2">
             <div class="TrackingDiv2-border Dashboard-tab ct_dash_board_tab text-white ct_scroll_dash"
                 style="height: calc(100vh - 160px);">
 
@@ -309,10 +309,10 @@
                             <div class="trackingContent"
                                 *ngIf="categoryId ==1 || categoryId == 2 ||   categoryId == 3  || categoryId == 4 || categoryId == 5 || categoryId == 6 || categoryId == 6 || categoryId == 7">
                                 <div class="row mt-4 mx-2">
-                                    <div class="col-lg-4"
+                                    <div class="col-4"
                                         *ngIf="categoryId==1 ||categoryId==2 || SubCatAllData.manageDataPointSubCategorySeedID == 1002 || categoryId == 7 ">
                                         <label for="fname">Type</label>
-                                        <p-dropdown   *ngIf="SubCatAllData.manageDataPointSubCategorySeedID != 1002"
+                                        <p-dropdown *ngIf="SubCatAllData.manageDataPointSubCategorySeedID != 1002"
                                             class="ct_select_op_input ct_chev_icon_dark230 
 
                                             " ngModel [options]="SubCategoryType" optionLabel="Item"
@@ -327,7 +327,7 @@
                                             (onChange)="marktetTypeChange($event)"></p-dropdown>
 
                                     </div>
-                                    <div class="col-lg-4" *ngIf="categoryId==1  || categoryId == 7">
+                                    <div class="col-4" *ngIf="categoryId==1  || categoryId == 7">
                                         <label for="fname">Reading Value</label>
                                         <div class=" position-relative">
                                             <input required ngModel name="readingvalue" #readingvalue="ngModel"
@@ -354,7 +354,7 @@
                                     </div>
 
                                     <div *ngIf="categoryId == 5 && SubCatAllData.manageDataPointSubCategorySeedID != 1002"
-                                        class="col-lg-4">
+                                        class="col-4">
                                         <label for="fname">Grid</label>
                                         <p-dropdown class="ct_select_op_input ct_chev_icon_dark230 " ngModel
                                             [options]="regionType" optionLabel="RegionName" optionValue="RegionID"
@@ -387,7 +387,7 @@
                                             Reading value required.
                                         </p>
                                     </div>
-                                    <div class="col-lg-4" *ngIf="categoryId==3">
+                                    <div class="col-4" *ngIf="categoryId==3">
                                         <label for="fname">No. of Extinguisher</label>
                                         <input required ngModel name="ExtinguisherNo" #ExtinguisherNo="ngModel"
                                             [(ngModel)]="FireExtinguisherDE.numberOfExtinguisher" ExtinguisherNo
@@ -405,7 +405,7 @@
                                             No. of Extinguisher required.
                                         </p>
                                     </div>
-                                    <div class="col-lg-4" *ngIf="categoryId==3">
+                                    <div class="col-4" *ngIf="categoryId==3">
                                         <label pTooltip="Quantity of CO2 Makeup" tooltipPosition="top" for="fname">CO2
                                             MakeUp</label>
                                         <div class="position-relative">
@@ -426,7 +426,7 @@
                                     </div>
                                     <div *ngIf="categoryId==6" class="row">
                                         <div class="mb-3"
-                                            [ngClass]="typeEV == true ? 'col-lg-4': typeBusCoach == true ? 'col-lg-4': 'col-lg-4'">
+                                            [ngClass]="typeEV == true ? 'col-4': typeBusCoach == true ? 'col-4': 'col-4'">
                                             <label for="fname">Vehicle Type</label>
                                             <p-dropdown class="ct_select_op_input ct_chev_icon_dark230 
 
@@ -435,7 +435,7 @@
                                                 [(ngModel)]="VehicleDE.vehicleTypeID"
                                                 (onChange)="enableCharging(SubCatAllData.subCatName)"></p-dropdown>
                                         </div>
-                                        <div class="col-lg-4 mb-3">
+                                        <div class="col-4 mb-3">
                                             <label for="fname">No. of Vehicles</label>
                                             <input required ngModel name="NoOfVehicles" #NoOfVehicles="ngModel"
                                                 [(ngModel)]="VehicleDE.noOfVehicles" NoOfVehicles id="search-input"
@@ -454,7 +454,7 @@
                                             </p>
                                         </div>
 
-                                        <div class="col-lg-4 mb-3">
+                                        <div class="col-4 mb-3">
                                             <label pTooltip="Total number of trips per vehicle" tooltipPosition="top"
                                                 for="TotalnoOftripsPerVehicle">Trips per vehicle</label>
 
@@ -468,7 +468,7 @@
 
 
                                         </div>
-                                        <div *ngIf="typeEV == true" class="col-lg-4">
+                                        <div *ngIf="typeEV == true" class="col-4">
                                             <label pTooltip="Charging done outside company campus (%)"
                                                 tooltipPosition="top" for="fname">Charging %
                                             </label>
@@ -481,7 +481,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div *ngIf="typeBusCoach == true" class="col-lg-4">
+                                        <div *ngIf="typeBusCoach == true" class="col-4">
                                             <label pTooltip="Average number of people travel in one vehicle per trip"
                                                 tooltipPosition="top" for="AvgNoPeople">Avg No. of People</label>
                                             <input required ngModel name="AvgNoPeople" #AvgNoPeople="ngModel"
@@ -490,7 +490,7 @@
 
                                         </div>
                                         <div
-                                            [ngClass]="typeEV == true ? 'col-lg-4': typeBusCoach == true ? 'col-lg-4': 'col-lg-4'">
+                                            [ngClass]="typeEV == true ? 'col-4': typeBusCoach == true ? 'col-4': 'col-4'">
                                             <label pTooltip="Mode of Data Entry" tooltipPosition="top" for="fname">Mode
                                                 of data entry</label>
                                             <p-dropdown class="ct_select_op_input ct_chev_icon_dark230 
@@ -502,7 +502,7 @@
 
 
                                         <div
-                                            [ngClass]="typeEV == true ? 'col-lg-4': typeBusCoach == true ? 'col-lg-4': 'col-lg-4'">
+                                            [ngClass]="typeEV == true ? 'col-4': typeBusCoach == true ? 'col-4': 'col-4'">
                                             <label for="fname">Value</label>
                                             <div class="position-relative">
                                                 <input required ngModel name="Value" #Value="ngModel" placeholder=""
@@ -520,7 +520,7 @@
 
 
 
-                                    <div class="col-lg-4" *ngIf="categoryId==1">
+                                    <div class="col-4" *ngIf="categoryId==1">
                                         <label for="fname">Calorific value (optional)</label>
 
                                         <input required ngModel name="calorificValue" type="text"
@@ -537,14 +537,14 @@
                                 </div>
 
                                 <div class="row mt-4 mx-2" *ngIf="categoryId==3">
-                                    <div class="col-lg-4 mb-3">
+                                    <div class="col-4 mb-3">
                                         <label for="fname">Identity of Fire Extinguisher(Optional)</label>
                                         <input required ngModel name="ExtinguisherID" #ExtinguisherID="ngModel"
                                             [(ngModel)]="FireExtinguisherDE.fireExtinguisherID" ExtinguisherID
                                             id="search-input" type="text" placeholder="Enter value"
                                             class="form-control Dashboard-tab text-white" />
                                     </div>
-                                    <!-- <div class="col-lg-4 downloadFile">
+                                    <!-- <div class="col-4 downloadFile">
                                         <label clickable (click)="downloadFireExtTemplate()"
                                             pTooltip="Download Fire Extinguisher Template"
                                             tooltipPosition="top">Download</label>
@@ -554,7 +554,7 @@
                                 </div>
                                 <div *ngIf="renewableSelected">
                                     <div class="row mt-4 mx-2" *ngIf="categoryId==5">
-                                        <div class="col-lg-4" *ngIf="categoryId==5">
+                                        <div class="col-4" *ngIf="categoryId==5">
                                             <label for="fname">Reading Value</label>
                                             <div class=" position-relative">
                                                 <input required ngModel name="readingvalue" #readingvalue="ngModel"
@@ -581,7 +581,7 @@
                                         </div>
 
                                         <div *ngIf="SubCatAllData.manageDataPointSubCategorySeedID == 1002"
-                                            class="col-lg-4">
+                                            class="col-4">
                                             <label for="fname">Source(Optional)</label>
                                             <p-dropdown class="ct_select_op_input ct_chev_icon_dark230"
                                                 placeholder="Select source" ngModel [options]="ElectricitySource"
@@ -598,13 +598,13 @@
                                 <div *ngIf="supplierSelected">
                                     <div class="row mt-4 mx-2" *ngIf="categoryId==5">
                                         <div *ngIf="SubCatAllData.manageDataPointSubCategorySeedID == 1002"
-                                            class="col-lg-4">
+                                            class="col-4">
                                             <label for="fname">Supplier specific Emission Factor</label>
                                             <input required ngModel name="emission_factorS" #emission_factorS="ngModel"
                                                 placeholder="Enter value" readingvalue id="search-input" type="text"
                                                 class="form-control Dashboard-tab text-white" />
                                         </div>
-                                        <div class="col-lg-4" *ngIf="categoryId==5">
+                                        <div class="col-4" *ngIf="categoryId==5">
                                             <label for="fname">Value</label>
                                             <div class=" position-relative">
                                                 <input required ngModel name="sourcevalue" #readingvalue="ngModel"

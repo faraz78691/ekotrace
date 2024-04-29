@@ -11,7 +11,7 @@
     <div class="row">
         <div class="col-4 text-center" *ngFor="let report of customreports">
             <div class="reportsclass">
-                <h4>{{ report.heading }}</h4>
+                <h6>{{ report.heading }}</h6>
                 <p>{{ report.pera }}</p>
                 <button class="ct_custom_sub_btn" [routerLink]="report.path">{{ report.button }}</button>
             </div>

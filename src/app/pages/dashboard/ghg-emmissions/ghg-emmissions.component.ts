@@ -119,6 +119,7 @@ export class GhgEmmissionsComponent implements OnDestroy {
     private trackingService: TrackingService,
     private dashboardService: DashboardService) {
     this.year = new Date();
+    console.log(this.year)
     this.loginInfo = new LoginInfo();
 
   };

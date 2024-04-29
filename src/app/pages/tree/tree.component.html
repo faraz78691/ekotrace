@@ -17,17 +17,14 @@
         </div>
     </div>
 </div>
-<div class="div ct_seprate_page_div">
-   
-    <div class="d-flex align-items-center justify-content-between mb-4">
-        <ng-container *ngIf="treeList$ | async as list ">
-            <p-dropdown 
-            class="ct_select_op_input ct_chev_icon_dark230 ct_select_2_300" ngModel [options]="list.familyDetails" optionLabel="family_name"
-            optionValue="id" name="subCatType" #subCatType="ngModel" [(ngModel)]="selectedTemplate" 
-          ></p-dropdown>
-        </ng-container>
-        <button (click)="showBasicDialog()" class="p-button ct_animation_btn_121 mr-2 py-2">Create template</button>
-    </div>
+<div class="div">
+    <button (click)="showBasicDialog()">Create template</button>
+    <ng-container *ngIf="treeList$ | async as list ">
+        <p-dropdown 
+        class="ct_select_op_input ct_chev_icon_dark230" ngModel [options]="list.familyDetails" optionLabel="family_name"
+        optionValue="id" name="subCatType" #subCatType="ngModel" [(ngModel)]="selectedTemplateId" (onChange)="onTemplateChange($event)"
+      ></p-dropdown>
+    </ng-container>
     <div  id="tree"></div>
 </div>
 

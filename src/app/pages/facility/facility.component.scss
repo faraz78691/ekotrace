@@ -455,7 +455,7 @@ tr.border-bottom td button {
 .label {
   width: 100%;
   color: #88AD47;
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .scopeDiv {
@@ -545,9 +545,3 @@ font-weight: 400;
   font-weight: 400 !important;
 }
 
-@media screen and (max-width:991px){
-  .myCol{
-    flex-basis: 100% !important;
-    max-width: 100% !important;
-  }
-}
