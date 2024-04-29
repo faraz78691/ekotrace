@@ -1,4 +1,4 @@
-<div class="container">
+<div class="containerfluid px-4">
     <div class="row pt-4">
         <div class="col-sm-6" [ngClass]="
                 this.updatedtheme === 'dark' ? 'headlinetextD' : 'headlinetextL'
@@ -7,8 +7,8 @@
         </div>
     </div>
 
-    <div class="row d-flex justify-content-between mx-3 pt-3">
-        <div class="col-md-12 myCol overflow-auto mb-5 ct_custom_flex_basisc"
+    <div class="row pt-3">
+        <div class="col-md-12  overflow-auto mb-5 ct_custom_flex_basisc"
             [ngClass]="this.updatedtheme === 'dark' ? 'User-tabD' : 'User-tabL'">
             <div class="row p-2">
                 <div class="" [ngClass]="
@@ -43,10 +43,9 @@
 
 
             <div class="dataTable scrollit">
-                <table class="table_loc ct_space_table_21 ct_billing_table_bg_120">
+                <table class="table_loc ct_space_table_21 ct_billing_table_bg_120 w-100">
                     <thead>
                         <tr>
-
                             <th scope="col">Planned</th>
                             <th scope="col">In Progress </th>
                             <th scope="col">Archieved</th>
@@ -54,20 +53,36 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr clickable (click)="selectGroup(group,index)" *ngFor="
+                        <!-- <tr clickable (click)="selectGroup(group,index)" *ngFor="
                                 let group of groupsList;let index = index
                             " class="col-12 tableRow border-bottom rounded pointer" (click)="UnlockComplete(group.id)"
-                            [ngClass]="{ 'tableRowclicked': index === selectedRowIndex }">
-                            <td *ngIf="group.status =='Passed'" class="td text-initial">
-                                {{ group.name }}
+                            [ngClass]="{ 'tableRowclicked': index === selectedRowIndex }"> -->
+                      
+                        <tr>
+                            <!-- <td *ngIf="group.status =='Passed'" class="td text-initial"> -->
+                            <td class="td text-initial">
+                                <!-- {{ group.name }} -->
+                                <div class="ct_actiion_box_125">
+                                    <h4>Vender Review</h4>
+                                    <p>CO2 Saving: <strong>650t CO2e</strong></p>
+                                    <span>12/04/2024</span>
+                                </div>
                             </td>
                             <td class="td ">
-                                {{ group.name }}
-
+                                <!-- {{ group.name }} -->
+                                <div class="ct_actiion_box_125">
+                                    <h4>Vender Review</h4>
+                                    <p>CO2 Saving: <strong>650t CO2e</strong></p>
+                                    <span>12/04/2024</span>
+                                </div>
                             </td>
                             <td class="td text-center pb-1">
-                                {{ group.name }}
-
+                                <!-- {{ group.name }} -->
+                                <div class="ct_actiion_box_125">
+                                    <h4>Vender Review</h4>
+                                    <p>CO2 Saving: <strong>650t CO2e</strong></p>
+                                    <span>12/04/2024</span>
+                                </div>
                             </td>
                           
                         

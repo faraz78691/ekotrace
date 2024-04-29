@@ -1,0 +1,30 @@
+.ct_actiion_box_125 {
+    background-color: #eee;
+    padding: 30px;
+    margin: 15px;
+    border-radius: 15px;
+    position: relative;
+}
+.ct_actiion_box_125:before{
+ content: "";
+ position: absolute;
+ top: 0px;
+ right:0px;
+ border-top: 4px solid #ffc543;
+ border-right: 4px solid #ffc543;
+ width: 30px;
+ height: 30px;
+ border-radius: 5px;
+
+}
+.ct_actiion_box_125:after{
+    content: "";
+    position: absolute;
+    bottom: 0px;
+    left:0px;
+    border-bottom: 4px solid #ffc543;
+    border-left: 4px solid #ffc543;
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+   }
