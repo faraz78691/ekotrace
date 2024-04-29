@@ -1,3 +1,4 @@
+<div class="ct_seprate_page_div">
 <div class="container-fluid">
     <!-- <div class="row pt-4">
         <div class="col-sm-6" [ngClass]="
@@ -8,7 +9,7 @@
     </div> -->
 
     <div class="row d-flex justify-content-between mx-3 pt-3">
-        <div class="col-7 myCol overflow-auto mb-5"
+        <div class="col-lg-7 myCol overflow-auto mb-5"
             [ngClass]="this.updatedtheme === 'dark' ? 'User-tabD' : 'User-tabL'">
             <div class="row p-2">
                 <div class="" [ngClass]="
@@ -91,7 +92,7 @@
 
 
                                 <div class="row mt-4" *ngIf="groupdetails.groupBy === 'State'">
-                                    <div class="col-4" *ngFor="let state of stateData">
+                                    <div class="col-lg-4" *ngFor="let state of stateData">
                                         <p-checkbox name="groupname" [value]="state.id" [inputId]="state.id"
                                             [(ngModel)]="selectedState" label="{{ state.name }}"></p-checkbox>
                                     </div>
@@ -99,7 +100,7 @@
                             </div>
 </div>
                             <div class="row mt-4" *ngIf="groupdetails.groupBy === 'Country'">
-                                <div class="col-4" *ngFor="
+                                <div class="col-lg-4" *ngFor="
                                         let country of countryData;
                                         let i = index
                                     ">
@@ -108,7 +109,7 @@
                                 </div>
                             </div>
                             <div class="row mt-4" *ngIf="groupdetails.groupBy === 'Facility'">
-                                <div class="col-4" *ngFor="let facility of facilityList">
+                                <div class="col-lg-4" *ngFor="let facility of facilityList">
                                     <p-checkbox name="groupname" [value]="facility.id" [inputId]="facility.id"
                                         label="{{ facility.name }}" [(ngModel)]="selectedFaciltiy"></p-checkbox>
                                 </div>
@@ -157,14 +158,14 @@
                                 let group of groupList.categories;let index = index
                             " class="col-12 tableRow border-bottom rounded pointer" (click)="UnlockComplete(group.id)"
                             [ngClass]="{ 'tableRowclicked': index === selectedRowIndex }">
-                            <td class="col-4 td text-initial">
+                            <td class="col-lg-4 td text-initial">
                                 {{ group.groupname }}
                             </td>
-                            <td class="col-4 td text-center pb-1">
+                            <td class="col-lg-4 td text-center pb-1">
                                 {{ group.groupBy }}
 
                             </td>
-                            <td class="col-4 td text-right">
+                            <td class="col-lg-4 td text-right">
                                 <a style="
                                         cursor: pointer;
                                         color: #88ad47;
@@ -184,7 +185,7 @@
             </div>
         </div>
 
-        <div class="col-5" [ngClass]="this.updatedtheme === 'dark' ? 'User-tabD' : 'User-tabL'" style="height: 350px">
+        <div class="col-lg-5" [ngClass]="this.updatedtheme === 'dark' ? 'User-tabD' : 'User-tabL'" style="height: 350px">
             <h5 class="pl-3 mt-3">Group Details</h5>
             <div class="row font-UserProfile mt-4" *ngIf="groupdata === true">
                 <table class="table ct_billing_border_0_none">
@@ -270,4 +271,5 @@
             </div>
         </div>
     </div>
+</div>
 </div>
