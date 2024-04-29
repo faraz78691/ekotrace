@@ -26,6 +26,11 @@ export class GroupService {
             environment.baseUrl + '/getuser_offseting',tenantID
         );
     };
+    public getTargetSetting(): Observable<any> {
+        return this.http.get(
+            environment.baseUrl + '/targetsetting/getTargetSettingDetails'
+        );
+    };
 
     public EditGroup( groupdetails): Observable<any> {
         return this.http.post(environment.baseUrl + '/Updategroupmapping' , groupdetails);
@@ -44,11 +49,10 @@ export class GroupService {
         return this.http.post(environment.baseUrl + '/Addgroup', groupdetails);
     }
     public Adduser_offseting(groupdetails): Observable<any> {
-        // const headers = new HttpHeaders()
-        // .set('content-type','multipart/form-data;')
-        // .set('Access-Control-Allow-Origin', '*');  
-        // ; 
         return this.http.post( environment.baseUrl + '/Adduser_offseting', groupdetails);
+    }
+    public addTargetSetting(groupdetails): Observable<any> {
+        return this.http.post( environment.baseUrl + '/targetsetting/addTargetSetting', groupdetails);
     }
 
     public deleteGroups(id) {

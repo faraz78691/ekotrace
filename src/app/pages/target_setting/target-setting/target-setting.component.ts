@@ -64,7 +64,10 @@ export class TargetSettingComponent {
   selectedValue: string;
   selectedCountry: any[] = [];
   scopeList: any[] = [];
+  emission_activity: any[] = [];
   editBindedCountry: any[] = [];
+  target_type: any[] = [];
+  targetKPI: any[] = [];
   id: any;
   isgroupExist: boolean = false;
   selectedFaciltiy: any;
@@ -124,6 +127,40 @@ export class TargetSettingComponent {
               name: 'Others'
           }
       ];
+      this.emission_activity = [
+          {
+              e_act: 'Scope 1'
+          },
+          {
+            e_act: 'Scope 1 & 2'
+          },
+          {
+            e_act: 'Scope 3'
+          },
+          {
+            e_act: 'Scope 1,2 & 3'
+          }
+      ];
+      this.target_type = [
+          {
+              e_act: 'Economic Intensity Convergence'
+          },
+          {
+            e_act: 'Physical Intensity Convergence'
+          },
+          {
+            e_act: 'Economic Intensity Convergence'
+          }
+      ];
+      this.targetKPI = [
+          {
+              e_act: 'Supplier Engagement'
+          },
+          {
+            e_act: 'Renewable energy'
+          }
+         
+      ];
       
  
       this.scopeList = [
@@ -148,7 +185,7 @@ export class TargetSettingComponent {
       this.getTenantsDetailById(Number(this.loginInfo.tenantID));
       // this.GetAllFacility();
       let tenantID = this.loginInfo.tenantID;
-      this.getOffset(tenantID);
+      this.GetTarget();
       this.updatedtheme = this.themeservice.getValue('theme');
   }
   //checks upadated theme
@@ -159,17 +196,17 @@ export class TargetSettingComponent {
   getTenantsDetailById(id: number) {};
 
 
-   getOffset(tenantID:any) {
-      let formData = new URLSearchParams();
+   GetTarget() {
+    //   let formData = new URLSearchParams();
 
-      formData.set('tenant_id', tenantID.toString());
+    //   formData.set('tenant_id', tenantID.toString());
   
-      this.GroupService.getuser_offseting(formData.toString()).subscribe({
+      this.GroupService.getTargetSetting().subscribe({
           next: (response) => {
              
               if(response.success == true)
               {
-                  this.groupsList = response.categories;
+                  this.groupsList = response.orders;
                   if (this.groupsList.length > 0) {
                       this.groupdetails = this.groupsList[0];
                       this.groupdata = true;
@@ -190,25 +227,18 @@ export class TargetSettingComponent {
   //method to add new group
   saveOffset(data: NgForm) {
 
-    const formData: FormData = new FormData();
-    if(this.selectedFile){
-        formData.append('file', this.selectedFile, this.selectedFile.name);
-    }
-      formData.append('project_name',data.value.project_details);
-      formData.append('project_type',this.project_type);
-      formData.append('date_of_purchase',this.date3);
-      formData.append('vintage',data.value.vintage);
-      formData.append('standard',data.value.standard);
-      formData.append('offset',  data.value.carbon_offset);
-      formData.append('carbon_credit_value',data.value.carbon_credit_value);
-      formData.append('scope1',data.value.scope_1);
-      formData.append('scope2',data.value.scope_2);
-      formData.append('scope3', data.value.scope_3);
-      formData.append('tenant_id',this.loginInfo.tenantID.toString());
-      formData.append('comments',data.value.comments);
-   
-
-      this.GroupService.Adduser_offseting(formData).subscribe({
+    const formData = new URLSearchParams();
+  
+      formData.append('target_name',data.value.target_name);
+      formData.append('emission_activity',data.value.emission_activity);
+      formData.append('target_type',data.value.target_type);
+      formData.append('base_year',data.value.base_year);
+      formData.append('target_year',data.value.target_year);
+      formData.append('target_emission_change',  data.value.target_emission_change);
+      formData.append('other_target_kpichange',data.value.other_target_kpichange);
+      formData.append('other_target_kpi',data.value.other_target_kpi);
+    
+      this.GroupService.addTargetSetting(formData).subscribe({
           next: (response) => {
               if(response.success == true)
               {
@@ -217,10 +247,11 @@ export class TargetSettingComponent {
                       ' Offset Added successfully',
                       'Success'
                   );
-                  this.getOffset(this.loginInfo.tenantID);
+                  this.GetTarget();
+                  this.GroupForm.reset();
               }
               // return
-              this.getOffset(this.loginInfo.tenantID);
+            //   this.getOffset(this.loginInfo.tenantID);
               this.visible = false;
               if (localStorage.getItem('FacilityGroupCount') != null) {
                   let fgcount = localStorage.getItem('FacilityGroupCount');
@@ -239,9 +270,7 @@ export class TargetSettingComponent {
       });
   };
 
-  onFileSelected(event: any) {
-    this.selectedFile = event.target.files[0];
-};
+
   
   //method for update group detail by id
   updateGroup(id: any, data: NgForm) {
@@ -283,7 +312,7 @@ export class TargetSettingComponent {
       this.GroupService.newEditGroup(formData.toString()).subscribe({
           next: (response) => {
               console.log(response);
-              this.getOffset(tenantID);
+              this.GetTarget();
 
               this.visible = false;
               this.notification.showSuccess(
@@ -306,7 +335,8 @@ export class TargetSettingComponent {
       this.visible = false;
       this.isloading = false;
       let tenantID = this.loginInfo.tenantID;
-      this.getOffset(tenantID);
+
+      this.GetTarget();
   }
   //display a dialog for editing a group
   showEditGroupDialog(groupdetails) {
@@ -393,7 +423,8 @@ export class TargetSettingComponent {
                           String(newcount)
                       );
                   }
-                  this.getOffset(tenantID);
+
+                  this.GetTarget();
               });
 
               this.messageService.add({
@@ -403,7 +434,8 @@ export class TargetSettingComponent {
               });
           },
           reject: () => {
-              this.getOffset(tenantID);
+ 
+            this.GetTarget();
               this.messageService.add({
                   severity: 'error',
                   summary: 'Rejected',
