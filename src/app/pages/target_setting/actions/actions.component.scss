@@ -14,8 +14,14 @@
  border-right: 4px solid #ffc543;
  width: 30px;
  height: 30px;
- border-radius: 5px;
+ border-radius: 0px 5px 0px 5px ;
 
+}
+.ct_actiion_box_125_orange:before,.ct_actiion_box_125_orange:after{
+    border-color: #ff974b !important;
+}
+.ct_actiion_box_125_blue:before,.ct_actiion_box_125_blue:after{
+    border-color: #3dd598 !important;
 }
 .ct_actiion_box_125:after{
     content: "";
@@ -26,5 +32,12 @@
     border-left: 4px solid #ffc543;
     width: 30px;
     height: 30px;
-    border-radius: 5px;
+    border-radius: 0px 5px 0px 5px;
+   }
+
+   .ct_action_dot_11{
+    width: 10px;
+    height: 10px;
+    border-radius: 100px;
+    display: inline-block;
    }
