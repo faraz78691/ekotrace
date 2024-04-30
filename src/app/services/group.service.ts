@@ -54,6 +54,9 @@ export class GroupService {
     public addTargetSetting(groupdetails): Observable<any> {
         return this.http.post( environment.baseUrl + '/targetsetting/addTargetSetting', groupdetails);
     }
+    public addTargetActions(groupdetails): Observable<any> {
+        return this.http.post( environment.baseUrl + '/targetsetting/addActions', groupdetails);
+    }
     public getActions(): Observable<any> {
         return this.http.get( environment.baseUrl + '/targetsetting/getActions');
     }

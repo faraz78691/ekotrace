@@ -67,19 +67,14 @@
                             " class="col-12 tableRow border-bottom rounded pointer" (click)="UnlockComplete(group.id)"
                             [ngClass]="{ 'tableRowclicked': index === selectedRowIndex }"> -->
                       
-                        <tr>
-                            <!-- <td *ngIf="group.status =='Passed'" class="td text-initial"> -->
-                            <td class="td text-initial">
+                        <tr  *ngFor="let group of groupsList">
+                            <!-- <td  class="td text-initial"> -->
+                            <td *ngIf="group.status =='Passed'" class="td text-initial">
                                 <!-- {{ group.name }} -->
                                 <div class="ct_actiion_box_125">
-                                    <h4 class="ct_h4">Vender Review</h4>
-                                    <p>CO2 Saving: <strong>650t CO2e</strong></p>
-                                    <span>12/04/2024</span>
-                                </div>
-                                <div class="ct_actiion_box_125">
-                                    <h4 class="ct_h4">Vender Review</h4>
-                                    <p>CO2 Saving: <strong>650t CO2e</strong></p>
-                                    <span>12/04/2024</span>
+                                    <h4 class="ct_h4">{{ group.name }}</h4>
+                                    <p>CO2 Saving: <strong>{{ group.name }} tCO2e</strong></p>
+                                    <span>{{ group.name }}</span>
                                 </div>
                             </td>
                             <td class="td ">
@@ -150,7 +145,7 @@
             <div class="col-md-6 mb-3">
                 <label for="fname">Name </label>
                 <input  name="name" ngModel id="search-input" type="text"
-                    class="form-control Dashboard-tab text-white" placeholder="Enter Project Name"
+                    class="form-control Dashboard-tab text-white" placeholder="Enter  Name"
                     #groupName="ngModel"  [disabled]="isloading"
                     required />
                 <p class="text-danger mb-0"
@@ -166,7 +161,7 @@
             <div class="col-md-6 mb-3">
                 <label for="fname">Scope Category</label>
                 <input  name="scope_category" ngModel id="search-input" type="text"
-                class="form-control Dashboard-tab text-white" placeholder="Enter Project Name"
+                class="form-control Dashboard-tab text-white" placeholder="Enter Scope Category"
                 #groupName="ngModel"  [disabled]="isloading"
                 required />
                 <p class="text-danger mb-0"
@@ -182,7 +177,7 @@
             <div class="col-md-6 mb-3">
                 <label for="fname">CO2 Savings (tCOe)</label>
                 <input  name="co2_savings_tcoe" ngModel id="search-input" type="text"
-                class="form-control Dashboard-tab text-white" placeholder="Enter Project Name"
+                class="form-control Dashboard-tab text-white" placeholder="Enter CO2e"
                 #groupName="ngModel"  [disabled]="isloading"
                 required />
                 <p class="text-danger mb-0"

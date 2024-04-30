@@ -225,14 +225,14 @@ export class ActionsComponent {
     const formData = new URLSearchParams();
   
       formData.append('name',data.value.name);
-      formData.append('emission_activity',data.value.emission_activity);
+      formData.append('scope_category',data.value.scope_category);
       formData.append('co2_savings_tcoe',data.value.co2_savings_tcoe);
       formData.append('time_period',data.value.time_period);
       formData.append('owner',data.value.owner);
       formData.append('status',data.value.status);
      
     
-      this.GroupService.addTargetSetting(formData).subscribe({
+      this.GroupService.addTargetActions(formData).subscribe({
           next: (response) => {
               if(response.success == true)
               {
