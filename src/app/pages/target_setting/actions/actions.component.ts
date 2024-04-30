@@ -1,7 +1,7 @@
 import { Facility } from '@/models/Facility';
 import { RoleModel } from '@/models/Roles';
 import { UserInfo } from '@/models/UserInfo';
-import { Group } from '@/models/group';
+import { Actions, Group } from '@/models/group';
 import { GroupMapping } from '@/models/group-mapping';
 import { LoginInfo } from '@/models/loginInfo';
 import { CompanyDetails } from '@/shared/company-details';
@@ -37,7 +37,7 @@ export class ActionsComponent {
   public admininfoList: UserInfo[] = [];
   facilityList: Facility[] = [];
   RolesList: RoleModel[] = [];
-  public groupsList: Group[] = [];
+  public groupsList: Actions[] = [];
   display = 'none';
   visible: boolean;
   selectedRole = '';
@@ -63,6 +63,9 @@ export class ActionsComponent {
   scopeList: any[] = [];
   emission_activity: any[] = [];
   status: any[] = [];
+  plannedActions: any[] = [];
+  progressActions: any[] = [];
+  archiveActions: any[] = [];
   editBindedCountry: any[] = [];
   target_type: any[] = [];
   targetKPI: any[] = [];
@@ -197,11 +200,15 @@ export class ActionsComponent {
     //   formData.set('tenant_id', tenantID.toString());
   
       this.GroupService.getActions().subscribe({
-          next: (response) => {
+          next: (response:any) => {
              
               if(response.success == true)
               {
                   this.groupsList = response.orders;
+                 this.plannedActions = this.groupsList.filter((items)=>items.status == 'Planned');
+                 this.progressActions = this.groupsList.filter((items)=>items.status == 'Progress');
+                 console.log(this.progressActions);
+                 this.archiveActions = this.groupsList.filter((items)=>items.status == 'Archieved');
                   if (this.groupsList.length > 0) {
                       this.groupdetails = this.groupsList[0];
                       this.groupdata = true;

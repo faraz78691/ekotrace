@@ -10,11 +10,11 @@
  position: absolute;
  top: 0px;
  right:0px;
- border-top: 4px solid #ffc543;
- border-right: 4px solid #ffc543;
+ border-top: 5px solid #ffc543;
+ border-right: 5px solid #ffc543;
  width: 30px;
  height: 30px;
- border-radius: 0px 5px 0px 5px ;
+ border-radius: 0px 15px 0px 15px ;
 
 }
 .ct_actiion_box_125_orange:before,.ct_actiion_box_125_orange:after{
@@ -28,11 +28,11 @@
     position: absolute;
     bottom: 0px;
     left:0px;
-    border-bottom: 4px solid #ffc543;
-    border-left: 4px solid #ffc543;
+    border-bottom: 5px solid #ffc543;
+    border-left: 5px solid #ffc543;
     width: 30px;
     height: 30px;
-    border-radius: 0px 5px 0px 5px;
+    border-radius: 0px 15px 0px 15px;
    }
 
    .ct_action_dot_11{
@@ -89,12 +89,7 @@
 
 .ct_grid_3_1 {
     display: flex;
-    // grid-template-columns: repeat(3, 1fr);
-
-    // overflow-x: scroll;
-    // overflow-y: hidden;
-    align-items: center;
-    gap: 1%;
+    gap: 2%;
 
 }
 
