@@ -33,17 +33,15 @@
     <div class="col-md-12">
         <div class="row">
 
-            <div class="col-xl-3 mb-4">
+            <div class="col-xl-4 mb-4">
                 <div class="ct_grey_border_1 ">
                     <div class="ct_d_flex_1 ct_grey_brdr_btm1 pb-3 mb-3">
                         <div>
-                            <h5 class="ct_font_16">Fuel type</h5>
+                            <h5 class="ct_font_16">Stationary Combustion</h5>
                             <h3 class="ct_fs_24"><strong>{{airTotal | number:'1.2-2'}}</strong></h3>
                             <p class="mb-0">tCO2e</p>
                         </div>
-                        <div class="ct_info_icon">
-                            <i class="fa-solid fa-info"></i>
-                        </div>
+                    
                     </div>
                     <div id="ct_emission_by_travel" *ngIf="donotOptions1">
                         <apx-chart [series]="donotOptions1.series" [chart]="donotOptions1.chart"
@@ -52,17 +50,38 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-3 mb-4">
+            <div class="col-xl-4 mb-4">
                 <div class="ct_grey_border_1">
                     <div class="ct_d_flex_1 ct_grey_brdr_btm1 pb-3 mb-3">
                         <div>
-                            <h5 class="ct_font_16">Electricity</h5>
-                            <h3><strong>5,887,34</strong></h3>
+                            <h5 class="ct_font_16">By Activity</h5>
+                            <h3><strong>{{activityTotal}}</strong></h3>
                             <p class="mb-0">tCO2e</p>
                         </div>
-                        <div class="ct_info_icon">
-                            <i class="fa-solid fa-info"></i>
+                      
+                    </div>
+                    <apx-chart
+                    [series]="donotOptions2.series"
+                    [chart]="donotOptions2.chart"
+                    [labels]="donotOptions2.labels"
+                    [fill]="donotOptions2.fill"
+                    [colors] = "donotOptions2.colors"
+                    [legend]="donotOptions2.legend"
+                    [dataLabels]="donotOptions2.dataLabels"
+                    [responsive]="donotOptions2.responsive"
+                  ></apx-chart>
+                </div>
+              
+            </div>
+            <div class="col-xl-4 mb-4">
+                <div class="ct_grey_border_1">
+                    <div class="ct_d_flex_1 ct_grey_brdr_btm1 pb-3 mb-3">
+                        <div>
+                            <h5 class="ct_font_16">Electricity Used</h5>
+                            <h3><strong>5,887,34</strong></h3>
+                            <p class="mb-0">KWH</p>
                         </div>
+                       
                     </div>
                     <div id="By_employee_location" *ngIf="pieChart">
                         <apx-chart [series]="pieChart.series" [chart]="pieChart.chart"
@@ -71,16 +90,15 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-6 mb-4">
+           
+            <div class="col-xl-12 mb-12">
                 <div class="ct_grey_border_1 ">
                     <div class="ct_d_flex_1 ct_grey_brdr_btm1 pb-3 mb-3">
                         <div>
                             <h5 class="ct_font_16">Emissions by  Month</h5>
                             <!-- <p class="mb-0">FY 2023-2024</p> -->
                         </div>
-                        <div class="ct_info_icon">
-                            <i class="fa-solid fa-info"></i>
-                        </div>
+                        
                     </div>
                     <div id="ct_emission_by_month" *ngIf="chartOptions">
                         <apx-chart
@@ -98,31 +116,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-3 mb-4">
-                <div class="ct_grey_border_1">
-                    <div class="ct_d_flex_1 ct_grey_brdr_btm1 pb-3 mb-3">
-                        <div>
-                            <h5 class="ct_font_16">By Activity</h5>
-                            <h3><strong>{{activityTotal}}</strong></h3>
-                            <p class="mb-0">tCO2e</p>
-                        </div>
-                        <div class="ct_info_icon">
-                            <i class="fa-solid fa-info"></i>
-                        </div>
-                    </div>
-                    <apx-chart
-                    [series]="donotOptions2.series"
-                    [chart]="donotOptions2.chart"
-                    [labels]="donotOptions2.labels"
-                    [fill]="donotOptions2.fill"
-                    [colors] = "donotOptions2.colors"
-                    [legend]="donotOptions2.legend"
-                    [dataLabels]="donotOptions2.dataLabels"
-                    [responsive]="donotOptions2.responsive"
-                  ></apx-chart>
-                </div>
-                </div>
-            </div>
+           
         </div>
      
     </div>

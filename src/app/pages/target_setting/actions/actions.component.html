@@ -91,8 +91,11 @@
                                 <h4 class="ct_h4">{{group.name}}</h4>
                                 <p>CO2 Saving: <strong>{{group.co2_savings_tcoe}}t CO2e</strong></p>
                                 <div class="d-flex align-items-center gap-1 justify-content-between mt-3">
+                                    <span class="ct_fw_600" style="color: #aaa;"><i
+                                            class="fa-solid fa-calendar-days mr-2"></i>{{group.time_period | date
+                                        :'yyyy'}}</span>
                                     <h6 class="mb-0">{{group.owner}}</h6>
-                                    <span>{{group.time_period | date :'yyyy'}}</span>
+
                                 </div>
                             </div>
                         </div>
@@ -105,8 +108,11 @@
                                 <h4 class="ct_h4">{{group.name}}</h4>
                                 <p>CO2 Saving: <strong>{{group.co2_savings_tcoe}}t CO2e</strong></p>
                                 <div class="d-flex align-items-center gap-1 justify-content-between mt-3">
+                                    <span class="ct_fw_600" style="color: #aaa;"><i
+                                            class="fa-solid fa-calendar-days mr-2"></i>{{group.time_period | date
+                                        :'yyyy'}}</span>
                                     <h6 class="mb-0">{{group.owner}}</h6>
-                                    <span>{{group.time_period | date :'yyyy'}}</span>
+
                                 </div>
                             </div>
                         </div>

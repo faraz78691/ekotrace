@@ -330,7 +330,7 @@
                                             (onChange)="marktetTypeChange($event)"></p-dropdown>
 
                                     </div>
-                                    <div class="col-lg-4" *ngIf="categoryId==1  || categoryId == 7">
+                                    <div class="col-lg-4" *ngIf="categoryId==1  || categoryId == 7 || (categoryId == 5 && SubCatAllData.manageDataPointSubCategorySeedID != 1002)">
                                         <label for="fname">Reading Value</label>
                                         <div class=" position-relative">
                                             <input required ngModel name="readingvalue" #readingvalue="ngModel"
@@ -487,7 +487,7 @@
                                         <div *ngIf="typeBusCoach == true" class="col-lg-4">
                                             <label pTooltip="Average number of people travel in one vehicle per trip"
                                                 tooltipPosition="top" for="AvgNoPeople">Avg No. of People</label>
-                                            <input required ngModel name="AvgNoPeople" #AvgNoPeople="ngModel"
+                                            <input required ngModel name="AvgNoPeople" #AvgNoPeople="ngModel" placeholder="Enter avg no of people"
                                                 [(ngModel)]="VehicleDE.avgPeoplePerTrip" AvgNoPeople id="search-input"
                                                 type="text" class="form-control Dashboard-tab text-white" />
 
@@ -508,7 +508,7 @@
                                             [ngClass]="typeEV == true ? 'col-lg-4': typeBusCoach == true ? 'col-lg-4': 'col-lg-4'">
                                             <label for="fname">Value</label>
                                             <div class="position-relative">
-                                                <input required ngModel name="Value" #Value="ngModel" placeholder=""
+                                                <input required ngModel name="Value" #Value="ngModel" placeholder="Enter value"
                                                     [(ngModel)]="VehicleDE.value" Value id="search-input" type="text"
                                                     class="form-control Dashboard-tab text-white" />
                                                 <p-dropdown
@@ -526,8 +526,19 @@
                                     <div class="col-lg-4" *ngIf="categoryId==1">
                                         <label for="fname">Calorific value (optional)</label>
 
-                                        <input required ngModel name="calorificValue" type="text"
-                                            class="form-control Dashboard-tab text-white" placeholder="Enter value" />
+                                        <!-- <input required ngModel name="calorificValue" type="text"
+                                            class="form-control Dashboard-tab text-white" placeholder="Enter value" /> -->
+
+                                            <div class="position-relative">
+                                                <input type="text"
+                                                    class="form-control Dashboard-tab text-white"
+                                                    placeholder="Enter value"
+                                                    name="calorificValue" ngModel />
+                                                <div class="ct_quantity_text">
+                                                    <p>{{dataEntry.unit}}</p>
+                                                </div>
+
+                                            </div>
 
                                     </div>
                                     <!-- <div class="col-3" *ngIf="SubCatAllData.subCatName == 'Passenger Vehicles'">
@@ -603,9 +614,15 @@
                                         <div *ngIf="SubCatAllData.manageDataPointSubCategorySeedID == 1002"
                                             class="col-lg-4">
                                             <label for="fname">Supplier specific Emission Factor</label>
-                                            <input required ngModel name="emission_factorS" #emission_factorS="ngModel"
-                                                placeholder="Enter value" readingvalue id="search-input" type="text"
-                                                class="form-control Dashboard-tab text-white" />
+                                            <div class=" position-relative">
+                                                <input required ngModel name="emission_factorS" #emission_factorS="ngModel"
+                                                    placeholder="Enter value" readingvalue id="search-input" type="text"
+                                                    class="form-control Dashboard-tab text-white" />
+                                                    <div class="ct_quantity_text">
+                                                        <p>{{dataEntry.unit}}</p>
+                                                    </div>
+
+                                            </div>
                                         </div>
                                         <div class="col-lg-4" *ngIf="categoryId==5">
                                             <label for="fname">Value</label>
@@ -3795,13 +3812,13 @@
                                             pTooltip="Quantity Of CO2 makeup" tooltipPosition="top">
                                             CO2 MakeUp <p-sortIcon field="quantityOfCO2makeup"></p-sortIcon>
                                         </th>
-                                        <th *ngIf="categoryId==6" pSortableColumn="noOfVehicles" pTooltip="Vehicle Type"
+                                        <th *ngIf="categoryId==6" pSortableColumn="noOfVehicles" pTooltip="Trips"
                                             tooltipPosition="top">
-                                            Type <p-sortIcon field="noOfVehicles"></p-sortIcon>
+                                            Trips per vehicle <p-sortIcon field="noOfVehicles"></p-sortIcon>
                                         </th>
                                         <th *ngIf="categoryId==6" pSortableColumn="noOfVehicles"
                                             pTooltip="Number Of Vehicles" tooltipPosition="top">
-                                            Vehicles <p-sortIcon field="noOfVehicles"></p-sortIcon>
+                                           No of Vehicles <p-sortIcon field="noOfVehicles"></p-sortIcon>
                                         </th>
                                         <th *ngIf="categoryId==6" pSortableColumn="modeOfDE"
                                             pTooltip="Mode Of data entry" tooltipPosition="top">
@@ -3980,7 +3997,7 @@
                                                 <ng-template pTemplate="output">
                                                     {{ de.refAmount }}
                                                 </ng-template>{{ de.refAmount }}</p-cellEditor></td>
-                                        <td *ngIf="categoryId==6">{{ de.vehicleTypeID }}</td>
+                                        <td *ngIf="categoryId==6">{{ de.TotalnoOftripsPerVehicle }}</td>
                                         <td *ngIf="categoryId==6">{{ de.NoOfVehicles }}</td>
                                         <td *ngIf="categoryId==6">{{ de.ModeofDEID }}</td>
                                         <td *ngIf="categoryId==6">{{ de.Value }}</td>
@@ -3993,9 +4010,6 @@
                                         <td>{{ de.status }}</td>
                                         <td>{{ de.emission | number :'1.2-2' }}</td>
                                         <td>{{ de.user_name }}</td>
-
-
-
                                         <!-- <td>
                                             <div class="view-details">
                                                 <i class="pi pi-eye pt-2 text-white" title="info"
@@ -4187,11 +4201,6 @@
                                         *ngIf="categoryId !=24 && categoryId !=25  && categoryId !=26">
                                         Unit <p-sortIcon field="unit"></p-sortIcon>
                                     </th>
-
-
-
-
-                                 
                                     <th>User</th>
                                     <!-- <th >Details</th> -->
                                 </tr>
@@ -4260,7 +4269,7 @@
                                     <td *ngIf="categoryId==6">{{ de.NoOfVehicles }}</td>
                                     <td *ngIf="categoryId==6">{{ de.ModeofDEID }}</td>
                                     <td *ngIf="categoryId==6">{{ de.Value }}</td>
-                                    <td>{{de.emissionFactorUsed | number :'1.2-2' }}</td>
+                                    <td>{{de.emissionFactorUsed != 'NaN' ? (de.emissionFactorUsed | number :'1.2-2') : '-' }}</td>
                                     <td *ngIf="categoryId !=24 && categoryId !=25  && categoryId !=26">{{ de.unit }}
                                     </td>
 

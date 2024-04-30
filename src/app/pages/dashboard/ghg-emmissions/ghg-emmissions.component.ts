@@ -111,8 +111,8 @@ export class GhgEmmissionsComponent implements OnDestroy {
   downstreamArray: any[] = [];
   vendorData: any[] = [];
   combinedSubscription: Subscription;
-
-
+  maxYear: any;
+  disabledDates: Date[];
   constructor(private router: Router,
     private route: ActivatedRoute,
     private facilityService: FacilityService,
@@ -125,6 +125,12 @@ export class GhgEmmissionsComponent implements OnDestroy {
   };
 
   ngOnInit() {
+    const currentYear = new Date().getFullYear();
+    // Set the max date to the last day of the current year
+    this.maxYear = new Date(currentYear, 11, 31);
+
+
+
     if (localStorage.getItem('LoginInfo') != null) {
       let userInfo = localStorage.getItem('LoginInfo');
       let jsonObj = JSON.parse(userInfo); // string to "any" object first
@@ -136,7 +142,8 @@ export class GhgEmmissionsComponent implements OnDestroy {
     this.dashboardFacilities$ = this.dashboardService.getdashboardfacilities(formData.toString()).pipe(
       tap(response => {
         this.selectedFacility = response.categories[0].ID;
-        this.makeCombinedApiCall(this.selectedFacility)
+        this.makeCombinedApiCall(this.selectedFacility);
+
       })
     );
 
@@ -183,6 +190,7 @@ export class GhgEmmissionsComponent implements OnDestroy {
 
   private createFormData(facility) {
     const formData = new URLSearchParams();
+    console.log(this.year.getFullYear());
     formData.set('year', this.year.getFullYear().toString());
     formData.set('facilities', facility);
     return formData;
@@ -191,7 +199,7 @@ export class GhgEmmissionsComponent implements OnDestroy {
 
   // Combined method to make both API calls
   makeCombinedApiCall(facility) {
-   
+
     const formData = this.createFormData(facility);
 
     // Create observables for both API calls
@@ -318,7 +326,7 @@ export class GhgEmmissionsComponent implements OnDestroy {
             floating: false,
             horizontalAlign: 'left',
           },
-          colors: ['#F3722C', '#0068F2', '#F8961E', '#ACE1AF', '#7BAFD4', '#B284BE','#98817B'],
+          colors: ['#F3722C', '#0068F2', '#F8961E', '#ACE1AF', '#7BAFD4', '#B284BE', '#98817B'],
           labels: this.labelScopeDonut2,
           responsive: [
             {
@@ -387,9 +395,10 @@ export class GhgEmmissionsComponent implements OnDestroy {
 
   // Handle the scopeWiseResult
   handleScopeWiseResult(scopeWiseResult: any) {
-  
+
     this.scopeWiseSeries = scopeWiseResult.series;
     this.series_graph = scopeWiseResult.series_graph;
+    console.log(this.scopeWiseSeries);
     this.sumofScope2 = scopeWiseResult.scope1 + scopeWiseResult.scope2 + scopeWiseResult.scope3;
     this.scope1E = scopeWiseResult.scope1;
     this.scope2E = scopeWiseResult.scope2;
@@ -404,7 +413,7 @@ export class GhgEmmissionsComponent implements OnDestroy {
         enabled: false
       },
       legend: {
-    fontSize:'12px'
+        fontSize: '12px'
       },
       colors: ['#213D49', '#46A5CD', '#FFD914'],
       series: this.scopeWiseSeries,
@@ -423,7 +432,7 @@ export class GhgEmmissionsComponent implements OnDestroy {
         breakpoint: 480,
         options: {
           legend: {
-            fontSize:'12px',
+            fontSize: '12px',
             position: 'bottom',
             offsetX: -10,
             offsetY: 0
@@ -443,7 +452,7 @@ export class GhgEmmissionsComponent implements OnDestroy {
                 fontSize: '12px',
                 fontWeight: 900
               },
-              formatter: function(val) {
+              formatter: function (val) {
                 const numericValue = parseFloat(val);
                 return numericValue.toFixed(2);
               }
@@ -452,17 +461,25 @@ export class GhgEmmissionsComponent implements OnDestroy {
         },
       },
       xaxis: {
-        labels:{
-          style:{
-            fontSize:'12px'
+        labels: {
+          style: {
+            fontSize: '12px'
           }
         },
         categories: ['Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar']
       },
-      yaxis:{
-        labels:{
-          style:{
-            fontSize:'13px'
+      yaxis: {
+
+        title: {
+          style: {
+            fontSize: '15px'
+          },
+
+          text: "t CO2e"
+        },
+        labels: {
+          style: {
+            fontSize: '13px'
           }
         },
       },
@@ -503,7 +520,7 @@ export class GhgEmmissionsComponent implements OnDestroy {
 
 
   onFacilityChange(event: any) {
-  
+
     this.makeCombinedApiCall(this.selectedFacility)
     // console.log(event.target.value)
     // console.log(this.selectedFacility);

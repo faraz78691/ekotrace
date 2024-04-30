@@ -37,13 +37,11 @@
                 <div class="ct_grey_border_1 ">
                     <div class="ct_d_flex_1 ct_grey_brdr_btm1 pb-3 mb-3">
                         <div>
-                            <h5 class="ct_font_16">Emissions by travel</h5>
+                            <h5 class="ct_font_16">Emissions in Travel</h5>
                             <h3 class="ct_fs_24"><strong>{{airTotal | number:'1.2-2'}}</strong></h3>
                             <p class="mb-0">tCO2e</p>
                         </div>
-                        <div class="ct_info_icon">
-                            <i class="fa-solid fa-info"></i>
-                        </div>
+                       
                     </div>
                     <div id="ct_emission_by_travel" *ngIf="donotOptions1">
                         <apx-chart [series]="donotOptions1.series" [chart]="donotOptions1.chart"
@@ -78,13 +76,11 @@
                 <div class="ct_grey_border_1">
                     <div class="ct_d_flex_1 ct_grey_brdr_btm1 pb-3 mb-3">
                         <div>
-                            <h5 class="ct_font_16">Cost centre</h5>
+                            <h5 class="ct_font_16">Emssions by Cost centre</h5>
                             <h3><strong>5,887,34</strong></h3>
                             <p class="mb-0">tCO2e</p>
                         </div>
-                        <div class="ct_info_icon">
-                            <i class="fa-solid fa-info"></i>
-                        </div>
+                       
                     </div>
                     <div id="ct_cost_center" *ngIf="donotOptions3">
                         <apx-chart [series]="donotOptions3.series" [chart]="donotOptions3.chart"
@@ -97,18 +93,25 @@
                 <div class="ct_grey_border_1 ">
                     <div class="ct_d_flex_1 ct_grey_brdr_btm1 pb-3 mb-3">
                         <div>
-                            <h5 class="ct_font_16">Total emissions by month</h5>
+                            <h5 class="ct_font_16">Graph of Travel Emissions  / month (tC02e)</h5>
                             <!-- <p class="mb-0">FY 2023-2024</p> -->
                         </div>
-                        <div class="ct_info_icon">
-                            <i class="fa-solid fa-info"></i>
-                        </div>
+                       
                     </div>
                     <div id="ct_emission_by_month" *ngIf="chartOptions">
-                        <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart"
-                            [dataLabels]="chartOptions.dataLabels" [plotOptions]="chartOptions.plotOptions"
-                            [yaxis]="chartOptions.yaxis" [xaxis]="chartOptions.xaxis"
-                            [fill]="chartOptions.fill"></apx-chart>
+                        <apx-chart
+                        [series]="chartOptions.series"
+                        [chart]="chartOptions.chart"
+                        [dataLabels]="chartOptions.dataLabels"
+                        [plotOptions]="chartOptions.plotOptions"
+                        [yaxis]="chartOptions.yaxis"
+                        [legend]="chartOptions.legend"
+                        [fill]="chartOptions.fill"
+                        [colors] = "chartOptions.colors"
+                        [stroke]="chartOptions.stroke"
+                        [tooltip]="chartOptions.tooltip"
+                        [xaxis]="chartOptions.xaxis"
+                      ></apx-chart>
                     </div>
                 </div>
             </div>
@@ -116,7 +119,7 @@
         <div class="row">
 
             <div class="col-xl-6">
-                <h4 class="text-center mb-4">Air Travel</h4>
+                <h4 class="text-center mb-4">Air Travel Emissions</h4>
                 <div class="row">
                     <div class="col-xl-6 mb-4">
                         <div class="ct_grey_border_1 ">
@@ -126,9 +129,7 @@
                                     <h3><strong>{{flightTypeTotal | number:'1.2-2'}}</strong></h3>
                                     <p class="mb-0">tCO2e</p>
                                 </div>
-                                <div class="ct_info_icon">
-                                    <i class="fa-solid fa-info"></i>
-                                </div>
+                              
                             </div>
                             <div id="ct_business_divisions">
                                 <div id="ct_cost_center" *ngIf="donotOptions2">
@@ -148,9 +149,7 @@
                                     <h3><strong>{{flightTotal | number:'1.2-2'}}</strong></h3>
                                     <p class="mb-0">tCO2e</p>
                                 </div>
-                                <div class="ct_info_icon">
-                                    <i class="fa-solid fa-info"></i>
-                                </div>
+                              
                             </div>
                             <div id="By_employee_location" *ngIf="pieChart">
                                 <apx-chart [series]="pieChart.series" [chart]="pieChart.chart"
@@ -163,7 +162,7 @@
                 </div>
             </div>
             <div class="col-xl-6">
-                <h4 class="text-center mb-4">Ground Travel</h4>
+                <h4 class="text-center mb-4">Ground Travel Emissions</h4>
                 <div class="row">
 
                     <div class="col-xl-12 mb-4">
@@ -174,9 +173,7 @@
                                     <h3><strong>{{groundTotal | number:'1.2-2'}}</strong></h3>
                                     <p class="mb-0">tCO2e</p>
                                 </div>
-                                <div class="ct_info_icon">
-                                    <i class="fa-solid fa-info"></i>
-                                </div>
+                               
                             </div>
                             <div id="ct_net_zeo_donut" *ngIf="groupChart">
                                 <apx-chart [series]="groupChart.series" [chart]="groupChart.chart"

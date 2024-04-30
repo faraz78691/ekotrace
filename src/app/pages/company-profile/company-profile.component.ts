@@ -13,7 +13,7 @@ import {HttpHeaders} from '@angular/common/http';
 import {environment} from 'environments/environment';
 
 import {ThemeService} from '@services/theme.service';
-
+import { countries } from '@/store/countrieslist';
 
 @Component({
     selector: 'app-company-profile',
@@ -21,6 +21,7 @@ import {ThemeService} from '@services/theme.service';
     styleUrls: ['./company-profile.component.scss']
 })
 export class CompanyProfileComponent {
+    countries:any;
     public loginInfo: LoginInfo;
     public companyDetails: CompanyDetails;
     companyData: CompanyDetails = new CompanyDetails();
@@ -42,6 +43,8 @@ export class CompanyProfileComponent {
         private messageService: MessageService,
         private themeservice: ThemeService
     ) {
+        this.countries = countries;
+        console.log(this.countries);
         this.loginInfo = new LoginInfo();
         this.companyDetails = new CompanyDetails();
         this.rootUrl = environment.baseUrl + 'uploads/';
@@ -64,18 +67,18 @@ export class CompanyProfileComponent {
     };
    //method to get tenants details by id
     getTenantsDetailById(id: number) {
-       console.log("calling")
+      
         const formdata = new URLSearchParams();
         formdata.set('tenant_id',this.loginInfo.tenantID.toString())
         this.companyService.newgetTenantsDataById(formdata.toString()).subscribe((response) => {
             this.companyDetails = response.categories[0];
-            this.uploadedImageUrl = this.companyDetails.logoPath
+            this.uploadedImageUrl = this.companyDetails.logoPath;
            
-            this.uploadedImageUrl =
-                this.rootUrl +
-                (response.logoName === '' || response.logoName === null
-                    ? 'defaultimg.png'
-                    : response.logoName);
+            // this.uploadedImageUrl =
+            //     this.rootUrl +
+            //     (response.logoName === '' || response.logoName === null
+            //         ? 'defaultimg.png'
+            //         : response.logoName);
 
             localStorage.setItem('companyName', response.companyName);
             this.selectedSecondaryIndustryTypes = JSON.parse(

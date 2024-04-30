@@ -1025,7 +1025,7 @@ export class Scope2TrackingComponent {
                         } else if (this.categoryId == 25) {
                             this.dataEntriesPending = (response.categories).filter(items => items.tablename == 'hotel_stay');
                         } else if (this.categoryId == 26) {
-                            console.log("hhhhh");
+                          
                             this.dataEntriesPending = (response.categories).filter(items => items.tablename == 'other_modes_of_transport');
                         } else {
                             this.dataEntriesPending = response.categories;

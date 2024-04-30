@@ -22,9 +22,6 @@
                         <div>
                             <h5 class="ct_font_24"><strong>Scope wise emission</strong></h5>
                         </div>
-                        <div class="ct_info_icon">
-                            <i class="fa-solid fa-info"></i>
-                        </div>
                     </div>
                     <div id="scope_wise_emission" *ngIf="chartOptions">
                         <apx-chart
@@ -85,9 +82,9 @@
                     </select>
                     <div class="mt-4">
                         <p class="mb-1 ct_fw_500">Financial Year</p>
-                        <p-calendar class="w-100 ct_input_dark_text_145" [(ngModel)]="year" ngModel name="year" year 
-                         view="year" dateFormat="yy" inputId="yearpicker"  (ngModelChange)="onFacilityChange($event)"
-                         styleClass="pcalender" 
+                        <p-calendar class="w-100 ct_input_dark_text_145" [(ngModel)]="year" ngModel name="year" year  
+                         view="year" dateFormat="yy" inputId="yearpicker"  (ngModelChange)="onFacilityChange($event)" [disabledDates]="disabledDates" yearRange="5"
+                         styleClass="pcalender"  [maxDate]="maxYear"
                         [showIcon]="true"></p-calendar>
                         <!-- <select class="ct_period_select w-100">
                             <option value="">2023-2024</option>
