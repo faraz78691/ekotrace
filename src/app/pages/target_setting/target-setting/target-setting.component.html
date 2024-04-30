@@ -1,23 +1,24 @@
 <div class="container-fluid px-4">
-    <div class="row pt-4">
+    <!-- <div class="row pt-4">
         <div class="col-sm-6" [ngClass]="
                 this.updatedtheme === 'dark' ? 'headlinetextD' : 'headlinetextL'
             ">
-            <h3 class="pl-4">Set Target</h3>
+            <h3 class="pl-4 card-header card-headerL">Set Target</h3>
         </div>
-    </div>
+    </div> -->
 
     <div class="row pt-3">
         <div class="col-md-12  overflow-auto mb-5 ct_custom_flex_basisc"
             [ngClass]="this.updatedtheme === 'dark' ? 'User-tabD' : 'User-tabL'">
-            <div class="row p-2">
+            <div class="row">
                 <div class="" [ngClass]="
                         this.updatedtheme === 'dark'
                             ? 'User-headD'
                             : 'User-headL'
                     ">
-                    <!-- <p class="ml-3 ct_fw_600">Set Emission Inventory</p> -->
+                    <p class=" ct_fw_600  card-header card-headerL m-0 ct_header_grey_1202">Set Target</p>
                 </div>
+                 <!-- <h3 class="pl-4 card-header card-headerL">Set Target</h3> -->
                 <div class="d-flex justify-content-between text-style text-light scope-Div">
                     <div class="form-group has-search">
                         <span class="fa fa-search form-control-feedback" [ngClass]="

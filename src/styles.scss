@@ -1026,7 +1026,7 @@ span.p-ripple.p-element.p-button.p-component.p-fileupload-choose{
 }
 .sidebar-mini .main-sidebar .nav-link, .sidebar-mini-md .main-sidebar .nav-link, .sidebar-mini-xs .main-sidebar .nav-link{
     // width: 100%;
-    width:94%!important
+    width:100%!important
 }
 // .nav-pills .nav-link:hover,.nav-pills .nav-link{
 //     border: 2px solid transparent;
@@ -1439,7 +1439,7 @@ color: #fff!important;
   @media (min-width: 768px){
     body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-wrapper, body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-footer, body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-header{
         transition: margin-left .3s ease-in-out;
-        margin-left: 220px;
+        margin-left: 240px;
       }
    
   }
@@ -1581,7 +1581,7 @@ padding-block: 7px;
 }
 
 .sidebar-open app-header.main-header.navbar.navbar-expand.navbar-light {
-    width: calc(100% - 220px);
+    width: calc(100% - 240px);
 }
 .ct_animation_btn_121 {
     position: relative;
@@ -1668,7 +1668,7 @@ padding-block: 7px;
 
 nav{
     // width: 220px;
-    width: 220px;
+    width: 230px;
     margin-bottom: 30px;
     
 }
