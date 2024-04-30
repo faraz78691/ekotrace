@@ -57,89 +57,106 @@
 
                 <div class="modal-body text-white text-style Dashboard-tab mt-0 ct_modal_scrool_121">
                     <form #UserForm="ngForm" (ngSubmit)="onSubmit(UserForm.value)" class="col-12">
-                        <div class="mb-3">
-                            <label for="fname" class="text-dark">First name</label>
-                            <input ngModel name="firstName" id="search-input" id="form1" type="text"
-                                class="form-control Dashboard-tab text-white" placeholder="First Name"
-                                #firstName="ngModel" [disabled]="isloading" [(ngModel)]="admininfo.firstname" required
-                                firstName />
-                            <p class="text-danger mb-0" *ngIf="UserForm.submitted && firstName.errors?.['required']">
-                                First name required
-                            </p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="fname" class="text-dark">First name</label>
+                                    <input ngModel name="firstName" id="search-input" id="form1" type="text"
+                                        class="form-control Dashboard-tab text-white" placeholder="First Name"
+                                        #firstName="ngModel" [disabled]="isloading" [(ngModel)]="admininfo.firstname" required
+                                        firstName />
+                                    <p class="text-danger mb-0" *ngIf="UserForm.submitted && firstName.errors?.['required']">
+                                        First name required
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="fname" class="text-dark">Last name</label>
+                                    <input ngModel name="lastName" id="search-input" type="text"
+                                        class="form-control Dashboard-tab text-white" placeholder="Last Name"
+                                        [(ngModel)]="admininfo.lastname" [disabled]="isloading" #lastName="ngModel" required />
+                                    <p class="text-danger" *ngIf="UserForm.submitted && lastName.errors?.['required']">
+                                        last name required
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="fname" class="text-dark">User name</label>
+                                    <input ngModel name="username" id="search-input" id="form1" placeholder="UserName"
+                                        type="text" class="form-control Dashboard-tab text-white" #username="ngModel"
+                                        [disabled]="isloading" [(ngModel)]="admininfo.username" (change)="
+                                        CheckUserExist(admininfo.username, 'username')
+                                    " required />
+                                    <p class="text-danger mb-0" *ngIf="UserForm.submitted && username.errors?.['required']">
+                                        user name required
+                                    </p>
+                                    <p class="text-danger mb-0" *ngIf="usernameIsExist === true && username.touched">
+                                        user name already taken please use other
+                                    </p>
+                                </div>
+        
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="fname" class="text-dark">Email</label>
+                                    <input ngModel name="email" id="search-input" type="text" placeholder="Email"
+                                        class="form-control Dashboard-tab text-white" [(ngModel)]="admininfo.email"
+                                        (change)="CheckUserExist(admininfo.email, 'email')" #email="ngModel"
+                                        [disabled]="isloading" required />
+                                    <p class="text-danger mb-0" *ngIf="UserForm.submitted && email.errors?.['required']">
+                                        email required
+                                    </p>
+                                    <p class="text-danger mb-0" *ngIf="emailIstExist === true && email.touched">
+                                        user already exist for this email please use other
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="fname" class="text-dark">Password</label>
+                                    <input ngModel name="password" id="search-input" type="text" placeholder="password"
+                                        class="form-control Dashboard-tab text-white" [(ngModel)]="admininfo.password"
+                                      #password="ngModel"
+        
+                                        [disabled]="isloading" required />
+                                    <p class="text-danger mb-0" *ngIf="UserForm.submitted && password.errors?.['required']">
+                                        password required
+                                    </p>
+                                    <!-- <p class="text-danger mb-0" *ngIf="emailIstExist === true && email.touched">
+                                        user already exist for this email please use other
+                                    </p> -->
+                                </div>
+                            </div>
                         </div>
+                       
 
-                        <div class="mb-3">
-                            <label for="fname" class="text-dark">Last name</label>
-                            <input ngModel name="lastName" id="search-input" type="text"
-                                class="form-control Dashboard-tab text-white" placeholder="Last Name"
-                                [(ngModel)]="admininfo.lastname" [disabled]="isloading" #lastName="ngModel" required />
-                            <p class="text-danger" *ngIf="UserForm.submitted && lastName.errors?.['required']">
-                                last name required
-                            </p>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="fname" class="text-dark">User name</label>
-                            <input ngModel name="username" id="search-input" id="form1" placeholder="UserName"
-                                type="text" class="form-control Dashboard-tab text-white" #username="ngModel"
-                                [disabled]="isloading" [(ngModel)]="admininfo.username" (change)="
-                                CheckUserExist(admininfo.username, 'username')
-                            " required />
-                            <p class="text-danger mb-0" *ngIf="UserForm.submitted && username.errors?.['required']">
-                                user name required
-                            </p>
-                            <p class="text-danger mb-0" *ngIf="usernameIsExist === true && username.touched">
-                                user name already taken please use other
-                            </p>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="fname" class="text-dark">Email</label>
-                            <input ngModel name="email" id="search-input" type="text" placeholder="Email"
-                                class="form-control Dashboard-tab text-white" [(ngModel)]="admininfo.email"
-                                (change)="CheckUserExist(admininfo.email, 'email')" #email="ngModel"
-                                [disabled]="isloading" required />
-                            <p class="text-danger mb-0" *ngIf="UserForm.submitted && email.errors?.['required']">
-                                email required
-                            </p>
-                            <p class="text-danger mb-0" *ngIf="emailIstExist === true && email.touched">
-                                user already exist for this email please use other
-                            </p>
-                        </div>
-                        <div class="mb-3">
-                            <label for="fname" class="text-dark">Password</label>
-                            <input ngModel name="password" id="search-input" type="text" placeholder="password"
-                                class="form-control Dashboard-tab text-white" [(ngModel)]="admininfo.password"
-                              #password="ngModel"
-
-                                [disabled]="isloading" required />
-                            <p class="text-danger mb-0" *ngIf="UserForm.submitted && password.errors?.['required']">
-                                password required
-                            </p>
-                            <!-- <p class="text-danger mb-0" *ngIf="emailIstExist === true && email.touched">
-                                user already exist for this email please use other
-                            </p> -->
-                        </div>
+                      
+                      
+                      
 
                         <label for="fname" class="text-dark">Role</label>
                         <div>
                             <div class="row d-flex mt-2">
-                                <div *ngFor="let Role of RolesList" class="mb-2 px-3">
+                                <div *ngFor="let Role of RolesList" class="mb-3 px-3">
                                     <ng-container *ngIf="Role.Name != 'Platform Admin'"></ng-container>
-                                    <div class="">
+                                    <div class="d-flex align-items-center gap-2 flex-wrap" style="gap:10px">
                                         <p-radioButton ngModel [inputId]="Role.Id" name="Role" [value]="Role.Id"
                                             (click)="onSelected(Role.Id)" [(ngModel)]="admininfo.roleID"
                                             [disabled]="isloading" #Role="ngModel"></p-radioButton>
-                                        <label [for]="Role.Id" class="ml-2 mb-0">{{ Role.Name }}</label>
-                                        <p style="font-size: 16px; color: #88AD47;" *ngIf="Role.Name == 'Admin'">Admin  Access to the sub group and all facilities
+                                      <div>
+                                        <!-- <label [for]="Role.Id" class="ml-2 mb-0">{{ Role.Name }}</label> -->
+                                        <p style="font-size: 16px; color: #88AD47;" class="mb-0" *ngIf="Role.Name == 'Admin'">Admin  Access to the sub group and all facilities
                                         </p>
-                                        <p style="font-size: 16px; color: #88AD47;" *ngIf="Role.Name == 'Manager'">
+                                        <p style="font-size: 16px; color: #88AD47;" class="mb-0" *ngIf="Role.Name == 'Manager'">
                                             Manager  Access to the associated facility</p>
-                                        <p style="font-size: 16px; color: #88AD47;" *ngIf="Role.Name == 'Preparer'">
+                                        <p style="font-size: 16px; color: #88AD47;" class="mb-0" *ngIf="Role.Name == 'Preparer'">
                                             Preparer  Access to the associated facility</p>
                                         <!-- <p style="font-size: 16px; color: #88AD47;" *ngIf="Role.Name == 'Approver'">
                                             Approver</p> -->
-                                        <p style="font-size: 16px; color: #88AD47;" *ngIf="Role.Name == 'User'">User</p>
+                                        <p style="font-size: 16px; color: #88AD47;" class="mb-0" *ngIf="Role.Name == 'User'">User</p>
+                                      </div>
                                     </div>
                                 </div>
                             </div>
