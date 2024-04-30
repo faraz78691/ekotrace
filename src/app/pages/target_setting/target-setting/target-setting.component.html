@@ -16,10 +16,15 @@
                             ? 'User-headD'
                             : 'User-headL'
                     ">
-                    <p class=" ct_fw_600  card-header card-headerL m-0 ct_header_grey_1202">Set Target</p>
+                    <div class="card-header card-headerL ct_header_grey_1202 d-flex align-items-center justify-content-between">
+                    <h4 class=" ct_fw_600 m-0 my-0" style="flex: 1;">Set Target</h4>
+                    <button class="GroupButton ct_assign_package_btn129 ct_animation_btn_121 w-auto px-3" (click)="showAddGroupDialog()">
+                        + Add Target
+                    </button>
+                </div>
                 </div>
                  <!-- <h3 class="pl-4 card-header card-headerL">Set Target</h3> -->
-                <div class="d-flex justify-content-between text-style text-light scope-Div">
+                <!-- <div class="d-flex justify-content-between text-style text-light scope-Div">
                     <div class="form-group has-search">
                         <span class="fa fa-search form-control-feedback" [ngClass]="
                                 this.updatedtheme === 'dark'
@@ -38,7 +43,7 @@
                             + Add Target
                         </button>
                     </div>
-                </div>
+                </div> -->
             </div>
 
             <p-toast></p-toast>
@@ -55,7 +60,7 @@
 
 
 
-            <div class="dataTable scrollit">
+            <div class="dataTable scrollit mt-4">
                 <table class="table_loc ct_space_table_21 ct_billing_table_bg_120">
                     <thead>
                         <tr>
