@@ -41,3 +41,13 @@
     border-radius: 100px;
     display: inline-block;
    }
+   h4.ct_h4 {
+    font-size: 24px;
+    font-weight: 600;
+}
+.ct_billing_table_bg_120  th:first-child{
+    border-radius:10px 0px 0px 10px;
+}
+.ct_billing_table_bg_120  th:last-child{
+    border-radius:0px 10px 10px 0px;
+}
