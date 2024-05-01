@@ -70,9 +70,9 @@
                         ">
                         <div class="mb-5 pb-0 row">
                             <div class="col-md-6 mb-3">
-                                <label for="fname">Project Name</label>
-                                <input  name="project_details" ngModel id="search-input" type="text"
-                                    class="form-control Dashboard-tab text-white" placeholder="Enter Project Name"
+                                <label for="fname">Group Name</label>
+                                <input  name="group_added" ngModel id="search-input" type="text"
+                                    class="form-control Dashboard-tab text-white" placeholder="Enter Group Name"
                                     #groupName="ngModel"  [disabled]="isloading"
                                     required />
                                 <p class="text-danger mb-0"
@@ -86,124 +86,66 @@
                                 </p>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label for="fname">Project Type</label>
-                                <p-dropdown class="ct_grop_select_2_drop_white123 ct_group_select_dark_124" required
-                                    ngModel placeholder="Select" [options]="Groupby" [(ngModel)]="project_type"
-                                    optionLabel="name" optionValue="name" name="group" #group="ngModel"></p-dropdown>
+                                <label for="fname">Year Added</label>
+                                <p-calendar class="w-100 ct_input_dark_text_145 ct_calender_input_38_action_12" ngModel
+                                name="year_added" [showIcon]="true" view="year" placeholder="Select year" dateFormat="yy"
+                                inputId="yearpicker" styleClass="pcalender"></p-calendar>
                                 <p class="text-danger mb-0"
                                     *ngIf="GroupForm.submitted && groupName.errors?.['required']">
-                                    Group name is required
-                                </p>
-                                <p class="text-danger mb-0" *ngIf="
-                                    isgroupExist === true && groupName.touched
-                                ">
-                                    group already exist please use other groupname
+                                    Year is required
                                 </p>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label for="fname">Date of Purchase</label>
-                                <div class="field">
-                                    <p-calendar [(ngModel)]="date3" [showIcon]="true" inputId="icon" class="ct_year_input_full_w "></p-calendar>
-                                </div>
-                                <p class="text-danger mb-0"
-                                    *ngIf="GroupForm.submitted && groupName.errors?.['required']">
-                                    Group name is required
-                                </p>
-                                <p class="text-danger mb-0" *ngIf="
-                                    isgroupExist === true && groupName.touched
-                                ">
-                                    group already exist please use other groupname
-                                </p>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="fname">Vintage</label>
-                                <input ngModel name="vintage" id="search-input" type="text" 
-                                    class="form-control Dashboard-tab text-white " placeholder="Enter Vintage"
-                                    #groupName="ngModel" [disabled]="isloading" required />
-                                <p class="text-danger mb-0"
-                                    *ngIf="GroupForm.submitted && groupName.errors?.['required']">
-                                    Group name is required
-                                </p>
-                                <p class="text-danger mb-0" *ngIf="
-                                    isgroupExist === true && groupName.touched
-                                ">
-                                    group already exist please use other groupname
-                                </p>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="fname">Standard</label>
-
-
-                                <input ngModel name="standard" id="search-input" type="text"
-                                    class="form-control Dashboard-tab text-white " placeholder="Enter standard"
-                                    #groupName="ngModel"  [disabled]="isloading" required />
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="fname">Carbon Offset</label>
-                                <input ngModel name="carbon_offset" id="search-input" type="text"
-                                    class="form-control Dashboard-tab text-white " placeholder="Enter Carbon Offset"
-                                    #groupName="ngModel"  [disabled]="isloading" required />
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="fname">Carbon Credit Value</label>
-
-                                <input ngModel name="carbon_credit_value" id="search-input" type="text"
-                                    class="form-control Dashboard-tab text-white "
-                                    placeholder="Enter carbon credit value" #groupName="ngModel"
-                                    [disabled]="isloading" required />
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="fname">Attachments</label>
-
-                                <input ngModel name="comments" id="search-input" style="padding: 0px;"  type="file"
-                                    class="form-control Dashboard-tab text-white ct_change_choose_file_input12 " (change)="onFileSelected($event)"
-                                    placeholder="Enter carbon credit value" #groupName="ngModel"
-                                   [disabled]="isloading" required />
-                            </div>
-
-                       <div class="row px-3 w-100">
-                        
-                        <div class="col-md-12">
-                            <label for="fname">Allocation</label>
-                            <div class="row">
-                                
-                            <div class="col-md-4 mb-3">
-
-                               
-
-                                <label for="fname">Scope 1</label>
-                                <input ngModel name="scope_1" id="search-input" type="text"
-                                    class="form-control Dashboard-tab text-white " placeholder="Enter Scope 1 Allocation"
-                                    #groupName="ngModel"  [disabled]="isloading" required />
-                               
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <label for="fname">Scope 2</label>
-                                <input ngModel name="scope_2" id="search-input" type="text"
-                                    class="form-control Dashboard-tab text-white " placeholder="Enter Scope 2 Allocation"
-                                    #groupName="ngModel"  [disabled]="isloading" required />
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <label for="fname">Scope 3</label>
-                                <input ngModel name="scope_3" id="search-input" type="text"
-                                    class="form-control Dashboard-tab text-white " placeholder="Enter Scope 3 Allocation"
-                                    #groupName="ngModel"  [disabled]="isloading" required />
+                                <label for="fname">Total Scope1 Emissions (tC02e)</label>
+                                <label for="fname">Scope1 from Company Vehicles</label>
+                                <input  name="company_vehicles" ngModel id="search-input" type="text"
+                                class="form-control Dashboard-tab text-white" placeholder="Enter Group Name"
+                                #groupName="ngModel"  [disabled]="isloading"
+                                required />
+                                <label for="fname">Scope1 from Refrigerants</label>
+                                <input  name="refrigerants" ngModel id="search-input" type="text"
+                                class="form-control Dashboard-tab text-white" placeholder="Enter Group Name"
+                                #groupName="ngModel"  [disabled]="isloading"
+                                required />
                               
                             </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="fname">Total Scope2 Emissions (tC02e)</label>
+                                <label for="fname">Scope2 Location Based Emissions</label>
+                                <input  name="location_based" ngModel id="search-input" type="text"
+                                class="form-control Dashboard-tab text-white" placeholder="Enter Group Name"
+                                #groupName="ngModel"  [disabled]="isloading"
+                                required />
+                                <label for="fname">Scope2 Renewable Energy Use</label>
+                                <input ngModel name="renewable" id="search-input" type="text" 
+                                    class="form-control Dashboard-tab text-white " placeholder="Enter Vintage"
+                                    #groupName="ngModel" [disabled]="isloading" required />
+                              
                             </div>
-                        </div>
-
-                       </div>
-                            <div class="col-md-12 mb-3">
-                                <label for="fname">Comments</label>
-<!-- 
-                                <input ngModel name="comments" id="search-input"  type="text"
-                                    class="form-control Dashboard-tab text-white "
-                                    placeholder="Enter carbon credit value" #groupName="ngModel"
-                                   [disabled]="isloading" required /> -->
-                                   <textarea rows="4" class="form-control ct_text bg-white"></textarea>
-
+                            <div class="col-md-6 mb-3">
+                                <label for="fname">Total Scope3 Emissions (tC02e)</label>
+                                <label for="fname">Purchased goods and services</label>
+                                <input  name="purchased_goods" ngModel id="search-input" type="text"
+                                class="form-control Dashboard-tab text-white" placeholder="Enter Group Name"
+                                #groupName="ngModel"  [disabled]="isloading"
+                                required />
+                                <label for="fname">Business travel and employee commute</label>
+                                <input ngModel name="business_travel" id="search-input" type="text" 
+                                    class="form-control Dashboard-tab text-white " placeholder="Enter Vintage"
+                                    #groupName="ngModel" [disabled]="isloading" required />
+                                <label for="fname">Waste generated in operations</label>
+                                <input ngModel name="waste_generated" id="search-input" type="text" 
+                                    class="form-control Dashboard-tab text-white " placeholder="Enter Vintage"
+                                    #groupName="ngModel" [disabled]="isloading" required />
+                                <label for="fname">Water Usage</label>
+                                <input ngModel name="waste" id="search-input" type="text" 
+                                    class="form-control Dashboard-tab text-white " placeholder="Enter Vintage"
+                                    #groupName="ngModel" [disabled]="isloading" required />
+                             
                             </div>
+                           
+                          
+                    
                         </div>
                     
 
@@ -253,27 +195,26 @@
                             " class="col-12 tableRow border-bottom rounded pointer" (click)="UnlockComplete(group.id)"
                             [ngClass]="{ 'tableRowclicked': index === selectedRowIndex }">
                             <td class="td text-initial">
-                                {{ group.project_name }}
+                                {{ group.group_added }}
                             </td>
                             <td class="td ">
-                                {{ group.type }}
+                                {{ group.year_added }}
 
                             </td>
                             <td class="td text-center pb-1">
-                                {{ group.standard }}
+                                {{ group.total_scope1 }}
 
                             </td>
                             <td class="td text-center pb-1">
-                                {{ group.date_of_purchase }}
+                                {{ group.total_scope2 }}
 
                             </td>
                             <td class="td text-center pb-1">
-                                {{ group.offset }}
+                                {{ group.total_scope3}}
 
                             </td>
                             <td class="td text-center pb-1">
-                                {{ group.carbon_credit_value }}
-
+                                {{ group.total_emission }}
                             </td>
                             <!-- <td class="td text-right">
                                 <a style="

@@ -26,6 +26,16 @@ export class GroupService {
             environment.baseUrl + '/getuser_offseting',tenantID
         );
     };
+    public getEmissionInventory(): Observable<any> {
+        return this.http.get(
+            environment.baseUrl + '/targetsetting/getTargetEmissionInventory'
+        );
+    };
+    public get(tenantID:any): Observable<any> {
+        return this.http.post(
+            environment.baseUrl + '/getuser_offseting',tenantID
+        );
+    };
     public getTargetSetting(): Observable<any> {
         return this.http.get(
             environment.baseUrl + '/targetsetting/getTargetSettingDetails'
@@ -50,6 +60,9 @@ export class GroupService {
     }
     public Adduser_offseting(groupdetails): Observable<any> {
         return this.http.post( environment.baseUrl + '/Adduser_offseting', groupdetails);
+    }
+    public AddEmissionInventory(groupdetails): Observable<any> {
+        return this.http.post( environment.baseUrl + '/targetsetting/addEmissionInventory', groupdetails);
     }
     public addTargetSetting(groupdetails): Observable<any> {
         return this.http.post( environment.baseUrl + '/targetsetting/addTargetSetting', groupdetails);
