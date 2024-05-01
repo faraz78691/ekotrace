@@ -1,13 +1,13 @@
 <div class="container-fluid px-4">
-    <form #targetForm="ngForm">
+    <form #targetForm="ngForm" (ngSubmit)="GetTargetGraph(targetForm.value)">
 
         <label for="fname">Reduction Percentage %</label>
-         <input name="target_name" ngModel id="search-input" type="text"
+         <input name="reduction" ngModel id="search-input" type="text"
                             class="form-control Dashboard-tab text-white" placeholder="Enter Project Name"
                             #groupName="ngModel" [disabled]="isloading" required />
         <label for="fname">Base Year</label>
         <p-calendar class="w-100 ct_input_dark_text_145 ct_calender_input_38_action_12" ngModel
-                            name="time_period" [showIcon]="true" view="year" placeholder="Select year" dateFormat="yy"
+                            name="base_year" [showIcon]="true" view="year" placeholder="Select year" dateFormat="yy"
                             inputId="yearpicker" styleClass="pcalender"></p-calendar>
         <label for="fname">Select Scope</label>
         <p-dropdown class="ct_grop_select_2_drop_white123 ct_group_select_dark_124" required ngModel placeholder="Select"

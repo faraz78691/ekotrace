@@ -30,7 +30,7 @@
             <ul *ngIf="IsPAdmin" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                 data-accordion="false" [ngClass]="updatedtheme === 'dark'">
                 <div>
-                    <!-- <p class="text-white Text-opacity">Admin Section</p> -->
+          
                     <app-menu-item [menuItem]="{
                             name: 'Dashboard',
                             iconClasses: 'fas fa-table',
@@ -47,7 +47,7 @@
             <ul *ngIf="!IsPAdmin" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                 data-accordion="false">
                 <div *ngFor="let item of menu">
-                    <p [ngClass]="
+                    <p *ngIf="item.head != '' || item.head != undefined" [ngClass]="
                             this.updatedtheme === 'dark'
                                 ? 'headtextD'
                                 : 'headtextL'
