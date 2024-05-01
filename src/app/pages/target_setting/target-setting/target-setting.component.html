@@ -1,4 +1,33 @@
 <div class="container-fluid px-4">
+    <div class="row">
+        <div class="col-xl-12 mb-12">
+            <div class="ct_grey_border_1 ">
+                <div class="ct_d_flex_1 ct_grey_brdr_btm1 pb-3 mb-3">
+                    <div>
+                        <h5 class="ct_font_16">Target</h5>
+                        <!-- <p class="mb-0">FY 2023-2024</p> -->
+                    </div>
+                    
+                </div>
+                <div id="ct_emission_by_month" *ngIf="chartOptions">
+                    <apx-chart
+                    [series]="chartOptions.series"
+                    [chart]="chartOptions.chart"
+                    [dataLabels]="chartOptions.dataLabels"
+                    [yaxis]="chartOptions.yaxis"
+                    [legend]="chartOptions.legend"
+                    [stroke]="chartOptions.stroke"
+                    [tooltip]="chartOptions.tooltip"
+                    [xaxis]="chartOptions.xaxis"
+                  ></apx-chart>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="container-fluid px-4">
     <!-- <div class="row pt-4">
         <div class="col-sm-6" [ngClass]="
                 this.updatedtheme === 'dark' ? 'headlinetextD' : 'headlinetextL'
