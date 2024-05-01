@@ -41,6 +41,11 @@ export class GroupService {
             environment.baseUrl + '/targetsetting/getTargetSettingDetails'
         );
     };
+    public getTargetGraphsPoints(data): Observable<any> {
+        return this.http.post(
+            environment.baseUrl + '/targetsetting/getEmissionPoints', data
+        );
+    };
 
     public EditGroup( groupdetails): Observable<any> {
         return this.http.post(environment.baseUrl + '/Updategroupmapping' , groupdetails);

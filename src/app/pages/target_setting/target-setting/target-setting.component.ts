@@ -336,6 +336,34 @@ public chartOptions: Partial<ChartOptions>;
           complete: () => console.info('Group Added')
       });
   };
+   GetTargetGraph() {
+      let formData = new URLSearchParams();
+
+      // formData.set('percentage', tenantID.toString());
+      // formData.set('base_year', tenantID.toString());
+  
+      this.GroupService.getTargetGraphsPoints(formData.toString()).subscribe({
+          next: (response) => {
+             
+              if(response.success == true)
+              {
+                  this.groupsList = response.orders;
+                  if (this.groupsList.length > 0) {
+                      this.groupdetails = this.groupsList[0];
+                      this.groupdata = true;
+                  } else {
+                      this.groupdata = false;
+                  }
+                  localStorage.setItem('GroupCount', String(this.groupsList.length));
+                  this.unlock = this.groupdetails.id.toString();
+              }
+          },
+          error: (err) => {
+              console.error('errrrrrr>>>>>>', err);
+          },
+          complete: () => console.info('Group Added')
+      });
+  };
 
   //method to add new group
   saveOffset(data: NgForm) {
