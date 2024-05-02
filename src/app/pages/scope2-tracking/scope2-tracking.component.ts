@@ -20,7 +20,7 @@ import { VehicleDE } from '@/models/VehicleDE';
 import { VehicleDEmode } from '@/models/VehicleDEmode';
 import { VehicleType } from '@/models/VehicleType';
 import { LoginInfo } from '@/models/loginInfo';
-import { Component, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { NgForm, FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FacilityService } from '@services/facility.service';
@@ -39,7 +39,7 @@ declare var $: any;
 @Component({
     selector: 'app-scope2-tracking',
     templateUrl: './scope2-tracking.component.html',
-    styleUrls: ['./scope2-tracking.component.scss']
+    styleUrls: ['./scope2-tracking.component.scss'],
 })
 export class Scope2TrackingComponent {
     public countriesList: any = countries
