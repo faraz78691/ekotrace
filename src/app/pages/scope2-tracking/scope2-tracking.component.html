@@ -1,4 +1,4 @@
-<div class="container-fluid px-0">
+<div class="container-fluid px-0 mt-5">
     <div class="row mb-0 pt-0">
         <!-- <div class="col-sm-12" [ngClass]="
                 this.updatedtheme === 'dark' ? 'headlinetextD' : 'headlinetextL'
@@ -10,7 +10,7 @@
     </div>
     <div class="row pt-2 ml-0 mx-0 px-0">
         <div class="col-lg-4  mb-4  px-2">
-            <div class=" TrackingDiv-border Dashboard-tab ct_dash_board_tab ct_hide_scroll_239"
+            <div class=" TrackingDiv-border Dashboard-tab ct_dash_board_tab ct_hide_scroll_239 ct_scroll_60012_left"
                 style="height: calc(100vh - 160px);" [ngClass]="facilitynothavedp === 'block' ? 'fornodata' : ''">
 
 
@@ -31,7 +31,7 @@
                         <label class="label"> Please select facility</label>
                     </div>
                 </div>
-
+                
                 <div [ngStyle]="{display: facilityhavedp}" class="modal-body text-white text-style">
                     <form #addCompForm="ngForm" class="" (ngSubmit)="openDatapointDialog()">
                         <div class="row d-flex justify-content-between tabviewclass">
@@ -247,6 +247,7 @@
                         [routerLink]="['/tracking-view-requests']" [queryParams]="{data: facilityID}">
                         View and Approve Request
                     </div>
+             
                 </div>
             </div>
         </div>
@@ -3541,7 +3542,15 @@
 
                         </form>
                     </p-tabPanel>
- y
+
+
+
+
+
+
+
+
+
                     <!-- dhdfjhfjfgk -->
                     <p-tabPanel header="Status">
                         <div class="row  border-bottom">

@@ -147,11 +147,14 @@ app-header .navbar {
     // max-height: 600px;
     padding: 10px;
     // max-height: 600px;
-    // overflow-y: auto; 29 css change
+    // overflow-y: auto; 
 }
 .ct_hide_scroll_239{
     max-height: auto;
     height: auto;
+}
+.ct_scroll_60012_left{
+    overflow-y: auto;
 }
 .border {
     border: 1px solid #80a745!important;
@@ -1414,7 +1417,7 @@ a.brand-link.ct_logo_collape {
     border-width: 0px !important;
     box-shadow: unset !important;
     border-radius: 0px !important;
-    background-color: rgba(136, 173, 71, 0.75) !important;
+    background-color: #a6c275!important;
 }
 .ct_position_small_quantity.ct_select_op_input  .p-inputtext{
 color: #fff!important;
@@ -2143,12 +2146,24 @@ input.ct_change_choose_file_input12::file-selector-button {
 }
 
 .ct_scroll_60012 .p-tabview-panels {
-    height: auto;
+    height: 539px;
     width: 100%;
     position: relative;
     overflow: hidden;
     overflow-y: auto;
     max-height: 539px;
+}
+
+// .ct_scroll_60012_left .ct_scroll_60012_left_short{
+//     height: 539px;
+//     width: 100%;
+//     position: relative;
+//     overflow: hidden;
+//     overflow-y: auto;
+//     max-height: 539px;
+// }
+.ct_scroll_60012 .p-tabview-panels .p-tabview-panel {
+    max-width: calc(100% - 16px);
 }
 // .ct_scroll_60012 .p-tabview-panels .p-tabview-panel {
 //     position: absolute;
