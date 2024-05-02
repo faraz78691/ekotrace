@@ -6,9 +6,10 @@ import { CompanyDetails } from '@/shared/company-details';
 import { AppState } from '@/store/state';
 import { ToggleControlSidebar, ToggleSidebarMenu } from '@/store/ui/actions';
 import { UiState } from '@/store/ui/state';
-import { Component, HostBinding, OnInit, ViewChild, computed } from '@angular/core';
-import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
-import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { Component, HostBinding, OnInit, ViewChild, computed, signal } from '@angular/core';
+import { UntypedFormGroup, UntypedFormControl, FormsModule } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppService } from '@services/app.service';
 import { CompanyService } from '@services/company.service';
@@ -17,6 +18,10 @@ import { ThemeService } from '@services/theme.service';
 import { environment } from 'environments/environment';
 import { MenuItem } from 'primeng/api';
 import { Observable } from 'rxjs';
+import { DropdownModule } from 'primeng/dropdown';
+import { ImageModule } from 'primeng/image';
+import { BrowserModule } from '@angular/platform-browser';
+
 
 interface CustomFacility {
     id: any;
@@ -25,6 +30,8 @@ interface CustomFacility {
 const BASE_CLASSES = 'main-header navbar navbar-expand ';
 @Component({
     selector: 'app-header',
+    standalone: true,
+    imports: [CommonModule,DropdownModule, FormsModule, ImageModule,RouterModule ],
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss']
 })
@@ -50,9 +57,10 @@ export class HeaderComponent implements OnInit {
     @ViewChild('menu', { static: true }) menu: any;
     public href: string = null;
     displayTracker = false;
-    isActiveLabel = computed(() => 
-   this.facilityService.headerTracking()
- )
+ 
+    isActiveLabel = computed(() => this.facilityService.headerTracking());
+
+
     constructor(
         private appService: AppService,
         private companyService: CompanyService,
@@ -64,13 +72,11 @@ export class HeaderComponent implements OnInit {
         this.companyDetails = new CompanyDetails();
         this.rootUrl = environment.baseUrl + 'uploads/';
         this.facilityGroup = new FacilityGroupList();
-        console.log(this.isActiveLabel() , 
-            "label");
+
     }
     ngOnInit() {
         this.facilityService.headerTracking();
         this.href = this.router.url;
-        console.log(this.href);
         this.loginInfo = new LoginInfo();
         if (localStorage.getItem('LoginInfo') != null) {
             let userInfo = localStorage.getItem('LoginInfo');
@@ -87,10 +93,10 @@ export class HeaderComponent implements OnInit {
                 this.loginInfo.role !== 'Approver'
             ) {
                 // this.getTenantById(Number(this.loginInfo.tenantID));
-             
+
                 // this.GetFacilityGroupList(Number(this.loginInfo.tenantID));
             }
-                  this.GetFacilityGroupList(this.loginInfo.tenantID);
+            this.GetFacilityGroupList(this.loginInfo.tenantID);
         }
         this.ProfileMenu = [
             {
@@ -132,17 +138,17 @@ export class HeaderComponent implements OnInit {
     }
 
     checkFacilityID() {
-    
+        this.facilityService.facilitySelected(this.selectedFacilityID.id)
         localStorage.setItem('SelectedfacilityID', this.selectedFacilityID.id);
         localStorage.setItem('Flag', this.selectedFacilityID.flag);
     };
 
     logout() {
         this.appService.logout();
-    }
+    };
 
     onToggleMenuSidebar() {
-  
+
         this.store.dispatch(new ToggleSidebarMenu());
     }
 
@@ -176,31 +182,31 @@ export class HeaderComponent implements OnInit {
         this.menu.toggle(event);
     }
 
-//     GetFacilityGroupList(tenantID) {
-// console.log(tenantID);
-//         if (this.loginInfo.role === this.excludedRole) {
-//             return;
-//         }
-//         this.facilityService
-//             .newGetFacilityGroupList(tenantID)
-//             .subscribe((res) => {
-//                 console.log("response iidd",res);
-//                 this.facilitygrouplist = res.categories[0].facilities;
-//                 const allOption: FacilityGroupList = {
-//                     id: 0,
-//                     name: 'All',
-//                     flag: ''
-//                 };
+    //     GetFacilityGroupList(tenantID) {
+    // console.log(tenantID);
+    //         if (this.loginInfo.role === this.excludedRole) {
+    //             return;
+    //         }
+    //         this.facilityService
+    //             .newGetFacilityGroupList(tenantID)
+    //             .subscribe((res) => {
+    //                 console.log("response iidd",res);
+    //                 this.facilitygrouplist = res.categories[0].facilities;
+    //                 const allOption: FacilityGroupList = {
+    //                     id: 0,
+    //                     name: 'All',
+    //                     flag: ''
+    //                 };
 
-//                 // Add the "All" option to the beginning of the list
-//                 this.facilitygrouplist.unshift(allOption);
+    //                 // Add the "All" option to the beginning of the list
+    //                 this.facilitygrouplist.unshift(allOption);
 
-//                 this.lfgcount = this.facilitygrouplist.length;
-//                 localStorage.setItem('FacilityGroupCount', String(this.lfgcount));
-//             });
+    //                 this.lfgcount = this.facilitygrouplist.length;
+    //                 localStorage.setItem('FacilityGroupCount', String(this.lfgcount));
+    //             });
 
 
-//     }
+    //     }
     GetFacilityGroupList(tenantID) {
 
         if (this.loginInfo.role === this.excludedRole) {
@@ -228,8 +234,7 @@ export class HeaderComponent implements OnInit {
 
     };
 
-    addFacilitesToSignal(facilites:facilities[]){
-        
+    addFacilitesToSignal(facilites: facilities[]) {
         const editedfacility = facilites.slice(0);
         this.facilityService.AddFacilites(editedfacility)
     }

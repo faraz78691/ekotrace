@@ -74,6 +74,7 @@ export type ChartAreaOptions = {
   selector: 'app-ghg-emmissions',
   templateUrl: './ghg-emmissions.component.html',
   styleUrls: ['./ghg-emmissions.component.scss'],
+  changeDetection:ChangeDetectionStrategy.OnPush
 
 })
 export class GhgEmmissionsComponent implements OnDestroy {
@@ -189,7 +190,7 @@ export class GhgEmmissionsComponent implements OnDestroy {
   };
 
   ngDoCheck(){
-    console.log("checking compoeoent")
+    console.log("checking compoeoent ghg")
   }
 
 

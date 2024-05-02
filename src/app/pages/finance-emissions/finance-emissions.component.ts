@@ -417,55 +417,11 @@ export class FinanceEmissionsComponent {
   };
 
 
-  // getting status, units, subCategory types where ever required
-  SubCatData(data: any, catID: any, categoryName) {
-      console.log("called");
-      this.categoryName = categoryName;
-      this.recycle = false;
-      this.isVisited = false;
-      this.renewableSelected =false;
-      this.supplierSelected = false;
-
-      this.id_var = data.manageDataPointSubCategorySeedID;
-
-      this.categoryId = catID;
-      console.log("subCatTypeID", this.categoryId);
-
-      this.SubCatAllData = data;
-      this.ALLEntries()
  
-      if (catID == 23) {
-          this.getInvestmentCategories();
-          this.getInvestmentSubCategory('Coke, Refined Petroleum, and Nuclear Fuel')
-      }
-
-      this.typeEV = false;
-      this.typeBusCoach = false;
-      //   this.checkEntryexist();
-      this.resetForm();
-  };
-
-
- 
-
-  getRegionName(subCatID: number) {
-      this.dataEntry.typeID = null;
-      this.RenewableElectricity.electricityRegionID = null;
-      this.trackingService.newgetsubCatType(subCatID).subscribe({
-          next: (response) => {
-              this.regionType = response.categories;
-              this.RenewableElectricity.electricityRegionID = this.regionType[0].RegionID;
-
-          },
-          error: (err) => {
-              console.error('errrrrrr>>>>>>', err);
-          }
-      })
-  };
 
   // to get the status of subcategories in status tab
   ALLEntries() {
-
+    this.facilityID = localStorage.getItem('SelectedfacilityID');
       if (this.facilityID == 0) {
           this.notification.showInfo(
               'Select Facility',
@@ -479,7 +435,7 @@ export class FinanceEmissionsComponent {
       this.convertedYear = this.trackingService.getYear(this.year);
       formData.set('year', this.convertedYear.toString())
       formData.set('facilities', this.facilityID.toString())
-      formData.set('categoryID', this.categoryId.toString())
+      formData.set('categoryID', '23'.toString())
 
 
       this.trackingService
@@ -489,16 +445,7 @@ export class FinanceEmissionsComponent {
                   if (response.success === false) {
                       this.dataEntriesPending = null;
                   } else {
-                      if (this.categoryId == 24) {
-                          this.dataEntriesPending = (response.categories).filter(items => items.tablename == 'flight_travel');
-                      } else if (this.categoryId == 25) {
-                          this.dataEntriesPending = (response.categories).filter(items => items.tablename == 'hotel_stay');
-                      } else if (this.categoryId == 26) {
-                        
-                          this.dataEntriesPending = (response.categories).filter(items => items.tablename == 'other_modes_of_transport');
-                      } else {
                           this.dataEntriesPending = response.categories;
-                      }
                   }
               },
               error: (err) => {
@@ -531,15 +478,14 @@ export class FinanceEmissionsComponent {
           );
           return
       }
-      if (this.selectMonths.length == 0 && this.categoryId != 8) {
+      if (this.selectMonths.length == 0 ) {
           this.notification.showInfo(
               'Select month',
               ''
           );
           return
       }
-    
-      if (this.categoryId == 23) {
+
           let formData = new URLSearchParams();
 
           if (this.franchiseMethodValue == 'Investment Specific method' && this.investmentTypeValue == 'Equity investments') {
@@ -550,7 +496,7 @@ export class FinanceEmissionsComponent {
               formData.set('scope1_emission', form.value.scope1_emission);
               formData.set('scope2_emission', form.value.scope2_emission);
               formData.set('equity_share', form.value.share_Equity);
-              formData.set('facilities', this.facilityID);
+              formData.set('facilities', fId);
               formData.set('month', monthString);
               formData.set('year', this.dataEntry.year);
           } else if (this.investmentTypeValue == 'Equity investments' && this.franchiseMethodValue == 'Average data method') {
@@ -560,7 +506,7 @@ export class FinanceEmissionsComponent {
               formData.set('calculation_method', form.value.calculationmethod);
               formData.set('investee_company_total_revenue', form.value.investe_company_revenue);
               formData.set('equity_share', form.value.share_Equity);
-              formData.set('facilities', this.facilityID);
+              formData.set('facilities', fId);
               formData.set('month', monthString);
               formData.set('year', this.dataEntry.year);
           } else if ((this.investmentTypeValue == 'Debt investments' || this.investmentTypeValue == 'Project finance') && this.franchiseMethodValue == 'Average data method') {
@@ -571,7 +517,7 @@ export class FinanceEmissionsComponent {
               formData.set('project_phase', form.value.projectPhase);
               formData.set('project_construction_cost', form.value.project_construction_cost);
               formData.set('equity_project_cost', form.value.equity_project_cost);
-              formData.set('facilities', this.facilityID);
+              formData.set('facilities', fId);
               formData.set('month', monthString);
               formData.set('year', this.dataEntry.year);
           } else if ((this.investmentTypeValue == 'Debt investments' || this.investmentTypeValue == 'Project finance') && this.franchiseMethodValue == 'Investment Specific method') {
@@ -583,12 +529,10 @@ export class FinanceEmissionsComponent {
               formData.set('scope1_emission', form.value.scope1_emission);
               formData.set('scope2_emission', form.value.scope2_emission);
               formData.set('equity_project_cost', form.value.project_cost);
-              formData.set('facilities', this.facilityID);
+              formData.set('facilities', fId);
               formData.set('month', monthString);
               formData.set('year', this.dataEntry.year);
-
           }
-
 
           this.trackingService.calculateInvestmentEmission(formData.toString()).subscribe({
               next: (response) => {
@@ -607,8 +551,8 @@ export class FinanceEmissionsComponent {
                       this.franchiseMethod = false
                       this.franchiseMethodValue = '';
                       this.investmentTypeValue = ''
-
-                      // this.getStatusData(this.activeCategoryIndex)
+                      this.year = new Date();
+                     
                   } else {
                       this.notification.showError(
                           response.message,
@@ -636,14 +580,12 @@ export class FinanceEmissionsComponent {
                       'Data entry added failed.',
                       'Error'
                   );
-                  console.error('errrrrrr>>>>>>', err);
+                 
               },
               complete: () => console.info('Data entry Added')
           })
-      }
-     
-
   };
+
   // getting units for category 1 and 2
   getUnit(subcatId) {
       this.trackingService.newgetUnits(subcatId).subscribe({
@@ -661,9 +603,6 @@ export class FinanceEmissionsComponent {
   };
 
 
-
-
-
  
   ToggleClick() {
       this.isVisited = true;
@@ -679,17 +618,12 @@ export class FinanceEmissionsComponent {
                   this.dataEntrySetting = new DataEntrySetting();
               }
           });
-  }
+  };
 
 
   onInputEdit() {
       this.isInputEdited = true;
   };
-
-
-
-
-
 
 
  
@@ -718,51 +652,11 @@ export class FinanceEmissionsComponent {
           })
           return
       }
-      if (categoryIndex == 2) {
-          url = 'getUpstreamEmissions'
-      }
-      if (categoryIndex == 3) {
-          url = 'getUpstreamLeaseEmission'
-      }
-      if (categoryIndex == 4) {
-          url = 'getDownstreamEmissions'
-      }
-      if (categoryIndex == 5) {
-          url = 'getFranchiseEmission'
-      }
-      if (categoryIndex == 6) {
-          url = 'getDownstreamLeaseEmission'
-      }
+ 
       if (categoryIndex == 7) {
           url = 'getInvestmentEmission'
       }
-      if (categoryIndex == 8) {
-          url = 'getflight_travel'
-      }
-      if (categoryIndex == 9) {
-          url = 'gethotel_stay'
-      }
-      if (categoryIndex == 10) {
-          url = 'getothermodesofTransport'
-      }
-      if (categoryIndex == 11) {
-          url = 'getwatersupplytreatmentCategory'
-      }
-      if (categoryIndex == 12) {
-          url = 'getwasteGeneratedEmission'
-      }
-      if (categoryIndex == 13) {
-          url = 'getemployeecommutingCategory'
-      }
-      if (categoryIndex == 14) {
-          url = 'gethomeofficeCategory'
-      }
-      if (categoryIndex == 15) {
-          url = 'getprocessing_of_sold_productsCategory'
-      }
-      if (categoryIndex == 17) {
-          url = 'getendof_lifetreatment_category'
-      }
+    
       this.trackingService.getStatus(url).subscribe({
           next: (response) => {
               console.log(response);
@@ -774,7 +668,6 @@ export class FinanceEmissionsComponent {
           }
       })
   };
-
 
 
 

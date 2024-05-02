@@ -3,17 +3,15 @@
     <div class="container-fluid row d-flex justify-content-end"
         [ngClass]="this.updatedtheme === 'dark' ? 'headertextD' : 'headertextL'">
         <a [routerLink]="['/']" class="brand-link ct_logo_collape">
-            <pf-image *ngIf="updatedtheme === 'dark'" class="pl-4" src="assets/img/ekobon.png" alt="Ekobon Logo"
-                height="33"></pf-image>
+            <p-image *ngIf="updatedtheme === 'dark'" class="pl-4" src="assets/img/ekobon.png" alt="Ekobon Logo"
+                height="33"></p-image>
         
         
-            <pf-image *ngIf="updatedtheme !== 'dark'" class="pl-4" src="assets/img/ekobonL.png" alt="Ekobon Logo"
-                height="33"></pf-image>
+            <p-image *ngIf="updatedtheme !== 'dark'" class="pl-4" src="assets/img/ekobonL.png" alt="Ekobon Logo"
+                height="33"></p-image>
         
-        
-          
         </a>
-        <div class="col d-flex justify-content-end d-none" >
+        <div class="col d-flex justify-content-end d-none">
             <div class="row align-items-center">
                 <div class="mr-4  pl-3 pointer">
                     <div>

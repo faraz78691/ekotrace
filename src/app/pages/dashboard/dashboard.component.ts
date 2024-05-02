@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { LoginInfo } from '@/models/loginInfo';
 import { ThemeService } from '@services/theme.service';
 import { FacilityService } from '@services/facility.service';
@@ -13,6 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.scss']
+   
 })
 export class DashboardComponent {
     public EnvironmentDataPoints: DashboardModel[];

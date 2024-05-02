@@ -122,7 +122,7 @@ registerLocaleData(localeEn, 'en-EN');
         AppComponent,
         MainComponent,
         LoginComponent,
-        HeaderComponent,
+        
         FooterComponent,
         MenuSidebarComponent,
         BlankComponent,
@@ -186,6 +186,7 @@ registerLocaleData(localeEn, 'en-EN');
         ActionsComponent
     ],
     imports: [
+        HeaderComponent,
         BrowserModule,
         MultiSelectModule,
         ValidateEqualModule,

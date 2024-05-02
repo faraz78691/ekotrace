@@ -1,56 +1,25 @@
-
 <div class="container-fluid px-0">
-    <div class="row mb-0 pt-0">
-        <!-- <div class="col-sm-12" [ngClass]="
-                this.updatedtheme === 'dark' ? 'headlinetextD' : 'headlinetextL'
-            ">
-            <h3 class="m-0 pl-4 ct_fs_24 mb-4 pt-4 " style="color: #333; font-weight: 500;">Tracking</h3>
-        </div> -->
 
-
-    </div>
     <div class="row pt-2 ml-0 mx-0 px-0">
-        
+
         <div class="col-lg-8 mb-4 px-2">
             <div class="TrackingDiv2-border Dashboard-tab ct_dash_board_tab text-white ct_scroll_dash"
                 style="height: calc(100vh - 160px);">
 
-                <div [ngStyle]="{display: facilitynothavedp}" style="justify-content: center" class="noData">
-                    <div>
-                        <div class="icon mt-3">
-                            <i class="fa fa-info-circle" style="font-size: 20px" aria-hidden="true"></i>
-                        </div>
-                        <label class="label"> No data point for entries</label>
-                    </div>
-                </div>
-                <div [ngStyle]="{display: forGroup}" style="justify-content: center" class="noData">
-                    <div>
-                        <div class="icon mt-3">
-                            <i class="fa fa-info-circle" style="font-size: 20px" aria-hidden="true"></i>
-                        </div>
-                        <label class="label"> Please select facility</label>
-                    </div>
-                </div>
-                <div class="ct_scroll_60012">
-
-             
-                
-                <p-tabView  #dataentryTab activeIndex="{{ activeindex }}">
+                <p-tabView #dataentryTab activeIndex="{{ activeindex }}">
                     <p-tabPanel header="Data Entry">
                         <div class="row text-white border-bottom">
                             <div class="d-flex align-items-center justify-content-between w-100">
 
 
-                                <p 
-                                    class="mb-2 mt-3 ml-4 text-dark ct_fw_600">
-                                  Investment
+                                <p class="mb-2 mt-3 ml-4 text-dark ct_fw_600">
+                                    Investment
 
                                 </p>
-                             
+
                                 <div class="ct_how_use_tooltip_main">
                                     <i class="fa-solid fa-circle-question"></i>
-                                    <div class="ct_how_use_tooltip_cnt" [class.ct_active]="isHowtoUse"
-                                        >
+                                    <div class="ct_how_use_tooltip_cnt" [class.ct_active]="isHowtoUse">
                                         <p>
                                             Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel.
                                         </p>
@@ -62,12 +31,26 @@
                         </div>
                         <form #dataEntryForm="ngForm" (ngSubmit)="EntrySave(dataEntryForm)">
 
-                        
-                            <!-- scope 3 categores stats from here -->
-                         
-                            <div class="trackingFooter" >
-                                <div class="row mt-4 mb-3 mb-5 pb-5 mx-2">
 
+                            <!-- scope 3 categores stats from here -->
+
+                            <div class="trackingFooter">
+                                <div class="row mt-4 mb-3 mb-5 pb-5 mx-2">
+                                    <div class="calenderDiv flex row">
+                                        <div
+                                            class="selectmonth col card justify-content-center ct_month_select_clr ct_multi_input_38 ct_month_light_green">
+                                            <p-multiSelect [options]="months" placeholder="Months" name="months"
+                                                [(ngModel)]="selectMonths" styleClass="pcalender"
+                                                optionLabel="name"></p-multiSelect>
+                                        </div>
+                                        <div
+                                            class="selectyear ct_calander_input col ct_calender_38 ct_month_light_green ct_calender_font_size">
+                                            <p-calendar class="w-100" ngModel name="year" year
+                                                [(ngModel)]="year" styleClass="pcalender" view="year"
+                                                dateFormat="yy" inputId="yearpicker"
+                                                [showIcon]="true"></p-calendar>
+                                        </div>
+                                    </div>
                                     <div class="col-12">
                                         <div class=" mt-4">
                                             <div class="row">
@@ -347,8 +330,8 @@
                                     </div>
                                 </div>
                             </div>
-                          
-                          
+
+
 
                         </form>
                     </p-tabPanel>
@@ -629,7 +612,7 @@
                                         </th>
                                         <th *ngIf="categoryId==6" pSortableColumn="noOfVehicles"
                                             pTooltip="Number Of Vehicles" tooltipPosition="top">
-                                           No of Vehicles <p-sortIcon field="noOfVehicles"></p-sortIcon>
+                                            No of Vehicles <p-sortIcon field="noOfVehicles"></p-sortIcon>
                                         </th>
                                         <th *ngIf="categoryId==6" pSortableColumn="modeOfDE"
                                             pTooltip="Mode Of data entry" tooltipPosition="top">
@@ -843,257 +826,258 @@
                             </p>
                         </div>
                         <div class="ElectricityTable mt-0 ct_overflow_hidden_data_table_500"
-                        style="height: auto !important;">
-                        <p-table [paginator]="true" [rowHover]="true" style="overflow-y: unset;" [rows]="10"
-                            styleClass="statusTable ct_status_tble_230_space ct_status_table_main"
-                            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" #dt1
-                            [value]="dataEntriesPending" dataKey="id">
-                            <ng-template pTemplate="header">
-                                <tr>
+                            style="height: auto !important;">
+                            <p-table [paginator]="true" [rowHover]="true" style="overflow-y: unset;" [rows]="10"
+                                styleClass="statusTable ct_status_tble_230_space ct_status_table_main"
+                                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" #dt1
+                                [value]="dataEntriesPending" dataKey="id">
+                                <ng-template pTemplate="header">
+                                    <tr>
 
-                                    <th pSortableColumn="catName" *ngIf="categoryId == 8">
-                                        Type of purchase
-                                        <p-sortIcon field="catName"></p-sortIcon>
-                                    </th>
-                                    <!-- <th pSortableColumn="catName" *ngIf="categoryId != 24 && categoryId != 25 && categoryId != 26">
+                                        <th pSortableColumn="catName" *ngIf="categoryId == 8">
+                                            Type of purchase
+                                            <p-sortIcon field="catName"></p-sortIcon>
+                                        </th>
+                                        <!-- <th pSortableColumn="catName" *ngIf="categoryId != 24 && categoryId != 25 && categoryId != 26">
                                         Category
                                         <p-sortIcon field="catName"></p-sortIcon>
                                     </th> -->
-                                    <th pTooltip="Data Points" tooltipPosition="top" pSortableColumn="subcatName"
-                                        *ngIf="categoryId == 1 || categoryId == 2 || categoryId == 3 || categoryId == 4 || categoryId == 5 || categoryId == 6">
-                                        D.P
-                                        <p-sortIcon field="subcatName"></p-sortIcon>
-                                    </th>
-                                    <th pSortableColumn="type"
-                                        *ngIf="categoryId != 3 && categoryId != 10 && categoryId != 11 && categoryId != 10 && categoryId != 12 && categoryId != 14">
+                                        <th pTooltip="Data Points" tooltipPosition="top" pSortableColumn="subcatName"
+                                            *ngIf="categoryId == 1 || categoryId == 2 || categoryId == 3 || categoryId == 4 || categoryId == 5 || categoryId == 6">
+                                            D.P
+                                            <p-sortIcon field="subcatName"></p-sortIcon>
+                                        </th>
+                                        <th pSortableColumn="type"
+                                            *ngIf="categoryId != 3 && categoryId != 10 && categoryId != 11 && categoryId != 10 && categoryId != 12 && categoryId != 14">
 
-                                        Type
-                                        <p-sortIcon field="catName"></p-sortIcon>
-                                    </th>
-                                
-                                  
-                                    <th pSortableColumn="catName"
-                                        *ngIf="categoryId == 16 || categoryId == 21 || categoryId == 22 || categoryId == 23">
-                                        Sub Category
-                                        <p-sortIcon field="catName"></p-sortIcon>
-                                    </th>
-                                    <th pSortableColumn="catName" *ngIf="categoryId == 18">
-                                        Sub Activity
-                                        <p-sortIcon field="catName"></p-sortIcon>
-                                    </th>
-                                  
-                               
-                                  
-                                    <th pSortableColumn="catName" *ngIf="categoryId == 14">
-                                        Type
-                                        <p-sortIcon field="catName"></p-sortIcon>
-                                    </th>
-                                 
-                                    <th pSortableColumn="catName" *ngIf="categoryId == 14">
-                                        Working Days
-                                        <p-sortIcon field="catName"></p-sortIcon>
-                                    </th>
-                                    <th pSortableColumn="catName" *ngIf="categoryId == 10 || categoryId == 17">
-                                        Vehicle Type
-                                        <p-sortIcon field="catName"></p-sortIcon>
-                                    </th>
-                                  
-                                    <th pSortableColumn="catName" *ngIf="categoryId == 12">
-                                        Waste Type
-                                        <p-sortIcon field="catName"></p-sortIcon>
-                                    </th>
-                                    <th pSortableColumn="catName" *ngIf="categoryId == 10 || categoryId == 17">
-                                        Sub Category
-                                        <p-sortIcon field="catName"></p-sortIcon>
-                                    </th>
-                                    <th pSortableColumn="catName" *ngIf="categoryId == 10 || categoryId == 17">
-                                        Distance Travelled
-                                        <p-sortIcon field="catName"></p-sortIcon>
-                                    </th>
-                                    <th pSortableColumn="catName" *ngIf="categoryId == 10 || categoryId == 17">
-                                        Mass of Product
-                                        <p-sortIcon field="catName"></p-sortIcon>
-                                    </th>
-                                  
-
-                                    <th pSortableColumn="flightMode" *ngIf="categoryId == 24">
-                                        Flight mode
-                                        <p-sortIcon field="flightMode"></p-sortIcon>
-                                    </th>
-                                    <th pSortableColumn=" FlightType" *ngIf="categoryId == 24">
-                                        Flight Type
-                                        <p-sortIcon field=" FlightType"></p-sortIcon>
-                                    </th>
-                                    <th pSortableColumn="Class" *ngIf="categoryId == 24">
-                                        Flight Class
-                                        <p-sortIcon field="Class"></p-sortIcon>
-                                    </th>
-                                    <th pSortableColumn="Nooftrips" *ngIf="categoryId == 24">
-                                        No of Trips
-                                        <p-sortIcon field="Nooftrips"></p-sortIcon>
-                                    </th>
-                                    <th pSortableColumn="Distance" *ngIf="categoryId == 24">
-                                        Distance Travelled
-                                        <p-sortIcon field="Distance"></p-sortIcon>
-                                    </th>
-                                    <th pSortableColumn="Countryofstay" *ngIf="categoryId == 25">
-                                        Country of Stay
-                                        <p-sortIcon field="Countryofstay"></p-sortIcon>
-                                    </th>
-
-                                    <th pSortableColumn="typeHotel" *ngIf="categoryId == 25">
-                                        Type of Sotel
-                                        <p-sortIcon field="typeHotel"></p-sortIcon>
-                                    </th>
-                                    <th pSortableColumn="no_of_occupied_rooms" *ngIf="categoryId == 25">
-                                        Occupied Rooms
-                                        <p-sortIcon field="no_of_occupied_rooms"></p-sortIcon>
-                                    </th>
-                                    <th pSortableColumn="no_of_nights_per_room" *ngIf="categoryId == 25">
-                                        Nights per Room
-                                        <p-sortIcon field="no_of_nights_per_room"></p-sortIcon>
-                                    </th>
-
-                                    <th pSortableColumn="no_of_nights_per_room" *ngIf="categoryId == 26">
-                                        Mode of Trasport
-                                        <p-sortIcon field="no_of_nights_per_room"></p-sortIcon>
-                                    </th>
-                                    <th pSortableColumn="no_of_nights_per_room" *ngIf="categoryId == 26">
-                                        No. of Passengers
-                                        <p-sortIcon field="no_of_nights_per_room"></p-sortIcon>
-                                    </th>
-                                    <th pSortableColumn="distanceT" *ngIf="categoryId == 26">
-                                        Distance Travlled
-                                        <p-sortIcon field="distanceT"></p-sortIcon>
-                                    </th>
-                                    <th pSortableColumn="no_of_trips" *ngIf="categoryId == 26">
-                                        No of Trips
-                                        <p-sortIcon field="no_of_trips"></p-sortIcon>
-                                    </th>
+                                            Type
+                                            <p-sortIcon field="catName"></p-sortIcon>
+                                        </th>
 
 
-                             
-                                
-                               
-                                    <!-- <th *ngIf="categoryId==1" style="width: 15%" pTooltip="Blend percent"
+                                        <th pSortableColumn="catName"
+                                            *ngIf="categoryId == 16 || categoryId == 21 || categoryId == 22 || categoryId == 23">
+                                            Sub Category
+                                            <p-sortIcon field="catName"></p-sortIcon>
+                                        </th>
+                                        <th pSortableColumn="catName" *ngIf="categoryId == 18">
+                                            Sub Activity
+                                            <p-sortIcon field="catName"></p-sortIcon>
+                                        </th>
+
+
+
+                                        <th pSortableColumn="catName" *ngIf="categoryId == 14">
+                                            Type
+                                            <p-sortIcon field="catName"></p-sortIcon>
+                                        </th>
+
+                                        <th pSortableColumn="catName" *ngIf="categoryId == 14">
+                                            Working Days
+                                            <p-sortIcon field="catName"></p-sortIcon>
+                                        </th>
+                                        <th pSortableColumn="catName" *ngIf="categoryId == 10 || categoryId == 17">
+                                            Vehicle Type
+                                            <p-sortIcon field="catName"></p-sortIcon>
+                                        </th>
+
+                                        <th pSortableColumn="catName" *ngIf="categoryId == 12">
+                                            Waste Type
+                                            <p-sortIcon field="catName"></p-sortIcon>
+                                        </th>
+                                        <th pSortableColumn="catName" *ngIf="categoryId == 10 || categoryId == 17">
+                                            Sub Category
+                                            <p-sortIcon field="catName"></p-sortIcon>
+                                        </th>
+                                        <th pSortableColumn="catName" *ngIf="categoryId == 10 || categoryId == 17">
+                                            Distance Travelled
+                                            <p-sortIcon field="catName"></p-sortIcon>
+                                        </th>
+                                        <th pSortableColumn="catName" *ngIf="categoryId == 10 || categoryId == 17">
+                                            Mass of Product
+                                            <p-sortIcon field="catName"></p-sortIcon>
+                                        </th>
+
+
+                                        <th pSortableColumn="flightMode" *ngIf="categoryId == 24">
+                                            Flight mode
+                                            <p-sortIcon field="flightMode"></p-sortIcon>
+                                        </th>
+                                        <th pSortableColumn=" FlightType" *ngIf="categoryId == 24">
+                                            Flight Type
+                                            <p-sortIcon field=" FlightType"></p-sortIcon>
+                                        </th>
+                                        <th pSortableColumn="Class" *ngIf="categoryId == 24">
+                                            Flight Class
+                                            <p-sortIcon field="Class"></p-sortIcon>
+                                        </th>
+                                        <th pSortableColumn="Nooftrips" *ngIf="categoryId == 24">
+                                            No of Trips
+                                            <p-sortIcon field="Nooftrips"></p-sortIcon>
+                                        </th>
+                                        <th pSortableColumn="Distance" *ngIf="categoryId == 24">
+                                            Distance Travelled
+                                            <p-sortIcon field="Distance"></p-sortIcon>
+                                        </th>
+                                        <th pSortableColumn="Countryofstay" *ngIf="categoryId == 25">
+                                            Country of Stay
+                                            <p-sortIcon field="Countryofstay"></p-sortIcon>
+                                        </th>
+
+                                        <th pSortableColumn="typeHotel" *ngIf="categoryId == 25">
+                                            Type of Sotel
+                                            <p-sortIcon field="typeHotel"></p-sortIcon>
+                                        </th>
+                                        <th pSortableColumn="no_of_occupied_rooms" *ngIf="categoryId == 25">
+                                            Occupied Rooms
+                                            <p-sortIcon field="no_of_occupied_rooms"></p-sortIcon>
+                                        </th>
+                                        <th pSortableColumn="no_of_nights_per_room" *ngIf="categoryId == 25">
+                                            Nights per Room
+                                            <p-sortIcon field="no_of_nights_per_room"></p-sortIcon>
+                                        </th>
+
+                                        <th pSortableColumn="no_of_nights_per_room" *ngIf="categoryId == 26">
+                                            Mode of Trasport
+                                            <p-sortIcon field="no_of_nights_per_room"></p-sortIcon>
+                                        </th>
+                                        <th pSortableColumn="no_of_nights_per_room" *ngIf="categoryId == 26">
+                                            No. of Passengers
+                                            <p-sortIcon field="no_of_nights_per_room"></p-sortIcon>
+                                        </th>
+                                        <th pSortableColumn="distanceT" *ngIf="categoryId == 26">
+                                            Distance Travlled
+                                            <p-sortIcon field="distanceT"></p-sortIcon>
+                                        </th>
+                                        <th pSortableColumn="no_of_trips" *ngIf="categoryId == 26">
+                                            No of Trips
+                                            <p-sortIcon field="no_of_trips"></p-sortIcon>
+                                        </th>
+
+
+
+
+
+                                        <!-- <th *ngIf="categoryId==1" style="width: 15%" pTooltip="Blend percent"
                                         tooltipPosition="top" pSortableColumn="blendPercent">
                                         <p-sortIcon field="blendPercent"></p-sortIcon>
                                         %
     
                                     </th> -->
-                                   
-                                    <th *ngIf="categoryId==3" pSortableColumn="numberOfExtinguisher"
-                                        pTooltip="Number Of Fire Extinguisher" tooltipPosition="top">
-                                        Extinguisher <p-sortIcon field="numberOfExtinguisher"></p-sortIcon>
-                                    </th>
-                                    <th *ngIf="categoryId==3" pSortableColumn="quantityOfCO2makeup"
-                                        pTooltip="Quantity Of CO2 makeup" tooltipPosition="top">
-                                        CO2 MakeUp <p-sortIcon field="quantityOfCO2makeup"></p-sortIcon>
-                                    </th>
-                                    <th *ngIf="categoryId==6" pSortableColumn="noOfVehicles" pTooltip="Vehicle Type"
-                                        tooltipPosition="top">
-                                        Type <p-sortIcon field="noOfVehicles"></p-sortIcon>
-                                    </th>
-                                    <th *ngIf="categoryId==6" pSortableColumn="noOfVehicles"
-                                        pTooltip="Number Of Vehicles" tooltipPosition="top">
-                                        Vehicles <p-sortIcon field="noOfVehicles"></p-sortIcon>
-                                    </th>
-                                    <th *ngIf="categoryId==6" pSortableColumn="modeOfDE"
-                                        pTooltip="Mode Of data entry" tooltipPosition="top">
-                                        Mode <p-sortIcon field="modeOfDE"></p-sortIcon>
-                                    </th>
-                                    <th *ngIf="categoryId==6" pSortableColumn="amount">
-                                        Value <p-sortIcon field="amount"></p-sortIcon>
-                                    </th>
-                                    <th pSortableColumn="sourceName" pTooltip="tCO2" tooltipPosition="top">
-                                        Emission Factor
-                                    </th>
-                                    <th pSortableColumn="unit"
-                                        *ngIf="categoryId !=24 && categoryId !=25  && categoryId !=26">
-                                        Unit <p-sortIcon field="unit"></p-sortIcon>
-                                    </th>
-                                    <th>User</th>
-                                    <!-- <th >Details</th> -->
-                                </tr>
 
-                            </ng-template>
-                            <ng-template pTemplate="body" let-de let-editing="editing" let-ri="rowIndex">
-                                <tr [pEditableRow]="de">
+                                        <th *ngIf="categoryId==3" pSortableColumn="numberOfExtinguisher"
+                                            pTooltip="Number Of Fire Extinguisher" tooltipPosition="top">
+                                            Extinguisher <p-sortIcon field="numberOfExtinguisher"></p-sortIcon>
+                                        </th>
+                                        <th *ngIf="categoryId==3" pSortableColumn="quantityOfCO2makeup"
+                                            pTooltip="Quantity Of CO2 makeup" tooltipPosition="top">
+                                            CO2 MakeUp <p-sortIcon field="quantityOfCO2makeup"></p-sortIcon>
+                                        </th>
+                                        <th *ngIf="categoryId==6" pSortableColumn="noOfVehicles" pTooltip="Vehicle Type"
+                                            tooltipPosition="top">
+                                            Type <p-sortIcon field="noOfVehicles"></p-sortIcon>
+                                        </th>
+                                        <th *ngIf="categoryId==6" pSortableColumn="noOfVehicles"
+                                            pTooltip="Number Of Vehicles" tooltipPosition="top">
+                                            Vehicles <p-sortIcon field="noOfVehicles"></p-sortIcon>
+                                        </th>
+                                        <th *ngIf="categoryId==6" pSortableColumn="modeOfDE"
+                                            pTooltip="Mode Of data entry" tooltipPosition="top">
+                                            Mode <p-sortIcon field="modeOfDE"></p-sortIcon>
+                                        </th>
+                                        <th *ngIf="categoryId==6" pSortableColumn="amount">
+                                            Value <p-sortIcon field="amount"></p-sortIcon>
+                                        </th>
+                                        <th pSortableColumn="sourceName" pTooltip="tCO2" tooltipPosition="top">
+                                            Emission Factor
+                                        </th>
+                                        <th pSortableColumn="unit"
+                                            *ngIf="categoryId !=24 && categoryId !=25  && categoryId !=26">
+                                            Unit <p-sortIcon field="unit"></p-sortIcon>
+                                        </th>
+                                        <th>User</th>
+                                        <!-- <th >Details</th> -->
+                                    </tr>
 
-                                    <td *ngIf="categoryId == 8"> {{de.typeofpurchase}}</td>
-                                    <td
-                                        *ngIf="categoryId != 8 && categoryId != 7 && categoryId != 10 && categoryId != 12 && categoryId != 14 && categoryId != 15 && categoryId != 16 && categoryId != 17 && categoryId != 18 && categoryId != 19 && categoryId != 20 && categoryId !=21 && categoryId !=22 && categoryId !=11 && categoryId !=23 && categoryId !=24 && categoryId != 25 && categoryId != 26">
-                                        {{ de.subcatName }}</td>
-                                    <td
-                                        *ngIf="categoryId != 3 && categoryId != 10 && categoryId != 11 && categoryId != 12 && categoryId != 14  &&  categoryId != 24 && categoryId != 16 && categoryId !=18 && categoryId !=20 && categoryId !=21   && categoryId !=22 && categoryId !=23 && categoryId != 25 && categoryId != 26">
-                                        {{ de.TypeName || '-' }}</td>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-de let-editing="editing" let-ri="rowIndex">
+                                    <tr [pEditableRow]="de">
 
-                                 
-                                    <td *ngIf="categoryId == 22 || categoryId == 23  ">{{ de.sub_category }}</td>
-                             
-                                    <td *ngIf="categoryId == 16 || categoryId == 21 ">{{ de.category }}</td>
-                                    <td *ngIf="categoryId == 18">{{ de.intermediate_category }}</td>
-                                    <td *ngIf="categoryId == 18">{{ de.sub_activity }}</td>
-                                    <td *ngIf="categoryId == 18">{{ de.processing_acitivity }}</td>
-                                    <td *ngIf="categoryId == 16 || categoryId == 21">{{ de.sub_category }}</td>
-                                    <td *ngIf="categoryId == 23">{{ de.investement_type }}</td>
-                             
-                                 
-                                    <td *ngIf="categoryId == 14">{{ de.type }}</td>
-                                  
-                                    <td *ngIf="categoryId == 12">{{ de.waste_type }}</td>
-
-                                    <td *ngIf="categoryId == 10 || categoryId == 17">{{ de.vehicle_type }}</td>
-                                    <td *ngIf="categoryId == 10 || categoryId == 17">{{ de.sub_category }}</td>
-                                    <td *ngIf="categoryId == 10 || categoryId == 17">{{ de.distance_travelled_km }}
-                                    </td>
-                                    <td *ngIf="categoryId == 10 || categoryId == 17">{{ de.mass_of_product_trans }}
-                                    </td>
-                                    <td *ngIf="categoryId == 10 || categoryId == 17">{{ de.storage_facility_type }}
-                                    </td>
-                               
-                                    <td *ngIf="categoryId == 25">{{ de.country_of_stay }}
-                                    </td>
-                                    <td *ngIf="categoryId == 25">{{ de.type_of_hotel }}
-                                    </td>
-                                    <td *ngIf="categoryId == 25">{{ de.no_of_occupied_rooms }}
-                                    </td>
-                                    <td *ngIf="categoryId == 25">{{ de.no_of_nights_per_room }}
-                                    </td>
-
-                                    <td *ngIf="categoryId == 26">{{ de.mode_of_trasport }}
-                                    </td>
-                                    <td *ngIf="categoryId == 26">{{ de.no_of_passengers }}
-                                    </td>
-                                    <td *ngIf="categoryId == 26">{{ de.distance_travelled }}
-                                    </td>
-                                    <td *ngIf="categoryId == 26">{{ de.no_of_trips }}
-                                    </td>
-                               
-                                  
-                                 
-                                
-                                 
-                                
-                                
-                                    <td *ngIf="categoryId==6">{{ de.vehicleTypeID }}</td>
-                                    <td *ngIf="categoryId==6">{{ de.NoOfVehicles }}</td>
-                                    <td *ngIf="categoryId==6">{{ de.ModeofDEID }}</td>
-                                    <td *ngIf="categoryId==6">{{ de.Value }}</td>
-                                    <td>{{de.emissionFactorUsed != 'NaN' ? (de.emissionFactorUsed | number :'1.2-2') : '-' }}</td>
-                                    <td *ngIf="categoryId !=24 && categoryId !=25  && categoryId !=26">{{ de.unit }}
-                                    </td>
+                                        <td *ngIf="categoryId == 8"> {{de.typeofpurchase}}</td>
+                                        <td
+                                            *ngIf="categoryId != 8 && categoryId != 7 && categoryId != 10 && categoryId != 12 && categoryId != 14 && categoryId != 15 && categoryId != 16 && categoryId != 17 && categoryId != 18 && categoryId != 19 && categoryId != 20 && categoryId !=21 && categoryId !=22 && categoryId !=11 && categoryId !=23 && categoryId !=24 && categoryId != 25 && categoryId != 26">
+                                            {{ de.subcatName }}</td>
+                                        <td
+                                            *ngIf="categoryId != 3 && categoryId != 10 && categoryId != 11 && categoryId != 12 && categoryId != 14  &&  categoryId != 24 && categoryId != 16 && categoryId !=18 && categoryId !=20 && categoryId !=21   && categoryId !=22 && categoryId !=23 && categoryId != 25 && categoryId != 26">
+                                            {{ de.TypeName || '-' }}</td>
 
 
-                                    <td *ngIf="categoryId==5">{{ de.SourceName == 'undefined' ? '-' : de.SourceName
-                                        }}</td>
-                                 
-                                 
-                                    <td>{{ de.user_name }}</td>
+                                        <td *ngIf="categoryId == 22 || categoryId == 23  ">{{ de.sub_category }}</td>
+
+                                        <td *ngIf="categoryId == 16 || categoryId == 21 ">{{ de.category }}</td>
+                                        <td *ngIf="categoryId == 18">{{ de.intermediate_category }}</td>
+                                        <td *ngIf="categoryId == 18">{{ de.sub_activity }}</td>
+                                        <td *ngIf="categoryId == 18">{{ de.processing_acitivity }}</td>
+                                        <td *ngIf="categoryId == 16 || categoryId == 21">{{ de.sub_category }}</td>
+                                        <td *ngIf="categoryId == 23">{{ de.investement_type }}</td>
+
+
+                                        <td *ngIf="categoryId == 14">{{ de.type }}</td>
+
+                                        <td *ngIf="categoryId == 12">{{ de.waste_type }}</td>
+
+                                        <td *ngIf="categoryId == 10 || categoryId == 17">{{ de.vehicle_type }}</td>
+                                        <td *ngIf="categoryId == 10 || categoryId == 17">{{ de.sub_category }}</td>
+                                        <td *ngIf="categoryId == 10 || categoryId == 17">{{ de.distance_travelled_km }}
+                                        </td>
+                                        <td *ngIf="categoryId == 10 || categoryId == 17">{{ de.mass_of_product_trans }}
+                                        </td>
+                                        <td *ngIf="categoryId == 10 || categoryId == 17">{{ de.storage_facility_type }}
+                                        </td>
+
+                                        <td *ngIf="categoryId == 25">{{ de.country_of_stay }}
+                                        </td>
+                                        <td *ngIf="categoryId == 25">{{ de.type_of_hotel }}
+                                        </td>
+                                        <td *ngIf="categoryId == 25">{{ de.no_of_occupied_rooms }}
+                                        </td>
+                                        <td *ngIf="categoryId == 25">{{ de.no_of_nights_per_room }}
+                                        </td>
+
+                                        <td *ngIf="categoryId == 26">{{ de.mode_of_trasport }}
+                                        </td>
+                                        <td *ngIf="categoryId == 26">{{ de.no_of_passengers }}
+                                        </td>
+                                        <td *ngIf="categoryId == 26">{{ de.distance_travelled }}
+                                        </td>
+                                        <td *ngIf="categoryId == 26">{{ de.no_of_trips }}
+                                        </td>
 
 
 
-                                    <!-- <td>
+
+
+
+
+                                        <td *ngIf="categoryId==6">{{ de.vehicleTypeID }}</td>
+                                        <td *ngIf="categoryId==6">{{ de.NoOfVehicles }}</td>
+                                        <td *ngIf="categoryId==6">{{ de.ModeofDEID }}</td>
+                                        <td *ngIf="categoryId==6">{{ de.Value }}</td>
+                                        <td>{{de.emissionFactorUsed != 'NaN' ? (de.emissionFactorUsed | number :'1.2-2')
+                                            : '-' }}</td>
+                                        <td *ngIf="categoryId !=24 && categoryId !=25  && categoryId !=26">{{ de.unit }}
+                                        </td>
+
+
+                                        <td *ngIf="categoryId==5">{{ de.SourceName == 'undefined' ? '-' : de.SourceName
+                                            }}</td>
+
+
+                                        <td>{{ de.user_name }}</td>
+
+
+
+                                        <!-- <td>
                                         <div class="view-details">
                                             <i class="pi pi-eye pt-2 text-white" title="info"
                                                 [routerLink]="['/tracking-status']"
@@ -1102,14 +1086,14 @@
                                                 <i class="pi pi-download text-white pl-2" title="download"></i></a>
                                         </div>
                                     </td> -->
-                                </tr>
-                            </ng-template>
-                        </p-table>
-                    </div>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
                     </p-tabPanel>
                 </p-tabView>
             </div>
-            </div>
         </div>
+
     </div>
 </div>

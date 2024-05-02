@@ -475,6 +475,7 @@ const routes: Routes = [
         component: ResetPasswordComponent,
         canActivate: [NonAuthGuard]
     },
+    { path: 'settings', loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule) },
 
     { path: '**', redirectTo: '' }
 ];

@@ -18,6 +18,7 @@ import { filter } from 'rxjs';
 })
 export class FacilityService {
     facilitiesSignal = signal<facilities[]>([])
+    selectedfacilitiesSignal = signal<number>(0)
     headerTracking = signal<boolean>(false);
     localapiURL = 'http://192.168.1.31:4003';
     totalAngularPackages;
@@ -69,6 +70,10 @@ export class FacilityService {
 
     AddFacilites(facilities: facilities[]) {
      this.facilitiesSignal.set(facilities)
+    };
+
+    facilitySelected(id:number){
+this.selectedfacilitiesSignal.set(id)
     };
 
     public gerReport(url, data): Observable<any> {
