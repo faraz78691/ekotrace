@@ -14,9 +14,9 @@ import { ThemeService } from '@services/theme.service';
 import { environment } from 'environments/environment';
 
 
-import {GroupService} from '@services/group.service';
+import { GroupService } from '@services/group.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import {UserService} from '@services/user.service';
+import { UserService } from '@services/user.service';
 import { ApexAxisChartSeries, ApexChart, ApexXAxis, ApexStroke, ApexDataLabels, ApexMarkers, ApexYAxis, ApexGrid, ApexLegend, ApexTitleSubtitle } from 'ng-apexcharts';
 
 interface groupby {
@@ -24,18 +24,18 @@ interface groupby {
 };
 
 export type ChartOptions = {
-    series: ApexAxisChartSeries;
-    chart: ApexChart;
-    xaxis: ApexXAxis;
-    stroke: ApexStroke;
-    dataLabels: ApexDataLabels;
-    markers: ApexMarkers;
-    tooltip: any; // ApexTooltip;
-    yaxis: ApexYAxis;
-    grid: ApexGrid;
-    legend: ApexLegend;
-    title: ApexTitleSubtitle;
-  };
+  series: ApexAxisChartSeries;
+  chart: ApexChart;
+  xaxis: ApexXAxis;
+  stroke: ApexStroke;
+  dataLabels: ApexDataLabels;
+  markers: ApexMarkers;
+  tooltip: any; // ApexTooltip;
+  yaxis: ApexYAxis;
+  grid: ApexGrid;
+  legend: ApexLegend;
+  title: ApexTitleSubtitle;
+};
 
 
 @Component({
@@ -44,9 +44,9 @@ export type ChartOptions = {
   styleUrls: ['./target-setting.component.scss']
 })
 export class TargetSettingComponent {
-    // @ViewChild("chart") chart: ChartComponent;
-public chartOptions: Partial<ChartOptions>;
-  @ViewChild('GroupForm', {static: false}) GroupForm: NgForm;
+  // @ViewChild("chart") chart: ChartComponent;
+  public chartOptions: Partial<ChartOptions>;
+  @ViewChild('GroupForm', { static: false }) GroupForm: NgForm;
   public companyDetails: CompanyDetails;
   companyData: CompanyDetails = new CompanyDetails();
   public loginInfo: LoginInfo;
@@ -57,7 +57,17 @@ public chartOptions: Partial<ChartOptions>;
   public admininfoList: UserInfo[] = [];
   facilityList: Facility[] = [];
   RolesList: RoleModel[] = [];
-  public groupsList: Group[] = [];
+  public groupsList: any[] = [];
+  public scope1_data: any[] = [];
+  public scope2_data: any[] = [];
+  public scope3_data: any[] = [];
+  public forecast1_data: any[] = [];
+  public forecast2_data: any[] = [];
+  public forecast3_data: any[] = [];
+  public dashed1_data: any[] = [];
+  public dashed2_data: any[] = [];
+  public dashed3_data: any[] = [];
+  public x_axis_years: any[] = [];
   display = 'none';
   visible: boolean;
   selectedRole = '';
@@ -85,6 +95,7 @@ public chartOptions: Partial<ChartOptions>;
   editBindedCountry: any[] = [];
   target_type: any[] = [];
   targetKPI: any[] = [];
+  responseGraph: any[] = [];
   id: any;
   isgroupExist: boolean = false;
   selectedFaciltiy: any;
@@ -95,495 +106,596 @@ public chartOptions: Partial<ChartOptions>;
   stateUnique: string[];
   unlock: string = '';
   ischecked = true;
-  selectedRowIndex = 0;  
+  selectedRowIndex = 0;
   filledgroup: any;
   project_details = '';
   carbon_offset = '';
-  selectedScope:any;
-  carbon_credit_value:string;
-  type:string;
-  date3:string;
-  standard:string;
-  selectedFile:File
+  selectedScope: any;
+  carbon_credit_value: string;
+  type: string;
+  date3: string;
+  standard: string;
+  selectedFile: File
   constructor(
-      private companyService: CompanyService,
-      private UserService: UserService,
-      private GroupService: GroupService,
-      private notification: NotificationService,
-      private facilityService: FacilityService,
-      private confirmationService: ConfirmationService,
-      private messageService: MessageService,
-      private themeservice: ThemeService
+    private companyService: CompanyService,
+    private UserService: UserService,
+    private GroupService: GroupService,
+    private notification: NotificationService,
+    private facilityService: FacilityService,
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService,
+    private themeservice: ThemeService
   ) {
-      this.admininfo = new UserInfo();
-      this.userdetails = new UserInfo();
-      this.groupdetails = new Array();
-      this.groupMappingDetails = new GroupMapping();
-      this.loginInfo = new LoginInfo();
-      this.companyDetails = new CompanyDetails();
-      this.rootUrl = environment.baseUrl + 'uploads/';
-      this.selectedValue = '';
+    this.admininfo = new UserInfo();
+    this.userdetails = new UserInfo();
+    this.groupdetails = new Array();
+    this.groupMappingDetails = new GroupMapping();
+    this.loginInfo = new LoginInfo();
+    this.companyDetails = new CompanyDetails();
+    this.rootUrl = environment.baseUrl + 'uploads/';
+    this.selectedValue = '';
 
-      this.chartOptions = {
-        series: [
-          {
-            name: "Session Duration",
-            data: [45, 52, 38, 24, 33, 26, 21, 20, 6, 8, 15, 10]
-          },
-          {
-            name: "Page Views",
-            data: [35, 41, 62, 42, 13, 18, 29, 37, 36, 51, 32, 35]
-          },
-          {
-            name: "Total Visits",
-            data: [87, 57, 74, 99, 75, 38, 62, 47, 82, 56, 45, 47]
-          }
-        ],
-        chart: {
-          height: 350,
-          type: "line"
-        },
-        dataLabels: {
-          enabled: false
-        },
-        stroke: {
-          width: 5,
-          curve: "straight",
-          dashArray: [0, 8, 5]
-        },
-        title: {
-          text: "Page Statistics",
-          align: "left"
-        },
-        legend: {
-          tooltipHoverFormatter: function(val, opts) {
-            return (
-              val +
-              " - <strong>" +
-              opts.w.globals.series[opts.seriesIndex][opts.dataPointIndex] +
-              "</strong>"
-            );
-          }
-        },
-        markers: {
-          size: 0,
-          hover: {
-            sizeOffset: 6
-          }
-        },
-        xaxis: {
-          labels: {
-            trim: false
-          },
-          categories: [
-            "01 Jan",
-            "02 Jan",
-            "03 Jan",
-            "04 Jan",
-            "05 Jan",
-            "06 Jan",
-            "07 Jan",
-            "08 Jan",
-            "09 Jan",
-            "10 Jan",
-            "11 Jan",
-            "12 Jan"
-          ]
-        },
-        tooltip: {
-          y: [
-            {
-              title: {
-                formatter: function(val) {
-                  return val + " (mins)";
-                }
-              }
-            },
-            {
-              title: {
-                formatter: function(val) {
-                  return val + " per session";
-                }
-              }
-            },
-            {
-              title: {
-                formatter: function(val) {
-                  return val;
-                }
-              }
-            }
-          ]
-        },
-        grid: {
-          borderColor: "#f1f1f1"
-        }
-      };
-      
-      this.Groupby = [
-          {
-              name: 'Renewable Energy'
-          },
-          {
-              name: 'Nature Based'
-          },
-          {
-              name: 'Energy Efficiency'
-          },
-          {
-              name: 'Community Project'
-          },
-          {
-              name: 'Carbon Sequestration'
-          },
-          {
-              name: 'Others'
-          }
-      ];
-      this.emission_activity = [
-          {
-              e_act: 'Scope 1'
-          },
-          {
-            e_act: 'Scope 1 & 2'
-          },
-          {
-            e_act: 'Scope 3'
-          },
-          {
-            e_act: 'Scope 1,2 & 3'
-          }
-      ];
-      this.target_type = [
-          {
-              e_act: 'Economic Intensity Convergence'
-          },
-          {
-            e_act: 'Physical Intensity Convergence'
-          },
-          {
-            e_act: 'Economic Intensity Convergence'
-          }
-      ];
-      this.targetKPI = [
-          {
-              e_act: 'Supplier Engagement'
-          },
-          {
-            e_act: 'Renewable energy'
-          }
-         
-      ];
-      
- 
-      this.scopeList = [
-          { id: 1,
-              name: 'Scope 1'
-          },
-          { id:2,
-              name: 'Scope 2'
-          },
-          { id:3,
-              name: 'Scope 3'
-          }
-      ];
+
+    // this.chartOptions = {
+    //   series: [
+    //     {
+    //       name: "Session Duration",
+    //       data: [45, 52, 38, 24, 33, 26, 21, 20, 6, 8, 15, 10]
+    //     },
+    //     {
+    //       name: "Page Views",
+    //       data: [35, 41, 62, 42, 13, 18, 29, 37, 36, 51, 32, 35]
+    //     },
+    //     {
+    //       name: "Total Visits",
+    //       data: [87, 57, 74, 99, 75, 38, 62, 47, 82, 56, 45, 47]
+    //     }
+    //   ],
+    //   chart: {
+    //     height: 350,
+    //     type: "line"
+    //   },
+    //   dataLabels: {
+    //     enabled: false
+    //   },
+    //   stroke: {
+    //     width: 5,
+    //     curve: "straight",
+    //     dashArray: [0, 8, 5]
+    //   },
+    //   title: {
+    //     text: "Page Statistics",
+    //     align: "left"
+    //   },
+    //   legend: {
+    //     tooltipHoverFormatter: function (val, opts) {
+    //       return (
+    //         val +
+    //         " - <strong>" +
+    //         opts.w.globals.series[opts.seriesIndex][opts.dataPointIndex] +
+    //         "</strong>"
+    //       );
+    //     }
+    //   },
+    //   markers: {
+    //     size: 0,
+    //     hover: {
+    //       sizeOffset: 6
+    //     }
+    //   },
+    //   xaxis: {
+    //     labels: {
+    //       trim: false
+    //     },
+    //     categories: [
+    //       "01 Jan",
+    //       "02 Jan",
+    //       "03 Jan",
+    //       "04 Jan",
+    //       "05 Jan",
+    //       "06 Jan",
+    //       "07 Jan",
+    //       "08 Jan",
+    //       "09 Jan",
+    //       "10 Jan",
+    //       "11 Jan",
+    //       "12 Jan"
+    //     ]
+    //   },
+    //   tooltip: {
+    //     y: [
+    //       {
+    //         title: {
+    //           formatter: function (val) {
+    //             return val + " (mins)";
+    //           }
+    //         }
+    //       },
+    //       {
+    //         title: {
+    //           formatter: function (val) {
+    //             return val + " per session";
+    //           }
+    //         }
+    //       },
+    //       {
+    //         title: {
+    //           formatter: function (val) {
+    //             return val;
+    //           }
+    //         }
+    //       }
+    //     ]
+    //   },
+    //   grid: {
+    //     borderColor: "#f1f1f1"
+    //   }
+    // };
+
+
+    this.Groupby = [
+      {
+        name: 'Renewable Energy'
+      },
+      {
+        name: 'Nature Based'
+      },
+      {
+        name: 'Energy Efficiency'
+      },
+      {
+        name: 'Community Project'
+      },
+      {
+        name: 'Carbon Sequestration'
+      },
+      {
+        name: 'Others'
+      }
+    ];
+    this.emission_activity = [
+      {
+        e_act: 'Scope 1'
+      },
+      {
+        e_act: 'Scope 1 & 2'
+      },
+      {
+        e_act: 'Scope 3'
+      },
+      {
+        e_act: 'Scope 1,2 & 3'
+      }
+    ];
+    this.target_type = [
+      {
+        e_act: 'Economic Intensity Convergence'
+      },
+      {
+        e_act: 'Physical Intensity Convergence'
+      },
+      {
+        e_act: 'Economic Intensity Convergence'
+      }
+    ];
+    this.targetKPI = [
+      {
+        e_act: 'Supplier Engagement'
+      },
+      {
+        e_act: 'Renewable energy'
+      }
+
+    ];
+
+
+    this.scopeList = [
+      {
+        id: 1,
+        name: 'Scope 1'
+      },
+      {
+        id: 2,
+        name: 'Scope 2'
+      },
+      {
+        id: 3,
+        name: 'Scope 3'
+      }
+    ];
   }
   ngOnInit() {
-      if (localStorage.getItem('LoginInfo') != null) {
-          let userInfo = localStorage.getItem('LoginInfo');
-          let jsonObj = JSON.parse(userInfo); // string to "any" object first
-          this.loginInfo = jsonObj as LoginInfo;
-          // this.facilityGet(this.loginInfo.tenantID);
-      }
-      this.getTenantsDetailById(Number(this.loginInfo.tenantID));
-      // this.GetAllFacility();
-      let tenantID = this.loginInfo.tenantID;
-      this.GetTarget();
-      this.updatedtheme = this.themeservice.getValue('theme');
+    if (localStorage.getItem('LoginInfo') != null) {
+      let userInfo = localStorage.getItem('LoginInfo');
+      let jsonObj = JSON.parse(userInfo); // string to "any" object first
+      this.loginInfo = jsonObj as LoginInfo;
+      // this.facilityGet(this.loginInfo.tenantID);
+    }
+    this.getTenantsDetailById(Number(this.loginInfo.tenantID));
+    // this.GetAllFacility();
+    let tenantID = this.loginInfo.tenantID;
+    this.GetTarget();
+    this.updatedtheme = this.themeservice.getValue('theme');
   }
   //checks upadated theme
   ngDoCheck() {
-      this.updatedtheme = this.themeservice.getValue('theme');
+    this.updatedtheme = this.themeservice.getValue('theme');
   }
 
-  getTenantsDetailById(id: number) {};
+  getTenantsDetailById(id: number) { };
 
 
-   GetTarget() {
+  GetTarget() {
     //   let formData = new URLSearchParams();
 
     //   formData.set('tenant_id', tenantID.toString());
-  
-      this.GroupService.getTargetSetting().subscribe({
-          next: (response) => {
-             
-              if(response.success == true)
-              {
-                  this.groupsList = response.orders;
-                  if (this.groupsList.length > 0) {
-                      this.groupdetails = this.groupsList[0];
-                      this.groupdata = true;
-                  } else {
-                      this.groupdata = false;
-                  }
-                  localStorage.setItem('GroupCount', String(this.groupsList.length));
-                  this.unlock = this.groupdetails.id.toString();
-              }
-          },
-          error: (err) => {
-              console.error('errrrrrr>>>>>>', err);
-          },
-          complete: () => console.info('Group Added')
-      });
-  };
-   GetTargetGraph() {
-      let formData = new URLSearchParams();
 
-      // formData.set('percentage', tenantID.toString());
-      // formData.set('base_year', tenantID.toString());
-  
-      this.GroupService.getTargetGraphsPoints(formData.toString()).subscribe({
-          next: (response) => {
-             
-              if(response.success == true)
-              {
-                  this.groupsList = response.orders;
-                  if (this.groupsList.length > 0) {
-                      this.groupdetails = this.groupsList[0];
-                      this.groupdata = true;
-                  } else {
-                      this.groupdata = false;
-                  }
-                  localStorage.setItem('GroupCount', String(this.groupsList.length));
-                  this.unlock = this.groupdetails.id.toString();
-              }
-          },
-          error: (err) => {
-              console.error('errrrrrr>>>>>>', err);
-          },
-          complete: () => console.info('Group Added')
-      });
+    this.GroupService.getTargetSetting().subscribe({
+      next: (response) => {
+
+        if (response.success == true) {
+          this.groupsList = response.orders;
+          if (this.groupsList.length > 0) {
+            this.groupdetails = this.groupsList[0];
+            this.groupdata = true;
+          } else {
+            this.groupdata = false;
+          }
+          localStorage.setItem('GroupCount', String(this.groupsList.length));
+          this.unlock = this.groupdetails.id.toString();
+        }
+      },
+      error: (err) => {
+        console.error('errrrrrr>>>>>>', err);
+      },
+      complete: () => console.info('Group Added')
+    });
+  };
+  GetTargetGraph(data: any) {
+    var dateYear = (data.base_year).getFullYear().toString();
+    let formData = new URLSearchParams();
+
+    formData.set('percentage', data.reduction.toString());
+    formData.set('base_year', dateYear.toString());
+
+    this.GroupService.getTargetGraphsPoints(formData.toString()).subscribe({
+      next: (response) => {
+
+        if (response.success == true) {
+          this.responseGraph = response;
+          this.scope1_data = response.scope1Xcordinate;
+          this.scope2_data = response.scope2Xcordinate;
+          this.scope3_data = response.scope3Xcordinate;
+          this.x_axis_years = response.forecastYcordinate;
+          this.graphMethod(response.scope1Xcordinate, response.forecastScope1Xcordinate, response.dottedScope1Xcordinate, response.forecastYcordinate)
+        }
+      },
+      error: (err) => {
+        console.error('errrrrrr>>>>>>', err);
+      },
+      complete: () => console.info('Group Added')
+    });
   };
 
   //method to add new group
   saveOffset(data: NgForm) {
 
     const formData = new URLSearchParams();
-  
-      formData.append('target_name',data.value.target_name);
-      formData.append('emission_activity',data.value.emission_activity);
-      formData.append('target_type',data.value.target_type);
-      formData.append('base_year',data.value.base_year);
-      formData.append('target_year',data.value.target_year);
-      formData.append('target_emission_change',  data.value.target_emission_change);
-      formData.append('other_target_kpichange',data.value.other_target_kpichange);
-      formData.append('other_target_kpi',data.value.other_target_kpi);
-    
-      this.GroupService.addTargetSetting(formData).subscribe({
-          next: (response) => {
-              if(response.success == true)
-              {
-                  this.visible = false;
-                  this.notification.showSuccess(
-                      ' Offset Added successfully',
-                      'Success'
-                  );
-                  this.GetTarget();
-                  this.GroupForm.reset();
-              }
-              // return
-            //   this.getOffset(this.loginInfo.tenantID);
-              this.visible = false;
-              if (localStorage.getItem('FacilityGroupCount') != null) {
-                  let fgcount = localStorage.getItem('FacilityGroupCount');
-                  let newcount = Number(fgcount) + 1;
-                  localStorage.setItem(
-                      'FacilityGroupCount',
-                      String(newcount)
-                  );
-              }
-          },
-          error: (err) => {
-              this.notification.showError('Group added failed.', 'Error');
-              console.error('errrrrrr>>>>>>', err);
-          },
-          complete: () => console.info('Group Added')
-      });
+
+    formData.append('target_name', data.value.target_name);
+    formData.append('emission_activity', data.value.emission_activity);
+    formData.append('target_type', data.value.target_type);
+    formData.append('base_year', data.value.base_year);
+    formData.append('target_year', data.value.target_year);
+    formData.append('target_emission_change', data.value.target_emission_change);
+    formData.append('other_target_kpichange', data.value.other_target_kpichange);
+    formData.append('other_target_kpi', data.value.other_target_kpi);
+
+    this.GroupService.addTargetSetting(formData).subscribe({
+      next: (response) => {
+        if (response.success == true) {
+          this.visible = false;
+          this.notification.showSuccess(
+            ' Offset Added successfully',
+            'Success'
+          );
+          this.GetTarget();
+          this.GroupForm.reset();
+        }
+        // return
+        //   this.getOffset(this.loginInfo.tenantID);
+        this.visible = false;
+        if (localStorage.getItem('FacilityGroupCount') != null) {
+          let fgcount = localStorage.getItem('FacilityGroupCount');
+          let newcount = Number(fgcount) + 1;
+          localStorage.setItem(
+            'FacilityGroupCount',
+            String(newcount)
+          );
+        }
+      },
+      error: (err) => {
+        this.notification.showError('Group added failed.', 'Error');
+        console.error('errrrrrr>>>>>>', err);
+      },
+      complete: () => console.info('Group Added')
+    });
   };
 
 
-  
+  graphMethod(data1, data2, data3, years) {
+    var index = 0;
+    const dashedLine: number[] = data3.map(str => parseFloat(str));
+    const normalsLine: number[] = data1.map(str => parseFloat(str));
+    // for ( index = 0; index < normalsLine.length; index++) {
+    //  dashedLine.unshift(null);
+    // };
+    // console.log(dashedLine);
+   
+
+    const parallelLine: number[] = data2.map(str => parseFloat(str));
+
+
+    this.chartOptions = {
+      series: [
+        {
+          name: "Actual Emissions",
+          //  data: [45, 52, 38, 24, 33, 26, 21, 20, 6, 8, 15, 10]
+          data: normalsLine
+        },
+        {
+          name: "Forecasted",
+          // data: [35, 41, 62, 42, 13, 18, 29, 37, 36, 51, 32, 35]
+          data: parallelLine
+        },
+        {
+          name: "Dotted",
+          // data: [87, 57, 74, 99, 75, 38, 62, 47, 82, 56, 45, 47]
+          data: dashedLine
+        }
+      ],
+      chart: {
+        height: 350,
+        type: "line"
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        width: 5,
+        curve: "straight",
+        dashArray: [0, 0, 5]
+      },
+      title: {
+        text: "Page Statistics",
+        align: "left"
+      },
+      legend: {
+        tooltipHoverFormatter: function (val, opts) {
+          return (
+            val +
+            " - <strong>" +
+            opts.w.globals.series[opts.seriesIndex][opts.dataPointIndex] +
+            "</strong>"
+          );
+        }
+      },
+      markers: {
+        size: 0,
+        hover: {
+          sizeOffset: 6
+        }
+      },
+      xaxis: {
+        labels: {
+          trim: false
+        },
+        categories: years
+      },
+      tooltip: {
+        y: [
+          {
+            title: {
+              formatter: function (val) {
+                return val + " (mins)";
+              }
+            }
+          },
+          {
+            title: {
+              formatter: function (val) {
+                return val + " per session";
+              }
+            }
+          },
+          {
+            title: {
+              formatter: function (val) {
+                return val;
+              }
+            }
+          }
+        ]
+      },
+      grid: {
+        borderColor: "#f1f1f1"
+      }
+    };
+  }
+
+
+
   //method for update group detail by id
   updateGroup(id: any, data: NgForm) {
-      // this.groupdetails.groupMappings = [];
-      // if (this.groupdetails.groupBy === 'Country') {
-      //     this.selectedCountry.forEach((val) => {
-      //         this.groupMappingDetails = new GroupMapping();
-      //         this.groupMappingDetails.stateId = 0;
-      //         this.groupMappingDetails.groupId = 0;
-      //         this.groupMappingDetails.facilityId = 0;
-      //         this.groupMappingDetails.countryId = val;
-      //         this.groupdetails.groupMappings.push(this.groupMappingDetails);
-      //     });
-      // } else if (this.groupdetails.groupBy === 'State') {
-      //     this.selectedState.forEach((val) => {
-      //         this.groupMappingDetails = new GroupMapping();
-      //         this.groupMappingDetails.stateId = val;
-      //         this.groupMappingDetails.countryId = 0;
-      //         this.groupMappingDetails.groupId = 0;
-      //         this.groupMappingDetails.facilityId = 0;
-      //         this.groupdetails.groupMappings.push(this.groupMappingDetails);
-      //     });
-      // } else {
-      //     this.selectedFaciltiy.forEach((val) => {
-      //         this.groupMappingDetails = new GroupMapping();
-      //         this.groupMappingDetails.stateId = 0;
-      //         this.groupMappingDetails.countryId = 0;
-      //         this.groupMappingDetails.groupId = 0;
-      //         this.groupMappingDetails.facilityId = val;
-      //         this.groupdetails.groupMappings.push(this.groupMappingDetails);
-      //     });
-      // }
-      let tenantID = this.loginInfo.tenantID;
-      let formData = new URLSearchParams();
-      formData.set('groupId',id);
-      formData.set('groupname',this.groupdetails.groupname);
-      // formData.set('tenantID',  this.groupdetails.tenantID.toString());
-      formData.set('facility',this.selectedFaciltiy);
-      this.GroupService.newEditGroup(formData.toString()).subscribe({
-          next: (response) => {
-              console.log(response);
-              this.GetTarget();
+    // this.groupdetails.groupMappings = [];
+    // if (this.groupdetails.groupBy === 'Country') {
+    //     this.selectedCountry.forEach((val) => {
+    //         this.groupMappingDetails = new GroupMapping();
+    //         this.groupMappingDetails.stateId = 0;
+    //         this.groupMappingDetails.groupId = 0;
+    //         this.groupMappingDetails.facilityId = 0;
+    //         this.groupMappingDetails.countryId = val;
+    //         this.groupdetails.groupMappings.push(this.groupMappingDetails);
+    //     });
+    // } else if (this.groupdetails.groupBy === 'State') {
+    //     this.selectedState.forEach((val) => {
+    //         this.groupMappingDetails = new GroupMapping();
+    //         this.groupMappingDetails.stateId = val;
+    //         this.groupMappingDetails.countryId = 0;
+    //         this.groupMappingDetails.groupId = 0;
+    //         this.groupMappingDetails.facilityId = 0;
+    //         this.groupdetails.groupMappings.push(this.groupMappingDetails);
+    //     });
+    // } else {
+    //     this.selectedFaciltiy.forEach((val) => {
+    //         this.groupMappingDetails = new GroupMapping();
+    //         this.groupMappingDetails.stateId = 0;
+    //         this.groupMappingDetails.countryId = 0;
+    //         this.groupMappingDetails.groupId = 0;
+    //         this.groupMappingDetails.facilityId = val;
+    //         this.groupdetails.groupMappings.push(this.groupMappingDetails);
+    //     });
+    // }
+    let tenantID = this.loginInfo.tenantID;
+    let formData = new URLSearchParams();
+    formData.set('groupId', id);
+    formData.set('groupname', this.groupdetails.groupname);
+    // formData.set('tenantID',  this.groupdetails.tenantID.toString());
+    formData.set('facility', this.selectedFaciltiy);
+    this.GroupService.newEditGroup(formData.toString()).subscribe({
+      next: (response) => {
+        console.log(response);
+        this.GetTarget();
 
-              this.visible = false;
-              this.notification.showSuccess(
-                  'Group Edited successfully',
-                  'Success'
-              );
-          },
-          error: (err) => {
-              this.notification.showError('Group edited failed.', 'Error');
-              console.error(err);
-          },
-          complete: () => console.info('Group edited')
-      });
+        this.visible = false;
+        this.notification.showSuccess(
+          'Group Edited successfully',
+          'Success'
+        );
+      },
+      error: (err) => {
+        this.notification.showError('Group edited failed.', 'Error');
+        console.error(err);
+      },
+      complete: () => console.info('Group edited')
+    });
   }
 
   //retrieves all facilities for a given tenant
 
   //handles the closing of a dialog
   onCloseHandled() {
-      this.visible = false;
-      this.isloading = false;
-      let tenantID = this.loginInfo.tenantID;
+    this.visible = false;
+    this.isloading = false;
+    let tenantID = this.loginInfo.tenantID;
 
-      this.GetTarget();
+    this.GetTarget();
   }
   //display a dialog for editing a group
   showEditGroupDialog(groupdetails) {
-      this.visible = true;
-      this.FormEdit = true;
+    this.visible = true;
+    this.FormEdit = true;
 
-      this.filledgroup = groupdetails as GroupMapping;
+    this.filledgroup = groupdetails as GroupMapping;
 
-      if (this.filledgroup.groupBy === 'Country') {
-          this.selectedCountry = [];
-          this.filledgroup.groupMappings.forEach((element) => {
-              this.selectedCountry.push(element.countryId);
-          });
-      } else if (this.filledgroup.groupBy === 'State') {
-          this.selectedState = [];
-          this.filledgroup.groupMappings.forEach((element) => {
-              this.selectedState.push(element.stateId);
-          });
-      } else if (this.filledgroup.groupBy === 'Facility') {
-          this.selectedFaciltiy = [];
-          this.filledgroup.groupMappings.forEach((element) => {
-              this.selectedFaciltiy.push(element.facilityId);
-          });
-      }
+    if (this.filledgroup.groupBy === 'Country') {
+      this.selectedCountry = [];
+      this.filledgroup.groupMappings.forEach((element) => {
+        this.selectedCountry.push(element.countryId);
+      });
+    } else if (this.filledgroup.groupBy === 'State') {
+      this.selectedState = [];
+      this.filledgroup.groupMappings.forEach((element) => {
+        this.selectedState.push(element.stateId);
+      });
+    } else if (this.filledgroup.groupBy === 'Facility') {
+      this.selectedFaciltiy = [];
+      this.filledgroup.groupMappings.forEach((element) => {
+        this.selectedFaciltiy.push(element.facilityId);
+      });
+    }
   }
   //display a dialog for add a group.
   showAddGroupDialog() {
-      this.visible = true;
-      this.groupdetails = new Group();
-      this.FormEdit = false;
-      this.resetForm();
+    this.visible = true;
+    this.groupdetails = new Group();
+    this.FormEdit = false;
+    this.resetForm();
   }
   //sets the selected group details
-  selectGroup(group: Group,index: number) {
-      this.selectedRowIndex = index;
-      this.groupdetails = group;
-      console.log(
-          '🚀 ~ file: group.component.ts:304 ~ GroupComponent ~ selectGroup ~ this.groupdetails:',
-          this.groupdetails
-      );
+  selectGroup(group: Group, index: number) {
+    this.selectedRowIndex = index;
+    this.groupdetails = group;
+    console.log(
+      '🚀 ~ file: group.component.ts:304 ~ GroupComponent ~ selectGroup ~ this.groupdetails:',
+      this.groupdetails
+    );
   }
   //The removeCss function is used to remove CSS styles applied to the body element
   removeCss() {
-      document.body.style.position = '';
-      document.body.style.overflow = '';
+    document.body.style.position = '';
+    document.body.style.overflow = '';
   }
 
   //method for reset form
   resetForm() {
-      this.GroupForm.resetForm();
+    this.GroupForm.resetForm();
   }
   //sets the value of the unlock variable to the provided groupId
   UnlockComplete(groupId) {
-      this.unlock = groupId;
+    this.unlock = groupId;
   }
   //method is used to check the existence of a group by its ID
   CheckGroupExist(id) {
-      this.GroupService.CheckGroupExist(id).subscribe((result) => {
-          this.isgroupExist = result;
-      });
+    this.GroupService.CheckGroupExist(id).subscribe((result) => {
+      this.isgroupExist = result;
+    });
   }
   // checks if a country is selected based on its countryId.
   isCountrySelected(countryId: any): boolean {
-      return this.selectedCountry.includes(countryId);
+    return this.selectedCountry.includes(countryId);
   }
   //method for delete a group by id
   deleteGroup(event: Event, id) {
-      let tenantID = this.loginInfo.tenantID;
-      this.confirmationService.confirm({
-          target: event.target,
-          message: 'Are you sure that you want to proceed?',
-          icon: 'pi pi-exclamation-triangle',
-          accept: () => {
-              let formData = new URLSearchParams();
-              formData.set('groupId',id);
-             
-              this.GroupService.newdeleteGroups(formData.toString()).subscribe((result) => {
-                  if (localStorage.getItem('FacilityGroupCount') != null) {
-                      let fgcount =
-                          localStorage.getItem('FacilityGroupCount');
-                      let newcount = Number(fgcount) - 1;
-                      localStorage.setItem(
-                          'FacilityGroupCount',
-                          String(newcount)
-                      );
-                  }
+    let tenantID = this.loginInfo.tenantID;
+    this.confirmationService.confirm({
+      target: event.target,
+      message: 'Are you sure that you want to proceed?',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        let formData = new URLSearchParams();
+        formData.set('groupId', id);
 
-                  this.GetTarget();
-              });
-
-              this.messageService.add({
-                  severity: 'success',
-                  summary: 'Confirmed',
-                  detail: 'Group Deleted Succesfully'
-              });
-          },
-          reject: () => {
- 
-            this.GetTarget();
-              this.messageService.add({
-                  severity: 'error',
-                  summary: 'Rejected',
-                  detail: 'Group not Deleted'
-              });
+        this.GroupService.newdeleteGroups(formData.toString()).subscribe((result) => {
+          if (localStorage.getItem('FacilityGroupCount') != null) {
+            let fgcount =
+              localStorage.getItem('FacilityGroupCount');
+            let newcount = Number(fgcount) - 1;
+            localStorage.setItem(
+              'FacilityGroupCount',
+              String(newcount)
+            );
           }
-      });
+
+          this.GetTarget();
+        });
+
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Confirmed',
+          detail: 'Group Deleted Succesfully'
+        });
+      },
+      reject: () => {
+
+        this.GetTarget();
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Rejected',
+          detail: 'Group not Deleted'
+        });
+      }
+    });
   };
   //method for get facility by id
   // facilityGet(tenantId) {

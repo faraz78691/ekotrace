@@ -125,6 +125,12 @@ const routes: Routes = [
                 data: { roles: ['Platform Admin'] }
             },
             {
+                path: 'finance_emissions',
+                canActivate: [RoleGuard],
+                component: FinanceEmissionsComponent,
+                data: { roles: ['Platform Admin','Super Admin','Admin'] }
+            },
+            {
                 path: 'setGhgTemplate',
                 canActivate: [RoleGuard],
                 component: GhgTemplateComponent,
@@ -134,12 +140,12 @@ const routes: Routes = [
                 path: 'main_tree',
                 canActivate: [RoleGuard],
                 component: MainTreeComponent,
-                data: { roles: ['Platform Admin', 'Super Admin','Admin','Manager'] },
+                data: { roles: ['Platform Admin','Super Admin','Admin','Manager'] },
                 children:[
                     {path:'',redirectTo:'view', pathMatch:'full'},
                     {path:'view', component:TreeComponent},
                     {path:'facility', component:FacilityComponent},
-                    {path:'group', component:GroupComponent},
+                    {path:'group', component:GroupComponent}
                 ]
             },
             {

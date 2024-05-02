@@ -33,7 +33,7 @@ export class FacilityService {
         });}
   // Function to check the current route and update the boolean variable
   private checkRoute(currentRoute: string): void {
-    if (currentRoute.includes('/Ntracking') || currentRoute.includes('/tracking-view-requests')) {
+    if (currentRoute.includes('/Ntracking') || currentRoute.includes('/tracking-view-requests') || currentRoute.includes('/finance_emissions') ) {
         this.headerTracking.set(true)
       // If the route is to the facility, set the boolean variable to true
     //   this.isRouteToFacilitySubject.next(true);

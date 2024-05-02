@@ -227,6 +227,13 @@ export const menu = [
                 path: ['user']
             },
             {
+                name: 'Set GHG Template',
+                iconClasses: 'fas fa-star',
+                iconSRC :'assets/img/tracking_icon.svg',
+                path: ['']
+            },
+            
+            {
                 head: 'Disclose',
                 name: 'Dashboard',
                 iconClasses: 'fas fa-table',
@@ -234,30 +241,25 @@ export const menu = [
                 path: ['dashboard']
             },
             {
-                name: 'Tracking',
-                iconClasses: 'fas fa-star',
-                iconSRC: 'assets/img/tracking_icon.svg',
-                path: ['Ntracking']
-            },
-            {
-                name: 'Set GHG Template',
-                iconClasses: 'fas fa-star',
-                // iconSRC :'assets/img/tracking_icon.svg',
-                path: ['setGhgTemplate']
-            },
-            {
-                head: 'GHG Emissions ',
+                head: 'GHG Emissions',
                 name: 'Corprate Emissions',
                 iconClasses: 'fas fa-star',
                 iconSRC: 'assets/img/trees.png',
-                path: ['facility']
+                path: ['Ntracking']
             }, 
-            // {
-            //     name: 'Add Vendor/Cost Centre',
-            //     iconClasses: 'fas fa-star',
-            //     // iconSRC :'assets/img/tracking_icon.svg',
-            //     path: ['']
-            // },
+            {
+                name: 'Financed Emissions',
+                iconClasses: 'fas fa-table',
+                iconSRC: 'assets/img/BRSR.svg',
+                path: ['finance_emissions']
+            },
+            {
+                name: 'Add Vendors / Cost Centre',
+                iconClasses: 'fas fa-table',
+                iconSRC: 'assets/img/BRSR.svg',
+                path: ['f']
+            },
+
             {
                 head: 'Reporting ',
                 name: 'Report',

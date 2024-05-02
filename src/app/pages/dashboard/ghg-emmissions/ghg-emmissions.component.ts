@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FacilityService } from '@services/facility.service';
 import { TrackingService } from '@services/tracking.service';
@@ -73,7 +73,8 @@ export type ChartAreaOptions = {
 @Component({
   selector: 'app-ghg-emmissions',
   templateUrl: './ghg-emmissions.component.html',
-  styleUrls: ['./ghg-emmissions.component.scss']
+  styleUrls: ['./ghg-emmissions.component.scss'],
+
 })
 export class GhgEmmissionsComponent implements OnDestroy {
   dashboardFacilities$ = new Observable<facilities>();
@@ -186,6 +187,10 @@ export class GhgEmmissionsComponent implements OnDestroy {
 
 
   };
+
+  ngDoCheck(){
+    console.log("checking compoeoent")
+  }
 
 
   private createFormData(facility) {

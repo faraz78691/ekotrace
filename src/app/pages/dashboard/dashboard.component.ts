@@ -74,6 +74,10 @@ export class DashboardComponent {
 
     };
     ngDoCheck() {
+
+
+            console.log("checking compoeoent   dashhh")
+          
         //
         this.updatedtheme = this.themeservice.getValue('theme');
         let fId = localStorage.getItem('SelectedfacilityID');
