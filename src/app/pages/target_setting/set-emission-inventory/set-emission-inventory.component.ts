@@ -64,6 +64,7 @@ export class SetEmissionInventoryComponent {
     selectedCountry: any[] = [];
     scopeList: any[] = [];
     editBindedCountry: any[] = [];
+    targetType: any[] = [];
     id: any;
     isgroupExist: boolean = false;
     selectedFaciltiy: any;
@@ -139,6 +140,17 @@ export class SetEmissionInventoryComponent {
                 name: 'Scope 3'
             }
         ];
+        this.targetType = [
+            {
+                id: 1,
+                name: 'Production output'
+            },
+            {
+                id: 2,
+                name: 'Economic output'
+            }
+
+        ];
     }
     ngOnInit() {
         if (localStorage.getItem('LoginInfo') != null) {
@@ -165,15 +177,15 @@ export class SetEmissionInventoryComponent {
 
                 if (response.success == true) {
                     this.groupsList = response.orders;
-                   
+
                     if (this.groupsList.length > 0) {
                         this.groupdetails = this.groupsList[0];
                         this.groupdata = true;
                     } else {
                         this.groupdata = false;
                     }
-                    localStorage.setItem('GroupCount', String(this.groupsList.length));
-                    this.unlock = this.groupdetails.id.toString();
+
+
                 }
             },
             error: (err) => {
@@ -186,13 +198,23 @@ export class SetEmissionInventoryComponent {
     //method to add new group
     saveOffset(data: NgForm) {
         var dateYear = (data.value.year_added).getFullYear().toString();
+        var scope1_items = [{ 'category': "Scope1 from Company Vehicles", "emission": Number(data.value.company_vehicles) }, { "category": "Scope1 from Refrigerants", "emission": Number(data.value.refrigerants) }]
+        var scope2_items = [{ "category": "Scope2 Location Based Emissions", "emission": Number(data.value.location_based) }, { "category": "Scope2 Renewable Energy Use", "emission": Number(data.value.renewable) }];
+        var scope3_items = [{ "category": "Scope3 Purchased goods and services", "emission": Number(data.value.purchased_goods) }, { "category": "Scope3 Business travel and employee commute", "emission": Number(data.value.business_travel) }, { "category": "Scope3 Waste generated in operations", "emission": Number(data.value.waste_generated) }, { "category": "Scope3 Water Usage", "emission": Number(data.value.waste) }];
+
 
         var scope_1_emissions = Number(data.value.company_vehicles) + Number(data.value.refrigerants);
         var scope_2_emissions = Number(data.value.location_based) + Number(data.value.renewable);
-        var scope_3_emissions = Number(data.value.purchased_goods) + Number(data.value.business_travel) + Number(data.value.waste_generated) + Number(data.value.waste)
+        var scope_3_emissions = Number(data.value.purchased_goods) + Number(data.value.business_travel) + Number(data.value.waste_generated) + Number(data.value.waste);
 
         const formData = new URLSearchParams();
-
+        if (data.value.targetType == 1) {
+            formData.append('production_output', data.value.emission);
+            formData.append('economic_output', '0');
+        } else {
+            formData.append('production_output', '0');
+            formData.append('economic_output', data.value.emission);
+        }
 
         formData.append('group_added', data.value.group_added);
         formData.append('year_added', dateYear);
@@ -200,13 +222,17 @@ export class SetEmissionInventoryComponent {
         formData.append('scope2_emission', scope_2_emissions.toString());
         formData.append('scope3_emission', scope_3_emissions.toString());
 
+        formData.append('scope1_items', JSON.stringify(scope1_items));
+        formData.append('scope2_items', JSON.stringify(scope2_items));
+        formData.append('scope3_items', JSON.stringify(scope3_items));
+
 
         this.GroupService.AddEmissionInventory(formData.toString()).subscribe({
             next: (response) => {
                 if (response.success == true) {
                     this.visible = false;
                     this.notification.showSuccess(
-                        ' Offset Added successfully',
+                        ' Inventory Added successfully',
                         'Success'
                     );
                     this.GetEmissionInventory();
@@ -289,6 +315,41 @@ export class SetEmissionInventoryComponent {
             },
             complete: () => console.info('Group edited')
         });
+    };
+
+
+    viewDetails(id:any){
+        const formData = new URLSearchParams();
+      
+            formData.append('relation_id', id);
+            this.GroupService.GetInventoryByID(formData.toString()).subscribe({
+                next: (response) => {
+                    if (response.success == true) {
+                        this.visible = false;
+                        this.notification.showSuccess(
+                            ' Inventory Added successfully',
+                            'Success'
+                        );
+                        this.GetEmissionInventory();
+                    }
+                    // return
+                    this.GetEmissionInventory();
+                    this.visible = false;
+                    if (localStorage.getItem('FacilityGroupCount') != null) {
+                        let fgcount = localStorage.getItem('FacilityGroupCount');
+                        let newcount = Number(fgcount) + 1;
+                        localStorage.setItem(
+                            'FacilityGroupCount',
+                            String(newcount)
+                        );
+                    }
+                },
+                error: (err) => {
+                    this.notification.showError('Group added failed.', 'Error');
+                    console.error('errrrrrr>>>>>>', err);
+                },
+                complete: () => console.info('Group Added')
+            });
     }
 
     //retrieves all facilities for a given tenant

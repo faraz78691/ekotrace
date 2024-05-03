@@ -113,6 +113,7 @@ import { FinanceEmissionsComponent } from './pages/finance-emissions/finance-emi
 import { SetEmissionInventoryComponent } from './pages/target_setting/set-emission-inventory/set-emission-inventory.component';
 import { TargetSettingComponent } from './pages/target_setting/target-setting/target-setting.component';
 import { ActionsComponent } from './pages/target_setting/actions/actions.component';
+import { VendorsComponent } from './pages/vendors/vendors.component';
 
 defineCustomElements();
 registerLocaleData(localeEn, 'en-EN');
@@ -183,7 +184,8 @@ registerLocaleData(localeEn, 'en-EN');
         FinanceEmissionsComponent,
         SetEmissionInventoryComponent,
         TargetSettingComponent,
-        ActionsComponent
+        ActionsComponent,
+        VendorsComponent
     ],
     imports: [
         HeaderComponent,

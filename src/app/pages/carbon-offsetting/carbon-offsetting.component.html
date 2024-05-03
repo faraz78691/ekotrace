@@ -33,7 +33,8 @@
                             " class="form-control" placeholder="Search" [(ngModel)]="searchData" />
                     </div>
                     <div class="form-group has-search text-light">
-                        <button class="GroupButton ct_assign_package_btn129 ct_animation_btn_121" (click)="showAddGroupDialog()">
+                        <button class="GroupButton ct_assign_package_btn129 ct_animation_btn_121"
+                            (click)="showAddGroupDialog()">
                             + Add Offset
                         </button>
                     </div>
@@ -64,13 +65,12 @@
                         <div class="mb-5 pb-0 row">
                             <div class="col-md-6 mb-3">
                                 <label for="fname">Project Name</label>
-                                <input  name="project_details" ngModel id="search-input" type="text"
+                                <input name="project_details" ngModel id="search-input" type="text"
                                     class="form-control Dashboard-tab text-white" placeholder="Enter Project Name"
-                                    #groupName="ngModel"  [disabled]="isloading"
-                                    required />
+                                    #groupName="ngModel" [disabled]="isloading" required />
                                 <p class="text-danger mb-0"
-                                    *ngIf="GroupForm.submitted && groupName.errors?.['required']">
-                                    Group name is required
+                                    *ngIf="groupName.errors?.['required'] && GroupForm.submitted">
+                                    Project name is required
                                 </p>
                                 <p class="text-danger mb-0" *ngIf="
                                     isgroupExist === true && groupName.touched
@@ -83,12 +83,11 @@
                                 <p-dropdown class="ct_grop_select_2_drop_white123 ct_group_select_dark_124" required
                                     ngModel placeholder="Select" [options]="Groupby" [(ngModel)]="project_type"
                                     optionLabel="name" optionValue="name" name="group" #group="ngModel"></p-dropdown>
-                                <p class="text-danger mb-0"
-                                    *ngIf="GroupForm.submitted && groupName.errors?.['required']">
-                                    Group name is required
+                                <p class="text-danger mb-0" *ngIf="GroupForm.submitted && group.errors?.['required']">
+                                    Project Type is required
                                 </p>
                                 <p class="text-danger mb-0" *ngIf="
-                                    isgroupExist === true && groupName.touched
+                                    isgroupExist === true && group.touched
                                 ">
                                     group already exist please use other groupname
                                 </p>
@@ -96,26 +95,30 @@
                             <div class="col-md-6 mb-3">
                                 <label for="fname">Date of Purchase</label>
                                 <div class="field">
-                                    <p-calendar [(ngModel)]="date3" [showIcon]="true" inputId="icon" class="ct_year_input_full_w "></p-calendar>
+                                    <p-calendar [(ngModel)]="date3" name="date_of_purchase" placeholder="Select date" #date_of_purchase="ngModel" [showIcon]="true" inputId="icon"
+                                        class="ct_year_input_full_w"></p-calendar>
                                 </div>
                                 <p class="text-danger mb-0"
-                                    *ngIf="GroupForm.submitted && groupName.errors?.['required']">
-                                    Group name is required
+                                    *ngIf="GroupForm.submitted && date_of_purchase.errors?.['required']">
+                                    Date is required
                                 </p>
                                 <p class="text-danger mb-0" *ngIf="
-                                    isgroupExist === true && groupName.touched
+                                    isgroupExist === true && date_of_purchase.touched
                                 ">
-                                    group already exist please use other groupname
+                                    group already exist please use other date_of_purchase
                                 </p>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="fname">Vintage</label>
-                                <input ngModel name="vintage" id="search-input" type="text" 
-                                    class="form-control Dashboard-tab text-white " placeholder="Enter Vintage"
-                                    #groupName="ngModel" [disabled]="isloading" required />
-                                <p class="text-danger mb-0"
-                                    *ngIf="GroupForm.submitted && groupName.errors?.['required']">
-                                    Group name is required
+                                <!-- <input ngModel name="vintage" id="search-input" type="text"
+                                    class="form-control Dashboard-tab text-white" placeholder="Enter Vintage"
+                                    #vintage="ngModel" [disabled]="isloading" required ngModel /> -->
+                                    <p-calendar class="ct_calender_input_38_action_12 " ngModel name="vintage" year #vintage="ngModel" placeholder="Select year"
+                                    styleClass="pcalender" view="year"
+                                    dateFormat="yy" inputId="yearpicker"
+                                   [showIcon]="true"></p-calendar>
+                                <p class="text-danger mb-0" *ngIf="GroupForm.submitted && vintage.errors?.['required']">
+                                    Vintage is required
                                 </p>
                                 <p class="text-danger mb-0" *ngIf="
                                     isgroupExist === true && groupName.touched
@@ -126,78 +129,104 @@
                             <div class="col-md-6 mb-3">
                                 <label for="fname">Standard</label>
 
-
                                 <input ngModel name="standard" id="search-input" type="text"
                                     class="form-control Dashboard-tab text-white " placeholder="Enter standard"
-                                    #groupName="ngModel"  [disabled]="isloading" required />
+                                    #standard="ngModel" [disabled]="isloading" required />
+                                <p class="text-danger mb-0"
+                                    *ngIf="GroupForm.submitted && standard.errors?.['required']">
+                                    Standard is required
+                                </p>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="fname">Carbon Offset</label>
                                 <input ngModel name="carbon_offset" id="search-input" type="text"
                                     class="form-control Dashboard-tab text-white " placeholder="Enter Carbon Offset"
-                                    #groupName="ngModel"  [disabled]="isloading" required />
+                                    #carbon_offset="ngModel" [disabled]="isloading" required ngModel />
+                                <p class="text-danger mb-0"
+                                    *ngIf="GroupForm.submitted && carbon_offset.errors?.['required']">
+                                    Carbon Offset is required
+                                </p>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="fname">Carbon Credit Value</label>
 
                                 <input ngModel name="carbon_credit_value" id="search-input" type="text"
                                     class="form-control Dashboard-tab text-white "
-                                    placeholder="Enter carbon credit value" #groupName="ngModel"
+                                    placeholder="Enter carbon credit value" #carbon_credit_value="ngModel"
                                     [disabled]="isloading" required />
+                                <p class="text-danger mb-0"
+                                    *ngIf="GroupForm.submitted && carbon_credit_value.errors?.['required']">
+                                    Carbon Credit Value is required
+                                </p>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="fname">Attachments</label>
 
-                                <input ngModel name="comments" id="search-input" style="padding: 0px;"  type="file"
-                                    class="form-control Dashboard-tab text-white ct_change_choose_file_input12 " (change)="onFileSelected($event)"
-                                    placeholder="Enter carbon credit value" #groupName="ngModel"
-                                   [disabled]="isloading" required />
+                                <input ngModel name="comments" id="search-input" style="padding: 0px;" type="file"
+                                    class="form-control Dashboard-tab text-white ct_change_choose_file_input12 "
+                                    (change)="onFileSelected($event)" placeholder="Enter carbon credit value"
+                                    #groupName="ngModel" [disabled]="isloading" />
                             </div>
 
-                       <div class="row px-3 w-100">
-                        
-                        <div class="col-md-12">
-                            <label for="fname">Allocation</label>
-                            <div class="row">
-                                
-                            <div class="col-md-4 mb-3">
+                            <div class="row px-3 w-100">
 
-                               
+                                <div class="col-md-12">
+                                    <label for="fname">Allocation</label>
+                                    <div class="row">
 
-                                <label for="fname">Scope 1</label>
-                                <input ngModel name="scope_1" id="search-input" type="text"
-                                    class="form-control Dashboard-tab text-white " placeholder="Enter Scope 1 Allocation"
-                                    #groupName="ngModel"  [disabled]="isloading" required />
-                               
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <label for="fname">Scope 2</label>
-                                <input ngModel name="scope_2" id="search-input" type="text"
-                                    class="form-control Dashboard-tab text-white " placeholder="Enter Scope 2 Allocation"
-                                    #groupName="ngModel"  [disabled]="isloading" required />
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <label for="fname">Scope 3</label>
-                                <input ngModel name="scope_3" id="search-input" type="text"
-                                    class="form-control Dashboard-tab text-white " placeholder="Enter Scope 3 Allocation"
-                                    #groupName="ngModel"  [disabled]="isloading" required />
-                              
-                            </div>
-                            </div>
-                        </div>
+                                        <div class="col-md-4 mb-3">
 
-                       </div>
+
+
+                                            <label for="fname">Scope 1</label>
+                                            <input ngModel name="scope_1" id="search-input" type="text"
+                                                class="form-control Dashboard-tab text-white "
+                                                placeholder="Enter Scope 1 Allocation" #scope_1="ngModel"
+                                                [disabled]="isloading" required />
+                                            <p class="text-danger mb-0"
+                                                *ngIf="GroupForm.submitted && scope_1.errors?.['required']">
+                                                Scope 1 Value is required
+                                            </p>
+
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label for="fname">Scope 2</label>
+                                            <input ngModel name="scope_2" id="search-input" type="text"
+                                                class="form-control Dashboard-tab text-white "
+                                                placeholder="Enter Scope 2 Allocation" #scope_2="ngModel"
+                                                [disabled]="isloading" required />
+                                                <p class="text-danger mb-0"
+                                                *ngIf="GroupForm.submitted && scope_1.errors?.['required']">
+                                                Scope 2 Value is required
+                                            </p>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label for="fname">Scope 3</label>
+                                            <input ngModel name="scope_3" id="search-input" type="text"
+                                                class="form-control Dashboard-tab text-white "
+                                                placeholder="Enter Scope 3 Allocation" #scope_3="ngModel"
+                                                [disabled]="isloading" required />
+                                                <p class="text-danger mb-0"
+                                                *ngIf="GroupForm.submitted && scope_1.errors?.['required']">
+                                                Scope 3 Value is required
+                                            </p>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
                             <div class="col-md-12 mb-3">
                                 <label for="fname">Comments</label>
-<!-- 
+                                <!-- 
                                 <input ngModel name="comments" id="search-input"  type="text"
                                     class="form-control Dashboard-tab text-white "
                                     placeholder="Enter carbon credit value" #groupName="ngModel"
                                    [disabled]="isloading" required /> -->
-                                   <textarea rows="4" class="form-control ct_text bg-white"></textarea>
+                                <textarea rows="4" class="form-control ct_text bg-white"></textarea>
 
                             </div>
-                           
+
 
 
 
@@ -342,65 +371,67 @@
                     </tr>
                     <tr>
                         <td>
-                            <p class="mb-0">Carbon offset  :</p>
+                            <p class="mb-0">Carbon offset :</p>
                         </td>
                         <td>
                             <p class="mb-0">{{ groupdetails.offset }}</p>
                         </td>
                     </tr>
-                   <tr>
-                    <td>
-                        <p class="mb-0">Offset:</p>
-                    </td>
-                    <td>
-                        <p class="mb-0">{{ groupdetails.offset }}</p>
-                    </td>
-                   </tr>
-                   <tr>
-                    <td>
-                        <p class="mb-0">Carbon Credit Value:</p>
-                    </td>
-                    <td>
-                        <p class="mb-0">{{ groupdetails.carbon_credit_value }}</p>
-                    </td>
-                   </tr>
-                   <tr>
-                    <td>
-                        <p class="mb-2 ct_fw_600">Allocation:</p>
-                        <div>
-                            <p  class="mb-2">Scope 1:</p>
-                            <p class="mb-2">Scope 2:</p>
-                            <p class="mb-0">Scope 3:</p>
-                        </div>
-                    </td>
-                    <td>
-                        <p class="mb-0">{{'' }}</p>
-                        <div>
-                            <p  class="mb-2">{{ groupdetails.scope1 }}</p>
-                            <p class="mb-2">{{ groupdetails.scope2 }}</p>
-                            <p class="mb-0">{{ groupdetails.scope3 }}</p>
-                        </div>
-                    </td>
-                   </tr>
-                   <tr>
-                    <td> <p class="mb-0">Comments</p></td>
-                    <td>
-                        <p class="mb-0">{{ groupdetails.comments || '-'}}</p>
-                    </td>
-                   </tr>
-                   <tr>
-                    <td>
-                        <p class="mb-0">Attachments</p>
-                    </td>
-                    <td>
-                        <p class="mb-0">{{ groupdetails.file }}</p>
-                    </td>
-                   </tr>
-                
-                 
-                 
-                   
-                  
+                    <tr>
+                        <td>
+                            <p class="mb-0">Offset:</p>
+                        </td>
+                        <td>
+                            <p class="mb-0">{{ groupdetails.offset }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class="mb-0">Carbon Credit Value:</p>
+                        </td>
+                        <td>
+                            <p class="mb-0">{{ groupdetails.carbon_credit_value }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class="mb-2 ct_fw_600">Allocation:</p>
+                            <div>
+                                <p class="mb-2">Scope 1:</p>
+                                <p class="mb-2">Scope 2:</p>
+                                <p class="mb-0">Scope 3:</p>
+                            </div>
+                        </td>
+                        <td>
+                            <p class="mb-0">{{'' }}</p>
+                            <div>
+                                <p class="mb-2">{{ groupdetails.scope1 }}</p>
+                                <p class="mb-2">{{ groupdetails.scope2 }}</p>
+                                <p class="mb-0">{{ groupdetails.scope3 }}</p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class="mb-0">Comments</p>
+                        </td>
+                        <td>
+                            <p class="mb-0">{{ groupdetails.comments || '-'}}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class="mb-0">Attachments</p>
+                        </td>
+                        <td>
+                            <p class="mb-0">{{ groupdetails.file }}</p>
+                        </td>
+                    </tr>
+
+
+
+
+
                 </table>
                 <!-- <div class="col-5 ml-3">
                     <p>Project Detals:</p>
@@ -436,7 +467,7 @@
 
                 </div> -->
             </div>
-         
+
             <div class="text-light noData" *ngIf="groupdata === false">
                 <div class="icon mt-3">
                     <i class="fa fa-info-circle" style="font-size: 20px" aria-hidden="true"></i>

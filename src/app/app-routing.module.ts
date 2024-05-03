@@ -53,6 +53,7 @@ import { FinanceEmissionsComponent } from '@pages/finance-emissions/finance-emis
 import { SetEmissionInventoryComponent } from '@pages/target_setting/set-emission-inventory/set-emission-inventory.component';
 import { TargetSettingComponent } from '@pages/target_setting/target-setting/target-setting.component';
 import { ActionsComponent } from '@pages/target_setting/actions/actions.component';
+import { VendorsComponent } from '@pages/vendors/vendors.component';
 
 const routes: Routes = [
     {
@@ -134,7 +135,13 @@ const routes: Routes = [
                 path: 'setGhgTemplate',
                 canActivate: [RoleGuard],
                 component: GhgTemplateComponent,
-                data: { roles: ['Platform Admin'] }
+                data: { roles: ['Platform Admin','Super Admin','Admin'] }
+            },
+            {
+                path: 'vendors',
+                canActivate: [RoleGuard],
+                component: VendorsComponent,
+                data: { roles: ['Platform Admin','Super Admin','Admin'] }
             },
             {
                 path: 'main_tree',

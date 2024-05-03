@@ -74,7 +74,7 @@ export type ChartAreaOptions = {
   selector: 'app-ghg-emmissions',
   templateUrl: './ghg-emmissions.component.html',
   styleUrls: ['./ghg-emmissions.component.scss'],
-  changeDetection:ChangeDetectionStrategy.OnPush
+
 
 })
 export class GhgEmmissionsComponent implements OnDestroy {
@@ -115,6 +115,7 @@ export class GhgEmmissionsComponent implements OnDestroy {
   combinedSubscription: Subscription;
   maxYear: any;
   disabledDates: Date[];
+  status =1;
   constructor(private router: Router,
     private route: ActivatedRoute,
     private facilityService: FacilityService,
@@ -186,12 +187,7 @@ export class GhgEmmissionsComponent implements OnDestroy {
       ]
     };
 
-
   };
-
-  ngDoCheck(){
-    console.log("checking compoeoent ghg")
-  }
 
 
   private createFormData(facility) {

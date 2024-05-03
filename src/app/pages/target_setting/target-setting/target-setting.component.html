@@ -1,31 +1,4 @@
 <div class="container-fluid px-4">
-    <form #targetForm="ngForm" (ngSubmit)="GetTargetGraph(targetForm.value)">
-
-        <label for="fname">Reduction Percentage %</label>
-         <input name="reduction" ngModel id="search-input" type="text"
-                            class="form-control Dashboard-tab text-white" placeholder="Enter Project Name"
-                            #groupName="ngModel" [disabled]="isloading" required />
-        <label for="fname">Base Year</label>
-        <p-calendar class="w-100 ct_input_dark_text_145 ct_calender_input_38_action_12" ngModel
-                            name="base_year" [showIcon]="true" view="year" placeholder="Select year" dateFormat="yy"
-                            inputId="yearpicker" styleClass="pcalender"></p-calendar>
-        <label for="fname">Select Scope</label>
-        <p-dropdown class="ct_grop_select_2_drop_white123 ct_group_select_dark_124" required ngModel placeholder="Select"
-            [options]="scopeList" optionLabel="name" optionValue="id" name="scopeList"
-            #group="ngModel"></p-dropdown>
-
-        <!-- </div> -->
-            <div class="mt-3 ct_modal_btns_12">
-                <Button  type="submit" 
-                   class="rounded span-color px-3 text-white text-style loading  w-auto ct_animation_btn_121 ">
-                    <p-progressSpinner strokeWidth="8" *ngIf="isloading === true"></p-progressSpinner>
-                    View graph
-                </Button>
-             
-
-               
-            </div>
-    </form>
     <div class="row mt-4">
         <div class="col-xl-12 mb-12">
             <div class="ct_grey_border_1 ">
@@ -44,7 +17,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 <!-- </div> -->
@@ -126,6 +98,7 @@
                             <th scope="col">Target Year</th>
                             <th scope="col">Target Emission change %</th>
                             <th scope="col">Other Target KPI Change%</th>
+                            <th scope="col">View Graph</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -164,13 +137,11 @@
                                 {{ group.other_target_kpichange }}
 
                             </td>
-                            <!-- <td class="td text-right">
-                                <a style="
-                                        cursor: pointer;
-                                        color: #88ad47;
-                                        font-size: 13px;
-                                    ">view details</a>
-                            </td> -->
+                            <td class="td  pb-1" (click)="ViewGraph(group.target_emission_change,group.base_year,group.target_year,group.target_type )">
+                                Click
+
+                            </td>
+                          
                         </tr>
                     </tbody>
                 </table>

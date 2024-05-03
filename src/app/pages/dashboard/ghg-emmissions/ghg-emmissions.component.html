@@ -145,7 +145,7 @@
                             aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                 </div> -->
-                <div class="ct_grey_border_1 ct_py_padd mt-3 ct_progress_active1" >
+                <div class="ct_grey_border_1 ct_py_padd mt-3 " (click)="status = 1" [ngClass]="status ==1 ? 'ct_progress_active1': '' " >
                     <div class="ct_d_flex_1">
                         <div class="d-flex align-items-center ct_gap_20 flex-wrap">
                             <h5 class="mb-0"><strong>{{scope1E}}</strong></h5>
@@ -162,7 +162,7 @@
                             aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                 </div>
-                <div class="ct_grey_border_1 ct_py_padd mt-3">
+                <div class="ct_grey_border_1 ct_py_padd mt-3" (click)="status = 2"  [ngClass]="status ==2 ? 'ct_progress_active1': '' "  >
                     <div class="ct_d_flex_1">
                         <div class="d-flex align-items-center ct_gap_20 flex-wrap">
                             <h5 class="mb-0"><strong>{{scope2E}}</strong></h5>
@@ -179,7 +179,7 @@
                             aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                 </div>
-                <div class="ct_grey_border_1 ct_py_padd mt-3">
+                <div class="ct_grey_border_1 ct_py_padd mt-3" (click)="status = 3"  [ngClass]="status ==3 ? 'ct_progress_active1': '' "  >
                     <div class="ct_d_flex_1">
                         <div class="d-flex align-items-center ct_gap_20 flex-wrap">
                             <h5 class="mb-0"><strong>{{scope3E}}</strong></h5>

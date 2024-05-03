@@ -269,7 +269,7 @@ export class TargetSettingComponent {
     ];
     this.target_type = [
       {
-        e_act: 'Economic Intensity Convergence'
+        e_act: 'Emission Reduction'
       },
       {
         e_act: 'Physical Intensity Convergence'
@@ -367,7 +367,7 @@ export class TargetSettingComponent {
           this.scope2_data = response.scope2Xcordinate;
           this.scope3_data = response.scope3Xcordinate;
           this.x_axis_years = response.forecastYcordinate;
-          this.graphMethod(response.scope1Xcordinate, response.forecastScope1Xcordinate, response.dottedScope1Xcordinate, response.forecastYcordinate)
+          this.graphMethod(response.scope1Xcordinate, response.forecastScope1Xcordinate, response.dottedScope1Xcordinate,response.yCordinate, response.forecastYcordinate)
         }
       },
       error: (err) => {
@@ -385,8 +385,8 @@ export class TargetSettingComponent {
     formData.append('target_name', data.value.target_name);
     formData.append('emission_activity', data.value.emission_activity);
     formData.append('target_type', data.value.target_type);
-    formData.append('base_year', data.value.base_year);
-    formData.append('target_year', data.value.target_year);
+    formData.append('base_year', (data.value.base_year).getFullYear().toString());
+    formData.append('target_year', (data.value.target_year).getFullYear().toString());
     formData.append('target_emission_change', data.value.target_emission_change);
     formData.append('other_target_kpichange', data.value.other_target_kpichange);
     formData.append('other_target_kpi', data.value.other_target_kpi);
@@ -423,17 +423,73 @@ export class TargetSettingComponent {
   };
 
 
-  graphMethod(data1, data2, data3, years) {
+  ViewGraph(percentage,base_year,target_year,intensity){
+    console.log(intensity);
+    
+    const formData = new URLSearchParams();
+    
+    formData.append('percentage', percentage);
+    formData.append('base_year', base_year);
+    formData.append('target_year', target_year);
+    if(intensity == 'Emission Reduction'){
+      formData.append('intensity', 'A');
+    }else{
+      formData.append('intensity', 'P');
+    }
+  
+
+    this.GroupService.getGraphsTarget(formData.toString()).subscribe({
+      next: (response) => {
+        if (response.success == true) {
+          this.graphMethod(response.scope1Xcordinate,response.targetScope1Xcordinate, response.forecastScope1Xcordinate, response.yCordinate,response.forecastYcordinate)
+          this.visible = false;
+          this.notification.showSuccess(
+            ' Offset Added successfully',
+            'Success'
+          );
+          this.GetTarget();
+          this.GroupForm.reset();
+        }
+        // return
+        //   this.getOffset(this.loginInfo.tenantID);
+        this.visible = false;
+        if (localStorage.getItem('FacilityGroupCount') != null) {
+          let fgcount = localStorage.getItem('FacilityGroupCount');
+          let newcount = Number(fgcount) + 1;
+          localStorage.setItem(
+            'FacilityGroupCount',
+            String(newcount)
+          );
+        }
+      },
+      error: (err) => {
+        this.notification.showError('Group added failed.', 'Error');
+        console.error('errrrrrr>>>>>>', err);
+      },
+      complete: () => console.info('Group Added')
+    });
+  }
+
+  graphMethod(normalData,targetData, forecastedData,normalYears, Dashedyears) {
+    console.log(normalData);
     var index = 0;
-    const dashedLine: number[] = data3.map(str => parseFloat(str));
-    const normalsLine: number[] = data1.map(str => parseFloat(str));
-    // for ( index = 0; index < normalsLine.length; index++) {
-    //  dashedLine.unshift(null);
-    // };
+    const normalsLine: number[] = normalData.map(str => parseFloat(str));
+    const dashedLine: number[] = forecastedData.map(str => parseFloat(str));
+    const normalYear: number[] = normalYears.map(str => parseFloat(str));
+    const mergedYears = [...normalYear, ...Dashedyears];
+    let uniqueYears = [...new Set(mergedYears)];
+
+   
+    // for (let i = 0; i < cars.length; i++) {
+    //   text += cars[i] + "<br>";
+    // }
+    for ( index = 0; index < normalsLine.length -1; index++) {
+     dashedLine.unshift(null);
+    };
     // console.log(dashedLine);
    
 
-    const parallelLine: number[] = data2.map(str => parseFloat(str));
+    const parallelLine: number[] = targetData.map(str => parseFloat(str));
 
 
     this.chartOptions = {
@@ -444,12 +500,12 @@ export class TargetSettingComponent {
           data: normalsLine
         },
         {
-          name: "Forecasted",
+          name: "Target",
           // data: [35, 41, 62, 42, 13, 18, 29, 37, 36, 51, 32, 35]
           data: parallelLine
         },
         {
-          name: "Dotted",
+          name: "Forecasted",
           // data: [87, 57, 74, 99, 75, 38, 62, 47, 82, 56, 45, 47]
           data: dashedLine
         }
@@ -464,7 +520,7 @@ export class TargetSettingComponent {
       stroke: {
         width: 5,
         curve: "straight",
-        dashArray: [0, 0, 5]
+        dashArray: [0,0,5]
       },
       title: {
         text: "Page Statistics",
@@ -490,7 +546,7 @@ export class TargetSettingComponent {
         labels: {
           trim: false
         },
-        categories: years
+        categories: uniqueYears
       },
       tooltip: {
         y: [

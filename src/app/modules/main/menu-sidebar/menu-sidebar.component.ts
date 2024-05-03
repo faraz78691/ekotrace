@@ -230,7 +230,7 @@ export const menu = [
                 name: 'Set GHG Template',
                 iconClasses: 'fas fa-star',
                 iconSRC :'assets/img/tracking_icon.svg',
-                path: ['']
+                path: ['setGhgTemplate']
             },
             
             {
@@ -254,10 +254,10 @@ export const menu = [
                 path: ['finance_emissions']
             },
             {
-                name: 'Add Vendors / Cost Centre',
+                name: 'Vendors / Cost Centre',
                 iconClasses: 'fas fa-table',
                 iconSRC: 'assets/img/BRSR.svg',
-                path: ['f']
+                path: ['vendors']
             },
 
             {

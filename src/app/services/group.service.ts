@@ -69,8 +69,14 @@ export class GroupService {
     public AddEmissionInventory(groupdetails): Observable<any> {
         return this.http.post( environment.baseUrl + '/targetsetting/addEmissionInventory', groupdetails);
     }
+    public GetInventoryByID(groupdetails): Observable<any> {
+        return this.http.post( environment.baseUrl + '/targetsetting/getTargetEmissionInventoryRelation', groupdetails);
+    }
     public addTargetSetting(groupdetails): Observable<any> {
         return this.http.post( environment.baseUrl + '/targetsetting/addTargetSetting', groupdetails);
+    }
+    public getGraphsTarget(groupdetails): Observable<any> {
+        return this.http.post( environment.baseUrl + '/targetsetting/getEmissionPoints', groupdetails);
     }
     public addTargetActions(groupdetails): Observable<any> {
         return this.http.post( environment.baseUrl + '/targetsetting/addActions', groupdetails);

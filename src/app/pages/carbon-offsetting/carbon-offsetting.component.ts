@@ -186,6 +186,10 @@ export class CarbonOffsettingComponent {
 
   //method to add new group
   saveOffset(data: NgForm) {
+    console.log(data);
+    if(!data.valid){
+        return
+    }
 
     const formData: FormData = new FormData();
     if(this.selectedFile){
