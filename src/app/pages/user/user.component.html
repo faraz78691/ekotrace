@@ -185,6 +185,7 @@
                                     class="input input-height pl-2 font-weight-light ct_select_facility_input_css12"
                                     placeholder="Select facility" [(ngModel)]="admininfo.facilityID"
                                     [disabled]="isloading" *ngIf="facilitydata === false">
+                                    <option value=" " selected>Select facility</option>
                                     <option selected *ngFor="let faclity of facilityList" value="{{ faclity.id }}">
                                         {{ faclity.name }}
                                     </option>

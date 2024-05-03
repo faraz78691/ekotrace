@@ -196,7 +196,7 @@ export class CarbonOffsettingComponent {
         formData.append('file', this.selectedFile, this.selectedFile.name);
     }
       formData.append('project_name',data.value.project_details);
-      formData.append('project_type',this.project_type);
+      formData.append('type',data.value.project_type);
       formData.append('date_of_purchase',this.date3);
       formData.append('vintage',data.value.vintage);
       formData.append('standard',data.value.standard);

@@ -82,7 +82,7 @@
                                 <label for="fname">Project Type</label>
                                 <p-dropdown class="ct_grop_select_2_drop_white123 ct_group_select_dark_124" required
                                     ngModel placeholder="Select" [options]="Groupby" [(ngModel)]="project_type"
-                                    optionLabel="name" optionValue="name" name="group" #group="ngModel"></p-dropdown>
+                                    optionLabel="name" optionValue="name" name="project_type" #group="ngModel"></p-dropdown>
                                 <p class="text-danger mb-0" *ngIf="GroupForm.submitted && group.errors?.['required']">
                                     Project Type is required
                                 </p>
@@ -294,7 +294,7 @@
 
                             </td>
                             <td class="td text-center pb-1">
-                                {{ group.date_of_purchase }}
+                                {{ group.date_of_purchase | date:'yyyy' }}
 
                             </td>
                             <td class="td text-center pb-1">
@@ -350,7 +350,7 @@
                             <p class="mb-0">Date of Purchase:</p>
                         </td>
                         <td>
-                            <p class="mb-0">{{ groupdetails.date_of_purchase }}</p>
+                            <p class="mb-0">{{ groupdetails.date_of_purchase | date:'dd-mm-yyyy'}}</p>
                         </td>
                     </tr>
                     <tr>
@@ -358,7 +358,7 @@
                             <p class="mb-0">Vintage:</p>
                         </td>
                         <td>
-                            <p class="mb-0">{{ groupdetails.vintage }}</p>
+                            <p class="mb-0">{{ groupdetails.vintage | date:'yyyy' }}</p>
                         </td>
                     </tr>
                     <tr>
@@ -403,11 +403,11 @@
                             </div>
                         </td>
                         <td>
-                            <p class="mb-0">{{'' }}</p>
+                            <p class="mb-2">{{'-' }}</p>
                             <div>
                                 <p class="mb-2">{{ groupdetails.scope1 }}</p>
                                 <p class="mb-2">{{ groupdetails.scope2 }}</p>
-                                <p class="mb-0">{{ groupdetails.scope3 }}</p>
+                                <p class="mb-0">{{ groupdetails.scope3 == null ? '-' : groupdetails.scope3 }}</p>
                             </div>
                         </td>
                     </tr>
