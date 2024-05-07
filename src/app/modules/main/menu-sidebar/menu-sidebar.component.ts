@@ -64,12 +64,13 @@ export class MenuSidebarComponent implements OnInit {
             this.getTenantsById(Number(this.loginInfo.tenantID));
             this.getTenantsById(Number(this.loginInfo.tenantID)).then(() => {
                 console.log("menu", menu);
-                console.log("this.isExpired", this.isExpired);
+              
                 if (this.loginInfo.role === 'Super Admin' && this.isExpired) {
                     this.menu =
                         menu.find((item) => item.role === this.loginInfo.role)
                             ?.items || [];
-                    console.log(this.menu);
+                            console.log("menu", menu);
+             
                 } else {
                     if (this.brsrdata.docPath != null || this.brsrdata.docPath != undefined) {
                         this.isBRSRDoc = true;
@@ -220,13 +221,13 @@ export const menu = [
                 iconSRC: 'assets/img/trees.png',
                 path: ['main_tree']
             },
-            {
+            { head: undefined,
                 name: 'Add User',
                 iconClasses: 'fas fa-user-plus',
                 iconSRC: 'assets/img/user_121.png',
                 path: ['user']
             },
-            {
+            {head: undefined,
                 name: 'Set GHG Template',
                 iconClasses: 'fas fa-star',
                 iconSRC :'assets/img/tracking_icon.svg',

@@ -27,7 +27,7 @@
     <nav class="mt-2" style="overflow-y: scroll">
 
         <div>
-            <ul *ngIf="IsPAdmin" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+            <!-- <ul *ngIf="IsPAdmin" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                 data-accordion="false" [ngClass]="updatedtheme === 'dark'">
                 <div>
           
@@ -43,11 +43,12 @@
                         }"></app-menu-item>
 
                 </div>
-            </ul>
+            </ul> -->
             <ul *ngIf="!IsPAdmin" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                 data-accordion="false">
                 <div *ngFor="let item of menu">
-                    <p *ngIf="item.head != '' || item.head != undefined" [ngClass]="
+                    
+                    <p *ngIf="item.head !== undefined" [ngClass]="
                             this.updatedtheme === 'dark'
                                 ? 'headtextD'
                                 : 'headtextL'
@@ -58,49 +59,6 @@
                 </div>
             </ul>
         </div>
-        <div [ngClass]="
-                this.IsPAdmin === true ||
-                this.loginInfo.role === 'Preparer' ||
-                this.loginInfo.role === 'Approver'
-                    ? 'Ldarkbutton'
-                    : ''
-            ">
-            <!-- dark mode toggle Start -->
-            <!-- <div class="d-flex" [ngClass]="
-                    this.updatedtheme === 'dark'
-                        ? 'ondarkThemeButton'
-                        : 'onlightThemeButton'
-                ">
-                <div class="col" [ngClass]="
-                        this.updatedtheme === 'dark'
-                            ? 'ondarklightbutton'
-                            : 'onlightdarkbutton'
-                    " (click)="theme1()">
-                    <i class="pi pi-sun"></i>
-                    Light
-                </div>
-                <div class="col" (click)="theme2()" [ngClass]="
-                        this.updatedtheme === 'dark'
-                            ? 'ondarkdarkbutton'
-                            : 'onlightlightbutton'
-                    ">
-                    <i class="pi pi-moon"></i>
-                    Dark
-                </div>
-            </div> -->
-            <!-- dark mode toggle end -->
-            <!-- <div class="pb-5 mb-5">
-                <select
-                    name="theme"
-                    [(ngModel)]="selectedTheme"
-                    (change)="getSelectedValue()"
-                >
-                    <option value="theme1">theme1</option>
-                    <option value="theme2">theme2</option>
-                    <option value="theme3">theme3</option>
-                    <option value="theme4">theme4</option>
-                </select>
-            </div> -->
-        </div>
+       
     </nav>
 </div>
