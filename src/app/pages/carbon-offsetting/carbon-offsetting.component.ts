@@ -62,6 +62,7 @@ export class CarbonOffsettingComponent {
   selectedCountry: any[] = [];
   scopeList: any[] = [];
   editBindedCountry: any[] = [];
+  standardList: any[] = [];
   id: any;
   isgroupExist: boolean = false;
   selectedFaciltiy: any;
@@ -116,6 +117,26 @@ export class CarbonOffsettingComponent {
           },
           {
               name: 'Carbon Sequestration'
+          },
+          {
+              name: 'Others'
+          }
+      ];
+      this.standardList = [
+          {
+              name: 'Verra'
+          },
+          {
+              name: 'Gold Standard (GS)'
+          },
+          {
+              name: 'Clean Development Mechanism (CDM)'
+          },
+          {
+              name: 'American Carbon Standard (ACR)'
+          },
+          {
+              name: 'Climate Action Reserve (CAR)'
           },
           {
               name: 'Others'

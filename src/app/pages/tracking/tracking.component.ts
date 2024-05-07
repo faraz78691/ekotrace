@@ -3193,7 +3193,6 @@ export class TrackingComponent {
                                     this.activeindex = 1;
                                     this.id_var = this.subCatID;
                                 }
-
                             })
                         }
                     },
