@@ -739,8 +739,9 @@ export class FinanceEmissionsComponent {
       const energyMethod = event.value;
       this.calculationRow = true;
       this.investmentTypeValue = energyMethod;
-
+console.log(this.franchiseMethodValue,this.investmentTypeValue);
       if (this.franchiseMethodValue == 'Investment Specific method' && this.investmentTypeValue == 'Equity investments' && this.equityInvestmentRow == true) {
+        console.log("here");
           this.equityInvestmentRow = true;
           this.franchiseMethod = true;
           this.averageMethod = false;
@@ -780,11 +781,13 @@ export class FinanceEmissionsComponent {
       if (calMethod == 'Investment Specific method' && this.investmentTypeValue == 'Equity investments') {
           this.equityInvestmentRow = true;
           this.franchiseMethod = true;
-          this.averageMethod = false
+          this.averageMethod = false;
+          this.debtInvesmentRow = false;
       } else if (this.investmentTypeValue == 'Equity investments' && calMethod == 'Average data method') {
           this.equityInvestmentRow = true;
           this.franchiseMethod = false;
           this.averageMethod = true;
+          this.debtInvesmentRow = false;
       } else if ((this.investmentTypeValue == 'Debt investments' || this.investmentTypeValue == 'Project finance') && calMethod == 'Average data method') {
           this.debtInvesmentRow = true;
           this.franchiseMethod = false;

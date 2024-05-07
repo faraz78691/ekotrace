@@ -96,7 +96,6 @@ import { VehicleComponent } from './pages/vehicle/vehicle.component';
 import { ElectricityComponent } from './pages/electricity/electricity.component';
 import { HeatandSteamComponent } from './pages/heatand-steam/heatand-steam.component';
 import { Scope3TrackingComponent } from './scope3-tracking/scope3-tracking.component';
-import { Scope2TrackingComponent } from './pages/scope2-tracking/scope2-tracking.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { GhgEmmissionsComponent } from './pages/dashboard/ghg-emmissions/ghg-emmissions.component';
 import { EnergyEmmsionsComponent } from './pages/dashboard/energy-emmsions/energy-emmsions.component';
@@ -169,7 +168,6 @@ registerLocaleData(localeEn, 'en-EN');
         ElectricityComponent,
         HeatandSteamComponent,
         Scope3TrackingComponent,
-        Scope2TrackingComponent,
         GhgEmmissionsComponent,
         EnergyEmmsionsComponent,
         BusinessTravelComponent,

@@ -245,7 +245,7 @@ export const menu = [
                 name: 'Corprate Emissions',
                 iconClasses: 'fas fa-star',
                 iconSRC: 'assets/img/trees.png',
-                path: ['Ntracking']
+                path: ['tracking']
             }, 
             {
                 name: 'Financed Emissions',

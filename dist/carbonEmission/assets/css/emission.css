@@ -49,7 +49,7 @@ a{
     color:  var(--darkblue) ;
     border-radius: 5px;
     padding: 7px 15px;
-    width: 180px;
+    /* width: 180px; */
     display: block;
     text-align: center;
     transition: 0.4s ease all;
@@ -60,12 +60,12 @@ a{
     gap: 20px;
 }
 .ct_emission_menu_link ul li a.ct_active {
-    background-color: #9abb4e;
+    background-color: rgba(136, 173, 71, 0.75);
     /* box-shadow: 0px 4px 4px rgba(0,0,0,0.38); */
     color: #fff;
 }
 .ct_emission_menu_link ul li a:hover{
-    background-color:  #9abb4e;
+    background-color:  rgba(136, 173, 71, 0.75);
     /* box-shadow: 0px 4px 4px rgba(0,0,0,0.38); */
     color: #fff;
 }
@@ -187,7 +187,7 @@ button.ct_scope_btn {
     position: relative;
 }
 .ct_emission_vender_list h5 {
-    font-weight: 500;
+    font-weight: 400;
     font-size: 16px;
 }
 .ct_emission_vender_list p {
@@ -204,10 +204,10 @@ button.ct_scope_btn {
 }
 .ct_emission_tab.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
     color: #fff!important;
-    background-color: #9abb4e !important;
+    background-color: rgba(136, 173, 71, 0.75) !important;
 }
 .ct_emission_tab.nav-pills .nav-link:hover{
-    background-color: #9abb4e !important;
+    background-color: rgba(136, 173, 71, 0.75) !important;
     color: #fff!important;
 }
 .ct_emission_tab.nav-pills .nav-link:not(.active):hover{
@@ -223,7 +223,7 @@ button.ct_scope_btn {
 }
 
 select.ct_all_vender_select {
-    background-color: #9abb4e ;
+    background-color: rgba(136, 173, 71, 0.75) ;
     width: 100%;
     color: #fff;
     padding: 10px 15px;
