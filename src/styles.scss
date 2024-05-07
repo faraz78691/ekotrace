@@ -1686,8 +1686,12 @@ input.ct_change_choose_file_input12::file-selector-button {
     padding: 5px 10px;
 }
 .sidebar img {
-    width: 20px !important;
-}
+    width: 26px !important;
+    background: #fff;
+    height: 26px;
+    border-radius: 100px;
+    padding: 5px;
+}   
 .ct_drop_down_position_21 .p-overlay.p-component {
     top: 35px !important;
     left: -16px !important;
@@ -2195,3 +2199,9 @@ input.ct_change_choose_file_input12::file-selector-button {
   .ct_calender_input_38_action_12 .p-calendar-w-btn {
     height: 38px !important;
 }
+
+.ct_remove_side_bar_10 a.brand-link.ct_logo_collape {
+    top: 0px !important;
+    padding-block: 10px;
+}
+
