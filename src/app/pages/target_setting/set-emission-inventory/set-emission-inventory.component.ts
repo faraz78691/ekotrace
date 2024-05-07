@@ -62,6 +62,9 @@ export class SetEmissionInventoryComponent {
     stateData: Location[] = [];
     selectedValue: string;
     selectedCountry: any[] = [];
+    scope1: any[] = [];
+    scope2: any[] = [];
+    scope3: any[] = [];
     scopeList: any[] = [];
     editBindedCountry: any[] = [];
     targetType: any[] = [];
@@ -82,6 +85,7 @@ export class SetEmissionInventoryComponent {
     selectedScope: any;
     carbon_credit_value: string;
     type: string;
+    relationId: string;
     date3: string;
     standard: string;
     selectedFile: File
@@ -208,14 +212,8 @@ export class SetEmissionInventoryComponent {
         var scope_3_emissions = Number(data.value.purchased_goods) + Number(data.value.business_travel) + Number(data.value.waste_generated) + Number(data.value.waste);
 
         const formData = new URLSearchParams();
-        if (data.value.targetType == 1) {
-            formData.append('production_output', data.value.emission);
-            formData.append('economic_output', '0');
-        } else {
-            formData.append('production_output', '0');
-            formData.append('economic_output', data.value.emission);
-        }
-
+        formData.append('production_output', data.value.production_output || 1);
+        formData.append('economic_output', data.value.economic_output || 1);
         formData.append('group_added', data.value.group_added);
         formData.append('year_added', dateYear);
         formData.append('scope1_emission', scope_1_emissions.toString());
@@ -263,44 +261,56 @@ export class SetEmissionInventoryComponent {
 
     //method for update group detail by id
     updateGroup(id: any, data: NgForm) {
-        // this.groupdetails.groupMappings = [];
-        // if (this.groupdetails.groupBy === 'Country') {
-        //     this.selectedCountry.forEach((val) => {
-        //         this.groupMappingDetails = new GroupMapping();
-        //         this.groupMappingDetails.stateId = 0;
-        //         this.groupMappingDetails.groupId = 0;
-        //         this.groupMappingDetails.facilityId = 0;
-        //         this.groupMappingDetails.countryId = val;
-        //         this.groupdetails.groupMappings.push(this.groupMappingDetails);
-        //     });
-        // } else if (this.groupdetails.groupBy === 'State') {
-        //     this.selectedState.forEach((val) => {
-        //         this.groupMappingDetails = new GroupMapping();
-        //         this.groupMappingDetails.stateId = val;
-        //         this.groupMappingDetails.countryId = 0;
-        //         this.groupMappingDetails.groupId = 0;
-        //         this.groupMappingDetails.facilityId = 0;
-        //         this.groupdetails.groupMappings.push(this.groupMappingDetails);
-        //     });
-        // } else {
-        //     this.selectedFaciltiy.forEach((val) => {
-        //         this.groupMappingDetails = new GroupMapping();
-        //         this.groupMappingDetails.stateId = 0;
-        //         this.groupMappingDetails.countryId = 0;
-        //         this.groupMappingDetails.groupId = 0;
-        //         this.groupMappingDetails.facilityId = val;
-        //         this.groupdetails.groupMappings.push(this.groupMappingDetails);
-        //     });
-        // }
-        let tenantID = this.loginInfo.tenantID;
-        let formData = new URLSearchParams();
-        formData.set('groupId', id);
-        formData.set('groupname', this.groupdetails.groupname);
-        // formData.set('tenantID',  this.groupdetails.tenantID.toString());
-        formData.set('facility', this.selectedFaciltiy);
+        console.log(id);
+        // var dateYear = (data.value.year_added).getFullYear().toString();
+        console.log(data.value.year_added.length);
+        if(data.value.year_added.length > 4){
+            var dateYear = (data.value.year_added).getFullYear().toString();
+        }else{
+            var dateYear = data.value.year_added;
+        }
+        
+        var scope1_items = [{ "emission": Number(data.value.company_vehicles) }, { "emission": Number(data.value.refrigerants) }]
+        var scope2_items = [{ "emission": Number(data.value.location_based) }, { "emission": Number(data.value.renewable) }];
+        var scope3_items = [{ "emission": Number(data.value.purchased_goods) }, { "emission": Number(data.value.business_travel) }, { "emission": Number(data.value.waste_generated) }, { "emission": Number(data.value.waste) }];
+        // Merge the updateEmission into scope_1
+        let mergedArrayScope1 = this.scope1.map((item, index) => ({
+            ...item,
+            ...scope1_items[index]
+        }));
+        let mergedArrayScope2 = this.scope2.map((item, index) => ({
+            ...item,
+            ...scope2_items[index]
+        }));
+        let mergedArrayScope3 = this.scope3.map((item, index) => ({
+            ...item,
+            ...scope3_items[index]
+        }));
+        console.log(mergedArrayScope1);
+
+        var scope_1_emissions = Number(data.value.company_vehicles) + Number(data.value.refrigerants);
+        var scope_2_emissions = Number(data.value.location_based) + Number(data.value.renewable);
+        var scope_3_emissions = Number(data.value.purchased_goods) + Number(data.value.business_travel) + Number(data.value.waste_generated) + Number(data.value.waste);
+
+        const formData = new URLSearchParams();
+
+        formData.append('production_output', data.value.production_output);
+        formData.append('economic_output', data.value.economic_output);
+
+        formData.append('group_added', data.value.group_added);
+        formData.append('year_added', dateYear);
+        formData.append('scope1_emission', scope_1_emissions.toString());
+        formData.append('scope2_emission', scope_2_emissions.toString());
+        formData.append('scope3_emission', scope_3_emissions.toString());
+
+        formData.append('scope1_items', JSON.stringify(mergedArrayScope1));
+        formData.append('scope2_items', JSON.stringify(mergedArrayScope2));
+        formData.append('scope3_items', JSON.stringify(mergedArrayScope3));
+        formData.append('groupId', id);
+
         this.GroupService.newEditGroup(formData.toString()).subscribe({
             next: (response) => {
-                console.log(response);
+
                 this.GetEmissionInventory();
 
                 this.visible = false;
@@ -318,39 +328,62 @@ export class SetEmissionInventoryComponent {
     };
 
 
-    viewDetails(id:any){
+    viewDetails(id: any) {
+        this.relationId = id;
+        this.FormEdit = true;
         const formData = new URLSearchParams();
-      
-            formData.append('relation_id', id);
-            this.GroupService.GetInventoryByID(formData.toString()).subscribe({
-                next: (response) => {
-                    if (response.success == true) {
-                        this.visible = false;
-                        this.notification.showSuccess(
-                            ' Inventory Added successfully',
-                            'Success'
-                        );
-                        this.GetEmissionInventory();
-                    }
-                    // return
-                    this.GetEmissionInventory();
-                    this.visible = false;
-                    if (localStorage.getItem('FacilityGroupCount') != null) {
-                        let fgcount = localStorage.getItem('FacilityGroupCount');
-                        let newcount = Number(fgcount) + 1;
-                        localStorage.setItem(
-                            'FacilityGroupCount',
-                            String(newcount)
-                        );
-                    }
-                },
-                error: (err) => {
-                    this.notification.showError('Group added failed.', 'Error');
-                    console.error('errrrrrr>>>>>>', err);
-                },
-                complete: () => console.info('Group Added')
-            });
-    }
+        this.scope1 = [];
+        this.scope2 = [];
+        this.scope3 = [];
+
+        formData.append('relation_id', id);
+        this.GroupService.GetInventoryByID(formData.toString()).subscribe({
+            next: (response) => {
+                if (response.success == true) {
+                    const details = response.individualDetails;
+                    const idCompany = details.find(items => items.category == 'Scope1 from Company Vehicles');
+         
+                    const idRefrigerants = details.find(items => items.category == 'Scope1 from Refrigerants');
+                    const idLocation = details.find(items => items.category == 'Scope2 Location Based Emissions');
+                    const idRenewable = details.find(items => items.category == 'Scope2 Renewable Energy Use');
+                    const idPurchased = details.find(items => items.category == 'Scope3 Purchased goods and services');
+                    const idBusiness = details.find(items => items.category == 'Scope3 Business travel and employee commute');
+                    const idWaste = details.find(items => items.category == 'Scope3 Waste generated in operations');
+                    const idWater = details.find(items => items.category == 'Scope3 Water Usage');
+                    this.scope1.push({ "id": idCompany.id, "emission": 0 }, { "id": idRefrigerants.id, "emission": 0 });
+                    this.scope2.push({ "id": idLocation.id, "emission": 0 }, { "id": idRenewable.id, "emission": 0 });
+                    this.scope3.push({ "id": idPurchased.id, "emission": 0 }, { "id": idBusiness.id, "emission": 0 }, { "id": idWaste.id, "emission": 0 }, { "id": idWater.id, "emission": 0 });
+                    this.visible = true;
+                    let obj = {
+                        group_added: response.details[0].group_added,
+                        year_added: response.details[0].year_added,
+                        company_vehicles: idCompany.emission,
+                        refrigerants: idRefrigerants.emission,
+                        location_based: idLocation.emission,
+                        renewable: idRenewable.emission,
+                        purchased_goods: idPurchased.emission,
+                        business_travel: idBusiness.emission,
+                        waste_generated: idWaste.emission,
+                        waste: idWater.emission,
+                        production_output:response.details[0].production_output,
+                        economic_output:response.details[0].economic_output,
+                    };
+
+                    this.GroupForm.control.patchValue(obj);
+
+                    // this.notification.showSuccess(
+                    //     ' Inventory Added successfully',
+                    //     'Success'
+                    // );
+                }
+            },
+            error: (err) => {
+                this.notification.showError('Group added failed.', 'Error');
+                console.error('errrrrrr>>>>>>', err);
+            },
+            complete: () => console.info('Group Added')
+        });
+    };
 
     //retrieves all facilities for a given tenant
 

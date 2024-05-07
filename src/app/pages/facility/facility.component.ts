@@ -357,7 +357,7 @@ export class FacilityComponent {
         let formdata = new URLSearchParams();
         formdata.set('ID', id)
         this.facilityService.newUsersByFacilityID(formdata.toString()).subscribe((result) => {
-            console.log(result);
+         
             this.selectedScope1 = result[0].scope1;
             this.selectedScope2 = result[0].scope2;
             this.selectedScope3 = result[0].scope3;

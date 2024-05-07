@@ -20,6 +20,9 @@
 
                 
                     <h4 class=" ct_fw_600 m-0 m-0" style="flex: 1;">Set Emission Inventory</h4>
+                    <button class="GroupButton ct_assign_package_btn129 ct_animation_btn_121 w-auto px-2 mr-3" (click)="showAddGroupDialog()">
+                        Set Revenue Projections
+                    </button>
                     <button class="GroupButton ct_assign_package_btn129 ct_animation_btn_121 w-auto px-4" (click)="showAddGroupDialog()">
                         + Add Inventory
                     </button>
@@ -66,7 +69,7 @@
                     <form #GroupForm="ngForm" class="col-12" (ngSubmit)="
                             FormEdit === false
                                 ? saveOffset(GroupForm)
-                                : updateGroup(groupdetails.id, GroupForm.value)
+                                : updateGroup(relationId, GroupForm)
                         ">
                         <div class="mb-5 pb-0 row">
                             <div class="col-md-6 mb-3">
@@ -163,24 +166,15 @@
                                             #groupName="ngModel" [disabled]="isloading" required />
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label for="fname">Target Type</label>
-                                        <p-dropdown class="ct_grop_select_2_drop_white123 ct_group_select_dark_124" required ngModel placeholder="Select type"
-                                        [options]="targetType" optionLabel="name" optionValue="id" name="targetType"
-                                        #group="ngModel"></p-dropdown>
-                                        <p class="text-danger mb-0"
-                                            *ngIf="GroupForm.submitted && groupName.errors?.['required']">
-                                            Group name is required
-                                        </p>
-                                        <p class="text-danger mb-0" *ngIf="
-                                            isgroupExist === true && groupName.touched
-                                        ">
-                                            group already exist please use other groupname
-                                        </p>
+                                        <label for="fname">Production output</label>
+                                        <input ngModel name="production_output" id="search-input" type="text" 
+                                        class="form-control Dashboard-tab text-white " placeholder="Enter production output"
+                                        #groupName="ngModel" [disabled]="isloading" required />
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label for="fname">Emission</label>
-                                        <input ngModel name="emission" id="search-input" type="text" 
-                                            class="form-control Dashboard-tab text-white " placeholder="Enter emission"
+                                        <label for="fname">Economic output</label>
+                                        <input ngModel name="economic_output" id="search-input" type="text" 
+                                            class="form-control Dashboard-tab text-white " placeholder="Enter economic output"
                                             #groupName="ngModel" [disabled]="isloading" required />
                                     </div>
                                 </div>
@@ -226,7 +220,7 @@
                             <th scope="col">Total Scope2 (tC02e)</th>
                             <th scope="col">Total Scope3 (tC02e)</th>
                             <th scope="col">Total Emissions (tC02e) </th>
-                            <!-- <th scope="col"> </th> -->
+                            <th scope="col"> </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -256,9 +250,9 @@
                             <td class="td pb-1">
                                 {{ group.total_emission }}
                             </td>
-                            <!-- <td class="td pb-1" (click)="viewDetails(group.relation_id)">
-                           View
-                            </td> -->
+                            <td class="td pb-1" (click)="viewDetails(group.relation_id)">
+                                <i class="fas fa-edit"></i>
+                            </td>
                             <!-- <td class="td text-right">
                                 <a style="
                                         cursor: pointer;

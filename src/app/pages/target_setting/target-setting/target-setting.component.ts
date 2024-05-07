@@ -262,10 +262,8 @@ export class TargetSettingComponent {
       },
       {
         e_act: 'Scope 3'
-      },
-      {
-        e_act: 'Scope 1,2 & 3'
       }
+    
     ];
     this.target_type = [
       {
@@ -423,7 +421,7 @@ export class TargetSettingComponent {
   };
 
 
-  ViewGraph(percentage,base_year,target_year,intensity){
+  ViewGraph(percentage,base_year,target_year,intensity, scope){
     console.log(intensity);
     
     const formData = new URLSearchParams();
@@ -441,7 +439,26 @@ export class TargetSettingComponent {
     this.GroupService.getGraphsTarget(formData.toString()).subscribe({
       next: (response) => {
         if (response.success == true) {
-          this.graphMethod(response.scope1Xcordinate,response.targetScope1Xcordinate, response.forecastScope1Xcordinate, response.yCordinate,response.forecastYcordinate)
+const Data = response;
+if(scope == 'Scope 1'){
+  this.graphMethod(response.scope1Xcordinate,response.targetScope1Xcordinate, response.forecastScope1Xcordinate, response.yCordinate,response.forecastYcordinate)
+}else if(scope == 'Scope 1 & 2'){
+  let actualCordinate =  Data.scope1Xcordinate.map((item,index)=>{
+    return parseFloat(item) + parseFloat(Data.scope2Xcordinate[index])
+  })
+  let targetCordinate =  Data.targetScope1Xcordinate.map((item,index)=>{
+    return parseFloat(item) + parseFloat(Data.targetScope2Xcordinate[index])
+  })
+  let forecastCordinate =  Data.forecastScope1Xcordinate.map((item,index)=>{
+    return parseFloat(item) + parseFloat(Data.forecastScope2Xcordinate[index])
+  })
+  this.graphMethod(actualCordinate,targetCordinate, forecastCordinate, response.yCordinate,response.forecastYcordinate)
+
+}else {
+
+}
+
+       
           this.visible = false;
           this.notification.showSuccess(
             ' Offset Added successfully',

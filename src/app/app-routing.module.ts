@@ -37,7 +37,7 @@ import { WaterCustomReportComponent } from '@pages/reports/water-custom-report/w
 import { BrsrQaComponent } from '@modules/brsr-qa/brsr-qa.component';
 import { ReportDocComponent } from '@pages/report-doc/report-doc.component';
 import { Scope3TrackingComponent } from './scope3-tracking/scope3-tracking.component';
-import { Scope2TrackingComponent } from '@pages/scope2-tracking/scope2-tracking.component';
+
 import { GhgEmmissionsComponent } from '@pages/dashboard/ghg-emmissions/ghg-emmissions.component';
 import { EnergyEmmsionsComponent } from '@pages/dashboard/energy-emmsions/energy-emmsions.component';
 import { BusinessTravelComponent } from '@pages/dashboard/business-travel/business-travel.component';
@@ -231,20 +231,29 @@ const routes: Routes = [
                 'Preparer',
                 'Approver'] }
             },
-            {
-                path: 'tracking',
-                canActivate: [RoleGuard],
-                component: TrackingComponent,
-                data: {
-                    roles: [
-                        'Super Admin',
-                        'Admin',
-                        'Manager',
-                        'Preparer',
-                        'Approver'
-                    ]
-                }
-            },
+            { path: 'tracking',   canActivate: [RoleGuard],             data: {
+                roles: [
+                    'Super Admin',
+                    'Admin',
+                    'Manager',
+                    'Preparer',
+                    'Approver'
+                ]
+            }, loadChildren: () => import('./pages/tracking/tracking.module').then(m => m.TrackingModule) },
+            // {
+            //     path: 'tracking',
+            //     canActivate: [RoleGuard],
+            //     component: TrackingComponent,
+            //     data: {
+            //         roles: [
+            //             'Super Admin',
+            //             'Admin',
+            //             'Manager',
+            //             'Preparer',
+            //             'Approver'
+            //         ]
+            //     }
+            // },
             {
                 path: 'scope3tracking',
                 canActivate: [RoleGuard],
@@ -259,20 +268,20 @@ const routes: Routes = [
                     ]
                 }
             },
-            {
-                path: 'Ntracking',
-                canActivate: [RoleGuard],
-                component: Scope2TrackingComponent,
-                data: {
-                    roles: [
-                        'Super Admin',
-                        'Admin',
-                        'Manager',
-                        'Preparer',
-                        'Approver'
-                    ]
-                }
-            },
+            // {
+            //     path: 'Ntracking',
+            //     canActivate: [RoleGuard],
+            //     component: Scope2TrackingComponent,
+            //     data: {
+            //         roles: [
+            //             'Super Admin',
+            //             'Admin',
+            //             'Manager',
+            //             'Preparer',
+            //             'Approver'
+            //         ]
+            //     }
+            // },
             {
                 path: 'notification',
                 canActivate: [RoleGuard],
