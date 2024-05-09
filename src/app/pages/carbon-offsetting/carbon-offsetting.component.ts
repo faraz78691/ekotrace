@@ -26,6 +26,11 @@ interface groupby {
   styleUrls: ['./carbon-offsetting.component.scss']
 })
 export class CarbonOffsettingComponent {
+   
+
+    showDialog() {
+        this.visible = true;
+    }
   @ViewChild('GroupForm', {static: false}) GroupForm: NgForm;
   public companyDetails: CompanyDetails;
   companyData: CompanyDetails = new CompanyDetails();

@@ -1899,8 +1899,13 @@ input.ct_change_choose_file_input12::file-selector-button {
           
         }
         .node rect {
-            fill: rgba(134, 175, 72, 0.7);
+            fill: #eee;
+            stroke: rgb(134, 175, 72);
+            stroke-width: 1px !important;
         }
+        g#base_node_menu {
+    filter: brightness(0);
+}
         g.link path {
             stroke-dasharray: 4px !important;
             stroke: #aac77f;
@@ -1909,10 +1914,12 @@ input.ct_change_choose_file_input12::file-selector-button {
             background-color: #86af48 !important;
             color: #fff !important;
         }
-        #tree .bft-edit-form-header,#tree .bft-img-button , #tree .bft-button{
-            background-color: #86af48;
+        #tree .bft-edit-form-header, #tree .bft-img-button, #tree .bft-button {
+            background-color: #a2be71 !important;
         }
-
+        .bft-edit-form-header {
+            background: unset !important
+        }
         #tree .bft-button{
             border-color: #86af48;
         }
@@ -1939,14 +1946,14 @@ input.ct_change_choose_file_input12::file-selector-button {
         //     padding: 0px;
         //     stroke-width: 1px;
         // }
-       #tree text {
+        #tree text {
             /* position: relative; */
-            transform: translateY(-43px);
             font-size: 22px !important;
+            transform: translateY(4px);
         }
         #tree text + text {
             /* position: relative; */
-            transform: translateY(-35px);
+            // transform: translateY(-35px);
             font-size: 18px !important;
         }
         .ct_custom_btn121 {
@@ -2032,7 +2039,7 @@ input.ct_change_choose_file_input12::file-selector-button {
 }
 
 .p-dropdown-items-wrapper {
-    max-height: 345px !important;
+    max-height: 314px !important;
 }
 
 .ct_chev_icon_dark230 .p-dropdown-trigger {

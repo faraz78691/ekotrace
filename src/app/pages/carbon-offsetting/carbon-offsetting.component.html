@@ -51,7 +51,7 @@
                 </ng-template>
             </p-confirmDialog>
 
-            <p-dialog (click)="removeCss()" [(visible)]="visible" [breakpoints]="{'960px': '75vw'}" [closable]="false"
+            <p-dialog (click)="removeCss()" [(visible)]="visible" [breakpoints]="{'960px': '75vw'}"
                 [style]="{width: '50vw'}">
                 <p-header *ngIf="FormEdit === false"> Add New Offset </p-header>
                 <p-header *ngIf="FormEdit === true"> Edit Carbon Offset </p-header>
@@ -80,7 +80,7 @@
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="fname">Project Type</label>
-                                <p-dropdown class="ct_grop_select_2_drop_white123 ct_group_select_dark_124" required
+                                <p-dropdown    class="ct_grop_select_2_drop_white123 ct_group_select_dark_124" required
                                     ngModel placeholder="Select" [options]="Groupby" [(ngModel)]="project_type"
                                     optionLabel="name" optionValue="name" name="project_type" #group="ngModel"></p-dropdown>
                                 <p class="text-danger mb-0" *ngIf="GroupForm.submitted && group.errors?.['required']">

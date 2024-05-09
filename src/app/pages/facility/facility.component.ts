@@ -30,6 +30,10 @@ import { TrackingService } from '@services/tracking.service';
     styleUrls: ['./facility.component.scss']
 })
 export class FacilityComponent {
+    
+    showDialog() {
+        this.visible = true;
+    }
     @ViewChild('addCompForm', { static: false }) addCompForm: NgForm;
     public loginInfo: LoginInfo;
     public userdetails: UserInfo;
