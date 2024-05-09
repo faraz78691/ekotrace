@@ -9738,7 +9738,11 @@ input.ct_change_choose_file_input12::file-selector-button {
 }
 
 .sidebar img {
-  width: 20px !important;
+  width: 26px !important;
+  background: #fff;
+  height: 26px;
+  border-radius: 100px;
+  padding: 5px;
 }
 
 .ct_drop_down_position_21 .p-overlay.p-component {
@@ -10266,6 +10270,11 @@ h1.bft-edit-form-title {
 
 .ct_calender_input_38_action_12 .p-calendar-w-btn {
   height: 38px !important;
+}
+
+.ct_remove_side_bar_10 a.brand-link.ct_logo_collape {
+  top: 0px !important;
+  padding-block: 10px;
 }
 /*!******************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[5].rules[0].oneOf[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[5].rules[0].oneOf[0].use[2]!./node_modules/ngx-toastr/toastr.css?ngGlobalStyle ***!

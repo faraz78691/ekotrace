@@ -455,28 +455,13 @@ if(scope == 'Scope 1'){
   this.graphMethod(actualCordinate,targetCordinate, forecastCordinate, response.yCordinate,response.forecastYcordinate)
 
 }else {
-
+  this.graphMethod(response.scope3Xcordinate,response.targetScope3Xcordinate, response.forecastScope3Xcordinate, response.yCordinate,response.forecastYcordinate)
 }
 
        
           this.visible = false;
-          this.notification.showSuccess(
-            ' Offset Added successfully',
-            'Success'
-          );
-          this.GetTarget();
+        
           this.GroupForm.reset();
-        }
-        // return
-        //   this.getOffset(this.loginInfo.tenantID);
-        this.visible = false;
-        if (localStorage.getItem('FacilityGroupCount') != null) {
-          let fgcount = localStorage.getItem('FacilityGroupCount');
-          let newcount = Number(fgcount) + 1;
-          localStorage.setItem(
-            'FacilityGroupCount',
-            String(newcount)
-          );
         }
       },
       error: (err) => {
