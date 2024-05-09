@@ -29,6 +29,7 @@ interface groupby {
 })
 export class SetEmissionInventoryComponent {
     @ViewChild('GroupForm', { static: false }) GroupForm: NgForm;
+    @ViewChild('projectionForm', { static: false }) projectionForm: NgForm;
     public companyDetails: CompanyDetails;
     companyData: CompanyDetails = new CompanyDetails();
     public loginInfo: LoginInfo;
@@ -42,6 +43,7 @@ export class SetEmissionInventoryComponent {
     public groupsList: Group[] = [];
     display = 'none';
     visible: boolean;
+    visible2: boolean;
     selectedRole = '';
     Alert: boolean = false;
     RoleIcon: string = '';
@@ -198,6 +200,38 @@ export class SetEmissionInventoryComponent {
             complete: () => console.info('Group Added')
         });
     };
+    GetEmissionProjections() {
+
+        this.GroupService.getEmissionProjections().subscribe({
+            next: (response) => {
+
+                if (response.success == true) {
+                   
+                    let obj = {
+                        factor1: response.orders[0].factor1,
+                        factor2: response.orders[0].factor2,
+                        factor3: response.orders[0].factor3,
+        
+                    };
+
+                    this.projectionForm.control.patchValue(obj);
+
+                    // if (this.groupsList.length > 0) {
+                    //     this.groupdetails = this.groupsList[0];
+                    //     this.groupdata = true;
+                    // } else {
+                    //     this.groupdata = false;
+                    // }
+
+
+                }
+            },
+            error: (err) => {
+                console.error('errrrrrr>>>>>>', err);
+            },
+            complete: () => console.info('Group Added')
+        });
+    };
 
     //method to add new group
     saveOffset(data: NgForm) {
@@ -255,6 +289,38 @@ export class SetEmissionInventoryComponent {
         });
     };
 
+    saveProjections(data: NgForm) {
+      
+
+        const formData = new URLSearchParams();
+     
+        formData.append('factor1', data.value.factor1);
+        formData.append('factor2', data.value.factor2);
+        formData.append('factor3', data.value.factor3);
+
+
+        this.GroupService.AddProjections(formData.toString()).subscribe({
+            next: (response) => {
+                if (response.success == true) {
+                  
+                    this.notification.showSuccess(
+                        ' Projection set successfully',
+                        'Success'
+                    );
+                }
+                // return
+          
+                this.visible2 = false;
+           
+            },
+            error: (err) => {
+                this.notification.showError('Group added failed.', 'Error');
+                console.error('errrrrrr>>>>>>', err);
+            },
+            complete: () => console.info('Group Added')
+        });
+    };
+
     onFileSelected(event: any) {
         this.selectedFile = event.target.files[0];
     };
@@ -286,7 +352,8 @@ export class SetEmissionInventoryComponent {
             ...item,
             ...scope3_items[index]
         }));
-        console.log(mergedArrayScope1);
+        let totalScopeEmision = [...mergedArrayScope1 , ...mergedArrayScope2 , ...mergedArrayScope3]
+        
 
         var scope_1_emissions = Number(data.value.company_vehicles) + Number(data.value.refrigerants);
         var scope_2_emissions = Number(data.value.location_based) + Number(data.value.renewable);
@@ -298,17 +365,17 @@ export class SetEmissionInventoryComponent {
         formData.append('economic_output', data.value.economic_output);
 
         formData.append('group_added', data.value.group_added);
-        formData.append('year_added', dateYear);
+   
         formData.append('scope1_emission', scope_1_emissions.toString());
         formData.append('scope2_emission', scope_2_emissions.toString());
         formData.append('scope3_emission', scope_3_emissions.toString());
 
-        formData.append('scope1_items', JSON.stringify(mergedArrayScope1));
-        formData.append('scope2_items', JSON.stringify(mergedArrayScope2));
-        formData.append('scope3_items', JSON.stringify(mergedArrayScope3));
-        formData.append('groupId', id);
+        formData.append('scope_items', JSON.stringify(totalScopeEmision));
+        formData.append('relation_id', id);
+      
+        // formData.append('groupId', id);
 
-        this.GroupService.newEditGroup(formData.toString()).subscribe({
+        this.GroupService.updateInventory(formData.toString()).subscribe({
             next: (response) => {
 
                 this.GetEmissionInventory();
@@ -392,32 +459,20 @@ export class SetEmissionInventoryComponent {
         this.visible = false;
         this.isloading = false;
         let tenantID = this.loginInfo.tenantID;
-        this.GetEmissionInventory();
+       
     }
     //display a dialog for editing a group
-    showEditGroupDialog(groupdetails) {
-        this.visible = true;
-        this.FormEdit = true;
 
-        this.filledgroup = groupdetails as GroupMapping;
+    //display a dialog for add a group.
+    showAddGroupDialog2() {
+        this.visible2 = true;
+        this.groupdetails = new Group();
+        this.FormEdit = false;
+        this.GetEmissionProjections();
+        // this.resetForm();
+    };
 
-        if (this.filledgroup.groupBy === 'Country') {
-            this.selectedCountry = [];
-            this.filledgroup.groupMappings.forEach((element) => {
-                this.selectedCountry.push(element.countryId);
-            });
-        } else if (this.filledgroup.groupBy === 'State') {
-            this.selectedState = [];
-            this.filledgroup.groupMappings.forEach((element) => {
-                this.selectedState.push(element.stateId);
-            });
-        } else if (this.filledgroup.groupBy === 'Facility') {
-            this.selectedFaciltiy = [];
-            this.filledgroup.groupMappings.forEach((element) => {
-                this.selectedFaciltiy.push(element.facilityId);
-            });
-        }
-    }
+
     //display a dialog for add a group.
     showAddGroupDialog() {
         this.visible = true;
@@ -498,39 +553,5 @@ export class SetEmissionInventoryComponent {
             }
         });
     };
-    //method for get facility by id
-    // facilityGet(tenantId) {
-    //     this.facilityService.FacilityDataGet(tenantId).subscribe((response) => {
-    //         this.facilityList = response;
-    //         console.log(
-    //             '🚀 ~ file: group.component.ts:370 ~ GroupComponent ~ this.facilityService.FacilityDataGet ~ this.facilityList:',
-    //             this.facilityList
-    //         );
-    //         const uniqueCountries = new Set(
-    //             this.facilityList.map((item) => item.countryName)
-    //         );
-    //         this.countryData = Array.from(uniqueCountries).map((country) => {
-    //             return {
-    //                 name: country,
-    //                 shortName: '', // Provide the appropriate value for shortName
-    //                 id: this.facilityList.find(
-    //                     (item) => item.countryName === country
-    //                 ).countryID
-    //             };
-    //         });
-
-    //         const uniqueStates = new Set(
-    //             this.facilityList.map((item) => item.stateName)
-    //         );
-    //         this.stateData = Array.from(uniqueStates).map((state) => {
-    //             return {
-    //                 name: state,
-    //                 shortName: '', // Provide the appropriate value for shortName
-    //                 id: this.facilityList.find(
-    //                     (item) => item.stateName === state
-    //                 ).stateID
-    //             };
-    //         });
-    //     });
-    // }
+   
 }
