@@ -263,7 +263,7 @@ export class TargetSettingComponent {
       {
         e_act: 'Scope 3'
       }
-    
+
     ];
     this.target_type = [
       {
@@ -365,7 +365,7 @@ export class TargetSettingComponent {
           this.scope2_data = response.scope2Xcordinate;
           this.scope3_data = response.scope3Xcordinate;
           this.x_axis_years = response.forecastYcordinate;
-          this.graphMethod(response.scope1Xcordinate, response.forecastScope1Xcordinate, response.dottedScope1Xcordinate,response.yCordinate, response.forecastYcordinate)
+          this.graphMethod(response.scope1Xcordinate, response.forecastScope1Xcordinate, response.dottedScope1Xcordinate, response.yCordinate, response.forecastYcordinate)
         }
       },
       error: (err) => {
@@ -421,47 +421,49 @@ export class TargetSettingComponent {
   };
 
 
-  ViewGraph(percentage,base_year,target_year,intensity, scope){
+  ViewGraph(percentage, base_year, target_year, intensity, scope) {
     console.log(intensity);
-    
+
     const formData = new URLSearchParams();
-    
+
     formData.append('percentage', percentage);
     formData.append('base_year', base_year);
     formData.append('target_year', target_year);
-    if(intensity == 'Emission Reduction'){
+    if (intensity == 'Emission Reduction') {
       formData.append('intensity', 'A');
-    }else{
+    } else {
       formData.append('intensity', 'P');
     }
-  
+
 
     this.GroupService.getGraphsTarget(formData.toString()).subscribe({
       next: (response) => {
         if (response.success == true) {
-const Data = response;
-if(scope == 'Scope 1'){
-  this.graphMethod(response.scope1Xcordinate,response.targetScope1Xcordinate, response.forecastScope1Xcordinate, response.yCordinate,response.forecastYcordinate)
-}else if(scope == 'Scope 1 & 2'){
-  let actualCordinate =  Data.scope1Xcordinate.map((item,index)=>{
-    return parseFloat(item) + parseFloat(Data.scope2Xcordinate[index])
-  })
-  let targetCordinate =  Data.targetScope1Xcordinate.map((item,index)=>{
-    return parseFloat(item) + parseFloat(Data.targetScope2Xcordinate[index])
-  })
-  let forecastCordinate =  Data.forecastScope1Xcordinate.map((item,index)=>{
-    return parseFloat(item) + parseFloat(Data.forecastScope2Xcordinate[index])
-  })
-  this.graphMethod(actualCordinate,targetCordinate, forecastCordinate, response.yCordinate,response.forecastYcordinate)
+          const Data = response;
+          if (scope == 'Scope 1') {
+            this.graphMethod(response.scope1Xcordinate, response.targetScope1Xcordinate, response.forecastScope1Xcordinate, response.targetYcordinate, response.forecastYcordinate)
+          } else if (scope == 'Scope 1 & 2') {
+            let actualCordinate = Data.scope1Xcordinate.map((item, index) => {
+              return parseFloat(item) + parseFloat(Data.scope2Xcordinate[index])
+            })
+            let targetCordinate = Data.targetScope1Xcordinate.map((item, index) => {
+              return parseFloat(item) + parseFloat(Data.targetScope2Xcordinate[index])
+            })
+            let forecastCordinate = Data.forecastScope1Xcordinate.map((item, index) => {
+              return parseFloat(item) + parseFloat(Data.forecastScope2Xcordinate[index])
+            })
+            this.graphMethod(actualCordinate, targetCordinate, forecastCordinate, response.targetYcordinate, response.forecastYcordinate)
 
-}else {
-  this.graphMethod(response.scope3Xcordinate,response.targetScope3Xcordinate, response.forecastScope3Xcordinate, response.yCordinate,response.forecastYcordinate)
-}
+          } else {
+            this.graphMethod(response.scope3Xcordinate, response.targetScope3Xcordinate, response.forecastScope3Xcordinate, response.targetYcordinate, response.forecastYcordinate)
+          }
 
-       
+
           this.visible = false;
-        
+
           this.GroupForm.reset();
+        }else{
+          this.notification.showInfo('Enter base year and current year emissions','')
         }
       },
       error: (err) => {
@@ -472,7 +474,7 @@ if(scope == 'Scope 1'){
     });
   }
 
-  graphMethod(normalData,targetData, forecastedData,normalYears, Dashedyears) {
+  graphMethod(normalData, targetData, forecastedData, normalYears, Dashedyears) {
     console.log(normalData);
     var index = 0;
     const normalsLine: number[] = normalData.map(str => parseFloat(str));
@@ -481,15 +483,15 @@ if(scope == 'Scope 1'){
     const mergedYears = [...normalYear, ...Dashedyears];
     let uniqueYears = [...new Set(mergedYears)];
 
-   
+
     // for (let i = 0; i < cars.length; i++) {
     //   text += cars[i] + "<br>";
     // }
-    for ( index = 0; index < normalsLine.length -1; index++) {
-     dashedLine.unshift(null);
+    for (index = 0; index < normalsLine.length - 1; index++) {
+      dashedLine.unshift(null);
     };
     // console.log(dashedLine);
-   
+
 
     const parallelLine: number[] = targetData.map(str => parseFloat(str));
 
@@ -522,7 +524,7 @@ if(scope == 'Scope 1'){
       stroke: {
         width: 5,
         curve: "straight",
-        dashArray: [0,0,5]
+        dashArray: [0, 0, 5]
       },
       title: {
         text: "Page Statistics",
@@ -548,7 +550,7 @@ if(scope == 'Scope 1'){
         labels: {
           trim: false
         },
-        categories: uniqueYears
+        categories: normalYear
       },
       tooltip: {
         y: [
