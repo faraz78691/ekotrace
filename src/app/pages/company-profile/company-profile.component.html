@@ -21,15 +21,15 @@
                 <div class="ct_company_profile_input">
                     <label for="industryType" class="mt-3 mb-2">Industry Type</label>
                     <div class="">
-                        <p-multiSelect class="ct_select_2_full_width12 ct_input_dark_text_145 " defaultLabel="Select Industry Type" [options]="industryTypes"
-                            [(ngModel)]="selectedIndustryTypes" optionLabel="name" name="industryType"></p-multiSelect>
+                        <p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230 " defaultLabel="Select Industry Type" [options]="companyProfile"
+                            [(ngModel)]="selectedIndustryTypes" optionLabel="category" name="industryType" (onChange)="onIndustryTypeChange($event)"   optionValue="category"></p-dropdown>
                     </div>
                 </div>
 
                 <div class="ct_company_profile_input">
                     <label for="secondaryIndustryType" class="mt-3 mb-2 w-100">Secondary Industry Type</label>
                     <p-multiSelect class="ct_select_2_full_width12 ct_input_dark_text_145 " [options]="industryTypes" [(ngModel)]="selectedSecondaryIndustryTypes"
-                        defaultLabel="Select Secondary Industry Type" optionLabel="name" display="chip"
+                        defaultLabel="Select Secondary Industry Type" optionLabel="sub_category" display="chip"
                         name="secondaryIndustryType"></p-multiSelect>
                 </div>
 

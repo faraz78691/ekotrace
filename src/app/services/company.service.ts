@@ -28,6 +28,16 @@ export class CompanyService {
             environment.baseUrl +  '/getComapnyDetail', id
         );
     };
+    public newgetComapnyProfile(): Observable<any> {
+        return this.http.get(
+            environment.baseUrl +  '/getComapnyCategory'
+        );
+    };
+    public newgetSubComapny(data): Observable<any> {
+        return this.http.post(
+            environment.baseUrl +  '/getComapnySubCategory' , data
+        );
+    };
 
     sendmailForPlanRenewal() {
         let url = this.rootUrl + 'sendplanrenewalmail';
