@@ -46,6 +46,11 @@ export class GroupService {
             environment.baseUrl + '/targetsetting/getTargetSettingDetails'
         );
     };
+    public getVendors(): Observable<any> {
+        return this.http.get(
+            environment.baseUrl + '/getVendorlist'
+        );
+    };
     public getTargetGraphsPoints(data): Observable<any> {
         return this.http.post(
             environment.baseUrl + '/targetsetting/getEmissionPoints', data
@@ -85,6 +90,9 @@ export class GroupService {
     }
     public addTargetSetting(groupdetails): Observable<any> {
         return this.http.post( environment.baseUrl + '/targetsetting/addTargetSetting', groupdetails);
+    }
+    public addVendors(groupdetails): Observable<any> {
+        return this.http.post( environment.baseUrl + '/AddVendor', groupdetails);
     }
     public getGraphsTarget(groupdetails): Observable<any> {
         return this.http.post( environment.baseUrl + '/targetsetting/getEmissionPoints', groupdetails);

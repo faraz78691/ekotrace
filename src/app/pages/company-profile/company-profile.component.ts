@@ -34,6 +34,7 @@ export class CompanyProfileComponent {
     updatedtheme: string;
     multiselectcolor: any;
     selectedFile: File;
+    selectedCountry = 'India'
     uploadedImageUrl: string | ArrayBuffer | null = null;
     companyName: string;
     constructor(
@@ -68,14 +69,12 @@ export class CompanyProfileComponent {
         const formdata = new URLSearchParams();
         formdata.set('tenant_id', this.loginInfo.tenantID.toString())
         this.companyService.newgetTenantsDataById(formdata.toString()).subscribe((response) => {
+            console.log(response);
             this.companyDetails = response.categories[0];
+            this.selectedCountry = this.companyDetails.location
             this.uploadedImageUrl = this.companyDetails.logoPath;
 
-            // this.uploadedImageUrl =
-            //     this.rootUrl +
-            //     (response.logoName === '' || response.logoName === null
-            //         ? 'defaultimg.png'
-            //         : response.logoName);
+        
 
             localStorage.setItem('companyName', response.companyName);
             this.selectedSecondaryIndustryTypes = JSON.parse(
@@ -93,7 +92,8 @@ export class CompanyProfileComponent {
     }
     //method to update company profile
     saveChanges() {
-        console.log(this.selectedIndustryTypes);
+        console.log(this.selectedSecondaryIndustryTypes);
+        
         const stringifySelectedIndustryTypes = JSON.stringify(this.selectedIndustryTypes);
         const stringifySelectedSecondaryIndustryTypes = JSON.stringify(this.selectedSecondaryIndustryTypes);
 
@@ -105,7 +105,7 @@ export class CompanyProfileComponent {
         formData.append('industryTypeID', stringifySelectedIndustryTypes);
         formData.append('secondIndustryTypeID', stringifySelectedSecondaryIndustryTypes);
         formData.append('tenant_id', this.loginInfo.tenantID.toString());
-        formData.append('location', this.companyDetails.location);
+        formData.append('location', this.selectedCountry);
         formData.append('companyBio', this.companyDetails.companyBio);
         // this.companyDetails.industryTypeID = JSON.stringify(
         //     this.selectedIndustryTypes
@@ -208,6 +208,7 @@ export class CompanyProfileComponent {
 
     onIndustryTypeChange(category) {
         const industryMethod = category.value;
+        this.selectedSecondaryIndustryTypes = []
         this.getCompanySubCategory(industryMethod);
     }
 
@@ -217,7 +218,7 @@ export class CompanyProfileComponent {
         this.companyService.newgetComapnyProfile().subscribe((response) => {
             console.log(response);
             this.companyProfile = response.categories;
-            this.getCompanySubCategory(this.companyProfile[0].category)
+            this.getCompanySubCategory(this.selectedIndustryTypes)
         });
     }
     getCompanySubCategory(type) {
@@ -225,7 +226,7 @@ export class CompanyProfileComponent {
         formDara.set('category', type)
         this.companyService.newgetSubComapny(formDara.toString()).subscribe((response) => {
             this.industryTypes = response.categories;
-            console.log(this.industryTypes);
+           
 
         });
     }
