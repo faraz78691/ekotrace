@@ -61,7 +61,7 @@ export class CompanyProfileComponent {
             this.loginInfo = jsonObj as LoginInfo;
         }
         this.getTenantsDetailById(Number(this.loginInfo.tenantID));
-        this.getCompanyCategory();
+       
     };
     //method to get tenants details by id
     getTenantsDetailById(id: number) {
@@ -83,6 +83,7 @@ export class CompanyProfileComponent {
             this.selectedIndustryTypes = JSON.parse(
                 this.companyDetails.industryTypeID
             ) as IndustryType[];
+            this.getCompanyCategory();
         });
     }
     //triggered whenever a change detection cycle runs 

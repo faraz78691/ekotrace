@@ -892,17 +892,20 @@
                                                                     class="form-control Dashboard-tab text-white"
                                                                     name="mass_of_products" required ngModel
                                                                     #mass_of_products="ngModel" />
-                                                                <div class="ct_quantity_text">
+                                                                    <p-dropdown
+                                                                    class="ct_select_op_input ct_position_small_quantity"
+                                                                    ngModel [options]="upstreamMassUnitsGrid"
+                                                                    optionLabel="units" optionValue="units"
+                                                                    name="upfacilityUnits" #upfacilityUnits="ngModel">
+                                                                </p-dropdown>
+                                                                <!-- <div class="ct_quantity_text">
                                                                     <p>tonnes</p>
-                                                                </div>
+                                                                </div> -->
                                                                 <!-- <p class="validation"
                                                                 *ngIf="mass_of_products.invalid && dataEntryForm.submitted">
                                                                 Mass of products value required
                                                             </p> -->
-
                                                             </div>
-
-
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
@@ -992,9 +995,16 @@
                                                                     class="form-control Dashboard-tab text-white"
                                                                     placeholder="Enter Area Occupied"
                                                                     name="area_occupied" ngModel />
-                                                                <div class="ct_quantity_text">
+                                                                    
+                                                                    <p-dropdown
+                                                                    class="ct_select_op_input ct_position_small_quantity"
+                                                                    ngModel [options]="facilityUnits"
+                                                                    optionLabel="energyTypes" optionValue="energyTypes"
+                                                                    name="upfacilityUnits" #upfacilityUnits="ngModel">
+                                                                </p-dropdown>
+                                                                <!-- <div class="ct_quantity_text">
                                                                     <p>sr mtr</p>
-                                                                </div>
+                                                                </div> -->
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1784,9 +1794,14 @@
                                                                     class="form-control Dashboard-tab text-white"
                                                                     placeholder="Enter Distance" name="distanceInKms"
                                                                     required ngModel #distanceInKms="ngModel" />
-                                                                <div class="ct_quantity_text">
-                                                                    <p>Km</p>
-                                                                </div>
+                                                                    <!-- distanceTravelled -->
+                                                                    <p-dropdown
+                                                                    class="ct_select_op_input ct_position_small_quantity"
+                                                                    ngModel [options]="distanceTravelled"
+                                                                    optionLabel="unit" optionValue="unit"
+                                                                    name="unit" #units="ngModel">
+                                                                </p-dropdown>
+                                                                
                                                                 <!-- <p class="validation"
                                                                 *ngIf="distanceInKms.invalid && dataEntryForm.submitted">
                                                                 Distance Travelled by
@@ -1898,6 +1913,7 @@
                                                                     class="form-control Dashboard-tab text-white"
                                                                     placeholder="Enter Distance" name="distanceInKms"
                                                                     required ngModel #distanceInKms="ngModel" />
+                                                                    
                                                                 <div class="ct_quantity_text">
                                                                     <p>Km</p>
                                                                 </div>

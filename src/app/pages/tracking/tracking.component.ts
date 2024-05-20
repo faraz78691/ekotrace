@@ -211,6 +211,7 @@ export class TrackingComponent {
     projectPhaseTypes: any[] = [];
     batchId: any;
     flightTime: any[] = [];
+    upstreamMassUnitsGrid: any[] = [];
     uploadButton = false;
     airportGrid: any[] = [];
     public isVisited = false;
@@ -658,6 +659,17 @@ export class TrackingComponent {
                     "units": "litres"
                 }
             ]
+        this.upstreamMassUnitsGrid =
+            [
+                {
+                    "id": 1,
+                    "units": "kg"
+                },
+                {
+                    "id": 2,
+                    "units": "tonnes"
+                }
+            ]
         this.waterSupplyUnitGrid =
             [{
                 "id": 1,
@@ -717,15 +729,15 @@ export class TrackingComponent {
                 },
                 {
                     "id": 2,
-                    "unitsExpElec": "Per Days"
+                    "unitsExpElec": "Per Day"
                 },
                 {
                     "id": 3,
-                    "unitsExpElec": " Per Months"
+                    "unitsExpElec": " Per Month"
                 },
                 {
                     "id": 4,
-                    "unitsExpElec": " Per Years"
+                    "unitsExpElec": " Per Year"
                 }
             ]
         this.active = this.items[0];
