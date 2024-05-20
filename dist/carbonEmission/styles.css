@@ -10244,12 +10244,12 @@ h1.bft-edit-form-title {
 }
 
 .ct_scroll_60012 .p-tabview-panels {
-  height: 610px;
+  height: 543px;
   width: 100%;
   position: relative;
   overflow: hidden;
   overflow-y: auto;
-  max-height: 610px;
+  max-height: 543px;
 }
 
 .ct_scroll_60012 .p-tabview-panels .p-tabview-panel {

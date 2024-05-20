@@ -227,7 +227,8 @@ export class TrackingComponent {
     selectedtemplate = '';
     mode_type: any[] = [];
     marketTypes: any[] = [];
-    marketEElecID: any;;
+    marketEElecID: any;
+    templateLinks:string;
 
 
     carFuel_type: any[] = [];
@@ -306,11 +307,13 @@ export class TrackingComponent {
         this.VehicleType = [];
         this.dataEntry.unit = "";
         this.SubCategoryType = [];
+    
 
 
         this.isInputEdited;
         this.dataEntry.typeID;
 
+       
 
         this.items = [
             {
@@ -860,7 +863,7 @@ export class TrackingComponent {
 
     // getting status, units, subCategory types where ever required
     SubCatData(data: any, catID: any, categoryName) {
-        console.log("called");
+        console.log("called",catID);
         this.categoryName = categoryName;
         this.recycle = false;
         this.isVisited = false;
@@ -883,7 +886,7 @@ export class TrackingComponent {
         }
 
         if (catID == 2) {
-
+            this.templateLinks = 'assets/Refrigerant_Template.xlsx'
             this.getsubCategoryType(this.SubCatAllData
                 .manageDataPointSubCategorySeedID);
             this.getUnit(this.SubCatAllData
@@ -891,7 +894,7 @@ export class TrackingComponent {
         }
 
         if (catID == 3) {
-
+            this.templateLinks = 'assets/FireExtinguisher_Template.xlsx'
             // this.getsubCategoryType(this.SubCatAllData
             //     .manageDataPointSubCategorySeedID);
             this.getUnit(this.SubCatAllData

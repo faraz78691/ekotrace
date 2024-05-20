@@ -106,13 +106,24 @@
                   
                 </span>
                 <span class=" mb-3 d-block">
-                    <label for="float-input" >Category</label>
-                    <input id="float-input" pInputText type="text"  class="form-control" pInputText name="nodeTitle" ngModel> 
-                   
+                    <label for="float-input" >Node Name</label>
+                    <input id="float-input" pInputText type="text" placeholder="Enter name"  class="form-control" pInputText name="nodeSubtitle" ngModel> 
+                    
                 </span>
                 <span class=" mb-3 d-block">
-                    <label for="float-input" >Name</label>
-                    <input id="float-input" pInputText type="text"  class="form-control" pInputText name="nodeSubtitle" ngModel> 
+                    <label for="float-input" >Category</label>
+                    <p-dropdown 
+                    class="ct_select_op_input ct_chev_icon_dark230" [options]="nodeType"  placeholder="Select type" ngModel   (onChange)="onTypeChange($event)"
+                    optionLabel="nodetype" optionValue="nodetype" name="nodetype" #Type="ngModel" 
+                   
+                    ></p-dropdown>
+                    <!-- <p-dropdown></p-dropdown> -->
+                    <!-- <input id="float-input" pInputText type="text"  class="form-control" pInputText name="nodeTitle" ngModel>  -->
+                   
+                </span>
+                <span class=" mb-3 d-block" *ngIf="facilityTab">
+                    <label for="float-input" >Facility Name</label>
+                    <input id="float-input" pInputText type="text" placeholder="Enter facility name"  class="form-control" pInputText name="facility_name" ngModel> 
                     
                 </span>
                 <div class="modal-footer border-0 justify-content-center">

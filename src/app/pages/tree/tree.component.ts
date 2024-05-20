@@ -31,7 +31,8 @@ export class TreeComponent {
     selectedNode: number;
     loadFamilyData: any[] = [];
     selectedTemplateId = 1;
-
+    facilityTab= false;
+nodeType:any[]=[];
     constructor(
         private renderer: Renderer2,
         private route: ActivatedRoute,
@@ -42,7 +43,22 @@ export class TreeComponent {
         private familyService: FamilyService
     ) {
         this.treeList$ = familyService.getTreeList();
-        
+        this.nodeType =
+            [
+                {
+                    "id": '1',
+                    "nodetype": "Main Group"
+                },
+                {
+                    "id": '2',
+                    "nodetype": "Sub Group"
+                },
+                {
+                    "id": '3',
+                    "nodetype": "Facility"
+                }
+            ]
+
     }
     ngOnInit() {
         FamilyTree.templates.hugo.link_field_0 = '<text width="230" style="font-size: 18px;" fill="#ffffff" x="145" y="150" text-anchor="middle" class="field_0">{val}</text>';
@@ -53,6 +69,17 @@ export class TreeComponent {
     onTemplateChange(event: any) {
         this.getTreeViewByID(event.value);
 
+    };
+
+
+    onTypeChange(data){
+        if (data.value == 'Facility') {
+            this.facilityTab = true
+        
+        } else {
+        
+            this.facilityTab = false;
+        }
     }
 
     onCancel() {
