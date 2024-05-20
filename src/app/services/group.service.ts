@@ -31,6 +31,11 @@ export class GroupService {
             environment.baseUrl + '/targetsetting/getTargetEmissionInventory'
         );
     };
+    public getEmissionProjections(): Observable<any> {
+        return this.http.get(
+            environment.baseUrl + '/targetsetting/getRevenueFactors'
+        );
+    };
     public get(tenantID:any): Observable<any> {
         return this.http.post(
             environment.baseUrl + '/getuser_offseting',tenantID
@@ -39,6 +44,11 @@ export class GroupService {
     public getTargetSetting(): Observable<any> {
         return this.http.get(
             environment.baseUrl + '/targetsetting/getTargetSettingDetails'
+        );
+    };
+    public getVendors(): Observable<any> {
+        return this.http.get(
+            environment.baseUrl + '/getVendorlist'
         );
     };
     public getTargetGraphsPoints(data): Observable<any> {
@@ -52,6 +62,9 @@ export class GroupService {
     }
     public newEditGroup( groupdetails) {
         return this.http.post(environment.baseUrl + '/Updategroupmapping' , groupdetails);
+    };
+    public updateInventory( groupdetails) {
+        return this.http.post(environment.baseUrl + '/targetsetting/updateEmissionInventoryID', groupdetails);
     };
     public newUpdatePackage( packageDetails) {
         return this.http.post(environment.baseUrl + '/Updategroupmapping' , packageDetails);
@@ -69,11 +82,17 @@ export class GroupService {
     public AddEmissionInventory(groupdetails): Observable<any> {
         return this.http.post( environment.baseUrl + '/targetsetting/addEmissionInventory', groupdetails);
     }
+    public AddProjections(groupdetails): Observable<any> {
+        return this.http.post( environment.baseUrl + '/targetsetting/insertRevenueFactors', groupdetails);
+    }
     public GetInventoryByID(groupdetails): Observable<any> {
         return this.http.post( environment.baseUrl + '/targetsetting/getTargetEmissionInventoryRelation', groupdetails);
     }
     public addTargetSetting(groupdetails): Observable<any> {
         return this.http.post( environment.baseUrl + '/targetsetting/addTargetSetting', groupdetails);
+    }
+    public addVendors(groupdetails): Observable<any> {
+        return this.http.post( environment.baseUrl + '/AddVendor', groupdetails);
     }
     public getGraphsTarget(groupdetails): Observable<any> {
         return this.http.post( environment.baseUrl + '/targetsetting/getEmissionPoints', groupdetails);

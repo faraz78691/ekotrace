@@ -9962,7 +9962,13 @@ input.ct_change_choose_file_input12::file-selector-button {
 }
 
 .node rect {
-  fill: rgba(134, 175, 72, 0.7);
+  fill: #eee;
+  stroke: rgb(134, 175, 72);
+  stroke-width: 1px !important;
+}
+
+g#base_node_menu {
+  filter: brightness(0);
 }
 
 g.link path {
@@ -9976,7 +9982,11 @@ g.link path {
 }
 
 #tree .bft-edit-form-header, #tree .bft-img-button, #tree .bft-button {
-  background-color: #86af48;
+  background-color: #a2be71 !important;
+}
+
+.bft-edit-form-header {
+  background: unset !important;
 }
 
 #tree .bft-button {
@@ -10008,13 +10018,12 @@ h1.bft-edit-form-title {
 
 #tree text {
   /* position: relative; */
-  transform: translateY(-43px);
   font-size: 22px !important;
+  transform: translateY(4px);
 }
 
 #tree text + text {
   /* position: relative; */
-  transform: translateY(-35px);
   font-size: 18px !important;
 }
 
@@ -10110,7 +10119,7 @@ h1.bft-edit-form-title {
 }
 
 .p-dropdown-items-wrapper {
-  max-height: 345px !important;
+  max-height: 314px !important;
 }
 
 .ct_chev_icon_dark230 .p-dropdown-trigger {
@@ -10235,12 +10244,12 @@ h1.bft-edit-form-title {
 }
 
 .ct_scroll_60012 .p-tabview-panels {
-  height: 539px;
+  height: 543px;
   width: 100%;
   position: relative;
   overflow: hidden;
   overflow-y: auto;
-  max-height: 539px;
+  max-height: 543px;
 }
 
 .ct_scroll_60012 .p-tabview-panels .p-tabview-panel {
