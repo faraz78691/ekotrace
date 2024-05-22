@@ -207,7 +207,8 @@ export class TreeComponent {
                         enableSearch: false,
                         nodeBinding: {
                             field_0: "relation",
-                            field_1: "name"
+                            field_1: "name",
+                            field_2: "facility_name",
                         },
                         nodeMenu: {
                             details: { text: "Details" },
@@ -231,7 +232,8 @@ export class TreeComponent {
                             generateElementsFromFields: false,
                             elements: [
                                 { type: 'textbox', label: 'Name', binding: 'name' },
-                                { type: 'textbox', label: 'Category', binding: 'relation' }
+                                { type: 'textbox', label: 'Category', binding: 'relation' },
+                                { type: 'textbox', label: 'Facility name', binding: 'facility_name' }
                             ],
                             buttons: {
                                 edit: {
@@ -273,12 +275,15 @@ export class TreeComponent {
                         var updateNode = args.updateNodesData[0];
                         console.log(updateNode);
 
+                        const formData = new URLSearchParams();
+                        formData.append('update_data', JSON.stringify(updateNode));
+
                         fetch('http://13.200.247.29:4000/UpdateChildInTree', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/x-www-form-urlencoded'
                             },
-                            body: JSON.stringify(updateNode)
+                            body: formData
                         })
                             .then(response => response.json())
                             .then(data => console.log(data))

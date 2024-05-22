@@ -234,7 +234,9 @@ registerLocaleData(localeEn, 'en-EN');
         OverlayPanelModule,
         NgxExtendedPdfViewerModule,
         NgxDocViewerModule,
-        ScrollerModule
+        ScrollerModule,
+        FormsModule,
+        ReactiveFormsModule
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     providers: [

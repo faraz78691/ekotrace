@@ -8,7 +8,7 @@
                 <h3 class="m-0 pl-4 ">Facilities</h3>
             </div>
         </div> -->
-    
+
         <div class="row d-flex justify-content-between gap-1 mx-3 pt-3 pb-5">
             <div class="col-lg-5 myCol" [ngClass]="
                     this.updatedtheme === 'dark' ? 'Location-tabD' : 'Location-tabL'
@@ -17,7 +17,7 @@
                     <div class="loc-head" [ngClass]="
                             this.updatedtheme === 'dark' ? 'loc-headD' : 'loc-headL'
                         ">
-                        <p class="ct_fw_600">Facility</p>
+                        <p class="ct_fw_600">Set GHG Template</p>
                     </div>
                     <div class="d-flex justify-content-between text-style text-light scope-Div gap-2 mx-0">
                         <div class="searchWidth form-group has-search">
@@ -35,7 +35,7 @@
                         </div> -->
                     </div>
                 </div>
-    
+
                 <div class="dataTable scrollit" [ngStyle]="{display: FacilityData}">
                     <table class="table_loc ct_billing_table_bg_120">
                         <thead>
@@ -46,7 +46,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                        
+
                             <tr clickable (click)="tableData(d.ID)" *ngFor="let d of LocData"
                                 class="col-12 tableRow border-bottom rounded pointer"
                                 [ngClass]="{tableRowclicked: id_var === d.ID}">
@@ -79,7 +79,7 @@
                         using the add facility button.</label>
                 </div>
             </div>
-    
+
             <div class="col-lg-6 rounded" [ngClass]="
                     this.updatedtheme === 'dark' ? 'Location-tabD' : 'Location-tabL'
                 ">
@@ -90,126 +90,14 @@
                         <p class="ct_fw_600">Manage Data points:</p>
                     </div>
                 </div>
-    
+
                 <div class="col d-flex justify-content-end mt-3"></div>
                 <div class="row font-LocProfile mt-0" [ngStyle]="{display: FacilityFullData}">
                     <table class="table ct_billing_border_0_none">
+                    
                         <tr>
                             <td>
-                                <p class="mb-0" *ngIf="facilityDetails.AssestName != undefined">Asset Name :</p>
-                            </td>
-                            <td>
-                                <p class="mb-0">{{ facilityDetails.AssestName }}</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <p class="mb-0" *ngIf="facilityDetails.AssestType != undefined">Asset Type :</p>
-                            </td>
-                            <td>
-                                <p class="mb-0">{{ facilityDetails.AssestType }}</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <p class="mb-0" *ngIf="facilityDetails.IsWaterStreenArea != undefined">Water Stress Area :</p>
-                            </td>
-                            <td>
-                                <p class="mb-0">{{ facilityDetails.IsWaterStreenArea }}</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <p class="mb-0" *ngIf="facilityDetails.EquityPercentage != undefined">Equity Percentage :</p>
-                            </td>
-                            <td>
-                                <p class="mb-0" *ngIf="facilityDetails.EquityPercentage != undefined">{{ facilityDetails.EquityPercentage }}%</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <p class="mb-0" *ngIf="facilityDetails.Address != undefined">Address :</p>
-                            </td>
-                            <td>
-                                <p class="mb-0">{{ facilityDetails.Address }}</p> 
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <p class="mb-0" *ngIf="facilityDetails.city_name != undefined">City :</p>
-                            </td>
-                            <td>
-                                <p class="mb-0">{{ facilityDetails.city_name }}</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <p class="mb-0" *ngIf="facilityDetails.state_name != undefined">State :</p>
-                            </td>
-                            <td>
-                                <p class="mb-0">{{ facilityDetails.state_name }}</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <p class="mb-0" *ngIf="facilityDetails.country_name != undefined">Country :</p>
-                            </td>
-                            <td>
-                                <p class="mb-0">{{ facilityDetails.country_name }}</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <p class="mb-0">Assigned User :</p>
-                            </td>
-                            <td>
-                                <div class="row gap-4">
-                                    <div class="dropdown ct_facility_2_main">
-                                        <button [ngClass]="
-                                                this.updatedtheme === 'dark'
-                                                    ? 'dropbtnD'
-                                                    : 'dropbtnL'
-                                            " class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <div>
-                                                Manager
-            
-                                                <!-- <span class="badge badgespan">{{
-                                                    dropCountManager.length
-                                                }}</span> -->
-                                                <span class="badge badgespan" *ngIf="managerList1">{{ managerList1.length
-                                                    }}</span>
-            
-                                            </div>
-                                        </button>
-                                        <div class="dropdown-menu dropdown-content" aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item dropItemManager" *ngFor="let d of managerList1">{{ d.username }}</a>
-                                        </div>
-                                    </div>
-                                    <div class="dropdown ct_facility_2_main">
-                                        <button [ngClass]="
-                                                this.updatedtheme === 'dark'
-                                                    ? 'dropbtnD'
-                                                    : 'dropbtnL'
-                                            " class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <div>
-                                                Staff
-                                                <span class="badge badgespan">{{
-                                                    staffList1.length
-                                                    }}</span>
-                                            </div>
-                                        </button>
-                                        <div class="dropdown-content dropdown-menu">
-                                            <a class="dropdown-item dropItemStaff" *ngFor="let s of staffList1">{{ s.username }}</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <p>Data Points</p>
+                                <p>Data Points :</p>
                             </td>
                             <td>
                                 <div class="row dataPointDiv">
@@ -298,8 +186,8 @@
                             </div>
                         </div>
                     </div> -->
-    
-                    <div class="d-flex text-light text-style scope-Div">
+
+                    <!-- <div class="d-flex text-light text-style scope-Div">
                         <div>
                             <i class="LocButtonEdit pi pi-user-edit pointer d-flex text-white"
                                 (click)="showEditFacilityDialog()">
@@ -313,9 +201,9 @@
                                 <p class="pl-2">Delete</p>
                             </i>
                         </div>
-                    </div>
-    
-    
+                    </div> -->
+
+
                 </div>
                 <div class="text-light noData" [ngStyle]="{display: NoData}">
                     <div class="icon mt-3">
@@ -324,12 +212,13 @@
                     <label class="text-center label">No facilities available. Start by adding a new facility
                         using the add facility button.</label>
                 </div>
-    
-    
-    
+
+
+
                 <div class="justify-content-center">
-                    <p-dialog [(visible)]="visible" [breakpoints]="{'960px': '75vw'}" styleClass="facilityDialog ct_h_none_143"
-                        [style]="{width: '50vw'}" [draggable]="false" [resizable]="false">
+                    <p-dialog [(visible)]="visible" [breakpoints]="{'960px': '75vw'}"
+                        styleClass="facilityDialog ct_h_none_143" [style]="{width: '50vw'}" [draggable]="false"
+                        [resizable]="false">
                         <p-header *ngIf="isEdit === false">
                             Add new Facility
                         </p-header>
@@ -343,7 +232,7 @@
                                               addCompForm.value
                                           )
                                 ">
-                                <div  class="d-flex row">
+                                <div class="d-flex row">
                                     <div class="facilitygrid col-lg-6 mb-4">
                                         <div class="mb-4">
                                             <label for="Aname" class="text-dark">Asset name</label>
@@ -355,14 +244,15 @@
                                                 class="text-danger mb-0">
                                                 Asset Name is required
                                             </p>
-    
+
                                         </div>
-                                        
-                                        <div class="ct_input_white_bg13 mb-4 ct_input_dark_text_121 ct_city_name_select_2_search">
+
+                                        <div
+                                            class="ct_input_white_bg13 mb-4 ct_input_dark_text_121 ct_city_name_select_2_search">
                                             <label for="country" class=" text-dark">Country Name</label>
                                             <p-dropdown required ngModel name="country" #country="ngModel"
-                                                [options]="countryData" optionLabel="Name" [filter]="true" filterBy="Name"
-                                                [showClear]="true" optionValue="Name" [(ngModel)]="
+                                                [options]="countryData" optionLabel="Name" [filter]="true"
+                                                filterBy="Name" [showClear]="true" optionValue="Name" [(ngModel)]="
                                                     facilityDetails.country_name
                                                 " [scrollable]="true" placeholder="Select a Country"
                                                 (onChange)="searchState()">
@@ -371,48 +261,52 @@
                                                 class="text-danger mb-0">
                                                 Country Name is required
                                             </p>
-    
+
                                         </div>
-                                        <div class="ct_input_white_bg13 mb-4 ct_input_dark_text_121 ct_city_name_select_2_search">
+                                        <div
+                                            class="ct_input_white_bg13 mb-4 ct_input_dark_text_121 ct_city_name_select_2_search">
                                             <label for="state" class=" text-dark">State Name</label>
-                                            <p-dropdown required ngModel name="state" #state="ngModel" [options]="stateData"
-                                                optionLabel="Name" optionValue="Name" [filter]="true" filterBy="Name"
-                                                [showClear]="true" [(ngModel)]="facilityDetails.state_name"
-                                                placeholder="Select a State" (onChange)="searchCity()">
+                                            <p-dropdown required ngModel name="state" #state="ngModel"
+                                                [options]="stateData" optionLabel="Name" optionValue="Name"
+                                                [filter]="true" filterBy="Name" [showClear]="true"
+                                                [(ngModel)]="facilityDetails.state_name" placeholder="Select a State"
+                                                (onChange)="searchCity()">
                                             </p-dropdown>
                                             <p *ngIf="addCompForm.submitted && state.errors?.['required']"
                                                 class="text-danger mb-0">
                                                 State Name is required
                                             </p>
                                         </div>
-                                        <div class="ct_input_white_bg13 mb-4 ct_input_dark_text_121 ct_city_name_select_2_search">
+                                        <div
+                                            class="ct_input_white_bg13 mb-4 ct_input_dark_text_121 ct_city_name_select_2_search">
                                             <label for="city" class=" text-dark">City Name</label>
-                                            <p-dropdown required ngModel name="city" #city="ngModel" [options]="cityData"
-                                                optionLabel="Name" optionValue="Name" [filter]="true" filterBy="Name"
-                                                [showClear]="true" [(ngModel)]="facilityDetails.city_name"
+                                            <p-dropdown required ngModel name="city" #city="ngModel"
+                                                [options]="cityData" optionLabel="Name" optionValue="Name"
+                                                [filter]="true" filterBy="Name" [showClear]="true"
+                                                [(ngModel)]="facilityDetails.city_name"
                                                 placeholder="Select a City"></p-dropdown>
                                             <p *ngIf="addCompForm.submitted && city.errors?.['required']"
                                                 class="text-danger mb-0">
                                                 City Name is required
                                             </p>
                                         </div>
-    
+
                                     </div>
-    
+
                                     <div class="facilitygrid col-lg-6 ">
                                         <div class="mb-4">
                                             <label for="atype" class=" text-dark">Asset type / Department</label>
                                             <input required ngModel name="assetType" type="text"
                                                 class="form-control Dashboard-tab text-white"
-                                                placeholder="Enter Asset Type.." [(ngModel)]="facilityDetails.AssestType"
-                                                #assetType="ngModel" />
+                                                placeholder="Enter Asset Type.."
+                                                [(ngModel)]="facilityDetails.AssestType" #assetType="ngModel" />
                                             <p *ngIf="addCompForm.submitted && assetType.errors?.['required']"
                                                 class="text-danger mb-0">
                                                 Asset Type is required
                                             </p>
-    
+
                                         </div>
-                                       
+
                                         <div class="mb-4">
                                             <label for="equity" class=" text-dark">Equity percentage</label>
                                             <input ngModel name="equity" type="number"
@@ -420,7 +314,7 @@
                                                 placeholder="Enter equity percentage.." [(ngModel)]="
                                                     facilityDetails.EquityPercentage
                                                 " #equity="ngModel" />
-    
+
                                         </div>
                                         <div class="mb-4">
                                             <label for="address" class=" text-dark">Address</label>
@@ -428,7 +322,7 @@
                                                 class="form-control Dashboard-tab text-white"
                                                 placeholder="Enter full address.." [(ngModel)]="facilityDetails.Address"
                                                 #address="ngModel" />
-    
+
                                             <p *ngIf="addCompForm.submitted && address.errors?.['required']"
                                                 class="text-danger mb-0">
                                                 Address is required
@@ -446,12 +340,13 @@
                                                 </label>
                                             </div>
                                         </div>
-    
+
                                     </div>
                                 </div>
                                 <div style="height: 200px;"></div>
                                 <div class="modal-footer">
-                                    <Button *ngIf="isEdit == false" type="submit" class="LocButton ct_animation_btn_121">
+                                    <Button *ngIf="isEdit == false" type="submit"
+                                        class="LocButton ct_animation_btn_121">
                                         Save
                                     </Button>
                                     <Button *ngIf="isEdit == true" type="submit" class="LocButton ct_animation_btn_121">
@@ -471,9 +366,9 @@
                 </div>
                 <!-- close model dialog -->
                 <!-- open delete dialog -->
-    
+
                 <!-- ghghjujhuj -->
-    
+
                 <p-confirmDialog #cd [style]="{width: '60vw'}">
                     <ng-template pTemplate="footer">
                         <button pButton icon="pi pi-check" label="Yes" (click)="cd.accept()"
@@ -542,7 +437,7 @@
                                         </p-tabPanel>
                                         
                                     </p-tabView> -->
-    
+
                                     <div class="row" *ngIf="scope1Category">
                                         <div class="col-md-12 mb-4">
                                             <div class="">
@@ -550,7 +445,11 @@
                                                 <!-- <p-multiSelect class="ct_drop_scroll" [options]="scope1Category" name="Item" defaultLabel="Select a template"
                                              
                                                 optionLabel="Item" optionValue="Id"></p-multiSelect> -->
-                                                <p-multiSelect class="ct_calender_input_1234 ct_drop_scroll" (onChange)="onMultiSelectChange($event)" [options]="scope1Category" [(ngModel)]="selectedScope1" [ngModelOptions]="{standalone: true}"  [group]="true"   defaultLabel="Select category" scrollHeight="250px" display="chip">
+                                                <p-multiSelect class="ct_calender_input_1234 ct_drop_scroll"
+                                                    (onChange)="onMultiSelectChange($event)" [options]="scope1Category"
+                                                    [(ngModel)]="selectedScope1" [ngModelOptions]="{standalone: true}"
+                                                    [group]="true" defaultLabel="Select category" scrollHeight="250px"
+                                                    display="chip">
                                                     <ng-template let-group pTemplate="group">
                                                         <div class="flex align-items-center">
                                                             <!-- <img src="assets/showcase/images/demo/flag/flag_placeholder.png" [class]="'mr-2 flag flag-' + group.value" style="width: 20px"/> -->
@@ -558,13 +457,16 @@
                                                         </div>
                                                     </ng-template>
                                                 </p-multiSelect>
-                                               
+
                                             </div>
                                         </div>
                                         <div class="col-md-12 mb-4">
                                             <div class="">
                                                 <label for="" class="text-dark w-100">Scope 2</label>
-                                                <p-multiSelect class="ct_calender_input_1234 ct_drop_scroll" [options]="scope2Category" [group]="true" [(ngModel)]="selectedScope2" [ngModelOptions]="{standalone: true}"  defaultLabel="Select category" scrollHeight="250px" display="chip">
+                                                <p-multiSelect class="ct_calender_input_1234 ct_drop_scroll"
+                                                    [options]="scope2Category" [group]="true"
+                                                    [(ngModel)]="selectedScope2" [ngModelOptions]="{standalone: true}"
+                                                    defaultLabel="Select category" scrollHeight="250px" display="chip">
                                                     <ng-template let-group pTemplate="group">
                                                         <div class="flex align-items-center">
                                                             <!-- <img src="assets/showcase/images/demo/flag/flag_placeholder.png" [class]="'mr-2 flag flag-' + group.value" style="width: 20px"/> -->
@@ -585,17 +487,42 @@
                                                         </div>
                                                     </ng-template>
                                                 </p-multiSelect> -->
+
+                                                <p-multiSelect class="ct_calender_input_1234 ct_drop_scroll"
+                                                    [options]="scope3Category" [(ngModel)]="selectedScope3"
+                                                    [ngModelOptions]="{standalone: true}" defaultLabel="Select category"
+                                                    optionLabel="label" optionValue="value"
+                                                    display="chip"></p-multiSelect>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12 mb-4">
+                                            <div class="">
+                                                <label for="" class="text-dark w-100">Facility</label>
     
-                                                <p-multiSelect class="ct_calender_input_1234 ct_drop_scroll" [options]="scope3Category" [(ngModel)]="selectedScope3" [ngModelOptions]="{standalone: true}" defaultLabel="Select category" optionLabel="label" optionValue="value" display="chip"></p-multiSelect>
+                                                <p-multiSelect class="ct_calender_input_1234 ct_drop_scroll" placeholder="Select facility"
+                                                [options]="facilitygrouplist" [(ngModel)]="selectedScope4"  [ngModelOptions]="{standalone: true}" optionLabel="name" display="chip">
+                        
+                                            </p-multiSelect>
     
                                             </div>
                                         </div>
+                                        <!-- <button (click)="logSelectedFacilityIds()">Log Selected Facility Ids</button> -->
+
+
+                                        <!-- <p  class="mr-2 pt-1 pointer ct_filter_dropdown" >
+                                            
+                                        </p> -->
+                               
+
+
                                     </div>
                                 </div>
-    
+
                                 <div style="height: 200px;"></div>
-    
-    
+
+
                                 <div class="modal-footer ct_mt_60">
                                     <Button type="submit" class="LocButton ct_animation_btn_121">
                                         Save
@@ -612,5 +539,5 @@
             </div>
         </div>
     </div>
-    
-    </div>
+
+</div>

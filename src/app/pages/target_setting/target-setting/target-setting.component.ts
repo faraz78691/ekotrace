@@ -333,6 +333,8 @@ export class TargetSettingComponent {
 
         if (response.success == true) {
           this.groupsList = response.orders;
+          // group.target_emission_change,group.base_year,group.target_year,group.target_type, group.emission_activity
+          // this.ViewGraph( this.groupsList[0].target_emission_change,this.groupsList[0].base_year,this.groupsList[0].target_year,this.groupsList[0].target_type,this.groupsList[0].emission_activity)
           if (this.groupsList.length > 0) {
             this.groupdetails = this.groupsList[0];
             this.groupdata = true;
@@ -463,6 +465,7 @@ export class TargetSettingComponent {
 
           this.GroupForm.reset();
         }else{
+          this.chartOptions = undefined;
           this.notification.showInfo('Enter base year and current year emissions','')
         }
       },

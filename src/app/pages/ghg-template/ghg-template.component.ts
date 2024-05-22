@@ -1,14 +1,17 @@
 import { Facility } from '@/models/Facility';
+import { FacilityGroupList } from '@/models/FacilityGroupList';
 import { ManageDataPoint1 } from '@/models/ManageDataPoint';
 import { ManageDataPointCategory } from '@/models/ManageDataPointCategory';
 import { UserInfo } from '@/models/UserInfo';
+import { facilities } from '@/models/facilities';
 import { LoginInfo } from '@/models/loginInfo';
 import { savedDataPoint } from '@/models/savedDataPoint';
 import { SavedDataPointCategory } from '@/models/savedDataPointCategory';
 import { SavedDataPointSubCategory } from '@/models/savedDataPointSubcategory';
+import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { NavigationEnd, Router } from '@angular/router';
 import { FacilityService } from '@services/facility.service';
 import { NotificationService } from '@services/notification.service';
@@ -16,15 +19,16 @@ import { ThemeService } from '@services/theme.service';
 import { TrackingService } from '@services/tracking.service';
 
 import { MenuItem, ConfirmationService, MessageService } from 'primeng/api';
+import { DropdownModule } from 'primeng/dropdown';
 import { filter } from 'rxjs';
 
 @Component({
-  selector: 'app-ghg-template',
-  templateUrl: './ghg-template.component.html',
-  styleUrls: ['./ghg-template.component.scss']
+    selector: 'app-ghg-template',
+    templateUrl: './ghg-template.component.html',
+    styleUrls: ['./ghg-template.component.scss'],
 })
 export class GhgTemplateComponent {
-  @ViewChild('addCompForm', { static: false }) addCompForm: NgForm;
+    @ViewChild('addCompForm', { static: false }) addCompForm: NgForm;
     public loginInfo: LoginInfo;
     public userdetails: UserInfo;
     public savedDataPointCat: SavedDataPointCategory;
@@ -85,6 +89,7 @@ export class GhgTemplateComponent {
     selectedScope1: any[] = [];
     selectedScope2: any[] = [];
     selectedScope3: any[] = [];
+    selectedScope4: any[] = [];
 
     constructor(
         private facilityService: FacilityService,
@@ -95,10 +100,10 @@ export class GhgTemplateComponent {
         private messageService: MessageService,
         private themeservice: ThemeService,
         private trackingService: TrackingService,
-        private router :Router
+        private router: Router
 
     ) {
-   
+
         this.facilityDetails = new Facility();
         this.loginInfo = new LoginInfo();
         this.admininfo = new UserInfo();
@@ -139,6 +144,7 @@ export class GhgTemplateComponent {
         this.active = this.items[0];
         this.updatedtheme = this.themeservice.getValue('theme');
         this.AllCountry();
+        this.GetFacilityGroupList(tenantID)
     }
 
     ngDoCheck() {
@@ -219,10 +225,10 @@ export class GhgTemplateComponent {
         );
         this.facilityDetails.StateId = this.selectedState.ID;
         this.selectedCity = this.cityData.find(
-         
-            (city)  =>
-            city.Name === this.facilityDetails.city_name
-            
+
+            (city) =>
+                city.Name === this.facilityDetails.city_name
+
         );
         // this.facilityDetails.CityId = this.selectedCity.ID;
         let tenantId = this.loginInfo.tenantID;
@@ -346,6 +352,25 @@ export class GhgTemplateComponent {
         });
     }
 
+    facilitygrouplist: facilities[] = [];
+
+    GetFacilityGroupList(tenantID) {
+        this.facilityService
+            .newGetFacilityByTenant(tenantID)
+            .subscribe((res) => {
+
+                this.facilitygrouplist = res;
+
+            });
+    };
+
+    logSelectedFacilityIds() {
+        const selectedFacilityIds = this.selectedScope4.map(facility => facility.id).join(',');
+        console.log('Selected Facility Ids:', selectedFacilityIds);
+    }
+
+
+
     //Retrieves the users associated with a specific facility and updates the lists of managers and staff members.
     getUserofFacility(id) {
 
@@ -359,7 +384,7 @@ export class GhgTemplateComponent {
             this.selectedScope3 = result[0].scope3;
             this.facilityDetails = result[0];
             const facilityUsers = result[0].userInfoModels;
-        
+
             this.managerList1 = [];
             this.staffList1 = [];
             if (facilityUsers.length > 0) {
@@ -452,7 +477,7 @@ export class GhgTemplateComponent {
         formdata.set('CountryID', this.selectedCountry.ID)
         this.facilityService.newGetState(formdata.toString()).subscribe({
             next: (response) => {
-             
+
                 this.stateData = response;
                 // this.searchCity();
             }
@@ -556,7 +581,7 @@ export class GhgTemplateComponent {
                 // ],
 
 
-             
+
                 this.scope2Category = response.scope2;
                 this.scope3Category = response.scope3;
                 // this.seedData.forEach((seed) => {
@@ -779,6 +804,14 @@ export class GhgTemplateComponent {
 
         }
 
+        if (this.selectedScope4.length > 0) {
+            const selectedFacilityIds = this.selectedScope4.map(facility => facility.id).join(',');
+            //console.log('Selected Facility Ids:', selectedFacilityIds);
+            fomdata.set('FacilityId', selectedFacilityIds);
+        }
+
+
+
 
         // console.log(this.selectedScope3);
 
@@ -887,6 +920,8 @@ export class GhgTemplateComponent {
         // }
 
 
+        
+
 
         const isSubcategoryEmptyForAllCategories = this.selectedScope1.length == 0 && this.selectedScope2.length == 0 && this.selectedScope3.length == 0
         if (isSubcategoryEmptyForAllCategories == true) {
@@ -919,6 +954,7 @@ export class GhgTemplateComponent {
         }
         // to here
     }
+
     //Retrieves the saved data points for a specific facility
     GetsavedDataPoint(facilityID: any) {
         this.facilityService.getSavedDataPoint(facilityID).subscribe({

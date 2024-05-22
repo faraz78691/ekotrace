@@ -26,25 +26,27 @@ export class FacilityService {
     constructor(
         private http: HttpClient,
         private notification: NotificationService,
-        private router :Router
-    ) {  this.router.events
+        private router: Router
+    ) {
+        this.router.events
         .pipe(filter(event => event instanceof NavigationEnd))
         .subscribe((event: NavigationEnd) => {
-          this.checkRoute(event.urlAfterRedirects);
-        });}
-  // Function to check the current route and update the boolean variable
-  private checkRoute(currentRoute: string): void {
-    
-    if (currentRoute.includes('/tracking') || currentRoute.includes('/tracking-view-requests') || currentRoute.includes('/finance_emissions') ) {
-        this.headerTracking.set(true)
-      // If the route is to the facility, set the boolean variable to true
-    //   this.isRouteToFacilitySubject.next(true);
-    } else {
-        this.headerTracking.set(false)
-      // Otherwise, set it to false
-    //   this.isRouteToFacilitySubject.next(false);
+            this.checkRoute(event.urlAfterRedirects);
+        });
     }
-  }
+    // Function to check the current route and update the boolean variable
+    private checkRoute(currentRoute: string): void {
+
+        if (currentRoute.includes('/tracking') || currentRoute.includes('/tracking-view-requests') || currentRoute.includes('/finance_emissions')) {
+            this.headerTracking.set(true)
+            // If the route is to the facility, set the boolean variable to true
+            //   this.isRouteToFacilitySubject.next(true);
+        } else {
+            this.headerTracking.set(false)
+            // Otherwise, set it to false
+            //   this.isRouteToFacilitySubject.next(false);
+        }
+    }
 
     options: {
         headers?: HttpHeaders | { [header: string]: string | string[] };
@@ -70,11 +72,11 @@ export class FacilityService {
     };
 
     AddFacilites(facilities: facilities[]) {
-     this.facilitiesSignal.set(facilities)
+        this.facilitiesSignal.set(facilities)
     };
 
-    facilitySelected(id:number){
-this.selectedfacilitiesSignal.set(id)
+    facilitySelected(id: number) {
+        this.selectedfacilitiesSignal.set(id)
     };
 
     public gerReport(url, data): Observable<any> {
