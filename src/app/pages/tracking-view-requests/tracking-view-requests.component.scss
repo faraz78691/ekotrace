@@ -89,10 +89,12 @@
 
 }
 
-.view-request-div {
-  height: 600px !important;
+// .view-request-div {
+//   height: 600px !important;
+// }
+.cd_requst__static12 .p-datatable .p-datatable-tbody > tr > td {
+  padding-block: 7px !important;
 }
-
 .contents {
   display: contents;
 }
@@ -220,3 +222,4 @@
 .ct_drop_input_250123 .p-dropdown.p-component.p-dropdown-open {
   width: 386px !important;
 }
+
