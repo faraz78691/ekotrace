@@ -308,10 +308,10 @@
                                     <p *ngIf="categoryId ==26" class="mb-2 mt-3 ml-4 text-dark">
                                         Other modes
                                     </p>
-                                    <div class="ct_how_use_tooltip_main">
-                                        <i class="fa-solid fa-circle-question"></i>
-                                        <div class="ct_how_use_tooltip_cnt" [class.ct_active]="isHowtoUse"
-                                            (click)="checkVisited()">
+                                    <div class="ct_how_use_tooltip_main"  >
+                                        <i class="fa-solid fa-circle-question" (click)="isHowtoUse = !isHowtoUse"></i>
+                                        <div class="ct_how_use_tooltip_cnt" [ngClass]="isHowtoUse ? 'ct_active' : ''"
+                                           >
                                             <p>
                                                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel.
                                             </p>

@@ -885,7 +885,7 @@ export class TrackingComponent {
         this.id_var = data.manageDataPointSubCategorySeedID;
 
         this.categoryId = catID;
-        console.log("subCatTypeID", this.categoryId);
+ 
 
         this.SubCatAllData = data;
         this.ALLEntries()
