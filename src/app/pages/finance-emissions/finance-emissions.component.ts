@@ -21,7 +21,7 @@ import { VehicleDEmode } from '@/models/VehicleDEmode';
 import { VehicleType } from '@/models/VehicleType';
 import { LoginInfo } from '@/models/loginInfo';
 import { countries } from '@/store/countrieslist';
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, computed, effect } from '@angular/core';
 import { NgForm, FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FacilityService } from '@services/facility.service';
@@ -231,7 +231,10 @@ export class FinanceEmissionsComponent {
   carFuel_type: any[] = [];
   wasteMethod: string;
   recycle = false;
-  recycleSelectedMethod = ''
+  recycleSelectedMethod = '';
+  facilityChange = computed(()=>{
+    return this.facilityService.selectedfacilitiesSignal()
+  })
 
   storagef_typeValue: string = this.storageGrid[0]?.storagef_type;
   openDatapointDialog() {
@@ -275,7 +278,11 @@ export class FinanceEmissionsComponent {
       private toastr: ToastrService,
       private confirmationService: ConfirmationService
   ) {
-
+effect(()=>{
+    if(this.facilityService.selectedfacilitiesSignal()){
+        this.ALLEntries()
+    }
+})
       this.facilityService.headerTracking.set(true);
       this.SubCatAllData = new ManageDataPointSubCategories();
       this.AssignedDataPoint = [];
@@ -404,8 +411,6 @@ export class FinanceEmissionsComponent {
 
  
   
-
-
   //display a dialog
   showDialog() {
       this.visible = true;
@@ -421,6 +426,7 @@ export class FinanceEmissionsComponent {
 
   // to get the status of subcategories in status tab
   ALLEntries() {
+   
     this.facilityID = localStorage.getItem('SelectedfacilityID');
       if (this.facilityID == 0) {
           this.notification.showInfo(
@@ -434,7 +440,7 @@ export class FinanceEmissionsComponent {
       const formData = new URLSearchParams();
       this.convertedYear = this.trackingService.getYear(this.year);
       formData.set('year', this.convertedYear.toString())
-      formData.set('facilities', this.facilityID.toString())
+      formData.set('facilities', this.facilityChange().toString())
       formData.set('categoryID', '23'.toString())
 
 
@@ -464,12 +470,12 @@ export class FinanceEmissionsComponent {
   //entrysave function to save dataentry
   EntrySave(form: NgForm) {
 
-      this.dataEntry.month = this.selectMonths
-          .map((month) => month.value)
-          .join(', '); //this.getMonthName();
+    //   this.dataEntry.month = this.selectMonths
+    //       .map((month) => month.value)
+    //       .join(', '); //this.getMonthName();
       this.dataEntry.year = this.year.getFullYear().toString(); //this.getYear();
-      var spliteedMonth = this.dataEntry.month.split(",");
-      var monthString = JSON.stringify(spliteedMonth);
+    //   var spliteedMonth = this.dataEntry.month.split(",");
+    //   var monthString = JSON.stringify(spliteedMonth);
       let fId = localStorage.getItem('SelectedfacilityID');
       if (fId == '0') {
           this.notification.showInfo(
@@ -478,13 +484,13 @@ export class FinanceEmissionsComponent {
           );
           return
       }
-      if (this.selectMonths.length == 0 ) {
-          this.notification.showInfo(
-              'Select month',
-              ''
-          );
-          return
-      }
+    //   if (this.selectMonths.length == 0 ) {
+    //       this.notification.showInfo(
+    //           'Select month',
+    //           ''
+    //       );
+    //       return
+    //   }
 
           let formData = new URLSearchParams();
 
@@ -497,7 +503,7 @@ export class FinanceEmissionsComponent {
               formData.set('scope2_emission', form.value.scope2_emission);
               formData.set('equity_share', form.value.share_Equity);
               formData.set('facilities', fId);
-              formData.set('month', monthString);
+            //   formData.set('month', monthString);
               formData.set('year', this.dataEntry.year);
           } else if (this.investmentTypeValue == 'Equity investments' && this.franchiseMethodValue == 'Average data method') {
               formData.set('investment_type', form.value.investment_type);
@@ -507,7 +513,7 @@ export class FinanceEmissionsComponent {
               formData.set('investee_company_total_revenue', form.value.investe_company_revenue);
               formData.set('equity_share', form.value.share_Equity);
               formData.set('facilities', fId);
-              formData.set('month', monthString);
+            //   formData.set('month', monthString);
               formData.set('year', this.dataEntry.year);
           } else if ((this.investmentTypeValue == 'Debt investments' || this.investmentTypeValue == 'Project finance') && this.franchiseMethodValue == 'Average data method') {
               formData.set('investment_type', form.value.investment_type);
@@ -518,7 +524,7 @@ export class FinanceEmissionsComponent {
               formData.set('project_construction_cost', form.value.project_construction_cost);
               formData.set('equity_project_cost', form.value.equity_project_cost);
               formData.set('facilities', fId);
-              formData.set('month', monthString);
+            //   formData.set('month', monthString);
               formData.set('year', this.dataEntry.year);
           } else if ((this.investmentTypeValue == 'Debt investments' || this.investmentTypeValue == 'Project finance') && this.franchiseMethodValue == 'Investment Specific method') {
 
@@ -530,7 +536,7 @@ export class FinanceEmissionsComponent {
               formData.set('scope2_emission', form.value.scope2_emission);
               formData.set('equity_project_cost', form.value.project_cost);
               formData.set('facilities', fId);
-              formData.set('month', monthString);
+            //   formData.set('month', monthString);
               formData.set('year', this.dataEntry.year);
           }
 
@@ -739,26 +745,36 @@ export class FinanceEmissionsComponent {
       const energyMethod = event.value;
       this.calculationRow = true;
       this.investmentTypeValue = energyMethod;
-console.log(this.franchiseMethodValue,this.investmentTypeValue);
-      if (this.franchiseMethodValue == 'Investment Specific method' && this.investmentTypeValue == 'Equity investments' && this.equityInvestmentRow == true) {
-        console.log("here");
+   
+      if (this.franchiseMethodValue == 'Investment Specific method' && this.investmentTypeValue == 'Equity investments') {
+      
           this.equityInvestmentRow = true;
           this.franchiseMethod = true;
           this.averageMethod = false;
           this.debtInvesmentRow = false;
       } else if (this.investmentTypeValue == 'Equity investments' && this.franchiseMethodValue == 'Average data method' && this.equityInvestmentRow == true) {
-          this.equityInvestmentRow = true;
+      
+        this.equityInvestmentRow = true;
           this.franchiseMethod = false;
           this.averageMethod = true;
           this.debtInvesmentRow = false;
-      } else if ((this.investmentTypeValue == 'Debt investments' || this.investmentTypeValue == 'Project finance') && this.franchiseMethodValue == 'Average data method') {
-          this.debtInvesmentRow = true;
+      }
+      else if (this.investmentTypeValue == 'Equity investments' && this.franchiseMethodValue == 'Average data method' && this.equityInvestmentRow == false) {
+
+          this.equityInvestmentRow = true;
+            this.franchiseMethod = false;
+            this.averageMethod = true;
+            this.debtInvesmentRow = false;
+        } else if ((this.investmentTypeValue == 'Debt investments' || this.investmentTypeValue == 'Project finance') && this.franchiseMethodValue == 'Average data method') {
+      
+        this.debtInvesmentRow = true;
           this.franchiseMethod = false;
           this.averageMethod = true;
           this.InvestmentHeading = this.investmentTypeValue;
           this.equityInvestmentRow = false;
       } else if ((this.investmentTypeValue == 'Debt investments' || this.investmentTypeValue == 'Project finance') && this.franchiseMethodValue == 'Investment Specific method') {
-          this.debtInvesmentRow = true;
+        
+        this.debtInvesmentRow = true;
           this.franchiseMethod = true;
           this.averageMethod = false;
           this.InvestmentHeading = this.investmentTypeValue;
@@ -778,7 +794,7 @@ console.log(this.franchiseMethodValue,this.investmentTypeValue);
   onInvestmentCalculationMethodChange(event: any) {
       const calMethod = event.value;
       this.franchiseMethodValue = calMethod;
-      if (calMethod == 'Investment Specific method' && this.investmentTypeValue == 'Equity investments') {
+      if ( this.investmentTypeValue == 'Equity investments' && calMethod == 'Investment Specific method' ) {
           this.equityInvestmentRow = true;
           this.franchiseMethod = true;
           this.averageMethod = false;

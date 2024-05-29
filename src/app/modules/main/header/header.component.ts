@@ -138,7 +138,9 @@ export class HeaderComponent implements OnInit {
     }
 
     checkFacilityID() {
+        console.log("click",this.selectedFacilityID.id);
         this.facilityService.facilitySelected(this.selectedFacilityID.id)
+        console.log(this.facilityService.selectedfacilitiesSignal())
         localStorage.setItem('SelectedfacilityID', this.selectedFacilityID.id);
         localStorage.setItem('Flag', this.selectedFacilityID.flag);
     };
