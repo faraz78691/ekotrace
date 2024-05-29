@@ -159,11 +159,11 @@
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="fname" class="text-dark">Scope Category</label>
-                    <input name="scope_category" ngModel id="search-input" type="text"
-                        class="form-control Dashboard-tab text-white" placeholder="Enter Scope Category"
-                        #groupName="ngModel" [disabled]="isloading" required />
+                    <p-dropdown class="ct_grop_select_2_drop_white123 ct_group_select_dark_124" required ngModel
+                     [options]="scopeList" optionLabel="name" optionValue="name" name="scope_category"
+                    #group="ngModel"></p-dropdown>
                     <p class="text-danger mb-0" *ngIf="GroupForm.submitted && groupName.errors?.['required']">
-                        Group name is required
+                        Scope name is required
                     </p>
                     <p class="text-danger mb-0" *ngIf="
                     isgroupExist === true && groupName.touched

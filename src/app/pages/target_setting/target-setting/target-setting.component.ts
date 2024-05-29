@@ -136,103 +136,6 @@ export class TargetSettingComponent {
     this.selectedValue = '';
 
 
-    // this.chartOptions = {
-    //   series: [
-    //     {
-    //       name: "Session Duration",
-    //       data: [45, 52, 38, 24, 33, 26, 21, 20, 6, 8, 15, 10]
-    //     },
-    //     {
-    //       name: "Page Views",
-    //       data: [35, 41, 62, 42, 13, 18, 29, 37, 36, 51, 32, 35]
-    //     },
-    //     {
-    //       name: "Total Visits",
-    //       data: [87, 57, 74, 99, 75, 38, 62, 47, 82, 56, 45, 47]
-    //     }
-    //   ],
-    //   chart: {
-    //     height: 350,
-    //     type: "line"
-    //   },
-    //   dataLabels: {
-    //     enabled: false
-    //   },
-    //   stroke: {
-    //     width: 5,
-    //     curve: "straight",
-    //     dashArray: [0, 8, 5]
-    //   },
-    //   title: {
-    //     text: "Page Statistics",
-    //     align: "left"
-    //   },
-    //   legend: {
-    //     tooltipHoverFormatter: function (val, opts) {
-    //       return (
-    //         val +
-    //         " - <strong>" +
-    //         opts.w.globals.series[opts.seriesIndex][opts.dataPointIndex] +
-    //         "</strong>"
-    //       );
-    //     }
-    //   },
-    //   markers: {
-    //     size: 0,
-    //     hover: {
-    //       sizeOffset: 6
-    //     }
-    //   },
-    //   xaxis: {
-    //     labels: {
-    //       trim: false
-    //     },
-    //     categories: [
-    //       "01 Jan",
-    //       "02 Jan",
-    //       "03 Jan",
-    //       "04 Jan",
-    //       "05 Jan",
-    //       "06 Jan",
-    //       "07 Jan",
-    //       "08 Jan",
-    //       "09 Jan",
-    //       "10 Jan",
-    //       "11 Jan",
-    //       "12 Jan"
-    //     ]
-    //   },
-    //   tooltip: {
-    //     y: [
-    //       {
-    //         title: {
-    //           formatter: function (val) {
-    //             return val + " (mins)";
-    //           }
-    //         }
-    //       },
-    //       {
-    //         title: {
-    //           formatter: function (val) {
-    //             return val + " per session";
-    //           }
-    //         }
-    //       },
-    //       {
-    //         title: {
-    //           formatter: function (val) {
-    //             return val;
-    //           }
-    //         }
-    //       }
-    //     ]
-    //   },
-    //   grid: {
-    //     borderColor: "#f1f1f1"
-    //   }
-    // };
-
-
     this.Groupby = [
       {
         name: 'Renewable Energy'
@@ -441,9 +344,42 @@ export class TargetSettingComponent {
     this.GroupService.getGraphsTarget(formData.toString()).subscribe({
       next: (response) => {
         if (response.success == true) {
+          console.log("graph response", response);
           const Data = response;
+          let getBaseYear = response.yCordinate[0];
+          let getYcoridnate = response.yCordinate;
+     
+          let getscope1Xcordinate = response.scope1Xcordinate;
+         
+          const currentYear = new Date().getFullYear();
+
+          const years = [];
+          const newScope1Xcordinate = [];
+          for (let year = getBaseYear; year <= currentYear; year++) {
+            years.push(year);
+          }
+          for (let i = 0; i < years.length; i++) {
+
+            let resultIndex = getYcoridnate.indexOf(years[i]);
+
+             if( resultIndex != -1){
+              newScope1Xcordinate.push(getscope1Xcordinate[resultIndex])
+             }else{
+              newScope1Xcordinate.push(0)
+             }
+            }
+            
+          
+            // if(years[i] == getYcoridnate[i]){
+              //   newScope1Xcordinate.push(getscope1Xcordinate[i])
+              // }else{
+                //   newScope1Xcordinate.push(null)
+                // }
+                
+      
+          console.log(newScope1Xcordinate);
           if (scope == 'Scope 1') {
-            this.graphMethod(response.scope1Xcordinate, response.targetScope1Xcordinate, response.forecastScope1Xcordinate, response.targetYcordinate, response.forecastYcordinate)
+            this.graphMethod(newScope1Xcordinate, response.targetScope1Xcordinate, response.forecastScope1Xcordinate, response.targetYcordinate, response.forecastYcordinate)
           } else if (scope == 'Scope 1 & 2') {
             let actualCordinate = Data.scope1Xcordinate.map((item, index) => {
               return parseFloat(item) + parseFloat(Data.scope2Xcordinate[index])
@@ -464,9 +400,9 @@ export class TargetSettingComponent {
           this.visible = false;
 
           this.GroupForm.reset();
-        }else{
+        } else {
           this.chartOptions = undefined;
-          this.notification.showInfo('Enter base year and current year emissions','')
+          this.notification.showInfo('Enter base year and current year emissions', '')
         }
       },
       error: (err) => {
@@ -479,6 +415,9 @@ export class TargetSettingComponent {
 
   graphMethod(normalData, targetData, forecastedData, normalYears, Dashedyears) {
     console.log(normalData);
+    console.log(forecastedData);
+    
+
     var index = 0;
     const normalsLine: number[] = normalData.map(str => parseFloat(str));
     const dashedLine: number[] = forecastedData.map(str => parseFloat(str));
@@ -493,7 +432,7 @@ export class TargetSettingComponent {
     for (index = 0; index < normalsLine.length - 1; index++) {
       dashedLine.unshift(null);
     };
-    // console.log(dashedLine);
+    console.log(dashedLine);
 
 
     const parallelLine: number[] = targetData.map(str => parseFloat(str));
@@ -503,7 +442,8 @@ export class TargetSettingComponent {
       series: [
         {
           name: "Actual Emissions",
-          //  data: [45, 52, 38, 24, 33, 26, 21, 20, 6, 8, 15, 10]
+          //  data: [1.2, null, null
+          //  , 5, 15]
           data: normalsLine
         },
         {
@@ -519,7 +459,8 @@ export class TargetSettingComponent {
       ],
       chart: {
         height: 350,
-        type: "line"
+        type: "line",
+        
       },
       dataLabels: {
         enabled: false
@@ -527,7 +468,8 @@ export class TargetSettingComponent {
       stroke: {
         width: 5,
         curve: "straight",
-        dashArray: [0, 0, 5]
+        dashArray: [0, 0, 5],
+        
       },
       title: {
         text: "Page Statistics",

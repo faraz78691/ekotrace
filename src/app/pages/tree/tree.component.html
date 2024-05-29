@@ -26,7 +26,7 @@
         optionValue="id" name="subCatType" #subCatType="ngModel" [(ngModel)]="selectedTemplateId" (onChange)="onTemplateChange($event)"
       ></p-dropdown>
     </ng-container>
-    <button (click)="showBasicDialog()" class="p-button ct_animation_btn_121 mr-2 py-2">Create template</button>
+    <button (click)="showBasicDialog()" class="p-button ct_animation_btn_121 mr-2 py-2">Create Org. Tree</button>
         
    </div>
     <div  id="tree"></div>
@@ -35,7 +35,7 @@
 
 <p-dialog  [(visible)]="displayBasic" [breakpoints]="{'960px': '75vw'}" [closable]="false"
 [style]="{width: '50vw'}">
-<p-header > Add New Tree </p-header>
+<p-header >Create Org. Tree </p-header>
 <!-- <p-header *ngIf="FormEdit === true"> Edit Group </p-header> -->
 
 <div class="modal-body text-white text-style Dashboard-tab">

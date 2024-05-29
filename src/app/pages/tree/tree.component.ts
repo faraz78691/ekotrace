@@ -134,35 +134,35 @@ export class TreeComponent {
                       `;
 
                     FamilyTree.templates.main = Object.assign({}, FamilyTree.templates.base);
-                    FamilyTree.templates.main.defs = `<style>
-                                                        .{randId} .bft-edit-form-header, .{randId} .bft-img-button{
-                                                            background-color: #aeaeae;
-                                                        }
-                                                        .{randId}.male .bft-edit-form-header, .{randId}.male .bft-img-button{
-                                                            background-color: #6bb4df;
-                                                        }        
-                                                        .{randId}.male div.bft-img-button:hover{
-                                                            background-color: #cb4aaf;
-                                                        }
-                                                        .{randId}.female .bft-edit-form-header, .{randId}.female .bft-img-button{
-                                                            background-color: #cb4aaf;
-                                                        }        
-                                                        .{randId}.female div.bft-img-button:hover{
-                                                            background-color: #6bb4df;
-                                                        }
-                    </style>`;
+                    // FamilyTree.templates.main.defs = `<style>
+                    //                                     .{randId} .bft-edit-form-header, .{randId} .bft-img-button{
+                    //                                         background-color: #aeaeae;
+                    //                                     }
+                    //                                     .{randId}.male .bft-edit-form-header, .{randId}.male .bft-img-button{
+                    //                                         background-color: #6bb4df;
+                    //                                     }        
+                    //                                     .{randId}.male div.bft-img-button:hover{
+                    //                                         background-color: #cb4aaf;
+                    //                                     }
+                    //                                     .{randId}.female .bft-edit-form-header, .{randId}.female .bft-img-button{
+                    //                                         background-color: #cb4aaf;
+                    //                                     }        
+                    //                                     .{randId}.female div.bft-img-button:hover{
+                    //                                         background-color: #6bb4df;
+                    //                                     }
+                    // </style>`;
                     FamilyTree.templates.main.node = '<rect x="0" y="0" height="{h}" width="{w}" fill="#ffffff" stroke-width="3" stroke="#ccc" rx="5" ry="5"></rect>' +
                         '<rect x="0" y="0" height="30" width="{w}" fill="#b1b9be" stroke-width="1" stroke="#b1b9be" style="fill: rgba(134, 175, 72, 0.7);" rx="5" ry="5"></rect>' +
                         '<line x1="0" y1="20" x2="250" y2="20" stroke-width="5" stroke="#b1b9be" style="display:none"></line>';
 
                     FamilyTree.templates.main.field_0 =
-                        '<text ' + FamilyTree.attr.width + ' ="250" style="font-size: 14px;" font-variant="all-small-caps" fill="white" x="125" y="16" text-anchor="middle">{val}</text>';
+                        '<text ' + FamilyTree.attr.width + ' ="250" style="font-size: 14px; " font-variant="all-small-caps" fill="white" x="125" y="16" text-anchor="middle">{val}</text>';
                     FamilyTree.templates.main.field_1 =
-                        '<text ' + FamilyTree.attr.width + ' ="160" data-text-overflow="multiline" style="font-size: 14px;" fill="black" x="100" y="66" text-anchor="start">{val}</text>';
+                        '<text ' + FamilyTree.attr.width + ' ="160" data-text-overflow="multiline" style="font-size: 14px; transform: translateX(26px);" fill="black" x="100" y="66" text-anchor="middle">{val}</text>';
                     FamilyTree.templates.main.field_2 =
-                        '<text ' + FamilyTree.attr.width + ' ="160" style="font-size: 10px;" fill="#b1b9be" x="100" y="95" text-anchor="start">{val}</text>';
+                        '<text ' + FamilyTree.attr.width + ' ="160" style="font-size: 10px; transform: translateX(26px)" fill="#b1b9be" x="100" y="95" text-anchor="middle">{val}</text>';
                     FamilyTree.templates.main.field_3 =
-                        '<text ' + FamilyTree.attr.width + ' ="60" style="font-size: 12px;" fill="black" x="47" y="112" text-anchor="middle">{val}</text>';
+                        '<text ' + FamilyTree.attr.width + ' ="60" style="font-size: 12px;  transform: translateX(26px)" fill="black" x="47" y="112" text-anchor="middle">{val}</text>';
                     FamilyTree.templates.main.img_0 =
                         `<use xlink:href="#base_img_0_stroke" /> 
                        <circle id="base_img_0_stroke" fill="#b1b9be" cx="45" cy="62" r="37"/>
@@ -170,31 +170,31 @@ export class TreeComponent {
 
 
                     FamilyTree.templates.single = Object.assign({}, FamilyTree.templates.tommy);
-                    FamilyTree.templates.single.size = [200, 200];
-                    FamilyTree.templates.single.defs = `<style>
-                                                        .{randId} .bft-edit-form-header, .{randId} .bft-img-button{
-                                                            background-color: #aeaeae;
-                                                        }
-                                                        .{randId}.male .bft-edit-form-header, .{randId}.male .bft-img-button{
-                                                            background-color: #6bb4df;
-                                                        }        
-                                                        .{randId}.male div.bft-img-button:hover{
-                                                            background-color: #cb4aaf;
-                                                        }
-                                                        .{randId}.female .bft-edit-form-header, .{randId}.female .bft-img-button{
-                                                            background-color: #cb4aaf;
-                                                        }        
-                                                        .{randId}.female div.bft-img-button:hover{
-                                                            background-color: #6bb4df;
-                                                        }
-                    </style>`;
-                    FamilyTree.templates.single.node =
-                        '<circle cx="100" cy="100" r="100" fill="white" stroke-width="1" stroke="#aeaeae"></circle>';
-                    FamilyTree.templates.single.field_0 = '<text ' + FamilyTree.attr.width + ' ="160" style="font-size: 14px;" font-variant="all-small-caps"  font-weight="bold" fill="black" x="100" y="115" text-anchor="middle">{val}</text>';
-                    FamilyTree.templates.single.field_1 = '<text ' + FamilyTree.attr.width + ' ="190" data-text-overflow="multiline" style="font-size: 16px;" fill="black" x="100" y="135" text-anchor="middle">{val}</text>';
-                    FamilyTree.templates.single.field_3 =
-                        '<text ' + FamilyTree.attr.width + ' ="60" style="font-size: 12px;" fill="black" x="100" y="180" text-anchor="middle">{val}</text>';
-                    FamilyTree.templates.single.nodeMenuButton = `<use ${FamilyTree.attr.control_node_menu_id}="{id}" x="89" y="5" xlink:href="#base_node_menu" />`;
+                    FamilyTree.templates.single.size = [150, 150];
+                    // FamilyTree.templates.single.defs = `<style>
+                    //                                     .{randId} .bft-edit-form-header, .{randId} .bft-img-button{
+                    //                                         background-color: #aeaeae;
+                    //                                     }
+                    //                                     .{randId}.male .bft-edit-form-header, .{randId}.male .bft-img-button{
+                    //                                         background-color: #6bb4df;
+                    //                                     }        
+                    //                                     .{randId}.male div.bft-img-button:hover{
+                    //                                         background-color: #cb4aaf;
+                    //                                     }
+                    //                                     .{randId}.female .bft-edit-form-header, .{randId}.female .bft-img-button{
+                    //                                         background-color: #cb4aaf;
+                    //                                     }        
+                    //                                     .{randId}.female div.bft-img-button:hover{
+                    //                                         background-color: #6bb4df;
+                    //                                     }
+                    // </style>`;
+                    // FamilyTree.templates.single.node =
+                    //     '<circle cx="100" cy="100" r="100" fill="white" stroke-width="1" stroke="#aeaeae"></circle>';
+                    // FamilyTree.templates.single.field_0 = '<text ' + FamilyTree.attr.width + ' ="160" style="font-size: 14px;" font-variant="all-small-caps"  font-weight="bold" fill="black" x="100" y="115" text-anchor="middle">{val}</text>';
+                    // FamilyTree.templates.single.field_1 = '<text ' + FamilyTree.attr.width + ' ="190" data-text-overflow="multiline" style="font-size: 16px;" fill="black" x="100" y="135" text-anchor="middle">{val}</text>';
+                    // FamilyTree.templates.single.field_3 =
+                    //     '<text ' + FamilyTree.attr.width + ' ="60" style="font-size: 12px;" fill="black" x="100" y="180" text-anchor="middle">{val}</text>';
+                    // FamilyTree.templates.single.nodeMenuButton = `<use ${FamilyTree.attr.control_node_menu_id}="{id}" x="89" y="5" xlink:href="#base_node_menu" />`;
 
 
 
@@ -233,7 +233,11 @@ export class TreeComponent {
                             elements: [
                                 { type: 'textbox', label: 'Name', binding: 'name' },
                                 { type: 'textbox', label: 'Category', binding: 'relation' },
-                                { type: 'textbox', label: 'Facility name', binding: 'facility_name' }
+                                { type: 'textbox', label: 'Facility name', binding: 'facility_name', options:['select'] }
+                               
+                             
+                                   
+                                
                             ],
                             buttons: {
                                 edit: {
@@ -306,10 +310,10 @@ export class TreeComponent {
 
         const getSelectedNode = localStorage.getItem("selectedNode");
         const nodeForm = new URLSearchParams();
-        if(this.facilityTab == true){
+        if (this.facilityTab == true) {
             nodeForm.set('facility_name', data.value.facility_name);
         }
-        
+
         nodeForm.set('id', getSelectedNode);
         nodeForm.set('family_id', this.selectedTemplateId.toString());
         nodeForm.set('main_name', data.value.nodetype);

@@ -1,6 +1,6 @@
 <div class="row ct_responsive_reverse">
-    <div class="col-xl-9" >
-       
+    <div class="col-xl-9">
+
         <div class="ct_reduction_graph_main mt-1 pt-2">
             <!-- <div class="ct_d_flex_1">
                 <div class="ct_reduction_title">
@@ -24,19 +24,11 @@
                         </div>
                     </div>
                     <div id="scope_wise_emission" *ngIf="chartOptions">
-                        <apx-chart
-                        [series]="chartOptions.series"
-                        [chart]="chartOptions.chart"
-                        [dataLabels]="chartOptions.dataLabels"
-                        [plotOptions]="chartOptions.plotOptions"
-                        [yaxis]="chartOptions.yaxis"
-                        [legend]="chartOptions.legend"
-                        [fill]="chartOptions.fill"
-                        [colors] = "chartOptions.colors"
-                        [stroke]="chartOptions.stroke"
-                        [tooltip]="chartOptions.tooltip"
-                        [xaxis]="chartOptions.xaxis"
-                      ></apx-chart>
+                        <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart"
+                            [dataLabels]="chartOptions.dataLabels" [plotOptions]="chartOptions.plotOptions"
+                            [yaxis]="chartOptions.yaxis" [legend]="chartOptions.legend" [fill]="chartOptions.fill"
+                            [colors]="chartOptions.colors" [stroke]="chartOptions.stroke"
+                            [tooltip]="chartOptions.tooltip" [xaxis]="chartOptions.xaxis"></apx-chart>
                     </div>
                 </div>
             </div>
@@ -73,19 +65,21 @@
     </div>
 
     <div class="col-xl-3 mb-4 ct_mt_top_68">
-       
+
         <div class="ct_right_sidebar">
             <div class="mb-4">
                 <div>
-                    <select class="ct_all_vender_select" [(ngModel)]="selectedFacility" *ngIf="dashboardFacilities$ | async as dashboardData" (change)="onFacilityChange($event)" >
-                        <option value="" *ngFor="let items of dashboardData.categories" [value]="items.ID">{{items.AssestName}}</option>
+                    <select class="ct_all_vender_select" [(ngModel)]="selectedFacility"
+                        *ngIf="dashboardFacilities$ | async as dashboardData" (change)="onFacilityChange($event)">
+                        <option value="" *ngFor="let items of dashboardData.categories" [value]="items.ID">
+                            {{items.AssestName}}</option>
                     </select>
                     <div class="mt-4">
                         <p class="mb-1 ct_fw_500">Financial Year</p>
-                        <p-calendar class="w-100 ct_input_dark_text_145" [(ngModel)]="year" ngModel name="year" year  
-                         view="year" dateFormat="yy" inputId="yearpicker"  (ngModelChange)="onFacilityChange($event)" [disabledDates]="disabledDates" yearRange="5"
-                         styleClass="pcalender"  [maxDate]="maxYear"
-                        [showIcon]="true"></p-calendar>
+                        <p-calendar class="w-100 ct_input_dark_text_145" [(ngModel)]="year" ngModel name="year" year
+                            view="year" dateFormat="yy" inputId="yearpicker" (ngModelChange)="onFacilityChange($event)"
+                            [disabledDates]="disabledDates" yearRange="5" styleClass="pcalender" [maxDate]="maxYear"
+                            [showIcon]="true"></p-calendar>
                         <!-- <select class="ct_period_select w-100">
                             <option value="">2023-2024</option>
                             <option value="">2023-2024</option>
@@ -98,7 +92,7 @@
                     <div>
                         <div class="d-flex align-items-center gap-3 p mb-2 justify-content-between ct_gap_20">
                             <h4 class="mb-0"><strong>{{sumofScope2 | number :'1.2-2'}}</strong>&nbsp;tCO2e</h4>
-                          
+
                         </div>
                         <!-- <div class="d-flex align-items-center gap-2 justify-content-between ct_gap_20">
                             <h6 class="mb-0"><strong>+12%</strong></h6>
@@ -121,7 +115,8 @@
 
                     <div id="previous_year_donut" *ngIf="previoucsOptions">
                         <apx-chart [series]="previoucsOptions.series" [chart]="previoucsOptions.chart"
-                            [labels]="previoucsOptions.labels" [responsive]="previoucsOptions.responsive"[colors]="previoucsOptions.colors"></apx-chart>
+                            [labels]="previoucsOptions.labels" [responsive]="previoucsOptions.responsive"
+                            [colors]="previoucsOptions.colors"></apx-chart>
                     </div>
                 </div>
             </div>
@@ -145,7 +140,8 @@
                             aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                 </div> -->
-                <div class="ct_grey_border_1 ct_py_padd mt-3 " (click)="status = 1" [ngClass]="status ==1 ? 'ct_progress_active1': '' " >
+                <div class="ct_grey_border_1 ct_py_padd mt-3 " (click)="status = 1"
+                    [ngClass]="status ==1 ? 'ct_progress_active1': '' ">
                     <div class="ct_d_flex_1">
                         <div class="d-flex align-items-center ct_gap_20 flex-wrap">
                             <h5 class="mb-0"><strong>{{scope1E}}</strong></h5>
@@ -158,11 +154,12 @@
                     </div>
                     <div class="progress mt-4" style="height: 10px;">
                         <div class="progress-bar" role="progressbar" [ngStyle]="{width:progress1 +'%'}"
-                            style="background-color: #213D49; border-radius: 2px;" aria-valuenow="50"
-                            aria-valuemin="0" aria-valuemax="100"></div>
+                            style="background-color: #213D49; border-radius: 2px;" aria-valuenow="50" aria-valuemin="0"
+                            aria-valuemax="100"></div>
                     </div>
                 </div>
-                <div class="ct_grey_border_1 ct_py_padd mt-3" (click)="status = 2"  [ngClass]="status ==2 ? 'ct_progress_active1': '' "  >
+                <div class="ct_grey_border_1 ct_py_padd mt-3" (click)="status = 2"
+                    [ngClass]="status ==2 ? 'ct_progress_active1': '' ">
                     <div class="ct_d_flex_1">
                         <div class="d-flex align-items-center ct_gap_20 flex-wrap">
                             <h5 class="mb-0"><strong>{{scope2E}}</strong></h5>
@@ -175,11 +172,12 @@
                     </div>
                     <div class="progress mt-4" style="height: 10px;">
                         <div class="progress-bar" role="progressbar" [ngStyle]="{width:progress2 +'%'}"
-                            style="background-color: #46A5CD; border-radius: 2px;" aria-valuenow="25"
-                            aria-valuemin="0" aria-valuemax="100"></div>
+                            style="background-color: #46A5CD; border-radius: 2px;" aria-valuenow="25" aria-valuemin="0"
+                            aria-valuemax="100"></div>
                     </div>
                 </div>
-                <div class="ct_grey_border_1 ct_py_padd mt-3" (click)="status = 3"  [ngClass]="status ==3 ? 'ct_progress_active1': '' "  >
+                <div class="ct_grey_border_1 ct_py_padd mt-3" (click)="status = 3"
+                    [ngClass]="status ==3 ? 'ct_progress_active1': '' ">
                     <div class="ct_d_flex_1">
                         <div class="d-flex align-items-center ct_gap_20 flex-wrap">
                             <h5 class="mb-0"><strong>{{scope3E}}</strong></h5>
@@ -192,8 +190,8 @@
                     </div>
                     <div class="progress mt-4" style="height: 10px;">
                         <div class="progress-bar" role="progressbar" [ngStyle]="{width:progress3 +'%'}"
-                            style="background-color: #FFD914; border-radius: 2px;" aria-valuenow="25"
-                            aria-valuemin="0" aria-valuemax="100"></div>
+                            style="background-color: #FFD914; border-radius: 2px;" aria-valuenow="25" aria-valuemin="0"
+                            aria-valuemax="100"></div>
                     </div>
                 </div>
             </div>
@@ -204,7 +202,7 @@
 
 
 <!-- <div class="row mt-4"> -->
-    <!-- <div class="col-xl-8 mb-4">
+<!-- <div class="col-xl-8 mb-4">
         <div class="ct_grey_border_1">
             <div class="ct_d_flex_1 ct_grey_brdr_btm1 pb-3 mb-3">
                 <div>
@@ -230,7 +228,7 @@
 
 
     </div> -->
-    <!-- <div class="col-xl-4 mb-4">
+<!-- <div class="col-xl-4 mb-4">
         <div class="ct_grey_border_1">
             <div class="ct_d_flex_1 ct_grey_brdr_btm1 pb-3 mb-3">
                 <div>
@@ -255,66 +253,45 @@
 
 <div class="row">
     <div class="col-xl-4 mb-4">
-     <div class="ct_grey_border_1">
-         <div class="mb-4">
-             <h5 class="mb-0"><strong>Scope 1</strong></h5>
-         </div>
-         <div id="chart" *ngIf="donotOptions1">
-             <apx-chart
-               [series]="donotOptions1.series"
-               [chart]="donotOptions1.chart"
-               [labels]="donotOptions1.labels"
-               [legend]="donotOptions1.legend"
-               [fill]="donotOptions1.fill"
-               [colors] = "donotOptions1.colors"
-               [dataLabels]="donotOptions1.dataLabels"
-               [responsive]="donotOptions1.responsive"
-             ></apx-chart>
-           </div>
-     </div>
+        <div class="ct_grey_border_1">
+            <div class="mb-4">
+                <h5 class="mb-0"><strong>Scope 1</strong></h5>
+            </div>
+            <div id="chart" *ngIf="donotOptions1">
+                <apx-chart [series]="donotOptions1.series" [chart]="donotOptions1.chart" [labels]="donotOptions1.labels"
+                    [legend]="donotOptions1.legend" [fill]="donotOptions1.fill" [colors]="donotOptions1.colors"
+                    [dataLabels]="donotOptions1.dataLabels" [responsive]="donotOptions1.responsive"></apx-chart>
+            </div>
+        </div>
     </div>
     <div class="col-xl-4 mb-4">
-     <div class="ct_grey_border_1">
-         <div class="mb-4">
-             <h5 class="mb-0"><strong>Scope 2</strong></h5>
-         </div>
-         <div id="chart" *ngIf="donotOptions2">
-             <apx-chart
-               [series]="donotOptions2.series"
-               [chart]="donotOptions2.chart"
-               [labels]="donotOptions2.labels"
-               [fill]="donotOptions2.fill"
-               [colors] = "donotOptions2.colors"
-               [legend]="donotOptions2.legend"
-               [dataLabels]="donotOptions2.dataLabels"
-               [responsive]="donotOptions2.responsive"
-             ></apx-chart>
-           </div>
+        <div class="ct_grey_border_1">
+            <div class="mb-4">
+                <h5 class="mb-0"><strong>Scope 2</strong></h5>
+            </div>
+            <div id="chart" *ngIf="donotOptions2">
+                <apx-chart [series]="donotOptions2.series" [chart]="donotOptions2.chart" [labels]="donotOptions2.labels"
+                    [fill]="donotOptions2.fill" [colors]="donotOptions2.colors" [legend]="donotOptions2.legend"
+                    [dataLabels]="donotOptions2.dataLabels" [responsive]="donotOptions2.responsive"></apx-chart>
+            </div>
+        </div>
     </div>
- </div>
- <div class="col-xl-4 mb-4">
-     <div class="ct_grey_border_1">
-         <div class="mb-4">
-             <h5 class="mb-0"><strong>Scope 3</strong></h5>
-         </div>
-         <div id="chart"  *ngIf="donotOptions3">
-             <apx-chart
-               [series]="donotOptions3.series"
-               [chart]="donotOptions3.chart"
-               [labels]="donotOptions3.labels"
-               [fill]="donotOptions3.fill"
-               [colors]="donotOptions3.colors"
-               [legend]="donotOptions3.legend"
-               [dataLabels]="donotOptions3.dataLabels"
-               [responsive]="donotOptions3.responsive"
-             ></apx-chart>
-           </div>
-   </div>
- </div>
-  
- </div>
+    <div class="col-xl-4 mb-4">
+        <div class="ct_grey_border_1">
+            <div class="mb-4">
+                <h5 class="mb-0"><strong>Scope 3</strong></h5>
+            </div>
+            <div id="chart" *ngIf="donotOptions3">
+                <apx-chart [series]="donotOptions3.series" [chart]="donotOptions3.chart" [labels]="donotOptions3.labels"
+                    [fill]="donotOptions3.fill" [colors]="donotOptions3.colors" [legend]="donotOptions3.legend"
+                    [dataLabels]="donotOptions3.dataLabels" [responsive]="donotOptions3.responsive"></apx-chart>
+            </div>
+        </div>
+    </div>
 
- <!-- <div class="row">
+</div>
+
+<!-- <div class="row">
     <div  *ngIf="donotOptions1">
         <apx-chart
           [series]="donotOptions1.series"
@@ -362,16 +339,18 @@
                 </div>
             </div>
             <div class="ct_emission_vender_list">
-                <div class="d-flex  ct_emission_vender_list_item_12 align-items-center gap-2 justify-content-between " *ngFor="let vendorItems of vendorData">
+                <div class="d-flex  ct_emission_vender_list_item_12 align-items-center gap-2 justify-content-between "
+                    *ngFor="let vendorItems of vendorData">
                     <div>
                         <h5 class="mb-1">{{vendorItems.supplier}}</h5>
-                        
+
                     </div>
                     <div>
-                        <p class="mb-0 d-flex align-items-center">{{vendorItems.emssion}}&nbsp; {{vendorItems.unit}} </p>
+                        <p class="mb-0 d-flex align-items-center">{{vendorItems.emssion}}&nbsp; {{vendorItems.unit}}
+                        </p>
                     </div>
                 </div>
-             
+
             </div>
         </div>
     </div>
@@ -393,9 +372,8 @@
                         aria-selected="true">Upstream</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="pills-Company-tab" data-toggle="pill"
-                        data-target="#pills-Company" type="button" role="tab" aria-controls="pills-Company"
-                        aria-selected="false">Downstream</button>
+                    <button class="nav-link" id="pills-Company-tab" data-toggle="pill" data-target="#pills-Company"
+                        type="button" role="tab" aria-controls="pills-Company" aria-selected="false">Downstream</button>
                 </li>
 
             </ul>
@@ -403,7 +381,8 @@
                 <div class="tab-pane fade show active" id="pills-Personal" role="tabpanel"
                     aria-labelledby="pills-Personal-tab">
                     <div class="ct_emission_vender_list">
-                        <div class="d-flex  align-items-center gap-2 justify-content-between  ct_emission_vender_list_item_12" *ngFor="let items of upstreamArray">
+                        <div class="d-flex  align-items-center gap-2 justify-content-between  ct_emission_vender_list_item_12"
+                            *ngFor="let items of upstreamArray">
                             <div>
                                 <h5 class="mb-1">{{items.category}}</h5>
                                 <!-- <p class="mb-2">33 Units</p> -->
@@ -416,7 +395,8 @@
                 </div>
                 <div class="tab-pane fade" id="pills-Company" role="tabpanel" aria-labelledby="pills-Company-tab">
                     <div class="ct_emission_vender_list">
-                        <div class="d-flex  align-items-center gap-2 justify-content-between  ct_emission_vender_list_item_12" *ngFor="let items of downstreamArray">
+                        <div class="d-flex  align-items-center gap-2 justify-content-between  ct_emission_vender_list_item_12"
+                            *ngFor="let items of downstreamArray">
                             <div>
                                 <h5 class="mb-0">{{items.category}}</h5>
                                 <!-- <p class="mb-2">33 Units</p> -->
@@ -460,16 +440,10 @@
                 </div> -->
             </div>
             <div id="ct_net_zeo_donut" *ngIf="donotoptions">
-                <apx-chart
-                [series]="donotoptions.series"
-                [chart]="donotoptions.chart"
-                [labels]="donotoptions.labels"
-                [legend]="donotoptions.legend"
-                [responsive]="donotoptions.responsive"
-              ></apx-chart>
+                <apx-chart [series]="donotoptions.series" [chart]="donotoptions.chart" [labels]="donotoptions.labels"
+                    [legend]="donotoptions.legend" [responsive]="donotoptions.responsive"></apx-chart>
             </div>
         </div>
     </div>
-  
-</div>
 
+</div>

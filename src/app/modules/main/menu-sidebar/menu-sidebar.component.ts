@@ -63,7 +63,7 @@ export class MenuSidebarComponent implements OnInit {
 
             this.getTenantsById(Number(this.loginInfo.tenantID));
             this.getTenantsById(Number(this.loginInfo.tenantID)).then(() => {
-                console.log("menu", menu);
+               
               
                 if (this.loginInfo.role === 'Super Admin' && this.isExpired) {
                     this.menu =

@@ -212,7 +212,11 @@ export class CarbonOffsettingComponent {
 
   //method to add new group
   saveOffset(data: NgForm) {
-    console.log(data);
+    console.log(data.value);
+    if(parseInt(data.value.scope_1) + parseInt(data.value.scope_2) + parseInt(data.value.scope_3)  != 100){
+        this.notification.showError(' Sum of scope allocation should be equal to 100%', 'Error');
+        return
+    }
     if(!data.valid){
         return
     }
@@ -371,8 +375,7 @@ export class CarbonOffsettingComponent {
       this.selectedRowIndex = index;
       this.groupdetails = group;
       console.log(
-          '🚀 ~ file: group.component.ts:304 ~ GroupComponent ~ selectGroup ~ this.groupdetails:',
-          this.groupdetails
+        this.groupdetails
       );
   }
   //The removeCss function is used to remove CSS styles applied to the body element

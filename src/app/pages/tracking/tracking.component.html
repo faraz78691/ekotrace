@@ -197,7 +197,7 @@
                                                                                     child,
                                                                                     head.manageDataPointCategorySeedID, head.catName
                                                                                 )
-                                                                            " class="col pointer d-flex "
+                                                                            " class="col pointer d-flex"
                                                                             pTooltip="{{ child.subCatName }}"
                                                                             tooltipPosition="bottom">
                                                                             {{ child.subCatName}}
@@ -490,7 +490,7 @@
                                             </div>
                                             <div *ngIf="typeEV == true" class="col-lg-4">
                                                 <label pTooltip="Charging done outside company campus (%)"
-                                                    tooltipPosition="top" for="fname">Charging %
+                                                    tooltipPosition="top" for="fname">Charging outside %
                                                 </label>
                                                 <div class="input-group">
                                                     <input id="chargingInput"
@@ -518,7 +518,7 @@
                                                 [ngClass]="typeEV == true ? 'col-lg-4': typeBusCoach == true ? 'col-lg-4': 'col-lg-4'">
                                                 <label pTooltip="Mode of Data Entry" tooltipPosition="top"
                                                     for="fname">Mode
-                                                    of data entry</label>
+                                                    of data entrys</label>
                                                 <p-dropdown class="ct_select_op_input ct_chev_icon_dark230 
                                             " ngModel [options]="ModeType" optionLabel="modeName"
                                                     optionValue="modeName" name="DEMode" #DEMode="ngModel"
@@ -536,11 +536,9 @@
                                                         placeholder="Enter value" [(ngModel)]="VehicleDE.value" Value
                                                         id="search-input" type="text"
                                                         class="form-control Dashboard-tab text-white" />
-                                                    <p-dropdown
-                                                        class="ct_select_op_input ct_select_op_input ct_position_small_quantity"
-                                                        ngModel [options]="units" optionLabel="UnitName"
-                                                        optionValue="UnitName" [(ngModel)]="dataEntry.unit"
-                                                        name="unitSet" #unitSet="ngModel"></p-dropdown>
+                                                        <div class="ct_quantity_text">
+                                                            <p>{{dataEntry.unit}}</p>
+                                                        </div>
 
                                                 </div>
                                             </div>
@@ -934,8 +932,8 @@
                                                                     required ngModel #distanceInKms="ngModel" />
                                                                 <p-dropdown
                                                                     class="ct_select_op_input ct_position_small_quantity"
-                                                                    ngModel [options]="facilityUnits"
-                                                                    optionLabel="energyTypes" optionValue="energyTypes"
+                                                                    ngModel [options]="distanceTravelled"
+                                                                    optionLabel="unit" optionValue="unit"
                                                                     name="upfacilityUnits" #upfacilityUnits="ngModel">
                                                                 </p-dropdown>
                                                                 <!-- <p class="validation"
@@ -1914,9 +1912,12 @@
                                                                     placeholder="Enter Distance" name="distanceInKms"
                                                                     required ngModel #distanceInKms="ngModel" />
                                                                     
-                                                                <div class="ct_quantity_text">
-                                                                    <p>Km</p>
-                                                                </div>
+                                                                    <p-dropdown
+                                                                    class="ct_select_op_input ct_position_small_quantity"
+                                                                    ngModel [options]="distanceTravelled"
+                                                                    optionLabel="unit" optionValue="unit"
+                                                                    name="unit" #units="ngModel">
+                                                                </p-dropdown>
                                                                 <!-- <p class="validation"
                                                                 *ngIf="distanceInKms.invalid && dataEntryForm.submitted">
                                                                 Distance Travelled by
@@ -2728,9 +2729,12 @@
                                                                     class="form-control Dashboard-tab text-white"
                                                                     placeholder="Enter Distance" name="distanceInKms"
                                                                     required ngModel #distanceInKms="ngModel" />
-                                                                <div class="ct_quantity_text">
-                                                                    <p>Km</p>
-                                                                </div>
+                                                                    <p-dropdown
+                                                                    class="ct_select_op_input ct_position_small_quantity"
+                                                                    ngModel [options]="distanceTravelled"
+                                                                    optionLabel="unit" optionValue="unit"
+                                                                    name="unit" #units="ngModel">
+                                                                </p-dropdown>
                                                                 <!-- <p class="validation"
                                                                 *ngIf="distanceInKms.invalid && dataEntryForm.submitted">
                                                                 Distance Travelled by
@@ -2912,7 +2916,7 @@
                                     </div>
                                 </div>
 
-                                <div class="trackingFooter" *ngIf="categoryId ==23">
+                                <!-- <div class="trackingFooter" *ngIf="categoryId ==23">
                                     <div class="row mt-4 mb-3 mb-5 pb-5 mx-2">
 
                                         <div class="col-12">
@@ -3195,7 +3199,7 @@
                                             </button>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="trackingFooter" *ngIf="categoryId ==24">
                                     <div class="row mt-4 mb-3 mb-5 pb-5 mx-2">
 
@@ -3309,7 +3313,7 @@
                                                                 <p-dropdown
                                                                     class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
                                                                     ngModel [options]="airportGrid"
-                                                                    optionLabel="airport_code"
+                                                                    optionLabel="airport_desc"
                                                                     optionValue="airport_code" name="airport_codefrom"
                                                                     #airport_code="ngModel">
                                                                 </p-dropdown>
@@ -3321,7 +3325,7 @@
                                                                 <p-dropdown
                                                                     class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
                                                                     ngModel [options]="airportGrid"
-                                                                    optionLabel="airport_code"
+                                                                    optionLabel="airport_desc"
                                                                     optionValue="airport_code" name="airport_codeto"
                                                                     #airport_code="ngModel">
                                                                 </p-dropdown>
@@ -3333,7 +3337,7 @@
                                                                 <p-dropdown
                                                                     class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
                                                                     ngModel [options]="airportGrid"
-                                                                    placeholder="Select via" optionLabel="airport_code"
+                                                                    placeholder="Select via" optionLabel="airport_desc"
                                                                     optionValue="airport_code" name="airport_codevia"
                                                                     #airport_code="ngModel">
                                                                 </p-dropdown>

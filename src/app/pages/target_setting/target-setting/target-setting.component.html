@@ -175,7 +175,7 @@
                 <div class="col-md-6 mb-3">
                     <label for="fname">Target Name</label>
                     <input name="target_name" ngModel id="search-input" type="text"
-                        class="form-control Dashboard-tab text-white" placeholder="Enter Project Name"
+                        class="form-control Dashboard-tab text-white" placeholder="Enter Target Name"
                         #groupName="ngModel" [disabled]="isloading" required />
                     <p class="text-danger mb-0" *ngIf="GroupForm.submitted && groupName.errors?.['required']">
                         Group name is required

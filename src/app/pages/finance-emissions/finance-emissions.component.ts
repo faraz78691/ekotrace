@@ -124,7 +124,7 @@ export class FinanceEmissionsComponent {
   uploadedFileUrl: string;
   rootUrl: string;
   fileSelect: File;
-  categoryId: number;
+  
   accordianIndex = 0;
   units: Units[] = [];
   monthString: string;
@@ -226,7 +226,7 @@ export class FinanceEmissionsComponent {
   mode_type: any[] = [];
   marketTypes: any[] = [];
   marketEElecID: any;;
-
+  categoryId = 23;
 
   carFuel_type: any[] = [];
   wasteMethod: string;

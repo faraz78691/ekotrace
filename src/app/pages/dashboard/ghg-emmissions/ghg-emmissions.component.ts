@@ -75,7 +75,6 @@ export type ChartAreaOptions = {
   templateUrl: './ghg-emmissions.component.html',
   styleUrls: ['./ghg-emmissions.component.scss'],
 
-
 })
 export class GhgEmmissionsComponent implements OnDestroy {
   dashboardFacilities$ = new Observable<facilities>();
@@ -254,6 +253,7 @@ export class GhgEmmissionsComponent implements OnDestroy {
       // Process the results of both API calls here
       if (scopeWiseResult) {
         // Handle scopeWise result
+        console.log(scopeWiseResult);
         this.handleScopeWiseResult(scopeWiseResult);
       } else {
         // Handle absence of scopeWise result or error

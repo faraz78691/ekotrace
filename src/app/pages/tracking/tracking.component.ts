@@ -729,15 +729,15 @@ export class TrackingComponent {
                 },
                 {
                     "id": 2,
-                    "unitsExpElec": "Per Day"
+                    "unitsExpElec": " Days"
                 },
                 {
                     "id": 3,
-                    "unitsExpElec": " Per Month"
+                    "unitsExpElec": "Months"
                 },
                 {
                     "id": 4,
-                    "unitsExpElec": " Per Year"
+                    "unitsExpElec": "Years"
                 }
             ]
         this.active = this.items[0];
@@ -4042,11 +4042,8 @@ export class TrackingComponent {
                 {
                     "id": 2,
                     "type": "International"
-                },
-                {
-                    "id": 3,
-                    "type": "Rail"
                 }
+             
                 ]
             this.mode_name = selectedMode;
             this.mode_type = optionvalue;
@@ -4507,20 +4504,11 @@ export class TrackingComponent {
     };
 
     setUnit() {
-        if (this.VehicleDE.modeOfDE == 'Distance Travelled') {
-            this.units.forEach(un => {
-                if (un.unitName == "km") {
-                    this.dataEntry.unit = un.unitName;
-                }
-            })
-            //this.dataEntry.unit = "km";
+        if (this.VehicleDE.modeOfDE == 'Average distance per trip') {
+            this.dataEntry.unit = "km"
         }
         else {
-            this.units.forEach(un => {
-                if (un.unitName == "litre" || un.unitName == 'Litre') {
-                    this.dataEntry.unit = un.unitName;
-                }
-            })
+            this.dataEntry.unit = "litre"
         }
     };
 
