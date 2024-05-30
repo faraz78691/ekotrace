@@ -28,6 +28,11 @@ export class CompanyService {
             environment.baseUrl +  '/getComapnyDetail', id
         );
     };
+    public setHazardNonhazard(data: any): Observable<CompanyDetails> {
+        return this.http.post<CompanyDetails>(
+            '/http://192.168.1.28:4005/addHazardous_nonhazardous', data
+        );
+    };
     public newgetComapnyProfile(): Observable<any> {
         return this.http.get(
             environment.baseUrl +  '/getComapnyCategory'
@@ -38,7 +43,9 @@ export class CompanyService {
             environment.baseUrl +  '/getComapnySubCategory' , data
         );
     };
-
+    getWasteType(): Observable<any> {
+        return this.http.get(environment.baseUrl + '/getendoflife_waste_type')
+    };
     sendmailForPlanRenewal() {
         let url = this.rootUrl + 'sendplanrenewalmail';
         return this.http.post(url, String);

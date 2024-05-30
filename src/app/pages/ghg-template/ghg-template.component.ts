@@ -121,6 +121,8 @@ export class GhgTemplateComponent {
         let tenantID = this.loginInfo.tenantID;
         this.facilityGet(tenantID);
 
+        this.getAllSeedData()
+
         this.items = [
             {
                 label: 'Scope 1',
@@ -154,6 +156,7 @@ export class GhgTemplateComponent {
     ngOnChanges() {
         let tenantId = this.loginInfo.tenantID;
         this.facilityGet(tenantId);
+
     }
 
     //method for add new facility
@@ -379,9 +382,9 @@ export class GhgTemplateComponent {
         formdata.set('ID', id)
         this.facilityService.newUsersByFacilityID(formdata.toString()).subscribe((result) => {
             console.log(result);
-            this.selectedScope1 = result[0].scope1;
-            this.selectedScope2 = result[0].scope2;
-            this.selectedScope3 = result[0].scope3;
+            // this.selectedScope1 = result[0].scope1;
+            // this.selectedScope2 = result[0].scope2;
+            // this.selectedScope3 = result[0].scope3;
             this.facilityDetails = result[0];
             const facilityUsers = result[0].userInfoModels;
 
@@ -506,82 +509,7 @@ export class GhgTemplateComponent {
         this.facilityService.getNewSeedData().subscribe({
             next: (response: any) => {
 
-
                 this.scope1Category = response.scope1;
-
-                // this.scope1Category = [
-                //     {
-                //         "label": "Stationary Combustion",
-                //         "value": 1,
-                //         "scopeid": 1,
-                //         "items": [
-                //             {
-                //                 "label": "Liquid Fuels",
-                //                 "value":1
-                //             },
-                //             {
-                //                 "label": "Solid Fuels",
-                //                 "value": 2
-                //             },
-                //             {
-                //                 "label": "Gaseous Fuels",
-                //                 "value": 3
-                //             },
-                //             {
-                //                 "label": "Biofuel",
-                //                 "value": 4
-                //             },
-                //             {
-                //                 "label": "Biomass",
-                //                 "value": 5
-                //             },
-                //             {
-                //                 "label": "Biogas",
-                //                 "value": 6
-                //             }
-                //         ]
-                //     },
-                //     {
-                //         "label": "Refrigerants",
-                //         "value": 2,
-                //         "scopeid": 1,
-                //         "items": [
-                //             {
-                //                 "label": "Refrigerants",
-                //                 "value": 7
-                //             }
-                //         ]
-                //     },
-                //     {
-                //         "label": "Fire Extinguisher",
-                //         "value": 3,
-                //         "scopeid": 1,
-                //         "items": [
-                //             {
-                //                 "label": "Fire Extinguisher (CO2 Type)",
-                //                 "value": 8
-                //             }
-                //         ]
-                //     },
-                //     {
-                //         "label": "Company Owned Vehicles",
-                //         "value": 6,
-                //         "scopeid": 1,
-                //         "items": [
-                //             {
-                //                 "label": "Passenger Vehicle",
-                //                 "value": 10
-                //             },
-                //             {
-                //                 "label": "Delivery Vehicle",
-                //                 "value": 11
-                //             }
-                //         ]
-                //     }
-                // ],
-
-
-
                 this.scope2Category = response.scope2;
                 this.scope3Category = response.scope3;
                 // this.seedData.forEach((seed) => {
@@ -709,9 +637,12 @@ export class GhgTemplateComponent {
     }
     //method for save manage data points
     SaveManageDataPoint() {
-
+        console.log(this.selectedValues);
+if(this.selectedValues.length == 0){
+return
+}
         const fomdata = new URLSearchParams();
-        fomdata.set('FacilityId', this.id_var);
+        fomdata.set('FacilityId', this.selectedValues.toString());
         fomdata.set('TenantID', this.loginInfo.tenantID.toString());
 
         const scope1 = [];
@@ -803,125 +734,6 @@ export class GhgTemplateComponent {
             fomdata.set('Scope3', scope3Stringy);
 
         }
-
-        if (this.selectedScope4.length > 0) {
-            const selectedFacilityIds = this.selectedScope4.map(facility => facility.id).join(',');
-            //console.log('Selected Facility Ids:', selectedFacilityIds);
-            fomdata.set('FacilityId', selectedFacilityIds);
-        }
-
-
-
-
-        // console.log(this.selectedScope3);
-
-        // this.manageDataPoint1 = []
-        // if (
-        //     this.savedData.length > 0
-
-        // ) {
-        //     if (this.savedData[0].facilityId == this.facilityDetails.ID) {
-        //         this.updateDataPoint();
-
-        //     }
-        // } else {
-        //     this.seedData.forEach(scope => {
-        //         const mdp = new ManageDataPoint1();
-        //         mdp.scopeID = scope.id;
-        //         mdp.facilityId = this.facilityDetails.ID;
-        //         mdp.fiscalYear = this.trackingService.getYear(this.year);
-        //         mdp.categorySeedData =
-        //             scope.categorySeedData.map((element) => {
-        //                 return {
-        //                     ...element,
-        //                     subCategorySeedDatas:
-        //                         element.subCategorySeedDatas.filter(
-        //                             (subElement) => subElement.active === true
-        //                         )
-        //                 };
-        //             });
-
-        //         this.manageDataPoint1.push(mdp);
-        //     })
-
-        //     // from here
-
-        //     this.savedDataPoint = [];
-        //     this.manageDataPoint1.forEach(scopewise => {
-        //         const scopedataforsave = new savedDataPoint();
-        //         scopedataforsave.TenantID = this.loginInfo.tenantID;
-        //         scopedataforsave.facilityId = scopewise.facilityId;
-        //         scopedataforsave.fiscalYear = this.trackingService.getYear(this.year);
-        //         scopedataforsave.scopeID = scopewise.scopeID;
-        //         scopedataforsave.categorySeedData = [];
-        //         scopewise.categorySeedData.forEach((seed) => {
-        //             this.savedDataPointCat = new SavedDataPointCategory();
-        //             this.savedDataPointCat.manageDataPointCategorySeedID = seed.id;
-        //             this.savedDataPointCat.manageDataPointId = seed.manageScopeId;
-        //             this.savedDataPointCat.TenantID = this.loginInfo.tenantID;
-        //             this.savedDataPointCat.subCategorySeedDatas = [];
-
-        //             scopedataforsave.categorySeedData.push(
-        //                 this.savedDataPointCat
-        //             );
-
-        //             seed.subCategorySeedDatas.forEach((cat) => {
-        //                 this.savedDataPointSubCat = new SavedDataPointSubCategory();
-        //                 this.savedDataPointSubCat.manageDataPointSubCategorySeedID =
-        //                     cat.id;
-        //                 this.savedDataPointSubCat.manageDataPointCategoriesId =
-        //                     cat.categorySeedDataId;
-        //                 this.savedDataPointSubCat.isMandatory = cat.isMandatory;
-        //                 this.savedDataPointSubCat.active = cat.active;
-        //                 this.savedDataPointSubCat.item = cat.item;
-        //                 this.savedDataPointSubCat.TenantID =
-        //                     this.loginInfo.tenantID;
-        //                 this.savedDataPointCat.subCategorySeedDatas.push(
-        //                     this.savedDataPointSubCat
-        //                 );
-        //             });
-        //         });
-        //         this.savedDataPoint.push(scopedataforsave)
-        //     })
-        // this.savedDataPoint.id = this.manageDataPoint1.id;
-        // this.savedDataPoint.scopeID = this.manageDataPoint1.scopeID;
-        // this.savedDataPoint.facilityId = this.manageDataPoint1.facilityId;
-        // this.savedDataPoint.fiscalYear = this.manageDataPoint1.fiscalYear;
-        // this.savedDataPoint.TenantID = this.loginInfo.tenantID;
-        // this.savedDataPoint.categorySeedData = [];
-
-        // this.manageDataPoint1.categorySeedData.forEach((seed) => {
-        //     this.savedDataPointCat = new SavedDataPointCategory();
-        //     this.savedDataPointCat.manageDataPointCategorySeedID = seed.id;
-        //     this.savedDataPointCat.manageDataPointId = seed.manageScopeId;
-        //     this.savedDataPointCat.TenantID = this.loginInfo.tenantID;
-        //     this.savedDataPointCat.subCategorySeedDatas = [];
-
-        //     this.savedDataPoint.categorySeedData.push(
-        //         this.savedDataPointCat
-        //     );
-
-        //     seed.subCategorySeedDatas.forEach((cat) => {
-        //         this.savedDataPointSubCat = new SavedDataPointSubCategory();
-        //         this.savedDataPointSubCat.manageDataPointSubCategorySeedID =
-        //             cat.id;
-        //         this.savedDataPointSubCat.manageDataPointCategoriesId =
-        //             cat.categorySeedDataId;
-        //         this.savedDataPointSubCat.isMandatory = cat.isMandatory;
-        //         this.savedDataPointSubCat.active = cat.active;
-        //         this.savedDataPointSubCat.item = cat.item;
-        //         this.savedDataPointSubCat.TenantID =
-        //             this.loginInfo.tenantID;
-        //         this.savedDataPointCat.subCategorySeedDatas.push(
-        //             this.savedDataPointSubCat
-        //         );
-        //     });
-        // });
-        // }
-
-
-        
-
 
         const isSubcategoryEmptyForAllCategories = this.selectedScope1.length == 0 && this.selectedScope2.length == 0 && this.selectedScope3.length == 0
         if (isSubcategoryEmptyForAllCategories == true) {

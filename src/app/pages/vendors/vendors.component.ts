@@ -55,6 +55,7 @@ export class VendorsComponent {
   public x_axis_years: any[] = [];
   display = 'none';
   visible: boolean;
+  visible2: boolean;
   selectedRole = '';
   Alert: boolean = false;
   RoleIcon: string = '';
@@ -81,6 +82,7 @@ export class VendorsComponent {
   target_type: any[] = [];
   targetKPI: any[] = [];
   responseGraph: any[] = [];
+  groupsCostList: any[] = [];
   id: any;
   isgroupExist: boolean = false;
   selectedFaciltiy: any;
@@ -137,6 +139,7 @@ export class VendorsComponent {
     // this.GetAllFacility();
     let tenantID = this.loginInfo.tenantID;
     this.GetVendors();
+    this.GetCostCetnre();
     this.updatedtheme = this.themeservice.getValue('theme');
   }
   //checks upadated theme
@@ -172,6 +175,31 @@ export class VendorsComponent {
       complete: () => console.info('Group Added')
     });
   };
+  GetCostCetnre() {
+    //   let formData = new URLSearchParams();
+
+    //   formData.set('tenant_id', tenantID.toString());
+
+    this.GroupService.getCostCentre().subscribe({
+      next: (response) => {
+
+        if (response.success == true) {
+          this.groupsCostList = response.categories;
+          if (this.groupsList.length > 0) {
+            this.groupdetails = this.groupsList[0];
+            this.groupdata = true;
+          } else {
+            this.groupdata = false;
+          }
+   
+        }
+      },
+      error: (err) => {
+        console.error('errrrrrr>>>>>>', err);
+      },
+      complete: () => console.info('Group Added')
+    });
+  };
 
 
   //method to add new group
@@ -181,6 +209,7 @@ export class VendorsComponent {
 
     formData.append('name', data.value.vendor_name);
     formData.append('address', data.value.address);
+    formData.append('refer_id', data.value.refer_id);
   
 
     this.GroupService.addVendors(formData.toString()).subscribe({
@@ -208,34 +237,30 @@ export class VendorsComponent {
   };
 
 
-  ViewGraph(percentage, base_year, target_year, intensity, scope) {
-    console.log(intensity);
-
+  //method to add new group
+  saveCostCentre(data: NgForm) {
+console.log(data);
     const formData = new URLSearchParams();
 
-    formData.append('percentage', percentage);
-    formData.append('base_year', base_year);
-    formData.append('target_year', target_year);
-    if (intensity == 'Emission Reduction') {
-      formData.append('intensity', 'A');
-    } else {
-      formData.append('intensity', 'P');
-    }
+    formData.append('cost_center_name', data.value.cost_center_name);
+    formData.append('cost_center_refer_id', data.value.cost_center_refer_id);
+  
 
-
-    this.GroupService.getGraphsTarget(formData.toString()).subscribe({
+    this.GroupService.AddCostcenter(formData.toString()).subscribe({
       next: (response) => {
         if (response.success == true) {
-          const Data = response;
-       
-
-
-          this.visible = false;
-
+          this.visible2 = false;
+          this.notification.showSuccess(
+            ' Cost Centre Added successfully',
+            'Success'
+          );
+          this.GetCostCetnre();
           this.GroupForm.reset();
-        }else{
-          this.notification.showInfo('Enter base year and current year emissions','')
         }
+        // return
+        //   this.getOffset(this.loginInfo.tenantID);
+        this.visible2 = false;
+ 
       },
       error: (err) => {
         this.notification.showError('Group added failed.', 'Error');
@@ -243,7 +268,10 @@ export class VendorsComponent {
       },
       complete: () => console.info('Group Added')
     });
-  }
+  };
+
+
+ 
 
   
 
@@ -312,11 +340,20 @@ export class VendorsComponent {
     }
   }
   //display a dialog for add a group.
-  showAddGroupDialog() {
-    this.visible = true;
-    this.groupdetails = new Group();
-    this.FormEdit = false;
-    this.resetForm();
+  showAddGroupDialog(id:any) {
+    if(id ==2){
+      this.visible = false;
+      this.visible2 = true;
+      this.groupdetails = new Group();
+      this.FormEdit = false;
+      this.resetForm();
+    }else {
+      this.visible2 = false;
+      this.visible = true;
+      this.groupdetails = new Group();
+      this.FormEdit = false;
+      this.resetForm();
+    }
   }
   //sets the selected group details
   selectGroup(group: Group, index: number) {

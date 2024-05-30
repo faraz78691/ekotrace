@@ -149,42 +149,7 @@ export class GhgEmmissionsComponent implements OnDestroy {
       })
     );
 
-    this.donotoptions = {
-      series: [55, 45],
-      chart: {
-        width: "100%",
-        height: 350,
-        type: "donut"
-      },
-      dataLabels: {
-        enabled: true
-      },
-      // fill: {
-      //   type: "gradient"
-      // },
-
-      legend: {
-        position: "bottom",
-        fontSize: '15px',
-        floating: false,
-        horizontalAlign: 'left',
-      },
-      labels: ['Reduction', "Emission"],
-      colors: ['#F3722C', '#0068F2', '#F8961E', '#ACE1AF', '#7BAFD4', '#B284BE'],
-      responsive: [
-        {
-          breakpoint: 480,
-          options: {
-            chart: {
-              width: 200
-            },
-            legend: {
-              position: "bottom"
-            }
-          }
-        }
-      ]
-    };
+   
 
   };
 
@@ -228,10 +193,17 @@ export class GhgEmmissionsComponent implements OnDestroy {
         return of(null);
       })
     );
+   
 
     const formVendorData = new URLSearchParams();
     formVendorData.set('facilities', facility);
     const GVEndorActivity$ = this.dashboardService.GVEndorActivity(formVendorData.toString()).pipe(
+      catchError(error => {
+        console.error('Error occurred in topWiseEmission API call:', error);
+        return of(null);
+      })
+    );
+    const getPathNetActivity$ = this.dashboardService.getPathNet(formData.toString()).pipe(
       catchError(error => {
         console.error('Error occurred in topWiseEmission API call:', error);
         return of(null);
@@ -244,9 +216,10 @@ export class GhgEmmissionsComponent implements OnDestroy {
       topWiseEmission$,
       getScopeSDonuts$,
       getScopeActivity$,
-      GVEndorActivity$
-    ]).subscribe((results: [any, any, any, any, any]) => {
-      const [scopeWiseResult, topWiseResult, getScopeSDonuts, getScopeActivity, getVendorE] = results;
+      GVEndorActivity$,
+      getPathNetActivity$
+    ]).subscribe((results: [any, any, any, any, any,any]) => {
+      const [scopeWiseResult, topWiseResult, getScopeSDonuts, getScopeActivity, getVendorE,getPathNetZero] = results;
 
 
 
@@ -391,6 +364,47 @@ export class GhgEmmissionsComponent implements OnDestroy {
       }
       if (getVendorE) {
         this.vendorData = getVendorE.purchaseGoods
+      }
+
+      if(getPathNetZero){
+        
+
+        this.donotoptions = {
+          series: getPathNetZero.series,
+          chart: {
+            width: "100%",
+            height: 350,
+            type: "donut"
+          },
+          dataLabels: {
+            enabled: true
+          },
+          // fill: {
+          //   type: "gradient"
+          // },
+
+          legend: {
+            position: "bottom",
+            fontSize: '15px',
+            floating: false,
+            horizontalAlign: 'left',
+          },
+          labels: getPathNetZero.hazardousmonth,
+          colors: ['#F3722C', '#0068F2', '#F8961E'],
+          responsive: [
+            {
+              breakpoint: 480,
+              options: {
+                chart: {
+                  width: 200
+                },
+                legend: {
+                  position: "bottom"
+                }
+              }
+            }
+          ]
+        };
       }
     });
   };
