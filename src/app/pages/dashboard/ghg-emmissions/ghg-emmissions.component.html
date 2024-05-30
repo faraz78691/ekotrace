@@ -20,7 +20,7 @@
                 <div class="ct_grey_border_1">
                     <div class="ct_d_flex_1 ct_grey_brdr_btm1 pb-3 mb-3">
                         <div>
-                            <h5 class="ct_font_24"><strong>Scope wise emission</strong></h5>
+                            <h5 class="ct_font_24 ct_fw_600">Scope wise emission</h5>
                         </div>
                     </div>
                     <div id="scope_wise_emission" *ngIf="chartOptions">
@@ -37,7 +37,7 @@
             <div>
                 <div class="ct_d_flex_1">
                     <div class="ct_reduction_title">
-                        <h4 class="text-dark">Top 5 Contributors of Total Emissions</h4>
+                        <h4 class="text-dark ct_fs_24 ">Top 5 Contributors of Total Emissions</h4>
                         <!-- <p class="mb-0 text-dark">FY - 2023-24</p> -->
                     </div>
                     <!-- <div>
@@ -52,7 +52,7 @@
                     <div class="ct_colo_2 col-md-6 mb-3" *ngFor="let fItems of topFIveE">
                         <div class="ct_total_emission_card">
                             <!-- <p class="mb-2"><strong>1</strong></p> -->
-                            <h2><strong>{{fItems.emission}}</strong></h2>
+                            <h2>{{fItems.emission}}</h2>
                             <p class="mb-2 ">tCO2e</p>
                             <button class="ct_scope_btn">{{fItems.scope}}</button>
                             <h6>{{fItems.category}}</h6>
@@ -140,55 +140,64 @@
                             aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                 </div> -->
-                <div class="ct_grey_border_1 ct_py_padd mt-3 " (click)="status = 1"
+                <div class="ct_grey_border_1 ct_py_padd mt-3 py-2 " (click)="status = 1"
                     [ngClass]="status ==1 ? 'ct_progress_active1': '' ">
-                    <div class="ct_d_flex_1">
-                        <div class="d-flex align-items-center ct_gap_20 flex-wrap">
-                            <h5 class="mb-0"><strong>{{scope1E}}</strong></h5>
+                    <div class="">
+                        <div class="d-flex align-items-center ct_gap_20 flex-wrap justify-content-between mb-2">
+                            <div>
+                                <h5 class="mb-0"><strong>{{scope1E}}</strong></h5>
                             <p class="mb-0">tCO2e</p>
+                            </div>
+                            <h5 class="mb-0"><strong>Scope 1</strong></h5>
                         </div>
                         <div class="d-flex align-items-center ct_gap_20 flex-wrap">
                             <p class="mb-0" style="color: #213D49;">{{progress1 | number:'1.2-2'}}%</p>
-                            <h5 class="mb-0"><strong>Scope 1</strong></h5>
+                           
                         </div>
                     </div>
                     <div class="progress mt-4" style="height: 10px;">
                         <div class="progress-bar" role="progressbar" [ngStyle]="{width:progress1 +'%'}"
-                            style="background-color: #213D49; border-radius: 2px;" aria-valuenow="50" aria-valuemin="0"
+                            style="background-color: #11235aa8; border-radius: 2px;" aria-valuenow="50" aria-valuemin="0"
                             aria-valuemax="100"></div>
                     </div>
                 </div>
-                <div class="ct_grey_border_1 ct_py_padd mt-3" (click)="status = 2"
+                <div class="ct_grey_border_1 ct_py_padd mt-3 py-2" (click)="status = 2"
                     [ngClass]="status ==2 ? 'ct_progress_active1': '' ">
-                    <div class="ct_d_flex_1">
-                        <div class="d-flex align-items-center ct_gap_20 flex-wrap">
+                    <div class="">
+                        <div class="d-flex  ct_gap_20 flex-wrap justify-content-between mb-2">
+                           <div>
                             <h5 class="mb-0"><strong>{{scope2E}}</strong></h5>
                             <p class="mb-0">tCO2e</p>
+                           </div>
+                           <h5 class="mb-0"><strong>Scope 2</strong></h5>
                         </div>
                         <div class="d-flex align-items-center ct_gap_20 flex-wrap">
                             <p class="mb-0" style="color: #46A5CD;">{{progress2 | number:'1.2-2'}}%</p>
-                            <h5 class="mb-0"><strong>Scope 2</strong></h5>
+                          
                         </div>
                     </div>
-                    <div class="progress mt-4" style="height: 10px;">
+                    <div class="progress mt-2" style="height: 10px;">
                         <div class="progress-bar" role="progressbar" [ngStyle]="{width:progress2 +'%'}"
                             style="background-color: #46A5CD; border-radius: 2px;" aria-valuenow="25" aria-valuemin="0"
                             aria-valuemax="100"></div>
                     </div>
                 </div>
-                <div class="ct_grey_border_1 ct_py_padd mt-3" (click)="status = 3"
+                <div class="ct_grey_border_1 ct_py_padd mt-3 py-2" (click)="status = 3"
                     [ngClass]="status ==3 ? 'ct_progress_active1': '' ">
-                    <div class="ct_d_flex_1">
-                        <div class="d-flex align-items-center ct_gap_20 flex-wrap">
+                    <div class="">
+                        <div class="d-flex  ct_gap_20 flex-wrap justify-content-between mb-2">
+                           <div>
                             <h5 class="mb-0"><strong>{{scope3E}}</strong></h5>
                             <p class="mb-0">tCO2e</p>
+                           </div>
+                           <h5 class="mb-0"><strong>Scope 3</strong></h5>
                         </div>
                         <div class="d-flex align-items-center ct_gap_20 flex-wrap">
                             <p class="mb-0" style="color: #FFD914;">{{progress3 | number:'1.2-2'}}%</p>
-                            <h5 class="mb-0"><strong>Scope 3</strong></h5>
+                          
                         </div>
                     </div>
-                    <div class="progress mt-4" style="height: 10px;">
+                    <div class="progress mt-2" style="height: 10px;">
                         <div class="progress-bar" role="progressbar" [ngStyle]="{width:progress3 +'%'}"
                             style="background-color: #FFD914; border-radius: 2px;" aria-valuenow="25" aria-valuemin="0"
                             aria-valuemax="100"></div>
@@ -255,7 +264,7 @@
     <div class="col-xl-4 mb-4">
         <div class="ct_grey_border_1">
             <div class="mb-4">
-                <h5 class="mb-0"><strong>Scope 1</strong></h5>
+                <h5 class="mb-0 ct_fw_600">Scope 1</h5>
             </div>
             <div id="chart" *ngIf="donotOptions1">
                 <apx-chart [series]="donotOptions1.series" [chart]="donotOptions1.chart" [labels]="donotOptions1.labels"
@@ -267,7 +276,7 @@
     <div class="col-xl-4 mb-4">
         <div class="ct_grey_border_1">
             <div class="mb-4">
-                <h5 class="mb-0"><strong>Scope 2</strong></h5>
+                <h5 class="mb-0 ct_fw_600">Scope 2</h5>
             </div>
             <div id="chart" *ngIf="donotOptions2">
                 <apx-chart [series]="donotOptions2.series" [chart]="donotOptions2.chart" [labels]="donotOptions2.labels"
@@ -279,7 +288,7 @@
     <div class="col-xl-4 mb-4">
         <div class="ct_grey_border_1">
             <div class="mb-4">
-                <h5 class="mb-0"><strong>Scope 3</strong></h5>
+                <h5 class="mb-0 ct_fw_600">Scope 3</h5>
             </div>
             <div id="chart" *ngIf="donotOptions3">
                 <apx-chart [series]="donotOptions3.series" [chart]="donotOptions3.chart" [labels]="donotOptions3.labels"
@@ -332,7 +341,7 @@
         <div class="ct_grey_border_1 ">
             <div class="ct_d_flex_1  pb-3">
                 <div>
-                    <h5><strong>Top emissions by vendor</strong></h5>
+                    <h5 class="ct_fw_600">Top emissions by vendor</h5>
                 </div>
                 <div>
                     <!-- <a href="#" class="ct_view_all_link">View All</a> -->
@@ -358,7 +367,7 @@
         <div class="ct_grey_border_1">
             <div class="ct_d_flex_1  pb-3">
                 <div>
-                    <h5><strong>Emission by Activity</strong></h5>
+                    <h5 class="ct_fw_600">Emission by Activity</h5>
                 </div>
                 <div>
                     <!-- <a href="#" class="ct_view_all_link">View All</a> -->
@@ -433,7 +442,7 @@
         <div class="ct_grey_border_1">
             <div class="ct_d_flex_1 ct_grey_brdr_btm1 pb-3 mb-3">
                 <div>
-                    <h5 class="mb-0"><strong>Path to net-zero</strong></h5>
+                    <h5 class="mb-0 ct_fw_600">Path to net-zero</h5>
                 </div>
                 <!-- <div class="ct_info_icon">
                     <i class="fa-solid fa-info"></i>
