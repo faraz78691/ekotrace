@@ -423,5 +423,8 @@ export class DashboardService {
     public BreakDownEmssion(admininfo) {
         return this.http.post(this.apiURL + '/dashboardWasteBreakdown', admininfo);
     };
+    public hazardGRash(admininfo) {
+        return this.http.post(this.apiURL + '/dashboardWasteEmissionhaz', admininfo);
+    };
 
 }

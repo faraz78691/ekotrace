@@ -33,6 +33,11 @@ export class CompanyService {
             '/http://192.168.1.28:4005/addHazardous_nonhazardous', data
         );
     };
+    public updatefinancial_year(data: any): Observable<any> {
+        return this.http.post<any>(
+            environment.baseUrl + '/updatefinancial_year', data
+        );
+    };
     public newgetComapnyProfile(): Observable<any> {
         return this.http.get(
             environment.baseUrl +  '/getComapnyCategory'

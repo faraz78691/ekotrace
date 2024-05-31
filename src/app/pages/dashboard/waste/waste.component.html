@@ -35,8 +35,8 @@
         <div class="row">
 
             <div class="col-xl-3 mb-4">
-                <div class="ct_dark_grey_bg1">
-                    <h4>Waste disposed (tonnes)</h4>
+                <div class="ct_dark_grey_bg1 mb-4">
+                    <h4>Waste disposed </h4>
                     <div class="row pt-3">
                         <div class="col-lg-6 mb-2">
                             <h5>{{UpWaste}}</h5>
@@ -45,7 +45,7 @@
 
                     </div>
                 </div>
-                <div class="ct_dark_grey_bg1 ">
+                <div class="ct_dark_grey_bg1 mb-4">
                     <h4>Emissions from Waste </h4>
                     <div class="row  pt-3">
                         <div class="col-lg-6 mb-2">
@@ -55,7 +55,7 @@
 
                     </div>
                 </div>
-                <div class="ct_dark_grey_bg1 ">
+                <div class="ct_dark_grey_bg1 mb-4">
                     <h4> Waste Diversion </h4>
                     <div class="row  pt-3">
                         <div class="col-lg-6 mb-2">
@@ -89,8 +89,8 @@
                 </div>
             </div> -->
             <div class="col-xl-3  mb-4">
-                <div class="ct_grey_border_1">
-                    <div class="ct_d_flex_1 ct_grey_brdr_btm1 pb-3 mb-3">
+                <div class="ct_grey_border_1 h-auto" style="height: 436px !important;">
+                    <div class="ct_d_flex_1 ct_grey_brdr_btm1 pb-3 mb-3 ">
                         <div>
                             <h5 class="ct_font_16"><strong>Emissions from Waste types</strong></h5>
                             <h3><strong>{{totaltype | number:'1.2-2'}}</strong></h3>
@@ -118,7 +118,7 @@
                 </div>
             </div>
             <div class="col-xl-6 mb-4">
-                <div class="ct_grey_border_1 ">
+                <div class="ct_grey_border_1 h-auto ">
                     <div class="ct_d_flex_1 ct_grey_brdr_btm1 pb-3 mb-3">
                         <div>
                             <h5 class="ct_font_16"><strong>Hazardous & Non Hazardous waste</strong></h5>
@@ -127,11 +127,12 @@
                         </div>
 
                     </div>
-                    <div id="ct_emission_by_month" *ngIf="groupChart">
-                        <apx-chart [series]="groupChart.series" [chart]="groupChart.chart"
-                            [dataLabels]="groupChart.dataLabels" [plotOptions]="groupChart.plotOptions"
-                            [yaxis]="groupChart.yaxis" [xaxis]="groupChart.xaxis"
-                            [colors]="groupChart.colors"></apx-chart>
+                    <div id="ct_emission_by_month" *ngIf="donotOptions4">
+                        <div id="ct_cost_center" *ngIf="donotOptions4">
+                            <apx-chart [series]="donotOptions4.series" [chart]="donotOptions4.chart"
+                                [labels]="donotOptions4.labels" [legend]="donotOptions4.legend"
+                                [responsive]="donotOptions4.responsive"></apx-chart>
+                        </div>
                     </div>
                 </div>
             </div>

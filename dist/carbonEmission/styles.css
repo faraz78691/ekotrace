@@ -8427,10 +8427,6 @@ app-header .navbar {
   height: auto;
 }
 
-.ct_scroll_60012_left {
-  overflow-y: auto;
-}
-
 .border {
   border: 1px solid #80a745 !important;
 }
@@ -8478,6 +8474,7 @@ app-header .navbar {
   display: flex !important;
   justify-content: center !important;
   box-shadow: 0px 0px 25px rgba(0, 0, 10, 0.09);
+  border: 1px solid #d8d8d8;
 }
 
 .facilityDialog {
@@ -10244,16 +10241,17 @@ h1.bft-edit-form-title {
 }
 
 .ct_scroll_60012 .p-tabview-panels {
-  height: 543px;
+  height: auto;
   width: 100%;
   position: relative;
   overflow: hidden;
   overflow-y: auto;
-  max-height: 543px;
+  height: calc(100vh - 230px);
 }
 
 .ct_scroll_60012 .p-tabview-panels .p-tabview-panel {
   max-width: calc(100% - 16px);
+  height: 100%;
 }
 
 /* width */
@@ -10284,6 +10282,33 @@ h1.bft-edit-form-title {
 .ct_remove_side_bar_10 a.brand-link.ct_logo_collape {
   top: 0px !important;
   padding-block: 10px;
+}
+
+.cd_requst__static12 {
+  height: auto !important;
+}
+
+.cd_requst__static12 .p-datatable-wrapper {
+  height: 531px;
+}
+
+.p-paginator-rpp-options.p-dropdown.p-component {
+  background-color: transparent !important;
+}
+
+.p-paginator-rpp-options.p-dropdown.p-component .p-dropdown .p-dropdown-trigger {
+  color: #000 !important;
+}
+
+.ct_multi_select_overlap_text_302 .p-element.p-multiselect-label-container {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 200px;
+}
+
+.ct_overflow_hidden_hide_585 .ng-tns-c3624468095-0.p-dialog-content {
+  overflow-y: unset !important;
 }
 /*!******************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[5].rules[0].oneOf[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[5].rules[0].oneOf[0].use[2]!./node_modules/ngx-toastr/toastr.css?ngGlobalStyle ***!

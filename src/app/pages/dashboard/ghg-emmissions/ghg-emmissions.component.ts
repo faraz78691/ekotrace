@@ -115,6 +115,7 @@ export class GhgEmmissionsComponent implements OnDestroy {
   maxYear: any;
   disabledDates: Date[];
   status =1;
+  scopeMonths :any[]= [];
   constructor(private router: Router,
     private route: ActivatedRoute,
     private facilityService: FacilityService,
@@ -411,7 +412,7 @@ export class GhgEmmissionsComponent implements OnDestroy {
 
   // Handle the scopeWiseResult
   handleScopeWiseResult(scopeWiseResult: any) {
-
+this.scopeMonths = scopeWiseResult.month;
     this.scopeWiseSeries = scopeWiseResult.series;
     this.series_graph = scopeWiseResult.series_graph;
     console.log(this.scopeWiseSeries);
@@ -482,7 +483,7 @@ export class GhgEmmissionsComponent implements OnDestroy {
             fontSize: '12px'
           }
         },
-        categories: ['Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar']
+        categories: this.scopeMonths
       },
       yaxis: {
 

@@ -27,6 +27,7 @@ export class WasteComponent {
   public donotOptions1: Partial<ChartOptions2>;
   public upDowndonotOptions1: Partial<ChartOptions2>;
   public donotOptions2: Partial<ChartOptions2>;
+  public donotOptions4: Partial<ChartOptions2>;
   public pieChart: Partial<ChartOptions2>;
   public groupChart: Partial<Chart3Options>;
   dashboardData: any[] = [];
@@ -161,6 +162,12 @@ export class WasteComponent {
         return of(null); // Return null or default value in case of error
       })
     );
+    const getHazardType$ = this.dashboardService.hazardGRash(formData.toString()).pipe(
+      catchError(error => {
+        console.error('Error occurred in topWiseEmission API call:', error);
+        return of(null); // Return null or default value in case of error
+      })
+    );
   
 
 
@@ -170,10 +177,11 @@ export class WasteComponent {
       topWiseEmission$,
       getScopeSDonuts$,
       getUpDownDonuts$,
-      getBRreakdownEmission$
+      getBRreakdownEmission$,
+      getHazardType$
 
-    ]).subscribe((results: [any, any, any, any, any]) => {
-      const [scopeWiseResult, topWiseResult, getALLEmisions, getUpDownDonuts, getBRreakdownEmission] = results;
+    ]).subscribe((results: [any, any, any, any, any,any]) => {
+      const [scopeWiseResult, topWiseResult, getALLEmisions, getUpDownDonuts, getBRreakdownEmission,getHazardType] = results;
       // Process the results of both API calls here
       if (scopeWiseResult) {
         console.log(scopeWiseResult);
@@ -395,6 +403,45 @@ export class WasteComponent {
             horizontalAlign: 'left',
           },
           labels: this.labelScopeDonut2,
+          colors: ['#F3722C', '#0068F2', '#F8961E','#213D49'],
+          responsive: [
+            {
+              breakpoint: 480,
+              options: {
+                chart: {
+                  width: 200
+                },
+                legend: {
+                  position: "bottom"
+                }
+              }
+            }
+          ]
+        };
+      }
+      if(getHazardType){
+        console.log(getHazardType);
+        this.donotOptions4 = {
+          series: getHazardType.series,
+          chart: {
+            width: "100%",
+            height: 350,
+            type: "donut"
+          },
+          dataLabels: {
+            enabled: true
+          },
+          // fill: {
+          //   type: "gradient"
+          // },
+
+          legend: {
+            position: "bottom",
+            fontSize: '15px',
+            floating: false,
+            horizontalAlign: 'left',
+          },
+          labels: getHazardType.hazardousmonth,
           colors: ['#F3722C', '#0068F2', '#F8961E','#213D49'],
           responsive: [
             {
