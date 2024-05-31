@@ -77,7 +77,7 @@ a{
 }
 .ct_reduction_title h4{
     font-size: 24px;
-    font-weight: 700;
+    font-weight: 600;
     color: #fff;
 }
 .ct_d_flex_1{
@@ -291,7 +291,8 @@ border-radius: 100px;
 display: block;
 }
 .ct_total_emission_card h2 {
-    font-size: 28px;
+    font-size: 24px;
+    font-weight: 600;
 }
 .ct_dark_blue_dots{
     background-color: var(--darkblue);

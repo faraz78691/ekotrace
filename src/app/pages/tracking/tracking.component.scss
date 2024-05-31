@@ -559,7 +559,7 @@ background-color: #b0d3af;
   padding-block: 5px;
   font-size: 14px;
   font-weight: 500;
-  border: unset;
+  // border: unset;
   background-color: rgba(136, 173, 71, 0.75) ;
 }
 .ct_home_office_table td{
@@ -677,6 +677,11 @@ div#DPRow.active {
 }
 .table .thead-dark th{
   white-space: nowrap;
+}
+
+.table .thead-dark th {
+
+  border-color: #dee2e6;
 }
 
 @media screen and (max-width:991px){

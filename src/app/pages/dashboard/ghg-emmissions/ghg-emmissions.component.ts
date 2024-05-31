@@ -431,7 +431,7 @@ export class GhgEmmissionsComponent implements OnDestroy {
       legend: {
         fontSize: '12px'
       },
-      colors: ['#213D49', '#46A5CD', '#FFD914'],
+      colors: ['#11235aa8', '#46A5CD', '#FFD914'],
       series: this.scopeWiseSeries,
       chart: {
         type: 'bar',
@@ -488,7 +488,8 @@ export class GhgEmmissionsComponent implements OnDestroy {
 
         title: {
           style: {
-            fontSize: '15px'
+            fontSize: '15px',
+            fontWeight:'600'
           },
 
           text: "t CO2e"
@@ -520,7 +521,7 @@ export class GhgEmmissionsComponent implements OnDestroy {
         position: 'bottom',
         offsetY: 0
       },
-      colors: ['#213D49', '#46A5CD', '#FFD914'],
+      colors: ['#11235aa8', '#46A5CD', '#FFD914'],
       labels: ['Scope 1', 'Scope 2', 'Scope 3'],
       responsive: [{
         breakpoint: 480,
