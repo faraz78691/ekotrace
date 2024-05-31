@@ -46,6 +46,9 @@ export class CompanyService {
     getWasteType(): Observable<any> {
         return this.http.get(environment.baseUrl + '/getendoflife_waste_type')
     };
+    getYEarType(): Observable<any> {
+        return this.http.post(environment.baseUrl + '/getfinancial_year','')
+    };
     sendmailForPlanRenewal() {
         let url = this.rootUrl + 'sendplanrenewalmail';
         return this.http.post(url, String);

@@ -390,7 +390,22 @@ export class TargetSettingComponent {
             let forecastCordinate = Data.forecastScope1Xcordinate.map((item, index) => {
               return parseFloat(item) + parseFloat(Data.forecastScope2Xcordinate[index])
             })
-            this.graphMethod(actualCordinate, targetCordinate, forecastCordinate, response.targetYcordinate, response.forecastYcordinate)
+            const years = [];
+            const newScope12Xcordinate = [];
+            for (let year = getBaseYear; year <= currentYear; year++) {
+              years.push(year);
+            }
+            for (let i = 0; i < years.length; i++) {
+  
+              let resultIndex = getYcoridnate.indexOf(years[i]);
+  
+               if( resultIndex != -1){
+                newScope12Xcordinate.push(actualCordinate[resultIndex])
+               }else{
+                newScope12Xcordinate.push(0)
+               }
+              }
+            this.graphMethod(newScope12Xcordinate, targetCordinate, forecastCordinate, response.targetYcordinate, response.forecastYcordinate)
 
           } else {
             this.graphMethod(response.scope3Xcordinate, response.targetScope3Xcordinate, response.forecastScope3Xcordinate, response.targetYcordinate, response.forecastYcordinate)

@@ -105,6 +105,21 @@
                                                                                     pTooltip="This section provides guidance on accounting for and calculating Scope 1 direct GHG emissions from owned or leased mobile sources (both on-road and non-road vehicles) that are within the company’s inventory boundaries. "
                                                                                     tooltipPosition="top"
                                                                                     style="color: #88ad47"></i>
+                                                                                <i *ngIf="head.catName == 'Fire Extinguisher'"
+                                                                                    class="fa fa-info-circle tooltip-icon"
+                                                                                    pTooltip="This section provides guidance on accounting for and calculating Scope 1 direct GHG emissions from owned or leased mobile sources (both on-road and non-road vehicles) that are within the company’s inventory boundaries. "
+                                                                                    tooltipPosition="top"
+                                                                                    style="color: #88ad47"></i>
+                                                                                <i *ngIf="head.catName == 'Electricity'"
+                                                                                    class="fa fa-info-circle tooltip-icon"
+                                                                                    pTooltip="This section provides guidance on accounting for and calculating Scope 1 direct GHG emissions from owned or leased mobile sources (both on-road and non-road vehicles) that are within the company’s inventory boundaries. "
+                                                                                    tooltipPosition="top"
+                                                                                    style="color: #88ad47"></i>
+                                                                                <i *ngIf="head.catName == 'Heat and Steam'"
+                                                                                    class="fa fa-info-circle tooltip-icon"
+                                                                                    pTooltip="This section provides guidance on accounting for and calculating Scope 1 direct GHG emissions from owned or leased mobile sources (both on-road and non-road vehicles) that are within the company’s inventory boundaries. "
+                                                                                    tooltipPosition="top"
+                                                                                    style="color: #88ad47"></i>
                                                                             </div>
 
                                                                         </ng-template>
@@ -4137,7 +4152,7 @@
                                                 de.SourceName
                                                 }}</td>
                                             <td>{{ de.status }}</td>
-                                            <td>{{ de.emission | number :'1.2-2' }}</td>
+                                            <td>{{ de.emission }}</td>
                                             <td>{{ de.user_name }}</td>
                                             <!-- <td>
                                             <div class="view-details">

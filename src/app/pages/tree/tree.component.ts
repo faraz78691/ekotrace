@@ -42,6 +42,11 @@ export class TreeComponent {
         private toastr: ToastrService,
         private familyService: FamilyService
     ) {
+        if (localStorage.getItem('LoginInfo') != null) {
+            let userInfo = localStorage.getItem('LoginInfo');
+            let jsonObj = JSON.parse(userInfo); // string to "any" object first
+            this.loginInfo = jsonObj as LoginInfo;
+          }
         this.treeList$ = familyService.getTreeList();
         this.nodeType =
             [
@@ -134,23 +139,7 @@ export class TreeComponent {
                       `;
 
                     FamilyTree.templates.main = Object.assign({}, FamilyTree.templates.base);
-                    // FamilyTree.templates.main.defs = `<style>
-                    //                                     .{randId} .bft-edit-form-header, .{randId} .bft-img-button{
-                    //                                         background-color: #aeaeae;
-                    //                                     }
-                    //                                     .{randId}.male .bft-edit-form-header, .{randId}.male .bft-img-button{
-                    //                                         background-color: #6bb4df;
-                    //                                     }        
-                    //                                     .{randId}.male div.bft-img-button:hover{
-                    //                                         background-color: #cb4aaf;
-                    //                                     }
-                    //                                     .{randId}.female .bft-edit-form-header, .{randId}.female .bft-img-button{
-                    //                                         background-color: #cb4aaf;
-                    //                                     }        
-                    //                                     .{randId}.female div.bft-img-button:hover{
-                    //                                         background-color: #6bb4df;
-                    //                                     }
-                    // </style>`;
+                  
                     FamilyTree.templates.main.node = '<rect x="0" y="0" height="{h}" width="{w}" fill="#ffffff" stroke-width="3" stroke="#ccc" rx="5" ry="5"></rect>' +
                         '<rect x="0" y="0" height="30" width="{w}" fill="#b1b9be" stroke-width="1" stroke="#b1b9be" style="fill: rgba(134, 175, 72, 0.7);" rx="5" ry="5"></rect>' +
                         '<line x1="0" y1="20" x2="250" y2="20" stroke-width="5" stroke="#b1b9be" style="display:none"></line>';
@@ -171,35 +160,7 @@ export class TreeComponent {
 
                     FamilyTree.templates.single = Object.assign({}, FamilyTree.templates.tommy);
                     FamilyTree.templates.single.size = [150, 150];
-                    // FamilyTree.templates.single.defs = `<style>
-                    //                                     .{randId} .bft-edit-form-header, .{randId} .bft-img-button{
-                    //                                         background-color: #aeaeae;
-                    //                                     }
-                    //                                     .{randId}.male .bft-edit-form-header, .{randId}.male .bft-img-button{
-                    //                                         background-color: #6bb4df;
-                    //                                     }        
-                    //                                     .{randId}.male div.bft-img-button:hover{
-                    //                                         background-color: #cb4aaf;
-                    //                                     }
-                    //                                     .{randId}.female .bft-edit-form-header, .{randId}.female .bft-img-button{
-                    //                                         background-color: #cb4aaf;
-                    //                                     }        
-                    //                                     .{randId}.female div.bft-img-button:hover{
-                    //                                         background-color: #6bb4df;
-                    //                                     }
-                    // </style>`;
-                    // FamilyTree.templates.single.node =
-                    //     '<circle cx="100" cy="100" r="100" fill="white" stroke-width="1" stroke="#aeaeae"></circle>';
-                    // FamilyTree.templates.single.field_0 = '<text ' + FamilyTree.attr.width + ' ="160" style="font-size: 14px;" font-variant="all-small-caps"  font-weight="bold" fill="black" x="100" y="115" text-anchor="middle">{val}</text>';
-                    // FamilyTree.templates.single.field_1 = '<text ' + FamilyTree.attr.width + ' ="190" data-text-overflow="multiline" style="font-size: 16px;" fill="black" x="100" y="135" text-anchor="middle">{val}</text>';
-                    // FamilyTree.templates.single.field_3 =
-                    //     '<text ' + FamilyTree.attr.width + ' ="60" style="font-size: 12px;" fill="black" x="100" y="180" text-anchor="middle">{val}</text>';
-                    // FamilyTree.templates.single.nodeMenuButton = `<use ${FamilyTree.attr.control_node_menu_id}="{id}" x="89" y="5" xlink:href="#base_node_menu" />`;
-
-
-
-
-
+                 
                     var family = new FamilyTree(tree, {
 
 
@@ -331,6 +292,37 @@ export class TreeComponent {
                 console.log(err)
         })
     };
+
+    onSubmitORg(data: any) {
+
+        const formData = new URLSearchParams();
+        formData.set('tenant_id',  this.loginInfo.tenantID.toString());
+        formData.set('family_name', data.value.treename);
+        formData.set('main_name', data.value.rootName); 
+        this.familyService.createTree(formData).subscribe({
+          next: (response) => {
+    
+            if (response.success == true) {
+              this.notification.showSuccess(
+                'Data entry added successfully',
+                'Success'
+              );
+              this.displayBasic = false
+              this.treeList$ = this.familyService.getTreeList();
+              this.form.reset();
+              this.getTreeViewByID('1')
+            }
+          },
+          error: (err) => {
+            this.notification.showError(
+              'Data entry added failed.',
+              'Error'
+            );
+            console.error('errrrrrr>>>>>>', err);
+          },
+          complete: () => console.info('Data entry Added')
+        });
+      };
 
 
 

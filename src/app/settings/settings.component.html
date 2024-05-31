@@ -196,7 +196,7 @@
                                                 <div class="">
                                                     <p-dropdown
                                                     class="ct_select_op_input ct_position_small_quantity"
-                                                    ngModel [options]="yearType" 
+                                                    ngModel [options]="yearType"  [(ngModel)]="yearSelect"
                                                     optionLabel="year" optionValue="id"
                                                     name="yearType" #units="ngModel">
                                                 </p-dropdown>
@@ -207,7 +207,7 @@
                             
     
                                             <div class="row mt-5">
-                                                <button  type="submit" class="px-3 ct_animation_btn_121" (click)="saveChanges()">
+                                                <button  type="submit" class="px-3 ct_animation_btn_121" (click)="saveCurrency()">
                                                     Save Changes
                                                 </button>
                                             </div>

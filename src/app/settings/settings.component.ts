@@ -20,6 +20,7 @@ export class SettingsComponent {
   visible: boolean;
   visible2: boolean;
   countries: any;
+  yearSelect: any;
   public loginInfo: LoginInfo;
   public companyDetails: CompanyDetails;
   companyData: CompanyDetails = new CompanyDetails();
@@ -77,26 +78,36 @@ dialogOpen(num:string){
   }else{
     this.visible2 = true;
     this.visible = false;
+    this.getYEarType();
   }
 };
 
    //method to update company profile
    saveChanges() {
-    // console.log(this.selectedSecondaryIndustryTypes);
-    
-    
-
+   
     const formData = new URLSearchParams();
    
     formData.append('hazadrous', this.hazadrous.toString());
     formData.append('non_hazadrous', this.non_hazadrous.toString());
    
-    // this.companyDetails.industryTypeID = JSON.stringify(
-    //     this.selectedIndustryTypes
-    // );
-    // this.companyDetails.secondIndustryTypeID = JSON.stringify(
-    //     this.selectedSecondaryIndustryTypes
-    // );
+    this.companyService.setHazardNonhazard(formData.toString()).subscribe({
+        next: (response) => {
+    
+            this.notification.showSuccess(
+                'Updated successfully',
+                'Success'
+            );
+        }
+    });
+};
+
+saveCurrency() {
+   
+    const formData = new URLSearchParams();
+   
+    formData.append('id', this.hazadrous.toString());
+    formData.append('financial_year', this.yearSelect.toString());
+   
     this.companyService.setHazardNonhazard(formData.toString()).subscribe({
         next: (response) => {
     
@@ -111,6 +122,18 @@ dialogOpen(num:string){
 
 getEndWasteType() {
   this.companyService.getWasteType().subscribe({
+      next: (response) => {
+        
+          if (response.success == true) {
+              this.wasteGrid = response.categories;
+              // this.waterWasteProduct = this.wasteGrid[0].type
+              // this.franchiseCategoryValue = this.franchiseGrid[0].categories
+          }
+      }
+  })
+};
+getYEarType() {
+  this.companyService.getYEarType().subscribe({
       next: (response) => {
           console.log(response, "sdgs");
           if (response.success == true) {
