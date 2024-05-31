@@ -1,4 +1,15 @@
+import { LoginInfo } from '@/models/loginInfo';
+import { CompanyDetails } from '@/shared/company-details';
+import { countries } from '@/store/countrieslist';
 import { Component } from '@angular/core';
+import { IndustryType } from '@pages/company-profile/industry-type';
+import { CompanyService } from '@services/company.service';
+import { NotificationService } from '@services/notification.service';
+import { RegistrationService } from '@services/registration.service';
+import { ThemeService } from '@services/theme.service';
+import { environment } from 'environments/environment';
+import { ToastrService } from 'ngx-toastr';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-settings',
@@ -6,8 +17,72 @@ import { Component } from '@angular/core';
   styleUrls: ['./settings.component.scss']
 })
 export class SettingsComponent {
+  visible: boolean;
+  countries: any;
+  public loginInfo: LoginInfo;
+  public companyDetails: CompanyDetails;
+  companyData: CompanyDetails = new CompanyDetails();
+  industryTypes: IndustryType[];
+  hazadrous: any[];
+  non_hazadrous: any[];
+  uploadedFile: any[] = [];
+  companyProfile: any[] = [];
+  wasteGrid: any[] = [];
+  rootUrl: string;
+  updatedtheme: string;
+  multiselectcolor: any;
+  selectedFile: File;
+  selectedCountry = 'India'
+  uploadedImageUrl: string | ArrayBuffer | null = null;
+  companyName: string;
+  constructor(
+      private companyService: CompanyService,
+      public registrationService: RegistrationService,
+      private toastr: ToastrService,
+      private notification: NotificationService,
+      private messageService: MessageService,
+      private themeservice: ThemeService
+  ) {
+      this.countries = countries;
+      this.loginInfo = new LoginInfo();
+      this.companyDetails = new CompanyDetails();
+      this.rootUrl = environment.baseUrl + 'uploads/';
+  }
 ngOnInit(){
 
   console.log("here");
 }
+
+dialogOpen(){
+  this.visible = true
+};
+
+   //method to update company profile
+   saveChanges() {
+    // console.log(this.selectedSecondaryIndustryTypes);
+    
+    
+
+    const formData = new URLSearchParams();
+   
+    formData.append('hazadrous', this.hazadrous.toString());
+    formData.append('non_hazadrous', this.non_hazadrous.toString());
+   
+    // this.companyDetails.industryTypeID = JSON.stringify(
+    //     this.selectedIndustryTypes
+    // );
+    // this.companyDetails.secondIndustryTypeID = JSON.stringify(
+    //     this.selectedSecondaryIndustryTypes
+    // );
+    this.companyService.setHazardNonhazard(formData.toString()).subscribe({
+        next: (response) => {
+    
+            this.notification.showSuccess(
+                'Updated successfully',
+                'Success'
+            );
+        }
+    });
+};
+
 }
