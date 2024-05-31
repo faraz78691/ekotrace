@@ -54,7 +54,8 @@ ngOnInit(){
 }
 
 dialogOpen(){
-  this.visible = true
+  this.visible = true;
+  this.getEndWasteType()
 };
 
    //method to update company profile
@@ -83,6 +84,20 @@ dialogOpen(){
             );
         }
     });
+};
+
+
+getEndWasteType() {
+  this.companyService.getWasteType().subscribe({
+      next: (response) => {
+          console.log(response, "sdgs");
+          if (response.success == true) {
+              this.wasteGrid = response.categories;
+              // this.waterWasteProduct = this.wasteGrid[0].type
+              // this.franchiseCategoryValue = this.franchiseGrid[0].categories
+          }
+      }
+  })
 };
 
 }

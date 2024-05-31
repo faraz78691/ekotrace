@@ -8,6 +8,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HazardNonhazardComponent } from './hazard-nonhazard/hazard-nonhazard.component';
 
 import {MultiSelectModule} from 'primeng/multiselect';
+import { ButtonModule } from 'primeng/button';
+import { DialogModule } from 'primeng/dialog';
+import { DropdownModule } from 'primeng/dropdown';
+import { FileUploadModule } from 'primeng/fileupload';
 @NgModule({
   declarations: [
     SettingsComponent,
@@ -16,7 +20,10 @@ import {MultiSelectModule} from 'primeng/multiselect';
   imports: [
     CommonModule,HeaderComponent,
     SettingsRoutingModule,
-
+    DialogModule,
+    ButtonModule,
+    FileUploadModule,
+    DropdownModule,
     FormsModule,
         ReactiveFormsModule,
         MultiSelectModule
