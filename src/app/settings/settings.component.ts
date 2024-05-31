@@ -18,6 +18,7 @@ import { MessageService } from 'primeng/api';
 })
 export class SettingsComponent {
   visible: boolean;
+  visible2: boolean;
   countries: any;
   public loginInfo: LoginInfo;
   public companyDetails: CompanyDetails;
@@ -28,6 +29,7 @@ export class SettingsComponent {
   uploadedFile: any[] = [];
   companyProfile: any[] = [];
   wasteGrid: any[] = [];
+  yearType: any[] = [];
   rootUrl: string;
   updatedtheme: string;
   multiselectcolor: any;
@@ -47,15 +49,35 @@ export class SettingsComponent {
       this.loginInfo = new LoginInfo();
       this.companyDetails = new CompanyDetails();
       this.rootUrl = environment.baseUrl + 'uploads/';
+ 
+      this.yearType =
+      [
+          {
+              "id": 1,
+              "year": "Calendar Year"
+          },
+          {
+              "id": 2,
+              "year": "Financial Year"
+          }
+       
+      ]
   }
 ngOnInit(){
 
   console.log("here");
 }
 
-dialogOpen(){
-  this.visible = true;
-  this.getEndWasteType()
+dialogOpen(num:string){
+  if(num == "1"){
+    this.visible = true;
+    this.getEndWasteType();
+    this.visible2 = false
+
+  }else{
+    this.visible2 = true;
+    this.visible = false;
+  }
 };
 
    //method to update company profile
