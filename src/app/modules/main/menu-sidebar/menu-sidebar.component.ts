@@ -243,7 +243,7 @@ export const menu = [
             },
             {
                 head: 'GHG Emissions',
-                name: 'Corprate Emissions',
+                name: 'Corporate Emissions',
                 iconClasses: 'fas fa-star',
                 iconSRC: 'assets/img/trees.png',
                 path: ['tracking']

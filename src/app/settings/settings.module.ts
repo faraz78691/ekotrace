@@ -4,17 +4,22 @@ import { CommonModule } from '@angular/common';
 import { SettingsRoutingModule } from './settings-routing.module';
 import { SettingsComponent } from './settings.component';
 import { HeaderComponent } from '@modules/main/header/header.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HazardNonhazardComponent } from './hazard-nonhazard/hazard-nonhazard.component';
 
-
+import {MultiSelectModule} from 'primeng/multiselect';
 @NgModule({
   declarations: [
-    SettingsComponent
+    SettingsComponent,
+    HazardNonhazardComponent
   ],
   imports: [
     CommonModule,HeaderComponent,
     SettingsRoutingModule,
-    FormsModule
+
+    FormsModule,
+        ReactiveFormsModule,
+        MultiSelectModule
   ]
 })
 export class SettingsModule { }

@@ -405,6 +405,9 @@ export class DashboardService {
     public GemissionActivity(admininfo) {
         return this.http.post(this.apiURL + '/dashboardEmssionByactivities', admininfo);
     };
+    public getPathNet(admininfo) {
+        return this.http.post(this.apiURL + '/dashboardnetZero', admininfo);
+    };
     public GVEndorActivity(admininfo) {
         return this.http.post(this.apiURL + '/dashboardEmssionByVendors', admininfo);
     };

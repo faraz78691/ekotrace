@@ -51,6 +51,11 @@ export class GroupService {
             environment.baseUrl + '/getVendorlist'
         );
     };
+    public getCostCentre(): Observable<any> {
+        return this.http.get(
+            'http://192.168.1.28:4005/getcostCenter'
+        );
+    };
     public getTargetGraphsPoints(data): Observable<any> {
         return this.http.post(
             environment.baseUrl + '/targetsetting/getEmissionPoints', data
@@ -62,6 +67,9 @@ export class GroupService {
     }
     public newEditGroup( groupdetails) {
         return this.http.post(environment.baseUrl + '/Updategroupmapping' , groupdetails);
+    };
+    public updateOffset( groupdetails) {
+        return this.http.post(environment.baseUrl + '/updateuser_offseting' , groupdetails);
     };
     public updateInventory( groupdetails) {
         return this.http.post(environment.baseUrl + '/targetsetting/updateEmissionInventoryID', groupdetails);
@@ -92,7 +100,10 @@ export class GroupService {
         return this.http.post( environment.baseUrl + '/targetsetting/addTargetSetting', groupdetails);
     }
     public addVendors(groupdetails): Observable<any> {
-        return this.http.post( environment.baseUrl + '/AddVendor', groupdetails);
+        return this.http.post( 'http://192.168.1.28:4005/AddVendor', groupdetails);
+    }
+    public AddCostcenter(groupdetails): Observable<any> {
+        return this.http.post('http://192.168.1.28:4005/AddCostcenter', groupdetails);
     }
     public getGraphsTarget(groupdetails): Observable<any> {
         return this.http.post( environment.baseUrl + '/targetsetting/getEmissionPoints', groupdetails);
