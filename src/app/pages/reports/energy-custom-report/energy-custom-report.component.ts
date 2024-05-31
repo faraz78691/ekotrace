@@ -525,7 +525,7 @@ export class EnergyCustomReportComponent {
                     this.reportData = res.result
                 }else{
                     this.notification.showSuccess(
-                        'No data found',
+                        'No data found for tihs month',
                         'Success'
                     );
                 }

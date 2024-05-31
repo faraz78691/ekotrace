@@ -136,7 +136,7 @@ export class ActionsComponent {
             e_act: 'Progress'
           },
           {
-            e_act: 'Archieved'
+            e_act: 'Achieved'
           }
       ];
       this.target_type = [

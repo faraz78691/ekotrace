@@ -62,6 +62,7 @@ export class WasteComponent {
   upDownSeries: any[] = [];
   totaltype: any
   hazardTotal: any;
+  wasteDiversion: any;
 
 
   constructor(private route: ActivatedRoute,
@@ -72,66 +73,6 @@ export class WasteComponent {
 
 
 
-    // this.chartOptions = {
-    //   series: [
-    //     {
-    //       name: "Net Profit",
-    //       data: [44, 55, 57, 56, 61, 58, 63]
-    //     },
-    //     {
-    //       name: "Revenue",
-    //       data: [76, 85, 101, 98, 87, 105, 91]
-    //     }
-
-    //   ],
-    //   chart: {
-    //     type: "bar",
-    //     height: 350
-    //   },
-    //   plotOptions: {
-    //     bar: {
-    //       horizontal: false,
-    //       columnWidth: "55%",
-
-    //     }
-    //   },
-    //   dataLabels: {
-    //     enabled: false
-    //   },
-    //   stroke: {
-    //     show: true,
-    //     width: 2,
-    //     colors: ["transparent"]
-    //   },
-    //   xaxis: {
-    //     categories: [
-    //       "Feb",
-    //       "Mar",
-    //       "Apr",
-    //       "May",
-    //       "Jun",
-    //       "Jul",
-    //       "Aug",
-    //       "Sep",
-    //       "Oct"
-    //     ]
-    //   },
-    //   yaxis: {
-    //     title: {
-    //       text: "$ (thousands)"
-    //     }
-    //   },
-    //   fill: {
-    //     opacity: 1
-    //   },
-    //   tooltip: {
-    //     y: {
-    //       formatter: function(val) {
-    //         return "$ " + val + " thousands";
-    //       }
-    //     }
-    //   }
-    // };
     this.pieChart = {
       series: [44, 55, 13, 43, 22],
       chart: {
@@ -156,12 +97,6 @@ export class WasteComponent {
         }
       ]
     };
-
-
-
-
-
-
 
 
   };
@@ -226,6 +161,7 @@ export class WasteComponent {
         return of(null); // Return null or default value in case of error
       })
     );
+  
 
 
     // Combine both observables using combineLatest and return the combined observable
@@ -240,8 +176,10 @@ export class WasteComponent {
       const [scopeWiseResult, topWiseResult, getALLEmisions, getUpDownDonuts, getBRreakdownEmission] = results;
       // Process the results of both API calls here
       if (scopeWiseResult) {
+        console.log(scopeWiseResult);
         this.UpWaste = scopeWiseResult.waste_disposed
         this.downWaste = scopeWiseResult.waste_emissions
+        this.wasteDiversion = scopeWiseResult.diverted_emssion
 
       } else {
         // Handle absence of scopeWise result or error
