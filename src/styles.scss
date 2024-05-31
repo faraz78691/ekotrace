@@ -2236,3 +2236,10 @@ input.ct_change_choose_file_input12::file-selector-button {
   .p-paginator-rpp-options.p-dropdown.p-component .p-dropdown .p-dropdown-trigger {
     color: #000 !important;
   }
+
+  .ct_multi_select_overlap_text_302 .p-element.p-multiselect-label-container {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 200px;
+}
