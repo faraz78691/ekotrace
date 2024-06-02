@@ -60,14 +60,14 @@
                     <form #GroupForm="ngForm" class="col-12" (ngSubmit)="
                             FormEdit === false
                                 ? saveOffset(GroupForm)
-                                : updateGroup(groupdetails.id, GroupForm.value)
+                                : updateGroup(groupdetails.id, GroupForm)
                         ">
                         <div class="mb-5 pb-0 row">
                             <div class="col-md-6 mb-3">
                                 <label for="fname">Project Name</label>
                                 <input name="project_details" ngModel id="search-input" type="text"
-                                    class="form-control Dashboard-tab text-white" placeholder="Enter Project Name" 
-                                    #groupName="ngModel" [disabled]="isloading" required />
+                                    class="form-control Dashboard-tab text-white" placeholder="Enter Project Name"
+                                    #groupName="ngModel" [disabled]="isloading" required [(ngModel)]="project_name" />
                                 <p class="text-danger mb-0"
                                     *ngIf="groupName.errors?.['required'] && GroupForm.submitted">
                                     Project name is required
@@ -80,10 +80,10 @@
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="fname">Project Type</label>
-                                <p-dropdown    class="ct_grop_select_2_drop_white123 ct_group_select_dark_124" required
-                                    ngModel placeholder="Select" [options]="Groupby" 
-                                    optionLabel="name" optionValue="name" name="project_type"
-                                    #group="ngModel"></p-dropdown>
+                                <p-dropdown class="ct_grop_select_2_drop_white123 ct_group_select_dark_124" required
+                                    ngModel placeholder="Select" [options]="Groupby" optionLabel="name"
+                                    optionValue="name" name="project_type" #group="ngModel"
+                                    [(ngModel)]="project_type"></p-dropdown>
                                 <p class="text-danger mb-0" *ngIf="GroupForm.submitted && group.errors?.['required']">
                                     Project Type is required
                                 </p>
@@ -115,12 +115,11 @@
                                 <!-- <input ngModel name="vintage" id="search-input" type="text"
                                     class="form-control Dashboard-tab text-white" placeholder="Enter Vintage"
                                     #vintage="ngModel" [disabled]="isloading" required ngModel /> -->
-                                <p-calendar class="ct_calender_input_38_action_12 " ngModel name="vintage" year 
-                                    #vintage="ngModel" placeholder="Select year" styleClass="pcalender" view="year"
+                                <p-calendar class="ct_calender_input_38_action_12 " ngModel name="vintage" [(ngModel)]="vintage" year
+                                    placeholder="Select year" styleClass="pcalender" view="year"
                                     dateFormat="yy" inputId="yearpicker" [showIcon]="true"></p-calendar>
-                                <p class="text-danger mb-0" *ngIf="GroupForm.submitted && vintage.errors?.['required']">
-                                    Vintage is required
-                                </p>
+                               
+                                
                                 <p class="text-danger mb-0" *ngIf="
                                     isgroupExist === true && groupName.touched
                                 ">
@@ -131,9 +130,8 @@
                                 <label for="fname">Standard</label>
 
                                 <p-dropdown class="ct_grop_select_2_drop_white123 ct_group_select_dark_124" required
-                                    ngModel placeholder="Select" [options]="standardList" 
-                                    optionLabel="name" optionValue="name" name="standard"
-                                    #group="ngModel"></p-dropdown>
+                                    ngModel placeholder="Select" [options]="standardList" optionLabel="name"
+                                    optionValue="name" name="standard"  [(ngModel)]="standard"></p-dropdown>
                                 <p class="text-danger mb-0" *ngIf="GroupForm.submitted && group.errors?.['required']">
                                     Project Type is required
                                 </p>
@@ -144,25 +142,25 @@
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="fname">Carbon Offset (tCO2e)</label>
-                                <input ngModel name="carbon_offset" id="search-input" type="text" 
+                                <input ngModel name="carbon_offset" id="search-input" type="text"
                                     class="form-control Dashboard-tab text-white " placeholder="Enter Carbon Offset"
-                                    #carbon_offset="ngModel" [disabled]="isloading" required ngModel />
-                                <p class="text-danger mb-0"
+                                   [disabled]="isloading" required ngModel [(ngModel)]="carbon_offset" />
+                                <!-- <p class="text-danger mb-0"
                                     *ngIf="GroupForm.submitted && carbon_offset.errors?.['required']">
                                     Carbon Offset is required
-                                </p>
+                                </p> -->
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="fname">Carbon Credit Value (usd/tonnes)</label>
 
-                                <input ngModel name="carbon_credit_value" id="search-input" type="text" 
+                                <input ngModel name="carbon_credit_value" id="search-input" type="text"
                                     class="form-control Dashboard-tab text-white "
-                                    placeholder="Enter carbon credit value" #carbon_credit_value="ngModel"
-                                    [disabled]="isloading" required />
-                                <p class="text-danger mb-0"
+                                    placeholder="Enter carbon credit value" 
+                                    [disabled]="isloading" required [(ngModel)]="carbon_credit_value" />
+                                <!-- <p class="text-danger mb-0"
                                     *ngIf="GroupForm.submitted && carbon_credit_value.errors?.['required']">
                                     Carbon Credit Value is required
-                                </p>
+                                </p> -->
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="fname">Attachments</label>
@@ -184,37 +182,37 @@
 
 
                                             <label for="fname">Scope 1</label>
-                                            <input ngModel name="scope_1" id="search-input" type="text" 
+                                            <input ngModel name="scope_1" id="search-input" type="text"
                                                 class="form-control Dashboard-tab text-white "
-                                                placeholder="Enter Scope 1 Allocation" #scope_1="ngModel"
-                                                [disabled]="isloading" required />
-                                            <p class="text-danger mb-0"
+                                                placeholder="Enter Scope 1 Allocation" 
+                                                [disabled]="isloading" required [(ngModel)]="scope_1" />
+                                            <!-- <p class="text-danger mb-0"
                                                 *ngIf="GroupForm.submitted && scope_1.errors?.['required']">
                                                 Scope 1 Value is required
-                                            </p>
+                                            </p> -->
 
                                         </div>
                                         <div class="col-md-4 mb-3">
                                             <label for="fname">Scope 2</label>
-                                            <input ngModel name="scope_2" id="search-input" type="text"  
+                                            <input ngModel name="scope_2" id="search-input" type="text"
                                                 class="form-control Dashboard-tab text-white "
-                                                placeholder="Enter Scope 2 Allocation" #scope_2="ngModel"
-                                                [disabled]="isloading" required />
-                                            <p class="text-danger mb-0"
+                                                placeholder="Enter Scope 2 Allocation" 
+                                                [disabled]="isloading" required [(ngModel)]="scope_2"  />
+                                            <!-- <p class="text-danger mb-0"
                                                 *ngIf="GroupForm.submitted && scope_1.errors?.['required']">
                                                 Scope 2 Value is required
-                                            </p>
+                                            </p> -->
                                         </div>
                                         <div class="col-md-4 mb-3">
                                             <label for="fname">Scope 3</label>
-                                            <input ngModel name="scope_3" id="search-input" type="text" 
+                                            <input ngModel name="scope_3" id="search-input" type="text"
                                                 class="form-control Dashboard-tab text-white "
-                                                placeholder="Enter Scope 3 Allocation" #scope_3="ngModel"
-                                                [disabled]="isloading" required />
-                                            <p class="text-danger mb-0"
+                                                placeholder="Enter Scope 3 Allocation" 
+                                                [disabled]="isloading" required [(ngModel)]="scope_3"  />
+                                            <!-- <p class="text-danger mb-0"
                                                 *ngIf="GroupForm.submitted && scope_1.errors?.['required']">
                                                 Scope 3 Value is required
-                                            </p>
+                                            </p> -->
 
                                         </div>
                                     </div>
@@ -231,14 +229,6 @@
                                 <textarea rows="4" class="form-control ct_text bg-white"></textarea>
 
                             </div>
-
-
-
-
-
-
-
-
 
                         </div>
 

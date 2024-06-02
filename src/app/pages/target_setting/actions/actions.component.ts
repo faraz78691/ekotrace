@@ -88,7 +88,15 @@ export class ActionsComponent {
   type:string;
   date3:string;
   standard:string;
-  selectedFile:File
+  selectedFile:File;
+  name:string;
+  owner_name:string;
+  time_period:string;
+  co2_savings:string;
+  scope_category:string;
+  status_action:string;
+  actionId:string;
+
   constructor(
       private companyService: CompanyService,
       private UserService: UserService,
@@ -208,7 +216,7 @@ export class ActionsComponent {
                  this.plannedActions = this.groupsList.filter((items)=>items.status == 'Planned');
                  this.progressActions = this.groupsList.filter((items)=>items.status == 'Progress');
                  console.log(this.progressActions);
-                 this.archiveActions = this.groupsList.filter((items)=>items.status == 'Archieved');
+                 this.archiveActions = this.groupsList.filter((items)=>items.status == 'Achieved');
                   if (this.groupsList.length > 0) {
                       this.groupdetails = this.groupsList[0];
                       this.groupdata = true;
@@ -271,46 +279,33 @@ export class ActionsComponent {
       });
   };
 
+  onEditAction(data){
+    this.FormEdit = true;
+this.actionId = data.id;
+this.status_action = data.status;
+this.owner_name = data.owner;
+this.scope_category = data.scope_category
+this.co2_savings = data.co2_savings_tcoe
+this.name = data.name;
+ this.time_period =  data.time_period;
+  }
+
 
   
   //method for update group detail by id
   updateGroup(id: any, data: NgForm) {
-      // this.groupdetails.groupMappings = [];
-      // if (this.groupdetails.groupBy === 'Country') {
-      //     this.selectedCountry.forEach((val) => {
-      //         this.groupMappingDetails = new GroupMapping();
-      //         this.groupMappingDetails.stateId = 0;
-      //         this.groupMappingDetails.groupId = 0;
-      //         this.groupMappingDetails.facilityId = 0;
-      //         this.groupMappingDetails.countryId = val;
-      //         this.groupdetails.groupMappings.push(this.groupMappingDetails);
-      //     });
-      // } else if (this.groupdetails.groupBy === 'State') {
-      //     this.selectedState.forEach((val) => {
-      //         this.groupMappingDetails = new GroupMapping();
-      //         this.groupMappingDetails.stateId = val;
-      //         this.groupMappingDetails.countryId = 0;
-      //         this.groupMappingDetails.groupId = 0;
-      //         this.groupMappingDetails.facilityId = 0;
-      //         this.groupdetails.groupMappings.push(this.groupMappingDetails);
-      //     });
-      // } else {
-      //     this.selectedFaciltiy.forEach((val) => {
-      //         this.groupMappingDetails = new GroupMapping();
-      //         this.groupMappingDetails.stateId = 0;
-      //         this.groupMappingDetails.countryId = 0;
-      //         this.groupMappingDetails.groupId = 0;
-      //         this.groupMappingDetails.facilityId = val;
-      //         this.groupdetails.groupMappings.push(this.groupMappingDetails);
-      //     });
-      // }
-      let tenantID = this.loginInfo.tenantID;
-      let formData = new URLSearchParams();
-      formData.set('groupId',id);
-      formData.set('groupname',this.groupdetails.groupname);
-      // formData.set('tenantID',  this.groupdetails.tenantID.toString());
-      formData.set('facility',this.selectedFaciltiy);
-      this.GroupService.newEditGroup(formData.toString()).subscribe({
+     
+    const formData = new URLSearchParams();
+  
+    formData.append('id', this.actionId);
+    formData.append('name',data.value.name);
+    formData.append('name',data.value.name);
+    formData.append('scope_category',data.value.scope_category);
+    formData.append('co2_savings_tcoe',data.value.co2_savings_tcoe);
+    formData.append('time_period',data.value.time_period);
+    formData.append('owner',data.value.owner);
+    formData.append('status',data.value.status);
+      this.GroupService.updateAction(formData.toString()).subscribe({
           next: (response) => {
               console.log(response);
               this.GetTarget();

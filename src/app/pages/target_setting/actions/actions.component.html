@@ -85,7 +85,7 @@
                     </div>
                     <div style="width: 32.66%">
                         <div *ngFor="let group of progressActions" class="mb-3">
-                            <div class="ct_actiion_box_125 ct_actiion_box_125_orange">
+                            <div class="ct_actiion_box_125 ct_actiion_box_125_orange" (click)="onEditAction(group)">
                                 <h4 class="ct_h4">{{group.name}}</h4>
                                 <p>CO2 Saving: <strong>{{group.co2_savings_tcoe}}t CO2e</strong></p>
                                 <div class="d-flex align-items-center gap-1 justify-content-between mt-3">
@@ -142,9 +142,9 @@
         ">
             <div class="mb-5 pb-0 row">
                 <div class="col-md-6 mb-3">
-                    <label for="fname" class="text-dark">Name </label>
+                    <label for="fname" class="text-dark">Name</label>
                     <input name="name" ngModel id="search-input" type="text"
-                        class="form-control Dashboard-tab text-white" placeholder="Enter  Name" #groupName="ngModel"
+                        class="form-control Dashboard-tab text-white" placeholder="Enter  Name" [(ngModel)]="name"
                         [disabled]="isloading" required />
                     <p class="text-danger mb-0" *ngIf="GroupForm.submitted && groupName.errors?.['required']">
                         Group name is required
@@ -158,8 +158,8 @@
                 <div class="col-md-6 mb-3">
                     <label for="fname" class="text-dark">Scope Category</label>
                     <p-dropdown class="ct_grop_select_2_drop_white123 ct_group_select_dark_124" required ngModel
-                     [options]="scopeList" optionLabel="name" optionValue="name" name="scope_category"
-                    #group="ngModel"></p-dropdown>
+                     [options]="scopeList" optionLabel="name" optionValue="name" name="scope_category" [(ngModel)]="scope_category"
+                    #group></p-dropdown>
                     <p class="text-danger mb-0" *ngIf="GroupForm.submitted && groupName.errors?.['required']">
                         Scope name is required
                     </p>
@@ -172,8 +172,8 @@
                 <div class="col-md-6 mb-3">
                     <label for="fname" class="text-dark">CO2 Savings (tCOe)</label>
                     <input name="co2_savings_tcoe" ngModel id="search-input" type="text"
-                        class="form-control Dashboard-tab text-white" placeholder="Enter CO2e" #groupName="ngModel"
-                        [disabled]="isloading" required />
+                        class="form-control Dashboard-tab text-white" placeholder="Enter CO2e" #groupName
+                        [disabled]="isloading" required [(ngModel)]="co2_savings" />
                     <p class="text-danger mb-0" *ngIf="GroupForm.submitted && groupName.errors?.['required']">
                         Group name is required
                     </p>
@@ -188,22 +188,22 @@
                     <label for="fname" class="text-dark">Time period</label>
                     <p-calendar class="w-100 ct_input_dark_text_145 ct_calender_input_38_action_12" ngModel
                         name="time_period" [showIcon]="true" view="year" placeholder="Select year" dateFormat="yy"
-                        inputId="yearpicker" styleClass="pcalender"></p-calendar>
+                        inputId="yearpicker" styleClass="pcalender" [(ngModel)]="time_period"></p-calendar>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="fname" class="text-dark">Owner</label>
                     <input name="owner" ngModel id="search-input" type="text"
                         class="form-control Dashboard-tab text-white" placeholder="Enter owner Name"
-                        #groupName="ngModel" [disabled]="isloading" required />
+                        #groupName [disabled]="isloading" required  [(ngModel)]="owner_name"/>
                     <!-- <p-dropdown class="ct_grop_select_2_drop_white123 ct_group_select_dark_124" required
                 ngModel placeholder="Select" [options]="emission_activity" 
-                optionLabel="e_act" optionValue="e_act" name="owner" #group="ngModel"></p-dropdown> -->
+                optionLabel="e_act" optionValue="e_act" name="owner" #group></p-dropdown> -->
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="fname" class="text-dark">Status </label>
                     <p-dropdown class="ct_grop_select_2_drop_white123 ct_group_select_dark_124" required ngModel
                         placeholder="Select" [options]="status" optionLabel="e_act" optionValue="e_act" name="status"
-                        #group="ngModel"></p-dropdown>
+                        #group [(ngModel)]="status_action"></p-dropdown>
                 </div>
 
 

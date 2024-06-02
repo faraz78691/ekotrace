@@ -68,6 +68,9 @@ export class GroupService {
     public newEditGroup( groupdetails) {
         return this.http.post(environment.baseUrl + '/Updategroupmapping' , groupdetails);
     };
+    public updateAction( groupdetails) {
+        return this.http.post(environment.baseUrl + '/updateActions' , groupdetails);
+    };
     public updateOffset( groupdetails) {
         return this.http.post(environment.baseUrl + '/updateuser_offseting' , groupdetails);
     };

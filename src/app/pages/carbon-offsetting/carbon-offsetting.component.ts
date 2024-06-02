@@ -87,11 +87,15 @@ export class CarbonOffsettingComponent {
     selectedScope: any;
     carbon_credit_value: string;
     type: string;
-    date3: string;
-    vintage: string;
+    date3: any;
+    vintage: any;
     standard: string;
     selectedFile: File
     project_name: string;
+    scope_1:string;
+    scope_2:string;
+    scope_3:string;
+    carbonID:string;
     constructor(
         private companyService: CompanyService,
         private UserService: UserService,
@@ -282,6 +286,7 @@ export class CarbonOffsettingComponent {
 
     //method for update group detail by id
     updateGroup(id: any, data: any) {
+        console.log("called")
         this.visible = true;
         console.log(data.value);
         if (parseInt(data.value.scope_1) + parseInt(data.value.scope_2) + parseInt(data.value.scope_3) != 100) {
@@ -297,9 +302,11 @@ export class CarbonOffsettingComponent {
             formData.append('file', this.selectedFile, this.selectedFile.name);
 
         }
+        formData.append('id', this.carbonID);
         formData.append('project_name', data.value.project_details);
+        formData.append('project_type', data.value.project_type);
         formData.append('type', data.value.project_type);
-        formData.append('date_of_purchase', this.date3);
+        formData.append('date_of_purchase', this.date3.toString());
         formData.append('vintage', data.value.vintage);
         formData.append('standard', data.value.standard);
         formData.append('offset', data.value.carbon_offset);
@@ -311,9 +318,7 @@ export class CarbonOffsettingComponent {
         formData.append('comments', data.value.comments);
 
 
-        // formData.set('tenantID',  this.groupdetails.tenantID.toString());
-        formData.set('facility', this.selectedFaciltiy);
-        this.GroupService.updateOffset(formData.toString()).subscribe({
+        this.GroupService.updateOffset(formData).subscribe({
             next: (response) => {
                 console.log(response);
                 //   this.getOffset(tenantID);
@@ -333,11 +338,21 @@ export class CarbonOffsettingComponent {
     };
 
     editButton(data: any) {
-        console.log(data);
+       this.carbonID = data.id;
+        this.project_name = data.project_name;
+        this.standard = data.standard;
+        this.carbon_credit_value = data.carbon_credit_value;
+        this.carbon_offset = data.offset;
+        this.scope_1 = data.scope1;
+        this.scope_2 = data.scope2;
+        this.scope_3 = data.scope3;
+        this.vintage = new Date(data.vintage)
+        this.project_type = data.type;
+        this.date3 = new Date(data.date_of_purchase)
         this.visible = true;
         this.FormEdit = true;
 
-        this.GroupForm.setValue({ 'project_details': data.project_name });
+    
     }
 
     //retrieves all facilities for a given tenant
@@ -396,7 +411,7 @@ export class CarbonOffsettingComponent {
 
     //method for reset form
     resetForm() {
-        //   this.GroupForm.resetForm();
+          this.GroupForm.reset();
     }
     //sets the value of the unlock variable to the provided groupId
     UnlockComplete(groupId) {
@@ -452,39 +467,5 @@ export class CarbonOffsettingComponent {
             }
         });
     };
-    //method for get facility by id
-    // facilityGet(tenantId) {
-    //     this.facilityService.FacilityDataGet(tenantId).subscribe((response) => {
-    //         this.facilityList = response;
-    //         console.log(
-    //             '🚀 ~ file: group.component.ts:370 ~ GroupComponent ~ this.facilityService.FacilityDataGet ~ this.facilityList:',
-    //             this.facilityList
-    //         );
-    //         const uniqueCountries = new Set(
-    //             this.facilityList.map((item) => item.countryName)
-    //         );
-    //         this.countryData = Array.from(uniqueCountries).map((country) => {
-    //             return {
-    //                 name: country,
-    //                 shortName: '', // Provide the appropriate value for shortName
-    //                 id: this.facilityList.find(
-    //                     (item) => item.countryName === country
-    //                 ).countryID
-    //             };
-    //         });
-
-    //         const uniqueStates = new Set(
-    //             this.facilityList.map((item) => item.stateName)
-    //         );
-    //         this.stateData = Array.from(uniqueStates).map((state) => {
-    //             return {
-    //                 name: state,
-    //                 shortName: '', // Provide the appropriate value for shortName
-    //                 id: this.facilityList.find(
-    //                     (item) => item.stateName === state
-    //                 ).stateID
-    //             };
-    //         });
-    //     });
-    // }
+    
 }
