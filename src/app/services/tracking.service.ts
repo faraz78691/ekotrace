@@ -535,6 +535,9 @@ export class TrackingService {
     public newgetSCpendingDataEntries(data): Observable<any> {
         return this.http.post<any>(environment.baseUrl + '/GetpendingDataEnteries',data)
     }
+    public newgetSCpendingDataEntriesForFuels(data): Observable<any> {
+        return this.http.post<any>(environment.baseUrl + '/GetpendingDataEnteriesFuelType',data)
+    }
     public getrefpendingDataEntries(facilityID, year): Observable<any> {
         return this.http.get<any>(environment.baseUrl + 'Tracking/getrefpendingDataEntries/' + facilityID +
             '/' +

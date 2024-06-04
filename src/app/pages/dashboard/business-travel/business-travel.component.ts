@@ -117,6 +117,7 @@ export class BusinessTravelComponent {
   labelScopeDonut1: any[] = [];
   labelScopeDonut2: any[] = [];
   labelScopeDonut3: any[] = [];
+  scopeMonths: any[] = [];
   upstreamArray: any[] = [];
   downstreamArray: any[] = [];
   vendorData: any[] = [];
@@ -267,7 +268,7 @@ export class BusinessTravelComponent {
     this.dashboardService.businessTravelByMonth(formData.toString()).subscribe((result: any) => {
       this.barGraph1 = result.series[0].data;
       this.labelScopeDonut1 = result.categories;
-
+      this.scopeMonths =  result.month;
       this.chartOptions = {
         dataLabels: {
           enabled: false
@@ -329,7 +330,7 @@ export class BusinessTravelComponent {
               fontSize: '12px'
             }
           },
-          categories: ['Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar']
+          categories:  this.scopeMonths
         },
         yaxis: {
   

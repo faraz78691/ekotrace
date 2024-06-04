@@ -28,9 +28,9 @@ export class CompanyService {
             environment.baseUrl +  '/getComapnyDetail', id
         );
     };
-    public setHazardNonhazard(data: any): Observable<CompanyDetails> {
-        return this.http.post<CompanyDetails>(
-            '/http://192.168.1.28:4005/addHazardous_nonhazardous', data
+    public setHazardNonhazard(data: any): Observable<any> {
+        return this.http.post<any>(
+            environment.baseUrl +  '/updateHazardous_nonhazardous', data
         );
     };
     public updatefinancial_year(data: any): Observable<any> {

@@ -118,6 +118,7 @@ export class EnergyEmmsionsComponent {
   businessType: any[] = [];
   groundLabel: any[] = [];
   groundSeries: any[] = [];
+  scopeMonths: any[] = [];
   groundTotal: any;
   flightTotal: any;
   flightTypeTotal: any
@@ -167,49 +168,6 @@ export class EnergyEmmsionsComponent {
         }
       ]
     };
-
-    // this.donotOptions2 = {
-    //   series: this.seriesScopeDonut2,
-    //   chart: {
-    //     width: "100%",
-    //     height: 320,
-    //     type: "donut"
-    //   },
-    //   dataLabels: {
-    //     enabled: true
-    //   },
-    //   // fill: {
-    //   //   type: "gradient"
-    //   // },
-    //   legend: {
-    //     position: "bottom",
-    //     fontSize: '15px',
-    //     floating: false,
-    //     horizontalAlign: 'left',
-    //   },
-    //   colors: ['#F3722C', '#0068F2', '#F8961E', '#ACE1AF', '#7BAFD4', '#B284BE','#98817B'],
-    //   labels: this.labelScopeDonut2,
-    //   responsive: [
-    //     {
-    //       breakpoint: 480,
-    //       options: {
-    //         chart: {
-    //           width: 200
-    //         },
-    //         legend: {
-    //           position: "bottom"
-    //         }
-    //       }
-    //     }
-    //   ]
-    // };
-
-
-
-
-
-
-
 
 
 
@@ -316,6 +274,7 @@ export class EnergyEmmsionsComponent {
 
       this.barGraph1 = result.series;
       this.labelScopeDonut1 = result.categories;
+      this.scopeMonths = result.month
 
 
       this.chartOptions = {
@@ -381,20 +340,7 @@ export class EnergyEmmsionsComponent {
               fontSize: '13px'
             }
           },
-          categories: [
-            "Apr",
-            "May",
-            "Jun",
-            "Jul",
-            "Aug",
-            "Sep",
-            "Oct",
-            "Nov",
-            "Dec",
-            "Jan",
-            "Feb",
-            "Mar"
-          ],
+          categories:  this.scopeMonths,
      
           tooltip: {
             enabled: true,

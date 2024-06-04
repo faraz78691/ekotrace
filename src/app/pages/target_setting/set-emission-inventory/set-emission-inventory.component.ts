@@ -90,7 +90,10 @@ export class SetEmissionInventoryComponent {
     relationId: string;
     date3: string;
     standard: string;
-    selectedFile: File
+    selectedFile: File;
+    scope_1_emissions:number;
+    scope_2_emissions:number;
+    scope_3_emissions:number;
     constructor(
         private companyService: CompanyService,
         private UserService: UserService,
@@ -250,9 +253,9 @@ export class SetEmissionInventoryComponent {
         formData.append('economic_output', data.value.economic_output || 1);
         formData.append('group_added', data.value.group_added);
         formData.append('year_added', dateYear);
-        formData.append('scope1_emission', scope_1_emissions.toString());
-        formData.append('scope2_emission', scope_2_emissions.toString());
-        formData.append('scope3_emission', scope_3_emissions.toString());
+        formData.append('scope1_emission', data.value.scope_1_emissions);
+        formData.append('scope2_emission', data.value.scope_2_emissions);
+        formData.append('scope3_emission', data.value.scope_3_emissions);
 
         formData.append('scope1_items', JSON.stringify(scope1_items));
         formData.append('scope2_items', JSON.stringify(scope2_items));
@@ -366,9 +369,10 @@ export class SetEmissionInventoryComponent {
 
         formData.append('group_added', data.value.group_added);
    
-        formData.append('scope1_emission', scope_1_emissions.toString());
-        formData.append('scope2_emission', scope_2_emissions.toString());
-        formData.append('scope3_emission', scope_3_emissions.toString());
+  
+        formData.append('scope1_emission', data.value.scope_1_emissions);
+        formData.append('scope2_emission', data.value.scope_2_emissions);
+        formData.append('scope3_emission', data.value.scope_3_emissions);
 
         formData.append('scope_items', JSON.stringify(totalScopeEmision));
         formData.append('relation_id', id);
@@ -434,6 +438,9 @@ export class SetEmissionInventoryComponent {
                         waste: idWater.emission,
                         production_output:response.details[0].production_output,
                         economic_output:response.details[0].economic_output,
+                        scope_1_emissions: response.details[0].total_scope1,
+                        scope_2_emissions: response.details[0].total_scope2,
+                        scope_3_emissions: response.details[0].total_scope3
                     };
 
                     this.GroupForm.control.patchValue(obj);

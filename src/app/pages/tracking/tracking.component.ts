@@ -1023,12 +1023,38 @@ export class TrackingComponent {
 
     // to get the status of subcategories in status tab
     ALLEntries() {
-
+console.log(this.categoryId);
         if (this.facilityID == 0) {
             this.notification.showInfo(
                 'Select Facility',
                 ''
             );
+            return
+        }
+        if (this.categoryId == 9) {
+            const formData = new URLSearchParams();
+            this.convertedYear = this.trackingService.getYear(this.year);
+            formData.set('year', this.convertedYear.toString())
+            formData.set('facilities', this.facilityID.toString())
+            formData.set('categoryID', this.categoryId.toString())
+            this.trackingService
+            .newgetSCpendingDataEntriesForFuels(formData)
+            .subscribe({
+                next: (response) => {
+                    if (response.success === false) {
+                        this.dataEntriesPending = null;
+                    } else {
+                            this.dataEntriesPending = response.categories;
+                    }
+                },
+                error: (err) => {
+                    this.notification.showError(
+                        'Get data Point failed.',
+                        'Error'
+                    );
+                    console.error('errrrrrr>>>>>>', err);
+                }
+            });
             return
         }
 

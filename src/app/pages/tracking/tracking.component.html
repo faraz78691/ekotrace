@@ -571,7 +571,7 @@
                                                 <input type="text" class="form-control Dashboard-tab text-white"
                                                     placeholder="Enter value" name="calorificValue" ngModel />
                                                 <div class="ct_quantity_text">
-                                                    <p>{{dataEntry.unit}}</p>
+                                                    <p>kWh/{{dataEntry.unit}}</p>
                                                 </div>
 
                                             </div>
@@ -3723,6 +3723,12 @@
                                                 Type
                                                 <p-sortIcon field="catName"></p-sortIcon>
                                             </th>
+                                            <th pSortableColumn="type"
+                                                *ngIf="categoryId == 9">
+
+                                                Sub Type
+                                                <p-sortIcon field="catName"></p-sortIcon>
+                                            </th>
                                             <th pSortableColumn="catName" *ngIf="categoryId == 11">
                                                 Water Treatment
                                                 <p-sortIcon field="catName"></p-sortIcon>
@@ -4268,7 +4274,7 @@
                                                 *ngIf="categoryId != 8 && categoryId != 7 && categoryId != 10 && categoryId != 12 && categoryId != 14 && categoryId != 15 && categoryId != 16 && categoryId != 17 && categoryId != 18 && categoryId != 19 && categoryId != 20 && categoryId !=21 && categoryId !=22 && categoryId !=11 && categoryId !=23 && categoryId !=24 && categoryId != 25 && categoryId != 26">
                                                 {{ de.subcatName }}</td>
                                             <td
-                                                *ngIf="categoryId != 3 && categoryId != 10 && categoryId != 11 && categoryId != 12 && categoryId != 14  &&  categoryId != 24 && categoryId != 16 && categoryId !=18 && categoryId !=20 && categoryId !=21   && categoryId !=22 && categoryId !=23 && categoryId != 25 && categoryId != 26">
+                                                *ngIf="categoryId != 3 && categoryId != 10  && categoryId != 9 && categoryId != 11 && categoryId != 12 && categoryId != 14  &&  categoryId != 24 && categoryId != 16 && categoryId !=18 && categoryId !=20 && categoryId !=21   && categoryId !=22 && categoryId !=23 && categoryId != 25 && categoryId != 26">
                                                 {{ de.TypeName || '-' }}</td>
 
                                             <td *ngIf="categoryId == 11 ">{{ de.water_treatment }}</td>

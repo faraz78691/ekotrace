@@ -63,21 +63,13 @@ export class HazardNonhazardComponent {
 
      //method to update company profile
      saveChanges() {
-      // console.log(this.selectedSecondaryIndustryTypes);
-      
-      
-
+     
       const formData = new URLSearchParams();
      
       formData.append('hazadrous', this.hazadrous.toString());
       formData.append('non_hazadrous', this.non_hazadrous.toString());
      
-      // this.companyDetails.industryTypeID = JSON.stringify(
-      //     this.selectedIndustryTypes
-      // );
-      // this.companyDetails.secondIndustryTypeID = JSON.stringify(
-      //     this.selectedSecondaryIndustryTypes
-      // );
+
       this.companyService.setHazardNonhazard(formData.toString()).subscribe({
           next: (response) => {
       
