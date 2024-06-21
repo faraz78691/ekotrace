@@ -118,7 +118,7 @@ export class LoginComponent implements OnInit {
              formData.set('password', this.loginForm.value.password);
             this.appService.newloginByAuth(formData).subscribe(
                 (res) => {
-                
+                console.log(res);
                     if(res.success == true){
 
                         this.loginInfo = res.userinfo[0];

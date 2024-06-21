@@ -47,7 +47,8 @@ export class TreeComponent {
             let jsonObj = JSON.parse(userInfo); // string to "any" object first
             this.loginInfo = jsonObj as LoginInfo;
           }
-        this.treeList$ = familyService.getTreeList();
+        
+
         this.nodeType =
             [
                 {
@@ -66,8 +67,15 @@ export class TreeComponent {
 
     }
     ngOnInit() {
+        this.treeList$ = this.familyService.getTreeList();
         FamilyTree.templates.hugo.link_field_0 = '<text width="230" style="font-size: 18px;" fill="#ffffff" x="145" y="150" text-anchor="middle" class="field_0">{val}</text>';
-        this.getTreeViewByID('1');
+        if(localStorage.getItem('tree_ID') !=null){
+            this.selectedTemplateId = Number(localStorage.getItem('tree_ID'))
+            this.getTreeViewByID( this.selectedTemplateId);
+ 
+           }else{
+            this.getTreeViewByID( '1');
+           }
 
     };
 
@@ -91,14 +99,15 @@ export class TreeComponent {
         $(".ct_custom_modal_120").hide()
         const targetElement = document.getElementById('#cancel2');
         if (targetElement) {
-            console.log('fd')
+    
             this.renderer.addClass(targetElement, 'none');
         }
         this.hideModal.nativeElement
 
-    }
+    };
 
     getTreeViewByID(id) {
+        console.log(id);
         const formData = new URLSearchParams();
         formData.set('family_id', id);
 
@@ -301,7 +310,7 @@ export class TreeComponent {
         formData.set('main_name', data.value.rootName); 
         this.familyService.createTree(formData).subscribe({
           next: (response) => {
-    
+    console.log("response---", response);
             if (response.success == true) {
               this.notification.showSuccess(
                 'Data entry added successfully',
@@ -309,8 +318,10 @@ export class TreeComponent {
               );
               this.displayBasic = false
               this.treeList$ = this.familyService.getTreeList();
+              this.selectedTemplateId = response.insertDetails.insertId;
+              localStorage.setItem('tree_ID', this.selectedTemplateId.toString())
               this.form.reset();
-              this.getTreeViewByID('1')
+              this.getTreeViewByID(response.insertDetails.insertId)
             }
           },
           error: (err) => {

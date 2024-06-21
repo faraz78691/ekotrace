@@ -13,4 +13,5 @@ export class LoginInfo {
     licenseExpired: Date;
     email = '';
     numberOfUserAllowed = 0;
+    package_name :string;
 }

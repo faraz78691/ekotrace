@@ -2433,6 +2433,7 @@ class LoginComponent {
       formData.set('email', this.loginForm.value.email);
       formData.set('password', this.loginForm.value.password);
       this.appService.newloginByAuth(formData).subscribe(res => {
+        console.log(res);
         if (res.success == true) {
           this.loginInfo = res.userinfo[0];
           localStorage.setItem('accessToken', this.loginInfo.token);
@@ -3861,8 +3862,10 @@ class MenuSidebarComponent {
             this.isBRSRDoc = true;
             this.menu = menu.find(item => item.role === this.loginInfo.role && item.isBRSRDoc === this.isBRSRDoc)?.items || [];
           } else {
+            console.log(this.loginInfo);
+            console.log("menu", menu);
             this.isBRSRDoc = false;
-            this.menu = menu.find(item => item.role === this.loginInfo.role && item.isBRSRDoc === this.isBRSRDoc)?.items || [];
+            this.menu = menu.find(item => item.role === this.loginInfo.role && item.package_name == this.loginInfo.package_name)?.items || [];
           }
         }
       });
@@ -3888,6 +3891,7 @@ class MenuSidebarComponent {
           return;
         }
         const response = yield _this.companyService.getTenantsDataById(Number(_this.loginInfo.tenantID)).toPromise();
+        console.log(response);
         _this.companyDetails = response;
         const currentDate = new Date();
         const licenseExpiredDate = new Date(_this.companyDetails.licenseExpired);
@@ -4001,21 +4005,8 @@ class MenuSidebarComponent {
 const menu = [{
   role: 'Super Admin',
   isBRSRDoc: false,
-  items: [
-  // {
-  //     head: 'Organisation Structure',
-  //     name: 'Dashboard',
-  //     iconClasses: 'fas fa-table',
-  //     iconSRC :'assets/img/dashboard.svg',
-  //     path: ['dashboard']
-  // },
-  // {
-  //     name: 'Tracking Old',
-  //     iconClasses: 'fas fa-star',
-  //     iconSRC :'assets/img/tracking_icon.svg',
-  //     path: ['scope3tracking']
-  // },
-  {
+  package_name: 'Comprehensive',
+  items: [{
     head: 'Organisation Structure',
     name: 'Tree',
     iconClasses: 'fas fa-star',
@@ -4176,6 +4167,7 @@ const menu = [{
 }, {
   role: 'Super Admin',
   isBRSRDoc: true,
+  package_name: 'Intermediate',
   items: [{
     head: 'Monitoring',
     name: 'Dashboard',
@@ -4254,6 +4246,113 @@ const menu = [{
     iconClasses: 'fas fa-folder',
     path: ['billing']
   }]
+}, {
+  role: 'Super Admin',
+  isBRSRDoc: true,
+  package_name: 'Basic',
+  items: [{
+    head: 'Organisation Structure',
+    name: 'Tree',
+    iconClasses: 'fas fa-star',
+    iconSRC: 'assets/img/trees.png',
+    path: ['main_tree']
+  }, {
+    head: undefined,
+    name: 'Add User',
+    iconClasses: 'fas fa-user-plus',
+    iconSRC: 'assets/img/user_121.png',
+    path: ['user']
+  }, {
+    head: 'Disclose',
+    name: 'Dashboard',
+    iconClasses: 'fas fa-table',
+    iconSRC: 'assets/img/dashboard.svg',
+    path: ['dashboard']
+  }, {
+    head: 'GHG Emissions',
+    name: 'Corporate Emissions',
+    iconClasses: 'fas fa-star',
+    iconSRC: 'assets/img/trees.png',
+    path: ['tracking']
+  },
+  // {
+  //     name: 'Carbon Offset',
+  //     iconClasses: 'fas fa-folder',
+  //     iconSRC :'assets/img/co2.svg',
+  //     path: ['carbonOffset']
+  // },
+  // {
+  //     head: 'Reporting',
+  //     name: 'BRSR',
+  //     iconClasses: 'fas fa-table',
+  //     iconSRC :'assets/img/BRSR.svg',
+  //     path: ['brsrReport'],
+  // children: [
+  //     {
+  //         name: 'Fd set',
+  //         iconClasses: 'fas fa-file',
+  //         path: ['brsrReport'],
+  //         queryParams: { defaultTab: 0 }
+  //     },
+  //     {
+  //         name: 'HR set',
+  //         iconClasses: 'fas fa-file',
+  //         path: ['brsrReport'],
+  //         queryParams: { defaultTab: 1 }
+  //     },
+  //     {
+  //         name: 'CS set',
+  //         iconClasses: 'fas fa-file',
+  //         path: ['brsrReport'],
+  //         queryParams: { defaultTab: 2 }
+  //     }
+  //     // {
+  //     //     name: 'Principle 4',
+  //     //     iconClasses: 'fas fa-file',
+  //     //     path: ['brsrReport'],
+  //     //     queryParams: { defaultTab: 3 }
+  //     // }
+  // ]
+  // },
+  // {
+  //     head: 'Admin Setting',
+  //     name: 'Company Profile',
+  //     iconClasses: 'fas fa-eye',
+  //     iconSRC: 'assets/img/building.svg',
+  //     path: ['company-profile']
+  // },
+  // {
+  //     name: 'Facility',
+  //     iconClasses: 'fas fa-search-location',
+  //     iconSRC: 'assets/img/facility_icon.svg',
+  //     path: ['facility']
+  // },
+  // {
+  //     name: 'Group',
+  //     iconClasses: 'fas fa-users',
+  //     iconSRC: 'assets/img/group_121.png',
+  //     path: ['group']
+  // },
+  // {
+  //     name: 'User',
+  //     iconClasses: 'fas fa-user-plus',
+  //     iconSRC: 'assets/img/user_121.png',
+  //     path: ['user']
+  // },
+  {
+    head: 'Account Details',
+    name: 'Billing',
+    iconClasses: 'fas fa-folder',
+    iconSRC: 'assets/img/biling_icon_211.png',
+    path: ['billing']
+  }
+  // {
+  //     name: 'Billing',
+  //     iconClasses: 'fas fa-folder',
+  //     iconSRC: 'assets/img/biling_icon_211.png',
+  //     path: ['adminBilling']
+  // },
+  ]
 }, {
   role: 'Admin',
   isBRSRDoc: false,
@@ -14313,8 +14412,8 @@ class BillingComponent {
     type: BillingComponent,
     selectors: [["app-billing"]],
     decls: 77,
-    vars: 45,
-    consts: [[1, "container-fluid"], [3, "value", "enableService", "closable", "valueChange"], [1, "row"], [1, "col-sm-6", 3, "ngClass"], [1, "m-0", "pl-4"], [1, "col-sm-6", "d-flex", "flex-row"], [1, "row", "text-white", "border-bottom"], [1, "row", "pt-3"], [1, "col"], [1, "card", "rounded", "shadow", 3, "ngClass"], [1, "card-header", 3, "ngClass"], [1, "card-body"], [1, "row", "p-2", "d-flex"], [1, "col-8", "font-pera", "mt-2"], [1, ""], [1, "col-3"], [1, "", 2, "font-size", "16px"], [1, "col-3", "statusactive", 2, "font-size", "16px"], [1, "dot", 3, "ngStyle"], [1, "mt-3"], [1, "text-right", "renewalbutton"], ["style", "\n                                    background-color: #88ad47;\n                                    font-size: 14px;\n                                ", "class", "btn btn-success float-right mb-5 mt-0 text-white", 3, "click", 4, "ngIf"], [1, "card", "rounded", "mt-3", "shadow", 3, "ngClass"], [1, "col", "ml-0"], [1, "col-3", "ml-0", "p-0", 2, "font-size", "16px"], [1, "ml-0", "p-0"], [1, "fa", "fa-id-card", "mr-2"], [1, "ml-0", "mt-0"], [1, "fas", "fa-user", "mr-2"], [1, "fas", "fa-calendar-alt", "mr-2"], [1, "col-3", 2, "font-size", "16px"], [1, "pointer"], ["class", "fa fa-info-circle tooltip-icon", "pTooltip", "You will get access to only BRSR Section with this license type", "tooltipPosition", "top", "style", "color: #88ad47", 4, "ngIf"], ["class", "fa fa-info-circle tooltip-icon", "pTooltip", "You will get access to BRSR and Tracking sections with this license type", "tooltipPosition", "top", "style", "color: #88ad47", 4, "ngIf"], [1, "col-4", 2, "font-size", "16px"], [1, "col-2", "v", 2, "font-size", "16px"], [1, "btn", "btn-success", "float-right", "mb-5", "mt-0", "text-white", 2, "background-color", "#88ad47", "font-size", "14px", 3, "click"], ["class", "fa fa-spinner fa-spin mr-2", 4, "ngIf"], [1, "fa", "fa-spinner", "fa-spin", "mr-2"], ["pTooltip", "You will get access to only BRSR Section with this license type", "tooltipPosition", "top", 1, "fa", "fa-info-circle", "tooltip-icon", 2, "color", "#88ad47"], ["pTooltip", "You will get access to BRSR and Tracking sections with this license type", "tooltipPosition", "top", 1, "fa", "fa-info-circle", "tooltip-icon", 2, "color", "#88ad47"]],
+    vars: 44,
+    consts: [[1, "container-fluid"], [3, "value", "enableService", "closable", "valueChange"], [1, "row"], [1, "col-sm-6", 3, "ngClass"], [1, "m-0", "pl-4"], [1, "col-sm-6", "d-flex", "flex-row"], [1, "row", "text-white", "border-bottom"], [1, "row", "pt-3"], [1, "col"], [1, "card", "rounded", "shadow", 3, "ngClass"], [1, "card-header", 3, "ngClass"], [1, "card-body"], [1, "row", "p-2", "d-flex"], [1, "col-8", "font-pera", "mt-2"], [1, ""], [1, "col-3"], [1, "", 2, "font-size", "16px"], [1, "col-3", "statusactive", 2, "font-size", "16px"], [1, "dot", 3, "ngStyle"], [1, "mt-3"], [1, "text-right", "renewalbutton"], ["style", "\n                                    background-color: #88ad47;\n                                    font-size: 14px;\n                                ", "class", "btn btn-success float-right mb-5 mt-0 text-white", 3, "click", 4, "ngIf"], [1, "card", "rounded", "mt-3", "shadow", 3, "ngClass"], [1, "col", "ml-0"], [1, "col-3", "ml-0", "p-0", 2, "font-size", "16px"], [1, "ml-0", "p-0"], [1, "fa", "fa-id-card", "mr-2"], [1, "ml-0", "mt-0"], [1, "fas", "fa-user", "mr-2"], [1, "fas", "fa-calendar-alt", "mr-2"], [1, "col-3", 2, "font-size", "16px"], [1, "pointer"], ["class", "fa fa-info-circle tooltip-icon", "pTooltip", "You will get access to only BRSR Section with this license type", "tooltipPosition", "top", "style", "color: #88ad47", 4, "ngIf"], ["class", "fa fa-info-circle tooltip-icon", "pTooltip", "You will get access to Scope 1-2 and Users with this license type", "tooltipPosition", "top", "style", "color: #88ad47", 4, "ngIf"], [1, "col-4", 2, "font-size", "16px"], [1, "col-2", "v", 2, "font-size", "16px"], [1, "btn", "btn-success", "float-right", "mb-5", "mt-0", "text-white", 2, "background-color", "#88ad47", "font-size", "14px", 3, "click"], ["class", "fa fa-spinner fa-spin mr-2", 4, "ngIf"], [1, "fa", "fa-spinner", "fa-spin", "mr-2"], ["pTooltip", "You will get access to only BRSR Section with this license type", "tooltipPosition", "top", 1, "fa", "fa-info-circle", "tooltip-icon", 2, "color", "#88ad47"], ["pTooltip", "You will get access to Scope 1-2 and Users with this license type", "tooltipPosition", "top", 1, "fa", "fa-info-circle", "tooltip-icon", 2, "color", "#88ad47"]],
     template: function BillingComponent_Template(rf, ctx) {
       if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelementStart"](0, "div", 0)(1, "p-messages", 1);
@@ -14367,7 +14466,7 @@ class BillingComponent {
         _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelementStart"](46, "div", 11)(47, "div", 23)(48, "div", 2)(49, "div", 24)(50, "p", 25);
         _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelement"](51, "i", 26);
-        _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵtext"](52, " Type Of License : ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵtext"](52, " Type Of license: ");
         _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelementStart"](53, "p", 27);
         _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelement"](54, "i", 28);
@@ -14383,7 +14482,7 @@ class BillingComponent {
         _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵtemplate"](63, BillingComponent_i_63_Template, 1, 0, "i", 33);
         _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelementStart"](64, "p");
-        _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵtext"](65);
+        _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵtext"](65, "5");
         _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelementStart"](66, "p");
         _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵtext"](67);
@@ -14414,15 +14513,15 @@ class BillingComponent {
         _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵadvance"](3);
         _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵstyleMapInterpolate1"]("--status-color: ", ctx.companyDetails.active ? "#55BF92" : "red", "; font-size: 16px;");
         _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵadvance"](7);
-        _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵproperty"]("ngStyle", _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵpureFunction1"](43, _c0, ctx.isExpired ? "red" : "#55BF92"));
+        _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵproperty"]("ngStyle", _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵpureFunction1"](42, _c0, ctx.isExpired ? "red" : "#55BF92"));
         _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵadvance"](1);
         _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵtextInterpolate1"](" ", ctx.isExpired ? "Inactive" : "Active", " ");
         _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵadvance"](2);
-        _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵtextInterpolate1"](" ", _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵpipeBind2"](32, 28, ctx.companyDetails.createdDate, "dd/MM/yyyy"), " ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵtextInterpolate1"](" ", _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵpipeBind2"](32, 27, ctx.companyDetails.createdDate, "dd/MM/yyyy"), " ");
         _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵadvance"](3);
-        _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵtextInterpolate1"](" ", _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵpipeBind2"](35, 31, ctx.companyDetails.licenseExpired, "dd/MM/yyyy"), " ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵtextInterpolate1"](" ", _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵpipeBind2"](35, 30, ctx.companyDetails.licenseExpired, "dd/MM/yyyy"), " ");
         _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵadvance"](3);
-        _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵtextInterpolate1"](" ", _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵpipeBind2"](38, 34, ctx.companyDetails.expiration, "dd/MM/yyyy"), " ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵtextInterpolate1"](" ", _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵpipeBind2"](38, 33, ctx.companyDetails.expiration, "dd/MM/yyyy"), " ");
         _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵadvance"](3);
         _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵproperty"]("ngIf", ctx.isExpired);
         _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵadvance"](3);
@@ -14432,17 +14531,15 @@ class BillingComponent {
         _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵadvance"](6);
         _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵstyleMapInterpolate1"]("--status-color: ", ctx.companyDetails.active ? "#55BF92" : "red", ";");
         _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵadvance"](11);
-        _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵtextInterpolate1"](" ", ctx.companyDetails.licenseType, " ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵtextInterpolate1"](" ", ctx.loginInfo.package_name, " ");
         _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵadvance"](1);
-        _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵproperty"]("ngIf", ctx.companyDetails.licenseType === "Normal");
+        _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵproperty"]("ngIf", ctx.loginInfo.package_name == "Normal");
         _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵadvance"](1);
-        _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵproperty"]("ngIf", ctx.companyDetails.licenseType === "FullAccess");
-        _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵadvance"](2);
-        _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵtextInterpolate"](ctx.companyDetails.numberOfUserAllowed);
-        _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵadvance"](2);
-        _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵtextInterpolate1"](" ", _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵpipeBind2"](68, 37, ctx.companyDetails.createdDate, "dd/MM/yyyy"), " ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵproperty"]("ngIf", ctx.loginInfo.package_name == "Basic");
+        _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵadvance"](4);
+        _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵtextInterpolate1"](" ", _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵpipeBind2"](68, 36, ctx.companyDetails.createdDate, "dd/MM/yyyy"), " ");
         _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵadvance"](8);
-        _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵpipeBind2"](76, 40, ctx.expirationDate, "dd/MM/yyyy"));
+        _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵpipeBind2"](76, 39, ctx.expirationDate, "dd/MM/yyyy"));
       }
     },
     dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_9__.NgClass, _angular_common__WEBPACK_IMPORTED_MODULE_9__.NgIf, _angular_common__WEBPACK_IMPORTED_MODULE_9__.NgStyle, primeng_messages__WEBPACK_IMPORTED_MODULE_10__.Messages, primeng_tooltip__WEBPACK_IMPORTED_MODULE_11__.Tooltip, _angular_common__WEBPACK_IMPORTED_MODULE_9__.DatePipe],
@@ -14991,13 +15088,13 @@ class BrsrReportComponent {
         _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](11, "Sections");
         _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](12, "th", 8);
-        _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](13, "HR");
+        _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](13, "Human Resource Department");
         _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](14, "th", 8);
-        _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](15, "CS");
+        _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](15, "Finance Department");
         _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](16, "th", 8);
-        _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](17, "FD");
+        _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](17, "Company Secretary");
         _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](18, "th", 8);
         _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](19, "FM & Supply Chain Departmemt");
@@ -16616,7 +16713,7 @@ function BusinessTravelComponent_option_7_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtextInterpolate1"]("", items_r7.AssestName, " ");
   }
 }
-function BusinessTravelComponent_div_27_Template(rf, ctx) {
+function BusinessTravelComponent_div_26_Template(rf, ctx) {
   if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "div", 28);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](1, "apx-chart", 29);
@@ -16628,7 +16725,7 @@ function BusinessTravelComponent_div_27_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("series", ctx_r1.donotOptions1.series)("chart", ctx_r1.donotOptions1.chart)("labels", ctx_r1.donotOptions1.labels)("legend", ctx_r1.donotOptions1.legend)("colors", ctx_r1.donotOptions1.colors)("responsive", ctx_r1.donotOptions1.responsive);
   }
 }
-function BusinessTravelComponent_div_39_Template(rf, ctx) {
+function BusinessTravelComponent_div_37_Template(rf, ctx) {
   if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "div", 30);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](1, "apx-chart", 29);
@@ -16640,7 +16737,7 @@ function BusinessTravelComponent_div_39_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("series", ctx_r2.donotOptions3.series)("chart", ctx_r2.donotOptions3.chart)("labels", ctx_r2.donotOptions3.labels)("legend", ctx_r2.donotOptions3.legend)("colors", ctx_r2.donotOptions3.colors)("responsive", ctx_r2.donotOptions3.responsive);
   }
 }
-function BusinessTravelComponent_div_46_Template(rf, ctx) {
+function BusinessTravelComponent_div_44_Template(rf, ctx) {
   if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "div", 31);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](1, "apx-chart", 32);
@@ -16652,7 +16749,7 @@ function BusinessTravelComponent_div_46_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("series", ctx_r3.chartOptions.series)("chart", ctx_r3.chartOptions.chart)("dataLabels", ctx_r3.chartOptions.dataLabels)("plotOptions", ctx_r3.chartOptions.plotOptions)("yaxis", ctx_r3.chartOptions.yaxis)("legend", ctx_r3.chartOptions.legend)("fill", ctx_r3.chartOptions.fill)("colors", ctx_r3.chartOptions.colors)("stroke", ctx_r3.chartOptions.stroke)("tooltip", ctx_r3.chartOptions.tooltip)("xaxis", ctx_r3.chartOptions.xaxis);
   }
 }
-function BusinessTravelComponent_div_65_Template(rf, ctx) {
+function BusinessTravelComponent_div_62_Template(rf, ctx) {
   if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "div", 30);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](1, "apx-chart", 29);
@@ -16664,7 +16761,7 @@ function BusinessTravelComponent_div_65_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("series", ctx_r4.donotOptions2.series)("chart", ctx_r4.donotOptions2.chart)("labels", ctx_r4.donotOptions2.labels)("legend", ctx_r4.donotOptions2.legend)("colors", ctx_r4.donotOptions2.colors)("responsive", ctx_r4.donotOptions2.responsive);
   }
 }
-function BusinessTravelComponent_div_78_Template(rf, ctx) {
+function BusinessTravelComponent_div_74_Template(rf, ctx) {
   if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "div", 33);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](1, "apx-chart", 34);
@@ -16676,7 +16773,7 @@ function BusinessTravelComponent_div_78_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("series", ctx_r5.pieChart.series)("chart", ctx_r5.pieChart.chart)("labels", ctx_r5.pieChart.labels)("legend", ctx_r5.pieChart.legend)("responsive", ctx_r5.pieChart.responsive)("colors", ctx_r5.pieChart.colors);
   }
 }
-function BusinessTravelComponent_div_95_Template(rf, ctx) {
+function BusinessTravelComponent_div_90_Template(rf, ctx) {
   if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "div", 35);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](1, "apx-chart", 36);
@@ -17065,7 +17162,7 @@ class BusinessTravelComponent {
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵloadQuery"]()) && (ctx.ct_emission_by_travel = _t.first);
       }
     },
-    decls: 96,
+    decls: 91,
     vars: 26,
     consts: [[1, "row"], [1, "col-xl-9", "mb-4"], [1, "col-xl-3", "mb-4", "ct_mt_top_68"], [1, "ct_right_sidebar"], [1, "mb-4"], [1, "ct_all_vender_select", 3, "ngModel", "ngModelChange", "change"], ["value", "", 3, "value", 4, "ngFor", "ngForOf"], [1, "mt-4"], [1, "mb-1", "ct_fw_500"], ["ngModel", "", "name", "year", "year", "", "view", "year", "dateFormat", "yy", "inputId", "yearpicker", "styleClass", "pcalender", 1, "w-100", "ct_input_dark_text_145", 3, "ngModel", "showIcon", "ngModelChange"], [1, "col-md-12"], [1, "col-xl-3", "mb-4"], [1, "ct_grey_border_1"], [1, "ct_d_flex_1", "ct_grey_brdr_btm1", "pb-3", "mb-3"], [1, "ct_font_16"], [1, "ct_fs_24"], [1, "mb-0"], ["id", "ct_emission_by_travel", 4, "ngIf"], ["id", "ct_cost_center", 4, "ngIf"], [1, "col-xl-6", "mb-4"], ["id", "ct_emission_by_month", 4, "ngIf"], [1, "col-xl-6"], [1, "text-center", "mb-4"], ["id", "ct_business_divisions"], ["id", "By_employee_location", 4, "ngIf"], [1, "col-xl-12", "mb-4"], ["id", "ct_net_zeo_donut", 4, "ngIf"], ["value", "", 3, "value"], ["id", "ct_emission_by_travel"], [3, "series", "chart", "labels", "legend", "colors", "responsive"], ["id", "ct_cost_center"], ["id", "ct_emission_by_month"], [3, "series", "chart", "dataLabels", "plotOptions", "yaxis", "legend", "fill", "colors", "stroke", "tooltip", "xaxis"], ["id", "By_employee_location"], [3, "series", "chart", "labels", "legend", "responsive", "colors"], ["id", "ct_net_zeo_donut"], [3, "series", "chart", "dataLabels", "plotOptions", "yaxis", "xaxis", "legend", "colors", "grid"]],
     template: function BusinessTravelComponent_Template(rf, ctx) {
@@ -17093,73 +17190,73 @@ class BusinessTravelComponent {
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](12, "div", 0)(13, "div", 10)(14, "div", 0)(15, "div", 11)(16, "div", 12)(17, "div", 13)(18, "div")(19, "h5", 14);
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](20, "Emissions in Travel");
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](21, "h3", 15)(22, "strong");
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](23);
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵpipe"](24, "number");
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](25, "p", 16);
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](26, "tCO2e");
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()()();
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](27, BusinessTravelComponent_div_27_Template, 2, 6, "div", 17);
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](28, "div", 11)(29, "div", 12)(30, "div", 13)(31, "div")(32, "h5", 14);
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](33, "Emssions by Cost centre");
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](21, "h3", 15);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](22);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵpipe"](23, "number");
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](34, "h3")(35, "strong");
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](36, "5,887,34");
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](24, "p", 16);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](25, "tCO2e");
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()()();
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](26, BusinessTravelComponent_div_26_Template, 2, 6, "div", 17);
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](37, "p", 16);
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](38, "tCO2e");
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()()();
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](39, BusinessTravelComponent_div_39_Template, 2, 6, "div", 18);
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](40, "div", 19)(41, "div", 12)(42, "div", 13)(43, "div")(44, "h5", 14);
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](45, "Travel Emissions / month (tCO2e)");
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()()();
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](46, BusinessTravelComponent_div_46_Template, 2, 11, "div", 20);
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()()();
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](47, "div", 0)(48, "div", 21)(49, "h4", 22);
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](50, "Air Travel Emissions");
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](27, "div", 11)(28, "div", 12)(29, "div", 13)(30, "div")(31, "h5", 14);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](32, "Emssions by Cost centre");
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](51, "div", 0)(52, "div", 19)(53, "div", 12)(54, "div", 13)(55, "div")(56, "h5", 14);
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](57, "By Flight type");
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](33, "h3", 15);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](34, "5,887,34");
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](58, "h3")(59, "strong");
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](60);
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵpipe"](61, "number");
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](35, "p", 16);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](36, "tCO2e");
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()()();
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](37, BusinessTravelComponent_div_37_Template, 2, 6, "div", 18);
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](62, "p", 16);
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](63, "tCO2e");
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](38, "div", 19)(39, "div", 12)(40, "div", 13)(41, "div")(42, "h5", 14);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](43, "Travel Emissions / month (tCO2e)");
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()()();
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](64, "div", 23);
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](65, BusinessTravelComponent_div_65_Template, 2, 6, "div", 18);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](44, BusinessTravelComponent_div_44_Template, 2, 11, "div", 20);
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()()();
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](66, "div", 19)(67, "div", 12)(68, "div", 13)(69, "div")(70, "h5", 14);
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](71, "By Flight Class");
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](45, "div", 0)(46, "div", 21)(47, "h4", 22);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](48, "Air Travel Emissions");
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](72, "h3")(73, "strong");
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](74);
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵpipe"](75, "number");
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](76, "p", 16);
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](77, "tCO2e");
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](49, "div", 0)(50, "div", 19)(51, "div", 12)(52, "div", 13)(53, "div")(54, "h5", 14);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](55, "By Flight type");
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](56, "h3", 15);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](57);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵpipe"](58, "number");
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](59, "p", 16);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](60, "tCO2e");
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()()();
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](78, BusinessTravelComponent_div_78_Template, 2, 6, "div", 24);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](61, "div", 23);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](62, BusinessTravelComponent_div_62_Template, 2, 6, "div", 18);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()()();
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](63, "div", 19)(64, "div", 12)(65, "div", 13)(66, "div")(67, "h5", 14);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](68, "By Flight Class");
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](69, "h3", 15);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](70);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵpipe"](71, "number");
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](72, "p", 16);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](73, "tCO2e");
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()()();
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](74, BusinessTravelComponent_div_74_Template, 2, 6, "div", 24);
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()()()();
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](79, "div", 21)(80, "h4", 22);
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](81, "Ground Travel Emissions");
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](75, "div", 21)(76, "h4", 22);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](77, "Ground Travel Emissions");
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](82, "div", 0)(83, "div", 25)(84, "div", 12)(85, "div", 13)(86, "div")(87, "h5", 14);
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](88, "Total Emission");
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](78, "div", 0)(79, "div", 25)(80, "div", 12)(81, "div", 13)(82, "div")(83, "h5", 14);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](84, "Total Emission");
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](89, "h3")(90, "strong");
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](91);
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵpipe"](92, "number");
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](93, "p", 16);
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](94, "tCO2e");
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](85, "h3", 15);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](86);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵpipe"](87, "number");
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](88, "p", 16);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](89, "tCO2e");
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()()();
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](95, BusinessTravelComponent_div_95_Template, 2, 9, "div", 26);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](90, BusinessTravelComponent_div_90_Template, 2, 9, "div", 26);
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()()()()()()();
       }
       if (rf & 2) {
@@ -17169,30 +17266,30 @@ class BusinessTravelComponent {
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngForOf", ctx.dashboardData);
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](4);
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngModel", ctx.year)("showIcon", true);
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](12);
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵpipeBind2"](24, 14, ctx.airTotal, "1.2-2"));
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](11);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵpipeBind2"](23, 14, ctx.airTotal, "1.2-2"));
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](4);
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngIf", ctx.donotOptions1);
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](12);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](11);
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngIf", ctx.donotOptions3);
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](7);
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngIf", ctx.chartOptions);
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](14);
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵpipeBind2"](61, 17, ctx.flightTypeTotal, "1.2-2"));
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](13);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵpipeBind2"](58, 17, ctx.flightTypeTotal, "1.2-2"));
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](5);
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngIf", ctx.donotOptions2);
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](9);
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵpipeBind2"](75, 20, ctx.flightTotal, "1.2-2"));
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](8);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵpipeBind2"](71, 20, ctx.flightTotal, "1.2-2"));
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](4);
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngIf", ctx.pieChart);
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](13);
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵpipeBind2"](92, 23, ctx.groundTotal, "1.2-2"));
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](12);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵpipeBind2"](87, 23, ctx.groundTotal, "1.2-2"));
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](4);
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngIf", ctx.groupChart);
       }
     },
     dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_5__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_5__.NgIf, _angular_forms__WEBPACK_IMPORTED_MODULE_6__.NgSelectOption, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["ɵNgSelectMultipleOption"], _angular_forms__WEBPACK_IMPORTED_MODULE_6__.SelectControlValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_6__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_6__.NgModel, ng_apexcharts__WEBPACK_IMPORTED_MODULE_7__.ChartComponent, primeng_calendar__WEBPACK_IMPORTED_MODULE_8__.Calendar, _angular_common__WEBPACK_IMPORTED_MODULE_5__.DecimalPipe],
-    styles: ["/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsInNvdXJjZVJvb3QiOiIifQ== */"]
+    styles: [".ct_fs_24[_ngcontent-%COMP%] {\n  font-size: 24px;\n  font-weight: 600;\n}\n/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8uL3NyYy9hcHAvcGFnZXMvZGFzaGJvYXJkL2J1c2luZXNzLXRyYXZlbC9idXNpbmVzcy10cmF2ZWwuY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDSSxlQUFBO0VBQ0EsZ0JBQUE7QUFDSiIsInNvdXJjZXNDb250ZW50IjpbIi5jdF9mc18yNHtcclxuICAgIGZvbnQtc2l6ZTogMjRweDtcclxuICAgIGZvbnQtd2VpZ2h0OiA2MDA7XHJcbn0iXSwic291cmNlUm9vdCI6IiJ9 */"]
   });
 }
 
@@ -17436,7 +17533,7 @@ function EnergyEmmsionsComponent_option_7_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtextInterpolate1"]("", items_r4.AssestName, " ");
   }
 }
-function EnergyEmmsionsComponent_div_27_Template(rf, ctx) {
+function EnergyEmmsionsComponent_div_26_Template(rf, ctx) {
   if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "div", 23);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](1, "apx-chart", 24);
@@ -17448,7 +17545,7 @@ function EnergyEmmsionsComponent_div_27_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("series", ctx_r1.donotOptions1.series)("chart", ctx_r1.donotOptions1.chart)("labels", ctx_r1.donotOptions1.labels)("legend", ctx_r1.donotOptions1.legend)("colors", ctx_r1.donotOptions1.colors)("responsive", ctx_r1.donotOptions1.responsive);
   }
 }
-function EnergyEmmsionsComponent_div_51_Template(rf, ctx) {
+function EnergyEmmsionsComponent_div_48_Template(rf, ctx) {
   if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "div", 25);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](1, "apx-chart", 26);
@@ -17460,7 +17557,7 @@ function EnergyEmmsionsComponent_div_51_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("series", ctx_r2.pieChart.series)("chart", ctx_r2.pieChart.chart)("labels", ctx_r2.pieChart.labels)("legend", ctx_r2.pieChart.legend)("responsive", ctx_r2.pieChart.responsive)("colors", ctx_r2.pieChart.colors);
   }
 }
-function EnergyEmmsionsComponent_div_58_Template(rf, ctx) {
+function EnergyEmmsionsComponent_div_55_Template(rf, ctx) {
   if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "div", 27);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](1, "apx-chart", 28);
@@ -17810,7 +17907,7 @@ class EnergyEmmsionsComponent {
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵloadQuery"]()) && (ctx.ct_emission_by_travel = _t.first);
       }
     },
-    decls: 59,
+    decls: 56,
     vars: 20,
     consts: [[1, "row"], [1, "col-xl-9", "mb-4"], [1, "col-xl-3", "mb-4", "ct_mt_top_68"], [1, "ct_right_sidebar"], [1, "mb-4"], [1, "ct_all_vender_select", 3, "ngModel", "ngModelChange", "change"], ["value", "", 3, "value", 4, "ngFor", "ngForOf"], [1, "mt-4"], [1, "mb-1", "ct_fw_500"], ["ngModel", "", "name", "year", "year", "", "view", "year", "dateFormat", "yy", "inputId", "yearpicker", "styleClass", "pcalender", 1, "w-100", "ct_input_dark_text_145", 3, "ngModel", "showIcon", "ngModelChange"], [1, "col-md-12"], [1, "col-xl-4", "mb-4"], [1, "ct_grey_border_1"], [1, "ct_d_flex_1", "ct_grey_brdr_btm1", "pb-3", "mb-3"], [1, "ct_font_16"], [1, "ct_fs_24"], [1, "mb-0"], ["id", "ct_emission_by_travel", 4, "ngIf"], [3, "series", "chart", "labels", "fill", "colors", "legend", "dataLabels", "responsive"], ["id", "By_employee_location", 4, "ngIf"], [1, "col-xl-12", "mb-12"], ["id", "ct_emission_by_month", 4, "ngIf"], ["value", "", 3, "value"], ["id", "ct_emission_by_travel"], [3, "series", "chart", "labels", "legend", "colors", "responsive"], ["id", "By_employee_location"], [3, "series", "chart", "labels", "legend", "responsive", "colors"], ["id", "ct_emission_by_month"], [3, "series", "chart", "dataLabels", "plotOptions", "yaxis", "legend", "fill", "stroke", "tooltip", "xaxis"]],
     template: function EnergyEmmsionsComponent_Template(rf, ctx) {
@@ -17838,41 +17935,41 @@ class EnergyEmmsionsComponent {
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](12, "div", 0)(13, "div", 10)(14, "div", 0)(15, "div", 11)(16, "div", 12)(17, "div", 13)(18, "div")(19, "h5", 14);
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](20, "Stationary Combustion");
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](21, "h3", 15)(22, "strong");
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](23);
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵpipe"](24, "number");
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](25, "p", 16);
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](26, "tCO2e");
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()()();
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](27, EnergyEmmsionsComponent_div_27_Template, 2, 6, "div", 17);
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](28, "div", 11)(29, "div", 12)(30, "div", 13)(31, "div")(32, "h5", 14);
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](33, "By Activity");
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](21, "h3", 15);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](22);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵpipe"](23, "number");
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](34, "h3")(35, "strong");
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](36);
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](37, "p", 16);
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](38, "tCO2e");
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](24, "p", 16);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](25, "tCO2e");
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()()();
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](39, "apx-chart", 18);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](26, EnergyEmmsionsComponent_div_26_Template, 2, 6, "div", 17);
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](40, "div", 11)(41, "div", 12)(42, "div", 13)(43, "div")(44, "h5", 14);
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](45, "Electricity Used");
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](27, "div", 11)(28, "div", 12)(29, "div", 13)(30, "div")(31, "h5", 14);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](32, "By Activity");
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](46, "h3")(47, "strong");
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](48, "5,887,34");
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](49, "p", 16);
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](50, "KWH");
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](33, "h3", 15);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](34);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](35, "p", 16);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](36, "tCO2e");
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()()();
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](51, EnergyEmmsionsComponent_div_51_Template, 2, 6, "div", 19);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](37, "apx-chart", 18);
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](52, "div", 20)(53, "div", 12)(54, "div", 13)(55, "div")(56, "h5", 14);
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](57, "Emissions by Month");
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](38, "div", 11)(39, "div", 12)(40, "div", 13)(41, "div")(42, "h5", 14);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](43, "Electricity Used");
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](44, "h3", 15);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](45, "5,887,34");
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](46, "p", 16);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](47, "KWH");
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()()();
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](58, EnergyEmmsionsComponent_div_58_Template, 2, 10, "div", 21);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](48, EnergyEmmsionsComponent_div_48_Template, 2, 6, "div", 19);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](49, "div", 20)(50, "div", 12)(51, "div", 13)(52, "div")(53, "h5", 14);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](54, "Emissions by Month");
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()()();
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](55, EnergyEmmsionsComponent_div_55_Template, 2, 10, "div", 21);
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()()()()();
       }
       if (rf & 2) {
@@ -17882,22 +17979,22 @@ class EnergyEmmsionsComponent {
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngForOf", ctx.dashboardData);
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](4);
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngModel", ctx.year)("showIcon", true);
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](12);
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵpipeBind2"](24, 17, ctx.airTotal, "1.2-2"));
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](11);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵpipeBind2"](23, 17, ctx.airTotal, "1.2-2"));
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](4);
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngIf", ctx.donotOptions1);
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](9);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](8);
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtextInterpolate"](ctx.activityTotal);
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](3);
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("series", ctx.donotOptions2.series)("chart", ctx.donotOptions2.chart)("labels", ctx.donotOptions2.labels)("fill", ctx.donotOptions2.fill)("colors", ctx.donotOptions2.colors)("legend", ctx.donotOptions2.legend)("dataLabels", ctx.donotOptions2.dataLabels)("responsive", ctx.donotOptions2.responsive);
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](12);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](11);
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngIf", ctx.pieChart);
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](7);
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngIf", ctx.chartOptions);
       }
     },
     dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_5__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_5__.NgIf, _angular_forms__WEBPACK_IMPORTED_MODULE_6__.NgSelectOption, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["ɵNgSelectMultipleOption"], _angular_forms__WEBPACK_IMPORTED_MODULE_6__.SelectControlValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_6__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_6__.NgModel, ng_apexcharts__WEBPACK_IMPORTED_MODULE_7__.ChartComponent, primeng_calendar__WEBPACK_IMPORTED_MODULE_8__.Calendar, _angular_common__WEBPACK_IMPORTED_MODULE_5__.DecimalPipe],
-    styles: ["/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsInNvdXJjZVJvb3QiOiIifQ== */"]
+    styles: [".ct_fs_24[_ngcontent-%COMP%] {\n  font-size: 24px;\n  font-weight: 600;\n}\n/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8uL3NyYy9hcHAvcGFnZXMvZGFzaGJvYXJkL2VuZXJneS1lbW1zaW9ucy9lbmVyZ3ktZW1tc2lvbnMuY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDSSxlQUFBO0VBQ0EsZ0JBQUE7QUFDSiIsInNvdXJjZXNDb250ZW50IjpbIi5jdF9mc18yNHtcclxuICAgIGZvbnQtc2l6ZTogMjRweDtcclxuICAgIGZvbnQtd2VpZ2h0OiA2MDA7XHJcbn0iXSwic291cmNlUm9vdCI6IiJ9 */"]
   });
 }
 
@@ -18077,7 +18174,7 @@ function GhgEmmissionsComponent_div_132_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵadvance"](3);
     _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵtextInterpolate"](vendorItems_r18.supplier);
     _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵadvance"](3);
-    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵtextInterpolate2"]("", vendorItems_r18.emssion, "\u00A0 ", vendorItems_r18.unit, " ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵtextInterpolate1"]("", vendorItems_r18.emssion, " ");
   }
 }
 function GhgEmmissionsComponent_div_150_Template(rf, ctx) {
@@ -18665,7 +18762,7 @@ class GhgEmmissionsComponent {
         _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelement"](130, "div");
         _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementStart"](131, "div", 49);
-        _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵtemplate"](132, GhgEmmissionsComponent_div_132_Template, 7, 3, "div", 50);
+        _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵtemplate"](132, GhgEmmissionsComponent_div_132_Template, 7, 2, "div", 50);
         _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementEnd"]()()();
         _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementStart"](133, "div", 44)(134, "div", 4)(135, "div", 47)(136, "div")(137, "h5", 48);
         _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵtext"](138, "Emission by Activity (tCO2e)");
@@ -19509,7 +19606,7 @@ __webpack_require__.r(__webpack_exports__);
 const _c0 = ["ct_emission_by_travel"];
 function WaterUsageComponent_option_7_Template(rf, ctx) {
   if (rf & 1) {
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "option", 23);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "option", 24);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](1);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
   }
@@ -19522,8 +19619,8 @@ function WaterUsageComponent_option_7_Template(rf, ctx) {
 }
 function WaterUsageComponent_div_53_Template(rf, ctx) {
   if (rf & 1) {
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "div", 24);
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](1, "apx-chart", 25);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "div", 25);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](1, "apx-chart", 26);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
   }
   if (rf & 2) {
@@ -19534,8 +19631,8 @@ function WaterUsageComponent_div_53_Template(rf, ctx) {
 }
 function WaterUsageComponent_div_60_Template(rf, ctx) {
   if (rf & 1) {
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "div", 24);
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](1, "apx-chart", 25);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "div", 25);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](1, "apx-chart", 26);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
   }
   if (rf & 2) {
@@ -19544,10 +19641,10 @@ function WaterUsageComponent_div_60_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("series", ctx_r2.chartOptions2.series)("chart", ctx_r2.chartOptions2.chart)("dataLabels", ctx_r2.chartOptions2.dataLabels)("plotOptions", ctx_r2.chartOptions2.plotOptions)("yaxis", ctx_r2.chartOptions2.yaxis)("xaxis", ctx_r2.chartOptions2.xaxis)("fill", ctx_r2.chartOptions2.fill)("colors", ctx_r2.chartOptions2.colors);
   }
 }
-function WaterUsageComponent_div_74_Template(rf, ctx) {
+function WaterUsageComponent_div_73_Template(rf, ctx) {
   if (rf & 1) {
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "div", 26);
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](1, "apx-chart", 27);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "div", 27);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](1, "apx-chart", 28);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
   }
   if (rf & 2) {
@@ -19936,9 +20033,9 @@ class WaterUsageComponent {
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵloadQuery"]()) && (ctx.ct_emission_by_travel = _t.first);
       }
     },
-    decls: 75,
+    decls: 74,
     vars: 11,
-    consts: [[1, "row"], [1, "col-xl-9", "mb-4"], [1, "col-xl-3", "mb-4", "ct_mt_top_68"], [1, "ct_right_sidebar"], [1, "mb-4"], [1, "ct_all_vender_select", 3, "ngModel", "ngModelChange", "change"], ["value", "", 3, "value", 4, "ngFor", "ngForOf"], [1, "mt-4"], [1, "mb-1", "ct_fw_500"], ["ngModel", "", "name", "year", "year", "", "view", "year", "dateFormat", "yy", "inputId", "yearpicker", "styleClass", "pcalender", 1, "w-100", "ct_input_dark_text_145", 3, "ngModel", "showIcon", "ngModelChange"], [1, "col-md-12"], [1, "col-xl-3", "mb-4"], [1, "ct_dark_grey_bg1", "mb-0"], [1, "row", "pt-3"], [1, "col-lg-6", "mb-2"], [1, "col-xl-4", "mb-4"], [1, "ct_grey_border_1"], [1, "ct_d_flex_1", "ct_grey_brdr_btm1", "pb-3", "mb-3"], [1, "ct_font_16"], ["id", "ct_emission_by_month", 4, "ngIf"], [1, "mb-0"], ["id", "ct_business_divisions"], ["id", "ct_cost_center", 4, "ngIf"], ["value", "", 3, "value"], ["id", "ct_emission_by_month"], [3, "series", "chart", "dataLabels", "plotOptions", "yaxis", "xaxis", "fill", "colors"], ["id", "ct_cost_center"], [3, "series", "chart", "labels", "legend", "responsive"]],
+    consts: [[1, "row"], [1, "col-xl-9", "mb-4"], [1, "col-xl-3", "mb-4", "ct_mt_top_68"], [1, "ct_right_sidebar"], [1, "mb-4"], [1, "ct_all_vender_select", 3, "ngModel", "ngModelChange", "change"], ["value", "", 3, "value", 4, "ngFor", "ngForOf"], [1, "mt-4"], [1, "mb-1", "ct_fw_500"], ["ngModel", "", "name", "year", "year", "", "view", "year", "dateFormat", "yy", "inputId", "yearpicker", "styleClass", "pcalender", 1, "w-100", "ct_input_dark_text_145", 3, "ngModel", "showIcon", "ngModelChange"], [1, "col-md-12"], [1, "col-xl-3", "mb-4"], [1, "ct_dark_grey_bg1", "mb-0"], [1, "row", "pt-3"], [1, "col-lg-6", "mb-2"], [1, "col-xl-4", "mb-4"], [1, "ct_grey_border_1"], [1, "ct_d_flex_1", "ct_grey_brdr_btm1", "pb-3", "mb-3"], [1, "ct_font_16"], ["id", "ct_emission_by_month", 4, "ngIf"], [1, "ct_fs_24"], [1, "mb-0"], ["id", "ct_business_divisions"], ["id", "ct_cost_center", 4, "ngIf"], ["value", "", 3, "value"], ["id", "ct_emission_by_month"], [3, "series", "chart", "dataLabels", "plotOptions", "yaxis", "xaxis", "fill", "colors"], ["id", "ct_cost_center"], [3, "series", "chart", "labels", "legend", "responsive"]],
     template: function WaterUsageComponent_Template(rf, ctx) {
       if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "div", 0);
@@ -19998,14 +20095,14 @@ class WaterUsageComponent {
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](61, "div", 15)(62, "div", 16)(63, "div", 17)(64, "div")(65, "h5", 18)(66, "strong");
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](67, "Treated vs non Treated water");
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](68, "h3")(69, "strong");
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](70, "2,563");
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](71, "p", 20);
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](72, "tCO2e");
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](68, "h3", 20);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](69, "2,563");
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](70, "p", 21);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](71, "tCO2e");
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()()();
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](73, "div", 21);
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](74, WaterUsageComponent_div_74_Template, 2, 5, "div", 22);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](72, "div", 22);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](73, WaterUsageComponent_div_73_Template, 2, 5, "div", 23);
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()()()()()();
       }
       if (rf & 2) {
@@ -20027,12 +20124,12 @@ class WaterUsageComponent {
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngIf", ctx.chartOptions);
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](7);
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngIf", ctx.chartOptions2);
-        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](14);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](13);
         _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngIf", ctx.donotOptions1);
       }
     },
     dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_5__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_5__.NgIf, _angular_forms__WEBPACK_IMPORTED_MODULE_6__.NgSelectOption, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["ɵNgSelectMultipleOption"], _angular_forms__WEBPACK_IMPORTED_MODULE_6__.SelectControlValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_6__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_6__.NgModel, ng_apexcharts__WEBPACK_IMPORTED_MODULE_7__.ChartComponent, primeng_calendar__WEBPACK_IMPORTED_MODULE_8__.Calendar],
-    styles: [".ct_green_up[_ngcontent-%COMP%] {\n  color: #269300;\n}\n\n.ct_dark_grey_bg1[_ngcontent-%COMP%] {\n  background-color: #f4f4f4;\n  padding: 15px;\n  border-radius: 10px;\n  margin-bottom: 80px;\n  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;\n  height: 100%;\n}\n\n.ct_dark_grey_bg1[_ngcontent-%COMP%]   h4[_ngcontent-%COMP%] {\n  font-size: 24px;\n  font-weight: 600;\n}\n/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8uL3NyYy9hcHAvcGFnZXMvZGFzaGJvYXJkL3dhdGVyLXVzYWdlL3dhdGVyLXVzYWdlLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksY0FBQTtBQUNKOztBQUVBO0VBQ0kseUJBQUE7RUFDQSxhQUFBO0VBQ0EsbUJBQUE7RUFDQSxtQkFBQTtFQUNBLHlGQUFBO0VBQ0EsWUFBQTtBQUNKOztBQUNBO0VBQ0ksZUFBQTtFQUNBLGdCQUFBO0FBRUoiLCJzb3VyY2VzQ29udGVudCI6WyIuY3RfZ3JlZW5fdXB7XHJcbiAgICBjb2xvcjogIzI2OTMwMDtcclxufVxyXG5cclxuLmN0X2RhcmtfZ3JleV9iZzF7XHJcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjZjRmNGY0O1xyXG4gICAgcGFkZGluZzogMTVweDtcclxuICAgIGJvcmRlci1yYWRpdXM6IDEwcHg7XHJcbiAgICBtYXJnaW4tYm90dG9tOiA4MHB4O1xyXG4gICAgYm94LXNoYWRvdzogcmdiYSg1MCwgNTAsIDkzLCAwLjI1KSAwcHggNnB4IDEycHggLTJweCwgcmdiYSgwLCAwLCAwLCAwLjMpIDBweCAzcHggN3B4IC0zcHg7XHJcbiAgICBoZWlnaHQ6IDEwMCU7XHJcbn1cclxuLmN0X2RhcmtfZ3JleV9iZzEgaDR7XHJcbiAgICBmb250LXNpemU6IDI0cHg7XHJcbiAgICBmb250LXdlaWdodDogNjAwO1xyXG59Il0sInNvdXJjZVJvb3QiOiIifQ== */"]
+    styles: [".ct_green_up[_ngcontent-%COMP%] {\n  color: #269300;\n}\n\n.ct_dark_grey_bg1[_ngcontent-%COMP%] {\n  background-color: #f4f4f4;\n  padding: 15px;\n  border-radius: 10px;\n  margin-bottom: 80px;\n  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;\n  height: 100%;\n}\n\n.ct_dark_grey_bg1[_ngcontent-%COMP%]   h4[_ngcontent-%COMP%] {\n  font-size: 24px;\n  font-weight: 600;\n}\n\n.ct_fs_24[_ngcontent-%COMP%] {\n  font-size: 24px;\n  font-weight: 600;\n}\n/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8uL3NyYy9hcHAvcGFnZXMvZGFzaGJvYXJkL3dhdGVyLXVzYWdlL3dhdGVyLXVzYWdlLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksY0FBQTtBQUNKOztBQUVBO0VBQ0kseUJBQUE7RUFDQSxhQUFBO0VBQ0EsbUJBQUE7RUFDQSxtQkFBQTtFQUNBLHlGQUFBO0VBQ0EsWUFBQTtBQUNKOztBQUNBO0VBQ0ksZUFBQTtFQUNBLGdCQUFBO0FBRUo7O0FBQUE7RUFDSSxlQUFBO0VBQ0EsZ0JBQUE7QUFHSiIsInNvdXJjZXNDb250ZW50IjpbIi5jdF9ncmVlbl91cHtcclxuICAgIGNvbG9yOiAjMjY5MzAwO1xyXG59XHJcblxyXG4uY3RfZGFya19ncmV5X2JnMXtcclxuICAgIGJhY2tncm91bmQtY29sb3I6ICNmNGY0ZjQ7XHJcbiAgICBwYWRkaW5nOiAxNXB4O1xyXG4gICAgYm9yZGVyLXJhZGl1czogMTBweDtcclxuICAgIG1hcmdpbi1ib3R0b206IDgwcHg7XHJcbiAgICBib3gtc2hhZG93OiByZ2JhKDUwLCA1MCwgOTMsIDAuMjUpIDBweCA2cHggMTJweCAtMnB4LCByZ2JhKDAsIDAsIDAsIDAuMykgMHB4IDNweCA3cHggLTNweDtcclxuICAgIGhlaWdodDogMTAwJTtcclxufVxyXG4uY3RfZGFya19ncmV5X2JnMSBoNHtcclxuICAgIGZvbnQtc2l6ZTogMjRweDtcclxuICAgIGZvbnQtd2VpZ2h0OiA2MDA7XHJcbn1cclxuLmN0X2ZzXzI0e1xyXG4gICAgZm9udC1zaXplOiAyNHB4O1xyXG4gICAgZm9udC13ZWlnaHQ6IDYwMDtcclxufSJdLCJzb3VyY2VSb290IjoiIn0= */"]
   });
 }
 
@@ -51162,7 +51259,7 @@ class TrackingComponent {
     },
     decls: 92,
     vars: 60,
-    consts: [[1, "container-fluid", "px-0", "mt-4"], [1, "row", "mb-0", "pt-0"], [1, "row", "pt-2", "ml-0", "mx-0", "px-0"], [1, "col-lg-4", "mb-4", "px-2"], [1, "TrackingDiv-border", "Dashboard-tab", "ct_dash_board_tab", "ct_hide_scroll_239", "ct_scroll_60012_left", 2, "height", "calc(100vh - 130px)", 3, "ngClass"], [1, "text-white", "noData", 2, "justify-content", "center", 3, "ngStyle"], [1, "icon", "mt-3"], ["aria-hidden", "true", 1, "fa", "fa-info-circle", 2, "font-size", "20px"], [1, "label"], [1, "modal-body", "text-white", "text-style", 3, "ngStyle"], [1, "", 3, "ngSubmit"], ["addCompForm", "ngForm"], [1, "row", "d-flex", "justify-content-between", "tabviewclass"], [1, "w-100", 3, "activeIndex"], [4, "ngFor", "ngForOf"], [1, "view-request", "ct_view_request_btn", "d-flex", "justify-content-center", 3, "routerLink", "queryParams", "click"], [1, "col-lg-8", "mb-4", "px-2"], [1, "TrackingDiv2-border", "Dashboard-tab", "ct_dash_board_tab", "text-white", "ct_scroll_dash", 2, "height", "calc(100vh - 130px)"], [1, "noData", 2, "justify-content", "center", 3, "ngStyle"], [1, "ct_scroll_60012"], [3, "ngStyle", "activeIndex"], ["dataentryTab", ""], ["header", "Data Entry"], [1, "row", "text-white", "border-bottom"], [1, "d-flex", "align-items-center", "justify-content-between", "w-100"], ["class", "mb-2 mt-3 ml-4 text-dark ct_fw_600", 4, "ngIf"], ["class", "mb-2 mt-3 ml-4 text-dark", 4, "ngIf"], [1, "ct_how_use_tooltip_main"], [1, "fa-solid", "fa-circle-question", 3, "click"], [1, "ct_how_use_tooltip_cnt", 3, "ngClass"], [3, "ngSubmit"], ["dataEntryForm", "ngForm"], ["class", "trackingContent", 4, "ngIf"], ["class", "trackingFooter", 4, "ngIf"], ["header", "Status"], [1, "row", "border-bottom"], [1, "mb-2", "mt-3", "ml-4"], [1, "ElectricityTable", "mt-0", "ct_overflow_hidden_data_table_500", 2, "height", "auto !important"], ["styleClass", "statusTable ct_status_tble_230_space ct_status_table_main", "currentPageReportTemplate", "Showing {first} to {last} of {totalRecords} entries", "dataKey", "id", 2, "overflow-y", "unset", 3, "paginator", "rowHover", "rows", "value"], ["dt1", ""], ["pTemplate", "header"], ["pTemplate", "body"], ["header", "Settings"], [1, "mb-2", "mt-3", "ml-4", "text-dark"], [4, "ngIf"], [1, "cardDiv"], [1, "calenderDiv", "flex", "row"], [1, "selectmonth", "col", "card", "justify-content-center", "ct_month_select_clr", "ct_multi_input_38", "ct_month_light_green"], ["placeholder", "Months", "name", "months", "styleClass", "pcalender", "optionLabel", "name", 3, "options", "ngModel", "ngModelChange"], [1, "selectyear", "ct_calander_input", "col", "ct_calender_38", "ct_month_light_green", "ct_calender_font_size"], ["ngModel", "", "name", "year", "year", "", "styleClass", "pcalender", "view", "year", "dateFormat", "yy", "inputId", "yearpicker", 1, "w-100", 3, "ngModel", "showIcon", "ngModelChange"], [1, "searchWidthDP", "form-group", "has-search", "ct_calander_input"], [1, "fa", "fa-search", "form-control-feedback"], ["type", "text", "placeholder", " Search", 1, "form-control"], [1, "card", "ct_shadow_none", "flex", "justify-content-center"], ["styleClass", "accordianclass bg-unset", 1, "ct_accordian_height_48vh12", 2, "background-color", "#f5f5f5", 3, "activeIndex", "multiple"], [3, "selected"], ["style", "height: 8px;", "pTemplate", "header"], ["id", "DPRow", "class", "py-2 px-4 border-bottom ct_scoope_1_tab ", 3, "ngClass", 4, "ngFor", "ngForOf"], [1, "iicon"], ["class", "fa fa-info-circle tooltip-icon", "pTooltip", "Direct emissions from owned or controlled stationary sources that use fossil fuels", "tooltipPosition", "top", "style", "color: #88ad47", 4, "ngIf"], ["class", "fa fa-info-circle tooltip-icon", "pTooltip", "Direct emissions from owned or controlled stationary sources that emit fugitive emissions", "tooltipPosition", "top", "style", "color: #88ad47", 4, "ngIf"], ["class", "fa fa-info-circle tooltip-icon", "pTooltip", "This section provides guidance on accounting for and calculating Scope 1 direct GHG emissions from owned or leased mobile sources (both on-road and non-road vehicles) that are within the company\u2019s inventory boundaries. ", "tooltipPosition", "top", "style", "color: #88ad47", 4, "ngIf"], ["pTooltip", "Direct emissions from owned or controlled stationary sources that use fossil fuels", "tooltipPosition", "top", 1, "fa", "fa-info-circle", "tooltip-icon", 2, "color", "#88ad47"], ["pTooltip", "Direct emissions from owned or controlled stationary sources that emit fugitive emissions", "tooltipPosition", "top", 1, "fa", "fa-info-circle", "tooltip-icon", 2, "color", "#88ad47"], ["pTooltip", "This section provides guidance on accounting for and calculating Scope 1 direct GHG emissions from owned or leased mobile sources (both on-road and non-road vehicles) that are within the company\u2019s inventory boundaries. ", "tooltipPosition", "top", 1, "fa", "fa-info-circle", "tooltip-icon", 2, "color", "#88ad47"], ["id", "DPRow", 1, "py-2", "px-4", "border-bottom", "ct_scoope_1_tab", 3, "ngClass"], ["clickable", "", "tooltipPosition", "bottom", 1, "col", "pointer", "d-flex", 3, "pTooltip", "click"], [1, "ct_overflow_box", 2, "max-height", "100%"], [1, "card", "ct_shadow_none", "flex", "justify-content-center", "ct_scope_3cata_list"], ["styleClass", "accordianclass ct_accordian_height_48vh12", 3, "activeIndex", "multiple"], ["id", "DPRow", "class", "py-2 px-4 border-bottom ct_scope_3_cata_list ct_scoope_1_tab", 3, "ngClass", 4, "ngFor", "ngForOf"], ["id", "DPRow", 1, "py-2", "px-4", "border-bottom", "ct_scope_3_cata_list", "ct_scoope_1_tab", 3, "ngClass"], ["clickable", "", "class", "col pointer d-flex", "tooltipPosition", "bottom", 3, "pTooltip", "click", 4, "ngIf"], ["header", "Business Travel", "clickable", "", 3, "pTooltip", "click", 4, "ngIf"], ["header", "Business Travel", "clickable", "", 3, "pTooltip", "click"], [1, "ct_dropdwon_item"], [3, "click"], [1, "mb-2", "mt-3", "ml-4", "text-dark", "ct_fw_600"], [1, "trackingContent"], [1, "row", "mt-4", "mx-2"], ["class", "col-lg-4", 4, "ngIf"], ["class", "col-lg-5", 4, "ngIf"], ["class", "row", 4, "ngIf"], ["class", "row mt-4 mx-2", 4, "ngIf"], [1, "row", "mt-3", "mx-2"], [1, "col"], ["for", "fname "], ["ngModel", "", "name", "Textarea", "rows", "5", "pInputTextarea", "", "styleClass", "notetracking", 1, "ct_textarea_input", 3, "ngModel", "ngModelChange"], ["Textarea", "ngModel"], [1, "col-lg-4"], ["for", "fname"], ["class", "ct_select_op_input ct_chev_icon_dark230 \n\n                                            ", "ngModel", "", "optionLabel", "Item", "optionValue", "subCatTypeID", "name", "subCatType", 3, "options", "ngModel", "ngModelChange", 4, "ngIf"], ["class", "ct_select_op_input ct_chev_icon_dark230 \n                                            ", "placeholder", "Select type", "ngModel", "", "optionLabel", "Type", "optionValue", "id", "name", "Type", 3, "options", "ngModel", "ngModelChange", "onChange", 4, "ngIf"], ["ngModel", "", "optionLabel", "Item", "optionValue", "subCatTypeID", "name", "subCatType", 1, "ct_select_op_input", "ct_chev_icon_dark230", 3, "options", "ngModel", "ngModelChange"], ["subCatType", "ngModel"], ["placeholder", "Select type", "ngModel", "", "optionLabel", "Type", "optionValue", "id", "name", "Type", 1, "ct_select_op_input", "ct_chev_icon_dark230", 3, "options", "ngModel", "ngModelChange", "onChange"], ["Type", "ngModel"], [1, "position-relative"], ["required", "", "ngModel", "", "name", "readingvalue", "placeholder", "Enter value", "readingvalue", "", "id", "search-input", "type", "text", 1, "form-control", "Dashboard-tab", "text-white", 3, "ngModel", "ngModelChange"], ["readingvalue", "ngModel"], ["ngModel", "", "optionLabel", "UnitName", "optionValue", "UnitName", "name", "unitSet", 1, "ct_select_op_input", "ct_select_op_input", "ct_position_small_quantity", 3, "options", "ngModel", "ngModelChange"], ["unitSet", "ngModel"], ["class", "validation", 4, "ngIf"], [1, "validation"], ["ngModel", "", "optionLabel", "RegionName", "optionValue", "RegionID", "name", "RegionID", 1, "ct_select_op_input", "ct_chev_icon_dark230", 3, "options", "ngModel", "ngModelChange"], ["RegionID", "ngModel"], [1, "col-lg-5"], ["required", "", "ngModel", "", "name", "refAmount", "placeholder", "Enter value", "refAmount", "", "id", "search-input", "type", "text", 1, "form-control", "Dashboard-tab", "text-white", 3, "ngModel", "ngModelChange"], ["refAmount", "ngModel"], ["required", "", "ngModel", "", "name", "ExtinguisherNo", "ExtinguisherNo", "", "id", "search-input", "type", "text", "placeholder", "Enter no of extinguisher", 1, "form-control", "Dashboard-tab", "text-white", 3, "ngModel", "ngModelChange"], ["ExtinguisherNo", "ngModel"], ["pTooltip", "Quantity of CO2 Makeup", "tooltipPosition", "top", "for", "fname"], ["required", "", "ngModel", "", "name", "CO2MU", "CO2MU", "", "id", "search-input", "type", "text", 1, "form-control", "Dashboard-tab", "text-white", 3, "ngModel", "ngModelChange"], ["CO2MU", "ngModel"], [1, "row"], [1, "mb-3", 3, "ngClass"], ["optionLabel", "VehicleType", "optionValue", "ID", "name", "VehicleType", 1, "ct_select_op_input", "ct_chev_icon_dark230", 3, "options", "ngModel", "ngModelChange", "onChange"], ["vehicletype", "ngModel"], [1, "col-lg-4", "mb-3"], ["required", "", "ngModel", "", "name", "NoOfVehicles", "NoOfVehicles", "", "id", "search-input", "type", "text", "placeholder", "Enter no of vehicles", 1, "form-control", "Dashboard-tab", "text-white", 3, "ngModel", "ngModelChange"], ["NoOfVehicles", "ngModel"], ["pTooltip", "Total number of trips per vehicle", "tooltipPosition", "top", "for", "TotalnoOftripsPerVehicle"], ["required", "", "ngModel", "", "name", "TotalnoOftripsPerVehicle", "TotalnoOftripsPerVehicle", "", "id", "search-input", "type", "text", "placeholder", "Enter trips per vehicle", 1, "form-control", "Dashboard-tab", "text-white", 3, "ngModel", "ngModelChange"], ["TotalnoOftripsPerVehicle", "ngModel"], [3, "ngClass"], ["pTooltip", "Mode of Data Entry", "tooltipPosition", "top", "for", "fname"], ["ngModel", "", "optionLabel", "modeName", "optionValue", "modeName", "name", "DEMode", 1, "ct_select_op_input", "ct_chev_icon_dark230", 3, "options", "ngModel", "ngModelChange", "onChange"], ["DEMode", "ngModel"], ["required", "", "ngModel", "", "name", "Value", "placeholder", "Enter value", "Value", "", "id", "search-input", "type", "text", 1, "form-control", "Dashboard-tab", "text-white", 3, "ngModel", "ngModelChange"], ["Value", "ngModel"], [1, "ct_quantity_text"], ["pTooltip", "Charging done outside company campus (%)", "tooltipPosition", "top", "for", "fname"], [1, "input-group"], ["id", "chargingInput", "placeholder", "Enter value in %", "required", "", "ngModel", "", "name", "chargingPerc", 1, "form-control", "Dashboard-tab", "text-white", 3, "ngModel", "ngModelChange"], ["chargingPerc", "ngModel"], [1, "input-group-append"], [1, "input-group-text"], ["pTooltip", "Average number of people travel in one vehicle per trip", "tooltipPosition", "top", "for", "AvgNoPeople"], ["required", "", "ngModel", "", "name", "AvgNoPeople", "placeholder", "Enter avg no of people", "AvgNoPeople", "", "id", "search-input", "type", "text", 1, "form-control", "Dashboard-tab", "text-white", 3, "ngModel", "ngModelChange"], ["AvgNoPeople", "ngModel"], ["type", "text", "placeholder", "Enter value", "name", "calorificValue", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["required", "", "ngModel", "", "name", "ExtinguisherID", "ExtinguisherID", "", "id", "search-input", "type", "text", "placeholder", "Enter value", 1, "form-control", "Dashboard-tab", "text-white", 3, "ngModel", "ngModelChange"], ["ExtinguisherID", "ngModel"], ["placeholder", "Select source", "ngModel", "", "optionLabel", "sourceName", "optionValue", "sourceName", "name", "Source", 1, "ct_select_op_input", "ct_chev_icon_dark230", 3, "options"], ["Source", "ngModel"], ["required", "", "ngModel", "", "name", "emission_factorS", "placeholder", "Enter value", "readingvalue", "", "id", "search-input", "type", "text", 1, "form-control", "Dashboard-tab", "text-white"], ["emission_factorS", "ngModel"], ["required", "", "ngModel", "", "name", "sourcevalue", "placeholder", "Enter value", "readingvalue", "", "id", "search-input", "type", "text", 1, "form-control", "Dashboard-tab", "text-white", 3, "ngModel", "ngModelChange"], [1, "col-lg-6"], ["ngModel", "", "optionLabel", "typeName", "optionValue", "typeName", "name", "blend", 1, "ct_select_op_input", "ct_chev_icon_dark230", 3, "options", "ngModel", "ngModelChange"], ["blend", "ngModel"], ["class", "col-lg-6", 4, "ngIf"], ["required", "", "ngModel", "", "name", "blendPercent", 1, "form-control", "Dashboard-tab", 3, "ngModel", "ngClass", "ngModelChange", "input"], ["blendPercent", "ngModel"], [1, "trackingFooter"], [1, "row", "my-3", "mb-0", "pb-3", "mx-2"], ["class", "col-4", 4, "ngIf"], [1, "col-8"], [1, "d-flex", "justify-content-end", "border", "rounded", "ct_upload_btn1"], ["mode", "basic", "accept", ".jpg,.png,.pdf", "chooseLabel", "Please select a File", 3, "onSelect"], ["fileUpload", ""], [1, "col-12", "mt-5", "pt-3", "ml-3", "text-center"], ["type", "submit", 1, "px-4", "trackingsubmitb"], [1, "col-4"], [1, ""], [1, "px-4", "trackingsubmitb", "w-100"], ["download", "", 3, "href"], [1, "row", "p-2"], [1, "col-md-12"], [1, "mb-4", "mt-4"], [1, "mb-3"], [1, "col-md-4"], ["ngModel", "", "placeholder", "Select a template", "optionLabel", "template", "optionValue", "template", "name", "template", 1, "ct_select_op_input", "ct_chev_icon_dark230", 3, "options", "ngModel", "ngModelChange"], [1, "col-md-5"], ["href", "assets/GenericTemplate_PurchasedGoods.xlsx", "download", "", 1, "trackingsubmitb", "d-block", "mt-0", 2, "width", "fit-content", "height", "36.13px", "padding-block", "5px"], [1, "attachments"], [1, "input-group", "ct_file_upload_1"], [1, "input-group-btn"], [1, "btn", "btn-default", "browse-button"], [1, "browse-button-text"], [1, "fa", "fa-folder-open"], ["type", "file", "accept", ".xlsx", "name", "attachment", 3, "change"], ["inputFile", ""], ["type", "text", "disabled", "disabled", "placeholder", "Please click on browse button", 1, "form-control", "filename"], ["class", "", 4, "ngIf"], [1, "col-12", "mt-5"], ["type", "button", 1, "btn", "trackingsubmitb", 3, "click"], [1, "fa", "fa-upload"], [1, "row", "mt-4", "mb-3", "pb-4", "mx-2"], ["for", ""], [3, "ngModel", "ngModelOptions", "ngModelChange"], ["for", "", 1, "ml-3"], [1, "col-12"], ["class", "mt-4", 4, "ngIf"], [1, "col-12", "mt-2", "pt-3", "ml-3", "text-center"], [1, "mt-4"], [1, "mb-4"], [1, "col-md-6"], [1, "mb-4", 2, "gap", "10px"], [1, "ct_text_wrape"], ["ngModel", "", "optionLabel", "vehicle_type", "optionValue", "id", "name", "vehicle_type", 1, "ct_select_op_input", "ct_flex_1", "ct_chev_icon_dark230", 3, "options", "ngModel", "onChange", "ngModelChange"], ["type", "number", "placeholder", "Enter Mass of Products", "name", "mass_of_products", "required", "", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["mass_of_products", "ngModel"], ["ngModel", "", "optionLabel", "units", "optionValue", "units", "name", "upfacilityUnits", 1, "ct_select_op_input", "ct_position_small_quantity", 3, "options"], ["upfacilityUnits", "ngModel"], ["ngModel", "", "optionLabel", "vehicle_type", "optionValue", "vehicle_type", "name", "vehicle_type", 1, "ct_select_op_input", "ct_flex_1", "ct_chev_icon_dark230", 3, "options", "ngModel", "onChange", "ngModelChange"], ["type", "number", "placeholder", "Enter Distance", "name", "distanceInKms", "required", "", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["distanceInKms", "ngModel"], ["ngModel", "", "optionLabel", "unit", "optionValue", "unit", "name", "upfacilityUnits", 1, "ct_select_op_input", "ct_position_small_quantity", 3, "options"], ["type", "number", "name", "noOfVehicles", "required", "", "ngModel", "", "placeholder", "Enter no of vehicles", 1, "form-control", "Dashboard-tab", "text-white"], ["noOfVehicles", "ngModel"], ["ngModel", "", "optionLabel", "storagef_type", "optionValue", "storagef_type", "name", "storage_type", 1, "ct_select_op_input", "ct_flex_1", "ct_chev_icon_dark230", 3, "options"], ["type", "text", "placeholder", "Enter Area Occupied", "name", "area_occupied", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["ngModel", "", "optionLabel", "energyTypes", "optionValue", "energyTypes", "name", "upfacilityUnits", 1, "ct_select_op_input", "ct_position_small_quantity", 3, "options"], ["type", "number", "placeholder", "Enter No. of Days of Storage", "name", "averageNoOfDays", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], [1, "row", "mt-4", "mb-3", "mb-5", "pb-5", "mx-2"], [1, "mt-0"], ["type", "text", "placeholder", "Enter water supply", "name", "water_supply", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["ngModel", "", "optionLabel", "unitType", "optionValue", "id", "name", "waterSupplyUnits", 1, "ct_select_op_input", "ct_position_small_quantity", 3, "options"], ["wasteUnits", "ngModel"], ["type", "text", "placeholder", "Enter water treatment", "name", "water_treatment", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["ngModel", "", "optionLabel", "unitType", "optionValue", "id", "name", "waterTreatmentUnits", 1, "ct_select_op_input", "ct_position_small_quantity", 3, "options"], [1, "col-lg-7"], [1, "row", "ct_home_office_table"], [1, "table"], [1, "thead-dark"], ["scope", "col"], ["type", "text", "name", "surface_water", "ngModel", "", "placeholder", "Enter required value", 1, "form-control", "w-auto"], ["type", "text", "name", "groundwater", "ngModel", "", "placeholder", "Enter required value", 1, "form-control", "w-auto"], ["type", "text", "name", "thirdParty", "ngModel", "", "placeholder", "Enter required value", 1, "form-control", "w-auto"], ["type", "text", "name", "seaWater", "ngModel", "", "placeholder", "Enter required value", 1, "form-control", "w-auto"], ["type", "text", "name", "others", "ngModel", "", "placeholder", "Enter required value", 1, "form-control", "w-auto"], [1, "col-12", "mt-3"], ["type", "text", "name", "surface_no_treatment", "ngModel", "", "placeholder", "Enter required value", 1, "form-control"], ["type", "number", "name", "surface_withTreatment", "ngModel", "", "placeholder", "Enter required value", 1, "form-control"], ["type", "number", "name", "surface_levelTreatment", "ngModel", "", "name", "noofmonths_1", "placeholder", "Enter required value", 1, "form-control"], ["type", "text", "name", "ground_no_treatment", "ngModel", "", "placeholder", "Enter required value", 1, "form-control"], ["type", "number", "name", "ground_withTreatment", "ngModel", "", "placeholder", "Enter required value", 1, "form-control"], ["type", "number", "name", "ground_levelTreatment", "ngModel", "", "placeholder", "Enter required value", 1, "form-control"], ["type", "text", "name", "seawater_no_treatment", "ngModel", "", "placeholder", "Enter required value", 1, "form-control"], ["type", "number", "name", "seawater_withTreatment", "ngModel", "", "placeholder", "Enter required value", 1, "form-control"], ["type", "number", "name", "seawater_levelTreatment", "ngModel", "", "placeholder", "Enter required value", 1, "form-control"], ["type", "text", "name", "third_no_treatment", "ngModel", "", "placeholder", "Enter required value", 1, "form-control"], ["type", "number", "name", "third_withTreatment", "ngModel", "", "placeholder", "Enter required value", 1, "form-control"], ["type", "number", "name", "third_levelTreatment", "ngModel", "", "placeholder", "Enter required value", 1, "form-control"], ["type", "text", "name", "others_no_treatment", "ngModel", "", "placeholder", "Enter required value", 1, "form-control"], ["type", "number", "name", "others_withTreatment", "ngModel", "", "placeholder", "Enter required value", 1, "form-control"], ["type", "number", "name", "others_levelTreatment", "ngModel", "", "placeholder", "Enter required value", 1, "form-control"], [1, "col-12", "mt-4", "pt-3", "ml-3", "text-center"], [1, "row", "mt-4", "mb-3", "mb-0", "pb-3", "mx-2"], ["ngModel", "", "optionLabel", "type", "optionValue", "id", "name", "wasteType", 1, "ct_select_op_input", "ct_chev_icon_dark230", 3, "options", "ngModel", "onChange", "ngModelChange"], ["ngModel", "", "optionLabel", "type", "optionValue", "type", "name", "wasteSubCategory", 1, "ct_select_op_input", "ct_chev_icon_dark230", 3, "options"], ["wasteSubCategory", "ngModel"], ["ngModel", "", "optionLabel", "water_type", "optionValue", "id", "name", "water_type", 1, "ct_select_op_input", "ct_chev_icon_dark230", 3, "options", "ngModel", "ngModelChange", "onChange"], ["water_type", "ngModel"], ["class", "col-md-6", 4, "ngIf"], ["type", "text", "placeholder", "Enter Waste Quantity", "name", "waste_quantity", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["ngModel", "", "optionLabel", "units", "optionValue", "units", "name", "wasteUnits", 1, "ct_select_op_input", "ct_position_small_quantity", 3, "options"], ["ngModel", "", "optionLabel", "template", "optionValue", "id", "name", "template", 1, "ct_select_op_input", "ct_chev_icon_dark230", 3, "options", "ngModel", "ngModelChange"], ["template", "ngModel"], ["type", "text", "name", "noofemployees", "ngModel", "", "placeholder", "Enter no of employees", 1, "form-control", "Dashboard-tab", "text-white"], ["type", "text", "placeholder", "Enter days", "name", "workingdays", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], [1, "table", "ct_home_office_table"], ["scope", "row"], ["type", "text", "name", "employeescommute_1", "ngModel", "", 1, "form-control"], ["type", "text", "name", "avgcommute_1", "ngModel", "", 1, "form-control"], ["type", "text", "name", "employeescommute_2", "ngModel", "", 1, "form-control"], ["type", "text", "name", "avgcommute_2", "ngModel", "", 1, "form-control"], ["type", "text", "name", "employeescommute_3", "ngModel", "", 1, "form-control"], ["type", "text", "name", "avgcommute_3", "ngModel", "", 1, "form-control"], ["type", "text", "name", "employeescommute_4", "ngModel", "", 1, "form-control"], ["type", "text", "name", "avgcommute_4", "ngModel", "", 1, "form-control"], ["type", "text", "name", "employeescommute_5", "ngModel", "", 1, "form-control"], ["type", "text", "name", "avgcommute_5", "ngModel", "", 1, "form-control"], ["type", "text", "name", "employeescommute_6", "ngModel", "", 1, "form-control"], ["type", "text", "name", "avgcommute_6", "ngModel", "", 1, "form-control"], ["type", "text", "name", "employeescommute_7", "ngModel", "", 1, "form-control"], ["type", "text", "name", "avgcommute_7", "ngModel", "", 1, "form-control"], ["type", "text", "name", "employeescommute_8", "ngModel", "", 1, "form-control"], ["type", "text", "name", "avgcommute_8", "ngModel", "", 1, "form-control"], ["type", "text", "name", "employeescommute_9", "ngModel", "", 1, "form-control"], ["type", "text", "name", "avgcommute_9", "ngModel", "", 1, "form-control"], ["type", "text", "name", "employeescommute_10", "ngModel", "", 1, "form-control"], ["type", "text", "name", "avgcommute_10", "ngModel", "", 1, "form-control"], ["type", "text", "name", "employeescommute_11", "ngModel", "", 1, "form-control"], ["type", "text", "name", "avgcommute_11", "ngModel", "", 1, "form-control"], ["type", "text", "name", "employeescommute_12", "ngModel", "", 1, "form-control"], ["type", "text", "name", "avgcommute_12", "ngModel", "", 1, "form-control"], ["type", "text", "name", "employeescommute_13", "ngModel", "", 1, "form-control"], ["type", "text", "name", "avgcommute_13", "ngModel", "", 1, "form-control"], ["type", "text", "name", "employeescommute_14", "ngModel", "", 1, "form-control"], ["type", "text", "name", "avgcommute_14", "ngModel", "", 1, "form-control"], ["type", "text", "name", "employeescommute_15", "ngModel", "", 1, "form-control"], ["type", "text", "name", "avgcommute_15", "ngModel", "", 1, "form-control"], [1, "row", "mt-4", "mb-0", "pb-3", "mx-2"], [1, "table", "table-bordered"], ["scope", "col", 2, "border-top-width", "0px"], ["type", "text", "name", "noofemployees_1", "placeholder", "Enter no of employee", 1, "form-control", 3, "ngModel", "ngModelChange"], ["type", "number", "name", "noofdays_1", "placeholder", "Enter no of days", 1, "form-control", 3, "ngModel", "ngModelChange"], ["type", "number", "name", "noofmonths_1", "placeholder", "Enter no of months", 1, "form-control", 3, "ngModel", "ngModelChange"], ["type", "text", "name", "noofemployees_2", "placeholder", "Enter no of employee", 1, "form-control", 3, "ngModel", "ngModelChange"], ["type", "number", "name", "noofdays_2", "placeholder", "Enter no of days", 1, "form-control", 3, "ngModel", "ngModelChange"], ["type", "number", "name", "noofmonths_2", "placeholder", "Enter no of months", 1, "form-control", 3, "ngModel", "ngModelChange"], ["type", "text", "name", "noofemployees_3", "placeholder", "Enter no of employee", 1, "form-control", 3, "ngModel", "ngModelChange"], ["type", "number", "name", "noofdays_3", "placeholder", "Enter no of days", 1, "form-control", 3, "ngModel", "ngModelChange"], ["type", "number", "name", "noofmonths_3", "placeholder", "Enter no of months", 1, "form-control", 3, "ngModel", "ngModelChange"], ["class", "col-12", 4, "ngIf"], ["ngModel", "", "optionLabel", "categories", "optionValue", "categories", "name", "facilityTypeValue", 1, "ct_select_op_input", "ct_flex_1", "ct_chev_icon_dark230", 3, "options", "onChange"], ["facilityTypeValue", "ngModel"], ["ngModel", "", "optionLabel", "sub_categories", "optionValue", "sub_categories", "name", "subfacilityTypeValue", 1, "ct_select_op_input", "ct_flex_1", "ct_chev_icon_dark230", 3, "options"], ["subfacilityTypeValue", "ngModel"], ["ngModel", "", "placeholder", "Select a method", "optionLabel", "calculationmethod", "optionValue", "calculationmethod", "name", "calculationmethod", 1, "ct_select_op_input", "ct_flex_1", "ct_chev_icon_dark230", 3, "options", "onChange"], ["calculationmethod", "ngModel"], ["type", "text", "placeholder", "Enter Franchise Space", "name", "upLeasefranchise_space", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["href", "assets/LeasingScope12_Template.xlsx", "download", "", 1, "trackingsubmitb"], ["type", "text", "placeholder", "Enter Scope1 Emissions", "name", "scope1_emission", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["type", "text", "placeholder", "Enter Scope2 Emissions", "name", "scope2_emission", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["ngModel", "", "optionLabel", "vehicle_type", "optionValue", "id", "name", "vehicle_type", 1, "ct_select_op_input", "ct_flex_1", "ct_chev_icon_dark230", 3, "options", "onChange"], ["ngModel", "", "optionLabel", "vehicle_type", "optionValue", "vehicle_type", "name", "subvehicle_type", 1, "ct_select_op_input", "ct_flex_1", "ct_chev_icon_dark230", 3, "options"], ["ngModel", "", "optionLabel", "unit", "optionValue", "unit", "name", "unit", 1, "ct_select_op_input", "ct_position_small_quantity", 3, "options"], ["units", "ngModel"], ["type", "number", "placeholder", "Enter No. of Vehicles", "name", "noOfVehicles", "required", "", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["class", " mt-4", 4, "ngIf"], ["type", "text", "placeholder", "Enter Mass of Products", "name", "mass_of_products", "required", "", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["type", "text", "placeholder", "Enter Distance", "name", "distanceInKms", "required", "", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["storagef_type", "ngModel"], ["type", "text", "placeholder", "Enter No. of Days of Storage", "name", "averageNoOfDays", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["ngModel", "", "placeholder", "Select category", "optionLabel", "Industry", "optionValue", "Industry", "name", "industry", 1, "ct_select_op_input", "ct_chev_icon_dark230", 3, "options", "onChange"], ["industry", "ngModel"], ["type", "text", "placeholder", "Enter value", "name", "valueofsoldintermediate", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["ngModel", "", "optionLabel", "units", "optionValue", "units", "name", "goodsUnits", 1, "ct_select_op_input", "ct_position_small_quantity", 3, "options"], ["ngModel", "", "optionLabel", "sector", "optionValue", "sector", "name", "sector", "placeholder", "Select Activity", 1, "ct_select_op_input", "ct_chev_icon_dark230", 3, "options", "onChange"], ["sector", "ngModel"], ["ngModel", "", "optionLabel", "sub_sector", "optionValue", "sub_sector", "name", "sub_sector", 1, "ct_select_op_input", "ct_chev_icon_dark230", 3, "options"], ["sub_sector", "ngModel"], ["type", "text", "placeholder", "Enter activity", "name", "processing_acitivity", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["type", "text", "placeholder", "Enter activity", "name", "sub_activity", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["type", "text", "placeholder", "Enter activity", "name", "emission_factor", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["href", "assets/ProcessingScope12_Template.xlsx", "download", "", 1, "trackingsubmitb"], ["ngModel", "", "optionLabel", "energyTypes", "optionValue", "id", "name", "energyTypes", 1, "ct_select_op_input", "ct_chev_icon_dark230", 3, "options", "onChange"], ["energyTypes", "ngModel"], ["ngModel", "", "optionLabel", "item", "optionValue", "id", "name", "productCategoryitem", 1, "ct_select_op_input", "ct_chev_icon_dark230", 3, "options"], ["productCategoryitem", "ngModel"], [1, "col-md-8"], ["type", "text", "placeholder", "Enter Number of Items", "name", "numberofitems", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["ngModel", "", "optionLabel", "units", "optionValue", "id", "placeholder", "Select a Unit", "name", "noofunits", 1, "ct_select_op_input", "ct_position_small_quantity", 3, "options", "onChange"], ["noofunits", "ngModel"], ["type", "text", "placeholder", "Enter lifetime of the product", "name", "expectedlifetimeproduct", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["ngModel", "", "optionLabel", "unitsExpElec", "optionValue", "id", "name", "unitsExpElec", 1, "ct_select_op_input", "ct_position_small_quantity", 3, "options", "onChange"], ["unitsExpElec", "ngModel"], [1, "ct_border_top"], ["type", "text", "placeholder", "Enter water treatment", "name", "electricity_use", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["ngModel", "", "optionLabel", "Item", "optionValue", "Item", "name", "fuelItem", 1, "ct_select_op_input", "ct_chev_icon_dark230", 3, "options"], ["Item", "ngModel"], ["type", "text", "placeholder", "Enter fuel consumed", "name", "fuel_consumed", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["ngModel", "", "optionLabel", "Item", "optionValue", "Item", "name", "ItemRefrigerant", 1, "ct_select_op_input", "ct_chev_icon_dark230", 3, "options"], ["ItemRefrigerant", "ngModel"], ["type", "text", "placeholder", "Enter Refrigerant\n                                                                    ", "name", "refLeakageValue", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["ngModel", "", "optionLabel", "type", "optionValue", "id", "name", "wasteType", 1, "ct_select_op_input", "ct_chev_icon_dark230", 3, "options", "onChange"], ["wasteType", "ngModel"], ["type", "text", "placeholder", "Enter water generated", "name", "total_waste", "ngModel", "", 1, "form-control", "text-white"], [1, "row", "ct_home_office_table", "border-0"], [1, "table", "w-50", "table-bordered"], ["type", "text", "name", "landfill", "ngModel", "", "placeholder", "Enter waste", 1, "form-control", "ct_fit-content"], ["type", "text", "name", "combustion", "ngModel", "", "placeholder", "Enter waste", 1, "form-control", "ct_fit-content"], ["type", "text", "name", "recycling", "ngModel", "", "placeholder", "Enter waste", 1, "form-control", "ct_fit-content"], ["type", "text", "name", "composing", "ngModel", "", "placeholder", "Enter waste", 1, "form-control", "ct_fit-content"], ["type", "text", "placeholder", "Enter Franchise Space", "name", "downLeasefranchise_space", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["ngModel", "", "optionLabel", "categories", "optionValue", "categories", "name", "categories", 1, "ct_select_op_input", "ct_flex_1", "ct_chev_icon_dark230", 3, "options", "ngModel", "onChange", "ngModelChange"], ["electricityRegionName", "ngModel"], ["ngModel", "", "optionLabel", "sub_categories", "optionValue", "sub_categories", "name", "sub_categories", 1, "ct_select_op_input", "ct_flex_1", "ct_chev_icon_dark230", 3, "options", "ngModel", "onChange", "ngModelChange"], ["sub_categories", "ngModel"], ["type", "text", "placeholder", "Enter value", "name", "franchise_space", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["href", "assets/FranchiseScope12_Template.xlsx", "download", "", 1, "trackingsubmitb"], ["ngModel", "", "optionLabel", "flightType", "optionValue", "flightType", "name", "flightMode", 1, "ct_select_op_input", "ct_flex_1", "ct_chev_icon_dark230", 3, "options", "onChange"], ["flightMode", "ngModel"], [3, "ngStyle"], [1, "ct_fs_24", "mb-3"], ["ngModel", "", "optionLabel", "flight_type", "optionValue", "flight_type", "name", "flight_type", 1, "ct_select_op_input", "ct_flex_1", "ct_chev_icon_dark230", 3, "options"], ["flight_type", "ngModel"], ["ngModel", "", "optionLabel", "classs", "optionValue", "classs", "name", "classs", 1, "ct_select_op_input", "ct_flex_1", "ct_chev_icon_dark230", 3, "options"], ["classs", "ngModel"], ["name", "return", 1, "ct_flex_1", 3, "ngModel", "ngModelOptions", "ngModelChange"], ["type", "text", "placeholder", "Enter no of trips", "name", "no_of_trips", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["type", "text", "placeholder", "Enter distance", "name", "distance", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["ngModel", "", "optionLabel", "unit", "optionValue", "unit", "name", "unitDistance", 1, "ct_select_op_input", "ct_position_small_quantity", 3, "options"], ["unitDistance", "ngModel"], ["ngModel", "", "optionLabel", "units", "optionValue", "units", "name", "businessunits", 1, "ct_select_op_input", "ct_flex_1", "ct_chev_icon_dark230", 3, "options"], ["return", "ngModel"], ["ngModel", "", "optionLabel", "airport_desc", "optionValue", "airport_code", "name", "airport_codefrom", 1, "ct_select_op_input", "ct_flex_1", "ct_chev_icon_dark230", 3, "options"], ["airport_code", "ngModel"], ["ngModel", "", "optionLabel", "airport_desc", "optionValue", "airport_code", "name", "airport_codeto", 1, "ct_select_op_input", "ct_flex_1", "ct_chev_icon_dark230", 3, "options"], ["ngModel", "", "placeholder", "Select via", "optionLabel", "airport_desc", "optionValue", "airport_code", "name", "airport_codevia", 1, "ct_select_op_input", "ct_flex_1", "ct_chev_icon_dark230", 3, "options"], ["type", "number", "placeholder", "Enter No of Passengers", "name", "no_of_passengers", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["ngModel", "", "optionLabel", "return", "optionValue", "return", "name", "return", 1, "ct_select_op_input", "ct_flex_1", "ct_chev_icon_dark230", 3, "options"], ["type", "number", "placeholder", "Enter Mass of Products", "name", "reference_id", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["type", "text", "placeholder", "Enter Distance", "name", "distance", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["type", "number", "placeholder", "Enter Reference id", "name", "reference_id", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["ngModel", "", "optionLabel", "name", "optionValue", "name", "name", "countryname", 1, "ct_select_op_input", "ct_chev_icon_dark230", 3, "options"], ["countryname", "ngModel"], ["ngModel", "", "optionLabel", "hoteltype", "optionValue", "id", "name", "hoteltype", 1, "ct_select_op_input", "ct_chev_icon_dark230", 3, "options"], ["hoteltype", "ngModel"], ["type", "text", "placeholder", "Enter no occupied rooms", "name", "noOfOccoupied", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["type", "text", "placeholder", "Enter no of nights", "name", "noOfNights", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["ngModel", "", "placeholder", "Select mode of travel", "optionLabel", "modes", "optionValue", "modes", "name", "modes", 1, "ct_select_op_input", "ct_chev_icon_dark230", 3, "options", "onChange"], ["modes", "ngModel"], ["ngModel", "", "optionLabel", "type", "optionValue", "type", "name", "cartype", 1, "ct_select_op_input", "ct_chev_icon_dark230", 3, "options"], ["cartype", "ngModel"], ["type", "number", "placeholder", "Enter distance travelled per trip", "name", "distance", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["type", "number", "placeholder", "Enter No. of trips", "name", "no_ofTrips", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["ngModel", "", "optionLabel", "mode_type", "optionValue", "mode_type", "name", "fuelCar_type", 1, "ct_select_op_input", "ct_chev_icon_dark230", 3, "options"], ["fuelCar_type", "ngModel"], ["type", "number", "placeholder", "Enter No. of passengers", "name", "no_of_passengers", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["pSortableColumn", "catName", 4, "ngIf"], ["pTooltip", "Data Points", "tooltipPosition", "top", "pSortableColumn", "subcatName", 4, "ngIf"], ["pSortableColumn", "type", 4, "ngIf"], ["pSortableColumn", "flightMode", 4, "ngIf"], ["pSortableColumn", " FlightType", 4, "ngIf"], ["pSortableColumn", "Class", 4, "ngIf"], ["pSortableColumn", "Nooftrips", 4, "ngIf"], ["pSortableColumn", "Distance", 4, "ngIf"], ["pSortableColumn", "Countryofstay", 4, "ngIf"], ["pSortableColumn", "typeHotel", 4, "ngIf"], ["pSortableColumn", "no_of_occupied_rooms", 4, "ngIf"], ["pSortableColumn", "no_of_nights_per_room", 4, "ngIf"], ["pSortableColumn", "distanceT", 4, "ngIf"], ["pSortableColumn", "no_of_trips", 4, "ngIf"], ["pSortableColumn", "year"], ["field", "year"], ["pSortableColumn", "month", 4, "ngIf"], ["pTooltip", "Reading Value", "tooltipPosition", "top", "pSortableColumn", "readingValue", 4, "ngIf"], ["pTooltip", "Blend Type", "tooltipPosition", "top", "pSortableColumn", "BlendType", 4, "ngIf"], ["pSortableColumn", "noofairconnUnits", "pTooltip", "Amount of refrigent used", "tooltipPosition", "top", 4, "ngIf"], ["pSortableColumn", "numberOfExtinguisher", "pTooltip", "Number Of Fire Extinguisher", "tooltipPosition", "top", 4, "ngIf"], ["pSortableColumn", "quantityOfCO2makeup", "pTooltip", "Quantity Of CO2 makeup", "tooltipPosition", "top", 4, "ngIf"], ["pSortableColumn", "noOfVehicles", "pTooltip", "Trips", "tooltipPosition", "top", 4, "ngIf"], ["pSortableColumn", "noOfVehicles", "pTooltip", "Number Of Vehicles", "tooltipPosition", "top", 4, "ngIf"], ["pSortableColumn", "modeOfDE", "pTooltip", "Mode Of data entry", "tooltipPosition", "top", 4, "ngIf"], ["pSortableColumn", "amount", 4, "ngIf"], ["pSortableColumn", "unit", 4, "ngIf"], ["pSortableColumn", "sourceName", 4, "ngIf"], ["pSortableColumn", "status", "field", "status"], ["field", "status", "matchMode", "equals", "display", "menu", 3, "showMenu", "showMatchModes", "showOperator", "showAddButton"], ["pTemplate", "filter"], ["pSortableColumn", "sourceName", "pTooltip", "tCO2", "tooltipPosition", "top"], ["pSortableColumn", "catName"], ["field", "catName"], ["pTooltip", "Data Points", "tooltipPosition", "top", "pSortableColumn", "subcatName"], ["field", "subcatName"], ["pSortableColumn", "type"], ["pSortableColumn", "flightMode"], ["field", "flightMode"], ["pSortableColumn", " FlightType"], ["field", " FlightType"], ["pSortableColumn", "Class"], ["field", "Class"], ["pSortableColumn", "Nooftrips"], ["field", "Nooftrips"], ["pSortableColumn", "Distance"], ["field", "Distance"], ["pSortableColumn", "Countryofstay"], ["field", "Countryofstay"], ["pSortableColumn", "typeHotel"], ["field", "typeHotel"], ["pSortableColumn", "no_of_occupied_rooms"], ["field", "no_of_occupied_rooms"], ["pSortableColumn", "no_of_nights_per_room"], ["field", "no_of_nights_per_room"], ["pSortableColumn", "distanceT"], ["field", "distanceT"], ["pSortableColumn", "no_of_trips"], ["field", "no_of_trips"], ["pSortableColumn", "month"], ["field", "month"], ["pTooltip", "Reading Value", "tooltipPosition", "top", "pSortableColumn", "readingValue"], ["field", "readingValue"], ["pTooltip", "Blend Type", "tooltipPosition", "top", "pSortableColumn", "BlendType"], ["field", "BlendType"], ["pSortableColumn", "noofairconnUnits", "pTooltip", "Amount of refrigent used", "tooltipPosition", "top"], ["field", "noofairconnUnits"], ["pSortableColumn", "numberOfExtinguisher", "pTooltip", "Number Of Fire Extinguisher", "tooltipPosition", "top"], ["field", "numberOfExtinguisher"], ["pSortableColumn", "quantityOfCO2makeup", "pTooltip", "Quantity Of CO2 makeup", "tooltipPosition", "top"], ["field", "quantityOfCO2makeup"], ["pSortableColumn", "noOfVehicles", "pTooltip", "Trips", "tooltipPosition", "top"], ["field", "noOfVehicles"], ["pSortableColumn", "noOfVehicles", "pTooltip", "Number Of Vehicles", "tooltipPosition", "top"], ["pSortableColumn", "modeOfDE", "pTooltip", "Mode Of data entry", "tooltipPosition", "top"], ["field", "modeOfDE"], ["pSortableColumn", "amount"], ["field", "amount"], ["pSortableColumn", "unit"], ["field", "unit"], ["pSortableColumn", "sourceName"], ["field", "sourceName"], ["placeholder", "All", 3, "ngModel", "options", "showClear", "onChange"], [3, "pEditableRow"], ["pTemplate", "input"], ["pTemplate", "output"], ["pInputText", "", "type", "text", "ngModel", "", 3, "name", "id", "ngModel", "ngModelChange"], ["readingValue", "ngModel"], ["numberOfExtinguisher", "ngModel"], ["quantityOfCO2makeup", "ngModel"]],
+    consts: [[1, "container-fluid", "px-0", "mt-4"], [1, "row", "mb-0", "pt-0"], [1, "row", "pt-2", "ml-0", "mx-0", "px-0"], [1, "col-lg-4", "mb-4", "px-2"], [1, "TrackingDiv-border", "Dashboard-tab", "ct_dash_board_tab", "ct_hide_scroll_239", "ct_scroll_60012_left", 2, "height", "calc(100vh - 130px)", 3, "ngClass"], [1, "text-white", "noData", 2, "justify-content", "center", 3, "ngStyle"], [1, "icon", "mt-3"], ["aria-hidden", "true", 1, "fa", "fa-info-circle", 2, "font-size", "20px"], [1, "label"], [1, "modal-body", "text-white", "text-style", 3, "ngStyle"], [1, "", 3, "ngSubmit"], ["addCompForm", "ngForm"], [1, "row", "d-flex", "justify-content-between", "tabviewclass"], [1, "w-100", 3, "activeIndex"], [4, "ngFor", "ngForOf"], [1, "view-request", "ct_view_request_btn", "d-flex", "justify-content-center", 3, "routerLink", "queryParams", "click"], [1, "col-lg-8", "mb-4", "px-2"], [1, "TrackingDiv2-border", "Dashboard-tab", "ct_dash_board_tab", "text-white", "ct_scroll_dash", 2, "height", "calc(100vh - 130px)"], [1, "noData", 2, "justify-content", "center", 3, "ngStyle"], [1, "ct_scroll_60012"], [3, "ngStyle", "activeIndex"], ["dataentryTab", ""], ["header", "Data Entry"], [1, "row", "text-white", "border-bottom"], [1, "d-flex", "align-items-center", "justify-content-between", "w-100"], ["class", "mb-2 mt-3 ml-4 text-dark ct_fw_600", 4, "ngIf"], ["class", "mb-2 mt-3 ml-4 text-dark", 4, "ngIf"], [1, "ct_how_use_tooltip_main"], [1, "fa-solid", "fa-circle-question", 3, "click"], [1, "ct_how_use_tooltip_cnt", 3, "ngClass"], [3, "ngSubmit"], ["dataEntryForm", "ngForm"], ["class", "trackingContent", 4, "ngIf"], ["class", "trackingFooter", 4, "ngIf"], ["header", "Status"], [1, "row", "border-bottom"], [1, "mb-2", "mt-3", "ml-4"], [1, "ElectricityTable", "mt-0", "ct_overflow_hidden_data_table_500", 2, "height", "auto !important"], ["styleClass", "statusTable ct_status_tble_230_space ct_status_table_main", "currentPageReportTemplate", "Showing {first} to {last} of {totalRecords} entries", "dataKey", "id", 2, "overflow-y", "unset", 3, "paginator", "rowHover", "rows", "value"], ["dt1", ""], ["pTemplate", "header"], ["pTemplate", "body"], ["header", "Settings"], [1, "mb-2", "mt-3", "ml-4", "text-dark"], [4, "ngIf"], [1, "cardDiv"], [1, "calenderDiv", "flex", "row"], [1, "selectmonth", "col", "card", "justify-content-center", "ct_month_select_clr", "ct_multi_input_38", "ct_month_light_green"], ["placeholder", "Months", "name", "months", "styleClass", "pcalender", "optionLabel", "name", 3, "options", "ngModel", "ngModelChange"], [1, "selectyear", "ct_calander_input", "col", "ct_calender_38", "ct_month_light_green", "ct_calender_font_size"], ["ngModel", "", "name", "year", "year", "", "styleClass", "pcalender", "view", "year", "dateFormat", "yy", "inputId", "yearpicker", 1, "w-100", 3, "ngModel", "showIcon", "ngModelChange"], [1, "searchWidthDP", "form-group", "has-search", "ct_calander_input"], [1, "fa", "fa-search", "form-control-feedback"], ["type", "text", "placeholder", " Search", 1, "form-control"], [1, "card", "ct_shadow_none", "flex", "justify-content-center"], ["styleClass", "accordianclass bg-unset", 1, "ct_accordian_height_48vh12", 2, "background-color", "#f5f5f5", 3, "activeIndex", "multiple"], [3, "selected"], ["style", "height: 8px;", "pTemplate", "header"], ["id", "DPRow", "class", "py-2 px-4 border-bottom ct_scoope_1_tab ", 3, "ngClass", 4, "ngFor", "ngForOf"], [1, "iicon"], ["class", "fa fa-info-circle tooltip-icon", "pTooltip", "Direct emissions from owned or controlled stationary sources that use fossil fuels", "tooltipPosition", "top", "style", "color: #88ad47", 4, "ngIf"], ["class", "fa fa-info-circle tooltip-icon", "pTooltip", "Direct emissions from owned or controlled stationary sources that emit fugitive emissions", "tooltipPosition", "top", "style", "color: #88ad47", 4, "ngIf"], ["class", "fa fa-info-circle tooltip-icon", "pTooltip", "This section provides guidance on accounting for and calculating Scope 1 direct GHG emissions from owned or leased mobile sources (both on-road and non-road vehicles) that are within the company\u2019s inventory boundaries. ", "tooltipPosition", "top", "style", "color: #88ad47", 4, "ngIf"], ["pTooltip", "Direct emissions from owned or controlled stationary sources that use fossil fuels", "tooltipPosition", "top", 1, "fa", "fa-info-circle", "tooltip-icon", 2, "color", "#88ad47"], ["pTooltip", "Direct emissions from owned or controlled stationary sources that emit fugitive emissions", "tooltipPosition", "top", 1, "fa", "fa-info-circle", "tooltip-icon", 2, "color", "#88ad47"], ["pTooltip", "This section provides guidance on accounting for and calculating Scope 1 direct GHG emissions from owned or leased mobile sources (both on-road and non-road vehicles) that are within the company\u2019s inventory boundaries. ", "tooltipPosition", "top", 1, "fa", "fa-info-circle", "tooltip-icon", 2, "color", "#88ad47"], ["id", "DPRow", 1, "py-2", "px-4", "border-bottom", "ct_scoope_1_tab", 3, "ngClass"], ["clickable", "", "tooltipPosition", "bottom", 1, "col", "pointer", "d-flex", 3, "pTooltip", "click"], [1, "ct_overflow_box", 2, "max-height", "100%"], [1, "card", "ct_shadow_none", "flex", "justify-content-center", "ct_scope_3cata_list"], ["styleClass", "accordianclass ct_accordian_height_48vh12", 3, "activeIndex", "multiple"], ["id", "DPRow", "class", "py-2 px-4 border-bottom ct_scope_3_cata_list ct_scoope_1_tab", 3, "ngClass", 4, "ngFor", "ngForOf"], ["id", "DPRow", 1, "py-2", "px-4", "border-bottom", "ct_scope_3_cata_list", "ct_scoope_1_tab", 3, "ngClass"], ["clickable", "", "class", "col pointer d-flex", "tooltipPosition", "bottom", 3, "pTooltip", "click", 4, "ngIf"], ["class", "ct_business_drop_12_main", "header", "Business Travel", "clickable", "", 3, "pTooltip", "click", 4, "ngIf"], ["header", "Business Travel", "clickable", "", 1, "ct_business_drop_12_main", 3, "pTooltip", "click"], [1, "ct_dropdwon_item"], [3, "click"], [1, "mb-2", "mt-3", "ml-4", "text-dark", "ct_fw_600"], [1, "trackingContent"], [1, "row", "mt-4", "mx-2"], ["class", "col-lg-4", 4, "ngIf"], ["class", "col-lg-5", 4, "ngIf"], ["class", "row", 4, "ngIf"], ["class", "row mt-4 mx-2", 4, "ngIf"], [1, "row", "mt-3", "mx-2"], [1, "col"], ["for", "fname "], ["ngModel", "", "name", "Textarea", "rows", "5", "pInputTextarea", "", "styleClass", "notetracking", 1, "ct_textarea_input", 3, "ngModel", "ngModelChange"], ["Textarea", "ngModel"], [1, "col-lg-4"], ["for", "fname"], ["class", "ct_select_op_input ct_chev_icon_dark230 \n\n                                            ", "ngModel", "", "optionLabel", "Item", "optionValue", "subCatTypeID", "name", "subCatType", 3, "options", "ngModel", "ngModelChange", 4, "ngIf"], ["class", "ct_select_op_input ct_chev_icon_dark230 \n                                            ", "placeholder", "Select type", "ngModel", "", "optionLabel", "Type", "optionValue", "id", "name", "Type", 3, "options", "ngModel", "ngModelChange", "onChange", 4, "ngIf"], ["ngModel", "", "optionLabel", "Item", "optionValue", "subCatTypeID", "name", "subCatType", 1, "ct_select_op_input", "ct_chev_icon_dark230", 3, "options", "ngModel", "ngModelChange"], ["subCatType", "ngModel"], ["placeholder", "Select type", "ngModel", "", "optionLabel", "Type", "optionValue", "id", "name", "Type", 1, "ct_select_op_input", "ct_chev_icon_dark230", 3, "options", "ngModel", "ngModelChange", "onChange"], ["Type", "ngModel"], [1, "position-relative"], ["required", "", "ngModel", "", "name", "readingvalue", "placeholder", "Enter value", "readingvalue", "", "id", "search-input", "type", "text", 1, "form-control", "Dashboard-tab", "text-white", 3, "ngModel", "ngModelChange"], ["readingvalue", "ngModel"], ["ngModel", "", "optionLabel", "UnitName", "optionValue", "UnitName", "name", "unitSet", 1, "ct_select_op_input", "ct_select_op_input", "ct_position_small_quantity", 3, "options", "ngModel", "ngModelChange"], ["unitSet", "ngModel"], ["class", "validation", 4, "ngIf"], [1, "validation"], ["ngModel", "", "optionLabel", "RegionName", "optionValue", "RegionID", "name", "RegionID", 1, "ct_select_op_input", "ct_chev_icon_dark230", 3, "options", "ngModel", "ngModelChange"], ["RegionID", "ngModel"], [1, "col-lg-5"], ["required", "", "ngModel", "", "name", "refAmount", "placeholder", "Enter value", "refAmount", "", "id", "search-input", "type", "text", 1, "form-control", "Dashboard-tab", "text-white", 3, "ngModel", "ngModelChange"], ["refAmount", "ngModel"], ["required", "", "ngModel", "", "name", "ExtinguisherNo", "ExtinguisherNo", "", "id", "search-input", "type", "text", "placeholder", "Enter no of extinguisher", 1, "form-control", "Dashboard-tab", "text-white", 3, "ngModel", "ngModelChange"], ["ExtinguisherNo", "ngModel"], ["pTooltip", "Quantity of CO2 Makeup", "tooltipPosition", "top", "for", "fname"], ["required", "", "ngModel", "", "name", "CO2MU", "CO2MU", "", "id", "search-input", "type", "text", 1, "form-control", "Dashboard-tab", "text-white", 3, "ngModel", "ngModelChange"], ["CO2MU", "ngModel"], [1, "row"], [1, "mb-3", 3, "ngClass"], ["optionLabel", "VehicleType", "optionValue", "ID", "name", "VehicleType", 1, "ct_select_op_input", "ct_chev_icon_dark230", 3, "options", "ngModel", "ngModelChange", "onChange"], ["vehicletype", "ngModel"], [1, "col-lg-4", "mb-3"], ["required", "", "ngModel", "", "name", "NoOfVehicles", "NoOfVehicles", "", "id", "search-input", "type", "text", "placeholder", "Enter no of vehicles", 1, "form-control", "Dashboard-tab", "text-white", 3, "ngModel", "ngModelChange"], ["NoOfVehicles", "ngModel"], ["pTooltip", "Total number of trips per vehicle", "tooltipPosition", "top", "for", "TotalnoOftripsPerVehicle"], ["required", "", "ngModel", "", "name", "TotalnoOftripsPerVehicle", "TotalnoOftripsPerVehicle", "", "id", "search-input", "type", "text", "placeholder", "Enter trips per vehicle", 1, "form-control", "Dashboard-tab", "text-white", 3, "ngModel", "ngModelChange"], ["TotalnoOftripsPerVehicle", "ngModel"], [3, "ngClass"], ["pTooltip", "Mode of Data Entry", "tooltipPosition", "top", "for", "fname"], ["ngModel", "", "optionLabel", "modeName", "optionValue", "modeName", "name", "DEMode", 1, "ct_select_op_input", "ct_chev_icon_dark230", 3, "options", "ngModel", "ngModelChange", "onChange"], ["DEMode", "ngModel"], ["required", "", "ngModel", "", "name", "Value", "placeholder", "Enter value", "Value", "", "id", "search-input", "type", "text", 1, "form-control", "Dashboard-tab", "text-white", 3, "ngModel", "ngModelChange"], ["Value", "ngModel"], [1, "ct_quantity_text"], ["pTooltip", "Charging done outside company campus (%)", "tooltipPosition", "top", "for", "fname"], [1, "input-group"], ["id", "chargingInput", "placeholder", "Enter value in %", "required", "", "ngModel", "", "name", "chargingPerc", 1, "form-control", "Dashboard-tab", "text-white", 3, "ngModel", "ngModelChange"], ["chargingPerc", "ngModel"], [1, "input-group-append"], [1, "input-group-text"], ["pTooltip", "Average number of people travel in one vehicle per trip", "tooltipPosition", "top", "for", "AvgNoPeople"], ["required", "", "ngModel", "", "name", "AvgNoPeople", "placeholder", "Enter avg no of people", "AvgNoPeople", "", "id", "search-input", "type", "text", 1, "form-control", "Dashboard-tab", "text-white", 3, "ngModel", "ngModelChange"], ["AvgNoPeople", "ngModel"], ["type", "text", "placeholder", "Enter value", "name", "calorificValue", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["required", "", "ngModel", "", "name", "ExtinguisherID", "ExtinguisherID", "", "id", "search-input", "type", "text", "placeholder", "Enter value", 1, "form-control", "Dashboard-tab", "text-white", 3, "ngModel", "ngModelChange"], ["ExtinguisherID", "ngModel"], ["placeholder", "Select source", "ngModel", "", "optionLabel", "sourceName", "optionValue", "sourceName", "name", "Source", 1, "ct_select_op_input", "ct_chev_icon_dark230", 3, "options"], ["Source", "ngModel"], ["required", "", "ngModel", "", "name", "emission_factorS", "placeholder", "Enter value", "readingvalue", "", "id", "search-input", "type", "text", 1, "form-control", "Dashboard-tab", "text-white"], ["emission_factorS", "ngModel"], ["required", "", "ngModel", "", "name", "sourcevalue", "placeholder", "Enter value", "readingvalue", "", "id", "search-input", "type", "text", 1, "form-control", "Dashboard-tab", "text-white", 3, "ngModel", "ngModelChange"], [1, "col-lg-6"], ["ngModel", "", "optionLabel", "typeName", "optionValue", "typeName", "name", "blend", 1, "ct_select_op_input", "ct_chev_icon_dark230", 3, "options", "ngModel", "ngModelChange"], ["blend", "ngModel"], ["class", "col-lg-6", 4, "ngIf"], ["required", "", "ngModel", "", "name", "blendPercent", 1, "form-control", "Dashboard-tab", 3, "ngModel", "ngClass", "ngModelChange", "input"], ["blendPercent", "ngModel"], [1, "trackingFooter"], [1, "row", "my-3", "mb-0", "pb-3", "mx-2"], ["class", "col-4", 4, "ngIf"], [1, "col-8"], [1, "d-flex", "justify-content-end", "border", "rounded", "ct_upload_btn1"], ["mode", "basic", "accept", ".jpg,.png,.pdf", "chooseLabel", "Please select a File", 3, "onSelect"], ["fileUpload", ""], [1, "col-12", "mt-5", "pt-3", "ml-3", "text-center"], ["type", "submit", 1, "px-4", "trackingsubmitb"], [1, "col-4"], [1, ""], [1, "px-4", "trackingsubmitb", "w-100"], ["download", "", 3, "href"], [1, "row", "p-2"], [1, "col-md-12"], [1, "mb-4", "mt-4"], [1, "mb-3"], [1, "col-md-4"], ["ngModel", "", "placeholder", "Select a template", "optionLabel", "template", "optionValue", "template", "name", "template", 1, "ct_select_op_input", "ct_chev_icon_dark230", 3, "options", "ngModel", "ngModelChange"], [1, "col-md-5"], ["href", "assets/GenericTemplate_PurchasedGoods.xlsx", "download", "", 1, "trackingsubmitb", "d-block", "mt-0", 2, "width", "fit-content", "height", "36.13px", "padding-block", "5px"], [1, "attachments"], [1, "input-group", "ct_file_upload_1"], [1, "input-group-btn"], [1, "btn", "btn-default", "browse-button"], [1, "browse-button-text"], [1, "fa", "fa-folder-open"], ["type", "file", "accept", ".xlsx", "name", "attachment", 3, "change"], ["inputFile", ""], ["type", "text", "disabled", "disabled", "placeholder", "Please click on browse button", 1, "form-control", "filename"], ["class", "", 4, "ngIf"], [1, "col-12", "mt-5"], ["type", "button", 1, "btn", "trackingsubmitb", 3, "click"], [1, "fa", "fa-upload"], [1, "row", "mt-4", "mb-3", "pb-4", "mx-2"], ["for", ""], [3, "ngModel", "ngModelOptions", "ngModelChange"], ["for", "", 1, "ml-3"], [1, "col-12"], ["class", "mt-4", 4, "ngIf"], [1, "col-12", "mt-2", "pt-3", "ml-3", "text-center"], [1, "mt-4"], [1, "mb-4"], [1, "col-md-6"], [1, "mb-4", 2, "gap", "10px"], [1, "ct_text_wrape"], ["ngModel", "", "optionLabel", "vehicle_type", "optionValue", "id", "name", "vehicle_type", 1, "ct_select_op_input", "ct_flex_1", "ct_chev_icon_dark230", 3, "options", "ngModel", "onChange", "ngModelChange"], ["type", "number", "placeholder", "Enter Mass of Products", "name", "mass_of_products", "required", "", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["mass_of_products", "ngModel"], ["ngModel", "", "optionLabel", "units", "optionValue", "units", "name", "upfacilityUnits", 1, "ct_select_op_input", "ct_position_small_quantity", 3, "options"], ["upfacilityUnits", "ngModel"], ["ngModel", "", "optionLabel", "vehicle_type", "optionValue", "vehicle_type", "name", "vehicle_type", 1, "ct_select_op_input", "ct_flex_1", "ct_chev_icon_dark230", 3, "options", "ngModel", "onChange", "ngModelChange"], ["type", "number", "placeholder", "Enter Distance", "name", "distanceInKms", "required", "", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["distanceInKms", "ngModel"], ["ngModel", "", "optionLabel", "unit", "optionValue", "unit", "name", "upfacilityUnits", 1, "ct_select_op_input", "ct_position_small_quantity", 3, "options"], ["type", "number", "name", "noOfVehicles", "required", "", "ngModel", "", "placeholder", "Enter no of vehicles", 1, "form-control", "Dashboard-tab", "text-white"], ["noOfVehicles", "ngModel"], ["ngModel", "", "optionLabel", "storagef_type", "optionValue", "storagef_type", "name", "storage_type", 1, "ct_select_op_input", "ct_flex_1", "ct_chev_icon_dark230", 3, "options"], ["type", "text", "placeholder", "Enter Area Occupied", "name", "area_occupied", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["ngModel", "", "optionLabel", "energyTypes", "optionValue", "energyTypes", "name", "upfacilityUnits", 1, "ct_select_op_input", "ct_position_small_quantity", 3, "options"], ["type", "number", "placeholder", "Enter No. of Days of Storage", "name", "averageNoOfDays", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], [1, "row", "mt-4", "mb-3", "mb-5", "pb-5", "mx-2"], [1, "mt-0"], ["type", "text", "placeholder", "Enter water supply", "name", "water_supply", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["ngModel", "", "optionLabel", "unitType", "optionValue", "id", "name", "waterSupplyUnits", 1, "ct_select_op_input", "ct_position_small_quantity", 3, "options"], ["wasteUnits", "ngModel"], ["type", "text", "placeholder", "Enter water treatment", "name", "water_treatment", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["ngModel", "", "optionLabel", "unitType", "optionValue", "id", "name", "waterTreatmentUnits", 1, "ct_select_op_input", "ct_position_small_quantity", 3, "options"], [1, "col-lg-7"], [1, "row", "ct_home_office_table"], [1, "table"], [1, "thead-dark"], ["scope", "col"], ["type", "text", "name", "surface_water", "ngModel", "", "placeholder", "Enter required value", 1, "form-control", "w-auto"], ["type", "text", "name", "groundwater", "ngModel", "", "placeholder", "Enter required value", 1, "form-control", "w-auto"], ["type", "text", "name", "thirdParty", "ngModel", "", "placeholder", "Enter required value", 1, "form-control", "w-auto"], ["type", "text", "name", "seaWater", "ngModel", "", "placeholder", "Enter required value", 1, "form-control", "w-auto"], ["type", "text", "name", "others", "ngModel", "", "placeholder", "Enter required value", 1, "form-control", "w-auto"], [1, "col-12", "mt-3"], ["type", "text", "name", "surface_no_treatment", "ngModel", "", "placeholder", "Enter required value", 1, "form-control"], ["type", "number", "name", "surface_withTreatment", "ngModel", "", "placeholder", "Enter required value", 1, "form-control"], ["type", "number", "name", "surface_levelTreatment", "ngModel", "", "name", "noofmonths_1", "placeholder", "Enter required value", 1, "form-control"], ["type", "text", "name", "ground_no_treatment", "ngModel", "", "placeholder", "Enter required value", 1, "form-control"], ["type", "number", "name", "ground_withTreatment", "ngModel", "", "placeholder", "Enter required value", 1, "form-control"], ["type", "number", "name", "ground_levelTreatment", "ngModel", "", "placeholder", "Enter required value", 1, "form-control"], ["type", "text", "name", "seawater_no_treatment", "ngModel", "", "placeholder", "Enter required value", 1, "form-control"], ["type", "number", "name", "seawater_withTreatment", "ngModel", "", "placeholder", "Enter required value", 1, "form-control"], ["type", "number", "name", "seawater_levelTreatment", "ngModel", "", "placeholder", "Enter required value", 1, "form-control"], ["type", "text", "name", "third_no_treatment", "ngModel", "", "placeholder", "Enter required value", 1, "form-control"], ["type", "number", "name", "third_withTreatment", "ngModel", "", "placeholder", "Enter required value", 1, "form-control"], ["type", "number", "name", "third_levelTreatment", "ngModel", "", "placeholder", "Enter required value", 1, "form-control"], ["type", "text", "name", "others_no_treatment", "ngModel", "", "placeholder", "Enter required value", 1, "form-control"], ["type", "number", "name", "others_withTreatment", "ngModel", "", "placeholder", "Enter required value", 1, "form-control"], ["type", "number", "name", "others_levelTreatment", "ngModel", "", "placeholder", "Enter required value", 1, "form-control"], [1, "col-12", "mt-4", "pt-3", "ml-3", "text-center"], [1, "row", "mt-4", "mb-3", "mb-0", "pb-3", "mx-2"], ["ngModel", "", "optionLabel", "type", "optionValue", "id", "name", "wasteType", 1, "ct_select_op_input", "ct_chev_icon_dark230", 3, "options", "ngModel", "onChange", "ngModelChange"], ["ngModel", "", "optionLabel", "type", "optionValue", "type", "name", "wasteSubCategory", 1, "ct_select_op_input", "ct_chev_icon_dark230", 3, "options"], ["wasteSubCategory", "ngModel"], ["ngModel", "", "optionLabel", "water_type", "optionValue", "id", "name", "water_type", 1, "ct_select_op_input", "ct_chev_icon_dark230", 3, "options", "ngModel", "ngModelChange", "onChange"], ["water_type", "ngModel"], ["class", "col-md-6", 4, "ngIf"], ["type", "text", "placeholder", "Enter Waste Quantity", "name", "waste_quantity", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["ngModel", "", "optionLabel", "units", "optionValue", "units", "name", "wasteUnits", 1, "ct_select_op_input", "ct_position_small_quantity", 3, "options"], ["ngModel", "", "optionLabel", "template", "optionValue", "id", "name", "template", 1, "ct_select_op_input", "ct_chev_icon_dark230", 3, "options", "ngModel", "ngModelChange"], ["template", "ngModel"], ["type", "text", "name", "noofemployees", "ngModel", "", "placeholder", "Enter no of employees", 1, "form-control", "Dashboard-tab", "text-white"], ["type", "text", "placeholder", "Enter days", "name", "workingdays", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], [1, "table", "ct_home_office_table"], ["scope", "row"], ["type", "text", "name", "employeescommute_1", "ngModel", "", 1, "form-control"], ["type", "text", "name", "avgcommute_1", "ngModel", "", 1, "form-control"], ["type", "text", "name", "employeescommute_2", "ngModel", "", 1, "form-control"], ["type", "text", "name", "avgcommute_2", "ngModel", "", 1, "form-control"], ["type", "text", "name", "employeescommute_3", "ngModel", "", 1, "form-control"], ["type", "text", "name", "avgcommute_3", "ngModel", "", 1, "form-control"], ["type", "text", "name", "employeescommute_4", "ngModel", "", 1, "form-control"], ["type", "text", "name", "avgcommute_4", "ngModel", "", 1, "form-control"], ["type", "text", "name", "employeescommute_5", "ngModel", "", 1, "form-control"], ["type", "text", "name", "avgcommute_5", "ngModel", "", 1, "form-control"], ["type", "text", "name", "employeescommute_6", "ngModel", "", 1, "form-control"], ["type", "text", "name", "avgcommute_6", "ngModel", "", 1, "form-control"], ["type", "text", "name", "employeescommute_7", "ngModel", "", 1, "form-control"], ["type", "text", "name", "avgcommute_7", "ngModel", "", 1, "form-control"], ["type", "text", "name", "employeescommute_8", "ngModel", "", 1, "form-control"], ["type", "text", "name", "avgcommute_8", "ngModel", "", 1, "form-control"], ["type", "text", "name", "employeescommute_9", "ngModel", "", 1, "form-control"], ["type", "text", "name", "avgcommute_9", "ngModel", "", 1, "form-control"], ["type", "text", "name", "employeescommute_10", "ngModel", "", 1, "form-control"], ["type", "text", "name", "avgcommute_10", "ngModel", "", 1, "form-control"], ["type", "text", "name", "employeescommute_11", "ngModel", "", 1, "form-control"], ["type", "text", "name", "avgcommute_11", "ngModel", "", 1, "form-control"], ["type", "text", "name", "employeescommute_12", "ngModel", "", 1, "form-control"], ["type", "text", "name", "avgcommute_12", "ngModel", "", 1, "form-control"], ["type", "text", "name", "employeescommute_13", "ngModel", "", 1, "form-control"], ["type", "text", "name", "avgcommute_13", "ngModel", "", 1, "form-control"], ["type", "text", "name", "employeescommute_14", "ngModel", "", 1, "form-control"], ["type", "text", "name", "avgcommute_14", "ngModel", "", 1, "form-control"], ["type", "text", "name", "employeescommute_15", "ngModel", "", 1, "form-control"], ["type", "text", "name", "avgcommute_15", "ngModel", "", 1, "form-control"], [1, "row", "mt-4", "mb-0", "pb-3", "mx-2"], [1, "table", "table-bordered"], ["scope", "col", 2, "border-top-width", "0px"], ["type", "text", "name", "noofemployees_1", "placeholder", "Enter no of employee", 1, "form-control", 3, "ngModel", "ngModelChange"], ["type", "number", "name", "noofdays_1", "placeholder", "Enter no of days", 1, "form-control", 3, "ngModel", "ngModelChange"], ["type", "number", "name", "noofmonths_1", "placeholder", "Enter no of months", 1, "form-control", 3, "ngModel", "ngModelChange"], ["type", "text", "name", "noofemployees_2", "placeholder", "Enter no of employee", 1, "form-control", 3, "ngModel", "ngModelChange"], ["type", "number", "name", "noofdays_2", "placeholder", "Enter no of days", 1, "form-control", 3, "ngModel", "ngModelChange"], ["type", "number", "name", "noofmonths_2", "placeholder", "Enter no of months", 1, "form-control", 3, "ngModel", "ngModelChange"], ["type", "text", "name", "noofemployees_3", "placeholder", "Enter no of employee", 1, "form-control", 3, "ngModel", "ngModelChange"], ["type", "number", "name", "noofdays_3", "placeholder", "Enter no of days", 1, "form-control", 3, "ngModel", "ngModelChange"], ["type", "number", "name", "noofmonths_3", "placeholder", "Enter no of months", 1, "form-control", 3, "ngModel", "ngModelChange"], ["class", "col-12", 4, "ngIf"], ["ngModel", "", "optionLabel", "categories", "optionValue", "categories", "name", "facilityTypeValue", 1, "ct_select_op_input", "ct_flex_1", "ct_chev_icon_dark230", 3, "options", "onChange"], ["facilityTypeValue", "ngModel"], ["ngModel", "", "optionLabel", "sub_categories", "optionValue", "sub_categories", "name", "subfacilityTypeValue", 1, "ct_select_op_input", "ct_flex_1", "ct_chev_icon_dark230", 3, "options"], ["subfacilityTypeValue", "ngModel"], ["ngModel", "", "placeholder", "Select a method", "optionLabel", "calculationmethod", "optionValue", "calculationmethod", "name", "calculationmethod", 1, "ct_select_op_input", "ct_flex_1", "ct_chev_icon_dark230", 3, "options", "onChange"], ["calculationmethod", "ngModel"], ["type", "text", "placeholder", "Enter Franchise Space", "name", "upLeasefranchise_space", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["href", "assets/LeasingScope12_Template.xlsx", "download", "", 1, "trackingsubmitb"], ["type", "text", "placeholder", "Enter Scope1 Emissions", "name", "scope1_emission", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["type", "text", "placeholder", "Enter Scope2 Emissions", "name", "scope2_emission", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["ngModel", "", "optionLabel", "vehicle_type", "optionValue", "id", "name", "vehicle_type", 1, "ct_select_op_input", "ct_flex_1", "ct_chev_icon_dark230", 3, "options", "onChange"], ["ngModel", "", "optionLabel", "vehicle_type", "optionValue", "vehicle_type", "name", "subvehicle_type", 1, "ct_select_op_input", "ct_flex_1", "ct_chev_icon_dark230", 3, "options"], ["ngModel", "", "optionLabel", "unit", "optionValue", "unit", "name", "unit", 1, "ct_select_op_input", "ct_position_small_quantity", 3, "options"], ["units", "ngModel"], ["type", "number", "placeholder", "Enter No. of Vehicles", "name", "noOfVehicles", "required", "", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["class", " mt-4", 4, "ngIf"], ["type", "text", "placeholder", "Enter Mass of Products", "name", "mass_of_products", "required", "", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["type", "text", "placeholder", "Enter Distance", "name", "distanceInKms", "required", "", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["storagef_type", "ngModel"], ["type", "text", "placeholder", "Enter No. of Days of Storage", "name", "averageNoOfDays", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["ngModel", "", "placeholder", "Select category", "optionLabel", "Industry", "optionValue", "Industry", "name", "industry", 1, "ct_select_op_input", "ct_chev_icon_dark230", 3, "options", "onChange"], ["industry", "ngModel"], ["type", "text", "placeholder", "Enter value", "name", "valueofsoldintermediate", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["ngModel", "", "optionLabel", "units", "optionValue", "units", "name", "goodsUnits", 1, "ct_select_op_input", "ct_position_small_quantity", 3, "options"], ["ngModel", "", "optionLabel", "sector", "optionValue", "sector", "name", "sector", "placeholder", "Select Activity", 1, "ct_select_op_input", "ct_chev_icon_dark230", 3, "options", "onChange"], ["sector", "ngModel"], ["ngModel", "", "optionLabel", "sub_sector", "optionValue", "sub_sector", "name", "sub_sector", 1, "ct_select_op_input", "ct_chev_icon_dark230", 3, "options"], ["sub_sector", "ngModel"], ["type", "text", "placeholder", "Enter activity", "name", "processing_acitivity", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["type", "text", "placeholder", "Enter activity", "name", "sub_activity", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["type", "text", "placeholder", "Enter activity", "name", "emission_factor", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["href", "assets/ProcessingScope12_Template.xlsx", "download", "", 1, "trackingsubmitb"], ["ngModel", "", "optionLabel", "energyTypes", "optionValue", "id", "name", "energyTypes", 1, "ct_select_op_input", "ct_chev_icon_dark230", 3, "options", "onChange"], ["energyTypes", "ngModel"], ["ngModel", "", "optionLabel", "item", "optionValue", "id", "name", "productCategoryitem", 1, "ct_select_op_input", "ct_chev_icon_dark230", 3, "options"], ["productCategoryitem", "ngModel"], [1, "col-md-8"], ["type", "text", "placeholder", "Enter Number of Items", "name", "numberofitems", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["ngModel", "", "optionLabel", "units", "optionValue", "id", "placeholder", "Select a Unit", "name", "noofunits", 1, "ct_select_op_input", "ct_position_small_quantity", 3, "options", "onChange"], ["noofunits", "ngModel"], ["type", "text", "placeholder", "Enter lifetime of the product", "name", "expectedlifetimeproduct", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["ngModel", "", "optionLabel", "unitsExpElec", "optionValue", "id", "name", "unitsExpElec", 1, "ct_select_op_input", "ct_position_small_quantity", 3, "options", "onChange"], ["unitsExpElec", "ngModel"], [1, "ct_border_top"], ["type", "text", "placeholder", "Enter water treatment", "name", "electricity_use", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["ngModel", "", "optionLabel", "Item", "optionValue", "Item", "name", "fuelItem", 1, "ct_select_op_input", "ct_chev_icon_dark230", 3, "options"], ["Item", "ngModel"], ["type", "text", "placeholder", "Enter fuel consumed", "name", "fuel_consumed", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["ngModel", "", "optionLabel", "Item", "optionValue", "Item", "name", "ItemRefrigerant", 1, "ct_select_op_input", "ct_chev_icon_dark230", 3, "options"], ["ItemRefrigerant", "ngModel"], ["type", "text", "placeholder", "Enter Refrigerant\n                                                                    ", "name", "refLeakageValue", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["ngModel", "", "optionLabel", "type", "optionValue", "id", "name", "wasteType", 1, "ct_select_op_input", "ct_chev_icon_dark230", 3, "options", "onChange"], ["wasteType", "ngModel"], ["type", "text", "placeholder", "Enter water generated", "name", "total_waste", "ngModel", "", 1, "form-control", "text-white"], [1, "row", "ct_home_office_table", "border-0"], [1, "table", "w-50", "table-bordered"], ["type", "text", "name", "landfill", "ngModel", "", "placeholder", "Enter waste", 1, "form-control", "ct_fit-content"], ["type", "text", "name", "combustion", "ngModel", "", "placeholder", "Enter waste", 1, "form-control", "ct_fit-content"], ["type", "text", "name", "recycling", "ngModel", "", "placeholder", "Enter waste", 1, "form-control", "ct_fit-content"], ["type", "text", "name", "composing", "ngModel", "", "placeholder", "Enter waste", 1, "form-control", "ct_fit-content"], ["type", "text", "placeholder", "Enter Franchise Space", "name", "downLeasefranchise_space", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["ngModel", "", "optionLabel", "categories", "optionValue", "categories", "name", "categories", 1, "ct_select_op_input", "ct_flex_1", "ct_chev_icon_dark230", 3, "options", "ngModel", "onChange", "ngModelChange"], ["electricityRegionName", "ngModel"], ["ngModel", "", "optionLabel", "sub_categories", "optionValue", "sub_categories", "name", "sub_categories", 1, "ct_select_op_input", "ct_flex_1", "ct_chev_icon_dark230", 3, "options", "ngModel", "onChange", "ngModelChange"], ["sub_categories", "ngModel"], ["type", "text", "placeholder", "Enter value", "name", "franchise_space", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["href", "assets/FranchiseScope12_Template.xlsx", "download", "", 1, "trackingsubmitb"], ["ngModel", "", "optionLabel", "flightType", "optionValue", "flightType", "name", "flightMode", 1, "ct_select_op_input", "ct_flex_1", "ct_chev_icon_dark230", 3, "options", "onChange"], ["flightMode", "ngModel"], [3, "ngStyle"], [1, "ct_fs_24", "mb-3"], ["ngModel", "", "optionLabel", "flight_type", "optionValue", "flight_type", "name", "flight_type", 1, "ct_select_op_input", "ct_flex_1", "ct_chev_icon_dark230", 3, "options"], ["flight_type", "ngModel"], ["ngModel", "", "optionLabel", "classs", "optionValue", "classs", "name", "classs", 1, "ct_select_op_input", "ct_flex_1", "ct_chev_icon_dark230", 3, "options"], ["classs", "ngModel"], ["name", "return", 1, "ct_flex_1", 3, "ngModel", "ngModelOptions", "ngModelChange"], ["type", "text", "placeholder", "Enter no of trips", "name", "no_of_trips", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["type", "text", "placeholder", "Enter distance", "name", "distance", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["ngModel", "", "optionLabel", "unit", "optionValue", "unit", "name", "unitDistance", 1, "ct_select_op_input", "ct_position_small_quantity", 3, "options"], ["unitDistance", "ngModel"], ["ngModel", "", "optionLabel", "units", "optionValue", "units", "name", "businessunits", 1, "ct_select_op_input", "ct_flex_1", "ct_chev_icon_dark230", 3, "options"], ["return", "ngModel"], ["ngModel", "", "optionLabel", "airport_desc", "optionValue", "airport_code", "name", "airport_codefrom", 1, "ct_select_op_input", "ct_flex_1", "ct_chev_icon_dark230", 3, "options"], ["airport_code", "ngModel"], ["ngModel", "", "optionLabel", "airport_desc", "optionValue", "airport_code", "name", "airport_codeto", 1, "ct_select_op_input", "ct_flex_1", "ct_chev_icon_dark230", 3, "options"], ["ngModel", "", "placeholder", "Select via", "optionLabel", "airport_desc", "optionValue", "airport_code", "name", "airport_codevia", 1, "ct_select_op_input", "ct_flex_1", "ct_chev_icon_dark230", 3, "options"], ["type", "number", "placeholder", "Enter No of Passengers", "name", "no_of_passengers", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["ngModel", "", "optionLabel", "return", "optionValue", "return", "name", "return", 1, "ct_select_op_input", "ct_flex_1", "ct_chev_icon_dark230", 3, "options"], ["type", "number", "placeholder", "Enter Mass of Products", "name", "reference_id", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["type", "text", "placeholder", "Enter Distance", "name", "distance", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["type", "number", "placeholder", "Enter Reference id", "name", "reference_id", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["ngModel", "", "optionLabel", "name", "optionValue", "name", "name", "countryname", 1, "ct_select_op_input", "ct_chev_icon_dark230", 3, "options"], ["countryname", "ngModel"], ["ngModel", "", "optionLabel", "hoteltype", "optionValue", "id", "name", "hoteltype", 1, "ct_select_op_input", "ct_chev_icon_dark230", 3, "options"], ["hoteltype", "ngModel"], ["type", "text", "placeholder", "Enter no occupied rooms", "name", "noOfOccoupied", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["type", "text", "placeholder", "Enter no of nights", "name", "noOfNights", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["ngModel", "", "placeholder", "Select mode of travel", "optionLabel", "modes", "optionValue", "modes", "name", "modes", 1, "ct_select_op_input", "ct_chev_icon_dark230", 3, "options", "onChange"], ["modes", "ngModel"], ["ngModel", "", "optionLabel", "type", "optionValue", "type", "name", "cartype", 1, "ct_select_op_input", "ct_chev_icon_dark230", 3, "options"], ["cartype", "ngModel"], ["type", "number", "placeholder", "Enter distance travelled per trip", "name", "distance", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["type", "number", "placeholder", "Enter No. of trips", "name", "no_ofTrips", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["ngModel", "", "optionLabel", "mode_type", "optionValue", "mode_type", "name", "fuelCar_type", 1, "ct_select_op_input", "ct_chev_icon_dark230", 3, "options"], ["fuelCar_type", "ngModel"], ["type", "number", "placeholder", "Enter No. of passengers", "name", "no_of_passengers", "ngModel", "", 1, "form-control", "Dashboard-tab", "text-white"], ["pSortableColumn", "catName", 4, "ngIf"], ["pTooltip", "Data Points", "tooltipPosition", "top", "pSortableColumn", "subcatName", 4, "ngIf"], ["pSortableColumn", "type", 4, "ngIf"], ["pSortableColumn", "flightMode", 4, "ngIf"], ["pSortableColumn", " FlightType", 4, "ngIf"], ["pSortableColumn", "Class", 4, "ngIf"], ["pSortableColumn", "Nooftrips", 4, "ngIf"], ["pSortableColumn", "Distance", 4, "ngIf"], ["pSortableColumn", "Countryofstay", 4, "ngIf"], ["pSortableColumn", "typeHotel", 4, "ngIf"], ["pSortableColumn", "no_of_occupied_rooms", 4, "ngIf"], ["pSortableColumn", "no_of_nights_per_room", 4, "ngIf"], ["pSortableColumn", "distanceT", 4, "ngIf"], ["pSortableColumn", "no_of_trips", 4, "ngIf"], ["pSortableColumn", "year"], ["field", "year"], ["pSortableColumn", "month", 4, "ngIf"], ["pTooltip", "Reading Value", "tooltipPosition", "top", "pSortableColumn", "readingValue", 4, "ngIf"], ["pTooltip", "Blend Type", "tooltipPosition", "top", "pSortableColumn", "BlendType", 4, "ngIf"], ["pSortableColumn", "noofairconnUnits", "pTooltip", "Amount of refrigent used", "tooltipPosition", "top", 4, "ngIf"], ["pSortableColumn", "numberOfExtinguisher", "pTooltip", "Number Of Fire Extinguisher", "tooltipPosition", "top", 4, "ngIf"], ["pSortableColumn", "quantityOfCO2makeup", "pTooltip", "Quantity Of CO2 makeup", "tooltipPosition", "top", 4, "ngIf"], ["pSortableColumn", "noOfVehicles", "pTooltip", "Trips", "tooltipPosition", "top", 4, "ngIf"], ["pSortableColumn", "noOfVehicles", "pTooltip", "Number Of Vehicles", "tooltipPosition", "top", 4, "ngIf"], ["pSortableColumn", "modeOfDE", "pTooltip", "Mode Of data entry", "tooltipPosition", "top", 4, "ngIf"], ["pSortableColumn", "amount", 4, "ngIf"], ["pSortableColumn", "unit", 4, "ngIf"], ["pSortableColumn", "sourceName", 4, "ngIf"], ["pSortableColumn", "status", "field", "status"], ["field", "status", "matchMode", "equals", "display", "menu", 3, "showMenu", "showMatchModes", "showOperator", "showAddButton"], ["pTemplate", "filter"], ["pSortableColumn", "sourceName", "pTooltip", "tCO2", "tooltipPosition", "top"], ["pSortableColumn", "catName"], ["field", "catName"], ["pTooltip", "Data Points", "tooltipPosition", "top", "pSortableColumn", "subcatName"], ["field", "subcatName"], ["pSortableColumn", "type"], ["pSortableColumn", "flightMode"], ["field", "flightMode"], ["pSortableColumn", " FlightType"], ["field", " FlightType"], ["pSortableColumn", "Class"], ["field", "Class"], ["pSortableColumn", "Nooftrips"], ["field", "Nooftrips"], ["pSortableColumn", "Distance"], ["field", "Distance"], ["pSortableColumn", "Countryofstay"], ["field", "Countryofstay"], ["pSortableColumn", "typeHotel"], ["field", "typeHotel"], ["pSortableColumn", "no_of_occupied_rooms"], ["field", "no_of_occupied_rooms"], ["pSortableColumn", "no_of_nights_per_room"], ["field", "no_of_nights_per_room"], ["pSortableColumn", "distanceT"], ["field", "distanceT"], ["pSortableColumn", "no_of_trips"], ["field", "no_of_trips"], ["pSortableColumn", "month"], ["field", "month"], ["pTooltip", "Reading Value", "tooltipPosition", "top", "pSortableColumn", "readingValue"], ["field", "readingValue"], ["pTooltip", "Blend Type", "tooltipPosition", "top", "pSortableColumn", "BlendType"], ["field", "BlendType"], ["pSortableColumn", "noofairconnUnits", "pTooltip", "Amount of refrigent used", "tooltipPosition", "top"], ["field", "noofairconnUnits"], ["pSortableColumn", "numberOfExtinguisher", "pTooltip", "Number Of Fire Extinguisher", "tooltipPosition", "top"], ["field", "numberOfExtinguisher"], ["pSortableColumn", "quantityOfCO2makeup", "pTooltip", "Quantity Of CO2 makeup", "tooltipPosition", "top"], ["field", "quantityOfCO2makeup"], ["pSortableColumn", "noOfVehicles", "pTooltip", "Trips", "tooltipPosition", "top"], ["field", "noOfVehicles"], ["pSortableColumn", "noOfVehicles", "pTooltip", "Number Of Vehicles", "tooltipPosition", "top"], ["pSortableColumn", "modeOfDE", "pTooltip", "Mode Of data entry", "tooltipPosition", "top"], ["field", "modeOfDE"], ["pSortableColumn", "amount"], ["field", "amount"], ["pSortableColumn", "unit"], ["field", "unit"], ["pSortableColumn", "sourceName"], ["field", "sourceName"], ["placeholder", "All", 3, "ngModel", "options", "showClear", "onChange"], [3, "pEditableRow"], ["pTemplate", "input"], ["pTemplate", "output"], ["pInputText", "", "type", "text", "ngModel", "", 3, "name", "id", "ngModel", "ngModelChange"], ["readingValue", "ngModel"], ["numberOfExtinguisher", "ngModel"], ["quantityOfCO2makeup", "ngModel"]],
     template: function TrackingComponent_Template(rf, ctx) {
       if (rf & 1) {
         const _r673 = _angular_core__WEBPACK_IMPORTED_MODULE_17__["ɵɵgetCurrentView"]();
@@ -51744,7 +51841,6 @@ class TreeComponent {
       let jsonObj = JSON.parse(userInfo); // string to "any" object first
       this.loginInfo = jsonObj;
     }
-    this.treeList$ = familyService.getTreeList();
     this.nodeType = [{
       "id": '1',
       "nodetype": "Main Group"
@@ -51757,8 +51853,14 @@ class TreeComponent {
     }];
   }
   ngOnInit() {
+    this.treeList$ = this.familyService.getTreeList();
     (_balkangraph_familytree_js__WEBPACK_IMPORTED_MODULE_0___default().templates).hugo.link_field_0 = '<text width="230" style="font-size: 18px;" fill="#ffffff" x="145" y="150" text-anchor="middle" class="field_0">{val}</text>';
-    this.getTreeViewByID('1');
+    if (localStorage.getItem('tree_ID') != null) {
+      this.selectedTemplateId = Number(localStorage.getItem('tree_ID'));
+      this.getTreeViewByID(this.selectedTemplateId);
+    } else {
+      this.getTreeViewByID('1');
+    }
   }
   onTemplateChange(event) {
     this.getTreeViewByID(event.value);
@@ -51774,12 +51876,12 @@ class TreeComponent {
     $(".ct_custom_modal_120").hide();
     const targetElement = document.getElementById('#cancel2');
     if (targetElement) {
-      console.log('fd');
       this.renderer.addClass(targetElement, 'none');
     }
     this.hideModal.nativeElement;
   }
   getTreeViewByID(id) {
+    console.log(id);
     const formData = new URLSearchParams();
     formData.set('family_id', id);
     this.familyService.getTreeById(formData.toString()).subscribe({
@@ -51948,12 +52050,15 @@ class TreeComponent {
     formData.set('main_name', data.value.rootName);
     this.familyService.createTree(formData).subscribe({
       next: response => {
+        console.log("response---", response);
         if (response.success == true) {
           this.notification.showSuccess('Data entry added successfully', 'Success');
           this.displayBasic = false;
           this.treeList$ = this.familyService.getTreeList();
+          this.selectedTemplateId = response.insertDetails.insertId;
+          localStorage.setItem('tree_ID', this.selectedTemplateId.toString());
           this.form.reset();
-          this.getTreeViewByID('1');
+          this.getTreeViewByID(response.insertDetails.insertId);
         }
       },
       error: err => {

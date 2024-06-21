@@ -24,5 +24,6 @@ export class CompanyDetails {
     currencySymbol:string;
     categories:any[]
     expiration:any;
+    package_name :string;
 
 }

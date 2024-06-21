@@ -118,8 +118,12 @@
                                             : 'red'
                                     }};">
                                     <i class="fa fa-id-card mr-2"></i>
-                                    Type Of License :
+                                    Type Of license:
                                 </p>
+                            
+                                <!-- <p class="ml-0 mt-0">
+                                    <i class="fas fa-user mr-2"></i> Type of plan :
+                                </p> -->
                                 <p class="ml-0 mt-0">
                                     <i class="fas fa-user mr-2"></i> Number Of
                                     User Allowed :
@@ -132,22 +136,24 @@
 
                             <div class="col-3" style="font-size: 16px">
                                 <p class="pointer">
-                                    {{ companyDetails.licenseType }}
+                                    {{ loginInfo.package_name }}
                                     <i *ngIf="
-                                            companyDetails.licenseType ===
+                                          loginInfo.package_name  ==
                                             'Normal'
                                         " class="fa fa-info-circle tooltip-icon"
                                         pTooltip="You will get access to only BRSR Section with this license type"
                                         tooltipPosition="top" style="color: #88ad47"></i>
                                     <i *ngIf="
-                                            companyDetails.licenseType ===
-                                            'FullAccess'
+                                          loginInfo.package_name  ==
+                                            'Basic'
                                         " class="fa fa-info-circle tooltip-icon"
-                                        pTooltip="You will get access to BRSR and Tracking sections with this license type"
+                                        pTooltip="You will get access to Scope 1-2 and Users with this license type"
                                         tooltipPosition="top" style="color: #88ad47"></i>
                                 </p>
 
-                                <p>{{ companyDetails.numberOfUserAllowed }}</p>
+                              
+                                <!-- <p>{{ loginInfo.package_name }}</p> -->
+                                <p>5</p>
 
                                 <p>
                                     {{
