@@ -206,6 +206,9 @@ export class UserComponent {
         formData.set('tenantId', tenantId.toString())
         this.UserService.newgetUsers(formData.toString()).subscribe((result) => {
             console.log(result)
+            if(result.success == true ){
+
+            
             this.admininfoList = result;
             this.userdetails = this.admininfoList[0];
             if (this.loginInfo.role == 'Super Admin') {
@@ -233,16 +236,19 @@ export class UserComponent {
                 }
             }
             this.unlock = this.userdetails.userID;
+        }else{
+
+        }
         });
     }
 
     // ----Get all Roles of user in dropdown method ---
 
-    GetAllRoles() {
+     GetAllRoles() {
         this.UserService.newGetAllRoles().subscribe({
             next: (response: any) => {
                 
-
+console.log(response);
                 if (response.success == true) {
                     this.RolesList = response.categories;
                 }

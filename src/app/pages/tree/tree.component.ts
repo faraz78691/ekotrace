@@ -2,7 +2,9 @@
 import { LoginInfo } from '@/models/loginInfo';
 import { Component, ElementRef, Input, Renderer2, ViewChild, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import FamilyTree from '@balkangraph/familytree.js';
+// import FamilyTree from '@balkangraph/familytree.js';
+
+import FamilyTree from "assets/balkanapp/familytree";
 import { FamilyService } from '@services/family.service';
 import { NotificationService } from '@services/notification.service';
 import { TrackingService } from '@services/tracking.service';

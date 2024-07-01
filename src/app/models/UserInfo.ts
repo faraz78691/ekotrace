@@ -13,6 +13,7 @@ export class UserInfo {
     userID = '';
     isDisabledDelete = false;
     isDisabledEdit = false;
+    success:boolean
 
 }
 export class newUserInfo {

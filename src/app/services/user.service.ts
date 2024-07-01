@@ -43,7 +43,7 @@ export class UserService {
         return this.http.get<UserInfo[]>(this.apiURL + 'user/' + tenantId);
     }
     public newgetUsers(tenantId) {
-        return this.http.post<UserInfo[]>(this.apiURL+ '/getAllusers', tenantId);
+        return this.http.post<any>(this.apiURL+ '/getAllusers', tenantId);
     };
     public UpdateUsers(admininfo) {
         return this.http.put<UserInfo[]>(this.apiURL + admininfo.id, admininfo);

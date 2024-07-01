@@ -224,7 +224,6 @@ export const menu = [
                 iconSRC :'assets/img/tracking_icon.svg',
                 path: ['setGhgTemplate']
             },
-            
             {
                 head: 'Disclose',
                 name: 'Dashboard',
@@ -314,100 +313,118 @@ export const menu = [
     },
     {
         role: 'Super Admin',
-        isBRSRDoc: true,
+        isBRSRDoc: false,
         package_name : 'Intermediate',
         items: [
             {
-                head: 'Monitoring',
+                head: 'Organisation Structure',
+                name: 'Tree',
+                iconClasses: 'fas fa-star',
+                iconSRC: 'assets/img/trees.png',
+                path: ['main_tree']
+            },
+            { head: undefined,
+                name: 'Add User',
+                iconClasses: 'fas fa-user-plus',
+                iconSRC: 'assets/img/user_121.png',
+                path: ['user']
+            },
+            {head: undefined,
+                name: 'Set GHG Template',
+                iconClasses: 'fas fa-star',
+                iconSRC :'assets/img/tracking_icon.svg',
+                path: ['setGhgTemplate']
+            },
+            {
+                head: 'Disclose',
                 name: 'Dashboard',
                 iconClasses: 'fas fa-table',
+                iconSRC: 'assets/img/dashboard.svg',
                 path: ['dashboard']
             },
             {
-                name: 'Tracking',
+                head: 'GHG Emissions',
+                name: 'Corporate Emissions',
                 iconClasses: 'fas fa-star',
-                path: ['Ntracking']
-            },
+                iconSRC: 'assets/img/trees.png',
+                path: ['tracking']
+            }, 
+            // {
+            //     name: 'Financed Emissions',
+            //     iconClasses: 'fas fa-table',
+            //     iconSRC: 'assets/img/BRSR.svg',
+            //     path: ['finance_emissions']
+            // },
+            // {
+            //     name: 'Vendors / Cost Centre',
+            //     iconClasses: 'fas fa-table',
+            //     iconSRC: 'assets/img/BRSR.svg',
+            //     path: ['vendors']
+            // },
+
             {
-                name: 'Carbon Offset',
-                iconClasses: 'fas fa-folder',
-                iconSRC: 'assets/img/report_icon.svg',
-                path: ['carbonOffset']
-            },
-            {
+                head: 'Reporting ',
                 name: 'Report',
                 iconClasses: 'fas fa-folder',
+                iconSRC: 'assets/img/report_icon.svg',
                 path: ['report']
             },
             {
-                head: 'Reporting',
                 name: 'BRSR',
                 iconClasses: 'fas fa-table',
-                path: ['report-doc'],
-                children: [
-                    {
-                        name: 'Report Document',
-                        iconClasses: 'fas fa-file-import',
-                        path: ['report-doc']
-                    },
-                    {
-                        name: 'Principle 1',
-                        iconClasses: 'fas fa-file',
-                        path: ['brsrReport'],
-                        queryParams: { defaultTab: 0 }
-                    },
-                    {
-                        name: 'Principle 2',
-                        iconClasses: 'fas fa-file',
-                        path: ['brsrReport'],
-                        queryParams: { defaultTab: 1 }
-                    },
-                    {
-                        name: 'Principle 3',
-                        iconClasses: 'fas fa-file',
-                        path: ['brsrReport'],
-                        queryParams: { defaultTab: 2 }
-                    },
-                    {
-                        name: 'Principle 4',
-                        iconClasses: 'fas fa-file',
-                        path: ['brsrReport'],
-                        queryParams: { defaultTab: 3 }
-                    }
-                ]
+                iconSRC: 'assets/img/BRSR.svg',
+                path: ['brsrReport']
             },
             {
-                head: 'Admin Setting',
+                head: 'Target Setting',
+                name: 'Set Emission Inventory',
+                iconClasses: 'fas fa-folder',
+                iconSRC: 'assets/img/report_icon.svg',
+                path: ['setEmissionInventory']
+            },
+            {
+                name: 'Target Setting',
+                iconClasses: 'fas fa-table',
+                iconSRC: 'assets/img/BRSR.svg',
+                path: ['targetSetting']
+            },
+            {
+                name: 'Actions',
+                iconClasses: 'fas fa-table',
+                iconSRC: 'assets/img/BRSR.svg',
+                path: ['actions']
+            },
+            // {
+            //     head: 'Carbon offsetting',
+            //     name: 'Offset Entry',
+            //     iconClasses: 'fas fa-eye',
+            //     iconSRC: 'assets/img/building.svg',
+            //     path: ['carbonOffset']
+            // },
+            {
+                head: 'Account Details',
                 name: 'Company Profile',
                 iconClasses: 'fas fa-eye',
+                iconSRC: 'assets/img/building.svg',
                 path: ['company-profile']
-            },
-            {
-                name: 'Facility',
-                iconClasses: 'fas fa-search-location',
-                path: ['facility']
-            },
-            {
-                name: 'Group',
-                iconClasses: 'fas fa-users',
-                path: ['group']
-            },
-            {
-                name: 'User',
-                iconClasses: 'fas fa-user-plus',
-                path: ['user']
             },
             {
                 name: 'Billing',
                 iconClasses: 'fas fa-folder',
-
+                iconSRC: 'assets/img/biling_icon_211.png',
                 path: ['billing']
-            }
+            },
+            // {
+            //     name: 'Billing',
+            //     iconClasses: 'fas fa-folder',
+            //     iconSRC: 'assets/img/biling_icon_211.png',
+            //     path: ['adminBilling']
+            // },
         ]
     },
     {
         role: 'Super Admin',
-        isBRSRDoc: true,
+        isBRSRDoc: false,
         package_name : 'Basic',
         items: [
             {
@@ -423,7 +440,12 @@ export const menu = [
                 iconSRC: 'assets/img/user_121.png',
                 path: ['user']
             },
-             
+            {head: undefined,
+                name: 'Set GHG Template',
+                iconClasses: 'fas fa-star',
+                iconSRC :'assets/img/tracking_icon.svg',
+                path: ['setGhgTemplate']
+            },
             {
                 head: 'Disclose',
                 name: 'Dashboard',
@@ -438,82 +460,66 @@ export const menu = [
                 iconSRC: 'assets/img/trees.png',
                 path: ['tracking']
             }, 
-          
-           
-           
-
-          
-          
-           
-           
             // {
-            //     name: 'Carbon Offset',
-            //     iconClasses: 'fas fa-folder',
-            //     iconSRC :'assets/img/co2.svg',
-            //     path: ['carbonOffset']
+            //     name: 'Financed Emissions',
+            //     iconClasses: 'fas fa-table',
+            //     iconSRC: 'assets/img/BRSR.svg',
+            //     path: ['finance_emissions']
             // },
             // {
-            //     head: 'Reporting',
+            //     name: 'Vendors / Cost Centre',
+            //     iconClasses: 'fas fa-table',
+            //     iconSRC: 'assets/img/BRSR.svg',
+            //     path: ['vendors']
+            // },
+
+            // {
+            //     head: 'Reporting ',
+            //     name: 'Report',
+            //     iconClasses: 'fas fa-folder',
+            //     iconSRC: 'assets/img/report_icon.svg',
+            //     path: ['report']
+            // },
+            // {
             //     name: 'BRSR',
             //     iconClasses: 'fas fa-table',
-            //     iconSRC :'assets/img/BRSR.svg',
-            //     path: ['brsrReport'],
-            // children: [
-            //     {
-            //         name: 'Fd set',
-            //         iconClasses: 'fas fa-file',
-            //         path: ['brsrReport'],
-            //         queryParams: { defaultTab: 0 }
-            //     },
-            //     {
-            //         name: 'HR set',
-            //         iconClasses: 'fas fa-file',
-            //         path: ['brsrReport'],
-            //         queryParams: { defaultTab: 1 }
-            //     },
-            //     {
-            //         name: 'CS set',
-            //         iconClasses: 'fas fa-file',
-            //         path: ['brsrReport'],
-            //         queryParams: { defaultTab: 2 }
-            //     }
-            //     // {
-            //     //     name: 'Principle 4',
-            //     //     iconClasses: 'fas fa-file',
-            //     //     path: ['brsrReport'],
-            //     //     queryParams: { defaultTab: 3 }
-            //     // }
-            // ]
+            //     iconSRC: 'assets/img/BRSR.svg',
+            //     path: ['brsrReport']
             // },
-           
             // {
-            //     head: 'Admin Setting',
-            //     name: 'Company Profile',
+            //     head: 'Target Setting',
+            //     name: 'Set Emission Inventory',
+            //     iconClasses: 'fas fa-folder',
+            //     iconSRC: 'assets/img/report_icon.svg',
+            //     path: ['setEmissionInventory']
+            // },
+            // {
+            //     name: 'Target Setting',
+            //     iconClasses: 'fas fa-table',
+            //     iconSRC: 'assets/img/BRSR.svg',
+            //     path: ['targetSetting']
+            // },
+            // {
+            //     name: 'Actions',
+            //     iconClasses: 'fas fa-table',
+            //     iconSRC: 'assets/img/BRSR.svg',
+            //     path: ['actions']
+            // },
+            // {
+            //     head: 'Carbon offsetting',
+            //     name: 'Offset Entry',
             //     iconClasses: 'fas fa-eye',
             //     iconSRC: 'assets/img/building.svg',
-            //     path: ['company-profile']
+            //     path: ['carbonOffset']
             // },
-            // {
-            //     name: 'Facility',
-            //     iconClasses: 'fas fa-search-location',
-            //     iconSRC: 'assets/img/facility_icon.svg',
-            //     path: ['facility']
-            // },
-            // {
-            //     name: 'Group',
-            //     iconClasses: 'fas fa-users',
-            //     iconSRC: 'assets/img/group_121.png',
-            //     path: ['group']
-            // },
-            // {
-            //     name: 'User',
-            //     iconClasses: 'fas fa-user-plus',
-            //     iconSRC: 'assets/img/user_121.png',
-            //     path: ['user']
-            // },
-          
             {
                 head: 'Account Details',
+                name: 'Company Profile',
+                iconClasses: 'fas fa-eye',
+                iconSRC: 'assets/img/building.svg',
+                path: ['company-profile']
+            },
+            {
                 name: 'Billing',
                 iconClasses: 'fas fa-folder',
                 iconSRC: 'assets/img/biling_icon_211.png',

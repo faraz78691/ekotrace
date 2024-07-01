@@ -32,7 +32,9 @@
                         ],
                         "scripts": [
                              "node_modules/apexcharts/dist/apexcharts.min.js",
-                             "node_modules/jquery/dist/jquery.min.js"
+                             "node_modules/jquery/dist/jquery.min.js",
+                             "src/assets/balkanapp/familytree.js"
+                             
                         ],
                         "vendorChunk": true,
                         "extractLicenses": false,
