@@ -14,4 +14,5 @@ export class LoginInfo {
     email = '';
     numberOfUserAllowed = 0;
     package_name :string;
+    package_id:number;
 }

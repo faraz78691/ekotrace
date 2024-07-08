@@ -64,6 +64,9 @@ export class TrackingComponent {
     items: MenuItem[];
     active: MenuItem;
     notevalue: string;
+    selectedAirport: string;
+    selectedAirport2: string;
+    selectedAirport3: string;
     status: TrackingTable[];
     formGroup: FormGroup;
     //units: units[];
@@ -229,7 +232,8 @@ export class TrackingComponent {
     mode_type: any[] = [];
     marketTypes: any[] = [];
     marketEElecID: any;
-    templateLinks:string;
+    templateLinks: string;
+    haveBasicPackage: number = 0;
 
 
     carFuel_type: any[] = [];
@@ -308,13 +312,13 @@ export class TrackingComponent {
         this.VehicleType = [];
         this.dataEntry.unit = "";
         this.SubCategoryType = [];
-    
+
 
 
         this.isInputEdited;
         this.dataEntry.typeID;
 
-       
+
 
         this.items = [
             {
@@ -775,6 +779,9 @@ export class TrackingComponent {
             let userInfo = localStorage.getItem('LoginInfo');
             let jsonObj = JSON.parse(userInfo); // string to "any" object first
             this.loginInfo = jsonObj as LoginInfo;
+            this.haveBasicPackage = this.loginInfo.package_id
+
+            console.log(this.haveBasicPackage);
         }
         let tenantID = this.loginInfo.tenantID;
         this.facilityID = localStorage.getItem('SelectedfacilityID');
@@ -875,17 +882,17 @@ export class TrackingComponent {
 
     // getting status, units, subCategory types where ever required
     SubCatData(data: any, catID: any, categoryName) {
-        console.log("called",catID);
+        console.log("called", catID);
         this.categoryName = categoryName;
         this.recycle = false;
         this.isVisited = false;
-        this.renewableSelected =false;
+        this.renewableSelected = false;
         this.supplierSelected = false;
 
         this.id_var = data.manageDataPointSubCategorySeedID;
 
         this.categoryId = catID;
- 
+
 
         this.SubCatAllData = data;
         this.ALLEntries()
@@ -1023,7 +1030,45 @@ export class TrackingComponent {
 
     // to get the status of subcategories in status tab
     ALLEntries() {
-console.log(this.categoryId);
+        if (this.categoryId == 25 || this.categoryId == 26 || this.categoryId == 24) {
+            const categoryID = 13
+            const formData = new URLSearchParams();
+            this.convertedYear = this.trackingService.getYear(this.year);
+            formData.set('year', this.convertedYear.toString())
+            formData.set('facilities', this.facilityID.toString())
+            formData.set('categoryID', categoryID.toString())
+
+
+            this.trackingService
+                .newgetSCpendingDataEntries(formData)
+                .subscribe({
+                    next: (response) => {
+                        if (response.success === false) {
+                            this.dataEntriesPending = null;
+                        } else {
+                            if (this.categoryId == 24) {
+                                this.dataEntriesPending = (response.categories).filter(items => items.tablename == 'flight_travel');
+                            } else if (this.categoryId == 25) {
+                                this.dataEntriesPending = (response.categories).filter(items => items.tablename == 'hotel_stay');
+                            } else if (this.categoryId == 26) {
+
+                                this.dataEntriesPending = (response.categories).filter(items => items.tablename == 'other_modes_of_transport');
+                            } else {
+                                this.dataEntriesPending = response.categories;
+                            }
+                        }
+                    },
+                    error: (err) => {
+                        this.notification.showError(
+                            'Get data Point failed.',
+                            'Error'
+                        );
+                        console.error('errrrrrr>>>>>>', err);
+                    }
+                });
+            return
+        }
+        console.log(this.categoryId);
         if (this.facilityID == 0) {
             this.notification.showInfo(
                 'Select Facility',
@@ -1038,23 +1083,23 @@ console.log(this.categoryId);
             formData.set('facilities', this.facilityID.toString())
             formData.set('categoryID', this.categoryId.toString())
             this.trackingService
-            .newgetSCpendingDataEntriesForFuels(formData)
-            .subscribe({
-                next: (response) => {
-                    if (response.success === false) {
-                        this.dataEntriesPending = null;
-                    } else {
+                .newgetSCpendingDataEntriesForFuels(formData)
+                .subscribe({
+                    next: (response) => {
+                        if (response.success === false) {
+                            this.dataEntriesPending = null;
+                        } else {
                             this.dataEntriesPending = response.categories;
+                        }
+                    },
+                    error: (err) => {
+                        this.notification.showError(
+                            'Get data Point failed.',
+                            'Error'
+                        );
+                        console.error('errrrrrr>>>>>>', err);
                     }
-                },
-                error: (err) => {
-                    this.notification.showError(
-                        'Get data Point failed.',
-                        'Error'
-                    );
-                    console.error('errrrrrr>>>>>>', err);
-                }
-            });
+                });
             return
         }
 
@@ -1078,7 +1123,7 @@ console.log(this.categoryId);
                         } else if (this.categoryId == 25) {
                             this.dataEntriesPending = (response.categories).filter(items => items.tablename == 'hotel_stay');
                         } else if (this.categoryId == 26) {
-                          
+
                             this.dataEntriesPending = (response.categories).filter(items => items.tablename == 'other_modes_of_transport');
                         } else {
                             this.dataEntriesPending = response.categories;
@@ -1100,7 +1145,7 @@ console.log(this.categoryId);
 
     //entrysave function to save dataentry
     EntrySave(form: NgForm) {
-
+        console.log(form.value);
         this.dataEntry.month = this.selectMonths
             .map((month) => month.value)
             .join(', '); //this.getMonthName();
@@ -1506,8 +1551,8 @@ console.log(this.categoryId);
                             this.activeindex = 0;
                             this.getRegionName(9);
                             this.ALLEntries();
-                            this.renewableSelected = false; 
-                             this.supplierSelected = false;
+                            this.renewableSelected = false;
+                            this.supplierSelected = false;
                             this.notification.showSuccess(
                                 'Data entry added successfully',
                                 'Success'
@@ -1551,7 +1596,7 @@ console.log(this.categoryId);
                             this.activeindex = 0;
                             this.getRegionName(9);
                             this.ALLEntries();
-                            this.renewableSelected = false; 
+                            this.renewableSelected = false;
                             this.supplierSelected = false;
                             this.notification.showSuccess(
                                 'Data entry added successfully',
@@ -1623,7 +1668,7 @@ console.log(this.categoryId);
             });
         }
         if (this.categoryId == 8) {
-          
+
             let formData = new URLSearchParams();
             formData.set('batch', this.batchId);
 
@@ -3273,8 +3318,9 @@ console.log(this.categoryId);
         this.equityInvestmentRow = false;
 
         if (this.categoryId == 24) {
+            this.ModeSelected = false;
             this.categoryName = 'Flight'
-
+            this.SubCatAllData.subCatName = 'Flight'
             this.getFlightType();
             this.getBusineesUnit();
 
@@ -3282,10 +3328,13 @@ console.log(this.categoryId);
             // this.getVehicleTypes();
             // this.getSubVehicleCategory(1)
         } else if (this.categoryId == 25) {
-            this.categoryName = 'Hotel Stay'
+            this.ModeSelected = false;
+            this.categoryName = 'Hotel Stay';
+            this.SubCatAllData.subCatName = 'Hotel Stay'
         } else if (this.categoryId == 26) {
 
-            this.categoryName = 'Other Modes of Transport'
+            this.categoryName = 'Other Modes of Transport';
+            this.SubCatAllData.subCatName = 'Other Modes of Transport'
         }
 
         // this.getStatusData(this.activeCategoryIndex);
@@ -3379,8 +3428,9 @@ console.log(this.categoryId);
         this.trackingService.getAirportCodes().subscribe({
             next: (response) => {
                 if (response.success == true) {
-                    this.airportGrid = response.categories
 
+                    this.airportGrid = response.categories
+                    console.log(this.airportGrid);
                 } else {
 
                 }
@@ -3555,8 +3605,8 @@ console.log(this.categoryId);
         if (event.value == 1) {
             this.renewableSelected = true
             this.supplierSelected = false;
-        } else if(event.value == 2) {
-        
+        } else if (event.value == 2) {
+
             this.renewableSelected = false
             this.supplierSelected = true;
         }
@@ -3977,10 +4027,10 @@ console.log(this.categoryId);
     onModesChange(event: any) {
         const selectedMode = event.value;
         this.carMode = true;
-        
+        this.autoMode = false;
         this.ModeSelected = true;
         if (selectedMode == 'Car') {
-            this.carMode = false;
+            this.carMode = true;
             this.autoMode = false;
             const optionvalue =
                 [{
@@ -4028,7 +4078,7 @@ console.log(this.categoryId);
             this.carFuel_type = optionvalue2;
         } else if (selectedMode == 'Auto') {
             this.autoMode = true;
-            this.carMode = false;
+            this.carMode = true;
             const optionvalue =
                 [{
                     "id": 1,
@@ -4046,6 +4096,8 @@ console.log(this.categoryId);
             this.mode_name = selectedMode;
             this.mode_type = optionvalue;
         } else if (selectedMode == 'Bus') {
+            this.carMode = false;
+            this.autoMode = true;
             const optionvalue =
                 [{
                     "id": 1,
@@ -4060,6 +4112,7 @@ console.log(this.categoryId);
             this.mode_type = optionvalue;
         }
         else if (selectedMode == 'Rail') {
+            this.carMode = false;
             const optionvalue =
                 [{
                     "id": 1,
@@ -4069,12 +4122,14 @@ console.log(this.categoryId);
                     "id": 2,
                     "type": "International"
                 }
-             
+
                 ]
             this.mode_name = selectedMode;
             this.mode_type = optionvalue;
         }
         else if (selectedMode == 'Ferry') {
+            this.carMode = false;
+            this.autoMode = true;
             const optionvalue =
                 [{
                     "id": 1,

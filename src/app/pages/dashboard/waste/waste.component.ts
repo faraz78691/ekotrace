@@ -113,7 +113,12 @@ export class WasteComponent {
     formData.set('tenantID', tenantId.toString())
     this.dashboardFacilities$ = this.dashboardService.getdashboardfacilities(formData.toString()).pipe(
       tap(response => {
-        this.selectedFacility = response.categories[0].ID;
+        if(this.facilityService.selectedfacilitiesSignal() == 0){
+          this.selectedFacility = response.categories[0].ID;
+
+        }else{
+          this.selectedFacility = this.facilityService.selectedfacilitiesSignal();
+        }
         this.makeCombinedApiCall(this.selectedFacility)
       })
     );
@@ -128,7 +133,7 @@ export class WasteComponent {
 
   // Combined method to make both API calls
   makeCombinedApiCall(facility) {
-    console.log(facility)
+   
     const formData = this.createFormData(facility);
 
     // Create observables for both API calls
@@ -184,7 +189,7 @@ export class WasteComponent {
       const [scopeWiseResult, topWiseResult, getALLEmisions, getUpDownDonuts, getBRreakdownEmission,getHazardType] = results;
       // Process the results of both API calls here
       if (scopeWiseResult) {
-        console.log(scopeWiseResult);
+ 
         this.UpWaste = scopeWiseResult.waste_disposed
         this.downWaste = scopeWiseResult.waste_emissions
         this.wasteDiversion = scopeWiseResult.diverted_emssion
@@ -420,7 +425,7 @@ export class WasteComponent {
         };
       }
       if(getHazardType){
-        console.log(getHazardType);
+    
         this.donotOptions4 = {
           series: getHazardType.series,
           chart: {
@@ -468,7 +473,7 @@ export class WasteComponent {
 
   // Handle the scopeWiseResult
   handleScopeWiseResult(scopeWiseResult: any) {
-    console.log(scopeWiseResult)
+  
     this.scopeWiseSeries = scopeWiseResult.series;
     this.series_graph = scopeWiseResult.series_graph;
     this.sumofScope2 = scopeWiseResult.scope1 + scopeWiseResult.scope2 + scopeWiseResult.scope3;
@@ -569,6 +574,7 @@ export class WasteComponent {
 
 
   onFacilityChange(event: any) {
+       this.facilityService.facilitySelected(this.selectedFacility)
     this.makeCombinedApiCall(this.selectedFacility)
     // console.log(event.target.value)
     // console.log(this.selectedFacility);

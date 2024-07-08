@@ -114,15 +114,15 @@ export class GhgEmmissionsComponent implements OnDestroy {
   combinedSubscription: Subscription;
   maxYear: any;
   disabledDates: Date[];
-  status =1;
-  scopeMonths :any[]= [];
+  status = 1;
+  scopeMonths: any[] = [];
   constructor(private router: Router,
     private route: ActivatedRoute,
     private facilityService: FacilityService,
     private trackingService: TrackingService,
     private dashboardService: DashboardService) {
     this.year = new Date();
-    console.log(this.year)
+
     this.loginInfo = new LoginInfo();
 
   };
@@ -144,20 +144,27 @@ export class GhgEmmissionsComponent implements OnDestroy {
     formData.set('tenantID', tenantId.toString())
     this.dashboardFacilities$ = this.dashboardService.getdashboardfacilities(formData.toString()).pipe(
       tap(response => {
-        this.selectedFacility = response.categories[0].ID;
+        // this.selectedFacility = response.categories[0].ID;
+        if (this.facilityService.selectedfacilitiesSignal() == 0) {
+          this.selectedFacility = response.categories[0].ID;
+
+        } else {
+          this.selectedFacility = this.facilityService.selectedfacilitiesSignal();
+        }
+
         this.makeCombinedApiCall(this.selectedFacility);
 
       })
     );
 
-   
+
 
   };
 
 
   private createFormData(facility) {
     const formData = new URLSearchParams();
-    console.log(this.year.getFullYear());
+
     formData.set('year', this.year.getFullYear().toString());
     formData.set('facilities', facility);
     return formData;
@@ -194,7 +201,7 @@ export class GhgEmmissionsComponent implements OnDestroy {
         return of(null);
       })
     );
-   
+
 
     const formVendorData = new URLSearchParams();
     formVendorData.set('facilities', facility);
@@ -219,15 +226,15 @@ export class GhgEmmissionsComponent implements OnDestroy {
       getScopeActivity$,
       GVEndorActivity$,
       getPathNetActivity$
-    ]).subscribe((results: [any, any, any, any, any,any]) => {
-      const [scopeWiseResult, topWiseResult, getScopeSDonuts, getScopeActivity, getVendorE,getPathNetZero] = results;
+    ]).subscribe((results: [any, any, any, any, any, any]) => {
+      const [scopeWiseResult, topWiseResult, getScopeSDonuts, getScopeActivity, getVendorE, getPathNetZero] = results;
 
 
 
       // Process the results of both API calls here
       if (scopeWiseResult) {
         // Handle scopeWise result
-        console.log(scopeWiseResult);
+
         this.handleScopeWiseResult(scopeWiseResult);
       } else {
         // Handle absence of scopeWise result or error
@@ -367,8 +374,8 @@ export class GhgEmmissionsComponent implements OnDestroy {
         this.vendorData = getVendorE.purchaseGoods
       }
 
-      if(getPathNetZero){
-        
+      if (getPathNetZero) {
+
 
         this.donotoptions = {
           series: getPathNetZero.series,
@@ -412,10 +419,10 @@ export class GhgEmmissionsComponent implements OnDestroy {
 
   // Handle the scopeWiseResult
   handleScopeWiseResult(scopeWiseResult: any) {
-this.scopeMonths = scopeWiseResult.month;
+    this.scopeMonths = scopeWiseResult.month;
     this.scopeWiseSeries = scopeWiseResult.series;
     this.series_graph = scopeWiseResult.series_graph;
-    console.log(this.scopeWiseSeries);
+
     this.sumofScope2 = scopeWiseResult.scope1 + scopeWiseResult.scope2 + scopeWiseResult.scope3;
     this.scope1E = scopeWiseResult.scope1;
     this.scope2E = scopeWiseResult.scope2;
@@ -490,7 +497,7 @@ this.scopeMonths = scopeWiseResult.month;
         title: {
           style: {
             fontSize: '15px',
-            fontWeight:'600'
+            fontWeight: '600'
           },
 
           text: "t CO2e"
@@ -539,11 +546,9 @@ this.scopeMonths = scopeWiseResult.month;
 
   onFacilityChange(event: any) {
 
+    this.facilityService.facilitySelected(this.selectedFacility)
     this.makeCombinedApiCall(this.selectedFacility)
-    // console.log(event.target.value)
-    // console.log(this.selectedFacility);
-    // this.GScopeWiseE(this.selectedFacility)
-    // this.getTopFiveE(this.selectedFacility);
+
   };
 
   ngOnDestroy(): void {

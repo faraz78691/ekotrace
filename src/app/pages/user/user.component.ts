@@ -52,7 +52,7 @@ export class UserComponent {
         private companyService: CompanyService,
         private UserService: UserService,
         private notification: NotificationService,
-        private facilityService: FacilityService,
+        public facilityService: FacilityService,
         private confirmationService: ConfirmationService,
         private messageService: MessageService,
         private themeservice: ThemeService
@@ -97,6 +97,14 @@ export class UserComponent {
                     : response.logoName);
         });
     };
+
+      //Checks the facility ID and calls the GetAssignedDataPoint function with the provided ID.
+      checkFacilityID(id) {
+      
+      
+
+        // this.GetAssignedDataPoint(id);
+    };
     //The onSubmit function handles form submission, including validation, user addition, and user update, with success/error notifications.
     onSubmit(x: any) {
         if (
@@ -130,18 +138,29 @@ export class UserComponent {
                 formData.set('roleID',this.admininfo.roleID)
                 formData.set('tenantId',this.loginInfo.tenantID.toString())
                 formData.set('facilityID',this.admininfo.facilityID.toString())
+                formData.set('package_id',this.loginInfo.package_id.toString())
                 
 
                 this.UserService.newSaveUsers(formData).subscribe({
-                    next: (response) => {
+                    next: (response:any) => {
                         if (response) {
-                            this.notification.showSuccess(
-                                'User Added successfully',
-                                'Success'
-                            );
-                            this.GetAllUsers();
-                            this.visible = false;
-                            this.isloading = false;
+                            if(response.success == true){
+                                this.notification.showSuccess(
+                                    'User Added successfully',
+                                    'Success'
+                                );
+                                this.GetAllUsers();
+                                this.visible = false;
+                                this.isloading = false;
+
+                            }else{
+                                this.notification.showError(
+                                    response.message,
+                                    ''
+                                );
+                          
+                                this.isloading = false;
+                            }
                         }
                     },
                     error: (err) => {
@@ -205,8 +224,8 @@ export class UserComponent {
         const formData = new URLSearchParams();
         formData.set('tenantId', tenantId.toString())
         this.UserService.newgetUsers(formData.toString()).subscribe((result) => {
-            console.log(result)
-            if(result.success == true ){
+           
+            if(result.length >0 ){
 
             
             this.admininfoList = result;
@@ -237,7 +256,10 @@ export class UserComponent {
             }
             this.unlock = this.userdetails.userID;
         }else{
-
+            this.notification.showWarning(
+                'Users not found',
+                ''
+            );
         }
         });
     }
@@ -248,7 +270,7 @@ export class UserComponent {
         this.UserService.newGetAllRoles().subscribe({
             next: (response: any) => {
                 
-console.log(response);
+
                 if (response.success == true) {
                     this.RolesList = response.categories;
                 }
@@ -304,20 +326,31 @@ console.log(response);
     // ----Delete user Method ---
 
     deleteUser(event: Event, userid) {
+       
         this.confirmationService.confirm({
             target: event.target,
             message: 'Are you sure that you want to proceed?',
             icon: 'pi pi-exclamation-triangle',
             accept: () => {
-                this.UserService.deleteUsers(userid).subscribe((result) => {
-                    this.GetAllUsers();
+                 const urlId = new URLSearchParams();
+                 urlId.set('user_id', userid)
+                this.UserService.newdeleteUsers(urlId.toString()).subscribe((result:any) => {
+                
+                    if(result.success  == true){
+                        this.GetAllUsers();
+                        this.notification.showSuccess(
+                            'User deleted successfully',
+                            'Success'
+                        );
+                    }else{
+                        this.notification.showError(
+                            'Failed to delete',
+                            ''
+                        );
+                    }
                 });
 
-                this.messageService.add({
-                    severity: 'success',
-                    summary: 'Confirmed',
-                    detail: 'User Deleted Succesfully'
-                });
+              
             },
             reject: () => {
                 this.GetAllUsers();
@@ -369,7 +402,7 @@ console.log(response);
 
     // ---Method for get selected user details ---
     selectUser(user: UserInfo) {
-        console.log(user);
+      
         if (this.loginInfo.role == 'Manager') {
             if (user.role == 'Admin' || user.role == 'Super Admin' || user.role == 'Manager') {
                 user.isDisabledDelete = true;

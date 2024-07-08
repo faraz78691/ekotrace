@@ -2,7 +2,7 @@
     <div class="d-flex justify-content-center"></div>
     <div class="row d-flex justify-content-center mx-3 my-2">
         <!-- <input type="date" name="" id="" /> -->
-      
+
         <!-- <div class="col-10">
             <div class="row">
                 <div class="col-1">
@@ -122,13 +122,21 @@
                 <div class="row mx-2 border-bottom mt-3 pb-3">
 
                     <div class="row d-flex align-items-center ml-0 gap-3 ct_drop_input_250123">
-                      
-                        <p-dropdown class="ct_custom_drop_white ct_input_dark_text_14 ct_chev_icon_dark230 " ngModel [options]="AllCategory" optionLabel="catName" optionValue="id" name="DEMode"
+
+                        <p-dropdown class="ct_custom_drop_white ct_input_dark_text_14 ct_chev_icon_dark230 " ngModel
+                            [options]="AllCategory" optionLabel="catName" optionValue="id" name="DEMode"
                             #DEMode="ngModel" [(ngModel)]="selectedCategory" (onChange)="getEntry()"></p-dropdown>
-                            <div class=" ml-2 ct_calander_600_height_38">
-                                <p-calendar class="ct_calender_input_1234   ct_calander_input_box_white_bg20" ngModel name="year" year [(ngModel)]="year" styleClass="pcalender" view="year" dateFormat="yy"
-                                    inputId="yearpicker" [showIcon]="true" (ngModelChange)="FilterByYear()"></p-calendar>
+                            <div class="col-md-6" *ngIf="modeShow">
+                                
+                                <p-dropdown class="ct_input_white_bg13 ct_select_2_drop_white ct_input_dark_text_145"
+                                    [options]="Modes" defaultLabel="Select Data Points" [(ngModel)]="selectMode"
+                                    optionLabel="modeType" optionValue="id" name="datapoint"></p-dropdown>
                             </div>
+                        <div class=" ml-2 ct_calander_600_height_38">
+                            <p-calendar class="ct_calender_input_1234   ct_calander_input_box_white_bg20" ngModel
+                                name="year" year [(ngModel)]="year" styleClass="pcalender" view="year" dateFormat="yy"
+                                inputId="yearpicker" [showIcon]="true" (ngModelChange)="FilterByYear()"></p-calendar>
+                        </div>
                     </div>
 
                     <div class="col text-right pt-0 d-flex justify-content-end pr-0">
@@ -150,7 +158,8 @@
                         <button *ngIf="
                                 loginInfo.role !== Approver &&
                                 issended === false
-                            " (click)="sendEntryForApproval()" class="SendforApproval-button text-white mb-0" style="border:1px solid  #88AD47;">
+                            " (click)="sendEntryForApproval()" class="SendforApproval-button text-white mb-0"
+                            style="border:1px solid  #88AD47;">
                             Send for Approval
                         </button>
                         <button *ngIf="
@@ -164,21 +173,23 @@
 
                 <div class="p-0 m-0 view-request-div table-responive cd_requst__static12">
 
-                    <p-table class="ct_bottom_table_tr ct_chev_icon_dark230" #dt [(selection)]="selectedEntry" [globalFilterFields]="['catName']" dataKey="id"
-                        [rowsPerPageOptions]="[10, 25, 50]" [rowHover]="true"
+                    <p-table class="ct_bottom_table_tr ct_chev_icon_dark230" #dt [(selection)]="selectedEntry"
+                        [globalFilterFields]="['catName']" dataKey="id" [rowsPerPageOptions]="[10, 25, 50]"
+                        [rowHover]="true"
                         [globalFilterFields]="['catName', 'subcatName', 'year', 'month', 'readingValue', 'unit', 'status']"
                         [value]="dataEntriesPending" [paginator]="true" [rows]="10" editMode="row">
 
                         <ng-template pTemplate="header">
                             <tr>
-                                <th  >
+                                <th>
                                     <p-tableHeaderCheckbox *ngIf="issended === false"></p-tableHeaderCheckbox>
                                 </th>
                                 <th pSortableColumn="catName" *ngIf="selectedCategory == 8">
                                     Type of purchase
                                     <p-sortIcon field="catName"></p-sortIcon>
                                 </th>
-                                <th pSortableColumn="catName" *ngIf="selectedCategory != 24 && selectedCategory != 25 && selectedCategory != 26">
+                                <th pSortableColumn="catName"
+                                    *ngIf="selectedCategory != 24 && selectedCategory != 25 && selectedCategory != 26">
                                     Category
                                     <p-sortIcon field="catName"></p-sortIcon>
                                 </th>
@@ -325,18 +336,18 @@
                                     <p-sortIcon field="Class"></p-sortIcon>
                                 </th>
                                 <th pSortableColumn="Nooftrips" *ngIf="selectedCategory == 24">
-                                  No of Trips
+                                    No of Trips
                                     <p-sortIcon field="Nooftrips"></p-sortIcon>
                                 </th>
                                 <th pSortableColumn="Distance" *ngIf="selectedCategory == 24">
-                                  Distance Travelled
+                                    Distance Travelled
                                     <p-sortIcon field="Distance"></p-sortIcon>
                                 </th>
                                 <th pSortableColumn="Countryofstay" *ngIf="selectedCategory == 25">
                                     Country of Stay
                                     <p-sortIcon field="Countryofstay"></p-sortIcon>
                                 </th>
-                
+
                                 <th pSortableColumn="typeHotel" *ngIf="selectedCategory == 25">
                                     Type of Sotel
                                     <p-sortIcon field="typeHotel"></p-sortIcon>
@@ -366,8 +377,8 @@
                                     No of Trips
                                     <p-sortIcon field="no_of_trips"></p-sortIcon>
                                 </th>
-                               
-                              
+
+
                                 <th pSortableColumn="year">
                                     <p-sortIcon field="year"></p-sortIcon>
                                     Year
@@ -386,8 +397,7 @@
                                     <p-sortIcon field="month"></p-sortIcon>
                                 </th>
                                 <th *ngIf="selectedCategory==1 || selectedCategory==5 || selectedCategory==7 || selectedCategory==8"
-                                    pTooltip="Reading Value" tooltipPosition="top"
-                                    pSortableColumn="readingValue">
+                                    pTooltip="Reading Value" tooltipPosition="top" pSortableColumn="readingValue">
                                     <p-sortIcon field="readingValue"></p-sortIcon>
                                     Value
 
@@ -424,17 +434,18 @@
                                     pTooltip="Number Of Vehicles" tooltipPosition="top">
                                     Vehicles <p-sortIcon field="noOfVehicles"></p-sortIcon>
                                 </th>
-                                <th *ngIf="selectedCategory==6" pSortableColumn="modeOfDE"
-                                    pTooltip="Mode Of data entry" tooltipPosition="top">
+                                <th *ngIf="selectedCategory==6" pSortableColumn="modeOfDE" pTooltip="Mode Of data entry"
+                                    tooltipPosition="top">
                                     Mode <p-sortIcon field="modeOfDE"></p-sortIcon>
                                 </th>
                                 <th *ngIf="selectedCategory==6" pSortableColumn="amount">
                                     Value <p-sortIcon field="amount"></p-sortIcon>
                                 </th>
-                                <th pSortableColumn="unit" *ngIf="selectedCategory !=24 && selectedCategory !=25  && selectedCategory !=26">
+                                <th pSortableColumn="unit"
+                                    *ngIf="selectedCategory !=24 && selectedCategory !=25  && selectedCategory !=26">
                                     Unit <p-sortIcon field="unit"></p-sortIcon>
                                 </th>
-                              
+
 
 
                                 <th *ngIf="selectedCategory==5" pSortableColumn="sourceName">
@@ -443,13 +454,11 @@
                                 <th>
                                     <p-sortIcon pSortableColumn="status" field="status"></p-sortIcon>
                                     Status
-                                    <p-columnFilter field="status" matchMode="equals" display="menu"
-                                        [showMenu]="true" [showMatchModes]="false" [showOperator]="false"
-                                        [showAddButton]="false">
+                                    <p-columnFilter field="status" matchMode="equals" display="menu" [showMenu]="true"
+                                        [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                                         <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                                             <p-dropdown [ngModel]="value" [options]="statusOptions"
-                                                (onChange)="filter($event.value)" placeholder="All"
-                                                [showClear]="false">
+                                                (onChange)="filter($event.value)" placeholder="All" [showClear]="false">
                                             </p-dropdown>
                                         </ng-template>
                                     </p-columnFilter>
@@ -458,7 +467,7 @@
                                 <th pSortableColumn="sourceName" pTooltip="tCO2" tooltipPosition="top">
                                     Emission
                                 </th>
-                                <th >Action</th>
+                                <th>Action</th>
                                 <!-- <th >Details</th> -->
                             </tr>
 
@@ -471,7 +480,7 @@
                                     <!-- <p-tableCheckbox *ngIf="de.status === false && loginInfo.role !== Approver" [value]="de" [disabled]="isOutOfStock(de)"></p-tableCheckbox> -->
                                     <p-tableCheckbox *ngIf="
                                    de.status === Pending
-                                "   [value]="de" ></p-tableCheckbox>
+                                " [value]="de"></p-tableCheckbox>
                                     <label class="sendLable" *ngIf="
                                             de.sendForApproval === true &&
                                             loginInfo.role === Preparer &&
@@ -485,7 +494,7 @@
                                     <p-tableCheckbox *ngIf="
                                             loginInfo.role === Manager &&
                                             de.status === Pending
-                                        " [value]="de" ></p-tableCheckbox>
+                                        " [value]="de"></p-tableCheckbox>
                                 </td>
                                 <td *ngIf="selectedCategory == 8"> {{de.typeofpurchase}}</td>
                                 <td
@@ -496,7 +505,8 @@
                                 <td *ngIf="selectedCategory == 11 ">{{ de.water_supply }}</td>
                                 <td *ngIf="selectedCategory == 23 ">{{ de.category }}</td>
                                 <td *ngIf="selectedCategory == 22 ">{{ de.franchise_type }}</td>
-                                <td *ngIf="selectedCategory == 22 || selectedCategory == 23  ">{{ de.sub_category }}</td>
+                                <td *ngIf="selectedCategory == 22 || selectedCategory == 23  ">{{ de.sub_category }}
+                                </td>
                                 <td *ngIf="selectedCategory == 7"> {{de.type}}</td>
                                 <td *ngIf="selectedCategory == 20 ">{{ de.subcategory }}</td>
                                 <td *ngIf="selectedCategory == 20 ">{{ de.combustion }}</td>
@@ -507,6 +517,7 @@
                                 <td *ngIf="selectedCategory == 18">{{ de.intermediate_category }}</td>
                                 <td *ngIf="selectedCategory == 18">{{ de.sub_activity }}</td>
                                 <td *ngIf="selectedCategory == 18">{{ de.processing_acitivity }}</td>
+                               
                                 <td *ngIf="selectedCategory == 16 || selectedCategory == 21">{{ de.sub_category }}</td>
                                 <td *ngIf="selectedCategory == 23">{{ de.investement_type }}</td>
                                 <td
@@ -517,9 +528,13 @@
                                 <td *ngIf="selectedCategory == 18 ">{{ de.scope1emissions }}</td>
                                 <td *ngIf="selectedCategory == 18 ">{{ de.scope2emissions }}</td>
 
-                                <td *ngIf="selectedCategory == 16 || selectedCategory == 21 || selectedCategory == 22   ">{{
+                                <td
+                                    *ngIf="selectedCategory == 16 || selectedCategory == 21 || selectedCategory == 22   ">
+                                    {{
                                     de.scope1_emission }}</td>
-                                <td *ngIf="selectedCategory == 16 || selectedCategory == 21 || selectedCategory == 22  ">{{
+                                <td
+                                    *ngIf="selectedCategory == 16 || selectedCategory == 21 || selectedCategory == 22  ">
+                                    {{
                                     de.scope2_emission }}</td>
                                 <td *ngIf="selectedCategory == 15">{{ de.typeof_homeoffice_name }}</td>
                                 <td *ngIf="selectedCategory == 15">{{ de.noofdays }}</td>
@@ -536,11 +551,14 @@
                                     {{ de.subcatName }}</td>
                                 <td *ngIf="selectedCategory == 10 || selectedCategory == 17">{{ de.vehicle_type }}</td>
                                 <td *ngIf="selectedCategory == 10 || selectedCategory == 17">{{ de.sub_category }}</td>
-                                <td *ngIf="selectedCategory == 10 || selectedCategory == 17">{{ de.distance_travelled_km }}
+                                <td *ngIf="selectedCategory == 10 || selectedCategory == 17">{{ de.distance_travelled_km
+                                    }}
                                 </td>
-                                <td *ngIf="selectedCategory == 10 || selectedCategory == 17">{{ de.mass_of_product_trans }}
+                                <td *ngIf="selectedCategory == 10 || selectedCategory == 17">{{ de.mass_of_product_trans
+                                    }}
                                 </td>
-                                <td *ngIf="selectedCategory == 10 || selectedCategory == 17">{{ de.storage_facility_type }}
+                                <td *ngIf="selectedCategory == 10 || selectedCategory == 17">{{ de.storage_facility_type
+                                    }}
                                 </td>
                                 <td *ngIf="selectedCategory == 24">{{ de.flight_calc_mode }}
                                 </td>
@@ -577,9 +595,8 @@
                                 </td>
                                 <td *ngIf="selectedCategory==1 || selectedCategory==5 || selectedCategory==7">
                                     <p-cellEditor><ng-template pTemplate="input">
-                                            <input name="readingValue_{{ ri }}" id="{{ ri }}" pInputText
-                                                type="text" [(ngModel)]="de.readingValue" ngModel
-                                                #readingValue="ngModel">
+                                            <input name="readingValue_{{ ri }}" id="{{ ri }}" pInputText type="text"
+                                                [(ngModel)]="de.readingValue" ngModel #readingValue="ngModel">
                                         </ng-template>
                                         <ng-template pTemplate="output">
                                             {{ de.readingValue }}
@@ -610,20 +627,20 @@
                                         <ng-template pTemplate="output">
                                             {{ de.quantityOfCO2makeup }}
                                         </ng-template>{{ de.quantityOfCO2makeup }}</p-cellEditor></td>
-                                        <td *ngIf="selectedCategory==2"><p-cellEditor><ng-template pTemplate="input">
-                                                    <input name="refAmount_{{ ri }}" id="{{ ri }}" pInputText
-                                                        type="text" [(ngModel)]="de.refAmount" ngModel
-                                                        #refAmount="ngModel">
-                                                </ng-template>
-                                                <ng-template pTemplate="output">
-                                                    {{ de.refAmount }}
-                                                </ng-template>{{ de.refAmount }}</p-cellEditor></td>
-                                                <td *ngIf="selectedCategory==6">{{ de.vehicleTypeID }}</td>
-                                                <td *ngIf="selectedCategory==6">{{ de.NoOfVehicles }}</td>
-                                                <td *ngIf="selectedCategory==6">{{ de.ModeofDEID }}</td>
-                                                <td *ngIf="selectedCategory==6">{{ de.Value }}</td>
-                                <td *ngIf="selectedCategory !=24 && selectedCategory !=25  && selectedCategory !=26">{{ de.unit }}</td>
-                               
+                                <td *ngIf="selectedCategory==2"><p-cellEditor><ng-template pTemplate="input">
+                                            <input name="refAmount_{{ ri }}" id="{{ ri }}" pInputText type="text"
+                                                [(ngModel)]="de.refAmount" ngModel #refAmount="ngModel">
+                                        </ng-template>
+                                        <ng-template pTemplate="output">
+                                            {{ de.refAmount }}
+                                        </ng-template>{{ de.refAmount }}</p-cellEditor></td>
+                                <td *ngIf="selectedCategory==6">{{ de.vehicleTypeID }}</td>
+                                <td *ngIf="selectedCategory==6">{{ de.NoOfVehicles }}</td>
+                                <td *ngIf="selectedCategory==6">{{ de.ModeofDEID }}</td>
+                                <td *ngIf="selectedCategory==6">{{ de.Value }}</td>
+                                <td *ngIf="selectedCategory !=24 && selectedCategory !=25  && selectedCategory !=26">{{
+                                    de.unit }}</td>
+
 
                                 <td *ngIf="selectedCategory==5">{{ de.SourceName }}</td>
                                 <td>
@@ -647,7 +664,7 @@
                                 <td>{{ de.emission | number :'1.2-2' }}</td>
 
                                 <td>
-                               
+
 
                                     <!-- <div *ngIf="
                                             de.sendForApproval === false &&
@@ -670,19 +687,14 @@
                                     </div> -->
                                     <div *ngIf="
                                     de.status === Pending
-                                 "
-                                         class="d-flex font-pera text-center pl-3 pt-0">
-                                         <button
-                                         type="button"
-                                         class="btn btn-dark margin ct_view_request_action_btn_green"
-                                         data-bs-toggle="modal" data-bs-target="#viewModal"
-                                         
-                                         ngbTooltip="Accept / Reject"
-                                         (click)="onUpdateUserStatus(de)"
-                                       >
-                                       <i class="fa fa-eject" aria-hidden="true"></i>
-                                       </button>
-                                       
+                                 " class="d-flex font-pera text-center pl-3 pt-0">
+                                        <button type="button"
+                                            class="btn btn-dark margin ct_view_request_action_btn_green"
+                                            data-bs-toggle="modal" data-bs-target="#viewModal"
+                                            ngbTooltip="Accept / Reject" (click)="onUpdateUserStatus(de)">
+                                            <i class="fa fa-eject" aria-hidden="true"></i>
+                                        </button>
+
                                         <!-- <div (click)="AcceptSingleEntry(de)">
                                             <i class="LocButtonEdit pi pi-check pointer d-flex text-white ct_border_radius_8">
                                                 <p class="pl-2">Accept</p>
@@ -701,7 +713,7 @@
                                             <label class="py-2">Please enter Reason for reject
                                                 entry</label>
                                             <div class="pl-5">
-                                                <textarea name="reason" rows="5" class="ct_textarea_full"  pInputTextarea
+                                                <textarea name="reason" rows="5" class="ct_textarea_full" pInputTextarea
                                                     [(ngModel)]="de.reason" #inputreason="ngModel" required></textarea>
                                                 <p class="text-danger mb-0" *ngIf="inputreason.errors?.['required']">
                                                     reason is required
@@ -743,34 +755,30 @@
 </div>
 
 
-<div class="modal fade show" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true" [ngStyle]="{'display':display}">
+<div class="modal fade show" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true"
+    [ngStyle]="{'display':display}">
     <div class="modal-dialog ct_modal_center_120">
         <div class="modal-content ct_modal_main_div140 ">
             <!-- Modal Header -->
             <div class="modal-header">
                 <h4 class="modal-title" id="myModalLabel">Update Status</h4>
-                <button
-                type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-label="Close"
-                id="closePopup"
-               (click)="onClose2()"
-              >
-                <span aria-hidden="true">&times;</span>
-              </button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closePopup"
+                    (click)="onClose2()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            
+
             <!-- Modal Body -->
             <div class="modal-body">
                 <p>Would you like to accept or reject?</p>
-                <button type="button" class="btn btn-primary text-white" id="acceptBtn" (click)="AcceptSingleEntry()" >Approve</button>
-                <button type="button" class="btn btn-danger ml-2 text-white" id="rejectBtn" (click)="RejectSingleEntry()" >Reject</button>
+                <button type="button" class="btn btn-primary text-white" id="acceptBtn"
+                    (click)="AcceptSingleEntry()">Approve</button>
+                <button type="button" class="btn btn-danger ml-2 text-white" id="rejectBtn"
+                    (click)="RejectSingleEntry()">Reject</button>
             </div>
-            
+
             <!-- Modal Footer -->
-       
+
         </div>
     </div>
-  </div>
-  
+</div>

@@ -34,6 +34,7 @@ export class TrackingViewRequestsComponent {
     status: ViewrequestTable[];
     facilityID;
     flag;
+    modeShow = false;
     AssignedDataPoint: TrackingDataPoint[] = [];;
     dataEntriesPending: PendingDataEntries;
     selectedEntry: PendingDataEntries[] = [];
@@ -92,6 +93,8 @@ export class TrackingViewRequestsComponent {
     mandatoryHSDP: any[] = [];
     dataEntry: any;
     display = 'none'
+    Modes: any[] = [];
+    selectMode: number =1
     constructor(
         private route: ActivatedRoute,
         private router: Router,
@@ -99,6 +102,23 @@ export class TrackingViewRequestsComponent {
         private notification: NotificationService,
         private toastr: ToastrService
     ) {
+        this.Modes =
+        [
+
+            {
+                "id": 1,
+                "modeType": "Flight"
+            },
+            {
+                "id": 2,
+                "modeType": "Hotel Stay"
+            },
+            {
+                "id": 3,
+                "modeType": "Other Modes"
+            }
+
+        ];
         this.reason = '';
         this.sendSCelement = new StationaryCombustionDE();
         this.sendrefelement = new RefrigerantsDE();
@@ -252,6 +272,7 @@ export class TrackingViewRequestsComponent {
 
             "seelcted", this.selectedCategory
         );
+        this.modeShow = false;
         this.months = new months();
         this.convertedYear = this.trackingService.getYear(this.year);
         const formData = new URLSearchParams();
@@ -1150,6 +1171,7 @@ export class TrackingViewRequestsComponent {
                 });
         }
         if (this.selectedCategory == 13) {
+            this.modeShow = true;
             this.trackingService
                 .newgetSCpendingDataEntries(formData)
                 .subscribe({
@@ -1157,8 +1179,18 @@ export class TrackingViewRequestsComponent {
                         if (response.success === false) {
                             this.dataEntriesPending = null;
                         } else {
+                            if (this.selectMode == 1) {
+                                this.dataEntriesPending = (response.categories).filter(items => items.tablename == 'flight_travel');
+                            } else if (this.selectMode == 2) {
+                                this.dataEntriesPending = (response.categories).filter(items => items.tablename == 'hotel_stay');
+                            } else if (this.selectMode == 3) {
+    
+                                this.dataEntriesPending = (response.categories).filter(items => items.tablename == 'other_modes_of_transport');
+                            } else {
+                                this.dataEntriesPending = response.categories;
+                            }
                             this.dataEntriesPending = response.categories;
-                            console.log("data>", this.dataEntriesPending)
+                            console.log("data entries =====>", this.dataEntriesPending)
                             if (Array.isArray(this.dataEntriesPending)) {
                                 for (let d of this.dataEntriesPending) {
                                     if (d.status === environment.approved) {

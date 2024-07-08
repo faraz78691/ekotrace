@@ -92,7 +92,7 @@ export class EnergyEmmsionsComponent {
   public groupChart: Partial<Chart3Options>;
   dashboardData: any[] = [];
   public loginInfo: LoginInfo;
-  selectedFacility = '';
+  selectedFacility:number;
   year: Date;
   scopeWiseSeries: any[] = [];
   progress1: any = '';
@@ -187,10 +187,15 @@ export class EnergyEmmsionsComponent {
     const formData = new URLSearchParams();
     formData.set('tenantID', tenantId.toString())
     this.dashboardService.getdashboardfacilities(formData.toString()).subscribe((result: any) => {
-      console.log(result);
+     
       if (result.success == true) {
         this.dashboardData = result.categories;
-        this.selectedFacility = this.dashboardData[0].ID;
+        if(this.facilityService.selectedfacilitiesSignal() == 0){
+          this.selectedFacility = this.dashboardData[0].ID;
+
+        }else{
+          this.selectedFacility = this.facilityService.selectedfacilitiesSignal();
+        }
         this.emssionByTravel(this.selectedFacility);
         this.totalEmissionByMonth(this.selectedFacility)
         this.BygroundTravel(this.selectedFacility)
@@ -202,15 +207,15 @@ export class EnergyEmmsionsComponent {
   };
 
   emssionByTravel(facility) {
-    console.log(this.selectedFacility);
+   
     let tenantId = this.loginInfo.tenantID;
     const formData = new URLSearchParams();
-    console.log(this.year);
+   
     // formData.set('year', this.year.getFullYear().toString());
     formData.set('year', this.year.getFullYear().toString());
     formData.set('facilities', facility);
     this.dashboardService.GEByFuelType(formData.toString()).subscribe((result: any) => {
-      console.log(result);
+     
 
       this.scopeWiseSeries = result.flueType;
       this.labelScopeDonut1 = result.series;
@@ -262,15 +267,15 @@ export class EnergyEmmsionsComponent {
   };
 
   totalEmissionByMonth(facility) {
-    console.log(this.selectedFacility);
+   
     let tenantId = this.loginInfo.tenantID;
     const formData = new URLSearchParams();
-    console.log(this.year);
+  
     // formData.set('year', this.year.getFullYear().toString());
     formData.set('year', this.year.getFullYear().toString());
     formData.set('facilities', facility);
     this.dashboardService.EnergyByMonth(formData.toString()).subscribe((result: any) => {
-      console.log(result);
+   
 
       this.barGraph1 = result.series;
       this.labelScopeDonut1 = result.categories;
@@ -374,15 +379,14 @@ export class EnergyEmmsionsComponent {
 
 
   BygroundTravel(facility) {
-    console.log(this.selectedFacility);
+  
     let tenantId = this.loginInfo.tenantID;
     const formData = new URLSearchParams();
     // formData.set('year', this.year.getFullYear().toString());
     formData.set('year', this.year.getFullYear().toString());
     formData.set('facilities', facility);
     this.dashboardService.ByEnergyRenewable(formData.toString()).subscribe((result: any) => {
-      console.log(result);
-
+     
       this.businessClass = result.renewable;
       this.labelScopeDonut2 = result.series;
 
@@ -427,15 +431,15 @@ export class EnergyEmmsionsComponent {
   };
 
   emssionByActivity(facility) {
-    console.log(this.selectedFacility);
+ 
     let tenantId = this.loginInfo.tenantID;
     const formData = new URLSearchParams();
-    console.log(this.year);
+
     // formData.set('year', this.year.getFullYear().toString());
     formData.set('year', this.year.getFullYear().toString());
     formData.set('facilities', facility);
     this.dashboardService.GEByActivity(formData.toString()).subscribe((result: any) => {
-      console.log(result);
+    
 
       this.seriesScopeDonut2 = result.energyinuse;
       this.labelScopeDonut2 = result.series;
@@ -490,6 +494,7 @@ export class EnergyEmmsionsComponent {
   onFacilityChange(event: any) {
     // console.log(event.target.value)
     // console.log(this.selectedFacility);
+    this.facilityService.facilitySelected(this.selectedFacility)
     this.emssionByTravel(this.selectedFacility)
     this.totalEmissionByMonth(this.selectedFacility)
     this.BygroundTravel(this.selectedFacility)

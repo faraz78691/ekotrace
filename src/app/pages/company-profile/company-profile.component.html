@@ -39,7 +39,18 @@
                         class="ct_select_op_input ct_chev_icon_dark230 "
                         ngModel [options]="countries" optionLabel="name" [(ngModel)]="selectedCountry"
                         optionValue="name"  name="country"
-                        #unitSet="ngModel"></p-dropdown>
+                        #unitSet="ngModel" [filter]="true" filterBy="name"
+                        [showClear]="true" placeholder="Select country">
+                        <ng-template pTemplate="selectedItem">
+                            <div class="country-item country-item-value" *ngIf="selectedCountry">
+                                <div>{{selectedCountry}}</div>
+                            </div>
+                        </ng-template>
+                        <ng-template let-country pTemplate="item">
+                            <div class="country-item">
+                                <div>{{country.name}}</div>
+                            </div>
+                        </ng-template></p-dropdown>
                 </div>
 
                 <div class="row mt-5">

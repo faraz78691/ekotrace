@@ -36,7 +36,7 @@ export class UserService {
         return this.http.post<UserInfo[]>(this.apiURL + 'register', admininfo);
     };
     public newSaveUsers(admininfo) {
-        return this.http.post<newUserInfo[]>(this.apiURL + '/register', admininfo);
+        return this.http.post(this.apiURL + '/register', admininfo);
     };
 
     public getUsers(tenantId) {
@@ -53,6 +53,9 @@ export class UserService {
     }
     public deleteUsers(userid) {
         return this.http.delete(this.apiURL + userid);
+    }
+    public newdeleteUsers(userid) {
+        return this.http.post(this.apiURL + '/removeUser', userid);
     }
     public GetAllRoles(): Observable<RoleModel[]> {
         return this.http.get<RoleModel[]>(this.apiURL + 'role-all');

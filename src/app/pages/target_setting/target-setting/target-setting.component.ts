@@ -512,6 +512,9 @@ export class TargetSettingComponent {
         },
         categories: normalYear
       },
+      yaxis: {
+        min: 0 // Ensure y-axis starts from zero
+      },
       tooltip: {
         y: [
           {

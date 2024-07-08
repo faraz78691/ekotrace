@@ -11,9 +11,10 @@ export class UserInfo {
     facilityName = '';
     role = '';
     userID = '';
+    user_id = '';
     isDisabledDelete = false;
     isDisabledEdit = false;
-    success:boolean
+    success:boolean;
 
 }
 export class newUserInfo {

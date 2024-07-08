@@ -111,7 +111,8 @@ export class GhgTemplateComponent {
         this.savedDataPointCat = new SavedDataPointCategory();
         this.savedDataPointSubCat = new SavedDataPointSubCategory();
         this.year = new Date();
-    }
+    };
+
     ngOnInit() {
         if (localStorage.getItem('LoginInfo') != null) {
             let userInfo = localStorage.getItem('LoginInfo');
@@ -146,7 +147,7 @@ export class GhgTemplateComponent {
         this.active = this.items[0];
         this.updatedtheme = this.themeservice.getValue('theme');
         this.AllCountry();
-        this.GetFacilityGroupList(tenantID)
+        this.GetFacilityGroupList(tenantID);
     }
 
     ngDoCheck() {
@@ -161,6 +162,8 @@ export class GhgTemplateComponent {
 
     //method for add new facility
     saveFacility(data: NgForm) {
+        
+      
         this.selectedCountry = this.countryData.find(
             (country) => country.
                 Name === this.facilityDetails.country_name
@@ -273,15 +276,13 @@ export class GhgTemplateComponent {
     facilityGet(tenantId) {
         this.facilityService.nFacilityDataGet().subscribe({
             next: (response: any) => {
-
+                
                 this.LocData = response.categories;
                 if (this.LocData.length == 0) {
-
                     this.NoData = 'block';
                     this.FacilityData = 'none';
                     this.FacilityFullData = 'none';
                 } else {
-
                     this.FacilityData = 'block';
                     this.FacilityFullData = 'flex';
                     this.NoData = 'none';
@@ -381,10 +382,7 @@ export class GhgTemplateComponent {
         let formdata = new URLSearchParams();
         formdata.set('ID', id)
         this.facilityService.newUsersByFacilityID(formdata.toString()).subscribe((result) => {
-            console.log(result);
-            // this.selectedScope1 = result[0].scope1;
-            // this.selectedScope2 = result[0].scope2;
-            // this.selectedScope3 = result[0].scope3;
+         
             this.facilityDetails = result[0];
             const facilityUsers = result[0].userInfoModels;
 
@@ -637,10 +635,14 @@ export class GhgTemplateComponent {
     }
     //method for save manage data points
     SaveManageDataPoint() {
-        console.log(this.selectedValues);
-if(this.selectedValues.length == 0){
-return
-}
+
+        if(this.loginInfo.role != 'Super Admin'){
+            this.notification.showWarning('You are not allowed to set the tempalte', '');
+            return
+        }
+        if (this.selectedValues.length == 0) {
+            return
+        }
         const fomdata = new URLSearchParams();
         fomdata.set('FacilityId', this.selectedValues.toString());
         fomdata.set('TenantID', this.loginInfo.tenantID.toString());

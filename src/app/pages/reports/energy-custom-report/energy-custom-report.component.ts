@@ -83,7 +83,7 @@ export class EnergyCustomReportComponent {
     Modes: any[] = [];
     modeShow = false;
     CustomReportData: CustomReportModel[] = [];
-    
+
     reportmonths: any[] = [
         { name: 'Jan', value: 'Jan' },
         { name: 'Feb', value: 'Feb' },
@@ -128,11 +128,10 @@ export class EnergyCustomReportComponent {
             ];
     };
 
-    ngAfterContentInit(){
-        console.log("working")
-    }
+   
 
    async ngOnInit() {
+   
         this.loginInfo = new LoginInfo();
         if (localStorage.getItem('LoginInfo') != null) {
             let userInfo = localStorage.getItem('LoginInfo');
@@ -142,6 +141,7 @@ export class EnergyCustomReportComponent {
        
            
             setTimeout(()=>{
+                console.log("here");
                     if(this.facilityService.facilitiesSignal()){
                          this.GetAssignedDataPoint(this.facilityService
                             .facilitiesSignal()[0].id
@@ -424,6 +424,7 @@ export class EnergyCustomReportComponent {
         this.dataEntry.year = this.date.getFullYear().toString();
         console.log(this.selectedCategory);
         this.CustomReportData = [];
+        const reportFormData = new URLSearchParams();
         // this.selectedCategory = 'Stationary Combustion';
         let url = ''
         switch (this.selectedCategory) {
@@ -437,7 +438,7 @@ export class EnergyCustomReportComponent {
                 url = 'reportFireExtinguisher'
                 break;
             case 6:
-                url = 'reportStationaryCombustion'
+                url = 'reportCompanyOwnedVehicles'
                 break;
             case 5:
                 url = 'reportRenewableElectricity'
@@ -455,7 +456,7 @@ export class EnergyCustomReportComponent {
                 url = 'reportUpStreamVehicles'
                 break;
             case 11:
-                url = 'reportStationaryCombustion'
+                url = 'reportWaterSupplyandTreatment'
                 break;
             case 12:
                 url = 'reportWasteGeneratedEmission'
@@ -466,7 +467,7 @@ export class EnergyCustomReportComponent {
                         url = 'reportFlightTravel'
                         break;
                     case 2:
-                        url = 'reportStationaryCombustion'
+                        url = 'reportHotelStays'
                         break;
                     case 3:
                         url = 'reportOtherTransport'
@@ -475,7 +476,7 @@ export class EnergyCustomReportComponent {
                 break;
             case 14:
                 // case 'Employee Commuting':
-                url = 'reportStationaryCombustion'
+                url = 'reportEmployeeCommuting'
                 break;
             case 15:
                 url = 'reportHomeOffice'
@@ -485,14 +486,14 @@ export class EnergyCustomReportComponent {
                 break;
             case 17:
                 // case 'Downstream Transportation and Distribution':
-                url = 'reportStationaryCombustion'
+                url = 'reportDownStreamVehicles'
                 break;
             case 18:
                 url = 'reportProOfSoldProducts'
                 break;
             case 19:
                 // case 'Use of Sold Products':
-                url = 'reportStationaryCombustion'
+                url = 'reportSoldProducts'
                 break;
             case 20:
                 url = 'reportEndOfLifeTreatment'
@@ -511,10 +512,13 @@ export class EnergyCustomReportComponent {
                 break;
         }
 
-        const reportFormData = new URLSearchParams();
+    
         reportFormData.set('facility', this.selectedFacilityID)
         reportFormData.set('year', this.dataEntry.year)
-        reportFormData.set('month', this.dataEntry.month)
+        if(url != 'reportEmployeeCommuting' && url != 'reportHomeOffice' ){
+            reportFormData.set('month', this.dataEntry.month)
+        }
+      
         reportFormData.set('page', '1')
         reportFormData.set('page_size', '10')
 

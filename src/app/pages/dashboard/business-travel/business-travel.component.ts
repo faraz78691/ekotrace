@@ -98,7 +98,7 @@ export class BusinessTravelComponent {
   public groupChart: Partial<Chart3Options>;
   dashboardData: any[] = [];
   public loginInfo: LoginInfo;
-  selectedFacility = '';
+  selectedFacility:number;
   year: Date;
   scopeWiseSeries: any[] = [];
   progress1: any = '';
@@ -189,10 +189,15 @@ export class BusinessTravelComponent {
     const formData = new URLSearchParams();
     formData.set('tenantID', tenantId.toString())
     this.dashboardService.getdashboardfacilities(formData.toString()).subscribe((result: any) => {
-      console.log(result);
+   
       if (result.success == true) {
         this.dashboardData = result.categories;
-        this.selectedFacility = this.dashboardData[0].ID;
+        if(this.facilityService.selectedfacilitiesSignal() == 0){
+          this.selectedFacility = this.dashboardData[0].ID;
+
+        }else{
+          this.selectedFacility = this.facilityService.selectedfacilitiesSignal();
+        }
         this.emssionByTravel(this.selectedFacility);
         this.totalEmissionByMonth(this.selectedFacility)
         this.emssionByTypeANDClass(this.selectedFacility)
@@ -361,14 +366,14 @@ export class BusinessTravelComponent {
   };
 
   emssionByTypeANDClass(facility) {
-    console.log(this.selectedFacility);
+
     let tenantId = this.loginInfo.tenantID;
     const formData = new URLSearchParams();
     // formData.set('year', this.year.getFullYear().toString());
     formData.set('year', this.year.getFullYear().toString());
     formData.set('facilities', facility);
     this.dashboardService.businessdashboardemssionByAir(formData.toString()).subscribe((result: any) => {
-      console.log(result);
+
 
       this.businessType = result.flight_type_series;
       this.businessClass = result.flight_class_series;
@@ -451,14 +456,14 @@ export class BusinessTravelComponent {
   };
 
   BygroundTravel(facility) {
-    console.log(this.selectedFacility);
+ 
     let tenantId = this.loginInfo.tenantID;
     const formData = new URLSearchParams();
     // formData.set('year', this.year.getFullYear().toString());
     formData.set('year', this.year.getFullYear().toString());
     formData.set('facilities', facility);
     this.dashboardService.BygroundTravel(formData.toString()).subscribe((result: any) => {
-      console.log(result);
+    
 
       this.groundSeries = result.series;
       this.groundLabel = result.categories;
@@ -538,6 +543,7 @@ export class BusinessTravelComponent {
   onFacilityChange(event: any) {
     // console.log(event.target.value)
     // console.log(this.selectedFacility);
+    this.facilityService.facilitySelected(this.selectedFacility)
     this.emssionByTravel(this.selectedFacility)
     this.totalEmissionByMonth(this.selectedFacility)
     this.emssionByTypeANDClass(this.selectedFacility)

@@ -28,7 +28,7 @@ export class WaterUsageComponent {
   public groupChart: Partial<Chart3Options>;
   dashboardData: any[] = [];
   public loginInfo: LoginInfo;
-  selectedFacility = '';
+  selectedFacility:number;
   year: Date;
   scopeWiseSeries: any[] = [];
   scopeWiseSeries2: any[] = [];
@@ -236,10 +236,15 @@ export class WaterUsageComponent {
     const formData = new URLSearchParams();
     formData.set('tenantID', tenantId.toString())
     this.dashboardService.getdashboardfacilities(formData.toString()).subscribe((result: any) => {
-      console.log(result);
+     
       if (result.success == true) {
         this.dashboardData = result.categories;
-        this.selectedFacility = this.dashboardData[0].ID;
+        if(this.facilityService.selectedfacilitiesSignal() == 0){
+          this.selectedFacility = result.categories[0].ID;
+
+        }else{
+          this.selectedFacility = this.facilityService.selectedfacilitiesSignal();
+        }
         this.Waterwithdrawnby_source(this.selectedFacility);
         this.dashboardWaterDischargedbydestination(this.selectedFacility);
         this.dashboardWaterTreated_nonTreated(this.selectedFacility);
@@ -254,15 +259,15 @@ export class WaterUsageComponent {
   };
 
   Waterwithdrawnby_source(facility) {
-    console.log(this.selectedFacility);
+    
     let tenantId = this.loginInfo.tenantID;
     const formData = new URLSearchParams();
-    console.log(this.year);
+   
     // formData.set('year', this.year.getFullYear().toString());
     formData.set('year', this.year.getFullYear().toString());
     formData.set('facilities', facility);
     this.dashboardService.Waterwithdrawnby_source(formData.toString()).subscribe((result: any) => {
-      console.log(result);
+      
 
       this.scopeWiseSeries = result.series[0].data;
       this.labelSeries1 = result.series;
@@ -355,7 +360,7 @@ export class WaterUsageComponent {
   };
 
   waterWaste(facility) {
-    console.log(this.selectedFacility);
+  
     let tenantId = this.loginInfo.tenantID;
     const formData = new URLSearchParams();
    
@@ -371,15 +376,15 @@ export class WaterUsageComponent {
     });
   };
  dashboardWaterDischargedbydestination(facility) {
-    console.log(this.selectedFacility);
+   
     let tenantId = this.loginInfo.tenantID;
     const formData = new URLSearchParams();
-    console.log(this.year);
+ 
     // formData.set('year', this.year.getFullYear().toString());
     formData.set('year', this.year.getFullYear().toString());
     formData.set('facilities', facility);
     this.dashboardService.WaterDischargedbydestination(formData.toString()).subscribe((result: any) => {
-      console.log(result);
+    
 
       this.scopeWiseSeries2 = result.series[0].data;
       this.labelScopeDonut1 = result.categories;
@@ -459,15 +464,15 @@ export class WaterUsageComponent {
   };
 
  dashboardWaterTreated_nonTreated(facility) {
-    console.log(this.selectedFacility);
+   
     let tenantId = this.loginInfo.tenantID;
     const formData = new URLSearchParams();
-    console.log(this.year);
+  
     // formData.set('year', this.year.getFullYear().toString());
     formData.set('year', this.year.getFullYear().toString());
     formData.set('facilities', facility);
     this.dashboardService.dashboardWaterTreated_nonTreated(formData.toString()).subscribe((result: any) => {
-      console.log(result);
+    
 
       this.seriesScopeDonut1 = result.water_treated_nontreated;
       this.labelScopeDonut1 = result.category;
@@ -513,6 +518,7 @@ export class WaterUsageComponent {
   };
 
   onFacilityChange(event: any) {
+    this.facilityService.facilitySelected(this.selectedFacility)
     this.waterWaste(this.selectedFacility);
     this.dashboardWaterDischargedbydestination(this.selectedFacility);
     this.dashboardWaterTreated_nonTreated(this.selectedFacility);

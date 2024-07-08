@@ -470,6 +470,10 @@ effect(()=>{
   //entrysave function to save dataentry
   EntrySave(form: NgForm) {
 
+    if(this.loginInfo.role != 'Super Admin'){
+        this.notification.showWarning('You are not allowed to set the tempalte', '');
+        return
+    }
     //   this.dataEntry.month = this.selectMonths
     //       .map((month) => month.value)
     //       .join(', '); //this.getMonthName();
