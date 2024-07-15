@@ -890,6 +890,7 @@ export class TrackingComponent {
         this.isVisited = false;
         this.renewableSelected = false;
         this.supplierSelected = false;
+        this.storageTransporationChecked = false;
 
         this.id_var = data.manageDataPointSubCategorySeedID;
 
@@ -2837,13 +2838,13 @@ export class TrackingComponent {
             var spliteedMonth = this.dataEntry.month.split(",");
             var monthString = JSON.stringify(spliteedMonth)
             let formData = new URLSearchParams();
+            console.log(this.storageTransporationChecked);
             if (form.value.flightMode == 'Generic') {
                 formData.set('flight_calc_mode', form.value.flightMode);
-                formData.set('distance', form.value.distance);
                 formData.set('flight_type', form.value.flight_type);
                 formData.set('flight_class', form.value.classs);
                 formData.set('no_of_trips', form.value.no_of_trips);
-                formData.set('return_flight', form.value.return);
+                formData.set('return_flight', this.storageTransporationChecked.toString());
                 formData.set('cost_centre', form.value.businessunits);
                 formData.set('batch', this.batchId);
                 formData.set('month', monthString);
@@ -2856,7 +2857,7 @@ export class TrackingComponent {
                 formData.set('via', form.value.airport_codevia);
                 formData.set('flight_class', form.value.classs);
                 formData.set('no_of_passengers', form.value.no_of_passengers);
-                formData.set('return_flight', form.value.return);
+                formData.set('return_flight', this.storageTransporationChecked.toString());
                 formData.set('reference_id', form.value.reference_id);
                 formData.set('cost_centre', form.value.businessunits);
                 formData.set('batch', this.batchId);
@@ -2869,7 +2870,7 @@ export class TrackingComponent {
                 formData.set('flight_class', form.value.classs);
                 formData.set('distance', form.value.distance);
                 formData.set('no_of_passengers', form.value.no_of_passengers);
-                formData.set('return_flight', form.value.return);
+                formData.set('return_flight', this.storageTransporationChecked.toString());
                 formData.set('reference_id', form.value.reference_id);
                 formData.set('cost_centre', form.value.businessunits);
                 formData.set('batch', this.batchId);

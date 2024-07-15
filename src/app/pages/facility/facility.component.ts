@@ -95,6 +95,7 @@ export class FacilityComponent {
     selectedScope1: any[] = [];
     selectedScope2: any[] = [];
     selectedScope3: any[] = [];
+    standardList: any[] = [];
 
     constructor(
         private facilityService: FacilityService,
@@ -107,6 +108,33 @@ export class FacilityComponent {
         private trackingService: TrackingService,
 
     ) {
+        this.standardList = [
+            {
+                name: 'Verra',
+                value:1
+            },
+            {
+                name: 'Gold Standard (GS)',
+                value:2
+            },
+            {
+                name: 'Clean Development Mechanism (CDM)',
+                value:3
+            },
+            {
+                name: 'American Carbon Standard (ACR)',
+                value:4
+            },
+            {
+                name: 'Climate Action Reserve (CAR)',
+                value:5
+            },
+            {
+                name: 'Others',
+                value:6
+            }
+        ];
+        this.selectedCountry = 'Gold Standard (GS)'
         this.facilityDetails = new Facility();
         this.loginInfo = new LoginInfo();
         this.admininfo = new UserInfo();
@@ -149,30 +177,20 @@ export class FacilityComponent {
         this.AllCountry();
     }
 
-    ngDoCheck() {
-        this.updatedtheme = this.themeservice.getValue('theme');
-    }
+    // ngDoCheck() {
+    //     this.updatedtheme = this.themeservice.getValue('theme');
+    // }
     //Handles changes in input properties and retrieves facility data for the specified tenant ID.
-    ngOnChanges() {
-        let tenantId = this.loginInfo.tenantID;
-        this.facilityGet(tenantId);
-    }
+    // ngOnChanges() {
+    //     let tenantId = this.loginInfo.tenantID;
+    //     this.facilityGet(tenantId);
+    // }
 
     //method for add new facility
     saveFacility(data: NgForm) {
-        this.selectedCountry = this.countryData.find(
-            (country) => country.
-                Name === this.facilityDetails.country_name
-        );
-        this.facilityDetails.CountryId = this.selectedCountry.Id;
-        this.selectedState = this.stateData.find(
-            (state) => state.Name === this.facilityDetails.state_name
-        );
-        this.facilityDetails.StateId = this.selectedState.Id;
-        this.selectedCity = this.cityData.find(
-            (city) => city.Name === this.facilityDetails.city_name
-        );
-        this.facilityDetails.CityId = this.selectedCity.Id;
+
+       
+    
         this.facilityDetails.tenantID = this.loginInfo.tenantID;
         if (this.facilityDetails.IsWaterStreenArea == null) {
             this.facilityDetails.IsWaterStreenArea = false;
@@ -182,12 +200,12 @@ export class FacilityComponent {
         formdata.set('AssestName', this.facilityDetails.AssestName)
         formdata.set('tenantID', this.facilityDetails.tenantID.toString())
         formdata.set('AssestType', this.facilityDetails.AssestType)
-        formdata.set('EquityPercentage', (this.facilityDetails.EquityPercentage).toString());
+        formdata.set('EquityPercentage', (this.facilityDetails.EquityPercentage)?.toString());
         formdata.set('Address', this.facilityDetails.Address);
         formdata.set('IsWaterStreenArea', (this.facilityDetails.IsWaterStreenArea).toString());
-        formdata.set('CityId', (this.selectedCity.ID).toString());
-        formdata.set('CountryId', this.selectedCountry.ID);
-        formdata.set('StateId', (this.selectedState.ID).toString());
+        formdata.set('CityId', this.facilityDetails.CityId.toString());
+        formdata.set('CountryId', this.facilityDetails.CountryId.toString());
+        formdata.set('StateId', this.facilityDetails.StateId.toString());
 
 
         this.facilityService.newFacilityDataPost(formdata.toString()).subscribe({
@@ -218,21 +236,7 @@ export class FacilityComponent {
     }
     //method for update a facility by id
     editfacility(id: any, data: NgForm) {
-        this.selectedCountry = this.countryData.find(
-            (country) => country.Name === this.facilityDetails.country_name
-        );
-        this.facilityDetails.CountryId = this.selectedCountry.ID;
-        this.selectedState = this.stateData.find(
-            (state) => state.Name === this.facilityDetails.state_name
-        );
-        this.facilityDetails.StateId = this.selectedState.ID;
-        this.selectedCity = this.cityData.find(
-         
-            (city)  =>
-            city.Name === this.facilityDetails.city_name
-            
-        );
-        // this.facilityDetails.CityId = this.selectedCity.ID;
+      
         let tenantId = this.loginInfo.tenantID;
         let formdata = new URLSearchParams();
         formdata.set('AssestName', this.facilityDetails.AssestName)
@@ -241,9 +245,9 @@ export class FacilityComponent {
         formdata.set('EquityPercentage', (this.facilityDetails.EquityPercentage).toString());
         formdata.set('Address', this.facilityDetails.Address);
         formdata.set('IsWaterStreenArea', (this.facilityDetails.IsWaterStreenArea).toString());
-        // formdata.set('CityId', (this.selectedCity.ID).toString());
-        formdata.set('CountryId', this.selectedCountry.ID);
-        formdata.set('StateId', (this.selectedState.ID).toString());
+        formdata.set('CityId', this.facilityDetails.CityId.toString());
+        formdata.set('CountryId', this.facilityDetails.CountryId.toString());
+        formdata.set('StateId', this.facilityDetails.StateId.toString());
         formdata.set('ID', this.id_var);
         this.facilityService
             .FacilityDataUpdate(formdata.toString())
@@ -285,20 +289,21 @@ export class FacilityComponent {
                     this.FacilityFullData = 'flex';
                     this.NoData = 'none';
                 }
-                if (this.facilityrefresh == true) this.defaultData();
+                // if (this.facilityrefresh == true) 
+                this.defaultData();
                 localStorage.setItem('FacilityCount', String(this.LocData.length));
             }, error: err => {
                 console.log(err)
             }
         })
-        console.log(this.LocData);
+       
 
     };
 
     //retrieves users associated with the facility
 
     tableData(id: any) {
-        console.log("tbakee", id);
+        
         this.id_var = id;
         this.getUserofFacility(id);
     }
@@ -366,6 +371,10 @@ export class FacilityComponent {
             this.selectedScope2 = result[0].scope2;
             this.selectedScope3 = result[0].scope3;
             this.facilityDetails = result[0];
+          
+            // this.selectedCountry = this.facilityDetails.CountryId;
+            // this.facilityDetails.CountryId = 5
+          
             const facilityUsers = result[0].userInfoModels;
         
             this.managerList1 = [];
@@ -381,29 +390,14 @@ export class FacilityComponent {
                 }
             }
         });
-        // this.UserService.getUsers(tenantId).subscribe((result) => {
-        //     this.admininfoList = result;
-        //     this.managerList = [];
-        //     this.staffList = [];
-        //     this.staffList;
-        //     for (let d of this.admininfoList) {
-        //         if (id == d.facilityID) {
-        //             if (d.role == 'Manager') {
-        //                 this.managerList.push(d);
-        //             }
-        //             if (d.role == 'Preparer' || d.role == 'Approver') {
-        //                 this.staffList.push(d);
-        //             }
-        //         }
-        //     }
-        // });
+   
     }
     //display a dialog for adding a facility
     showAddFacilityDialog() {
         this.visible = true;
-        console.log(this.facilityDetails);
+     
         this.facilityDetails = new Facility();
-        console.log(this.facilityDetails);
+       
         this.isEdit = false;
         this.resetForm();
     }
@@ -413,6 +407,7 @@ export class FacilityComponent {
         this.isEdit = true;
 
         this.searchState();
+        this.searchCity()
     }
     //handles the closing of Add facility dialog
     closeAddFacilityDialog() {
@@ -438,11 +433,14 @@ export class FacilityComponent {
     }
     //method for retrieve all country name
     AllCountry() {
-        console.log("calling");
+       
         this.facilityService.GetCountry().subscribe({
             next: (response) => {
 
                 this.countryData = response;
+               
+                // this.facilityDetails.CountryId = 2
+               
             },
             error: err => {
                 console.log(err)
@@ -451,13 +449,13 @@ export class FacilityComponent {
     }
     //method for search state
     searchState() {
-        console.log(this.countryData);
+     
         this.selectedCountry = this.countryData.find(
             (country) => country.Name === this.facilityDetails.country_name
         );
-        console.log(this.selectedCountry);
+       
         let formdata = new URLSearchParams();
-        formdata.set('CountryID', this.selectedCountry.ID)
+        formdata.set('CountryID', this.facilityDetails.CountryId.toString())
         this.facilityService.newGetState(formdata.toString()).subscribe({
             next: (response) => {
              
@@ -468,11 +466,11 @@ export class FacilityComponent {
     };
     //method for search city
     searchCity() {
-        this.selectedState = this.stateData.find(
-            (state) => state.Name === this.facilityDetails.state_name
-        );
+        // this.selectedState = this.stateData.find(
+        //     (state) => state.Name === this.facilityDetails.state_name
+        // );
         let formdata = new URLSearchParams();
-        formdata.set('StateID', this.selectedState.ID)
+        formdata.set('StateID', this.facilityDetails.StateId.toString())
         this.facilityService.newGetCity(formdata.toString()).subscribe({
             next: (response) => {
                 this.cityData = response;
@@ -567,14 +565,7 @@ export class FacilityComponent {
              
                 this.scope2Category = response.scope2;
                 this.scope3Category = response.scope3;
-                // this.seedData.forEach((seed) => {
-                //     seed.categorySeedData.forEach((cat) => {
-                //         cat.subCategorySeedDatas.forEach((subcat) => {
-                //             subcat.isMandatory = false;
-                //             subcat.active = false;
-                //         });
-                //     });
-                // });
+             
                 this.GetsavedDataPoint(this.facilityDetails.ID);
             }
         });
@@ -582,7 +573,7 @@ export class FacilityComponent {
 
     onMultiSelectChange(event: { originalEvent: Event, value: any }) {
 
-        console.log(this.selectedScope1);
+      
         this.selectedScope1
         // this.selectedScope1 = event.value.map((item: any) => {
 
@@ -907,7 +898,7 @@ export class FacilityComponent {
                 .newManageDataPointSave(fomdata.toString())
                 .subscribe({
                     next: (response) => {
-                        console.log(response);
+                     
                         if (response.success == true) {
                             this.DP_BoxVisible = false;
                             this.notification.showSuccess(

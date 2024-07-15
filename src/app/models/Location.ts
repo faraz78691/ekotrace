@@ -1,5 +1,6 @@
 export class Location {
   Name = '';
   shortName = '';
-  Id: number
+  Id: number;
+  ID:number
 }

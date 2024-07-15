@@ -2219,8 +2219,9 @@
                                                                 <p-dropdown
                                                                     class="ct_select_op_input ct_position_small_quantity"
                                                                     ngModel [options]="purchaseGoodsUnitsGrid"
-                                                                    optionLabel="units" optionValue="units" [(ngModel)]="processingUnit"
-                                                                    name="goodsUnits" #units="ngModel">
+                                                                    optionLabel="units" optionValue="units"
+                                                                    [(ngModel)]="processingUnit" name="goodsUnits"
+                                                                    #units="ngModel">
                                                                 </p-dropdown>
 
                                                             </div>
@@ -3386,7 +3387,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-4">
+                                                        <!-- <div class="col-md-4">
                                                             <div class="mb-4  " style="gap: 10px;">
                                                                 <label class=" ct_text_wrape">Distance
                                                                     Travelled</label>
@@ -3402,7 +3403,7 @@
                                                                     </p-dropdown>
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                        </div> -->
                                                         <div class="col-md-4">
                                                             <div class="mb-4" style="gap: 10px;">
                                                                 <label class=" ct_text_wrape">Cost Centre</label>
@@ -3524,12 +3525,12 @@
                                                         <div class="col-md-4">
                                                             <div class="mb-4" style="gap: 10px;">
                                                                 <label class=" ct_text_wrape">Return Flight</label>
-                                                                <p-dropdown
-                                                                    class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
-                                                                    ngModel [options]="returnGrid" optionLabel="return"
-                                                                    optionValue="return" name="return"
-                                                                    #return="ngModel">
-                                                                </p-dropdown>
+                                                                <div> <p-inputSwitch class="ct_flex_1"
+                                                                        [(ngModel)]="storageTransporationChecked"
+                                                                        name="return"
+                                                                        [ngModelOptions]="{standalone: true}"></p-inputSwitch>
+                                                                </div>
+                                                              
                                                             </div>
                                                         </div>
                                                         <div class="col-md-4">
@@ -3610,12 +3611,12 @@
                                                         <div class="col-md-4">
                                                             <div class="mb-4" style="gap: 10px;">
                                                                 <label class=" ct_text_wrape">Return Flight</label>
-                                                                <p-dropdown
-                                                                    class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
-                                                                    ngModel [options]="returnGrid" optionLabel="return"
-                                                                    optionValue="return" name="return"
-                                                                    #return="ngModel">
-                                                                </p-dropdown>
+                                                                <div> <p-inputSwitch class="ct_flex_1"
+                                                                        [(ngModel)]="storageTransporationChecked"
+                                                                        name="return"
+                                                                        [ngModelOptions]="{standalone: true}"></p-inputSwitch>
+                                                                </div>
+
                                                             </div>
                                                         </div>
 
@@ -3895,15 +3896,14 @@
                                                 Recycling
                                                 <!-- <p-sortIcon field="catName"></p-sortIcon> -->
                                             </th>
-                                            <th pSortableColumn="catName"
-                                                *ngIf="categoryId == 19">
-                                                 Category
-                                                
+                                            <th pSortableColumn="catName" *ngIf="categoryId == 19">
+                                                Category
+
                                             </th>
                                             <th pSortableColumn="catName"
                                                 *ngIf="categoryId == 16 || categoryId == 19 || categoryId == 21 || categoryId == 22 || categoryId == 23">
                                                 Sub Category
-                                                
+
                                             </th>
                                             <th pSortableColumn="catName" *ngIf="categoryId == 18">
                                                 Sub Activity
@@ -3927,13 +3927,12 @@
                                                 Franchise Space
                                                 <!-- <p-sortIcon field="catName"></p-sortIcon> -->
                                             </th>
-                                            <th *ngIf="categoryId==18"
-                                            pTooltip="Reading Value" tooltipPosition="top"
-                                            pSortableColumn="readingValue">
-                                            <!-- <p-sortIcon field="readingValue"></p-sortIcon> -->
-                                            Value
+                                            <th *ngIf="categoryId==18" pTooltip="Reading Value" tooltipPosition="top"
+                                                pSortableColumn="readingValue">
+                                                <!-- <p-sortIcon field="readingValue"></p-sortIcon> -->
+                                                Value
 
-                                        </th>
+                                            </th>
                                             <th pSortableColumn="catName"
                                                 *ngIf="categoryId == 16 || categoryId ==18 || categoryId == 21 ||categoryId == 22">
                                                 Scope 1 Emission
@@ -4396,10 +4395,11 @@
                                             </th>
 
                                             <th pSortableColumn="catName" *ngIf="categoryId ==  19">
-                                                 Category
+                                                Category
                                                 <p-sortIcon field="catName"></p-sortIcon>
                                             </th>
-                                            <th pSortableColumn="catName" *ngIf="categoryId == 10 || categoryId == 17 || categoryId == 19">
+                                            <th pSortableColumn="catName"
+                                                *ngIf="categoryId == 10 || categoryId == 17 || categoryId == 19">
                                                 Sub Category
                                                 <p-sortIcon field="catName"></p-sortIcon>
                                             </th>
@@ -4429,7 +4429,7 @@
                                                 <p-sortIcon field="catName"></p-sortIcon>
                                             </th>
 
-                                            
+
                                             <th pSortableColumn="sourceName">
                                                 Emission Factor
                                             </th>
@@ -4477,8 +4477,8 @@
 
                                             <td *ngIf="categoryId == 12">{{ de.waste_type }}</td>
 
-                                             <td *ngIf="categoryId == 10 || categoryId == 17">{{ de.vehicle_type }}</td>
-                                            <td *ngIf="categoryId == 10 || categoryId == 17">{{ de.sub_category }}</td> 
+                                            <td *ngIf="categoryId == 10 || categoryId == 17">{{ de.vehicle_type }}</td>
+                                            <td *ngIf="categoryId == 10 || categoryId == 17">{{ de.sub_category }}</td>
                                             <!-- <td *ngIf="categoryId == 10 || categoryId == 17">{{ de.distance_travelled_km
                                                 }}
                                             </td>
@@ -4504,7 +4504,7 @@
                                             <td *ngIf="categoryId == 26">{{ de.no_of_trips }}
                                             </td> -->
                                             <td>{{de.emissionFactorUsed != 'NaN' ? de.emissionFactorUsed : '-' }}</td>
-                                            <td >kg
+                                            <td>kg
                                                 CO2e/{{
                                                 de.unit }}
                                             </td>

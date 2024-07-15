@@ -343,24 +343,27 @@
                                     
                                     <div class="ct_input_white_bg13 mb-4 ct_input_dark_text_121 ct_city_name_select_2_search">
                                         <label for="country" class=" text-dark">Country Name</label>
-                                        <p-dropdown required ngModel name="country" #country="ngModel"
+                                        <p-dropdown required  #country="ngModel"
                                             [options]="countryData" optionLabel="Name" [filter]="true" filterBy="Name"
-                                            [showClear]="true" optionValue="Name" [(ngModel)]="
-                                                facilityDetails.country_name
-                                            " [scrollable]="true" placeholder="Select a Country"
+                                            [showClear]="true" optionValue="ID" [(ngModel)]="facilityDetails.CountryId " [ngModelOptions]="{standalone: true}" [scrollable]="true" placeholder="Select country"
                                             (onChange)="searchState()">
                                         </p-dropdown>
-                                        <p *ngIf="addCompForm.submitted && country.errors?.['required']"
+                                        <!-- <p-dropdown required  #country="ngModel"
+                                            [options]="standardList" optionLabel="name"  
+                                             optionValue="value" [(ngModel)]="selectedCountry"  [ngModelOptions]="{standalone: true}"
+                                            (onChange)="searchState()">
+                                        </p-dropdown> -->
+                                        <!-- <p *ngIf="addCompForm.submitted && country.errors?.['required']"
                                             class="text-danger mb-0">
                                             Country Name is required
-                                        </p>
+                                        </p> -->
 
                                     </div>
                                     <div class="ct_input_white_bg13 mb-4 ct_input_dark_text_121 ct_city_name_select_2_search">
                                         <label for="state" class=" text-dark">State Name</label>
                                         <p-dropdown required ngModel name="state" #state="ngModel" [options]="stateData"
-                                            optionLabel="Name" optionValue="Name" [filter]="true" filterBy="Name"
-                                            [showClear]="true" [(ngModel)]="facilityDetails.state_name"
+                                            optionLabel="Name" optionValue="ID" [filter]="true" filterBy="Name"
+                                            [showClear]="true" [(ngModel)]="facilityDetails.StateId" [ngModelOptions]="{standalone: true}"
                                             placeholder="Select a State" (onChange)="searchCity()">
                                         </p-dropdown>
                                         <p *ngIf="addCompForm.submitted && state.errors?.['required']"
@@ -371,8 +374,8 @@
                                     <div class="ct_input_white_bg13 mb-4 ct_input_dark_text_121 ct_city_name_select_2_search">
                                         <label for="city" class=" text-dark">City Name</label>
                                         <p-dropdown required ngModel name="city" #city="ngModel" [options]="cityData"
-                                            optionLabel="Name" optionValue="Name" [filter]="true" filterBy="Name"
-                                            [showClear]="true" [(ngModel)]="facilityDetails.city_name"
+                                            optionLabel="Name" optionValue="ID" [filter]="true" filterBy="Name"
+                                            [showClear]="true" [(ngModel)]="facilityDetails.CityId" [ngModelOptions]="{standalone: true}"
                                             placeholder="Select a City"></p-dropdown>
                                         <p *ngIf="addCompForm.submitted && city.errors?.['required']"
                                             class="text-danger mb-0">
