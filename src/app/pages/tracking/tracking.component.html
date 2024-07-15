@@ -219,9 +219,11 @@
                                                                             {{ child.subCatName}}
                                                                         </div>
                                                                         <p-accordion>
-                                                                           
 
-                                                                            <p-accordionTab class="ct_business_drop_12_main" header="Business Travel"
+
+                                                                            <p-accordionTab
+                                                                                class="ct_business_drop_12_main"
+                                                                                header="Business Travel"
                                                                                 *ngIf="head.manageDataPointCategorySeedID ==13"
                                                                                 clickable (click)="
                                                                                 ToggleClick(
@@ -256,10 +258,10 @@
                                     </p-tabPanel>
 
                                     <!-- for basic package -->
-                                     <p-tabPanel *ngIf="seed.ScopeID ==3 && this.haveBasicPackage === 1">
+                                    <p-tabPanel *ngIf="seed.ScopeID ==3 && this.haveBasicPackage === 1">
                                         <ng-template pTemplate="header">
                                             {{ seed.scopeName }}
-                                           
+
                                         </ng-template>
                                         <div class="cardDiv">
                                             <div class="calenderDiv flex row">
@@ -293,7 +295,8 @@
                                                             <ng-container *ngFor="
                                                         let head of seed.manageDataPointCategories
                                                     ">
-                                                                <ng-container *ngIf="
+                                                                <ng-container
+                                                                    *ngIf="
                                                                 head.manageDataPointCategorySeedID === 13 || head.manageDataPointCategorySeedID === 14">
 
 
@@ -317,9 +320,11 @@
                                                                             {{ child.subCatName}}
                                                                         </div>
                                                                         <p-accordion>
-                                                                           
 
-                                                                            <p-accordionTab class="ct_business_drop_12_main" header="Business Travel"
+
+                                                                            <p-accordionTab
+                                                                                class="ct_business_drop_12_main"
+                                                                                header="Business Travel"
                                                                                 *ngIf="head.manageDataPointCategorySeedID ==13"
                                                                                 clickable (click)="
                                                                                 ToggleClick(
@@ -414,10 +419,9 @@
                                     <p *ngIf="categoryId ==26" class="mb-2 mt-3 ml-4 text-dark">
                                         Other modes
                                     </p>
-                                    <div class="ct_how_use_tooltip_main"  >
+                                    <div class="ct_how_use_tooltip_main">
                                         <i class="fa-solid fa-circle-question" (click)="isHowtoUse = !isHowtoUse"></i>
-                                        <div class="ct_how_use_tooltip_cnt" [ngClass]="isHowtoUse ? 'ct_active' : ''"
-                                           >
+                                        <div class="ct_how_use_tooltip_cnt" [ngClass]="isHowtoUse ? 'ct_active' : ''">
                                             <p>
                                                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel.
                                             </p>
@@ -624,10 +628,10 @@
                                                 [ngClass]="typeEV == true ? 'col-lg-4': typeBusCoach == true ? 'col-lg-4': 'col-lg-4'">
                                                 <label pTooltip="Mode of Data Entry" tooltipPosition="top"
                                                     for="fname">Mode
-                                                    of data entrys</label>
+                                                    of data entry</label>
                                                 <p-dropdown class="ct_select_op_input ct_chev_icon_dark230 
                                             " ngModel [options]="ModeType" optionLabel="modeName"
-                                                    optionValue="modeName" name="DEMode" #DEMode="ngModel"
+                                                    optionValue="modeName" name="modeName" #DEMode="ngModel"
                                                     [(ngModel)]="VehicleDE.modeOfDE"
                                                     (onChange)="setUnit()"></p-dropdown>
                                             </div>
@@ -642,9 +646,9 @@
                                                         placeholder="Enter value" [(ngModel)]="VehicleDE.value" Value
                                                         id="search-input" type="text"
                                                         class="form-control Dashboard-tab text-white" />
-                                                        <div class="ct_quantity_text">
-                                                            <p>{{dataEntry.unit}}</p>
-                                                        </div>
+                                                    <div class="ct_quantity_text">
+                                                        <p>{{dataEntry.unit}}</p>
+                                                    </div>
 
                                                 </div>
                                             </div>
@@ -818,8 +822,7 @@
                                     <div class="trackingFooter"
                                         *ngIf="categoryId ==1 || categoryId == 2 ||   categoryId == 3  || categoryId == 4 || categoryId == 5 || categoryId == 6 ||  categoryId == 7">
                                         <div class="row my-3 mb-0 pb-3 mx-2">
-                                            <div class="col-4"
-                                                *ngIf="categoryId == 2 || categoryId == 3">
+                                            <div class="col-4" *ngIf="categoryId == 2 || categoryId == 3">
                                                 <label for="fname ">Template</label>
 
                                                 <div class="">
@@ -827,7 +830,7 @@
                                                     chooseLabel="Please select a File" (onSelect)="
                                                     onFileSelected($event.files)
                                                 "></p-fileUpload> -->
-                                                   
+
                                                     <button class="px-4 trackingsubmitb w-100"><a [href]="templateLinks"
                                                             download>Click here to download</a></button>
                                                 </div>
@@ -996,11 +999,11 @@
                                                                     class="form-control Dashboard-tab text-white"
                                                                     name="mass_of_products" required ngModel
                                                                     #mass_of_products="ngModel" />
-                                                                    <p-dropdown
+                                                                <p-dropdown
                                                                     class="ct_select_op_input ct_position_small_quantity"
                                                                     ngModel [options]="upstreamMassUnitsGrid"
                                                                     optionLabel="units" optionValue="units"
-                                                                    name="upfacilityUnits" #upfacilityUnits="ngModel">
+                                                                    name="mass_unit" #upfacilityUnits="ngModel">
                                                                 </p-dropdown>
                                                                 <!-- <div class="ct_quantity_text">
                                                                     <p>tonnes</p>
@@ -1040,7 +1043,7 @@
                                                                     class="ct_select_op_input ct_position_small_quantity"
                                                                     ngModel [options]="distanceTravelled"
                                                                     optionLabel="unit" optionValue="unit"
-                                                                    name="upfacilityUnits" #upfacilityUnits="ngModel">
+                                                                    name="distance_unit" #upfacilityUnits="ngModel">
                                                                 </p-dropdown>
                                                                 <!-- <p class="validation"
                                                                 *ngIf="distanceInKms.invalid && dataEntryForm.submitted">
@@ -1099,12 +1102,12 @@
                                                                     class="form-control Dashboard-tab text-white"
                                                                     placeholder="Enter Area Occupied"
                                                                     name="area_occupied" ngModel />
-                                                                    
-                                                                    <p-dropdown
+
+                                                                <p-dropdown
                                                                     class="ct_select_op_input ct_position_small_quantity"
                                                                     ngModel [options]="facilityUnits"
                                                                     optionLabel="energyTypes" optionValue="energyTypes"
-                                                                    name="upfacilityUnits" #upfacilityUnits="ngModel">
+                                                                    name="area_unit" #upfacilityUnits="ngModel">
                                                                 </p-dropdown>
                                                                 <!-- <div class="ct_quantity_text">
                                                                     <p>sr mtr</p>
@@ -1658,10 +1661,14 @@
                                                         <thead class="thead-dark">
                                                             <tr>
 
-                                                                <th scope="col" style="border-top-width: 0px;">Type of home office</th>
-                                                                <th scope="col" style="border-top-width: 0px;">Number of employees work from home</th>
-                                                                <th scope="col" style="border-top-width: 0px;">No of days / week work from home</th>
-                                                                <th scope="col" style="border-top-width: 0px;">No of months</th>
+                                                                <th scope="col" style="border-top-width: 0px;">Type of
+                                                                    home office</th>
+                                                                <th scope="col" style="border-top-width: 0px;">Number of
+                                                                    employees work from home</th>
+                                                                <th scope="col" style="border-top-width: 0px;">No of
+                                                                    days / week work from home</th>
+                                                                <th scope="col" style="border-top-width: 0px;">No of
+                                                                    months</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -1833,7 +1840,7 @@
                                                                         placeholder="Enter Scope1 Emissions"
                                                                         name="scope1_emission" ngModel />
                                                                     <div class="ct_quantity_text">
-                                                                        <p>(tonnes C02e)</p>
+                                                                        <p>kg CO2e</p>
                                                                     </div>
 
                                                                 </div>
@@ -1849,7 +1856,7 @@
                                                                         placeholder="Enter Scope2 Emissions"
                                                                         name="scope2_emission" ngModel />
                                                                     <div class="ct_quantity_text">
-                                                                        <p>(tonnes C02e)</p>
+                                                                        <p>kg CO2e</p>
                                                                     </div>
 
                                                                 </div>
@@ -1898,14 +1905,14 @@
                                                                     class="form-control Dashboard-tab text-white"
                                                                     placeholder="Enter Distance" name="distanceInKms"
                                                                     required ngModel #distanceInKms="ngModel" />
-                                                                    <!-- distanceTravelled -->
-                                                                    <p-dropdown
+                                                                <!-- distanceTravelled -->
+                                                                <p-dropdown
                                                                     class="ct_select_op_input ct_position_small_quantity"
                                                                     ngModel [options]="distanceTravelled"
-                                                                    optionLabel="unit" optionValue="unit"
-                                                                    name="unit" #units="ngModel">
+                                                                    optionLabel="unit" optionValue="unit" name="unit"
+                                                                    #units="ngModel">
                                                                 </p-dropdown>
-                                                                
+
                                                                 <!-- <p class="validation"
                                                                 *ngIf="distanceInKms.invalid && dataEntryForm.submitted">
                                                                 Distance Travelled by
@@ -1981,7 +1988,7 @@
                                                                     name="mass_of_products" required ngModel
                                                                     #mass_of_products="ngModel" />
                                                                 <div class="ct_quantity_text">
-                                                                    <p>t</p>
+                                                                    <p>tonnes</p>
                                                                 </div>
                                                                 <!-- <p class="validation"
                                                                 *ngIf="mass_of_products.invalid && dataEntryForm.submitted">
@@ -2017,12 +2024,12 @@
                                                                     class="form-control Dashboard-tab text-white"
                                                                     placeholder="Enter Distance" name="distanceInKms"
                                                                     required ngModel #distanceInKms="ngModel" />
-                                                                    
-                                                                    <p-dropdown
+
+                                                                <p-dropdown
                                                                     class="ct_select_op_input ct_position_small_quantity"
                                                                     ngModel [options]="distanceTravelled"
-                                                                    optionLabel="unit" optionValue="unit"
-                                                                    name="unit" #units="ngModel">
+                                                                    optionLabel="unit" optionValue="unit" name="unit"
+                                                                    #units="ngModel">
                                                                 </p-dropdown>
                                                                 <!-- <p class="validation"
                                                                 *ngIf="distanceInKms.invalid && dataEntryForm.submitted">
@@ -2082,7 +2089,7 @@
                                                                     placeholder="Enter Area Occupied"
                                                                     name="area_occupied" ngModel />
                                                                 <div class="ct_quantity_text">
-                                                                    <p>sr mtr</p>
+                                                                    <p>sq mtr</p>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -2212,7 +2219,7 @@
                                                                 <p-dropdown
                                                                     class="ct_select_op_input ct_position_small_quantity"
                                                                     ngModel [options]="purchaseGoodsUnitsGrid"
-                                                                    optionLabel="units" optionValue="units"
+                                                                    optionLabel="units" optionValue="units" [(ngModel)]="processingUnit"
                                                                     name="goodsUnits" #units="ngModel">
                                                                 </p-dropdown>
 
@@ -2281,7 +2288,7 @@
                                                                         placeholder="Enter Scope1 Emissions"
                                                                         name="scope1_emission" ngModel />
                                                                     <div class="ct_quantity_text">
-                                                                        <p>(tonnes C02e)</p>
+                                                                        <p>kg c02e / {{processingUnit}}</p>
                                                                     </div>
 
                                                                 </div>
@@ -2297,7 +2304,7 @@
                                                                         placeholder="Enter Scope2 Emissions"
                                                                         name="scope2_emission" ngModel />
                                                                     <div class="ct_quantity_text">
-                                                                        <p>(tonnes C02e)</p>
+                                                                        <p>kg c02e / {{processingUnit}}</p>
                                                                     </div>
 
                                                                 </div>
@@ -2770,7 +2777,7 @@
                                                                         placeholder="Enter Scope1 Emissions"
                                                                         name="scope1_emission" ngModel />
                                                                     <div class="ct_quantity_text">
-                                                                        <p>(tonnes C02e)</p>
+                                                                        <p>kg C02e</p>
                                                                     </div>
 
                                                                 </div>
@@ -2786,7 +2793,7 @@
                                                                         placeholder="Enter Scope2 Emissions"
                                                                         name="scope2_emission" ngModel />
                                                                     <div class="ct_quantity_text">
-                                                                        <p>(tonnes C02e)</p>
+                                                                        <p>kg C02e</p>
                                                                     </div>
 
                                                                 </div>
@@ -2835,11 +2842,11 @@
                                                                     class="form-control Dashboard-tab text-white"
                                                                     placeholder="Enter Distance" name="distanceInKms"
                                                                     required ngModel #distanceInKms="ngModel" />
-                                                                    <p-dropdown
+                                                                <p-dropdown
                                                                     class="ct_select_op_input ct_position_small_quantity"
                                                                     ngModel [options]="distanceTravelled"
-                                                                    optionLabel="unit" optionValue="unit"
-                                                                    name="unit" #units="ngModel">
+                                                                    optionLabel="unit" optionValue="unit" name="unit"
+                                                                    #units="ngModel">
                                                                 </p-dropdown>
                                                                 <!-- <p class="validation"
                                                                 *ngIf="distanceInKms.invalid && dataEntryForm.submitted">
@@ -2983,7 +2990,7 @@
                                                                         placeholder="Enter Scope1 Emissions"
                                                                         name="scope1_emission" ngModel />
                                                                     <div class="ct_quantity_text">
-                                                                        <p>(tonnes C02e)</p>
+                                                                        <p>kg C02e</p>
                                                                     </div>
 
                                                                 </div>
@@ -2999,7 +3006,7 @@
                                                                         placeholder="Enter Scope2 Emissions"
                                                                         name="scope2_emission" ngModel />
                                                                     <div class="ct_quantity_text">
-                                                                        <p>(tonnes C02e)</p>
+                                                                        <p>kg C02e</p>
                                                                     </div>
 
                                                                 </div>
@@ -3402,8 +3409,9 @@
                                                                 <p-dropdown
                                                                     class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
                                                                     ngModel [options]="busineessGrid"
-                                                                    optionLabel="units" optionValue="units"
-                                                                    name="businessunits" #return="ngModel">
+                                                                    optionLabel="cost_center_name"
+                                                                    optionValue="cost_center_name" name="businessunits"
+                                                                    #return="ngModel">
                                                                 </p-dropdown>
                                                             </div>
                                                         </div>
@@ -3419,12 +3427,15 @@
                                                                 <p-dropdown
                                                                     class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
                                                                     ngModel [options]="airportGrid"
-                                                                    optionLabel="airport_desc" [filter]="true" filterBy="airport_desc"
-                                                                    [showClear]="true" [(ngModel)]="selectedAirport"
+                                                                    optionLabel="airport_desc" [filter]="true"
+                                                                    filterBy="airport_desc" [showClear]="true"
+                                                                    [(ngModel)]="selectedAirport"
                                                                     optionValue="airport_code" name="airport_codefrom"
-                                                                    #airport_code="ngModel" placeholder="Select airport">
+                                                                    #airport_code="ngModel"
+                                                                    placeholder="Select airport">
                                                                     <ng-template pTemplate="selectedItem">
-                                                                        <div class="country-item country-item-value" *ngIf="selectedAirport">
+                                                                        <div class="country-item country-item-value"
+                                                                            *ngIf="selectedAirport">
                                                                             <div>{{selectedAirport}}</div>
                                                                         </div>
                                                                     </ng-template>
@@ -3444,10 +3455,13 @@
                                                                     ngModel [options]="airportGrid"
                                                                     optionLabel="airport_desc"
                                                                     optionValue="airport_code" name="airport_codeto"
-                                                                    #airport_code="ngModel" [filter]="true" filterBy="airport_desc"
-                                                                    [showClear]="true" [(ngModel)]="selectedAirport2" placeholder="Select airport">
+                                                                    #airport_code="ngModel" [filter]="true"
+                                                                    filterBy="airport_desc" [showClear]="true"
+                                                                    [(ngModel)]="selectedAirport2"
+                                                                    placeholder="Select airport">
                                                                     <ng-template pTemplate="selectedItem">
-                                                                        <div class="country-item country-item-value" *ngIf="selectedAirport2">
+                                                                        <div class="country-item country-item-value"
+                                                                            *ngIf="selectedAirport2">
                                                                             <div>{{selectedAirport2}}</div>
                                                                         </div>
                                                                     </ng-template>
@@ -3467,10 +3481,13 @@
                                                                     ngModel [options]="airportGrid"
                                                                     placeholder="Select via" optionLabel="airport_desc"
                                                                     optionValue="airport_code" name="airport_codevia"
-                                                                    #airport_code="ngModel" [filter]="true" filterBy="airport_desc"
-                                                                    [showClear]="true" [(ngModel)]="selectedAirport3" placeholder="Select airport">
+                                                                    #airport_code="ngModel" [filter]="true"
+                                                                    filterBy="airport_desc" [showClear]="true"
+                                                                    [(ngModel)]="selectedAirport3"
+                                                                    placeholder="Select airport">
                                                                     <ng-template pTemplate="selectedItem">
-                                                                        <div class="country-item country-item-value" *ngIf="selectedAirport3">
+                                                                        <div class="country-item country-item-value"
+                                                                            *ngIf="selectedAirport3">
                                                                             <div>{{selectedAirport3}}</div>
                                                                         </div>
                                                                     </ng-template>
@@ -3521,7 +3538,7 @@
                                                                     (optional)</label>
                                                                 <div class="position-relative">
                                                                     <input type="number"
-                                                                        placeholder="Enter Mass of Products"
+                                                                        placeholder="Enter Reference Id"
                                                                         name="reference_id" ngModel
                                                                         class="form-control Dashboard-tab text-white" />
                                                                 </div>
@@ -3531,12 +3548,13 @@
                                                         </div>
                                                         <div class="col-md-4">
                                                             <div class="mb-4" style="gap: 10px;">
-                                                                <label class=" ct_text_wrape">Business unit</label>
+                                                                <label class=" ct_text_wrape">Cost Centre</label>
                                                                 <p-dropdown
                                                                     class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
                                                                     ngModel [options]="busineessGrid"
-                                                                    optionLabel="units" optionValue="units"
-                                                                    name="businessunits" #return="ngModel">
+                                                                    optionLabel="cost_center_name"
+                                                                    optionValue="cost_center_name" name="businessunits"
+                                                                    #return="ngModel">
                                                                 </p-dropdown>
                                                             </div>
                                                         </div>
@@ -3612,12 +3630,13 @@
 
                                                         <div class="col-md-4">
                                                             <div class="mb-4" style="gap: 10px;">
-                                                                <label class=" ct_text_wrape">Business Unit</label>
+                                                                <label class=" ct_text_wrape">Cost Centre</label>
                                                                 <p-dropdown
                                                                     class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
                                                                     ngModel [options]="busineessGrid"
-                                                                    optionLabel="units" optionValue="units"
-                                                                    name="businessunits" #return="ngModel">
+                                                                    optionLabel="cost_center_name"
+                                                                    optionValue="cost_center_name" name="businessunits"
+                                                                    #return="ngModel">
                                                                 </p-dropdown>
                                                             </div>
                                                         </div>
@@ -3755,7 +3774,7 @@
                                                                     <input type="number"
                                                                         placeholder="Enter No. of passengers" ngModel
                                                                         class="form-control Dashboard-tab text-white"
-                                                                        name="no_of_passengers"  />
+                                                                        name="no_of_passengers" />
 
                                                                 </div>
                                                             </div>
@@ -3842,13 +3861,12 @@
                                                 <!-- <p-sortIcon field="subcatName"></p-sortIcon> -->
                                             </th>
                                             <th pSortableColumn="type"
-                                                *ngIf="categoryId != 3 && categoryId != 10 && categoryId != 11 && categoryId != 10 && categoryId != 12 && categoryId != 14  && categoryId != 15 && categoryId != 24 && categoryId !=25 && categoryId !=26">
+                                                *ngIf="categoryId != 3 && categoryId != 10 && categoryId != 11 && categoryId != 19 && categoryId != 10 && categoryId != 12 && categoryId != 14  && categoryId != 15 && categoryId != 24 && categoryId !=25 && categoryId !=26">
 
                                                 Type
                                                 <!-- <p-sortIcon field="catName"></p-sortIcon> -->
                                             </th>
-                                            <th pSortableColumn="type"
-                                                *ngIf="categoryId == 9">
+                                            <th pSortableColumn="type" *ngIf="categoryId == 9">
 
                                                 Sub Type
                                                 <!-- <p-sortIcon field="catName"></p-sortIcon> -->
@@ -3878,9 +3896,14 @@
                                                 <!-- <p-sortIcon field="catName"></p-sortIcon> -->
                                             </th>
                                             <th pSortableColumn="catName"
-                                                *ngIf="categoryId == 16 || categoryId == 21 || categoryId == 22 || categoryId == 23">
+                                                *ngIf="categoryId == 19">
+                                                 Category
+                                                
+                                            </th>
+                                            <th pSortableColumn="catName"
+                                                *ngIf="categoryId == 16 || categoryId == 19 || categoryId == 21 || categoryId == 22 || categoryId == 23">
                                                 Sub Category
-                                                <!-- <p-sortIcon field="catName"></p-sortIcon> -->
+                                                
                                             </th>
                                             <th pSortableColumn="catName" *ngIf="categoryId == 18">
                                                 Sub Activity
@@ -3904,6 +3927,13 @@
                                                 Franchise Space
                                                 <!-- <p-sortIcon field="catName"></p-sortIcon> -->
                                             </th>
+                                            <th *ngIf="categoryId==18"
+                                            pTooltip="Reading Value" tooltipPosition="top"
+                                            pSortableColumn="readingValue">
+                                            <!-- <p-sortIcon field="readingValue"></p-sortIcon> -->
+                                            Value
+
+                                        </th>
                                             <th pSortableColumn="catName"
                                                 *ngIf="categoryId == 16 || categoryId ==18 || categoryId == 21 ||categoryId == 22">
                                                 Scope 1 Emission
@@ -3960,6 +3990,10 @@
                                             </th>
                                             <th pSortableColumn="catName" *ngIf="categoryId == 12">
                                                 Waste Type
+                                                <!-- <p-sortIcon field="catName"></p-sortIcon> -->
+                                            </th>
+                                            <th pSortableColumn="catName" *ngIf="categoryId == 12">
+                                                Quantity
                                                 <!-- <p-sortIcon field="catName"></p-sortIcon> -->
                                             </th>
                                             <th pSortableColumn="catName" *ngIf="categoryId == 10 || categoryId == 17">
@@ -4073,34 +4107,34 @@
                                         </th> -->
                                             <th *ngIf="categoryId==2" pSortableColumn="noofairconnUnits"
                                                 pTooltip="Amount of refrigent used" tooltipPosition="top">
-                                                <!-- Refrigerant Amount <p-sortIcon field="noofairconnUnits"></p-sortIcon> -->
+                                                Refrigerant Amount <p-sortIcon field="noofairconnUnits"></p-sortIcon>
                                             </th>
                                             <th *ngIf="categoryId==3" pSortableColumn="numberOfExtinguisher"
                                                 pTooltip="Number Of Fire Extinguisher" tooltipPosition="top">
-                                                <!-- Extinguisher <p-sortIcon field="numberOfExtinguisher"></p-sortIcon> -->
+                                                Extinguisher <p-sortIcon field="numberOfExtinguisher"></p-sortIcon>
                                             </th>
                                             <th *ngIf="categoryId==3" pSortableColumn="quantityOfCO2makeup"
                                                 pTooltip="Quantity Of CO2 makeup" tooltipPosition="top">
-                                                <!-- CO2 MakeUp <p-sortIcon field="quantityOfCO2makeup"></p-sortIcon> -->
+                                                CO2 MakeUp <p-sortIcon field="quantityOfCO2makeup"></p-sortIcon>
                                             </th>
                                             <th *ngIf="categoryId==6" pSortableColumn="noOfVehicles" pTooltip="Trips"
                                                 tooltipPosition="top">
-                                                <!-- Trips per vehicle <p-sortIcon field="noOfVehicles"></p-sortIcon> -->
+                                                Trips per vehicle <p-sortIcon field="noOfVehicles"></p-sortIcon>
                                             </th>
                                             <th *ngIf="categoryId==6" pSortableColumn="noOfVehicles"
                                                 pTooltip="Number Of Vehicles" tooltipPosition="top">
-                                                <!-- No of Vehicles <p-sortIcon field="noOfVehicles"></p-sortIcon> -->
+                                                No of Vehicles <p-sortIcon field="noOfVehicles"></p-sortIcon>
                                             </th>
                                             <th *ngIf="categoryId==6" pSortableColumn="modeOfDE"
                                                 pTooltip="Mode Of data entry" tooltipPosition="top">
-                                                <!-- Mode <p-sortIcon field="modeOfDE"></p-sortIcon> -->
+                                                Mode <p-sortIcon field="modeOfDE"></p-sortIcon>
                                             </th>
                                             <th *ngIf="categoryId==6" pSortableColumn="amount">
-                                                <!-- Value <p-sortIcon field="amount"></p-sortIcon> -->
+                                                Value <p-sortIcon field="amount"></p-sortIcon>
                                             </th>
                                             <th pSortableColumn="unit"
                                                 *ngIf="categoryId !=24 && categoryId !=25  && categoryId !=26">
-                                                <!-- Unit <p-sortIcon field="unit"></p-sortIcon> -->
+                                                Unit <p-sortIcon field="unit"></p-sortIcon>
                                             </th>
 
 
@@ -4141,7 +4175,7 @@
                                                 *ngIf="categoryId != 8 && categoryId != 7 && categoryId != 10 && categoryId != 12 && categoryId != 14 && categoryId != 15 && categoryId != 16 && categoryId != 17 && categoryId != 18 && categoryId != 19 && categoryId != 20 && categoryId !=21 && categoryId !=22 && categoryId !=11 && categoryId !=23 && categoryId !=24 && categoryId != 25 && categoryId != 26">
                                                 {{ de.subcatName }}</td>
                                             <td
-                                                *ngIf="categoryId != 3 && categoryId != 10 && categoryId != 11 && categoryId != 12 && categoryId != 14 && categoryId != 15  &&  categoryId != 24 && categoryId != 16 && categoryId !=18 && categoryId !=20 && categoryId !=21   && categoryId !=22 && categoryId !=23 && categoryId != 25 && categoryId != 26">
+                                                *ngIf="categoryId != 3 && categoryId != 10 && categoryId != 11 && categoryId != 12 && categoryId != 14 && categoryId != 15  &&  categoryId != 24 && categoryId != 16 && categoryId !=18 && categoryId !=19 && categoryId !=20 && categoryId !=21   && categoryId !=22 && categoryId !=23 && categoryId != 25 && categoryId != 26">
                                                 {{ de.TypeName || '-' }}</td>
 
                                             <td *ngIf="categoryId == 11 ">{{ de.water_treatment }}</td>
@@ -4150,6 +4184,8 @@
                                             <td *ngIf="categoryId == 22 ">{{ de.franchise_type }}</td>
                                             <td *ngIf="categoryId == 22 || categoryId == 23  ">{{ de.sub_category }}
                                             </td>
+                                            <td *ngIf="categoryId == 19">{{ de.type_name }}</td>
+                                            <td *ngIf="categoryId == 19">{{ de.productcategory_name }}</td>
                                             <td *ngIf="categoryId == 20 ">{{ de.subcategory }}</td>
                                             <td *ngIf="categoryId == 20 ">{{ de.combustion }}</td>
                                             <td *ngIf="categoryId == 20 ">{{ de.composing }}</td>
@@ -4164,6 +4200,7 @@
                                             <td
                                                 *ngIf="categoryId == 16 || categoryId ==18 || categoryId == 21 ||categoryId == 22 ||categoryId == 23">
                                                 {{ de.calculation_method }}</td>
+                                            <td *ngIf="categoryId == 18">{{ de.valueofsoldintermediate }}</td>
                                             <td *ngIf="categoryId == 16 || categoryId == 21 ||categoryId ==22">{{
                                                 de.franchise_space }}</td>
                                             <td *ngIf="categoryId == 18 ">{{ de.scope1emissions }}</td>
@@ -4184,6 +4221,7 @@
                                             <td *ngIf="categoryId == 14">{{ de.workingdays }}</td>
                                             <td *ngIf="categoryId == 12">{{ de.method }}</td>
                                             <td *ngIf="categoryId == 12">{{ de.waste_type }}</td>
+                                            <td *ngIf="categoryId == 12">{{ de.total_waste }}</td>
 
                                             <td *ngIf="categoryId == 10 || categoryId == 17">{{ de.vehicle_type }}</td>
                                             <td *ngIf="categoryId == 10 || categoryId == 17">{{ de.sub_category }}</td>
@@ -4334,7 +4372,7 @@
                                                 <p-sortIcon field="subcatName"></p-sortIcon>
                                             </th>
                                             <th pSortableColumn="type"
-                                                *ngIf="categoryId != 3 && categoryId != 10 && categoryId != 11 && categoryId != 10 && categoryId != 12 && categoryId != 14 && categoryId != 13 && categoryId != 25">
+                                                *ngIf="categoryId != 3 && categoryId != 10 && categoryId != 17 && categoryId != 11 && categoryId != 10 && categoryId != 12 && categoryId != 14 && categoryId != 13 && categoryId != 19 && categoryId != 25">
 
                                                 Type
                                                 <p-sortIcon field="catName"></p-sortIcon>
@@ -4357,7 +4395,11 @@
                                                 <p-sortIcon field="catName"></p-sortIcon>
                                             </th>
 
-                                            <th pSortableColumn="catName" *ngIf="categoryId == 10 || categoryId == 17">
+                                            <th pSortableColumn="catName" *ngIf="categoryId ==  19">
+                                                 Category
+                                                <p-sortIcon field="catName"></p-sortIcon>
+                                            </th>
+                                            <th pSortableColumn="catName" *ngIf="categoryId == 10 || categoryId == 17 || categoryId == 19">
                                                 Sub Category
                                                 <p-sortIcon field="catName"></p-sortIcon>
                                             </th>
@@ -4387,11 +4429,8 @@
                                                 <p-sortIcon field="catName"></p-sortIcon>
                                             </th>
 
-                                            <th pSortableColumn="catName" *ngIf="categoryId == 10 || categoryId == 17">
-                                                Sub Category
-                                                <p-sortIcon field="catName"></p-sortIcon>
-                                            </th>
-                                            <th pSortableColumn="sourceName" pTooltip="tCO2" tooltipPosition="top">
+                                            
+                                            <th pSortableColumn="sourceName">
                                                 Emission Factor
                                             </th>
                                             <th pSortableColumn="unit"
@@ -4407,22 +4446,28 @@
                                         <tr [pEditableRow]="de">
 
                                             <td *ngIf="categoryId == 8"> {{de.typeofpurchase}}</td>
+                                            <td *ngIf="categoryId == 19"> {{de.type_name}}</td>
+                                            <td *ngIf="categoryId == 19"> {{de.productcategory_name}}</td>
+                                            <td *ngIf="categoryId == 20"> {{de.waste_type_name}}</td>
                                             <td
                                                 *ngIf="categoryId != 8 && categoryId != 7 && categoryId != 10 && categoryId != 12 && categoryId != 14 && categoryId != 15 && categoryId != 16 && categoryId != 17 && categoryId != 18 && categoryId != 19 && categoryId != 20 && categoryId !=21 && categoryId !=22 && categoryId !=11 && categoryId !=23 && categoryId !=24 && categoryId != 25 && categoryId != 26">
                                                 {{ de.subcatName }}</td>
                                             <td
-                                                *ngIf="categoryId != 3 && categoryId != 10  && categoryId != 9 && categoryId != 11 && categoryId != 12 && categoryId != 14  &&  categoryId != 24 && categoryId != 16 && categoryId !=18 && categoryId !=20 && categoryId !=21   && categoryId !=22 && categoryId !=23 && categoryId != 25 && categoryId != 26">
+                                                *ngIf="categoryId != 3 && categoryId != 10 && categoryId != 17 && categoryId != 19  && categoryId != 9 && categoryId != 11 && categoryId != 12 && categoryId != 14 && categoryId != 15  &&  categoryId != 24 && categoryId != 16 && categoryId !=18 && categoryId !=20 && categoryId !=21   && categoryId !=22 && categoryId !=23 && categoryId != 25 && categoryId != 26">
                                                 {{ de.TypeName || '-' }}</td>
 
+                                            <td *ngIf="categoryId == 15 ">{{ de.typeof_homeoffice_name }}</td>
                                             <td *ngIf="categoryId == 11 ">{{ de.water_treatment }}</td>
                                             <td *ngIf="categoryId == 11 ">{{ de.water_supply }}</td>
+                                            <td *ngIf="categoryId == 22">{{ de.franchise_type }}
+                                            </td>
                                             <td *ngIf="categoryId == 22 || categoryId == 23  ">{{ de.sub_category }}
                                             </td>
 
                                             <td *ngIf="categoryId == 16 || categoryId == 21 ">{{ de.category }}</td>
                                             <td *ngIf="categoryId == 18">{{ de.intermediate_category }}</td>
                                             <td *ngIf="categoryId == 18">{{ de.sub_activity }}</td>
-                                            <td *ngIf="categoryId == 18">{{ de.processing_acitivity }}</td>
+                                            <!-- <td *ngIf="categoryId == 18">{{ de.processing_acitivity }}</td> -->
                                             <td *ngIf="categoryId == 16 || categoryId == 21">{{ de.sub_category }}</td>
                                             <td *ngIf="categoryId == 23">{{ de.investement_type }}</td>
 
@@ -4432,9 +4477,9 @@
 
                                             <td *ngIf="categoryId == 12">{{ de.waste_type }}</td>
 
-                                            <td *ngIf="categoryId == 10 || categoryId == 17">{{ de.vehicle_type }}</td>
-                                            <td *ngIf="categoryId == 10 || categoryId == 17">{{ de.sub_category }}</td>
-                                            <td *ngIf="categoryId == 10 || categoryId == 17">{{ de.distance_travelled_km
+                                             <td *ngIf="categoryId == 10 || categoryId == 17">{{ de.vehicle_type }}</td>
+                                            <td *ngIf="categoryId == 10 || categoryId == 17">{{ de.sub_category }}</td> 
+                                            <!-- <td *ngIf="categoryId == 10 || categoryId == 17">{{ de.distance_travelled_km
                                                 }}
                                             </td>
                                             <td *ngIf="categoryId == 10 || categoryId == 17">{{ de.mass_of_product_trans
@@ -4442,7 +4487,7 @@
                                             </td>
                                             <td *ngIf="categoryId == 10 || categoryId == 17">{{ de.storage_facility_type
                                                 }}
-                                            </td>
+                                            </td>  -->
 
                                             <td *ngIf="categoryId == 24">{{ de.flight_calc_mode }}
                                             </td>
@@ -4458,8 +4503,9 @@
                                             </td>
                                             <td *ngIf="categoryId == 26">{{ de.no_of_trips }}
                                             </td> -->
-                                            <td>{{de.emissionFactorUsed != 'NaN' ? de.emissionFactorUsed  : '-' }}</td>
-                                            <td *ngIf="categoryId !=24 && categoryId !=25  && categoryId !=26">{{
+                                            <td>{{de.emissionFactorUsed != 'NaN' ? de.emissionFactorUsed : '-' }}</td>
+                                            <td >kg
+                                                CO2e/{{
                                                 de.unit }}
                                             </td>
 

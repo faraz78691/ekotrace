@@ -10232,6 +10232,10 @@ h1.bft-edit-form-title {
   border: 2px solid #ddd;
 }
 
+.ct_remove_nowrape_850 li span {
+  white-space: normal !important;
+}
+
 .ct_seprate_page_div {
   margin-top: 30px;
   border: 1px solid #eee;

@@ -34,7 +34,7 @@ import { MenuItem, MessageService, ConfirmationService } from 'primeng/api';
 import { FileUpload } from 'primeng/fileupload';
 import { TabView } from 'primeng/tabview';
 import { countries } from '@/store/countrieslist';
-
+import { GroupService } from '@services/group.service';
 declare var $: any;
 
 @Component({
@@ -233,6 +233,7 @@ export class TrackingComponent {
     marketTypes: any[] = [];
     marketEElecID: any;
     templateLinks: string;
+    processingUnit: string;
     haveBasicPackage: number = 0;
 
 
@@ -280,6 +281,7 @@ export class TrackingComponent {
         private facilityService: FacilityService,
         private trackingService: TrackingService,
         private themeservice: ThemeService,
+        private GroupService: GroupService,
         private notification: NotificationService,
         private toastr: ToastrService,
         private confirmationService: ConfirmationService
@@ -1474,13 +1476,15 @@ export class TrackingComponent {
             else {
                 this.VehicleDE.modeofDEID = 2;
             }
+            console.log(this.VehicleDE.modeOfDE);
             let formData = new URLSearchParams();
             formData.set('NoOfVehicles', this.VehicleDE.noOfVehicles.toString());
             formData.set('TotalnoOftripsPerVehicle', this.VehicleDE.totalnoOftripsPerVehicle.toString());
-            formData.set('ModeofDEID', this.VehicleDE.modeOfDE);
+            formData.set('ModeofDEID', form.value.modeName);
             formData.set('Value', this.VehicleDE.value.toString());
             formData.set('vehicleTypeID', this.VehicleDE.vehicleTypeID.toString());
             formData.set('unit', this.dataEntry.unit);
+            formData.set('charging_outside', this.VehicleDE.chargingPerc);
             formData.set('facilities', this.facilityID);
             formData.set('months', monthString);
             formData.set('year', this.dataEntry.year);
@@ -1714,6 +1718,9 @@ export class TrackingComponent {
                 formData.set('sub_category', this.subVehicleCategoryValue);
                 formData.set('noOfVehicles', form.value.noOfVehicles);
                 formData.set('mass_of_products', form.value.mass_of_products);
+                formData.set('mass_unit', form.value.mass_unit);
+                formData.set('distance_unit', form.value.distance_unit);
+                formData.set('area_occupied_unit', form.value.area_unit);
                 formData.set('distanceInKms', form.value.distanceInKms);
                 formData.set('storagef_type', form.value.storage_type);
                 formData.set('area_occupied', form.value.area_occupied);
@@ -1725,12 +1732,15 @@ export class TrackingComponent {
                 formData.set('storagef_type', form.value.storage_type);
                 formData.set('area_occupied', form.value.area_occupied);
                 formData.set('averageNoOfDays', form.value.averageNoOfDays);
+                formData.set('area_occupied_unit', form.value.area_unit);
                 formData.set('facility_id', this.facilityID);
                 formData.set('month', monthString);
                 formData.set('year', this.dataEntry.year);
             } else if (this.vehcilestransporationchecked == true) {
                 formData.set('vehicle_type', this.selectedVehicleType);
                 formData.set('sub_category', this.subVehicleCategoryValue);
+                formData.set('mass_unit', form.value.mass_unit);
+                formData.set('distance_unit', form.value.distance_unit);
                 formData.set('noOfVehicles', form.value.noOfVehicles);
                 formData.set('mass_of_products', form.value.mass_of_products);
                 formData.set('distanceInKms', form.value.distanceInKms);
@@ -2834,7 +2844,7 @@ export class TrackingComponent {
                 formData.set('flight_class', form.value.classs);
                 formData.set('no_of_trips', form.value.no_of_trips);
                 formData.set('return_flight', form.value.return);
-                formData.set('business_unit', form.value.businessunits);
+                formData.set('cost_centre', form.value.businessunits);
                 formData.set('batch', this.batchId);
                 formData.set('month', monthString);
                 formData.set('year', this.dataEntry.year);
@@ -2848,7 +2858,7 @@ export class TrackingComponent {
                 formData.set('no_of_passengers', form.value.no_of_passengers);
                 formData.set('return_flight', form.value.return);
                 formData.set('reference_id', form.value.reference_id);
-                formData.set('business_unit', form.value.businessunits);
+                formData.set('cost_centre', form.value.businessunits);
                 formData.set('batch', this.batchId);
                 formData.set('month', monthString);
                 formData.set('year', this.dataEntry.year);
@@ -2861,7 +2871,7 @@ export class TrackingComponent {
                 formData.set('no_of_passengers', form.value.no_of_passengers);
                 formData.set('return_flight', form.value.return);
                 formData.set('reference_id', form.value.reference_id);
-                formData.set('business_unit', form.value.businessunits);
+                formData.set('cost_centre', form.value.businessunits);
                 formData.set('batch', this.batchId);
                 formData.set('month', monthString);
                 formData.set('year', this.dataEntry.year);
@@ -3055,6 +3065,32 @@ export class TrackingComponent {
         })
     };
 
+
+    CostCentre() {
+        //   let formData = new URLSearchParams();
+    
+        //   formData.set('tenant_id', tenantID.toString());
+    
+        this.GroupService.getCostCentre().subscribe({
+          next: (response) => {
+    
+            if (response.success == true) {
+              this.busineessGrid = response.categories;
+              if (this.busineessGrid.length > 0) {
+      
+             
+              } else {
+             
+              }
+       
+            }
+          },
+          error: (err) => {
+            console.error('errrrrrr>>>>>>', err);
+          },
+          complete: () => console.info('Group Added')
+        });
+      };
 
     //retrieves assigned data points for a facility and handles the response to update the UI accordingly.
     GetAssignedDataPoint(facilityID: number) {
@@ -3318,11 +3354,12 @@ export class TrackingComponent {
         this.equityInvestmentRow = false;
 
         if (this.categoryId == 24) {
+
             this.ModeSelected = false;
             this.categoryName = 'Flight'
             this.SubCatAllData.subCatName = 'Flight'
             this.getFlightType();
-            this.getBusineesUnit();
+            this.CostCentre();
 
             // this.getSubFranchiseCategory('Banking Financial Services');
             // this.getVehicleTypes();
@@ -4279,7 +4316,7 @@ export class TrackingComponent {
             this.flightDisplay1 = 'block'
             this.flightDisplay2 = 'none'
             this.flightDisplay3 = 'none'
-            this.getBusineesUnit();
+            this.CostCentre();
         } else if (this.selectedflightsTravel == 'To/From') {
             this.getAirportCodes()
             this.flightDisplay2 = 'block'
@@ -4586,10 +4623,10 @@ export class TrackingComponent {
 
     setUnit() {
         if (this.VehicleDE.modeOfDE == 'Average distance per trip') {
-            this.dataEntry.unit = "km"
+            this.dataEntry.unit = "Km"
         }
         else {
-            this.dataEntry.unit = "litre"
+            this.dataEntry.unit = "Litre"
         }
     };
 

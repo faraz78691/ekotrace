@@ -52,7 +52,7 @@
                     <div class="ct_colo_2 col-md-6 mb-3" *ngFor="let fItems of topFIveE">
                         <div class="ct_total_emission_card">
                             <!-- <p class="mb-2"><strong>1</strong></p> -->
-                            <h2>{{fItems.emission}}</h2>
+                            <h2>{{fItems.emission | number:'1.3-3'}}</h2>
                             <p class="mb-2 ">tCO2e</p>
                             <button class="ct_scope_btn">{{fItems.scope}}</button>
                             <h6>{{fItems.category}}</h6>

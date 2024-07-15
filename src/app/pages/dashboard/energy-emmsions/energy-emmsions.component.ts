@@ -124,6 +124,7 @@ export class EnergyEmmsionsComponent {
   flightTypeTotal: any
   airTotal: any;
   activityTotal: any;
+  renewableTotal: any;
 
   constructor(private route: ActivatedRoute,
     private facilityService: FacilityService,
@@ -389,7 +390,7 @@ export class EnergyEmmsionsComponent {
      
       this.businessClass = result.renewable;
       this.labelScopeDonut2 = result.series;
-
+this.renewableTotal = result.totalEmssion;
       this.pieChart = {
         series: this.businessClass,
         chart: {

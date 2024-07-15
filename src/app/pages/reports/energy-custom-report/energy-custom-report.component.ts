@@ -420,9 +420,11 @@ export class EnergyCustomReportComponent {
 
     newgenerateReport() {
 
-        this.dataEntry.month = this.selectMonths.map((month) => month.value).join(', '); //this.getMonthName();
+        this.dataEntry.month = this.selectMonths.map((month) => month.value).join(','); //this.getMonthName();
         this.dataEntry.year = this.date.getFullYear().toString();
-        console.log(this.selectedCategory);
+        console.log(typeof(this.dataEntry.month));
+        const selectedMonths = this.dataEntry.month.split(',').map(month => `'${month}'`).join(',');
+       
         this.CustomReportData = [];
         const reportFormData = new URLSearchParams();
         // this.selectedCategory = 'Stationary Combustion';
@@ -516,7 +518,7 @@ export class EnergyCustomReportComponent {
         reportFormData.set('facility', this.selectedFacilityID)
         reportFormData.set('year', this.dataEntry.year)
         if(url != 'reportEmployeeCommuting' && url != 'reportHomeOffice' ){
-            reportFormData.set('month', this.dataEntry.month)
+            reportFormData.set('month', selectedMonths)
         }
       
         reportFormData.set('page', '1')
