@@ -130,7 +130,7 @@
                                 
                                 <p-dropdown class="ct_input_white_bg13 ct_select_2_drop_white ct_input_dark_text_145"
                                     [options]="Modes" defaultLabel="Select Data Points" [(ngModel)]="selectMode"
-                                    optionLabel="modeType" optionValue="id" name="datapoint"></p-dropdown>
+                                    optionLabel="modeType" optionValue="id" name="datapoint" (onChange)="getModesEntry()"></p-dropdown>
                             </div>
                         <div class=" ml-2 ct_calander_600_height_38">
                             <p-calendar class="ct_calender_input_1234   ct_calander_input_box_white_bg20" ngModel
@@ -323,57 +323,57 @@
                                     D.P
                                     <p-sortIcon field="subcatName"></p-sortIcon>
                                 </th>
-                                <th pSortableColumn="flightMode" *ngIf="selectedCategory == 24">
+                                <th pSortableColumn="flightMode" *ngIf="selectedCategory == 13 && this.selectMode == 1">
                                     Flight mode
                                     <p-sortIcon field="flightMode"></p-sortIcon>
                                 </th>
-                                <th pSortableColumn=" FlightType" *ngIf="selectedCategory == 24">
+                                <th pSortableColumn=" FlightType" *ngIf="selectedCategory == 13 && this.selectMode == 1">
                                     Flight Type
                                     <p-sortIcon field=" FlightType"></p-sortIcon>
                                 </th>
-                                <th pSortableColumn="Class" *ngIf="selectedCategory == 24">
+                                <th pSortableColumn="Class" *ngIf="selectedCategory == 13 && this.selectMode == 1">
                                     Flight Class
                                     <p-sortIcon field="Class"></p-sortIcon>
                                 </th>
-                                <th pSortableColumn="Nooftrips" *ngIf="selectedCategory == 24">
+                                <th pSortableColumn="Nooftrips" *ngIf="selectedCategory == 13 && this.selectMode == 1">
                                     No of Trips
                                     <p-sortIcon field="Nooftrips"></p-sortIcon>
                                 </th>
-                                <th pSortableColumn="Distance" *ngIf="selectedCategory == 24">
+                                <!-- <th pSortableColumn="Distance" *ngIf="selectedCategory == 24">
                                     Distance Travelled
                                     <p-sortIcon field="Distance"></p-sortIcon>
-                                </th>
-                                <th pSortableColumn="Countryofstay" *ngIf="selectedCategory == 25">
+                                </th> -->
+                                <th pSortableColumn="Countryofstay" *ngIf="selectedCategory == 13 && this.selectMode == 2">
                                     Country of Stay
                                     <p-sortIcon field="Countryofstay"></p-sortIcon>
                                 </th>
 
-                                <th pSortableColumn="typeHotel" *ngIf="selectedCategory == 25">
+                                <th pSortableColumn="typeHotel" *ngIf="selectedCategory == 13 && this.selectMode == 2">
                                     Type of Sotel
                                     <p-sortIcon field="typeHotel"></p-sortIcon>
                                 </th>
-                                <th pSortableColumn="no_of_occupied_rooms" *ngIf="selectedCategory == 25">
+                                <th pSortableColumn="no_of_occupied_rooms" *ngIf="selectedCategory == 13 && this.selectMode == 2">
                                     Occupied Rooms
                                     <p-sortIcon field="no_of_occupied_rooms"></p-sortIcon>
                                 </th>
-                                <th pSortableColumn="no_of_nights_per_room" *ngIf="selectedCategory == 25">
+                                <th pSortableColumn="no_of_nights_per_room" *ngIf="selectedCategory == 13 && this.selectMode == 2">
                                     Nights per Room
                                     <p-sortIcon field="no_of_nights_per_room"></p-sortIcon>
                                 </th>
 
-                                <th pSortableColumn="no_of_nights_per_room" *ngIf="selectedCategory == 26">
+                                <th pSortableColumn="no_of_nights_per_room" *ngIf="selectedCategory == 13 && this.selectMode == 3">
                                     Mode of Trasport
                                     <p-sortIcon field="no_of_nights_per_room"></p-sortIcon>
                                 </th>
-                                <th pSortableColumn="no_of_nights_per_room" *ngIf="selectedCategory == 26">
+                                <th pSortableColumn="no_of_nights_per_room" *ngIf="selectedCategory == 13 && this.selectMode == 3">
                                     No. of Passengers
                                     <p-sortIcon field="no_of_nights_per_room"></p-sortIcon>
                                 </th>
-                                <th pSortableColumn="distanceT" *ngIf="selectedCategory == 26">
+                                <th pSortableColumn="distanceT" *ngIf="selectedCategory == 13 && this.selectMode == 3">
                                     Distance Travlled
                                     <p-sortIcon field="distanceT"></p-sortIcon>
                                 </th>
-                                <th pSortableColumn="no_of_trips" *ngIf="selectedCategory == 26">
+                                <th pSortableColumn="no_of_trips" *ngIf="selectedCategory == 13 && this.selectMode == 3">
                                     No of Trips
                                     <p-sortIcon field="no_of_trips"></p-sortIcon>
                                 </th>
@@ -547,7 +547,7 @@
                                 <td *ngIf="selectedCategory == 12">{{ de.method }}</td>
                                 <td *ngIf="selectedCategory == 12">{{ de.waste_type }}</td>
                                 <td
-                                    *ngIf="selectedCategory != 8 && selectedCategory != 7 && selectedCategory != 10 && selectedCategory != 12 && selectedCategory != 14 && selectedCategory != 15 && selectedCategory != 16 && selectedCategory != 17 && selectedCategory != 18 && selectedCategory != 19 && selectedCategory != 20 && selectedCategory !=21 && selectedCategory !=22 && selectedCategory !=11 && selectedCategory !=23 && selectedCategory !=24 && selectedCategory != 25 && selectedCategory != 26">
+                                    *ngIf="selectedCategory != 8 && selectedCategory != 7 && selectedCategory != 10 && selectedCategory != 12 && selectedCategory != 13 && selectedCategory != 14 && selectedCategory != 15 && selectedCategory != 16 && selectedCategory != 17 && selectedCategory != 18 && selectedCategory != 19 && selectedCategory != 20 && selectedCategory !=21 && selectedCategory !=22 && selectedCategory !=11 && selectedCategory !=23 && selectedCategory !=24 && selectedCategory != 25 && selectedCategory != 26">
                                     {{ de.subcatName }}</td>
                                 <td *ngIf="selectedCategory == 10 || selectedCategory == 17">{{ de.vehicle_type }}</td>
                                 <td *ngIf="selectedCategory == 10 || selectedCategory == 17">{{ de.sub_category }}</td>
@@ -560,32 +560,32 @@
                                 <td *ngIf="selectedCategory == 10 || selectedCategory == 17">{{ de.storage_facility_type
                                     }}
                                 </td>
-                                <td *ngIf="selectedCategory == 24">{{ de.flight_calc_mode }}
+                                <td *ngIf="selectedCategory == 13 && this.selectMode ==1">{{ de.flight_calc_mode }}
                                 </td>
-                                <td *ngIf="selectedCategory == 24">{{ de.flight_Type }}
+                                <td *ngIf="selectedCategory == 13 && this.selectMode ==1">{{ de.flight_Type }}
                                 </td>
-                                <td *ngIf="selectedCategory == 24">{{ de.flight_Class }}
+                                <td *ngIf="selectedCategory == 13 && this.selectMode ==1">{{ de.flight_Class }}
                                 </td>
-                                <td *ngIf="selectedCategory == 24">{{ de.no_of_trips }}
+                                <td *ngIf="selectedCategory == 13 && this.selectMode ==1">{{ de.no_of_trips }}
                                 </td>
-                                <td *ngIf="selectedCategory == 24">{{ de.distance }}
+                                <!-- <td *ngIf="selectedCategory == 24">{{ de.distance }}
+                                </td> -->
+                                <td *ngIf="selectedCategory == 13 && this.selectMode ==2">{{ de.country_of_stay }}
                                 </td>
-                                <td *ngIf="selectedCategory == 25">{{ de.country_of_stay }}
+                                <td *ngIf="selectedCategory == 13 && this.selectMode ==2">{{ de.type_of_hotel }}
                                 </td>
-                                <td *ngIf="selectedCategory == 25">{{ de.type_of_hotel }}
+                                <td *ngIf="selectedCategory == 13 && this.selectMode ==2">{{ de.no_of_occupied_rooms }}
                                 </td>
-                                <td *ngIf="selectedCategory == 25">{{ de.no_of_occupied_rooms }}
-                                </td>
-                                <td *ngIf="selectedCategory == 25">{{ de.no_of_nights_per_room }}
+                                <td *ngIf="selectedCategory == 13 && this.selectMode ==2">{{ de.no_of_nights_per_room }}
                                 </td>
 
-                                <td *ngIf="selectedCategory == 26">{{ de.mode_of_trasport }}
+                                <td *ngIf="selectedCategory == 13 && this.selectMode ==3">{{ de.mode_of_trasport }}
                                 </td>
-                                <td *ngIf="selectedCategory == 26">{{ de.no_of_passengers }}
+                                <td *ngIf="selectedCategory == 13 && this.selectMode ==3">{{ de.no_of_passengers }}
                                 </td>
-                                <td *ngIf="selectedCategory == 26">{{ de.distance_travelled }}
+                                <td *ngIf="selectedCategory == 13 && this.selectMode ==3">{{ de.distance_travelled }}
                                 </td>
-                                <td *ngIf="selectedCategory == 26">{{ de.no_of_trips }}
+                                <td *ngIf="selectedCategory == 13 && this.selectMode ==3">{{ de.no_of_trips }}
                                 </td>
                                 <td>
                                     {{ de.year }}

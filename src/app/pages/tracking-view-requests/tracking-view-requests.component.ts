@@ -36,7 +36,7 @@ export class TrackingViewRequestsComponent {
     flag;
     modeShow = false;
     AssignedDataPoint: TrackingDataPoint[] = [];;
-    dataEntriesPending: PendingDataEntries;
+    dataEntriesPending: PendingDataEntries[]=[];
     selectedEntry: PendingDataEntries[] = [];
     selectedScEntry: StationaryCombustionDE;
     selectedObjectEntry: selectedObjectEntry;
@@ -87,6 +87,7 @@ export class TrackingViewRequestsComponent {
     AllCategory: ManageDataPointCategory[] = [];
     mandatorySCDP: any[] = [];
     mandatoryRefDP: any[] = [];
+    BusinessEntires: any[] = [];
     mandatoryFireDP: any[] = [];
     mandatoryVehicleDP: any[] = [];
     mandatoryElecDP: any[] = [];
@@ -292,7 +293,7 @@ export class TrackingViewRequestsComponent {
                             if (Array.isArray(this.dataEntriesPending)) {
                                 for (var i = 0; i < this.mandatorySCDP.length; i++) {
                                     for (var j = 0; j < this.dataEntriesPending.length; j++) {
-                                        if (this.dataEntriesPending[j].subCatName == this.mandatorySCDP[i].subCatName) {
+                                        if (this.dataEntriesPending[j]?.subCatName == this.mandatorySCDP[i].subCatName) {
 
                                         }
                                     }
@@ -1179,6 +1180,7 @@ export class TrackingViewRequestsComponent {
                         if (response.success === false) {
                             this.dataEntriesPending = null;
                         } else {
+                            this.BusinessEntires = response.categories
                             if (this.selectMode == 1) {
                                 this.dataEntriesPending = (response.categories).filter(items => items.tablename == 'flight_travel');
                             } else if (this.selectMode == 2) {
@@ -1189,7 +1191,7 @@ export class TrackingViewRequestsComponent {
                             } else {
                                 this.dataEntriesPending = response.categories;
                             }
-                            this.dataEntriesPending = response.categories;
+                            // this.dataEntriesPending = response.categories;
                             console.log("data entries =====>", this.dataEntriesPending)
                             if (Array.isArray(this.dataEntriesPending)) {
                                 for (let d of this.dataEntriesPending) {
@@ -3685,5 +3687,22 @@ export class TrackingViewRequestsComponent {
                 }
             });
     }
+
+
+    getModesEntry(){
+        if (this.selectMode == 1) {
+            this.dataEntriesPending =  this.BusinessEntires.filter(items => items.tablename == 'flight_travel');
+        } else if (this.selectMode == 2) {
+            this.dataEntriesPending = this.BusinessEntires.filter(items => items.tablename == 'hotel_stay');
+        } else if (this.selectMode == 3) {
+
+            this.dataEntriesPending = this.BusinessEntires.filter(items => items.tablename == 'other_modes_of_transport');
+        } else {
+            this.dataEntriesPending = this.dataEntriesPending;
+        }
+
+    }
+
+
 
 }

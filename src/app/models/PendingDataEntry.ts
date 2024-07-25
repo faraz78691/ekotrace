@@ -27,6 +27,7 @@ export class PendingDataEntries {
   blendPercent: number;
   refAmount: number;
   id:number;
+  subCatName:string
   // cO2LeakagePerUnit: number;
   // capacity: number;
   // leakagePerOfCapacity: number;

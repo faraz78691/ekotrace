@@ -77,7 +77,7 @@
                     <div class="ct_d_flex_1 ct_grey_brdr_btm1 pb-3 mb-3">
                         <div>
                             <h5 class="ct_font_16">Emssions by Cost centre</h5>
-                            <h3 class="ct_fs_24">5,887,34</h3>
+                            <h3 class="ct_fs_24">{{totalCostCentre}}</h3>
                             <p class="mb-0">tCO2e</p>
                         </div>
                        
@@ -96,7 +96,6 @@
                             <h5 class="ct_font_16">Travel Emissions  / month (tCO2e)</h5>
                             <!-- <p class="mb-0">FY 2023-2024</p> -->
                         </div>
-                       
                     </div>
                     <div id="ct_emission_by_month" *ngIf="chartOptions">
                         <apx-chart

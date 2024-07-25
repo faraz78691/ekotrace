@@ -17,6 +17,8 @@ import { BRSR_Doc, BRSR_Questions } from '@/models/brsrDOc';
 import { SendNotification } from '@/models/SendNotification';
 import { ConfirmationService } from 'primeng/api';
 import { brsrPrinciples } from '@/models/brsrPrinciples';
+import { TrackingService } from '@services/tracking.service';
+import { ToastrService } from 'ngx-toastr';
 @Component({
     selector: 'app-brsr-report',
     templateUrl: './brsr-report.component.html',
@@ -38,13 +40,20 @@ export class BrsrReportComponent {
     showUnansweredFields = false;
     focusedFieldIndex: number | null = null;
     public brsrTable14List: BRSR_Table14[] = [];
+    fileNameHR: string = '';
+    fileNameCS: string = '';
+    fileNameFD: string = '';
+    fileNameFDM: string = '';
+    file:File;
     constructor(
         private themeservice: ThemeService,
         private router: Router,
         private reportService: ReportService,
         private notification: NotificationService,//private brsrdata:BRSR_Doc
         private confirmationService: ConfirmationService,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private trackingService:TrackingService,
+        private toastr: ToastrService,
     ) {
         this.brsrQuestions = new BRSR_Doc;
         this.brsrdata = new BRSR_Doc();
@@ -61,6 +70,7 @@ export class BrsrReportComponent {
             let userInfo = localStorage.getItem('LoginInfo');
             let jsonObj = JSON.parse(userInfo); // string to "any" object first
             this.loginInfo = jsonObj as LoginInfo;
+            console.log(this.loginInfo);
         }
         this.updatedtheme = this.themeservice.getValue('theme');
         this.getQuestions();
@@ -68,7 +78,201 @@ export class BrsrReportComponent {
     }
     ngDoCheck() {
         this.updatedtheme = this.themeservice.getValue('theme');
+    };
+
+
+
+    onFileSelected(event: any, id:any): void {
+    this.file = event.target.files[0];
+      if (this.file && id == 1) {
+        this.fileNameHR = this.file.name;
+      }
+      else if (this.file && id == 1) {
+        this.fileNameFD = this.file.name;
+      }
+      else if (this.file && id == 1) {
+        this.fileNameCS = this.file.name;
+      }
+     else if (this.file && id == 1) {
+        this.fileNameFDM = this.file.name;
+      }
+    };
+
+    uploadFiles(name:string) {
+
+        if(name =='CS'){
+            const formData: FormData = new FormData();
+            formData.append('file', this.file, this.fileNameCS);
+            formData.append('tenant_id', this.loginInfo.tenantID.toString());
+       
+            this.trackingService.uploadBRSRCS(formData).subscribe({
+                next: (response) => {
+                    if (response) {
+                        this.toastr.success('Doc uploaded successfully');
+                     
+                    } else {
+                        // Handle the case when the file upload was not successful
+                        this.toastr.error('Doc uploaded failed');
+                    }
+                },
+                error: (err) => {
+                    if (
+                        err.error.message ===
+                        'File size exceeds the allowed limit'
+                    ) {
+                        this.notification.showError(
+                            'File is too large to upload',
+                            ''
+                        );
+                    } else if (
+                        err.error.message ===
+                        'Only PNG, JPG and PDF files are allowed'
+                    ) {
+                        this.notification.showError(
+                            'Only PNG and JPG files are allowed',
+                            ''
+                        );
+                    } else {
+                        // Handle other errors
+                        console.error('errrrr', err);
+                    }
+                    this.toastr.error('Doc upload failed');
+                    // Handle the error
+                    console.log('Error-->>: ', JSON.stringify(err));
+                }
+            });
+        }else if(name == 'HR'){
+            const formData: FormData = new FormData();
+            formData.append('file', this.file, this.fileNameHR);
+            formData.append('tenant_id', this.loginInfo.tenantID.toString());
+       
+            this.trackingService.uploadBRSRHR(formData).subscribe({
+                next: (response) => {
+                    if (response) {
+                        this.toastr.success('Doc uploaded successfully');
+                     
+                    } else {
+                        // Handle the case when the file upload was not successful
+                        this.toastr.error('Doc uploaded failed');
+                    }
+                },
+                error: (err) => {
+                    if (
+                        err.error.message ===
+                        'File size exceeds the allowed limit'
+                    ) {
+                        this.notification.showError(
+                            'File is too large to upload',
+                            ''
+                        );
+                    } else if (
+                        err.error.message ===
+                        'Only PNG, JPG and PDF files are allowed'
+                    ) {
+                        this.notification.showError(
+                            'Only PNG and JPG files are allowed',
+                            ''
+                        );
+                    } else {
+                        // Handle other errors
+                        console.error('errrrr', err);
+                    }
+                    this.toastr.error('Doc upload failed');
+                    // Handle the error
+                    console.log('Error-->>: ', JSON.stringify(err));
+                }
+            });
+        }else if(name =='FD'){
+            const formData: FormData = new FormData();
+            formData.append('file', this.file, this.fileNameFD);
+            formData.append('tenant_id', this.loginInfo.tenantID.toString());
+       
+            this.trackingService.uploadBRSRFD(formData).subscribe({
+                next: (response) => {
+                    if (response) {
+                        this.toastr.success('Doc uploaded successfully');
+                     
+                    } else {
+                        // Handle the case when the file upload was not successful
+                        this.toastr.error('Doc uploaded failed');
+                    }
+                },
+                error: (err) => {
+                    if (
+                        err.error.message ===
+                        'File size exceeds the allowed limit'
+                    ) {
+                        this.notification.showError(
+                            'File is too large to upload',
+                            ''
+                        );
+                    } else if (
+                        err.error.message ===
+                        'Only PNG, JPG and PDF files are allowed'
+                    ) {
+                        this.notification.showError(
+                            'Only PNG and JPG files are allowed',
+                            ''
+                        );
+                    } else {
+                        // Handle other errors
+                        console.error('errrrr', err);
+                    }
+                    this.toastr.error('Doc upload failed');
+                    // Handle the error
+                    console.log('Error-->>: ', JSON.stringify(err));
+                }
+            });
+        }else if(name == 'FCD'){
+            const formData: FormData = new FormData();
+            formData.append('file', this.file, this.fileNameFDM);
+            formData.append('tenant_id', this.loginInfo.tenantID.toString());
+       
+            this.trackingService.uploadBRSRCS(formData).subscribe({
+                next: (response) => {
+                    if (response) {
+                        this.toastr.success('Doc uploaded successfully');
+                     
+                    } else {
+                        // Handle the case when the file upload was not successful
+                        this.toastr.error('Doc uploaded failed');
+                    }
+                },
+                error: (err) => {
+                    if (
+                        err.error.message ===
+                        'File size exceeds the allowed limit'
+                    ) {
+                        this.notification.showError(
+                            'File is too large to upload',
+                            ''
+                        );
+                    } else if (
+                        err.error.message ===
+                        'Only PNG, JPG and PDF files are allowed'
+                    ) {
+                        this.notification.showError(
+                            'Only PNG and JPG files are allowed',
+                            ''
+                        );
+                    } else {
+                        // Handle other errors
+                        console.error('errrrr', err);
+                    }
+                    this.toastr.error('Doc upload failed');
+                    // Handle the error
+                    console.log('Error-->>: ', JSON.stringify(err));
+                }
+            });
+        }
+      
+
+          
+        
     }
+
+
+
  
    
    

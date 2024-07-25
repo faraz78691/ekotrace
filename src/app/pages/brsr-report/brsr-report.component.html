@@ -112,25 +112,45 @@
               </tr>
               <tr>    
                  <td scope="row"></td>
-                <td>  <a class="trackingsubmitb ct_green_text_120 d-block" href="assets/template.xlsx"
+                <td>  <a class="trackingsubmitb ct_green_text_120 d-block" href="assets/BRSR_Template_HR Dept.xlsx"
                     download="">Click here to
                     download template</a></td>
-                <td>  <a class="trackingsubmitb ct_green_text_120 d-block" href="assets/template.xlsx"
+                <td>  <a class="trackingsubmitb ct_green_text_120 d-block" href="assets/BRSR_Template_Finance Dept.xlsx"
                     download="">Click here to
                     download template</a></td>
-                <td>  <a class="trackingsubmitb ct_green_text_120 d-block" href="assets/template.xlsx"
+                <td>  <a class="trackingsubmitb ct_green_text_120 d-block" href="assets/BRSR_Template_Company Secretary.xlsx"
                     download="">Click here to
                     download template</a></td>
-                <td>  <a class="trackingsubmitb ct_green_text_120 d-block" href="assets/template.xlsx"
+                <td>  <a class="trackingsubmitb ct_green_text_120 d-block" href="assets/BRSR_Template_FM & Supply Chain.xlsx"
                     download="">Click here to
                     download template</a></td>
               </tr>
               <tr>    
                  <td scope="row"></td>
-                <td><button  class="LocButton ct_animation_btn_121">Upload</button></td>
-                <td><button  class="LocButton ct_animation_btn_121">Upload</button></td>
-                <td><button  class="LocButton ct_animation_btn_121">Upload</button></td>
-                <td><button  class="LocButton ct_animation_btn_121">Upload</button></td>
+                 <td>
+                  <input type="file" class="LocButton ct_animation_btn_121" (change)="onFileSelected($event , '1')">
+                  <span *ngIf="fileNameHR"> {{ fileNameHR }} </span>
+                </td>
+                 <td>
+                  <input type="file" class="LocButton ct_animation_btn_121" (change)="onFileSelected($event , '2')">
+                  <span *ngIf="fileNameFD"> {{ fileNameFD }} </span>
+                </td>
+                 <td>
+                  <input type="file" class="LocButton ct_animation_btn_121" (change)="onFileSelected($event , '3')">
+                  <span *ngIf="fileNameCS"> {{ fileNameCS }} </span>
+                </td>
+                 <td>
+                  <input type="file" class="LocButton ct_animation_btn_121" (change)="onFileSelected($event , '4')">
+                  <span *ngIf="fileNameFDM"> {{ fileNameFDM }} </span>
+                </td>
+              
+              </tr>
+              <tr>    
+                 <td scope="row"></td>
+                 <td><button  class="LocButton ct_animation_btn_121" (click)="uploadFiles('HR')">Submit</button></td>
+                 <td><button  class="LocButton ct_animation_btn_121" (click)="uploadFiles('FD')">Submit</button></td>
+                 <td><button  class="LocButton ct_animation_btn_121" (click)="uploadFiles('CS')">Submit</button></td>
+                 <td><button  class="LocButton ct_animation_btn_121" (click)="uploadFiles('aa')">Submit</button></td>
               </tr>
             </tbody>
           </table>

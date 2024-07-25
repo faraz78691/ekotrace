@@ -128,7 +128,8 @@ export class BusinessTravelComponent {
   groundTotal: any;
   flightTotal: any;
   flightTypeTotal: any
-  airTotal: any
+  airTotal: any;
+  totalCostCentre: any;
 
   constructor(private route: ActivatedRoute,
     private facilityService: FacilityService,
@@ -137,41 +138,7 @@ export class BusinessTravelComponent {
     this.year = new Date();
 
 
-    this.donotOptions3 = {
-      series: [21, 21, 13, 30],
-      chart: {
-        width: "100%",
-        height: 350,
-        type: "donut"
-      },
-      dataLabels: {
-        enabled: true
-      },
-      legend: {
-        position: "bottom",
-        fontSize: '15px',
-        floating: false,
-        horizontalAlign: 'left',
-
-      },
-      labels: [
-        "EAMC", "COST"
-      ],
-      colors: ['#F3722C', '#0068F2', '#FFD914'],
-      responsive: [
-        {
-          breakpoint: 480,
-          options: {
-            chart: {
-              width: 300
-            },
-            legend: {
-              position: "bottom"
-            }
-          }
-        }
-      ]
-    };
+   
 
   };
 
@@ -202,6 +169,7 @@ export class BusinessTravelComponent {
         this.totalEmissionByMonth(this.selectedFacility)
         this.emssionByTypeANDClass(this.selectedFacility)
         this.BygroundTravel(this.selectedFacility)
+        this.costCentre(this.selectedFacility)
 
       }
 
@@ -258,6 +226,55 @@ export class BusinessTravelComponent {
           }
         ]
       };
+
+    });
+  };
+  costCentre(facility) {
+  
+    let tenantId = this.loginInfo.tenantID;
+    const formData = new URLSearchParams();
+
+    // formData.set('year', this.year.getFullYear().toString());
+    formData.set('year', this.year.getFullYear().toString());
+    formData.set('facilities', facility);
+    this.dashboardService.BycostTravel(formData.toString()).subscribe((result: any) => {
+    console.log(result);
+    this.totalCostCentre = result.totalemssion;
+
+      this.donotOptions3 = {
+        series: result.series,
+        chart: {
+          width: "100%",
+          height: 350,
+          type: "donut"
+        },
+        dataLabels: {
+          enabled: true
+        },
+        legend: {
+          position: "bottom",
+          fontSize: '15px',
+          floating: false,
+          horizontalAlign: 'left',
+  
+        },
+        labels: result.cost_center,
+        colors: ['#F3722C', '#0068F2', '#FFD914'],
+        responsive: [
+          {
+            breakpoint: 480,
+            options: {
+              chart: {
+                width: 300
+              },
+              legend: {
+                position: "bottom"
+              }
+            }
+          }
+        ]
+      };
+      
 
     });
   };
@@ -548,6 +565,7 @@ export class BusinessTravelComponent {
     this.totalEmissionByMonth(this.selectedFacility)
     this.emssionByTypeANDClass(this.selectedFacility)
     this.BygroundTravel(this.selectedFacility)
+    this.costCentre(this.selectedFacility)
   };
 
 }

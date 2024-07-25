@@ -354,7 +354,19 @@ effect(()=>{
           [
               {
                   "id": 1,
-                  "type": "Equity investments"
+                  "type": "Equity investments - subsidiaries"
+              },
+              {
+                  "id": 1,
+                  "type": "Equity investments - associated companies"
+              },
+              {
+                  "id": 1,
+                  "type": "Equity investments - joint ventures"
+              },
+              {
+                  "id": 1,
+                  "type": "Equity investments - other investment"
               },
               {
                   "id": 2,
@@ -469,6 +481,8 @@ effect(()=>{
 
   //entrysave function to save dataentry
   EntrySave(form: NgForm) {
+console.log(this.investmentTypeValue.includes('Equity investments'));
+console.log(this.investmentTypeValue);
 
     if(this.loginInfo.role != 'Super Admin'){
         this.notification.showWarning('You are not allowed to set the tempalte', '');
@@ -498,7 +512,7 @@ effect(()=>{
 
           let formData = new URLSearchParams();
 
-          if (this.franchiseMethodValue == 'Investment Specific method' && this.investmentTypeValue == 'Equity investments') {
+          if (this.franchiseMethodValue == 'Investment Specific method' && this.investmentTypeValue.includes('Equity investments')) {
               formData.set('investment_type', form.value.investment_type);
               formData.set('category', form.value.investment_sector);
               formData.set('sub_category_id', form.value.broad_categoriesId);
@@ -509,7 +523,7 @@ effect(()=>{
               formData.set('facilities', fId);
             //   formData.set('month', monthString);
               formData.set('year', this.dataEntry.year);
-          } else if (this.investmentTypeValue == 'Equity investments' && this.franchiseMethodValue == 'Average data method') {
+          } else if (this.investmentTypeValue.includes('Equity investments') && this.franchiseMethodValue == 'Average data method') {
               formData.set('investment_type', form.value.investment_type);
               formData.set('category', form.value.investment_sector);
               formData.set('sub_category_id', form.value.broad_categoriesId);
@@ -750,20 +764,20 @@ effect(()=>{
       this.calculationRow = true;
       this.investmentTypeValue = energyMethod;
    
-      if (this.franchiseMethodValue == 'Investment Specific method' && this.investmentTypeValue == 'Equity investments') {
+      if (this.franchiseMethodValue == 'Investment Specific method' && this.investmentTypeValue.includes('Equity investments')) {
       
           this.equityInvestmentRow = true;
           this.franchiseMethod = true;
           this.averageMethod = false;
           this.debtInvesmentRow = false;
-      } else if (this.investmentTypeValue == 'Equity investments' && this.franchiseMethodValue == 'Average data method' && this.equityInvestmentRow == true) {
+      } else if (this.investmentTypeValue.includes('Equity investments') && this.franchiseMethodValue == 'Average data method' && this.equityInvestmentRow == true) {
       
         this.equityInvestmentRow = true;
           this.franchiseMethod = false;
           this.averageMethod = true;
           this.debtInvesmentRow = false;
       }
-      else if (this.investmentTypeValue == 'Equity investments' && this.franchiseMethodValue == 'Average data method' && this.equityInvestmentRow == false) {
+      else if (this.investmentTypeValue.includes('Equity investments') && this.franchiseMethodValue == 'Average data method' && this.equityInvestmentRow == false) {
 
           this.equityInvestmentRow = true;
             this.franchiseMethod = false;
@@ -798,12 +812,12 @@ effect(()=>{
   onInvestmentCalculationMethodChange(event: any) {
       const calMethod = event.value;
       this.franchiseMethodValue = calMethod;
-      if ( this.investmentTypeValue == 'Equity investments' && calMethod == 'Investment Specific method' ) {
+      if ( this.investmentTypeValue.includes('Equity investments') && calMethod == 'Investment Specific method' ) {
           this.equityInvestmentRow = true;
           this.franchiseMethod = true;
           this.averageMethod = false;
           this.debtInvesmentRow = false;
-      } else if (this.investmentTypeValue == 'Equity investments' && calMethod == 'Average data method') {
+      } else if (this.investmentTypeValue.includes('Equity investments') && calMethod == 'Average data method') {
           this.equityInvestmentRow = true;
           this.franchiseMethod = false;
           this.averageMethod = true;

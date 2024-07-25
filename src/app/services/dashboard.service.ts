@@ -387,6 +387,9 @@ export class DashboardService {
     public BygroundTravel(admininfo) {
         return this.http.post(this.apiURL + '/businessdashboardemssionBygroundTravel', admininfo);
     };
+    public BycostTravel(admininfo) {
+        return this.http.post(this.apiURL + '/dashboardCostcentreBreakdown', admininfo);
+    };
     public ByEnergyRenewable(admininfo) {
         return this.http.post(this.apiURL + '/dashboardenergyConsumptionRenewable', admininfo);
     };

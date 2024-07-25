@@ -208,8 +208,6 @@ export class TreeComponent {
                                 { type: 'textbox', label: 'Facility name', binding: 'facility_name', options:['select'] }
                                
                              
-                                   
-                                
                             ],
                             buttons: {
                                 edit: {

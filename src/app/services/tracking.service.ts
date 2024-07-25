@@ -132,6 +132,24 @@ export class TrackingService {
             Entries
         );
     };
+    public uploadBRSRCS(Entries:any) {
+        return this.http.post(
+            environment.baseUrl + '/uploadCsreport',
+            Entries
+        );
+    };
+    public uploadBRSRHR(Entries:any) {
+        return this.http.post(
+            environment.baseUrl + '/uploadHrreport',
+            Entries
+        );
+    };
+    public uploadBRSRFD(Entries:any) {
+        return this.http.post(
+            environment.baseUrl + '/uploadFdreport',
+            Entries
+        );
+    };
 
     public UpdaterefEntry(Entries: RefrigerantsDE[]) {
         return this.http.put(

@@ -1148,7 +1148,7 @@ export class TrackingComponent {
 
     //entrysave function to save dataentry
     EntrySave(form: NgForm) {
-        console.log(form.value);
+       
         this.dataEntry.month = this.selectMonths
             .map((month) => month.value)
             .join(', '); //this.getMonthName();
@@ -2066,6 +2066,7 @@ export class TrackingComponent {
             })
         }
         if (this.categoryId == 16) {
+            console.log(form.value.distanceUnit);
             var spliteedMonth = this.dataEntry.month.split(",");
             var monthString = JSON.stringify(spliteedMonth)
             console.log(monthString);
@@ -2116,6 +2117,7 @@ export class TrackingComponent {
                 formData.set('vehicle_subtype', form.value.subvehicle_type);
                 formData.set('no_of_vehicles', form.value.noOfVehicles);
                 formData.set('distance_travelled', form.value.distanceInKms);
+                formData.set('distance_unit', form.value.distanceUnit);
                 formData.set('is_vehicle', is_vehicle.toString());
                 formData.set('is_facility', is_facility.toString());
                 formData.set('facility_id', this.facilityID);
@@ -2133,6 +2135,7 @@ export class TrackingComponent {
                     formData.set('vehicle_subtype', form.value.subvehicle_type);
                     formData.set('no_of_vehicles', form.value.noOfVehicles);
                     formData.set('distance_travelled', form.value.distanceInKms);
+                    formData.set('distance_unit', form.value.distanceUnit);
                     formData.set('is_vehicle', is_vehicle.toString());
                     formData.set('is_facility', is_facility.toString());
                     formData.set('facility_id', this.facilityID);
@@ -2148,6 +2151,7 @@ export class TrackingComponent {
                     formData.set('vehicle_subtype', form.value.subvehicle_type);
                     formData.set('no_of_vehicles', form.value.noOfVehicles);
                     formData.set('distance_travelled', form.value.distanceInKms);
+                    formData.set('distance_unit', form.value.distanceUnit);
                     formData.set('is_vehicle', is_vehicle.toString());
                     formData.set('is_facility', is_facility.toString());
                     formData.set('facility_id', this.facilityID);
@@ -2576,6 +2580,7 @@ export class TrackingComponent {
                 formData.set('vehicle_subtype', form.value.subvehicle_type);
                 formData.set('no_of_vehicles', form.value.noOfVehicles);
                 formData.set('distance_travelled', form.value.distanceInKms);
+                formData.set('distance_unit', form.value.distanceDUnit);
                 formData.set('is_vehicle', is_vehicle.toString());
                 formData.set('is_facility', is_facility.toString());
                 formData.set('facility_id', this.facilityID);
@@ -2593,6 +2598,7 @@ export class TrackingComponent {
                     formData.set('vehicle_subtype', form.value.subvehicle_type);
                     formData.set('no_of_vehicles', form.value.noOfVehicles);
                     formData.set('distance_travelled', form.value.distanceInKms);
+                    formData.set('distance_unit', form.value.distanceDUnit);
                     formData.set('is_vehicle', is_vehicle.toString());
                     formData.set('is_facility', is_facility.toString());
                     formData.set('facility_id', this.facilityID);
@@ -2608,6 +2614,7 @@ export class TrackingComponent {
                     formData.set('vehicle_subtype', form.value.subvehicle_type);
                     formData.set('no_of_vehicles', form.value.noOfVehicles);
                     formData.set('distance_travelled', form.value.distanceInKms);
+                    formData.set('distance_unit', form.value.distanceDUnit);
                     formData.set('is_vehicle', is_vehicle.toString());
                     formData.set('is_facility', is_facility.toString());
                     formData.set('facility_id', this.facilityID);
@@ -2838,7 +2845,7 @@ export class TrackingComponent {
             var spliteedMonth = this.dataEntry.month.split(",");
             var monthString = JSON.stringify(spliteedMonth)
             let formData = new URLSearchParams();
-            console.log(this.storageTransporationChecked);
+         
             if (form.value.flightMode == 'Generic') {
                 formData.set('flight_calc_mode', form.value.flightMode);
                 formData.set('flight_type', form.value.flight_type);
@@ -3068,9 +3075,7 @@ export class TrackingComponent {
 
 
     CostCentre() {
-        //   let formData = new URLSearchParams();
-    
-        //   formData.set('tenant_id', tenantID.toString());
+      
     
         this.GroupService.getCostCentre().subscribe({
           next: (response) => {

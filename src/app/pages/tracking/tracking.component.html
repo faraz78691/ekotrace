@@ -92,8 +92,10 @@
                                                                             <div class="iicon">
                                                                                 <i *ngIf="head.catName == 'Stationary Combustion'"
                                                                                     class="fa fa-info-circle tooltip-icon"
-                                                                                    pTooltip="Direct emissions from owned or controlled stationary sources that use fossil fuels"
-                                                                                    tooltipPosition="top"
+                                                                                    pTooltip="Direct emissions from owned or controlled stationary sources that uses fossil fuels.
+                                                                                    Blend type – Blend % of bioethanol or biodiesel. Avg. blend is 7%. 
+                                                                                   Calorific value – Gross CV of fuel, if available
+                                                                                   " tooltipPosition="top"
                                                                                     style="color: #88ad47"></i>
                                                                                 <i *ngIf="head.catName == 'Refrigerants'"
                                                                                     class="fa fa-info-circle tooltip-icon"
@@ -102,22 +104,23 @@
                                                                                     style="color: #88ad47"></i>
                                                                                 <i *ngIf="head.catName == 'Company Owned Vehicles'"
                                                                                     class="fa fa-info-circle tooltip-icon"
-                                                                                    pTooltip="This section provides guidance on accounting for and calculating Scope 1 direct GHG emissions from owned or leased mobile sources (both on-road and non-road vehicles) that are within the company’s inventory boundaries. "
-                                                                                    tooltipPosition="top"
+                                                                                    pTooltip="Emissions from owned mobile sources (both on-road and non-road vehicles) that are within the company’s inventory boundaries.
+                                                                                    Charging outside % - Charging done outside company campus (%).
+                                                                                    " tooltipPosition="top"
                                                                                     style="color: #88ad47"></i>
                                                                                 <i *ngIf="head.catName == 'Fire Extinguisher'"
                                                                                     class="fa fa-info-circle tooltip-icon"
-                                                                                    pTooltip="This section provides guidance on accounting for and calculating Scope 1 direct GHG emissions from owned or leased mobile sources (both on-road and non-road vehicles) that are within the company’s inventory boundaries. "
+                                                                                    pTooltip="Direct emissions released into the atmosphere from the use and maintenance of fire extinguishers."
                                                                                     tooltipPosition="top"
                                                                                     style="color: #88ad47"></i>
                                                                                 <i *ngIf="head.catName == 'Electricity'"
                                                                                     class="fa fa-info-circle tooltip-icon"
-                                                                                    pTooltip="This section provides guidance on accounting for and calculating Scope 1 direct GHG emissions from owned or leased mobile sources (both on-road and non-road vehicles) that are within the company’s inventory boundaries. "
+                                                                                    pTooltip="Indirect emissions associated with the generation of purchased electricity used by a company."
                                                                                     tooltipPosition="top"
                                                                                     style="color: #88ad47"></i>
                                                                                 <i *ngIf="head.catName == 'Heat and Steam'"
                                                                                     class="fa fa-info-circle tooltip-icon"
-                                                                                    pTooltip="This section provides guidance on accounting for and calculating Scope 1 direct GHG emissions from owned or leased mobile sources (both on-road and non-road vehicles) that are within the company’s inventory boundaries. "
+                                                                                    pTooltip="Indirect emissions associated with the generation of heat and steam used by a company."
                                                                                     tooltipPosition="top"
                                                                                     style="color: #88ad47"></i>
                                                                             </div>
@@ -422,8 +425,67 @@
                                     <div class="ct_how_use_tooltip_main">
                                         <i class="fa-solid fa-circle-question" (click)="isHowtoUse = !isHowtoUse"></i>
                                         <div class="ct_how_use_tooltip_cnt" [ngClass]="isHowtoUse ? 'ct_active' : ''">
-                                            <p>
-                                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel.
+                                            <p *ngIf="categoryId ==1">
+                                                Stationary combustion: Emissions from the burning of fuels in stationary
+                                                sources owned or controlled by an organization. These sources include
+                                                equipment and systems that are fixed in place, such as boilers,
+                                                furnaces, turbines, and other types of heating and power-generating
+                                                equipment.
+                                                Liquid fuels: Emissions resulting from the combustion of liquid fuels in
+                                                stationary sources are a significant part of an organization’s overall
+                                                carbon footprint due to the widespread use of liquid fuels such as
+                                                gasoline, diesel, fuel oil, kerosene, and others.
+                                                Solid fuels: These fuels typically include coal, peat, and other solid
+                                                materials used for heating, power generation, or industrial processes.
+                                                Gaseous fuels: These fuels are typically in a gaseous state at normal
+                                                atmospheric conditions and include natural gas, propane, butane, and
+                                                other similar gases used for heating, power generation, and
+                                                transportation.
+                                                Biofuels: Biofuels are derived from renewable biomass sources such as
+                                                plant matter, agricultural residues, or waste materials.
+                                                Biomass: Biomass refers to organic materials derived from plants or
+                                                animals that can be used as fuel. This includes wood, agricultural
+                                                residues, animal waste, and dedicated energy crops.
+                                                Biogas: Biogas is a renewable energy source produced through the
+                                                anaerobic digestion or fermentation of organic materials such as
+                                                agricultural residues, food waste, sewage sludge, or energy crops.
+                                                To collect stationary combustion data for emissions in a company, follow
+                                                these steps:
+                                                Identify stationary combustion sources - Determine which equipment and
+                                                facilities generate emissions, such as: Boilers, Furnaces, Generators,
+                                                Heaters, Chillers
+                                                Collect fuel consumption data:
+                                                Fuel Purchase Records - Collect data from fuel purchase receipts and
+                                                invoices.
+                                                Usage Logs - Maintain logs of fuel usage in vehicles, machinery, and
+                                                equipment.
+                                                Meter Readings - Use meter readings for equipment that consumes liquid
+                                                fuels.
+                                                Operational Records - Document hours of operation for fuel-consuming
+                                                equipment
+                                                Relevant departments for collecting the data - Production department,
+                                                Operational department
+
+                                                How to use the tool for entering data emissions
+                                                Select the months and year for which you want to enter the emissions
+                                                data. If you select multiple months, same data will be replicated for
+                                                the months selected.
+                                                Once submitted, data is sent for approval. Manager of facility or the
+                                                admin has approval rights. Only the approved data is included in
+                                                emissions calculations. You can check the approval status in ‘Status’
+                                                tab
+                                                User can attach the bills, invoices as attachment for record purpose.
+
+                                                Guidance on input fields
+
+                                                Blend type – This is the blend% of biofuel (bioethanol / biodiesel).
+                                                Final emission factor is the weighted average of emission factor for
+                                                100% mineral petrol / diesel and biofuel. Average blend type assumes 7%
+                                                blend perc.
+
+                                                Calorific Value – If Gross CV of the fuel is entered, it overwrites the
+                                                average CV.
+
                                             </p>
                                         </div>
                                     </div>
@@ -1909,8 +1971,8 @@
                                                                 <p-dropdown
                                                                     class="ct_select_op_input ct_position_small_quantity"
                                                                     ngModel [options]="distanceTravelled"
-                                                                    optionLabel="unit" optionValue="unit" name="unit"
-                                                                    #units="ngModel">
+                                                                    optionLabel="unit" optionValue="unit"
+                                                                    name="distanceUnit" #units="ngModel">
                                                                 </p-dropdown>
 
                                                                 <!-- <p class="validation"
@@ -2846,8 +2908,8 @@
                                                                 <p-dropdown
                                                                     class="ct_select_op_input ct_position_small_quantity"
                                                                     ngModel [options]="distanceTravelled"
-                                                                    optionLabel="unit" optionValue="unit" name="unit"
-                                                                    #units="ngModel">
+                                                                    optionLabel="unit" optionValue="unit"
+                                                                    name="distanceDUnit" #units="ngModel">
                                                                 </p-dropdown>
                                                                 <!-- <p class="validation"
                                                                 *ngIf="distanceInKms.invalid && dataEntryForm.submitted">
@@ -3530,7 +3592,7 @@
                                                                         name="return"
                                                                         [ngModelOptions]="{standalone: true}"></p-inputSwitch>
                                                                 </div>
-                                                              
+
                                                             </div>
                                                         </div>
                                                         <div class="col-md-4">
@@ -3543,8 +3605,6 @@
                                                                         name="reference_id" ngModel
                                                                         class="form-control Dashboard-tab text-white" />
                                                                 </div>
-
-
                                                             </div>
                                                         </div>
                                                         <div class="col-md-4">
@@ -4433,8 +4493,7 @@
                                             <th pSortableColumn="sourceName">
                                                 Emission Factor
                                             </th>
-                                            <th pSortableColumn="unit"
-                                                *ngIf="categoryId !=24 && categoryId !=25  && categoryId !=26">
+                                            <th pSortableColumn="unit" *ngIf=" categoryId !=25  && categoryId !=26">
                                                 Unit <p-sortIcon field="unit"></p-sortIcon>
                                             </th>
                                             <th>User</th>
@@ -4504,7 +4563,7 @@
                                             <td *ngIf="categoryId == 26">{{ de.no_of_trips }}
                                             </td> -->
                                             <td>{{de.emissionFactorUsed != 'NaN' ? de.emissionFactorUsed : '-' }}</td>
-                                            <td>kg
+                                            <td *ngIf=" categoryId !=25  && categoryId !=26">kg
                                                 CO2e/{{
                                                 de.unit }}
                                             </td>
