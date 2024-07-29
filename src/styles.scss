@@ -2061,12 +2061,13 @@ input.ct_change_choose_file_input12::file-selector-button {
 .ct_how_use_tooltip_main i{
     color: rgba(136, 173, 71, 0.75);
     position: relative;
+    cursor: pointer;
 }
 .ct_how_use_tooltip_cnt {
     position: absolute;
     right: 25px;
     width: 100%;
-    max-width: 300px;
+    max-width: 900px;
     background-color: #eee;
     padding: 10px;
     border-radius: 10px;
@@ -2075,6 +2076,18 @@ input.ct_change_choose_file_input12::file-selector-button {
     top: 28px;
     font-size: 14px;
     display: none;
+    text-align: left;
+    min-width: 600px;
+    padding: 20px;
+    max-height: 620px;
+    overflow-y: auto;
+    height: auto;
+}
+.ct_how_use_tooltip_cnt ol {
+    padding-left: 10px;
+}
+.ct_how_use_tooltip_cnt ol li{
+    padding-top: 10px;
 }
 .ct_how_use_tooltip_cnt.ct_active{
     display: block;
@@ -2261,4 +2274,12 @@ input.ct_change_choose_file_input12::file-selector-button {
   }
   .ct_business_drop_12_main .p-accordion-content ul{
     margin-top: 10px;
+  }
+
+  @media screen and (max-width:575px){
+    .ct_how_use_tooltip_cnt{
+        min-width: 250px;
+        width: 250px;
+        max-width: 250px;
+    }
   }

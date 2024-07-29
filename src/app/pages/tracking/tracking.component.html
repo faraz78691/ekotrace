@@ -425,68 +425,240 @@
                                     <div class="ct_how_use_tooltip_main">
                                         <i class="fa-solid fa-circle-question" (click)="isHowtoUse = !isHowtoUse"></i>
                                         <div class="ct_how_use_tooltip_cnt" [ngClass]="isHowtoUse ? 'ct_active' : ''">
-                                            <p *ngIf="categoryId ==1">
-                                                Stationary combustion: Emissions from the burning of fuels in stationary
-                                                sources owned or controlled by an organization. These sources include
-                                                equipment and systems that are fixed in place, such as boilers,
-                                                furnaces, turbines, and other types of heating and power-generating
-                                                equipment.
-                                                Liquid fuels: Emissions resulting from the combustion of liquid fuels in
-                                                stationary sources are a significant part of an organization’s overall
-                                                carbon footprint due to the widespread use of liquid fuels such as
-                                                gasoline, diesel, fuel oil, kerosene, and others.
-                                                Solid fuels: These fuels typically include coal, peat, and other solid
-                                                materials used for heating, power generation, or industrial processes.
-                                                Gaseous fuels: These fuels are typically in a gaseous state at normal
-                                                atmospheric conditions and include natural gas, propane, butane, and
-                                                other similar gases used for heating, power generation, and
-                                                transportation.
-                                                Biofuels: Biofuels are derived from renewable biomass sources such as
-                                                plant matter, agricultural residues, or waste materials.
-                                                Biomass: Biomass refers to organic materials derived from plants or
-                                                animals that can be used as fuel. This includes wood, agricultural
-                                                residues, animal waste, and dedicated energy crops.
-                                                Biogas: Biogas is a renewable energy source produced through the
-                                                anaerobic digestion or fermentation of organic materials such as
-                                                agricultural residues, food waste, sewage sludge, or energy crops.
-                                                To collect stationary combustion data for emissions in a company, follow
-                                                these steps:
-                                                Identify stationary combustion sources - Determine which equipment and
-                                                facilities generate emissions, such as: Boilers, Furnaces, Generators,
-                                                Heaters, Chillers
-                                                Collect fuel consumption data:
-                                                Fuel Purchase Records - Collect data from fuel purchase receipts and
-                                                invoices.
-                                                Usage Logs - Maintain logs of fuel usage in vehicles, machinery, and
-                                                equipment.
-                                                Meter Readings - Use meter readings for equipment that consumes liquid
-                                                fuels.
-                                                Operational Records - Document hours of operation for fuel-consuming
-                                                equipment
-                                                Relevant departments for collecting the data - Production department,
-                                                Operational department
-
-                                                How to use the tool for entering data emissions
-                                                Select the months and year for which you want to enter the emissions
-                                                data. If you select multiple months, same data will be replicated for
-                                                the months selected.
-                                                Once submitted, data is sent for approval. Manager of facility or the
-                                                admin has approval rights. Only the approved data is included in
-                                                emissions calculations. You can check the approval status in ‘Status’
-                                                tab
-                                                User can attach the bills, invoices as attachment for record purpose.
-
-                                                Guidance on input fields
-
-                                                Blend type – This is the blend% of biofuel (bioethanol / biodiesel).
-                                                Final emission factor is the weighted average of emission factor for
-                                                100% mineral petrol / diesel and biofuel. Average blend type assumes 7%
-                                                blend perc.
-
-                                                Calorific Value – If Gross CV of the fuel is entered, it overwrites the
-                                                average CV.
-
+                                            <div *ngIf="categoryId ==1">
+                                               <p class="ct_fs_16 mb-1">Emissions from the burning of fuels in stationary sources owned or controlled by an organization. These sources include equipment and systems that are fixed in place, such as boilers, furnaces, turbines, and other types of heating and power-generating equipment.
                                             </p>
+                                            <ol>
+                                                <li>Liquid fuels: Emissions resulting from the combustion of liquid fuels in stationary sources are a significant part of an organization’s overall carbon footprint due to the widespread use of liquid fuels such as gasoline, diesel, fuel oil, kerosene, and others.
+                                                </li>
+                                                <li>Solid fuels: These fuels typically include coal, peat, and other solid materials used for heating, power generation, or industrial processes.
+                                                </li>
+                                                <li>Gaseous fuels: These fuels are typically in a gaseous state at normal atmospheric conditions and include natural gas, propane, butane, and other similar gases used for heating, power generation, and transportation.
+                                                </li>
+                                                <li>Biofuels: Biofuels are derived from renewable biomass sources such as plant matter, agricultural residues, or waste materials.
+                                                </li>
+                                                <li>Biomass: Biomass refers to organic materials derived from plants or animals that can be used as fuel. This includes wood, agricultural residues, animal waste, and dedicated energy crops. 
+                                                </li>
+                                                <li>Biogas: Biogas is a renewable energy source produced through the anaerobic digestion or fermentation of organic materials such as agricultural residues, food waste, sewage sludge, or energy crops.
+                                                </li>
+                                            </ol>
+
+                                            <h5 class="ct_fs_16 mb-0">To collect stationary combustion data for emissions in a company, follow these steps:
+                                            </h5>
+                                                <ol>
+                                                    <li>Identify stationary combustion sources - Determine which equipment and facilities generate emissions, such as: Boilers, Furnaces, Generators, Heaters, Chillers
+                                                    </li>
+                                                    <li>Collect fuel consumption data: 
+                                                        Fuel Purchase Records - Collect data from fuel purchase receipts and invoices.
+                                                        Usage Logs - Maintain logs of fuel usage in vehicles, machinery, and equipment.
+                                                        Meter Readings - Use meter readings for equipment that consumes liquid fuels.
+                                                        Operational Records - Document hours of operation for fuel-consuming equipment
+                                                        </li>
+                                                    <li>Relevant departments for collecting the data - Production department, Operational department
+                                                    </li>
+                                                </ol>
+                                                <h5 class="ct_fs_16  mb-0">How to use the tool for entering data emissions
+                                                </h5>
+                                                <ol>
+                                                    <li>Select the months and year for which you want to enter the emissions data. If you select multiple months, same data will be replicated for the months selected. 
+                                                    </li>
+                                                    <li>Once submitted, data is sent for approval. Manager of facility or the admin has approval rights. Only the approved data is included in emissions calculations. You can check the approval status in ‘Status’ tab
+                                                    </li>
+                                                    <li>User can attach the bills, invoices as attachment for record purpose.
+                                                    </li>
+                                                </ol>
+
+                                                <h5 class="ct_fs_16 ">Guidance on input fields</h5>
+                                                <p class="mb-1"><span class="ct_fw_600">Blend type –</span> This is the blend% of biofuel (bioethanol / biodiesel). Final emission factor is the weighted average of emission factor for 100% mineral petrol / diesel and biofuel. Average blend type assumes 7% blend perc.
+                                                </p>
+                                                <p class="mb-0"><span class="ct_fw_600">Calorific Value –</span> If Gross CV of the fuel is entered, it overwrites the average CV.
+                                                </p>
+                                               
+                                            </div>
+                                            <div *ngIf="categoryId ==2">
+                                                <p class="ct_fs_16"> Emissions from the use and leakage of refrigerants from equipment owned or controlled by an organization. These emissions are significant because many refrigerants have a high global warming potential (GWP), meaning they can trap much more heat in the atmosphere than carbon dioxide (CO2). Common agents include HVAC systems, refrigeration units, and vehicle air conditioning systems.
+
+                                             </p>
+                                             <h5 class="ct_fs_16  mb-0">To collect refrigerants data for emissions in a company, follow these steps:
+                                            </h5>
+                                            <ol>
+                                                <li>Inventory of Equipment - List all the equipment that uses refrigerants (e.g., HVAC systems, refrigeration units).
+                                                </li>
+                                                <li>Type of Refrigerant Used - Collect information on the specific types of refrigerants used in each piece of equipment.
+                                                </li>
+                                                <li>Quantity of Refrigerant - Amount of refrigerant in each piece of equipment and total quantities used, including any additions or top-ups.
+                                                </li>
+                                                <li>Leakage and Emissions Data - Records of refrigerant leaks, repairs, and the quantity of refrigerants emitted during maintenance or due to leaks.
+                                                </li>
+                                                <li>Purchase and Disposal Records - Data on the purchase of new refrigerants and the disposal of old or unused refrigerants
+                                                </li>
+                                                <li>Relevant departments for collecting the data - Environment, Health, and Safety/ Facilities Management department
+                                                </li>
+                                            </ol>
+                                            <p>
+                                                You can download the ‘Refrigerants Template’ to understand the breakdown of refrigerants usage.
+                                            </p>
+                                            <h5 class="ct_fs_16  mb-0">How to use the tool for entering data emissions
+                                            </h5>
+                                            <ol>
+                                                <li>Select the months and year for which you want to enter the emissions data. If you select multiple months, same data will be replicated for the months selected. 
+                                                </li>
+                                                <li>Once submitted, data is sent for approval. Manager of facility or the admin has approval rights. Only the approved data is included in emissions calculations. You can check the approval status in ‘Status’ tab
+                                                </li>
+                                                <li>User can attach the bills, invoices as attachment for record purpose.
+                                                </li>
+                                            </ol>
+                                             </div>
+                                             <div *ngIf="categoryId ==6">
+                                                <p class="ct_fs_16 mb-1">Vehicles that are owned, or otherwise controlled by an organization, and whose emissions result directly from fuel combustion. These vehicles are considered part of the organization's direct emissions sources.</p>
+                                                <ol>
+                                                    <li>
+                                                        Passenger vehicles: Emissions resulting from the operation of passenger cars owned or controlled by an organization. Eg. Company cars, executive vehicles, pool cars, etc
+                                                    </li>
+                                                    <li>
+                                                        Delivery Vehicles: Emissions resulting from the operation of delivery vehicles owned or controlled by an organization. These emissions primarily come from the combustion of fuels such as diesel or gasoline within the vehicle's engine. Eg: Trucks, vans etc.
+                                                    </li>
+                                                </ol>
+                                                <h5 class="ct_fs_16  mb-0">To collect emissions data for vehicles owned by company, follow these steps:
+                                                </h5>
+                                                <ol>
+                                                    <li>Fuel Consumption - Amount of fuel used by each vehicle, often tracked through fuel cards or receipts.
+                                                    </li>
+                                                    <li>Mileage - Distance travelled by each vehicle, typically recorded through odometer readings or GPS tracking systems.
+                                                    </li>
+                                                    <li>Vehicle Inventory - Details of the vehicles in the fleet, including model, engine size, and type of fuel used.
+                                                    </li>
+                                                    <li>
+                                                        Relevant departments for collecting the data - Transportation/ Facilities/ Operational Department
+                                                    </li>
+                                                </ol>
+                                                <h5 class="ct_fs_16  mb-0">How to use the tool for entering data emissions
+                                                </h5>
+                                                <ol>
+                                                    <li>
+                                                        Select the months and year for which you want to enter the emissions data. If you select multiple months, same data will be replicated for the months selected. 
+                                                    </li>
+                                                    <li>
+                                                        Once submitted, data is sent for approval. Manager of facility or the admin has approval rights. Only the approved data is included in emissions calculations. You can check the approval status in ‘Status’ tab
+                                                    </li>
+                                                    <li>
+                                                        User can attach the bills, invoices as attachment for record purpose.
+                                                    </li>
+                                                </ol>
+                                                <h5 class="ct_fs_16">Guidance on input fields
+                                                </h5>
+                                                <p class="mb-0">Charging outside% - For hybrid and EV vehicles, user need to specify the average % of times charging is done outside company campus. Charging inside the campus is considered part of Scope2 emissions.
+                                                </p>
+                                             </div>
+                                             <div *ngIf="categoryId ==3">
+                                                <p class="ct_fs_16 ">Emissions occur directly from the leakage or discharge of the extinguishing agents. The fire extinguishers must be owned or controlled by the organization. Common agents include halons, HFCs, and other fluorinated gases.
+                                                </p>
+                                                <h5 class="ct_fs_16  mb-0">To collect emissions data for fire extinguishers owned by company, follow these steps:
+                                                </h5>
+                                                <ol>
+                                                    <li>Number and types of fire extinguishers (e.g., CO₂, dry chemical, halon).
+                                                    </li>
+                                                    <li>Location of each fire extinguisher within the facility.
+                                                    </li>
+                                                    <li>Relevant departments for collecting the data - Environment, Health and Safety/ Facilities Management department
+                                                    </li>
+                                                </ol>
+                                                <p>You can download the ‘Fire Extinguisher Template’ to understand the breakdown of gas used.
+                                                </p>
+                                                <h5 class="ct_fs_16  mb-0">How to use the tool for entering data emissions
+                                                </h5>
+                                                <ol>
+                                                    <li>
+                                                        Select the months and year for which you want to enter the emissions data. If you select multiple months, same data will be replicated for the months selected. 
+                                                    </li>
+                                                    <li>Once submitted, data is sent for approval. Manager of facility or the admin has approval rights. Only the approved data is included in emissions calculations. You can check the approval status in ‘Status’ tab
+                                                    </li>
+                                                    <li>User can attach the bills, invoices as attachment for record purpose.
+                                                    </li>
+                                                </ol>
+                                                
+                                             </div>
+
+                                             <div *ngIf="categoryId ==5">
+                                                <p class="ct_fs_16 mb-1"> Emissions associated with the generation of purchased electricity used by a company. These emissions are indirect, as they occur outside of the company's direct operations, but are still related to its activities.
+                                                </p>
+                                                <ol>
+                                                    <li>
+                                                        <span class="ct_fw_600">Market-based:</span> This method considers specific purchasing decisions including contracts for renewable energy credits (RECs) or guarantees of origin (GOs), which allow organizations to report lower emissions if they purchase electricity from renewable sources.
+
+                                                    </li>
+                                                    <li>
+                                                        <span class="ct_fw_600">Location based:</span> This method calculates emissions based on the average emissions intensity of the grid where the electricity is consumed.
+
+                                                    </li>
+                                                </ol>
+                                                <h5 class="mb-0 ct_fs_16">To collect emissions data for electricity purchased by the company, follow these steps:
+                                                </h5>
+                                                <ol>
+                                                    <li>Utility Bills and Invoices- Obtain electricity bills from utility providers or invoices that detail the amount of electricity consumed during the reporting period.
+                                                    </li>
+                                                    <li>Meter Readings - Monitor and record meter readings regularly to track electricity consumption accurately.
+                                                    </li>
+                                                    <li>Relevant departments for collecting the data - Energy Management or Facilities Management Department
+                                                    </li>
+                                                </ol>
+                                                <h5 class="ct_fs_16 mb-0">How to use the tool for entering data emissions
+                                                </h5>
+                                                <ol>
+                                                    <li>Select the months and year for which you want to enter the electricity data. If you select multiple months, same data will be replicated for the months selected. 
+                                                    </li>
+                                                    <li>For ‘Location based’ electricity, user can either select country average for the grid factor or state-based grid factors where-ever the data is available
+                                                    </li>
+                                                    <li>
+                                                        For ‘Market based electricity’, RECs data is used to calculate avoided emissions.
+                                                    </li>
+                                                </ol>
+                                              
+                                                
+                                             </div>
+
+                                             <div *ngIf="categoryId ==7">
+                                                <p class="ct_fs_16 mb-1"> Indirect emissions associated with the generation of heat and steam used by a company. These emissions occur outside of the company's direct control, typically at the utility or energy generation level. Examples of Scope 2 emissions from heat and steam include:
+
+                                                </p>
+                                                <ol>
+                                                    <li>
+                                                        Steam generation for industrial processes
+                                                    </li>
+                                                    <li>
+                                                        Heating systems (e.g., boilers, furnaces)
+                                                    </li>
+                                                    <li>
+                                                        Cooling systems (e.g., chillers, air conditioning)
+                                                    </li>
+                                                </ol>
+                                                <h5 class="mb-0 ct_fs_16">To collect emissions data for heat and steam used by the company, follow these steps:
+                                                </h5>
+                                                <ol>
+                                                    <li>Identify Energy Sources - Determine the sources from which heat and steam are obtained (e.g., district heating, on-site boilers).
+
+                                                    </li>
+                                                    <li>Data Collection Methods - Obtain energy consumption data from utility bills or meters
+
+                                                    </li>
+                                                    <li>Relevant departments for collecting the data - Facilities Management 
+                                                    </li>
+                                                </ol>
+                                                <h5 class="ct_fs_16 mb-0">How to use the tool for entering data emissions
+                                                </h5>
+                                                <ol>
+                                                    <li>Select the months and year for which you want to enter the emissions data. If you select multiple months, same data will be replicated for the months selected. 
+                                                    </li>
+                                                    <li>Once submitted, data is sent for approval. Manager of facility or the admin has approval rights. Only the approved data is included in emissions calculations. You can check the approval status in ‘Status’ tab
+
+                                                    </li>
+                                                    <li>
+                                                        User can attach the bills, invoices as attachment for record purpose.
+                                                    </li>
+                                                </ol>
+                                              
+                                                
+                                             </div>
                                         </div>
                                     </div>
                                 </div>
