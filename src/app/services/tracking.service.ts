@@ -134,7 +134,7 @@ export class TrackingService {
     };
     public uploadBRSRCS(Entries:any) {
         return this.http.post(
-            environment.baseUrl + '/uploadCsreport',
+            environment.baseUrl + '/updatebrsrReport',
             Entries
         );
     };

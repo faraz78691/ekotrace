@@ -87,13 +87,13 @@ export class BrsrReportComponent {
       if (this.file && id == 1) {
         this.fileNameHR = this.file.name;
       }
-      else if (this.file && id == 1) {
+      else if (this.file && id == 2) {
         this.fileNameFD = this.file.name;
       }
-      else if (this.file && id == 1) {
+      else if (this.file && id == 3) {
         this.fileNameCS = this.file.name;
       }
-     else if (this.file && id == 1) {
+     else if (this.file && id == 4) {
         this.fileNameFDM = this.file.name;
       }
     };
@@ -103,7 +103,7 @@ export class BrsrReportComponent {
         if(name =='CS'){
             const formData: FormData = new FormData();
             formData.append('file', this.file, this.fileNameCS);
-            formData.append('tenant_id', this.loginInfo.tenantID.toString());
+            formData.append('type', '1');
        
             this.trackingService.uploadBRSRCS(formData).subscribe({
                 next: (response) => {
@@ -144,9 +144,9 @@ export class BrsrReportComponent {
         }else if(name == 'HR'){
             const formData: FormData = new FormData();
             formData.append('file', this.file, this.fileNameHR);
-            formData.append('tenant_id', this.loginInfo.tenantID.toString());
+            formData.append('type', '2');
        
-            this.trackingService.uploadBRSRHR(formData).subscribe({
+            this.trackingService.uploadBRSRCS(formData).subscribe({
                 next: (response) => {
                     if (response) {
                         this.toastr.success('Doc uploaded successfully');
@@ -185,9 +185,9 @@ export class BrsrReportComponent {
         }else if(name =='FD'){
             const formData: FormData = new FormData();
             formData.append('file', this.file, this.fileNameFD);
-            formData.append('tenant_id', this.loginInfo.tenantID.toString());
+            formData.append('type', '3');
        
-            this.trackingService.uploadBRSRFD(formData).subscribe({
+            this.trackingService.uploadBRSRCS(formData).subscribe({
                 next: (response) => {
                     if (response) {
                         this.toastr.success('Doc uploaded successfully');
@@ -226,7 +226,7 @@ export class BrsrReportComponent {
         }else if(name == 'FCD'){
             const formData: FormData = new FormData();
             formData.append('file', this.file, this.fileNameFDM);
-            formData.append('tenant_id', this.loginInfo.tenantID.toString());
+            formData.append('type', '4');
        
             this.trackingService.uploadBRSRCS(formData).subscribe({
                 next: (response) => {
