@@ -969,8 +969,8 @@ export class TrackingComponent {
         if (catID == 16) {
             this.getFranchiseType();
             this.getSubFranchiseCategory('Banking Financial Services');
-            this.getVehicleTypes();
-            this.getSubVehicleCategory(1)
+            this.getVehicleTypesLease();
+            this.getSubVehicleCategoryLease(15)
         }
         if (catID == 19) {
             this.getProductsEnergyCategory("1")
@@ -982,8 +982,8 @@ export class TrackingComponent {
         if (catID == 21) {
             this.getFranchiseType();
             this.getSubFranchiseCategory('Banking Financial Services');
-            this.getVehicleTypes();
-            this.getSubVehicleCategory(1)
+            this.getVehicleTypesLease();
+            this.getSubVehicleCategoryLease(15)
         }
         if (catID == 22) {
             this.getFranchiseType();
@@ -2171,8 +2171,8 @@ export class TrackingComponent {
                         this.averageMethod = false;
                         this.franchiseMethod = false;
                         this.dataEntryForm.reset();
-                        this.getSubVehicleCategory(1);
-                        this.getVehicleTypes();
+                        this.getSubVehicleCategoryLease(15);
+                        this.getVehicleTypesLease();
                         this.getFranchiseType();
                         this.getSubFranchiseCategory('Banking Financial Services');
                         // this.getStatusData(this.activeCategoryIndex)
@@ -2184,8 +2184,8 @@ export class TrackingComponent {
                         this.averageMethod = false;
                         this.franchiseMethod = false;
                         this.dataEntryForm.reset();
-                        this.getSubVehicleCategory(1);
-                        this.getVehicleTypes();
+                        this.getSubVehicleCategoryLease(15);
+                        this.getVehicleTypesLease();
                         this.getFranchiseType();
                         this.getSubFranchiseCategory('Banking Financial Services');
                     }
@@ -4256,11 +4256,24 @@ export class TrackingComponent {
     getVehicleTypes() {
         this.trackingService.getVehicleType().subscribe({
             next: (response) => {
-
+console.log("dg");
                 if (response.success == true) {
                     this.VehicleGrid = response.categories;
                     const selectedIndex = this.selectedVehicleIndex;
                     this.selectedVehicleType = this.VehicleGrid[selectedIndex - 1]?.vehicle_type
+
+                }
+            }
+        })
+    };
+    getVehicleTypesLease() {
+        this.trackingService.getVehicleTypeLease().subscribe({
+            next: (response) => {
+
+                if (response.success == true) {
+                    this.VehicleGrid = response.categories;
+                   console.log(this.VehicleGrid);
+                    this.selectedVehicleType = 'Cars'
 
                 }
             }
@@ -4274,8 +4287,34 @@ export class TrackingComponent {
         this.getSubVehicleCategory(selectedIndex)
     };
 
+    onVehicleTypeChangeLease(event: any) {
+
+        const selectedIndex = event.value;
+        console.log(this.dataEntryForm.value);
+      this.selectedVehicleType =  this.VehicleGrid.find(items =>items.id == selectedIndex).vehicle_type;
+        console.log(this.selectedVehicleType);
+        // this.selectedVehicleType = this.VehicleGrid[selectedIndex - 1].vehicle_type
+
+        this.getSubVehicleCategoryLease(selectedIndex)
+    };
+
     getSubVehicleCategory(categoryId: any) {
         this.trackingService.getSubVehicleCat(categoryId).subscribe({
+            next: (response) => {
+                // console.log(response);
+                if (response.success == true) {
+                    // this.VehicleGrid = response.categories;
+                    this.subVehicleCategory = response.categories;
+                    this.subVehicleCategoryValue = this.subVehicleCategory[0].vehicle_type
+
+
+                }
+            }
+        })
+    };
+
+    getSubVehicleCategoryLease(categoryId: any) {
+        this.trackingService.getSubVehicleCatLease(categoryId).subscribe({
             next: (response) => {
                 // console.log(response);
                 if (response.success == true) {

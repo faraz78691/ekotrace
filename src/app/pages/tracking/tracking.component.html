@@ -985,7 +985,7 @@
                                                         readingvalue id="search-input" type="text"
                                                         class="form-control Dashboard-tab text-white" />
                                                     <div class="ct_quantity_text">
-                                                        <p>{{dataEntry.unit}}</p>
+                                                        <p>kg CO2e/{{dataEntry.unit}}</p>
                                                     </div>
 
                                                 </div>
@@ -2114,7 +2114,7 @@
 
                                                         " ngModel [options]="VehicleGrid" optionLabel="vehicle_type"
                                                                 optionValue="id" name="vehicle_type"
-                                                                (onChange)="onVehicleTypeChange($event)">
+                                                                (onChange)="onVehicleTypeChangeLease($event)">
                                                             </p-dropdown>
                                                         </div>
                                                     </div>
@@ -3052,7 +3052,7 @@
 
                                                         " ngModel [options]="VehicleGrid" optionLabel="vehicle_type"
                                                                 optionValue="id" name="vehicle_type"
-                                                                (onChange)="onVehicleTypeChange($event)">
+                                                                (onChange)="onVehicleTypeChangeLease($event)">
                                                             </p-dropdown>
                                                         </div>
                                                     </div>

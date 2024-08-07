@@ -25,11 +25,12 @@
         class="ct_select_op_input ct_chev_icon_dark230 ct_select_2_300" ngModel [options]="list.familyDetails" optionLabel="family_name"
         optionValue="id" name="subCatType" #subCatType="ngModel" [(ngModel)]="selectedTemplateId" (onChange)="onTemplateChange($event)"
       ></p-dropdown>
+      <button (click)="showBasicDialog()" class="p-button ct_animation_btn_121 mr-2 py-2">Create Org. Tree</button>
+      <div class="p-button ct_animation_btn_121 mr-2 py-2" (click)="OnSave(selectedTemplateId)">Save</div>
     </ng-container>
-    <button (click)="showBasicDialog()" class="p-button ct_animation_btn_121 mr-2 py-2">Create Org. Tree</button>
         
    </div>
-    <div  id="tree"></div>
+    <div id="tree"></div>
 </div>
 
 

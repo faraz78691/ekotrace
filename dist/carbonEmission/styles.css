@@ -10138,13 +10138,14 @@ h1.bft-edit-form-title {
 .ct_how_use_tooltip_main i {
   color: rgba(136, 173, 71, 0.75);
   position: relative;
+  cursor: pointer;
 }
 
 .ct_how_use_tooltip_cnt {
   position: absolute;
   right: 25px;
   width: 100%;
-  max-width: 300px;
+  max-width: 900px;
   background-color: #eee;
   padding: 10px;
   border-radius: 10px;
@@ -10153,6 +10154,20 @@ h1.bft-edit-form-title {
   top: 28px;
   font-size: 14px;
   display: none;
+  text-align: left;
+  min-width: 600px;
+  padding: 20px;
+  max-height: 620px;
+  overflow-y: auto;
+  height: auto;
+}
+
+.ct_how_use_tooltip_cnt ol {
+  padding-left: 10px;
+}
+
+.ct_how_use_tooltip_cnt ol li {
+  padding-top: 10px;
 }
 
 .ct_how_use_tooltip_cnt.ct_active {
@@ -10323,6 +10338,14 @@ h1.bft-edit-form-title {
 
 .ct_business_drop_12_main .p-accordion-content ul {
   margin-top: 10px;
+}
+
+@media screen and (max-width: 575px) {
+  .ct_how_use_tooltip_cnt {
+    min-width: 250px;
+    width: 250px;
+    max-width: 250px;
+  }
 }
 /*!******************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[5].rules[0].oneOf[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[5].rules[0].oneOf[0].use[2]!./node_modules/ngx-toastr/toastr.css?ngGlobalStyle ***!

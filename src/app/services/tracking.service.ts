@@ -634,8 +634,14 @@ export class TrackingService {
     getVehicleType(): Observable<any> {
         return this.http.get(environment.baseUrl + '/vehicleCategories')
     };
+    getVehicleTypeLease(): Observable<any> {
+        return this.http.get(environment.baseUrl + '/vehicleCategories_lease')
+    };
     getSubVehicleCat(id:any): Observable<any> {
         return this.http.get(environment.baseUrl + `/vehicleSubCategories?id=${id}`)
+    };
+    getSubVehicleCatLease(id:any): Observable<any> {
+        return this.http.get(environment.baseUrl + `/vehicleSubCategories_lease?id=${id}`)
     };
 
     upStreamTransportation(formData: any): Observable<any> {
