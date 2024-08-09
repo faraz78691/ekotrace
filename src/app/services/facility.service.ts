@@ -70,6 +70,16 @@ export class FacilityService {
             environment.baseUrl + '/getFacilityByTenantId/' + tenantId
         );
     };
+    public getSubGroupsByTenantId(tenantId): Observable<any> {
+        return this.http.post<any>(
+            environment.baseUrl + '/getdashboardfacilitiessubgroup' , tenantId 
+        );
+    };
+    public getMainSubGroupByTenantId(tenantId): Observable<any> {
+        return this.http.get<any>(
+            environment.baseUrl + '/getFacilityByTenantIdMainGroup/' + tenantId 
+        );
+    };
 
     AddFacilites(facilities: facilities[]) {
         this.facilitiesSignal.set(facilities)

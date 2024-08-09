@@ -47,6 +47,8 @@ export class UserComponent {
     updatedtheme: string;
     rootUrl: string;
     uploadedImageUrl: string;
+    groupId: any;
+    payloadFacilityIds: any;
 
     constructor(
         private companyService: CompanyService,
@@ -72,10 +74,11 @@ export class UserComponent {
             this.loginInfo = jsonObj as LoginInfo;
         }
         // this.getTenantsDetailById(Number(this.loginInfo.tenantID));
-        this.GetAllFacility();
+        // this.GetAllFacility();
         this.GetAllUsers();
         this.GetAllRoles();
         this.updatedtheme = this.themeservice.getValue('theme');
+
     }
     // updates the updatedtheme variable with the current value of the 'theme'.
     ngDoCheck() {
@@ -98,10 +101,19 @@ export class UserComponent {
         });
     };
 
-      //Checks the facility ID and calls the GetAssignedDataPoint function with the provided ID.
-      checkFacilityID(id) {
-      
-      
+    //Checks the facility ID and calls the GetAssignedDataPoint function with the provided ID.
+    checkFacilityID() {
+        if (this.selectedRole == '525debfd-cd64-4936-ae57-346d57de3585') {
+            this.groupId = this.admininfo.facilityID['id'];
+            const stringfyIDs = JSON.stringify(this.admininfo.facilityID['ID']);
+            this.payloadFacilityIds = stringfyIDs;
+        } else {
+            const stringfyIDs = JSON.stringify([this.admininfo.facilityID.toString()]);
+            this.payloadFacilityIds = stringfyIDs;
+            console.log(this.payloadFacilityIds);
+        }
+        console.log(this.admininfo.facilityID);
+
 
         // this.GetAssignedDataPoint(id);
     };
@@ -128,23 +140,24 @@ export class UserComponent {
                 if (this.loginInfo.role == 'Manager') {
                     this.admininfo.facilityID = this.loginInfo.facilityID;
                 }
-         
-                const  formData = new URLSearchParams();
-                formData.set('email',this.admininfo.email)
-                formData.set('username',this.admininfo.username)
-                formData.set('password',this.admininfo.password)
-                formData.set('firstname',this.admininfo.firstname)
-                formData.set('lastname',this.admininfo.lastname)
-                formData.set('roleID',this.admininfo.roleID)
-                formData.set('tenantId',this.loginInfo.tenantID.toString())
-                formData.set('facilityID',this.admininfo.facilityID.toString())
-                formData.set('package_id',this.loginInfo.package_id.toString())
-                
+
+                const formData = new URLSearchParams();
+                formData.set('email', this.admininfo.email)
+                formData.set('username', this.admininfo.username)
+                formData.set('password', this.admininfo.password)
+                formData.set('firstname', this.admininfo.firstname)
+                formData.set('lastname', this.admininfo.lastname)
+                formData.set('roleID', this.admininfo.roleID)
+                formData.set('tenantId', this.loginInfo.tenantID.toString())
+                formData.set('facilityID', this.payloadFacilityIds)
+                formData.set('package_id', this.loginInfo.package_id.toString())
+                formData.set('group_id', this.groupId.toString())
+
 
                 this.UserService.newSaveUsers(formData).subscribe({
-                    next: (response:any) => {
+                    next: (response: any) => {
                         if (response) {
-                            if(response.success == true){
+                            if (response.success == true) {
                                 this.notification.showSuccess(
                                     'User Added successfully',
                                     'Success'
@@ -153,12 +166,12 @@ export class UserComponent {
                                 this.visible = false;
                                 this.isloading = false;
 
-                            }else{
+                            } else {
                                 this.notification.showError(
                                     response.message,
                                     ''
                                 );
-                          
+
                                 this.isloading = false;
                             }
                         }
@@ -184,16 +197,16 @@ export class UserComponent {
                     'Warning'
                 );
             } else {
-            
-                const  formData = new URLSearchParams();
-                formData.set('email',this.admininfo.email)
-                formData.set('username',this.admininfo.username)
-                formData.set('password',this.admininfo.password)
-                formData.set('firstname',this.admininfo.firstname)
-                formData.set('lastname',this.admininfo.lastname)
-                formData.set('roleID',this.admininfo.roleID)
-                formData.set('tenantId',this.loginInfo.tenantID.toString())
-                formData.set('facilityID',this.admininfo.facilityID.toString())
+
+                const formData = new URLSearchParams();
+                formData.set('email', this.admininfo.email)
+                formData.set('username', this.admininfo.username)
+                formData.set('password', this.admininfo.password)
+                formData.set('firstname', this.admininfo.firstname)
+                formData.set('lastname', this.admininfo.lastname)
+                formData.set('roleID', this.admininfo.roleID)
+                formData.set('tenantId', this.loginInfo.tenantID.toString())
+                formData.set('facilityID', this.admininfo.facilityID.toString())
                 this.UserService.NUpdateUsers(formData.toString()).subscribe({
                     next: (response) => {
                         this.notification.showSuccess(
@@ -224,52 +237,55 @@ export class UserComponent {
         const formData = new URLSearchParams();
         formData.set('tenantId', tenantId.toString())
         this.UserService.newgetUsers(formData.toString()).subscribe((result) => {
-           
-            if(result.length >0 ){
 
-            
-            this.admininfoList = result;
-            this.userdetails = this.admininfoList[0];
-            if (this.loginInfo.role == 'Super Admin') {
-                if (this.userdetails.role == 'Super Admin') {
-                    this.userdetails.isDisabledDelete = true;
+            if (result.length > 0) {
+
+
+                this.admininfoList = result;
+                this.userdetails = this.admininfoList[0];
+                if (this.loginInfo.role == 'Super Admin') {
+                    if (this.userdetails.role == 'Super Admin') {
+                        this.userdetails.isDisabledDelete = true;
+                    }
                 }
+                if (this.loginInfo.role == 'Manager') {
+                    if (
+                        this.userdetails.role == 'Admin' ||
+                        this.userdetails.role == 'Super Admin' || this.userdetails.role == 'Manager'
+                    ) {
+                        this.userdetails.isDisabledDelete = true;
+                        this.userdetails.isDisabledEdit = true;
+                    }
+                    if (this.userdetails.role == 'Approver' && this.userdetails.facilityID == this.loginInfo.facilityID) {
+
+                        this.userdetails.isDisabledDelete = true;
+                        this.userdetails.isDisabledEdit = true;
+                    }
+                    if (this.userdetails.role == 'Preparer' && this.userdetails.facilityID == this.loginInfo.facilityID) {
+
+                        this.userdetails.isDisabledDelete = true;
+                        this.userdetails.isDisabledEdit = true;
+                    }
+                }
+                this.unlock = this.userdetails.userID;
+            } else {
+                this.notification.showWarning(
+                    'Users not found',
+                    ''
+                );
             }
-            if (this.loginInfo.role == 'Manager') {
-                if (
-                    this.userdetails.role == 'Admin' ||
-                    this.userdetails.role == 'Super Admin' || this.userdetails.role == 'Manager'
-                ) {
-                    this.userdetails.isDisabledDelete = true;
-                    this.userdetails.isDisabledEdit = true;
-                }
-                if (this.userdetails.role == 'Approver' && this.userdetails.facilityID == this.loginInfo.facilityID) {
-
-                    this.userdetails.isDisabledDelete = true;
-                    this.userdetails.isDisabledEdit = true;
-                }
-                if (this.userdetails.role == 'Preparer' && this.userdetails.facilityID == this.loginInfo.facilityID) {
-
-                    this.userdetails.isDisabledDelete = true;
-                    this.userdetails.isDisabledEdit = true;
-                }
-            }
-            this.unlock = this.userdetails.userID;
-        }else{
-            this.notification.showWarning(
-                'Users not found',
-                ''
-            );
-        }
         });
-    }
+    };
+
+
+
 
     // ----Get all Roles of user in dropdown method ---
 
-     GetAllRoles() {
+    GetAllRoles() {
         this.UserService.newGetAllRoles().subscribe({
             next: (response: any) => {
-                
+
 
                 if (response.success == true) {
                     this.RolesList = response.categories;
@@ -285,7 +301,7 @@ export class UserComponent {
         });
 
 
-     
+
     };
     // RemoveElementFromArray(element: string) {
     //     this.RolesList.forEach((value, index) => {
@@ -301,6 +317,18 @@ export class UserComponent {
         let tenantId = this.loginInfo.tenantID;
         this.facilitydata = false;
         this.facilityService.newGetFacilityByTenant(tenantId).subscribe((response) => {
+            this.facilityList = response;
+            if (this.facilityList.length === 0) {
+                this.facilitydata = true;
+            }
+        });
+    }
+    GetGroups() {
+        let tenantId = this.loginInfo.tenantID;
+        this.facilitydata = false;
+        // const formData = new URLSearchParams();
+        // formData.set('tenantID', tenantId.toString())
+        this.facilityService.getMainSubGroupByTenantId(tenantId).subscribe((response) => {
             this.facilityList = response;
             if (this.facilityList.length === 0) {
                 this.facilitydata = true;
@@ -326,23 +354,23 @@ export class UserComponent {
     // ----Delete user Method ---
 
     deleteUser(event: Event, userid) {
-       
+
         this.confirmationService.confirm({
             target: event.target,
             message: 'Are you sure that you want to proceed?',
             icon: 'pi pi-exclamation-triangle',
             accept: () => {
-                 const urlId = new URLSearchParams();
-                 urlId.set('user_id', userid)
-                this.UserService.newdeleteUsers(urlId.toString()).subscribe((result:any) => {
-                
-                    if(result.success  == true){
+                const urlId = new URLSearchParams();
+                urlId.set('user_id', userid)
+                this.UserService.newdeleteUsers(urlId.toString()).subscribe((result: any) => {
+
+                    if (result.success == true) {
                         this.GetAllUsers();
                         this.notification.showSuccess(
                             'User deleted successfully',
                             'Success'
                         );
-                    }else{
+                    } else {
                         this.notification.showError(
                             'Failed to delete',
                             ''
@@ -350,7 +378,7 @@ export class UserComponent {
                     }
                 });
 
-              
+
             },
             reject: () => {
                 this.GetAllUsers();
@@ -377,6 +405,12 @@ export class UserComponent {
     //---method for get selected role for user model Radio button ---
     onSelected(value: string): void {
         this.selectedRole = value;
+        console.log(this.selectedRole);
+        if (this.selectedRole == '525debfd-cd64-4936-ae57-346d57de3585') {
+            this.GetGroups()
+        } else {
+            this.GetAllFacility()
+        }
     }
 
     // ---Method for open user dialog or model---
@@ -389,8 +423,9 @@ export class UserComponent {
             this.loginInfo.role === 'Admin'
         ) {
             this.visible = true;
-            this.selectedRole = this.Roleaccess;
+            // this.selectedRole = this.Roleaccess;
         }
+
     }
 
     // ---Method for close user dialog or model---
@@ -402,7 +437,7 @@ export class UserComponent {
 
     // ---Method for get selected user details ---
     selectUser(user: UserInfo) {
-      
+
         if (this.loginInfo.role == 'Manager') {
             if (user.role == 'Admin' || user.role == 'Super Admin' || user.role == 'Manager') {
                 user.isDisabledDelete = true;

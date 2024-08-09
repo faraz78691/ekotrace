@@ -93,8 +93,7 @@
                                                                                 <i *ngIf="head.catName == 'Stationary Combustion'"
                                                                                     class="fa fa-info-circle tooltip-icon"
                                                                                     pTooltip="Direct emissions from owned or controlled stationary sources that uses fossil fuels.
-                                                                                    Blend type – Blend % of bioethanol or biodiesel. Avg. blend is 7%. 
-                                                                                   Calorific value – Gross CV of fuel, if available
+                                                                                  
                                                                                    " tooltipPosition="top"
                                                                                     style="color: #88ad47"></i>
                                                                                 <i *ngIf="head.catName == 'Refrigerants'"
@@ -105,7 +104,7 @@
                                                                                 <i *ngIf="head.catName == 'Company Owned Vehicles'"
                                                                                     class="fa fa-info-circle tooltip-icon"
                                                                                     pTooltip="Emissions from owned mobile sources (both on-road and non-road vehicles) that are within the company’s inventory boundaries.
-                                                                                    Charging outside % - Charging done outside company campus (%).
+                                                                                    
                                                                                     " tooltipPosition="top"
                                                                                     style="color: #88ad47"></i>
                                                                                 <i *ngIf="head.catName == 'Fire Extinguisher'"
@@ -836,6 +835,12 @@
                                                 <label pTooltip="Charging done outside company campus (%)"
                                                     tooltipPosition="top" for="fname">Charging outside %
                                                 </label>
+                                                <i 
+                                                class="fa fa-info-circle tooltip-icon mx-2"
+                                                pTooltip="
+                                                Charging done outside company campus (%).
+                                                " tooltipPosition="top"
+                                                style="color: #88ad47"></i>
                                                 <div class="input-group">
                                                     <input id="chargingInput"
                                                         class="form-control Dashboard-tab text-white"
@@ -892,7 +897,12 @@
 
                                         <div class="col-lg-4" *ngIf="categoryId==1">
                                             <label for="fname">Calorific value (optional)</label>
-
+                                            <i 
+                                            class="fa fa-info-circle tooltip-icon mx-2"
+                                            pTooltip="Calorific value – Gross CV of fuel, if available. 
+                                           
+                                           " tooltipPosition="top"
+                                            style="color: #88ad47"></i>
                                             <!-- <input required ngModel name="calorificValue" type="text"
                                             class="form-control Dashboard-tab text-white" placeholder="Enter value" /> -->
 
@@ -1023,6 +1033,12 @@
                                         *ngIf="categoryId==1 && (dataEntry.typeID == 1 || dataEntry.typeID == 2)">
                                         <div class="col-lg-6">
                                             <label for="fname">Blend Type</label>
+                                             <i 
+                                                                                    class="fa fa-info-circle tooltip-icon mx-2"
+                                                                                    pTooltip="Blend type – Blend % of bioethanol or biodiesel. Avg. blend is 7%. 
+                                                                                   
+                                                                                   " tooltipPosition="top"
+                                                                                    style="color: #88ad47"></i>
                                             <p-dropdown class="ct_select_op_input ct_chev_icon_dark230 
                                         " ngModel [options]="blendType" optionLabel="typeName" optionValue="typeName"
                                                 name="blend" #blend="ngModel"

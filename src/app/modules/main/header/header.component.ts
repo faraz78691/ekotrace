@@ -9,7 +9,7 @@ import { UiState } from '@/store/ui/state';
 import { CommonModule } from '@angular/common';
 import { Component, HostBinding, OnInit, ViewChild, computed, signal } from '@angular/core';
 import { UntypedFormGroup, UntypedFormControl, FormsModule } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
+import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppService } from '@services/app.service';
 import { CompanyService } from '@services/company.service';
@@ -17,7 +17,7 @@ import { FacilityService } from '@services/facility.service';
 import { ThemeService } from '@services/theme.service';
 import { environment } from 'environments/environment';
 import { MenuItem } from 'primeng/api';
-import { Observable } from 'rxjs';
+import { Observable, filter } from 'rxjs';
 import { DropdownModule } from 'primeng/dropdown';
 import { ImageModule } from 'primeng/image';
 import { BrowserModule } from '@angular/platform-browser';
@@ -31,7 +31,7 @@ const BASE_CLASSES = 'main-header navbar navbar-expand ';
 @Component({
     selector: 'app-header',
     standalone: true,
-    imports: [CommonModule,DropdownModule, FormsModule, ImageModule,RouterModule ],
+    imports: [CommonModule, DropdownModule, FormsModule, ImageModule, RouterModule],
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss']
 })
@@ -57,7 +57,7 @@ export class HeaderComponent implements OnInit {
     @ViewChild('menu', { static: true }) menu: any;
     public href: string = null;
     displayTracker = false;
- 
+
     isActiveLabel = computed(() => this.facilityService.headerTracking());
 
 
@@ -72,9 +72,10 @@ export class HeaderComponent implements OnInit {
         this.companyDetails = new CompanyDetails();
         this.rootUrl = environment.baseUrl + 'uploads/';
         this.facilityGroup = new FacilityGroupList();
-
+        console.log(this.router.url);
     }
     ngOnInit() {
+
         this.facilityService.headerTracking();
         this.href = this.router.url;
         this.loginInfo = new LoginInfo();
@@ -96,7 +97,26 @@ export class HeaderComponent implements OnInit {
 
                 // this.GetFacilityGroupList(Number(this.loginInfo.tenantID));
             }
-            this.GetFacilityGroupList(this.loginInfo.tenantID);
+            this.router.events.pipe(
+                filter(event => event instanceof NavigationEnd)
+            ).subscribe(() => {
+                if (this.loginInfo.role !== 'Manager' &&
+                    this.loginInfo.role !== 'Preparer' &&
+                    this.loginInfo.role !== 'Approver') {
+                    // this.getTenantById(Number(this.loginInfo.tenantID));
+                    // this.GetFacilityGroupList(Number(this.loginInfo.tenantID));
+                }
+        
+                if (this.router.url == '/finance_emissions') {
+                    this.GetSubGroupList(this.loginInfo.tenantID);
+                } else {
+                   
+                    this.GetFacilityGroupList(this.loginInfo.tenantID);
+                }
+            });
+        
+
+           
         }
         this.ProfileMenu = [
             {
@@ -123,22 +143,9 @@ export class HeaderComponent implements OnInit {
         this.uploadedImageUrl = localStorage.getItem('uploadedImageUrl');
         this.updatedtheme = localStorage.getItem('theme');
     };
-    ngDoCheck() {
-        // this.GetFacilityGroupList(this.loginInfo.tenantID);
-        // this.updatedtheme = this.themeservice.getValue('theme');
-        // this.uploadedImageUrl = localStorage.getItem('uploadedImageUrl');
-        // if (localStorage.getItem('companyName') != null) {
-        //     this.loginInfo.companyName = localStorage.getItem('companyName');
-        // }
-        // if (localStorage.getItem('FacilityGroupCount') != null) {
-        //     let fgcount = localStorage.getItem('FacilityGroupCount');
-        //     if (this.lfgcount != Number(fgcount)) {
-        //     }
-        // }
-    }
 
     checkFacilityID() {
-        console.log("click",this.selectedFacilityID.id);
+        console.log("click", this.selectedFacilityID);
         this.facilityService.facilitySelected(this.selectedFacilityID.id)
         console.log(this.facilityService.selectedfacilitiesSignal())
         localStorage.setItem('SelectedfacilityID', this.selectedFacilityID.id);
@@ -184,31 +191,7 @@ export class HeaderComponent implements OnInit {
         this.menu.toggle(event);
     }
 
-    //     GetFacilityGroupList(tenantID) {
-    // console.log(tenantID);
-    //         if (this.loginInfo.role === this.excludedRole) {
-    //             return;
-    //         }
-    //         this.facilityService
-    //             .newGetFacilityGroupList(tenantID)
-    //             .subscribe((res) => {
-    //                 console.log("response iidd",res);
-    //                 this.facilitygrouplist = res.categories[0].facilities;
-    //                 const allOption: FacilityGroupList = {
-    //                     id: 0,
-    //                     name: 'All',
-    //                     flag: ''
-    //                 };
 
-    //                 // Add the "All" option to the beginning of the list
-    //                 this.facilitygrouplist.unshift(allOption);
-
-    //                 this.lfgcount = this.facilitygrouplist.length;
-    //                 localStorage.setItem('FacilityGroupCount', String(this.lfgcount));
-    //             });
-
-
-    //     }
     GetFacilityGroupList(tenantID) {
 
         if (this.loginInfo.role === this.excludedRole) {
@@ -232,8 +215,33 @@ export class HeaderComponent implements OnInit {
                 this.lfgcount = this.facilitygrouplist.length;
                 localStorage.setItem('FacilityGroupCount', String(this.lfgcount));
             });
+    };
 
+    GetSubGroupList(tenantID) {
 
+        if (this.loginInfo.role === this.excludedRole) {
+            return;
+        }
+        const formData = new URLSearchParams();
+        formData.set('tenantID', tenantID)
+        this.facilityService
+            .getSubGroupsByTenantId(formData.toString())
+            .subscribe((res) => {
+                console.log(res);
+                this.facilitygrouplist = res.categories;
+                this.addFacilitesToSignal(this.facilitygrouplist)
+                const allOption: FacilityGroupList = {
+                    id: 0,
+                    name: 'Select',
+                    flag: ''
+                };
+
+                // Add the "All" option to the beginning of the list
+                this.facilitygrouplist.unshift(allOption);
+
+                this.lfgcount = this.facilitygrouplist.length;
+                localStorage.setItem('FacilityGroupCount', String(this.lfgcount));
+            });
     };
 
     addFacilitesToSignal(facilites: facilities[]) {
