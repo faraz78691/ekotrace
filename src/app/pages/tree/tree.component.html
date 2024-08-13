@@ -26,8 +26,8 @@
         optionValue="id" name="subCatType" #subCatType="ngModel" [(ngModel)]="selectedTemplateId" (onChange)="onTemplateChange($event)"
       ></p-dropdown>
     <div class="d-flex align-items-center gap-2">
-        <button (click)="showBasicDialog()" class="p-button ct_animation_btn_121 mr-2 py-2">Create Org. Tree</button>
-        <div class="p-button ct_animation_btn_121 mr-2 py-2" (click)="OnSave(selectedTemplateId)">Save</div>
+        <!-- <button (click)="showBasicDialog()" class="p-button ct_animation_btn_121 mr-2 py-2">Create Org. Tree</button> -->
+        <div class="p-button ct_animation_btn_121 mr-2 py-2" *ngIf="saveButtton" (click)="OnSave(selectedTemplateId)">Save</div>
     </div>
     </ng-container>
         

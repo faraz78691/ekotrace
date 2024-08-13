@@ -42,6 +42,7 @@ export class TreeComponent {
     newArray: any[] = [];
     lastObject: any;
     oldID = false;
+    saveButtton = true;
     constructor(
         private renderer: Renderer2,
         private route: ActivatedRoute,
@@ -82,6 +83,7 @@ export class TreeComponent {
                         this.familyId = items.familyDetails[0].family_id;
                         this.selectedTemplateId =items.familyDetails[0].id;
                         this.createClone();
+                        this.saveButtton = false;
                     }
 
                 }
@@ -360,7 +362,7 @@ export class TreeComponent {
         })
     };
     createClone() {
-console.log("callign create clone");
+
         const nodeForm = new URLSearchParams();
         nodeForm.set('family_id', this.familyId);
 
@@ -508,7 +510,7 @@ console.log("callign create clone");
                             const formData = new URLSearchParams();
                             formData.append('id', nodeData['id'].toString());
                             formData.append('family_id', nodeData['family_id'].toString());
-                            nodeForm.set('new_child', '1');
+                            formData.append('new_child', '1');
                             if (this.oldID == false) {
                                 formData.set('old_id', '1');
                             } else {

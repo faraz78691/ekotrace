@@ -78,6 +78,7 @@ export class HeaderComponent implements OnInit {
 
         this.facilityService.headerTracking();
         this.href = this.router.url;
+        
         this.loginInfo = new LoginInfo();
         if (localStorage.getItem('LoginInfo') != null) {
             let userInfo = localStorage.getItem('LoginInfo');
@@ -97,23 +98,13 @@ export class HeaderComponent implements OnInit {
 
                 // this.GetFacilityGroupList(Number(this.loginInfo.tenantID));
             }
+
+            this.checkRolesAndLoadData();
             this.router.events.pipe(
                 filter(event => event instanceof NavigationEnd)
             ).subscribe(() => {
-                if (this.loginInfo.role !== 'Manager' &&
-                    this.loginInfo.role !== 'Preparer' &&
-                    this.loginInfo.role !== 'Approver') {
-                    // this.getTenantById(Number(this.loginInfo.tenantID));
-                    // this.GetFacilityGroupList(Number(this.loginInfo.tenantID));
-                }
-        
-                if (this.router.url == '/finance_emissions') {
-                    this.GetSubGroupList(this.loginInfo.tenantID);
-                } else {
-                   
-                    this.GetFacilityGroupList(this.loginInfo.tenantID);
-                }
-            });
+                this.checkRolesAndLoadData();
+            })
         
 
            
@@ -143,6 +134,23 @@ export class HeaderComponent implements OnInit {
         this.uploadedImageUrl = localStorage.getItem('uploadedImageUrl');
         this.updatedtheme = localStorage.getItem('theme');
     };
+
+    private checkRolesAndLoadData(): void {
+        if (this.loginInfo.role !== 'Manager' &&
+            this.loginInfo.role !== 'Preparer' &&
+            this.loginInfo.role !== 'Approver') {
+          // this.getTenantById(Number(this.loginInfo.tenantID));
+          // this.GetFacilityGroupList(Number(this.loginInfo.tenantID));
+        }
+    
+        if (this.router.url === '/finance_emissions') {
+          console.log("dge");
+          this.GetSubGroupList(this.loginInfo.tenantID);
+        } else {
+          console.log("dg");
+          this.GetFacilityGroupList(this.loginInfo.tenantID);
+        }
+      }
 
     checkFacilityID() {
         console.log("click", this.selectedFacilityID);
