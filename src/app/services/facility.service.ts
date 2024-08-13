@@ -110,9 +110,9 @@ export class FacilityService {
             environment.baseUrl + 'Group/facility/GroupByData/' + tenantId
         );
     };
-    public nFacilityDataGet(): Observable<Facility[]> {
+    public nFacilityDataGet(tenantId): Observable<Facility[]> {
         return this.http.get<Facility[]>(
-            environment.baseUrl + '/allfacilitiesbyRole'
+            environment.baseUrl + '/allfacilitiesbyRole/' + tenantId
         );
     };
     public newFacilityDataGet(tenantId): Observable<Facility[]> {

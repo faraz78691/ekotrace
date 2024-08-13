@@ -963,6 +963,10 @@ export class TrackingComponent {
             this.isVisited = true;
 
         }
+        if (catID == 17) {
+            this.getVehicleTypes();
+            this.getSubVehicleCategory(1)
+        }
         if (catID == 18) {
             this.getPurchaseGoodsCategory();
         }

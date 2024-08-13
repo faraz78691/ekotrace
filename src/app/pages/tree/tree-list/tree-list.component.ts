@@ -26,12 +26,12 @@ export class TreeListComponent {
     public familyService_: FamilyService,
     private notification: NotificationService,
   ) {
-    this.treeList$ = familyService_.getTreeList();
     if (localStorage.getItem('LoginInfo') != null) {
       let userInfo = localStorage.getItem('LoginInfo');
       let jsonObj = JSON.parse(userInfo); // string to "any" object first
       this.loginInfo = jsonObj as LoginInfo;
     }
+    this.treeList$ = familyService_.getTreeList(this.loginInfo);
   };
 
   showBasicDialog() {
@@ -55,7 +55,7 @@ export class TreeListComponent {
             'Success'
           );
           this.displayBasic = false
-          this.treeList$ = this.familyService_.getTreeList();
+          this.treeList$ = this.familyService_.getTreeList(this.loginInfo);
           this.form.reset();
         }
       },

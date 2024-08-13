@@ -72,7 +72,7 @@ export class HeaderComponent implements OnInit {
         this.companyDetails = new CompanyDetails();
         this.rootUrl = environment.baseUrl + 'uploads/';
         this.facilityGroup = new FacilityGroupList();
-        console.log(this.router.url);
+  
     }
     ngOnInit() {
 
@@ -144,16 +144,16 @@ export class HeaderComponent implements OnInit {
         }
     
         if (this.router.url === '/finance_emissions') {
-          console.log("dge");
+         
           this.GetSubGroupList(this.loginInfo.tenantID);
         } else {
-          console.log("dg");
+     
           this.GetFacilityGroupList(this.loginInfo.tenantID);
         }
       }
 
     checkFacilityID() {
-        console.log("click", this.selectedFacilityID);
+        
         this.facilityService.facilitySelected(this.selectedFacilityID.id)
         console.log(this.facilityService.selectedfacilitiesSignal())
         localStorage.setItem('SelectedfacilityID', this.selectedFacilityID.id);
@@ -189,8 +189,7 @@ export class HeaderComponent implements OnInit {
             localStorage.setItem('companyName', response.companyName);
         });
 
-
-    }
+    };
 
     clicknotificationicon() {
         this.notificationIcon = true;

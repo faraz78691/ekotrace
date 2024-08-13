@@ -232,7 +232,7 @@ export class NewBillingComponent {
   GetAllFacility() {
       let tenantId = this.loginInfo.tenantID;
       this.facilitydata = false;
-      this.facilityService.nFacilityDataGet().subscribe((response:any) => {
+      this.facilityService.nFacilityDataGet(tenantId).subscribe((response:any) => {
 
           this.facilityList = response.categories;
           if (this.facilityList.length === 0) {

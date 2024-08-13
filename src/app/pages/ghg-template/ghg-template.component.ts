@@ -274,7 +274,7 @@ export class GhgTemplateComponent {
     }
     //Retrieves facility data for the specified tenant ID and updates the UI based on the data availability.
     facilityGet(tenantId) {
-        this.facilityService.nFacilityDataGet().subscribe({
+        this.facilityService.nFacilityDataGet(tenantId).subscribe({
             next: (response: any) => {
                 
                 this.LocData = response.categories;

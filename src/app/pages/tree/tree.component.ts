@@ -39,10 +39,12 @@ export class TreeComponent {
     selectedTemplateId = 1;
     facilityTab = false;
     nodeType: any[] = [];
+    treeList: any[] = [];
     newArray: any[] = [];
     lastObject: any;
     oldID = false;
     saveButtton = true;
+    treeSection = true;
     constructor(
         private renderer: Renderer2,
         private route: ActivatedRoute,
@@ -58,43 +60,54 @@ export class TreeComponent {
             let userInfo = localStorage.getItem('LoginInfo');
             let jsonObj = JSON.parse(userInfo); // string to "any" object first
             this.loginInfo = jsonObj as LoginInfo;
+            
         };
 
-        
+
     };
-   
+
     ngOnInit() {
-        this.treeList$ = this.familyService.getTreeList().pipe(
+        
+        this.treeList$ = this.familyService.getTreeList(this.loginInfo.super_admin_id).pipe(
             tap(items => {
-                console.log(items); // Log the entire response
+                // console.log(items); // Log the entire response
                 if (items.success) {
+                    this.treeList = items.familyDetails;
+                    console.log(this.treeList.length);
                     if (items.familyDetails.length > 1) {
+                        if(this.loginInfo.role =='Manager' || this.loginInfo.role =='Admin' || this.loginInfo.role == 'Preparer'){
+                        this.treeSection = false;
+                    }
                         if (items.new_data == 1) {
                             this.familyId = items.family_id;
-                            const selectedTempate= items.familyDetails.filter(value =>value.family_id == this.familyId);
-                            console.log(selectedTempate);
-                            this.selectedTemplateId = selectedTempate;
+                            const selectedTempate = items.familyDetails.filter(value => value.family_id == this.familyId);
+                        console.log(selectedTempate);
+                            this.selectedTemplateId = selectedTempate[0].id;
                             this.createClone()
                         } else {
                             // this.familyId = items.familyDetails[0]?.family_id;
                             // this.getTreeViewByID(this.familyId); 
                         }
                     } else {
+                        this.treeSection = true;
                         this.familyId = items.familyDetails[0].family_id;
-                        this.selectedTemplateId =items.familyDetails[0].id;
-                        this.createClone();
+                        this.selectedTemplateId = items.familyDetails[0].id;
+                        if(this.loginInfo.role =='Manager' || this.loginInfo.role =='Admin' || this.loginInfo.role == 'Preparer'){
+                            this.getTreeForOtherUser();
+                        }else{
+                            this.createClone();
+                        }
                         this.saveButtton = false;
                     }
-
                 }
             })
         );
         FamilyTree.templates.hugo.link_field_0 = '<text width="230" style="font-size: 18px;" fill="#ffffff" x="145" y="150" text-anchor="middle" class="field_0">{val}</text>';
-    
+
     };
 
-   
-    
+
+
 
     onTemplateChange(event: any) {
         this.familyId = event.value
@@ -201,16 +214,17 @@ export class TreeComponent {
                             edit: { text: "Edit" },
                             add: {
                                 text: "Add",
-                                onClick:  (node: string)=> {
-                                    
+                             
+                                onClick: (node: string) => {
+
                                     var nodeData = family.get(node);
                                     var relationCat = nodeData['relation']
-                                    console.log("nodeData", nodeData['relation'] );
-                              
-                                
+                                    console.log("nodeData", nodeData['relation']);
+
+
                                     localStorage.setItem("selectedNode", node);
                                     $(".ct_custom_modal_120").show(500);
-                                    if (relationCat== 'Main Group') {
+                                    if (relationCat == 'Main Group') {
                                         this.nodeType = [
                                             {
                                                 "id": '2',
@@ -241,7 +255,7 @@ export class TreeComponent {
                             generateElementsFromFields: false,
                             elements: [
                                 { type: 'textbox', label: 'Name', binding: 'name' },
-                                
+
                                 { type: 'textbox', label: 'Facility name', binding: 'facility_name' }
 
                             ],
@@ -256,12 +270,12 @@ export class TreeComponent {
                                 pdf: null
 
                             }
-                         
+
                         },
 
                     });
-                  
-                 
+
+
                     function callHandler(nodeId) {
                         const token: string | null = localStorage.getItem('accessToken');
                         var nodeData = family.get(nodeId);
@@ -281,8 +295,8 @@ export class TreeComponent {
                             body: formData.toString()
                         })
                             .then(response => response.json())
-                            .then(data => 
-                            window.location.reload()
+                            .then(data =>
+                                window.location.reload()
                                 // console.log(data)
                             )
                             .catch(error => console.error('Error:', error));
@@ -290,9 +304,9 @@ export class TreeComponent {
 
                     }
 
-                    
-                    family.onUpdateNode( (args) =>{
-                       
+
+                    family.onUpdateNode((args) => {
+
                         const token: string | null = localStorage.getItem('accessToken');
                         var updateNode = args.updateNodesData[0];
                         const mainName = (args.updateNodesData[0] as any).relation;
@@ -312,7 +326,7 @@ export class TreeComponent {
                         })
                             .then(response => response.json())
                             // .then(data =>window.location.reload())
-                            .then(data =>this.createClone())
+                            .then(data => this.createClone())
                             .catch(error => console.error('Error:', error));
                     }
                     )
@@ -365,7 +379,7 @@ export class TreeComponent {
 
         const nodeForm = new URLSearchParams();
         nodeForm.set('family_id', this.familyId);
-
+        nodeForm.set('tenant_id', this.loginInfo.super_admin_id.toString());
 
         this.familyService.createCloneTree(nodeForm.toString()).subscribe({
             next: res => {
@@ -450,13 +464,13 @@ export class TreeComponent {
                                 edit: { text: "Edit" },
                                 add: {
                                     text: "Add",
-                                    onClick:  (node: string)=> {
+                                    onClick: (node: string) => {
                                         $(".ct_custom_modal_120").show(500)
                                         var nodeData = family.get(node);
                                         console.log("nodeData", nodeData);
                                         localStorage.setItem("selectedNode", node);
                                         var relationCat = nodeData['relation']
-                                        if (relationCat== 'Main Group') {
+                                        if (relationCat == 'Main Group') {
                                             this.nodeType = [
                                                 {
                                                     "id": '2',
@@ -503,7 +517,7 @@ export class TreeComponent {
                             },
 
                         });
-                     
+
                         function callHandler(nodeId) {
                             const token: string | null = localStorage.getItem('accessToken');
                             var nodeData = family.get(nodeId);
@@ -516,7 +530,7 @@ export class TreeComponent {
                             } else {
                                 formData.set('old_id', '0');
                             }
-                            fetch(environment.baseUrl +  '/deleteNode', {
+                            fetch(environment.baseUrl + '/deleteNode', {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/x-www-form-urlencoded',
@@ -565,6 +579,136 @@ export class TreeComponent {
                         );
                     }
                     $(".ct_custom_modal_120").hide()
+                    // this.nodeForm.reset();
+                    this.facilityTab = false;
+
+                }
+                console.log(res);
+                // this.getTreeViewByID(this.selectedTemplateId);
+            },
+            error: err =>
+                console.log(err)
+        })
+    };
+
+    getTreeForOtherUser() {
+
+        const nodeForm = new URLSearchParams();
+        nodeForm.set('family_id', this.familyId);
+        nodeForm.set('tenant_id', this.loginInfo.super_admin_id.toString());
+
+        this.familyService.createCloneTree(nodeForm.toString()).subscribe({
+            next: res => {
+                if (res.success == true) {
+                    this.oldID = true;
+                    this.newFamilyData = res.familyTreeDetails;
+                    this.lastObject = this.newFamilyData[this.newFamilyData.length - 1];
+                    this.newArray.push(this.lastObject);
+                    this.paylaodFamilyData = JSON.stringify(this.newArray)
+                    // this.paylaodFamilyData.push(this.lastObject)
+
+
+                    this.loadFamilyData = this.newFamilyData;
+                    const tree = document.getElementById('tree');
+                    if (tree) {
+                        FamilyTree.templates.base.defs =
+                            `<g transform="matrix(0.05,0,0,0.05,-12,-9)" id="heart">
+                            <path fill="#aeaeae" d="M438.482,58.61c-24.7-26.549-59.311-41.655-95.573-41.711c-36.291,0.042-70.938,15.14-95.676,41.694l-8.431,8.909  l-8.431-8.909C181.284,5.762,98.663,2.728,45.832,51.815c-2.341,2.176-4.602,4.436-6.778,6.778 c-52.072,56.166-52.072,142.968,0,199.134l187.358,197.581c6.482,6.843,17.284,7.136,24.127,0.654 c0.224-0.212,0.442-0.43,0.654-0.654l187.29-197.581C490.551,201.567,490.551,114.77,438.482,58.61z"/>
+                            </g>
+                         <g transform="matrix(1,0,0,1,0,0)" id="dot"></g>
+                          <g id="base_node_menu" style="cursor:pointer;">
+                              <rect x="0" y="0" fill="transparent" width="22" height="22"></rect>
+                              <circle cx="4" cy="11" r="2" fill="#b1b9be"></circle>
+                              <circle cx="11" cy="11" r="2" fill="#b1b9be"></circle>
+                              <circle cx="18" cy="11" r="2" fill="#b1b9be"></circle>
+                          </g>
+                          <g style="cursor: pointer;" id="base_tree_menu">
+                              <rect x="0" y="0" width="25" height="25" fill="transparent"></rect>
+                              ${FamilyTree.icon.addUser(25, 25, '#fff', 0, 0)}
+                          </g>
+                          <g style="cursor: pointer;" id="base_tree_menu_close">
+                              <circle cx="12.5" cy="12.5" r="12" fill="#F57C00"></circle>
+                              ${FamilyTree.icon.close(25, 25, '#fff', 0, 0)}
+                          </g>            
+                          <g id="base_up">
+                              <circle cx="115" cy="30" r="15" fill="#fff" stroke="#b1b9be" stroke-width="1"></circle>
+                              ${FamilyTree.icon.ft(20, 80, '#b1b9be', 105, -10)}
+                          </g>
+                          <clipPath id="base_img_0">
+                            <circle id="base_img_0_stroke" cx="45" cy="62" r="35"/>
+                          </clipPath>
+                          <clipPath id="base_img_1">
+                            <circle id="base_img_1_stroke" cx="100" cy="62" r="35"/>
+                          </clipPath>
+                          `;
+
+                        FamilyTree.templates.main = Object.assign({}, FamilyTree.templates.base);
+
+                        FamilyTree.templates.main.node = '<rect x="0" y="0" height="{h}" width="{w}" fill="#ffffff" stroke-width="3" stroke="#ccc" rx="5" ry="5"></rect>' +
+                            '<rect x="0" y="0" height="30" width="{w}" fill="#b1b9be" stroke-width="1" stroke="#b1b9be" style="fill: rgba(134, 175, 72, 0.7);" rx="5" ry="5"></rect>' +
+                            '<line x1="0" y1="20" x2="250" y2="20" stroke-width="5" stroke="#b1b9be" style="display:none"></line>';
+
+                        FamilyTree.templates.main.field_0 =
+                            '<text ' + FamilyTree.attr.width + ' ="250" style="font-size: 14px; " font-variant="all-small-caps" fill="white" x="125" y="16" text-anchor="middle">{val}</text>';
+                        FamilyTree.templates.main.field_1 =
+                            '<text ' + FamilyTree.attr.width + ' ="160" data-text-overflow="multiline" style="font-size: 14px; transform: translateX(26px);" fill="black" x="100" y="66" text-anchor="middle">{val}</text>';
+                        FamilyTree.templates.main.field_2 =
+                            '<text ' + FamilyTree.attr.width + ' ="160" style="font-size: 10px; transform: translateX(26px)" fill="#b1b9be" x="100" y="95" text-anchor="middle">{val}</text>';
+                        FamilyTree.templates.main.field_3 =
+                            '<text ' + FamilyTree.attr.width + ' ="60" style="font-size: 12px;  transform: translateX(26px)" fill="black" x="47" y="112" text-anchor="middle">{val}</text>';
+                        FamilyTree.templates.main.img_0 =
+                            `<use xlink:href="#base_img_0_stroke" /> 
+                           <circle id="base_img_0_stroke" fill="#b1b9be" cx="45" cy="62" r="37"/>
+                          <image preserveAspectRatio="xMidYMid slice" clip-path="url(#base_img_0)" xlink:href="{val}" x="10" y="26" width="72" height="72"></image>`;
+
+
+                        FamilyTree.templates.single = Object.assign({}, FamilyTree.templates.tommy);
+                        FamilyTree.templates.single.size = [150, 150];
+
+                        var family = new FamilyTree(tree, {
+
+
+                            template: "main",
+                            enableSearch: false,
+                            nodeBinding: {
+                                field_0: "relation",
+                                field_1: "name",
+                                field_2: "facility_name",
+                            },
+                            nodeMenu: {
+                                details: { text: "Details" },
+                              
+                            },
+                            editForm: {
+                                addMoreFieldName: null,
+                                addMore: null,
+                                addMoreBtn: null,
+                                generateElementsFromFields: false,
+                                elements: [
+                                    { type: 'textbox', label: 'Name', binding: 'name' },
+                                    { type: 'textbox', label: 'Facility name', binding: 'facility_name', options: ['select'] }
+                                ],
+                                buttons: {
+                                    edit: {
+                                        icon: FamilyTree.icon.edit(24, 24, '#fff'),
+                                        text: 'Edit',
+                                        hideIfEditMode: true,
+                                        hideIfDetailsMode: true
+                                    },
+                                    share: null,
+                                    pdf: null
+
+                                }
+                            }
+
+                        });
+
+                      
+                        family.load(
+                            this.loadFamilyData
+                        );
+                    }
+                    $(".ct_custom_modal_120").hide()
                     this.nodeForm.reset();
                     this.facilityTab = false;
 
@@ -576,6 +720,7 @@ export class TreeComponent {
                 console.log(err)
         })
     };
+
 
     onSubmitORg(data: any) {
 
@@ -592,7 +737,7 @@ export class TreeComponent {
                         'Success'
                     );
                     this.displayBasic = false
-                    this.treeList$ = this.familyService.getTreeList();
+                    this.treeList$ = this.familyService.getTreeList(this.loginInfo.super_admin_id);
                     this.selectedTemplateId = response.insertDetails.insertId;
                     localStorage.setItem('tree_ID', this.selectedTemplateId.toString())
                     this.form.reset();
@@ -631,9 +776,36 @@ export class TreeComponent {
 
 
 
-    ngOnDestroy(){
+    ngOnDestroy() {
+        console.log(this.treeList.length >1)
+            
+        
+        if(this.treeList.length > 1 ){
+this.onDeleteFamilySample()
+        }
         console.log("destroying child...")
-      }
+    };
+
+
+    onDeleteFamilySample() {
+
+
+        const nodeForm = new URLSearchParams();
+        nodeForm.set('family_id', this.familyId);
+  
+        this.familyService.deleteSampleTree(nodeForm.toString()).subscribe({
+            next: res => {
+                if (res.success == true) {
+                   
+
+                }
+                console.log(res);
+                // this.getTreeViewByID(this.selectedTemplateId);
+            },
+            error: err =>
+                console.log(err)
+        })
+    };
 
 
 }

@@ -15,4 +15,5 @@ export class LoginInfo {
     numberOfUserAllowed = 0;
     package_name :string;
     package_id:number;
+    super_admin_id:number;
 }

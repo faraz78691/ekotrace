@@ -129,19 +129,19 @@ const routes: Routes = [
                 path: 'finance_emissions',
                 canActivate: [RoleGuard],
                 component: FinanceEmissionsComponent,
-                data: { roles: ['Platform Admin','Super Admin','Admin'] }
+                data: { roles: ['Platform Admin','Super Admin','Admin','Manager','Preparer'] }
             },
             {
                 path: 'setGhgTemplate',
                 canActivate: [RoleGuard],
                 component: GhgTemplateComponent,
-                data: { roles: ['Platform Admin','Super Admin','Admin'] }
+                data: { roles: ['Platform Admin','Super Admin','Admin','Manager','Preparer'] }
             },
             {
                 path: 'vendors',
                 canActivate: [RoleGuard],
                 component: VendorsComponent,
-                data: { roles: ['Platform Admin','Super Admin','Admin'] }
+                data: { roles: ['Platform Admin','Super Admin','Admin','Manager','Preparer'] }
             },
             {
                 path: 'main_tree',
@@ -183,7 +183,7 @@ const routes: Routes = [
                 path: 'user',
                 component: UserComponent,
                 canActivate: [RoleGuard],
-                data: { roles: ['Super Admin', 'Admin', 'Manager'] }
+                data: { roles: ['Super Admin', 'Admin', 'Manager','Preparer'] }
             },
             {
                 path: 'tree/:id',
@@ -213,7 +213,9 @@ const routes: Routes = [
                 path: 'billing',
                 canActivate: [RoleGuard],
                 component: BillingComponent,
-                data: { roles: ['Super Admin'] }
+                data: { roles: ['Super Admin','Admin','Manager',
+                'Preparer',
+                'Approver'] }
             },
             {
                 path: 'adminBilling',
@@ -438,7 +440,9 @@ const routes: Routes = [
                 data: {
                     roles: [
                         'Super Admin',
-                        'Admin'
+                        'Admin', 'Manager',
+                        'Preparer',
+                        'Approver'
                     ]
                 }
             },

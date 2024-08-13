@@ -1,23 +1,6 @@
 
-<div id="editForm"
-    style="display:none; text-align:center; position:absolute; border: 1px solid #aeaeae;width:300px;background-color:#F57C00;z-index:10000; ">
-    <div id="editForm_title" style="padding: 10px 0 10px 0; background-color:#039BE5; color: #ffffff;">Edit Form</div>
-    <div>
-        <div style="padding: 10px 0 5px 0;">
-            <label style="color:#ffffff; width:50px; display:inline-block;" for="name">Name</label>
-            <input style="background-color:#FFCA28" id="name" value="" />
-        </div>
-        <div style="padding: 5px 0 10px 0;">
-            <label style="color:#ffffff; width:50px; display:inline-block;" for="title">Title</label>
-            <input style="background-color:#FFCA28"  id="title" value="" />
-        </div>
-        <div style="padding: 5px 0 15px 0;">
-            <button style="width:108px;" id="cancel">Cancel</button>
-            <button style="width:108px;" id="save">Save</button>
-        </div>
-    </div>
-</div>
-<div class="div ct_seprate_page_div">
+
+<div class="div ct_seprate_page_div" *ngIf="treeSection">
    <div class="d-flex align-items-center justify-content-between mb-4">
 
     <ng-container *ngIf="treeList$ | async as list ">
@@ -33,6 +16,11 @@
         
    </div>
     <div id="tree"></div>
+</div>
+<div class="div ct_seprate_page_div" *ngIf="!treeSection">
+   <div class="d-flex align-items-center justify-content-between mb-4">
+No tree found
+  </div>
 </div>
 
 
@@ -80,7 +68,7 @@
 </div>
 </p-dialog>
 
-<div class="ct_custom_modal_120" style="display: none;" id="cancel2" #cancel2>
+<div class="ct_custom_modal_120" style="display: none;"  id="cancel2" #cancel2>
     <form #nodeForm="ngForm" (ngSubmit)="onNodeAdd(nodeForm)">
         <div class="modal-content">
             <div class="modal-header">
@@ -103,7 +91,6 @@
                     <p-dropdown 
                     class="ct_select_op_input ct_chev_icon_dark230" [options]="nodeType"  placeholder="Select type" ngModel   (onChange)="onTypeChange($event)"
                     optionLabel="nodetype" optionValue="nodetype" name="nodetype" #Type="ngModel" 
-                   
                     ></p-dropdown>
                     <!-- <p-dropdown></p-dropdown> -->
                     <!-- <input id="float-input" pInputText type="text"  class="form-control" pInputText name="nodeTitle" ngModel>  -->
@@ -117,7 +104,7 @@
                 <div class="modal-footer border-0 justify-content-center">
                    
                     <button type="button" class="btn ct_animation_btn_121" data-dismiss="modal" (click)="onCancel()">Close</button>
-                    <button type="submit" class="btn ct_animation_btn_121 ct_custom_btn121 w-auto">Save changes</button>
+                    <button type="submit" class="btn ct_animation_btn_121 ct_custom_btn121 w-auto" *ngIf="nodeType.length >0" >Save changes</button>
 
                   </div>
             </div>

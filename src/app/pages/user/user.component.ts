@@ -151,7 +151,7 @@ export class UserComponent {
                 formData.set('tenantId', this.loginInfo.tenantID.toString())
                 formData.set('facilityID', this.payloadFacilityIds)
                 formData.set('package_id', this.loginInfo.package_id.toString())
-                formData.set('group_id', this.groupId.toString())
+                formData.set('group_id', this.groupId?.toString())
 
 
                 this.UserService.newSaveUsers(formData).subscribe({
