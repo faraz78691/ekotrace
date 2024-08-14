@@ -244,7 +244,7 @@ export class FacilityComponent {
         formdata.set('AssestType', this.facilityDetails.AssestType)
         formdata.set('EquityPercentage', (this.facilityDetails.EquityPercentage).toString());
         formdata.set('Address', this.facilityDetails.Address);
-        formdata.set('IsWaterStreenArea', (this.facilityDetails.IsWaterStreenArea).toString());
+        formdata.set('IsWaterStreenArea', (this.facilityDetails.IsWaterStreenArea)?.toString());
         formdata.set('CityId', this.facilityDetails.CityId.toString());
         formdata.set('CountryId', this.facilityDetails.CountryId.toString());
         formdata.set('StateId', this.facilityDetails.StateId.toString());

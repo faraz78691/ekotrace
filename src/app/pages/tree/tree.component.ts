@@ -579,7 +579,7 @@ export class TreeComponent {
                         );
                     }
                     $(".ct_custom_modal_120").hide()
-                    // this.nodeForm.reset();
+                    this.nodeForm.reset();
                     this.facilityTab = false;
 
                 }
