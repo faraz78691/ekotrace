@@ -481,34 +481,22 @@ effect(()=>{
 
   //entrysave function to save dataentry
   EntrySave(form: NgForm) {
-console.log(this.investmentTypeValue.includes('Equity investments'));
-console.log(this.investmentTypeValue);
 
-    if(this.loginInfo.role != 'Super Admin'){
-        this.notification.showWarning('You are not allowed to set the tempalte', '');
+    if(this.loginInfo.role != 'Super Admin' && this.loginInfo.role != 'Admin'){
+        this.notification.showWarning('You are not allowed to enter the values', '');
         return
     }
-    //   this.dataEntry.month = this.selectMonths
-    //       .map((month) => month.value)
-    //       .join(', '); //this.getMonthName();
+
       this.dataEntry.year = this.year.getFullYear().toString(); //this.getYear();
-    //   var spliteedMonth = this.dataEntry.month.split(",");
-    //   var monthString = JSON.stringify(spliteedMonth);
       let fId = localStorage.getItem('SelectedfacilityID');
       if (fId == '0') {
           this.notification.showInfo(
-              'Select Facility',
+              'Select Subgroup',
               ''
           );
           return
       }
-    //   if (this.selectMonths.length == 0 ) {
-    //       this.notification.showInfo(
-    //           'Select month',
-    //           ''
-    //       );
-    //       return
-    //   }
+   
 
           let formData = new URLSearchParams();
 
@@ -520,7 +508,8 @@ console.log(this.investmentTypeValue);
               formData.set('scope1_emission', form.value.scope1_emission);
               formData.set('scope2_emission', form.value.scope2_emission);
               formData.set('equity_share', form.value.share_Equity);
-              formData.set('facilities', fId);
+              formData.set('facilities', '');
+              formData.set('sub_group_id', fId);
             //   formData.set('month', monthString);
               formData.set('year', this.dataEntry.year);
           } else if (this.investmentTypeValue.includes('Equity investments') && this.franchiseMethodValue == 'Average data method') {
@@ -530,7 +519,8 @@ console.log(this.investmentTypeValue);
               formData.set('calculation_method', form.value.calculationmethod);
               formData.set('investee_company_total_revenue', form.value.investe_company_revenue);
               formData.set('equity_share', form.value.share_Equity);
-              formData.set('facilities', fId);
+              formData.set('facilities', '');
+              formData.set('sub_group_id', fId);
             //   formData.set('month', monthString);
               formData.set('year', this.dataEntry.year);
           } else if ((this.investmentTypeValue == 'Debt investments' || this.investmentTypeValue == 'Project finance') && this.franchiseMethodValue == 'Average data method') {
@@ -541,7 +531,8 @@ console.log(this.investmentTypeValue);
               formData.set('project_phase', form.value.projectPhase);
               formData.set('project_construction_cost', form.value.project_construction_cost);
               formData.set('equity_project_cost', form.value.equity_project_cost);
-              formData.set('facilities', fId);
+              formData.set('facilities', '');
+              formData.set('sub_group_id', fId);
             //   formData.set('month', monthString);
               formData.set('year', this.dataEntry.year);
           } else if ((this.investmentTypeValue == 'Debt investments' || this.investmentTypeValue == 'Project finance') && this.franchiseMethodValue == 'Investment Specific method') {
@@ -553,7 +544,8 @@ console.log(this.investmentTypeValue);
               formData.set('scope1_emission', form.value.scope1_emission);
               formData.set('scope2_emission', form.value.scope2_emission);
               formData.set('equity_project_cost', form.value.project_cost);
-              formData.set('facilities', fId);
+              formData.set('facilities', '');
+              formData.set('sub_group_id', fId);
             //   formData.set('month', monthString);
               formData.set('year', this.dataEntry.year);
           }
@@ -575,7 +567,7 @@ console.log(this.investmentTypeValue);
                       this.franchiseMethod = false
                       this.franchiseMethodValue = '';
                       this.investmentTypeValue = ''
-                      this.year = new Date();
+                    //   this.year = new Date();
                      
                   } else {
                       this.notification.showError(
@@ -884,141 +876,5 @@ console.log(this.investmentTypeValue);
 
 
 
-  //retrieves the emission factor for a given subcategory seed ID and category ID.
-  getEmissionfactor(subcatseedID: any, catID) {
-      if (catID === 1) {
-          this.trackingService
-              .GetEmissionFactorStationarybyID(subcatseedID)
-              .subscribe({
-                  next: (response) => {
-                      if (response) {
-                          this.EmissionFactor = response;
-                          //   this.getUnit(subcatseedID);
-                      }
-                      else {
-                          this.EmissionFactor = [];
-                      }
-                  },
-                  error: (err) => {
-                      this.EmissionFactor = [];
-
-                  }
-              });
-      }
-      if (catID === 2) {
-          this.trackingService
-              .GetEmissionFactorRefrigerantsbyID(subcatseedID)
-              .subscribe({
-                  next: (response) => {
-                      if (response) {
-                          this.EmissionFactor = response;
-                          // this.getUnit(subcatseedID);
-                      }
-                      else {
-                          this.EmissionFactor = [];
-                      }
-                  },
-                  error: (err) => {
-                      this.EmissionFactor = [];
-                      this.notification.showError(
-                          'Emission Factor failed.',
-                          'Error'
-                      );
-                      console.error('errrrrrr>>>>>>', err);
-                  }
-              });
-      }
-      if (catID === 3) {
-          this.trackingService
-              .GetEmissionFactorFirebyID(subcatseedID)
-              .subscribe({
-                  next: (response) => {
-                      if (response) {
-                          this.EmissionFactor = response;
-                          // this.getUnit(subcatseedID);
-                      }
-                      else {
-                          this.EmissionFactor = [];
-                      }
-                  },
-                  error: (err) => {
-                      this.EmissionFactor = [];
-                      this.notification.showError(
-                          'Emission Factor failed.',
-                          'Error'
-                      );
-                      console.error('errrrrrr>>>>>>', err);
-                  }
-              });
-      }
-      if (catID === 5) {
-          this.trackingService
-              .GetEmissionFactorElectricitybyID(subcatseedID)
-              .subscribe({
-                  next: (response) => {
-                      if (response) {
-                          this.EmissionFactor = response;
-                          // this.getUnit(subcatseedID);
-                      }
-                      else {
-                          this.EmissionFactor = [];
-                      }
-                  },
-                  error: (err) => {
-                      this.EmissionFactor = [];
-                      this.notification.showError(
-                          'Emission Factor failed.',
-                          'Error'
-                      );
-                      console.error('errrrrrr>>>>>>', err);
-                  }
-              });
-      }
-      if (catID === 6) {
-          this.trackingService
-              .GetEmissionFactorVehiclebyID(subcatseedID)
-              .subscribe({
-                  next: (response) => {
-                      if (response) {
-                          this.EmissionFactor = response;
-                          // this.getUnit(subcatseedID);
-                      }
-                      else {
-                          this.EmissionFactor = [];
-                      }
-                  },
-                  error: (err) => {
-                      this.EmissionFactor = [];
-                      this.notification.showError(
-                          'Emission Factor failed.',
-                          'Error'
-                      );
-                      console.error('errrrrrr>>>>>>', err);
-                  }
-              });
-      }
-      if (catID === 7) {
-          this.trackingService
-              .GetEmissionFactorHeatandSteambyID(subcatseedID)
-              .subscribe({
-                  next: (response) => {
-                      if (response) {
-                          this.EmissionFactor = response;
-                          // this.getUnit(subcatseedID);
-                      }
-                      else {
-                          this.EmissionFactor = [];
-                      }
-                  },
-                  error: (err) => {
-                      this.EmissionFactor = [];
-                      this.notification.showError(
-                          'Emission Factor failed.',
-                          'Error'
-                      );
-                      console.error('errrrrrr>>>>>>', err);
-                  }
-              });
-      }
-  };
+ 
 }

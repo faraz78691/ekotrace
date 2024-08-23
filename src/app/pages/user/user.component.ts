@@ -110,11 +110,9 @@ export class UserComponent {
         } else {
             const stringfyIDs = JSON.stringify([this.admininfo.facilityID.toString()]);
             this.payloadFacilityIds = stringfyIDs;
-            console.log(this.payloadFacilityIds);
+            
         }
-        console.log(this.admininfo.facilityID);
-
-
+      
         // this.GetAssignedDataPoint(id);
     };
     //The onSubmit function handles form submission, including validation, user addition, and user update, with success/error notifications.
@@ -129,7 +127,7 @@ export class UserComponent {
         }
         if (this.FormEdit === false) {
             if (
-                this.loginInfo.numberOfUserAllowed <= this.admininfoList.length
+                this.loginInfo.package_info.users  <= this.admininfoList.length
             ) {
                 this.notification.showWarning(
                     'You have reached the maximum limit, and you will need to either upgrade your plan or delete your user account.',
@@ -190,7 +188,7 @@ export class UserComponent {
         }
         if (this.FormEdit === true) {
             if (
-                this.loginInfo.numberOfUserAllowed < this.admininfoList.length
+                this.loginInfo.package_info.users < this.admininfoList.length
             ) {
                 this.notification.showWarning(
                     'You have reached the maximum limit, and you will need to either upgrade your plan or delete your user account.',
@@ -233,13 +231,12 @@ export class UserComponent {
 
     // ----Get all users method ---
     GetAllUsers() {
-        let tenantId = this.loginInfo.tenantID;
+        let tenantId = this.loginInfo.super_admin_id;
         const formData = new URLSearchParams();
         formData.set('tenantId', tenantId.toString())
         this.UserService.newgetUsers(formData.toString()).subscribe((result) => {
 
             if (result.length > 0) {
-
 
                 this.admininfoList = result;
                 this.userdetails = this.admininfoList[0];
@@ -303,15 +300,7 @@ export class UserComponent {
 
 
     };
-    // RemoveElementFromArray(element: string) {
-    //     this.RolesList.forEach((value, index) => {
-    //         if (value.name == element) {
-    //             this.RolesList.splice(index, 1);
-    //         }
-    //     });
-    // }
-
-    // ----Get all Facility list in add user dropdown method ---
+  
 
     GetAllFacility() {
         let tenantId = this.loginInfo.tenantID;
@@ -321,7 +310,7 @@ export class UserComponent {
             if (this.facilityList.length === 0) {
                 this.facilitydata = true;
             }
-        });
+        })
     }
     GetGroups() {
         let tenantId = this.loginInfo.tenantID;

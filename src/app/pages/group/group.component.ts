@@ -66,9 +66,11 @@ export class GroupComponent {
     selectedValue: string;
     selectedCountry: any[] = [];
     editBindedCountry: any[] = [];
+    subGroupsList: any[] = [];
     id: any;
     isgroupExist: boolean = false;
     selectedFaciltiy: any;
+    selectedSubGroup: any;
     selectedState: any;
     GroupByValue: string;
     countryUnique: string[];
@@ -104,13 +106,10 @@ export class GroupComponent {
         
         this.Groupby = [
             {
-                name: 'Country'
-            },
-            {
-                name: 'State'
-            },
-            {
                 name: 'Facility'
+            },
+            {
+                name: 'Sub Group'
             }
         ];
     }
@@ -123,6 +122,7 @@ export class GroupComponent {
         }
         // this.getTenantsDetailById(Number(this.loginInfo.tenantID));
         this.GetAllFacility();
+        this.GetAllSubGroups();
         let tenantID = this.loginInfo.tenantID;
         this.newGetAllGroups(tenantID);
         this.updatedtheme = this.themeservice.getValue('theme');
@@ -139,7 +139,7 @@ export class GroupComponent {
  
     
      newGetAllGroups(tenantID:any) {
-console.log("Dsg")
+
         let formData = new URLSearchParams();
 
         formData.set('tenantID', tenantID.toString());
@@ -221,13 +221,18 @@ console.log("Dsg")
                 this.groupMappingDetails.facilityId = val;
                 this.groupdetails.groupMappings.push(this.groupMappingDetails);
             });
-        
+
         this.groupdetails.tenantID = this.loginInfo.tenantID;
         let formData = new URLSearchParams();
         formData.set('groupname',this.groupdetails.groupname);
         formData.set('tenantID',  this.groupdetails.tenantID.toString());
         formData.set('facility',this.selectedFaciltiy);
-    
+        if(this.groupdetails.groupBy === 'Facility'){
+            formData.set('group_by', '1');
+        }else if (this.groupdetails.groupBy === 'Sub Group'){
+            formData.set('group_by', '2');
+        }
+     
         this.GroupService.newSaveGroups(formData.toString()).subscribe({
             next: (response) => {
                 console.log(response);
@@ -298,6 +303,15 @@ console.log("Dsg")
             if (this.facilityList.length === 0) {
                 this.facilitydata = true;
             }
+        });
+    }
+    GetAllSubGroups() {
+        let tenantId = this.loginInfo.tenantID;
+        const formData = new URLSearchParams();
+        formData.set('tenantID', tenantId.toString())
+     
+        this.facilityService.getActualSubGroups(formData).subscribe((response) => {
+            this.subGroupsList = response.categories;
         });
     }
     //handles the closing of a dialog

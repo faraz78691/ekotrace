@@ -75,6 +75,11 @@ export class FacilityService {
             environment.baseUrl + '/getdashboardfacilitiessubgroup' , tenantId 
         );
     };
+    public getActualSubGroups(tenantId): Observable<any> {
+        return this.http.post<any>(
+            environment.baseUrl + '/getSubGroups' , tenantId 
+        );
+    };
     public getMainSubGroupByTenantId(tenantId): Observable<any> {
         return this.http.get<any>(
             environment.baseUrl + '/getFacilityByTenantIdMainGroup/' + tenantId 

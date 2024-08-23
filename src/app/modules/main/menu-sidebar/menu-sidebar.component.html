@@ -27,23 +27,20 @@
     <nav class="mt-2" style="overflow-y: scroll">
 
         <div>
-            <!-- <ul *ngIf="IsPAdmin" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+            <ul *ngIf="IsPAdmin" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                 data-accordion="false" [ngClass]="updatedtheme === 'dark'">
-                <div>
-          
-                    <app-menu-item [menuItem]="{
-                            name: 'Dashboard',
-                            iconClasses: 'fas fa-table',
-                            path: ['dashboard']
-                        }"></app-menu-item>
-                    <app-menu-item [menuItem]="{
-                            name: 'Company Registration',
-                            iconClasses: 'fas fa-user',
-                            path: ['company-register']
-                        }"></app-menu-item>
-
+                <div *ngFor="let item of menu">
+                    
+                    <p *ngIf="item.head !== undefined" [ngClass]="
+                            this.updatedtheme === 'dark'
+                                ? 'headtextD'
+                                : 'headtextL'
+                        ">
+                        {{ item.head }}
+                    </p>
+                    <app-menu-item [menuItem]="item"></app-menu-item>
                 </div>
-            </ul> -->
+            </ul>
             <ul *ngIf="!IsPAdmin" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                 data-accordion="false">
                 <div *ngFor="let item of menu">

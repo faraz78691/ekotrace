@@ -92,7 +92,7 @@ export class EnergyEmmsionsComponent {
   public groupChart: Partial<Chart3Options>;
   dashboardData: any[] = [];
   public loginInfo: LoginInfo;
-  selectedFacility:number;
+  selectedFacility: number;
   year: Date;
   scopeWiseSeries: any[] = [];
   progress1: any = '';
@@ -188,13 +188,13 @@ export class EnergyEmmsionsComponent {
     const formData = new URLSearchParams();
     formData.set('tenantID', tenantId.toString())
     this.dashboardService.getdashboardfacilities(formData.toString()).subscribe((result: any) => {
-     
+
       if (result.success == true) {
         this.dashboardData = result.categories;
-        if(this.facilityService.selectedfacilitiesSignal() == 0){
+        if (this.facilityService.selectedfacilitiesSignal() == 0) {
           this.selectedFacility = this.dashboardData[0].ID;
 
-        }else{
+        } else {
           this.selectedFacility = this.facilityService.selectedfacilitiesSignal();
         }
         this.emssionByTravel(this.selectedFacility);
@@ -208,15 +208,15 @@ export class EnergyEmmsionsComponent {
   };
 
   emssionByTravel(facility) {
-   
+
     let tenantId = this.loginInfo.tenantID;
     const formData = new URLSearchParams();
-   
+
     // formData.set('year', this.year.getFullYear().toString());
     formData.set('year', this.year.getFullYear().toString());
     formData.set('facilities', facility);
     this.dashboardService.GEByFuelType(formData.toString()).subscribe((result: any) => {
-     
+
 
       this.scopeWiseSeries = result.flueType;
       this.labelScopeDonut1 = result.series;
@@ -259,24 +259,19 @@ export class EnergyEmmsionsComponent {
         ]
       };
 
-
-
-
-
-
     });
   };
 
   totalEmissionByMonth(facility) {
-   
+
     let tenantId = this.loginInfo.tenantID;
     const formData = new URLSearchParams();
-  
+
     // formData.set('year', this.year.getFullYear().toString());
     formData.set('year', this.year.getFullYear().toString());
     formData.set('facilities', facility);
     this.dashboardService.EnergyByMonth(formData.toString()).subscribe((result: any) => {
-   
+
 
       this.barGraph1 = result.series;
       this.labelScopeDonut1 = result.categories;
@@ -309,7 +304,7 @@ export class EnergyEmmsionsComponent {
           breakpoint: 480,
           options: {
             legend: {
-              fontSize:'14px',
+              fontSize: '14px',
               position: 'bottom',
               offsetX: -10,
               offsetY: 0
@@ -346,18 +341,18 @@ export class EnergyEmmsionsComponent {
               fontSize: '13px'
             }
           },
-          categories:  this.scopeMonths,
-     
+          categories: this.scopeMonths,
+
           tooltip: {
             enabled: true,
             offsetY: -35
           }
         },
         fill: {
-            opacity: 1,
-            // stops: [50, 0, 100, 100]
-          }
-      ,
+          opacity: 1,
+          // stops: [50, 0, 100, 100]
+        }
+        ,
         yaxis: {
 
           labels: {
@@ -366,7 +361,7 @@ export class EnergyEmmsionsComponent {
             }
           }
         },
-      
+
       };
 
 
@@ -380,17 +375,17 @@ export class EnergyEmmsionsComponent {
 
 
   BygroundTravel(facility) {
-  
+
     let tenantId = this.loginInfo.tenantID;
     const formData = new URLSearchParams();
     // formData.set('year', this.year.getFullYear().toString());
     formData.set('year', this.year.getFullYear().toString());
     formData.set('facilities', facility);
     this.dashboardService.ByEnergyRenewable(formData.toString()).subscribe((result: any) => {
-     
+
       this.businessClass = result.renewable;
       this.labelScopeDonut2 = result.series;
-this.renewableTotal = result.totalEmssion;
+      this.renewableTotal = result.totalEmssion;
       this.pieChart = {
         series: this.businessClass,
         chart: {
@@ -432,7 +427,7 @@ this.renewableTotal = result.totalEmssion;
   };
 
   emssionByActivity(facility) {
- 
+
     let tenantId = this.loginInfo.tenantID;
     const formData = new URLSearchParams();
 
@@ -440,7 +435,7 @@ this.renewableTotal = result.totalEmssion;
     formData.set('year', this.year.getFullYear().toString());
     formData.set('facilities', facility);
     this.dashboardService.GEByActivity(formData.toString()).subscribe((result: any) => {
-    
+
 
       this.seriesScopeDonut2 = result.energyinuse;
       this.labelScopeDonut2 = result.series;

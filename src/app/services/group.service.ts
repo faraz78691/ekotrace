@@ -31,6 +31,11 @@ export class GroupService {
             environment.baseUrl + '/targetsetting/getTargetEmissionInventory'
         );
     };
+    public getSuperAdmins(): Observable<any> {
+        return this.http.get(
+            environment.baseUrl + '/getSuperadmin'
+        );
+    };
     public getEmissionProjections(): Observable<any> {
         return this.http.get(
             environment.baseUrl + '/targetsetting/getRevenueFactors'
@@ -76,6 +81,9 @@ export class GroupService {
     };
     public updateInventory( groupdetails) {
         return this.http.post(environment.baseUrl + '/targetsetting/updateEmissionInventoryID', groupdetails);
+    };
+    public updateSuperAdminPakcages( groupdetails) {
+        return this.http.post(environment.baseUrl + '/addpackageBySuperadmin', groupdetails);
     };
     public newUpdatePackage( packageDetails) {
         return this.http.post(environment.baseUrl + '/Updategroupmapping' , packageDetails);

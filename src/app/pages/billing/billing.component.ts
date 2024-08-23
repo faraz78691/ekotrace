@@ -168,14 +168,14 @@ export class BillingComponent {
         formData.set('tenant_id', this.loginInfo.tenantID.toString())
         this.userService.getNewPackageDetails(formData.toString()).subscribe({
             next: (response: any) => {
-console.log(response);
+                console.log(response);
                 this.companyDetails = response.userinfo[0];
                 this.expirationDate = new Date(this.companyDetails.expiration);
                 this.expirationDate.setDate(this.expirationDate.getDate() - 1);
                 const currentDate = new Date();
                 const licenseExpiredDate = new Date(this.loginInfo.licenseExpired);
                 this.isExpired = licenseExpiredDate < currentDate;
-    
+
                 // Calculate the difference in days
                 const timeDifference =
                     this.expirationDate.getTime() - currentDate.getTime();
@@ -209,7 +209,7 @@ console.log(response);
         console.log(this.companyDetails);
 
     };
-    
+
     // getUsers() {
     //     this.userService.getNewPackageDetails().subscribe({
     //         next: (response: any) => {
@@ -297,13 +297,13 @@ console.log(response);
         // });
     }
 
-     //method for add new facility
-     saveFacility(data: any) {
-     
+    //method for add new facility
+    saveFacility(data: any) {
+
     }
     //method for update a facility by id
     editfacility(id: any, data: any) {
-    
-            };
-    
+
+    };
+
 }

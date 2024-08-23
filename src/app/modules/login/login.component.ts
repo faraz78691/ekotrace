@@ -114,8 +114,8 @@ export class LoginComponent implements OnInit {
             this.showLoader = true;
             this.isAuthLoading = true;
              const formData = new URLSearchParams();
-             formData.set('email', this.loginForm.value.email);
-             formData.set('password', this.loginForm.value.password);
+             formData.set('email', this.loginForm.value.email.trim());
+             formData.set('password', this.loginForm.value.password.trim());
             this.appService.newloginByAuth(formData).subscribe(
                 (res) => {
                 console.log(res);
@@ -137,8 +137,8 @@ export class LoginComponent implements OnInit {
                         let jsonObj = JSON.parse(userInfo); // string to "any" object first
                         this.loginInfo = jsonObj as LoginInfo;
                         console.log(
-                            '🚀 ~ file: header.component.ts:62 ~ HeaderComponent ~ ngOnInit ~ this.loginInfo:',
-                            this.loginInfo
+                            'loginInfo:',
+                            this.loginInfo.role
                         );
                         this.invalidLogin = false;
                         const currentDate = new Date();
@@ -147,11 +147,14 @@ export class LoginComponent implements OnInit {
                         );
                         this.isExpired = licenseExpiredDate < currentDate;
                         if (
-                            this.loginInfo.role[0] === 'Super Admin' &&
+                            this.loginInfo.role === 'Super Admin' &&
                             this.isExpired
                         ) {
                             this.router.navigate(['/billing']);
-                        } else {
+                        } else if(this.loginInfo.role === 'Platform Admin'){
+                            this.router.navigate(['/platformAdmin']);
+                        }
+                        else {
                             this.router.navigate(['/dashboard']);
                         }
                         this.showLoader = false;

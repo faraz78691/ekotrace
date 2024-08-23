@@ -45,7 +45,8 @@ export class MenuItemComponent implements OnInit {
         ) {
             this.isExpandable = true;
         }
-        this.calculateIsActive(this.router.url);
+       
+        this.calculateIsActive(this.router.url); 
         this.router.events
             .pipe(filter((event) => event instanceof NavigationEnd))
             .subscribe((event: NavigationEnd) => {
@@ -101,7 +102,8 @@ export class MenuItemComponent implements OnInit {
         this.isMenuExtended = !this.isMenuExtended;
     }
 
-    public calculateIsActive(url: string) {
+     calculateIsActive(url: string) {
+      
         this.isMainActive = false;
         this.isOneOfChildrenActive = false;
         if (!this.isExpandable) {
@@ -109,11 +111,12 @@ export class MenuItemComponent implements OnInit {
                 this.isOneOfChildrenActive = true;
                 this.isMenuExtended = true;
             }else if(url.includes(this.menuItem.path[0])){
+               
                 this.isOneOfChildrenActive = true;
                 this.isMenuExtended = true;
             }
         } else if (this.menuItem.path[0] === url) {
-            console.log("jajjjjj")
+          
             this.isMainActive = true;
         }
         if (!this.isMainActive && !this.isOneOfChildrenActive) {

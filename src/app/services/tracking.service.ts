@@ -587,7 +587,10 @@ export class TrackingService {
     public newgetsubCatType(subCatID): Observable<any> {
         return this.http.get<any>(environment.baseUrl + '/GetSubCategoryTypes/' + subCatID)
     }
-
+    public newGetRegionType(facility): Observable<any> {
+        return this.http.post<any>(environment.baseUrl + '/electricitygridType', facility)
+    }
+   
 
 
     // Scope threee apis Routes starts ------->
@@ -611,7 +614,7 @@ export class TrackingService {
         ;  
         ; 
         return this.http.post(
-            environment.baseUrl + '/getCalcPurchaseGood',
+            environment.baseUrl + '/purchaseGoods',
             formData
         );
     };
@@ -631,6 +634,12 @@ export class TrackingService {
         );
     };
 
+    getEmployeeType(): Observable<any> {
+        return this.http.get(environment.baseUrl + '/employeeCommunityCategory')
+    };
+    getEmployeeSubVehicleCat(id:any): Observable<any> {
+        return this.http.get(environment.baseUrl + `/employeeCommunitysubCategory/${id}`)
+    };
     getVehicleType(): Observable<any> {
         return this.http.get(environment.baseUrl + '/vehicleCategories')
     };
@@ -817,6 +826,9 @@ export class TrackingService {
     };
     getPurchaseGoodsType(): Observable<any> {
         return this.http.get(environment.baseUrl + '/getintermediateCategory')
+    };
+    getPurchaseGoodsCurrency(data): Observable<any> {
+        return this.http.post(environment.baseUrl + '/getcurrencyByfacilities', data)
     };
     getrefrigents(): Observable<any> {
         return this.http.get(environment.baseUrl + '/getrefrigents')

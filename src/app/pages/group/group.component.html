@@ -114,6 +114,12 @@
                                         label="{{ facility.name }}" [(ngModel)]="selectedFaciltiy"></p-checkbox>
                                 </div>
                             </div>
+                            <div class="row mt-4" *ngIf="groupdetails.groupBy === 'Sub Group'">
+                                <div class="col-lg-4" *ngFor="let facility of subGroupsList">
+                                    <p-checkbox name="groupname" [value]="facility.id" [inputId]="facility.id"
+                                        label="{{ facility.name }}" [(ngModel)]="selectedFaciltiy"></p-checkbox>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="mt-3 ct_modal_btns_12">

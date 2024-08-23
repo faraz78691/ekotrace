@@ -20,7 +20,7 @@ import { VehicleDE } from '@/models/VehicleDE';
 import { VehicleDEmode } from '@/models/VehicleDEmode';
 import { VehicleType } from '@/models/VehicleType';
 import { LoginInfo } from '@/models/loginInfo';
-import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
 import { NgForm, FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FacilityService } from '@services/facility.service';
@@ -46,6 +46,7 @@ export class TrackingComponent {
     public countriesList: any = countries
     @ViewChild('dataEntryForm', { static: false }) dataEntryForm: NgForm;
     @ViewChild('tabView') dataentryTab: TabView;
+    @ViewChild('commuteTable') commuteTable: ElementRef;
     @ViewChild('dt1') dt!: Table;
     @ViewChild('fileUpload') fileUpload!: FileUpload;
     @ViewChild('inputFile') inputFile: any;
@@ -176,6 +177,7 @@ export class TrackingComponent {
     noofmonths_2: string;
     noofmonths_3: string;
     franchiseGrid: any[] = [];
+    HSNCode: any[] = [];
     busineessGrid: any[] = [];
     franchiseGridWithPlaceholder: any[] = [];
     subFranchiseCategory: any[] = [];
@@ -194,11 +196,13 @@ export class TrackingComponent {
     calculationPurchaseGrid: any[] = [];
     productEnergyTypes: any[] = [];
     energyUnitsGrid: any[] = [];
+    purchaseProduct: any[] = [];
     noOfItems = false;
     subElectricityUnits = "per usage";
     expectedElectricityUnitsGrid: any[] = [];
     selectedFuelItem: any;
     fuelEnergyTypes: any[] = [];
+    vendorList: any[] = [];
     ModesTravelGrid: any[] = [];
     refrigeratedTypes: any[] = [];
     calculationGrid: any[] = [];
@@ -231,17 +235,21 @@ export class TrackingComponent {
     selectedtemplate = '';
     mode_type: any[] = [];
     marketTypes: any[] = [];
+    purchaseProductTypes: any[] = [];
+    purchaseProductCategoryTypes: any[] = [];
     marketEElecID: any;
     templateLinks: string;
     processingUnit: string;
     haveBasicPackage: number = 0;
-
-
     carFuel_type: any[] = [];
+    purchaseUnits: any[] = [];
+    waterUsageLevel: any[] = [];
     distanceTravelled: any[] = [];
     wasteMethod: string;
     recycle = false;
-    recycleSelectedMethod = ''
+    recycleSelectedMethod = '';
+    rows: any[] = [];
+    vendorUnits: any[] = [];
 
     storagef_typeValue: string = this.storageGrid[0]?.storagef_type;
     openDatapointDialog() {
@@ -273,7 +281,6 @@ export class TrackingComponent {
 
 
 
-
     constructor(
         private messageService: MessageService,
         private router: Router,
@@ -284,8 +291,13 @@ export class TrackingComponent {
         private GroupService: GroupService,
         private notification: NotificationService,
         private toastr: ToastrService,
-        private confirmationService: ConfirmationService
+        private confirmationService: ConfirmationService,
+        private renderer: Renderer2
     ) {
+        // Initialize with the first 5 rows
+        for (let i = 1; i <= 5; i++) {
+            this.rows.push({ id: i, subVehicleCategory: [], vehicleType1: null, vehicleType2: null, employeesCommute: '', avgCommute: '' });
+        }
 
         this.facilityService.headerTracking.set(true);
         this.SubCatAllData = new ManageDataPointSubCategories();
@@ -315,12 +327,8 @@ export class TrackingComponent {
         this.dataEntry.unit = "";
         this.SubCategoryType = [];
 
-
-
         this.isInputEdited;
         this.dataEntry.typeID;
-
-
 
         this.items = [
             {
@@ -343,6 +351,27 @@ export class TrackingComponent {
             }
         ];
 
+        this.purchaseUnits =
+            [
+
+                {
+                    "id": 1,
+                    "units": "kg"
+                },
+                {
+                    "id": 2,
+                    "units": "Tonnes"
+                },
+                {
+                    "id": 3,
+                    "units": "Litres"
+                },
+                {
+                    "id": 4,
+                    "units": "INR"
+                }
+
+            ];
         this.flightsTravelTypes =
             [
 
@@ -561,10 +590,6 @@ export class TrackingComponent {
         this.purchaseGoodsUnitsGrid =
             [
                 {
-                    "id": 1,
-                    "units": "INR"
-                },
-                {
                     "id": 2,
                     "units": "kg"
                 },
@@ -676,15 +701,50 @@ export class TrackingComponent {
                     "units": "tonnes"
                 }
             ]
+        this.vendorUnits =
+            [
+                {
+                    "id": 1,
+                    "units": "kg CO2e/kg"
+                },
+                {
+                    "id": 2,
+                    "units": "kg CO2e/Tonnes"
+                },
+                {
+                    "id": 3,
+                    "units": "kg CO2e/Litres"
+                },
+                {
+                    "id": 4,
+                    "units": "kg CO2e/INR"
+                }
+            ]
         this.waterSupplyUnitGrid =
             [{
                 "id": 1,
-                "unitType": "cubic m"
+                "unitType": "kilo litres"
             },
             {
                 "id": 2,
-                "unitType": "million litres"
+                "unitType": "cubic m"
+            },
+
+            ];
+        this.waterUsageLevel =
+            [{
+                "id": 1,
+                "unitType": "Primary"
+            },
+            {
+                "id": 2,
+                "unitType": "Secondary"
+            },
+            {
+                "id": 3,
+                "unitType": "Tertiary"
             }
+
             ];
         this.ElectricitySource =
             [{
@@ -727,6 +787,17 @@ export class TrackingComponent {
                     "water_type": "Anaerobic digestion"
                 }
             ];
+        this.HSNCode =
+            [
+                {
+                    "id": 1,
+                    "code": "HSN"
+                },
+                {
+                    "id": 2,
+                    "code": "SAC"
+                }
+            ];
         this.expectedElectricityUnitsGrid =
             [
                 {
@@ -745,6 +816,31 @@ export class TrackingComponent {
                     "id": 4,
                     "unitsExpElec": "Years"
                 }
+            ]
+        this.purchaseProductTypes =
+            [
+                {
+                    "id": 1,
+                    "product": "Standard Goods"
+                },
+                {
+                    "id": 2,
+                    "product": "Capital Goods"
+                },
+                {
+                    "id": 3,
+                    "product": "Standard Services"
+                },
+             
+            ]
+        this.purchaseProductCategoryTypes =
+            [
+                {
+                    "id": 1,
+                    "product": "Testing"
+                },
+             
+             
             ]
         this.active = this.items[0];
         this.SCdataEntry.blendPercent = 20;
@@ -841,7 +937,7 @@ export class TrackingComponent {
         let fId = localStorage.getItem('SelectedfacilityID');
         this.flag = localStorage.getItem('Flag');
         if (this.facilityID != fId) {
-            console.log("checkssss");
+
             this.GetAssignedDataPoint(Number(fId));
             this.facilityID = fId;
 
@@ -876,10 +972,7 @@ export class TrackingComponent {
             break; // Exit the outer loop after storing the zero index
         }
         //retrieves the emission factor for the selected subcategory
-        this.getEmissionfactor(
-            this.SubCatAllData.manageDataPointSubCategorySeedID,
-            this.categoryId
-        );
+
     };
 
     // getting status, units, subCategory types where ever required
@@ -925,7 +1018,7 @@ export class TrackingComponent {
 
         if (catID == 5) {
 
-            this.getRegionName(9);
+            this.getRegionName();
             this.getUnit(this.SubCatAllData
                 .manageDataPointSubCategorySeedID);
         }
@@ -951,6 +1044,10 @@ export class TrackingComponent {
             this.getUnit(this.SubCatAllData
                 .manageDataPointSubCategorySeedID);
         }
+        if (catID == 8) {
+
+            this.GetVendors()
+        }
         if (catID == 10) {
             this.getVehicleTypes();
             this.getSubVehicleCategory(1)
@@ -963,11 +1060,16 @@ export class TrackingComponent {
             this.isVisited = true;
 
         }
+        if (catID == 14) {
+            this.getEmployeeCommuTypes()
+
+        }
         if (catID == 17) {
             this.getVehicleTypes();
             this.getSubVehicleCategory(1)
         }
         if (catID == 18) {
+            this.getPurchaseGoodsCurrency();
             this.getPurchaseGoodsCategory();
         }
         if (catID == 16) {
@@ -1020,10 +1122,11 @@ export class TrackingComponent {
         })
     };
 
-    getRegionName(subCatID: number) {
-        this.dataEntry.typeID = null;
-        this.RenewableElectricity.electricityRegionID = null;
-        this.trackingService.newgetsubCatType(subCatID).subscribe({
+    getRegionName() {
+
+        let formData = new URLSearchParams();
+        formData.set('facilities', this.facilityID);
+        this.trackingService.newGetRegionType(formData.toString()).subscribe({
             next: (response) => {
                 this.regionType = response.categories;
                 this.RenewableElectricity.electricityRegionID = this.regionType[0].RegionID;
@@ -1152,7 +1255,7 @@ export class TrackingComponent {
 
     //entrysave function to save dataentry
     EntrySave(form: NgForm) {
-       
+
         this.dataEntry.month = this.selectMonths
             .map((month) => month.value)
             .join(', '); //this.getMonthName();
@@ -1347,6 +1450,11 @@ export class TrackingComponent {
                         // });
 
                         this.activeindex = 0;
+                    } else {
+                        this.notification.showError(
+                            response.message,
+                            'Error'
+                        );
                     }
                 },
                 error: (err) => {
@@ -1402,6 +1510,11 @@ export class TrackingComponent {
                         // });
 
                         this.activeindex = 0;
+                    } else {
+                        this.notification.showError(
+                            response.message,
+                            'Error'
+                        );
                     }
                 },
                 error: (err) => {
@@ -1452,6 +1565,11 @@ export class TrackingComponent {
                         // });
 
                         this.activeindex = 0;
+                    } else {
+                        this.notification.showError(
+                            response.message,
+                            'Error'
+                        );
                     }
                 },
                 error: (err) => {
@@ -1558,7 +1676,7 @@ export class TrackingComponent {
                                 .manageDataPointSubCategorySeedID);
                             this.RenewableElectricity.sourceName = this.ElectricitySource[0].sourceName;
                             this.activeindex = 0;
-                            this.getRegionName(9);
+                            this.getRegionName();
                             this.ALLEntries();
                             this.renewableSelected = false;
                             this.supplierSelected = false;
@@ -1567,6 +1685,11 @@ export class TrackingComponent {
                                 'Success'
                             );
 
+                        } else {
+                            this.notification.showError(
+                                response.message,
+                                'Error'
+                            );
                         }
                     },
                     error: (err) => {
@@ -1603,7 +1726,7 @@ export class TrackingComponent {
                                 .manageDataPointSubCategorySeedID);
 
                             this.activeindex = 0;
-                            this.getRegionName(9);
+                            this.getRegionName();
                             this.ALLEntries();
                             this.renewableSelected = false;
                             this.supplierSelected = false;
@@ -1613,6 +1736,11 @@ export class TrackingComponent {
                             );
 
 
+                        } else {
+                            this.notification.showError(
+                                response.message,
+                                'Error'
+                            );
                         }
                         // this.marketEElecID = this.marketTypes[0].id;
 
@@ -1664,6 +1792,11 @@ export class TrackingComponent {
                             'Success'
                         );
 
+                    } else {
+                        this.notification.showError(
+                            response.message,
+                            'Error'
+                        );
                     }
                 },
                 error: (err) => {
@@ -1679,7 +1812,19 @@ export class TrackingComponent {
         if (this.categoryId == 8) {
 
             let formData = new URLSearchParams();
-            formData.set('batch', this.batchId);
+            formData.set('month', monthString);
+            formData.set('year', this.dataEntry.year);
+            formData.set('typeofpurchase', form.value.productType);
+            formData.set('productcodestandard',  form.value.HSNcode);
+            formData.set('valuequantity',  form.value.valueQuantity);
+            formData.set('unit',  form.value.distance_unit);
+            formData.set('vendor',  form.value.vendorName);
+            formData.set('vendorunit',  form.value.vendor_unit);
+            formData.set('vendorspecificEF',  form.value.vendotEf);
+            formData.set('product_subcategory',  form.value.productSubCateggory);
+            formData.set('product_category',  form.value.productCateggory);
+            formData.set('facilities', this.facilityID);
+
 
             this.trackingService.submitPurchaseGoods(formData.toString()).subscribe({
                 next: (response) => {
@@ -1689,20 +1834,15 @@ export class TrackingComponent {
                             response.message,
                             'Success'
                         );
-                        this.inputFile.nativeElement.value = '';
-                        $(".filename").val('');
-                        $(".browse-button-text").html('<i class="fa fa-folder-open"></i> Browse')
                         this.resetForm();
                         this.ALLEntries();
-                        // this.dataEntryForm.reset()
-                        // this.getStatusData(1);
-                        this.uploadButton = false;
+                    
                     } else {
                         this.notification.showError(
                             response.message,
                             'Error'
                         );
-                        this.inputFile.nativeElement.value = '';
+                   
                     }
                 },
                 error: (err) => {
@@ -1804,14 +1944,23 @@ export class TrackingComponent {
             var waterobj5 = { "type": "Others", "kilolitres": form.value.others };
 
             const typoOfOffice = [waterobj1, waterobj2, waterobj3, waterobj4, waterobj5]
-            var water_withdrawlStringfy = JSON.stringify(typoOfOffice)
+            var water_withdrawlStringfy = JSON.stringify(typoOfOffice);
 
 
-            var waterDischargeobj1 = { "type": "Into Surface water", "notreatment": form.value.surface_no_treatment, "withthtreatment": form.value.surface_withTreatment, "leveloftreatment": form.value.surface_levelTreatment };
-            var waterDischargeobj2 = { "type": "Into Ground water", "notreatment": form.value.ground_no_treatment, "withthtreatment": form.value.ground_withTreatment, "leveloftreatment": form.value.ground_levelTreatment };
-            var waterDischargeobj3 = { "type": "Into Seawater", "notreatment": form.value.seawater_no_treatment, "withthtreatment": form.value.seawater_withTreatment, "leveloftreatment": form.value.seawater_levelTreatment };
-            var waterDischargeobj4 = { "type": "Send to third-parties", "notreatment": form.value.third_no_treatment, "withthtreatment": form.value.third_withTreatment, "leveloftreatment": form.value.third_levelTreatment };
-            var waterDischargeobj5 = { "type": "Others", "notreatment": form.value.others_no_treatment, "withthtreatment": form.value.others_withTreatment, "leveloftreatment": form.value.others_levelTreatment };
+            var waterDischargeonlyobj1 = { "type": "Surface water", "kilolitres": form.value.surface_water_dest };
+            var waterDischargeonlyobj2 = { "type": "Groundwater", "kilolitres": form.value.groundwater_dest };
+            var waterDischargeonlyobj3 = { "type": "Third party water", "kilolitres": form.value.thirdParty_dest };
+            var waterDischargeonlyobj4 = { "type": "Sea water / desalinated water", "kilolitres": form.value.seaWater_dest };
+            var waterDischargeonlyobj5 = { "type": "Others", "kilolitres": form.value.others_dest };
+
+            const typoOfDischargeonlyOffice = [waterDischargeonlyobj1, waterDischargeonlyobj2, waterDischargeonlyobj3, waterDischargeonlyobj4, waterDischargeonlyobj5]
+            var water_DischargeonlyStringfy = JSON.stringify(typoOfDischargeonlyOffice);
+
+            var waterDischargeobj1 = { "type": "Into Surface water", "withthtreatment": form.value.surface_withTreatment, "leveloftreatment": form.value.surface_levelTreatment };
+            var waterDischargeobj2 = { "type": "Into Ground water", "withthtreatment": form.value.ground_withTreatment, "leveloftreatment": form.value.ground_levelTreatment };
+            var waterDischargeobj3 = { "type": "Into Seawater", "withthtreatment": form.value.seawater_withTreatment, "leveloftreatment": form.value.seawater_levelTreatment };
+            var waterDischargeobj4 = { "type": "Send to third-parties", "withthtreatment": form.value.third_withTreatment, "leveloftreatment": form.value.third_levelTreatment };
+            var waterDischargeobj5 = { "type": "Others", "withthtreatment": form.value.others_withTreatment, "leveloftreatment": form.value.others_levelTreatment };
 
             const dischargeWater = [waterDischargeobj1, waterDischargeobj2, waterDischargeobj3, waterDischargeobj4, waterDischargeobj5]
             var waterDischargeStringfy = JSON.stringify(dischargeWater)
@@ -1823,6 +1972,7 @@ export class TrackingComponent {
             formData.set('water_treatment_unit', form.value.waterTreatmentUnits);
             formData.set('water_supply_unit', form.value.waterSupplyUnits);
             formData.set('water_withdrawl', water_withdrawlStringfy);
+            formData.set('water_discharge_only', water_DischargeonlyStringfy);
             formData.set('water_discharge', waterDischargeStringfy);
             formData.set('facilities', this.facilityID);
             formData.set('month', monthString);
@@ -1938,25 +2088,32 @@ export class TrackingComponent {
             })
         }
         if (this.categoryId == 14) {
-            var empobj1 = { "type": "1", "employeescommute": form.value.employeescommute_1, "avgcommute": form.value.avgcommute_1 };
-            var empobj2 = { "type": "2", "employeescommute": form.value.employeescommute_2, "avgcommute": form.value.avgcommute_2 };
-            var empobj3 = { "type": "3", "employeescommute": form.value.employeescommute_3, "avgcommute": form.value.avgcommute_3 };
-            var empobj4 = { "type": "4", "employeescommute": form.value.employeescommute_4, "avgcommute": form.value.avgcommute_4 };
-            var empobj5 = { "type": "5", "employeescommute": form.value.employeescommute_5, "avgcommute": form.value.avgcommute_5 };
-            var empobj6 = { "type": "6", "employeescommute": form.value.employeescommute_6, "avgcommute": form.value.avgcommute_6 };
-            var empobj7 = { "type": "7", "employeescommute": form.value.employeescommute_7, "avgcommute": form.value.avgcommute_7 };
-            var empobj8 = { "type": "8", "employeescommute": form.value.employeescommute_8, "avgcommute": form.value.avgcommute_8 };
-            var empobj9 = { "type": "9", "employeescommute": form.value.employeescommute_9, "avgcommute": form.value.avgcommute_9 };
-            var empobj10 = { "type": "10", "employeescommute": form.value.employeescommute_10, "avgcommute": form.value.avgcommute_10 };
-            var empobj11 = { "type": "11", "employeescommute": form.value.employeescommute_11, "avgcommute": form.value.avgcommute_11 };
-            var empobj12 = { "type": "12", "employeescommute": form.value.employeescommute_12, "avgcommute": form.value.avgcommute_12 };
-            var empobj13 = { "type": "13", "employeescommute": form.value.employeescommute_13, "avgcommute": form.value.avgcommute_13 };
-            var empobj14 = { "type": "14", "employeescommute": form.value.employeescommute_14, "avgcommute": form.value.avgcommute_14 };
-            var empobj15 = { "type": "15", "employeescommute": form.value.employeescommute_15, "avgcommute": form.value.avgcommute_15 };
 
+            // Filter out rows where no field is filled
+            const filledRows = this.rows.filter(row =>
+                // console.log(row.employeesCommute !== '')
+                row.vehicleType1 !== null && row.employeesCommute.trim() !== ''
+            );
+            console.log(filledRows);
+            if (filledRows.length === 0) {
+                this.notification.showError(
+                    "Fill fields",
+                    'Error'
+                );
+                return;
+            }
 
-            const typoOfOffice = [empobj1, empobj2, empobj3, empobj4, empobj5, empobj6, empobj7, empobj8, empobj9, empobj10, empobj11, empobj12, empobj13, empobj14, empobj15]
-            var typeoftransportStringfy = JSON.stringify(typoOfOffice)
+            // Prepare the payload
+            const payload = filledRows.map(row => ({
+                type: row.vehicleType1,
+                subtype: row.vehicleType2,
+                employeesCommute: row.employeesCommute,
+                avgCommute: row.avgCommute
+            }));
+            console.log(payload);
+
+            // const typoOfOffice = [empobj1, empobj2, empobj3, empobj4, empobj5, empobj6, empobj7, empobj8, empobj9, empobj10, empobj11, empobj12, empobj13, empobj14, empobj15]
+            var typeoftransportStringfy = JSON.stringify(payload)
 
 
             let formData = new URLSearchParams();
@@ -2849,7 +3006,7 @@ export class TrackingComponent {
             var spliteedMonth = this.dataEntry.month.split(",");
             var monthString = JSON.stringify(spliteedMonth)
             let formData = new URLSearchParams();
-         
+
             if (form.value.flightMode == 'Generic') {
                 formData.set('flight_calc_mode', form.value.flightMode);
                 formData.set('flight_type', form.value.flight_type);
@@ -3077,30 +3234,32 @@ export class TrackingComponent {
         })
     };
 
+    addCommutes() {
+        this.rows.push({ id: this.rows.length + 1, subVehicleCategory: [], vehicleType1: null, vehicleType2: null, employeesCommute: '', avgCommute: '' });
+    }
+
 
     CostCentre() {
-      
-    
+
         this.GroupService.getCostCentre().subscribe({
-          next: (response) => {
-    
-            if (response.success == true) {
-              this.busineessGrid = response.categories;
-              if (this.busineessGrid.length > 0) {
-      
-             
-              } else {
-             
-              }
-       
-            }
-          },
-          error: (err) => {
-            console.error('errrrrrr>>>>>>', err);
-          },
-          complete: () => console.info('Group Added')
+            next: (response) => {
+
+                if (response.success == true) {
+                    this.busineessGrid = response.categories;
+                    if (this.busineessGrid.length > 0) {
+
+                    } else {
+
+                    }
+
+                }
+            },
+            error: (err) => {
+                console.error('errrrrrr>>>>>>', err);
+            },
+            complete: () => console.info('Group Added')
         });
-      };
+    };
 
     //retrieves assigned data points for a facility and handles the response to update the UI accordingly.
     GetAssignedDataPoint(facilityID: number) {
@@ -3211,11 +3370,7 @@ export class TrackingComponent {
                                                 next: (response) => {
                                                     this.commonDE = response;
                                                     this.categoryId = 2;
-                                                    this.getEmissionfactor(
-                                                        this.SubCatAllData
-                                                            .manageDataPointSubCategorySeedID,
-                                                        this.categoryId
-                                                    );
+
                                                     this.getsubCategoryType(this.SubCatAllData
                                                         .manageDataPointSubCategorySeedID);
 
@@ -3230,11 +3385,7 @@ export class TrackingComponent {
                                                 next: (response) => {
                                                     this.commonDE = response;
                                                     this.categoryId = 3;
-                                                    this.getEmissionfactor(
-                                                        this.SubCatAllData
-                                                            .manageDataPointSubCategorySeedID,
-                                                        this.categoryId
-                                                    );
+
                                                     this.getsubCategoryType(this.SubCatAllData
                                                         .manageDataPointSubCategorySeedID);
 
@@ -3249,11 +3400,7 @@ export class TrackingComponent {
                                                 next: (response) => {
                                                     this.commonDE = response;
                                                     this.categoryId = 5;
-                                                    this.getEmissionfactor(
-                                                        this.SubCatAllData
-                                                            .manageDataPointSubCategorySeedID,
-                                                        this.categoryId
-                                                    );
+
                                                     this.getsubCategoryType(this.SubCatAllData
                                                         .manageDataPointSubCategorySeedID);
 
@@ -3270,11 +3417,7 @@ export class TrackingComponent {
                                                 next: (response) => {
                                                     this.commonDE = response;
                                                     this.categoryId = 6;
-                                                    this.getEmissionfactor(
-                                                        this.SubCatAllData
-                                                            .manageDataPointSubCategorySeedID,
-                                                        this.categoryId
-                                                    );
+
                                                     this.getsubCategoryType(this.SubCatAllData
                                                         .manageDataPointSubCategorySeedID);
 
@@ -3288,15 +3431,23 @@ export class TrackingComponent {
                                                 next: (response) => {
                                                     this.commonDE = response;
                                                     this.categoryId = 7;
-                                                    this.getEmissionfactor(
-                                                        this.SubCatAllData
-                                                            .manageDataPointSubCategorySeedID,
-                                                        this.categoryId
-                                                    );
+
                                                     this.getsubCategoryType(this.SubCatAllData
                                                         .manageDataPointSubCategorySeedID);
                                                 }
                                             });
+                                            found = true; // Set the flag to true
+                                            break;
+                                        }
+                                        if ((response.categories)[i].manageDataPointCategories[j].manageDataPointCategorySeedID == 8) {
+                                            console.log("Df");
+                                            this.categoryId = 8;
+                                            this.ALLEntries()
+                                            this.getsubCategoryType(this.SubCatAllData
+                                                .manageDataPointSubCategorySeedID);
+                                                this.GetVendors()
+                                        
+                                    
                                             found = true; // Set the flag to true
                                             break;
                                         }
@@ -3513,6 +3664,26 @@ export class TrackingComponent {
             });
     }
 
+    GetVendors() {
+        //   let formData = new URLSearchParams();
+
+        //   formData.set('tenant_id', tenantID.toString());
+
+        this.GroupService.getVendors().subscribe({
+            next: (response) => {
+
+                if (response.success == true) {
+                    this.vendorList = response.categories;
+
+
+                }
+            },
+            error: (err) => {
+                console.error('errrrrrr>>>>>>', err);
+            },
+            complete: () => console.info('Group Added')
+        });
+    };
 
 
 
@@ -4257,10 +4428,43 @@ export class TrackingComponent {
         }
     };
 
+    onEmpTypeChange(event: any, row: any) {
+        console.log(event.value, row);
+        const selectedIndex = event.value;
+
+        this.getSubEmployeeCommuTypes(selectedIndex, row)
+    }
+
+    getEmployeeCommuTypes() {
+        this.trackingService.getEmployeeType().subscribe({
+            next: (response) => {
+
+                if (response.success == true) {
+                    this.VehicleGrid = response.batchIds;
+                }
+            }
+        })
+    };
+
+    getSubEmployeeCommuTypes(id, row: any) {
+
+        this.trackingService.getEmployeeSubVehicleCat(id).subscribe({
+            next: (response) => {
+
+                if (response.success == true) {
+                    row.subVehicleCategory = response.batchIds;
+
+                }
+            }
+        })
+    };
+
+
+
     getVehicleTypes() {
         this.trackingService.getVehicleType().subscribe({
             next: (response) => {
-console.log("dg");
+
                 if (response.success == true) {
                     this.VehicleGrid = response.categories;
                     const selectedIndex = this.selectedVehicleIndex;
@@ -4276,7 +4480,7 @@ console.log("dg");
 
                 if (response.success == true) {
                     this.VehicleGrid = response.categories;
-                   console.log(this.VehicleGrid);
+                    console.log(this.VehicleGrid);
                     this.selectedVehicleType = 'Cars'
 
                 }
@@ -4295,7 +4499,7 @@ console.log("dg");
 
         const selectedIndex = event.value;
         console.log(this.dataEntryForm.value);
-      this.selectedVehicleType =  this.VehicleGrid.find(items =>items.id == selectedIndex).vehicle_type;
+        this.selectedVehicleType = this.VehicleGrid.find(items => items.id == selectedIndex).vehicle_type;
         console.log(this.selectedVehicleType);
         // this.selectedVehicleType = this.VehicleGrid[selectedIndex - 1].vehicle_type
 
@@ -4689,6 +4893,39 @@ console.log("dg");
             }
         })
     };
+    getPurchaseGoodsCurrency() {
+        this.purchaseGoodsUnitsGrid = [];
+        const formdata = new URLSearchParams();
+        formdata.set('facilities', this.facilityID);
+        this.trackingService.getPurchaseGoodsCurrency(formdata).subscribe({
+            next: (response) => {
+                // console.log(response);
+                if (response.success == true) {
+                    const curreny = response.categories;
+                    this.purchaseGoodsUnitsGrid.push({ id: 1, units: curreny })
+                    const concatUnits =
+                        [
+                            {
+                                "id": 2,
+                                "units": "kg"
+                            },
+                            {
+                                "id": 3,
+                                "units": "tonnes"
+                            },
+                            {
+                                "id": 4,
+                                "units": "litres"
+                            }
+                        ]
+
+                    this.purchaseGoodsUnitsGrid = this.purchaseGoodsUnitsGrid.concat(concatUnits);
+
+
+                }
+            }
+        })
+    };
 
     getInvestmentCategories() {
         this.trackingService.getInvestmentCategories().subscribe({
@@ -4719,142 +4956,7 @@ console.log("dg");
 
 
     //retrieves the emission factor for a given subcategory seed ID and category ID.
-    getEmissionfactor(subcatseedID: any, catID) {
-        if (catID === 1) {
-            this.trackingService
-                .GetEmissionFactorStationarybyID(subcatseedID)
-                .subscribe({
-                    next: (response) => {
-                        if (response) {
-                            this.EmissionFactor = response;
-                            //   this.getUnit(subcatseedID);
-                        }
-                        else {
-                            this.EmissionFactor = [];
-                        }
-                    },
-                    error: (err) => {
-                        this.EmissionFactor = [];
 
-                    }
-                });
-        }
-        if (catID === 2) {
-            this.trackingService
-                .GetEmissionFactorRefrigerantsbyID(subcatseedID)
-                .subscribe({
-                    next: (response) => {
-                        if (response) {
-                            this.EmissionFactor = response;
-                            // this.getUnit(subcatseedID);
-                        }
-                        else {
-                            this.EmissionFactor = [];
-                        }
-                    },
-                    error: (err) => {
-                        this.EmissionFactor = [];
-                        this.notification.showError(
-                            'Emission Factor failed.',
-                            'Error'
-                        );
-                        console.error('errrrrrr>>>>>>', err);
-                    }
-                });
-        }
-        if (catID === 3) {
-            this.trackingService
-                .GetEmissionFactorFirebyID(subcatseedID)
-                .subscribe({
-                    next: (response) => {
-                        if (response) {
-                            this.EmissionFactor = response;
-                            // this.getUnit(subcatseedID);
-                        }
-                        else {
-                            this.EmissionFactor = [];
-                        }
-                    },
-                    error: (err) => {
-                        this.EmissionFactor = [];
-                        this.notification.showError(
-                            'Emission Factor failed.',
-                            'Error'
-                        );
-                        console.error('errrrrrr>>>>>>', err);
-                    }
-                });
-        }
-        if (catID === 5) {
-            this.trackingService
-                .GetEmissionFactorElectricitybyID(subcatseedID)
-                .subscribe({
-                    next: (response) => {
-                        if (response) {
-                            this.EmissionFactor = response;
-                            // this.getUnit(subcatseedID);
-                        }
-                        else {
-                            this.EmissionFactor = [];
-                        }
-                    },
-                    error: (err) => {
-                        this.EmissionFactor = [];
-                        this.notification.showError(
-                            'Emission Factor failed.',
-                            'Error'
-                        );
-                        console.error('errrrrrr>>>>>>', err);
-                    }
-                });
-        }
-        if (catID === 6) {
-            this.trackingService
-                .GetEmissionFactorVehiclebyID(subcatseedID)
-                .subscribe({
-                    next: (response) => {
-                        if (response) {
-                            this.EmissionFactor = response;
-                            // this.getUnit(subcatseedID);
-                        }
-                        else {
-                            this.EmissionFactor = [];
-                        }
-                    },
-                    error: (err) => {
-                        this.EmissionFactor = [];
-                        this.notification.showError(
-                            'Emission Factor failed.',
-                            'Error'
-                        );
-                        console.error('errrrrrr>>>>>>', err);
-                    }
-                });
-        }
-        if (catID === 7) {
-            this.trackingService
-                .GetEmissionFactorHeatandSteambyID(subcatseedID)
-                .subscribe({
-                    next: (response) => {
-                        if (response) {
-                            this.EmissionFactor = response;
-                            // this.getUnit(subcatseedID);
-                        }
-                        else {
-                            this.EmissionFactor = [];
-                        }
-                    },
-                    error: (err) => {
-                        this.EmissionFactor = [];
-                        this.notification.showError(
-                            'Emission Factor failed.',
-                            'Error'
-                        );
-                        console.error('errrrrrr>>>>>>', err);
-                    }
-                });
-        }
-    };
 
 
 }

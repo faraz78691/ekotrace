@@ -60,14 +60,14 @@ export class TreeComponent {
             let userInfo = localStorage.getItem('LoginInfo');
             let jsonObj = JSON.parse(userInfo); // string to "any" object first
             this.loginInfo = jsonObj as LoginInfo;
-            
+
         };
 
 
     };
 
     ngOnInit() {
-        
+
         this.treeList$ = this.familyService.getTreeList(this.loginInfo.super_admin_id).pipe(
             tap(items => {
                 // console.log(items); // Log the entire response
@@ -75,13 +75,13 @@ export class TreeComponent {
                     this.treeList = items.familyDetails;
                     console.log(this.treeList.length);
                     if (items.familyDetails.length > 1) {
-                        if(this.loginInfo.role =='Manager' || this.loginInfo.role =='Admin' || this.loginInfo.role == 'Preparer'){
-                        this.treeSection = false;
-                    }
+                        if (this.loginInfo.role == 'Manager' || this.loginInfo.role == 'Admin' || this.loginInfo.role == 'Preparer') {
+                            this.treeSection = false;
+                        }
                         if (items.new_data == 1) {
                             this.familyId = items.family_id;
                             const selectedTempate = items.familyDetails.filter(value => value.family_id == this.familyId);
-                        console.log(selectedTempate);
+                            console.log(selectedTempate);
                             this.selectedTemplateId = selectedTempate[0].id;
                             this.createClone()
                         } else {
@@ -92,9 +92,9 @@ export class TreeComponent {
                         this.treeSection = true;
                         this.familyId = items.familyDetails[0].family_id;
                         this.selectedTemplateId = items.familyDetails[0].id;
-                        if(this.loginInfo.role =='Manager' || this.loginInfo.role =='Admin' || this.loginInfo.role == 'Preparer'){
+                        if (this.loginInfo.role == 'Manager' || this.loginInfo.role == 'Admin' || this.loginInfo.role == 'Preparer') {
                             this.getTreeForOtherUser();
-                        }else{
+                        } else {
                             this.createClone();
                         }
                         this.saveButtton = false;
@@ -214,7 +214,7 @@ export class TreeComponent {
                             edit: { text: "Edit" },
                             add: {
                                 text: "Add",
-                             
+
                                 onClick: (node: string) => {
 
                                     var nodeData = family.get(node);
@@ -347,7 +347,7 @@ export class TreeComponent {
         const getSelectedNode = localStorage.getItem("selectedNode");
         const nodeForm = new URLSearchParams();
         if (this.facilityTab == true) {
-            nodeForm.set('facility_name', data.value.facility_name);
+            nodeForm.set('facility_name', data.value.facility_type);
         }
 
         nodeForm.set('id', getSelectedNode);
@@ -501,7 +501,7 @@ export class TreeComponent {
                                 generateElementsFromFields: false,
                                 elements: [
                                     { type: 'textbox', label: 'Name', binding: 'name' },
-                                    { type: 'textbox', label: 'Facility name', binding: 'facility_name', options: ['select'] }
+                                    { type: 'textbox', label: 'Facility type', binding: 'facility_name', options: ['select'] }
                                 ],
                                 buttons: {
                                     edit: {
@@ -677,7 +677,7 @@ export class TreeComponent {
                             },
                             nodeMenu: {
                                 details: { text: "Details" },
-                              
+
                             },
                             editForm: {
                                 addMoreFieldName: null,
@@ -686,7 +686,7 @@ export class TreeComponent {
                                 generateElementsFromFields: false,
                                 elements: [
                                     { type: 'textbox', label: 'Name', binding: 'name' },
-                                    { type: 'textbox', label: 'Facility name', binding: 'facility_name', options: ['select'] }
+                                    { type: 'textbox', label: 'Facility type', binding: 'facility_name', options: ['select'] }
                                 ],
                                 buttons: {
                                     edit: {
@@ -703,7 +703,7 @@ export class TreeComponent {
 
                         });
 
-                      
+
                         family.load(
                             this.loadFamilyData
                         );
@@ -777,11 +777,11 @@ export class TreeComponent {
 
 
     ngOnDestroy() {
-        console.log(this.treeList.length >1)
-            
-        
-        if(this.treeList.length > 1 ){
-this.onDeleteFamilySample()
+        console.log(this.treeList.length > 1)
+
+
+        if (this.treeList.length > 1) {
+            this.onDeleteFamilySample()
         }
         console.log("destroying child...")
     };
@@ -792,11 +792,11 @@ this.onDeleteFamilySample()
 
         const nodeForm = new URLSearchParams();
         nodeForm.set('family_id', this.familyId);
-  
+
         this.familyService.deleteSampleTree(nodeForm.toString()).subscribe({
             next: res => {
                 if (res.success == true) {
-                   
+
 
                 }
                 console.log(res);

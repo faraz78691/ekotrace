@@ -425,199 +425,322 @@
                                         <i class="fa-solid fa-circle-question" (click)="isHowtoUse = !isHowtoUse"></i>
                                         <div class="ct_how_use_tooltip_cnt" [ngClass]="isHowtoUse ? 'ct_active' : ''">
                                             <div *ngIf="categoryId ==1">
-                                               <p class="ct_fs_16 mb-1">Emissions from the burning of fuels in stationary sources owned or controlled by an organization. These sources include equipment and systems that are fixed in place, such as boilers, furnaces, turbines, and other types of heating and power-generating equipment.
-                                            </p>
-                                            <ol>
-                                                <li>Liquid fuels: Emissions resulting from the combustion of liquid fuels in stationary sources are a significant part of an organization’s overall carbon footprint due to the widespread use of liquid fuels such as gasoline, diesel, fuel oil, kerosene, and others.
-                                                </li>
-                                                <li>Solid fuels: These fuels typically include coal, peat, and other solid materials used for heating, power generation, or industrial processes.
-                                                </li>
-                                                <li>Gaseous fuels: These fuels are typically in a gaseous state at normal atmospheric conditions and include natural gas, propane, butane, and other similar gases used for heating, power generation, and transportation.
-                                                </li>
-                                                <li>Biofuels: Biofuels are derived from renewable biomass sources such as plant matter, agricultural residues, or waste materials.
-                                                </li>
-                                                <li>Biomass: Biomass refers to organic materials derived from plants or animals that can be used as fuel. This includes wood, agricultural residues, animal waste, and dedicated energy crops. 
-                                                </li>
-                                                <li>Biogas: Biogas is a renewable energy source produced through the anaerobic digestion or fermentation of organic materials such as agricultural residues, food waste, sewage sludge, or energy crops.
-                                                </li>
-                                            </ol>
-
-                                            <h5 class="ct_fs_16 mb-0">To collect stationary combustion data for emissions in a company, follow these steps:
-                                            </h5>
+                                                <p class="ct_fs_16 mb-1">Emissions from the burning of fuels in
+                                                    stationary sources owned or controlled by an organization. These
+                                                    sources include equipment and systems that are fixed in place, such
+                                                    as boilers, furnaces, turbines, and other types of heating and
+                                                    power-generating equipment.
+                                                </p>
                                                 <ol>
-                                                    <li>Identify stationary combustion sources - Determine which equipment and facilities generate emissions, such as: Boilers, Furnaces, Generators, Heaters, Chillers
+                                                    <li>Liquid fuels: Emissions resulting from the combustion of liquid
+                                                        fuels in stationary sources are a significant part of an
+                                                        organization’s overall carbon footprint due to the widespread
+                                                        use of liquid fuels such as gasoline, diesel, fuel oil,
+                                                        kerosene, and others.
                                                     </li>
-                                                    <li>Collect fuel consumption data: 
-                                                        Fuel Purchase Records - Collect data from fuel purchase receipts and invoices.
-                                                        Usage Logs - Maintain logs of fuel usage in vehicles, machinery, and equipment.
-                                                        Meter Readings - Use meter readings for equipment that consumes liquid fuels.
-                                                        Operational Records - Document hours of operation for fuel-consuming equipment
-                                                        </li>
-                                                    <li>Relevant departments for collecting the data - Production department, Operational department
+                                                    <li>Solid fuels: These fuels typically include coal, peat, and other
+                                                        solid materials used for heating, power generation, or
+                                                        industrial processes.
+                                                    </li>
+                                                    <li>Gaseous fuels: These fuels are typically in a gaseous state at
+                                                        normal atmospheric conditions and include natural gas, propane,
+                                                        butane, and other similar gases used for heating, power
+                                                        generation, and transportation.
+                                                    </li>
+                                                    <li>Biofuels: Biofuels are derived from renewable biomass sources
+                                                        such as plant matter, agricultural residues, or waste materials.
+                                                    </li>
+                                                    <li>Biomass: Biomass refers to organic materials derived from plants
+                                                        or animals that can be used as fuel. This includes wood,
+                                                        agricultural residues, animal waste, and dedicated energy crops.
+                                                    </li>
+                                                    <li>Biogas: Biogas is a renewable energy source produced through the
+                                                        anaerobic digestion or fermentation of organic materials such as
+                                                        agricultural residues, food waste, sewage sludge, or energy
+                                                        crops.
                                                     </li>
                                                 </ol>
-                                                <h5 class="ct_fs_16  mb-0">How to use the tool for entering data emissions
+
+                                                <h5 class="ct_fs_16 mb-0">To collect stationary combustion data for
+                                                    emissions in a company, follow these steps:
                                                 </h5>
                                                 <ol>
-                                                    <li>Select the months and year for which you want to enter the emissions data. If you select multiple months, same data will be replicated for the months selected. 
+                                                    <li>Identify stationary combustion sources - Determine which
+                                                        equipment and facilities generate emissions, such as: Boilers,
+                                                        Furnaces, Generators, Heaters, Chillers
                                                     </li>
-                                                    <li>Once submitted, data is sent for approval. Manager of facility or the admin has approval rights. Only the approved data is included in emissions calculations. You can check the approval status in ‘Status’ tab
+                                                    <li>Collect fuel consumption data:
+                                                        Fuel Purchase Records - Collect data from fuel purchase receipts
+                                                        and invoices.
+                                                        Usage Logs - Maintain logs of fuel usage in vehicles, machinery,
+                                                        and equipment.
+                                                        Meter Readings - Use meter readings for equipment that consumes
+                                                        liquid fuels.
+                                                        Operational Records - Document hours of operation for
+                                                        fuel-consuming equipment
                                                     </li>
-                                                    <li>User can attach the bills, invoices as attachment for record purpose.
+                                                    <li>Relevant departments for collecting the data - Production
+                                                        department, Operational department
+                                                    </li>
+                                                </ol>
+                                                <h5 class="ct_fs_16  mb-0">How to use the tool for entering data
+                                                    emissions
+                                                </h5>
+                                                <ol>
+                                                    <li>Select the months and year for which you want to enter the
+                                                        emissions data. If you select multiple months, same data will be
+                                                        replicated for the months selected.
+                                                    </li>
+                                                    <li>Once submitted, data is sent for approval. Manager of facility
+                                                        or the admin has approval rights. Only the approved data is
+                                                        included in emissions calculations. You can check the approval
+                                                        status in ‘Status’ tab
+                                                    </li>
+                                                    <li>User can attach the bills, invoices as attachment for record
+                                                        purpose.
                                                     </li>
                                                 </ol>
 
                                                 <h5 class="ct_fs_16 ">Guidance on input fields</h5>
-                                                <p class="mb-1"><span class="ct_fw_600">Blend type –</span> This is the blend% of biofuel (bioethanol / biodiesel). Final emission factor is the weighted average of emission factor for 100% mineral petrol / diesel and biofuel. Average blend type assumes 7% blend perc.
+                                                <p class="mb-1"><span class="ct_fw_600">Blend type –</span> This is the
+                                                    blend% of biofuel (bioethanol / biodiesel). Final emission factor is
+                                                    the weighted average of emission factor for 100% mineral petrol /
+                                                    diesel and biofuel. Average blend type assumes 7% blend perc.
                                                 </p>
-                                                <p class="mb-0"><span class="ct_fw_600">Calorific Value –</span> If Gross CV of the fuel is entered, it overwrites the average CV.
+                                                <p class="mb-0"><span class="ct_fw_600">Calorific Value –</span> If
+                                                    Gross CV of the fuel is entered, it overwrites the average CV.
                                                 </p>
-                                               
+
                                             </div>
                                             <div *ngIf="categoryId ==2">
-                                                <p class="ct_fs_16"> Emissions from the use and leakage of refrigerants from equipment owned or controlled by an organization. These emissions are significant because many refrigerants have a high global warming potential (GWP), meaning they can trap much more heat in the atmosphere than carbon dioxide (CO2). Common agents include HVAC systems, refrigeration units, and vehicle air conditioning systems.
+                                                <p class="ct_fs_16"> Emissions from the use and leakage of refrigerants
+                                                    from equipment owned or controlled by an organization. These
+                                                    emissions are significant because many refrigerants have a high
+                                                    global warming potential (GWP), meaning they can trap much more heat
+                                                    in the atmosphere than carbon dioxide (CO2). Common agents include
+                                                    HVAC systems, refrigeration units, and vehicle air conditioning
+                                                    systems.
 
-                                             </p>
-                                             <h5 class="ct_fs_16  mb-0">To collect refrigerants data for emissions in a company, follow these steps:
-                                            </h5>
-                                            <ol>
-                                                <li>Inventory of Equipment - List all the equipment that uses refrigerants (e.g., HVAC systems, refrigeration units).
-                                                </li>
-                                                <li>Type of Refrigerant Used - Collect information on the specific types of refrigerants used in each piece of equipment.
-                                                </li>
-                                                <li>Quantity of Refrigerant - Amount of refrigerant in each piece of equipment and total quantities used, including any additions or top-ups.
-                                                </li>
-                                                <li>Leakage and Emissions Data - Records of refrigerant leaks, repairs, and the quantity of refrigerants emitted during maintenance or due to leaks.
-                                                </li>
-                                                <li>Purchase and Disposal Records - Data on the purchase of new refrigerants and the disposal of old or unused refrigerants
-                                                </li>
-                                                <li>Relevant departments for collecting the data - Environment, Health, and Safety/ Facilities Management department
-                                                </li>
-                                            </ol>
-                                            <p>
-                                                You can download the ‘Refrigerants Template’ to understand the breakdown of refrigerants usage.
-                                            </p>
-                                            <h5 class="ct_fs_16  mb-0">How to use the tool for entering data emissions
-                                            </h5>
-                                            <ol>
-                                                <li>Select the months and year for which you want to enter the emissions data. If you select multiple months, same data will be replicated for the months selected. 
-                                                </li>
-                                                <li>Once submitted, data is sent for approval. Manager of facility or the admin has approval rights. Only the approved data is included in emissions calculations. You can check the approval status in ‘Status’ tab
-                                                </li>
-                                                <li>User can attach the bills, invoices as attachment for record purpose.
-                                                </li>
-                                            </ol>
-                                             </div>
-                                             <div *ngIf="categoryId ==6">
-                                                <p class="ct_fs_16 mb-1">Vehicles that are owned, or otherwise controlled by an organization, and whose emissions result directly from fuel combustion. These vehicles are considered part of the organization's direct emissions sources.</p>
-                                                <ol>
-                                                    <li>
-                                                        Passenger vehicles: Emissions resulting from the operation of passenger cars owned or controlled by an organization. Eg. Company cars, executive vehicles, pool cars, etc
-                                                    </li>
-                                                    <li>
-                                                        Delivery Vehicles: Emissions resulting from the operation of delivery vehicles owned or controlled by an organization. These emissions primarily come from the combustion of fuels such as diesel or gasoline within the vehicle's engine. Eg: Trucks, vans etc.
-                                                    </li>
-                                                </ol>
-                                                <h5 class="ct_fs_16  mb-0">To collect emissions data for vehicles owned by company, follow these steps:
+                                                </p>
+                                                <h5 class="ct_fs_16  mb-0">To collect refrigerants data for emissions in
+                                                    a company, follow these steps:
                                                 </h5>
                                                 <ol>
-                                                    <li>Fuel Consumption - Amount of fuel used by each vehicle, often tracked through fuel cards or receipts.
+                                                    <li>Inventory of Equipment - List all the equipment that uses
+                                                        refrigerants (e.g., HVAC systems, refrigeration units).
                                                     </li>
-                                                    <li>Mileage - Distance travelled by each vehicle, typically recorded through odometer readings or GPS tracking systems.
+                                                    <li>Type of Refrigerant Used - Collect information on the specific
+                                                        types of refrigerants used in each piece of equipment.
                                                     </li>
-                                                    <li>Vehicle Inventory - Details of the vehicles in the fleet, including model, engine size, and type of fuel used.
+                                                    <li>Quantity of Refrigerant - Amount of refrigerant in each piece of
+                                                        equipment and total quantities used, including any additions or
+                                                        top-ups.
                                                     </li>
-                                                    <li>
-                                                        Relevant departments for collecting the data - Transportation/ Facilities/ Operational Department
+                                                    <li>Leakage and Emissions Data - Records of refrigerant leaks,
+                                                        repairs, and the quantity of refrigerants emitted during
+                                                        maintenance or due to leaks.
+                                                    </li>
+                                                    <li>Purchase and Disposal Records - Data on the purchase of new
+                                                        refrigerants and the disposal of old or unused refrigerants
+                                                    </li>
+                                                    <li>Relevant departments for collecting the data - Environment,
+                                                        Health, and Safety/ Facilities Management department
                                                     </li>
                                                 </ol>
-                                                <h5 class="ct_fs_16  mb-0">How to use the tool for entering data emissions
+                                                <p>
+                                                    You can download the ‘Refrigerants Template’ to understand the
+                                                    breakdown of refrigerants usage.
+                                                </p>
+                                                <h5 class="ct_fs_16  mb-0">How to use the tool for entering data
+                                                    emissions
+                                                </h5>
+                                                <ol>
+                                                    <li>Select the months and year for which you want to enter the
+                                                        emissions data. If you select multiple months, same data will be
+                                                        replicated for the months selected.
+                                                    </li>
+                                                    <li>Once submitted, data is sent for approval. Manager of facility
+                                                        or the admin has approval rights. Only the approved data is
+                                                        included in emissions calculations. You can check the approval
+                                                        status in ‘Status’ tab
+                                                    </li>
+                                                    <li>User can attach the bills, invoices as attachment for record
+                                                        purpose.
+                                                    </li>
+                                                </ol>
+                                            </div>
+                                            <div *ngIf="categoryId ==6">
+                                                <p class="ct_fs_16 mb-1">Vehicles that are owned, or otherwise
+                                                    controlled by an organization, and whose emissions result directly
+                                                    from fuel combustion. These vehicles are considered part of the
+                                                    organization's direct emissions sources.</p>
+                                                <ol>
+                                                    <li>
+                                                        Passenger vehicles: Emissions resulting from the operation of
+                                                        passenger cars owned or controlled by an organization. Eg.
+                                                        Company cars, executive vehicles, pool cars, etc
+                                                    </li>
+                                                    <li>
+                                                        Delivery Vehicles: Emissions resulting from the operation of
+                                                        delivery vehicles owned or controlled by an organization. These
+                                                        emissions primarily come from the combustion of fuels such as
+                                                        diesel or gasoline within the vehicle's engine. Eg: Trucks, vans
+                                                        etc.
+                                                    </li>
+                                                </ol>
+                                                <h5 class="ct_fs_16  mb-0">To collect emissions data for vehicles owned
+                                                    by company, follow these steps:
+                                                </h5>
+                                                <ol>
+                                                    <li>Fuel Consumption - Amount of fuel used by each vehicle, often
+                                                        tracked through fuel cards or receipts.
+                                                    </li>
+                                                    <li>Mileage - Distance travelled by each vehicle, typically recorded
+                                                        through odometer readings or GPS tracking systems.
+                                                    </li>
+                                                    <li>Vehicle Inventory - Details of the vehicles in the fleet,
+                                                        including model, engine size, and type of fuel used.
+                                                    </li>
+                                                    <li>
+                                                        Relevant departments for collecting the data - Transportation/
+                                                        Facilities/ Operational Department
+                                                    </li>
+                                                </ol>
+                                                <h5 class="ct_fs_16  mb-0">How to use the tool for entering data
+                                                    emissions
                                                 </h5>
                                                 <ol>
                                                     <li>
-                                                        Select the months and year for which you want to enter the emissions data. If you select multiple months, same data will be replicated for the months selected. 
+                                                        Select the months and year for which you want to enter the
+                                                        emissions data. If you select multiple months, same data will be
+                                                        replicated for the months selected.
                                                     </li>
                                                     <li>
-                                                        Once submitted, data is sent for approval. Manager of facility or the admin has approval rights. Only the approved data is included in emissions calculations. You can check the approval status in ‘Status’ tab
+                                                        Once submitted, data is sent for approval. Manager of facility
+                                                        or the admin has approval rights. Only the approved data is
+                                                        included in emissions calculations. You can check the approval
+                                                        status in ‘Status’ tab
                                                     </li>
                                                     <li>
-                                                        User can attach the bills, invoices as attachment for record purpose.
+                                                        User can attach the bills, invoices as attachment for record
+                                                        purpose.
                                                     </li>
                                                 </ol>
                                                 <h5 class="ct_fs_16">Guidance on input fields
                                                 </h5>
-                                                <p class="mb-0">Charging outside% - For hybrid and EV vehicles, user need to specify the average % of times charging is done outside company campus. Charging inside the campus is considered part of Scope2 emissions.
+                                                <p class="mb-0">Charging outside% - For hybrid and EV vehicles, user
+                                                    need to specify the average % of times charging is done outside
+                                                    company campus. Charging inside the campus is considered part of
+                                                    Scope2 emissions.
                                                 </p>
-                                             </div>
-                                             <div *ngIf="categoryId ==3">
-                                                <p class="ct_fs_16 ">Emissions occur directly from the leakage or discharge of the extinguishing agents. The fire extinguishers must be owned or controlled by the organization. Common agents include halons, HFCs, and other fluorinated gases.
+                                            </div>
+                                            <div *ngIf="categoryId ==3">
+                                                <p class="ct_fs_16 ">Emissions occur directly from the leakage or
+                                                    discharge of the extinguishing agents. The fire extinguishers must
+                                                    be owned or controlled by the organization. Common agents include
+                                                    halons, HFCs, and other fluorinated gases.
                                                 </p>
-                                                <h5 class="ct_fs_16  mb-0">To collect emissions data for fire extinguishers owned by company, follow these steps:
+                                                <h5 class="ct_fs_16  mb-0">To collect emissions data for fire
+                                                    extinguishers owned by company, follow these steps:
                                                 </h5>
                                                 <ol>
-                                                    <li>Number and types of fire extinguishers (e.g., CO₂, dry chemical, halon).
+                                                    <li>Number and types of fire extinguishers (e.g., CO₂, dry chemical,
+                                                        halon).
                                                     </li>
                                                     <li>Location of each fire extinguisher within the facility.
                                                     </li>
-                                                    <li>Relevant departments for collecting the data - Environment, Health and Safety/ Facilities Management department
+                                                    <li>Relevant departments for collecting the data - Environment,
+                                                        Health and Safety/ Facilities Management department
                                                     </li>
                                                 </ol>
-                                                <p>You can download the ‘Fire Extinguisher Template’ to understand the breakdown of gas used.
+                                                <p>You can download the ‘Fire Extinguisher Template’ to understand the
+                                                    breakdown of gas used.
                                                 </p>
-                                                <h5 class="ct_fs_16  mb-0">How to use the tool for entering data emissions
+                                                <h5 class="ct_fs_16  mb-0">How to use the tool for entering data
+                                                    emissions
                                                 </h5>
                                                 <ol>
                                                     <li>
-                                                        Select the months and year for which you want to enter the emissions data. If you select multiple months, same data will be replicated for the months selected. 
+                                                        Select the months and year for which you want to enter the
+                                                        emissions data. If you select multiple months, same data will be
+                                                        replicated for the months selected.
                                                     </li>
-                                                    <li>Once submitted, data is sent for approval. Manager of facility or the admin has approval rights. Only the approved data is included in emissions calculations. You can check the approval status in ‘Status’ tab
+                                                    <li>Once submitted, data is sent for approval. Manager of facility
+                                                        or the admin has approval rights. Only the approved data is
+                                                        included in emissions calculations. You can check the approval
+                                                        status in ‘Status’ tab
                                                     </li>
-                                                    <li>User can attach the bills, invoices as attachment for record purpose.
+                                                    <li>User can attach the bills, invoices as attachment for record
+                                                        purpose.
                                                     </li>
                                                 </ol>
-                                                
-                                             </div>
 
-                                             <div *ngIf="categoryId ==5">
-                                                <p class="ct_fs_16 mb-1"> Emissions associated with the generation of purchased electricity used by a company. These emissions are indirect, as they occur outside of the company's direct operations, but are still related to its activities.
+                                            </div>
+
+                                            <div *ngIf="categoryId ==5">
+                                                <p class="ct_fs_16 mb-1"> Emissions associated with the generation of
+                                                    purchased electricity used by a company. These emissions are
+                                                    indirect, as they occur outside of the company's direct operations,
+                                                    but are still related to its activities.
                                                 </p>
                                                 <ol>
                                                     <li>
-                                                        <span class="ct_fw_600">Market-based:</span> This method considers specific purchasing decisions including contracts for renewable energy credits (RECs) or guarantees of origin (GOs), which allow organizations to report lower emissions if they purchase electricity from renewable sources.
+                                                        <span class="ct_fw_600">Market-based:</span> This method
+                                                        considers specific purchasing decisions including contracts for
+                                                        renewable energy credits (RECs) or guarantees of origin (GOs),
+                                                        which allow organizations to report lower emissions if they
+                                                        purchase electricity from renewable sources.
 
                                                     </li>
                                                     <li>
-                                                        <span class="ct_fw_600">Location based:</span> This method calculates emissions based on the average emissions intensity of the grid where the electricity is consumed.
+                                                        <span class="ct_fw_600">Location based:</span> This method
+                                                        calculates emissions based on the average emissions intensity of
+                                                        the grid where the electricity is consumed.
 
                                                     </li>
                                                 </ol>
-                                                <h5 class="mb-0 ct_fs_16">To collect emissions data for electricity purchased by the company, follow these steps:
+                                                <h5 class="mb-0 ct_fs_16">To collect emissions data for electricity
+                                                    purchased by the company, follow these steps:
                                                 </h5>
                                                 <ol>
-                                                    <li>Utility Bills and Invoices- Obtain electricity bills from utility providers or invoices that detail the amount of electricity consumed during the reporting period.
+                                                    <li>Utility Bills and Invoices- Obtain electricity bills from
+                                                        utility providers or invoices that detail the amount of
+                                                        electricity consumed during the reporting period.
                                                     </li>
-                                                    <li>Meter Readings - Monitor and record meter readings regularly to track electricity consumption accurately.
+                                                    <li>Meter Readings - Monitor and record meter readings regularly to
+                                                        track electricity consumption accurately.
                                                     </li>
-                                                    <li>Relevant departments for collecting the data - Energy Management or Facilities Management Department
+                                                    <li>Relevant departments for collecting the data - Energy Management
+                                                        or Facilities Management Department
                                                     </li>
                                                 </ol>
-                                                <h5 class="ct_fs_16 mb-0">How to use the tool for entering data emissions
+                                                <h5 class="ct_fs_16 mb-0">How to use the tool for entering data
+                                                    emissions
                                                 </h5>
                                                 <ol>
-                                                    <li>Select the months and year for which you want to enter the electricity data. If you select multiple months, same data will be replicated for the months selected. 
+                                                    <li>Select the months and year for which you want to enter the
+                                                        electricity data. If you select multiple months, same data will
+                                                        be replicated for the months selected.
                                                     </li>
-                                                    <li>For ‘Location based’ electricity, user can either select country average for the grid factor or state-based grid factors where-ever the data is available
+                                                    <li>For ‘Location based’ electricity, user can either select country
+                                                        average for the grid factor or state-based grid factors
+                                                        where-ever the data is available
                                                     </li>
                                                     <li>
-                                                        For ‘Market based electricity’, RECs data is used to calculate avoided emissions.
+                                                        For ‘Market based electricity’, RECs data is used to calculate
+                                                        avoided emissions.
                                                     </li>
                                                 </ol>
-                                              
-                                                
-                                             </div>
 
-                                             <div *ngIf="categoryId ==7">
-                                                <p class="ct_fs_16 mb-1"> Indirect emissions associated with the generation of heat and steam used by a company. These emissions occur outside of the company's direct control, typically at the utility or energy generation level. Examples of Scope 2 emissions from heat and steam include:
+
+                                            </div>
+
+                                            <div *ngIf="categoryId ==7">
+                                                <p class="ct_fs_16 mb-1"> Indirect emissions associated with the
+                                                    generation of heat and steam used by a company. These emissions
+                                                    occur outside of the company's direct control, typically at the
+                                                    utility or energy generation level. Examples of Scope 2 emissions
+                                                    from heat and steam include:
 
                                                 </p>
                                                 <ol>
@@ -631,33 +754,45 @@
                                                         Cooling systems (e.g., chillers, air conditioning)
                                                     </li>
                                                 </ol>
-                                                <h5 class="mb-0 ct_fs_16">To collect emissions data for heat and steam used by the company, follow these steps:
+                                                <h5 class="mb-0 ct_fs_16">To collect emissions data for heat and steam
+                                                    used by the company, follow these steps:
                                                 </h5>
                                                 <ol>
-                                                    <li>Identify Energy Sources - Determine the sources from which heat and steam are obtained (e.g., district heating, on-site boilers).
+                                                    <li>Identify Energy Sources - Determine the sources from which heat
+                                                        and steam are obtained (e.g., district heating, on-site
+                                                        boilers).
 
                                                     </li>
-                                                    <li>Data Collection Methods - Obtain energy consumption data from utility bills or meters
+                                                    <li>Data Collection Methods - Obtain energy consumption data from
+                                                        utility bills or meters
 
                                                     </li>
-                                                    <li>Relevant departments for collecting the data - Facilities Management 
+                                                    <li>Relevant departments for collecting the data - Facilities
+                                                        Management
                                                     </li>
                                                 </ol>
-                                                <h5 class="ct_fs_16 mb-0">How to use the tool for entering data emissions
+                                                <h5 class="ct_fs_16 mb-0">How to use the tool for entering data
+                                                    emissions
                                                 </h5>
                                                 <ol>
-                                                    <li>Select the months and year for which you want to enter the emissions data. If you select multiple months, same data will be replicated for the months selected. 
+                                                    <li>Select the months and year for which you want to enter the
+                                                        emissions data. If you select multiple months, same data will be
+                                                        replicated for the months selected.
                                                     </li>
-                                                    <li>Once submitted, data is sent for approval. Manager of facility or the admin has approval rights. Only the approved data is included in emissions calculations. You can check the approval status in ‘Status’ tab
+                                                    <li>Once submitted, data is sent for approval. Manager of facility
+                                                        or the admin has approval rights. Only the approved data is
+                                                        included in emissions calculations. You can check the approval
+                                                        status in ‘Status’ tab
 
                                                     </li>
                                                     <li>
-                                                        User can attach the bills, invoices as attachment for record purpose.
+                                                        User can attach the bills, invoices as attachment for record
+                                                        purpose.
                                                     </li>
                                                 </ol>
-                                              
-                                                
-                                             </div>
+
+
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -835,12 +970,9 @@
                                                 <label pTooltip="Charging done outside company campus (%)"
                                                     tooltipPosition="top" for="fname">Charging outside %
                                                 </label>
-                                                <i 
-                                                class="fa fa-info-circle tooltip-icon mx-2"
-                                                pTooltip="
+                                                <i class="fa fa-info-circle tooltip-icon mx-2" pTooltip="
                                                 Charging done outside company campus (%).
-                                                " tooltipPosition="top"
-                                                style="color: #88ad47"></i>
+                                                " tooltipPosition="top" style="color: #88ad47"></i>
                                                 <div class="input-group">
                                                     <input id="chargingInput"
                                                         class="form-control Dashboard-tab text-white"
@@ -897,12 +1029,9 @@
 
                                         <div class="col-lg-4" *ngIf="categoryId==1">
                                             <label for="fname">Calorific value (optional)</label>
-                                            <i 
-                                            class="fa fa-info-circle tooltip-icon mx-2"
-                                            pTooltip="Calorific value – Gross CV of fuel, if available. 
+                                            <i class="fa fa-info-circle tooltip-icon mx-2" pTooltip="Calorific value – Gross CV of fuel, if available. 
                                            
-                                           " tooltipPosition="top"
-                                            style="color: #88ad47"></i>
+                                           " tooltipPosition="top" style="color: #88ad47"></i>
                                             <!-- <input required ngModel name="calorificValue" type="text"
                                             class="form-control Dashboard-tab text-white" placeholder="Enter value" /> -->
 
@@ -1033,12 +1162,10 @@
                                         *ngIf="categoryId==1 && (dataEntry.typeID == 1 || dataEntry.typeID == 2)">
                                         <div class="col-lg-6">
                                             <label for="fname">Blend Type</label>
-                                             <i 
-                                                                                    class="fa fa-info-circle tooltip-icon mx-2"
-                                                                                    pTooltip="Blend type – Blend % of bioethanol or biodiesel. Avg. blend is 7%. 
+                                            <i class="fa fa-info-circle tooltip-icon mx-2" pTooltip="Blend type – Blend % of bioethanol or biodiesel. Avg. blend is 7%. 
                                                                                    
                                                                                    " tooltipPosition="top"
-                                                                                    style="color: #88ad47"></i>
+                                                style="color: #88ad47"></i>
                                             <p-dropdown class="ct_select_op_input ct_chev_icon_dark230 
                                         " ngModel [options]="blendType" optionLabel="typeName" optionValue="typeName"
                                                 name="blend" #blend="ngModel"
@@ -1135,79 +1262,133 @@
                                 <div class="trackingFooter" *ngIf="categoryId ==8">
                                     <div class="row p-2">
 
-                                        <div class="col-md-12">
-                                            <div class="mb-4 mt-4">
-                                                <div>
-                                                    <label class="mb-3">Download Template</label>
-                                                    <!-- <p>
-                                                    <a class="trackingsubmitb" href="assets/template.xlsx"
-                                                        download="">Click here to
-                                                        download template</a>
+                                        <div class="col-md-6">
+                                            <div class="mb-4" style="gap: 10px;">
+                                                <label class=" ct_text_wrape">Type of purchase</label>
+                                                <p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230 
+
+                                            " ngModel [options]="purchaseProductTypes" optionLabel="product"
+                                                    optionValue="product" name="productType"
+                                                   >
+                                                </p-dropdown>
+                                            </div>
+                                        </div>
+                                       
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-4  " style="gap: 10px;">
+                                                <label class=" ct_text_wrape">Product category</label>
+                                                <p-dropdown
+                                                class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                ngModel [options]="purchaseProductCategoryTypes"
+                                                optionLabel="product" optionValue="product"
+                                                name="productCateggory"
+                                                >
+                                            </p-dropdown>
+                                              
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-4 " style="gap: 10px;">
+                                                <label class="ct_text_wrape">Product Sub Category</label>
+                                                <p-dropdown 
+                                                    class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                    ngModel [options]="purchaseProductCategoryTypes"
+                                                    optionLabel="product" optionValue="product"
+                                                    name="productSubCateggory"
+                                                   >
+                                                </p-dropdown>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-4 " style="gap: 10px;">
+                                                <label class="ct_text_wrape">HSN</label>
+                                                <p-dropdown
+                                                    class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                    ngModel [options]="HSNCode"
+                                                    optionLabel="code" optionValue="code"
+                                                    name="HSNcode"
+                                                   >
+                                                </p-dropdown>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-4" style="gap: 10px;">
+                                                <label class=" ct_text_wrape">Value / Quantity</label>
+
+                                                <div class="position-relative">
+
+                                                    <input type="number"
+                                                        class="form-control Dashboard-tab text-white"
+                                                        placeholder="Enter Value" name="valueQuantity"
+                                                        required ngModel />
+                                                    <p-dropdown
+                                                        class="ct_select_op_input ct_position_small_quantity"
+                                                        ngModel [options]="purchaseUnits"
+                                                        optionLabel="units" optionValue="units"
+                                                        name="distance_unit" >
+                                                    </p-dropdown>
+                                                    <!-- <p class="validation"
+                                                    *ngIf="distanceInKms.invalid && dataEntryForm.submitted">
+                                                    Distance Travelled by
+                                                    Product value required
                                                 </p> -->
-                                                    <div class="row">
-                                                        <div class="col-md-4">
-                                                            <p-dropdown
-                                                                class="ct_select_op_input  ct_chev_icon_dark230 "
-                                                                ngModel placeholder="Select a template"
-                                                                [options]="goodsTemplates" optionLabel="template"
-                                                                optionValue="template" name="template"
-                                                                [(ngModel)]="selectedtemplate">
-                                                            </p-dropdown>
-                                                        </div>
-                                                        <div class="col-md-5">
 
-                                                            <a class="trackingsubmitb d-block mt-0"
-                                                                style="width: fit-content; height: 36.13px;  padding-block: 5px;"
-                                                                href="assets/GenericTemplate_PurchasedGoods.xlsx"
-                                                                download="">Click here to
-                                                                download template</a>
-                                                        </div>
+                                                </div>
 
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <h6 class="ct_fw_600 mb-3">Vendor Details</h6>
+                                            <div class="row">
+                                                <div class="mb-4 col-md-6" >
+                                                    <label class=" ct_text_wrape">Vendor</label>
+                                                    <div class="position-relative">
+                                                        <p-dropdown
+                                                        class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                        ngModel [options]="vendorList"
+                                                        optionLabel="name" optionValue="name"
+                                                        name="vendorName"
+                                                       >
+                                                    </p-dropdown>
+                                                        <!-- <p class="validation"
+                                                        *ngIf="noOfVehicles.invalid && dataEntryForm.submitted">
+                                                        No. of Vehicles value required
+                                                    </p> -->
                                                     </div>
-
+    
+    
+                                                </div>
+                                                <div class="mb-4 col-md-6" >
+                                                    <label class=" ct_text_wrape">Vendor specific EF</label>
+                                                  
+                                                     
+                                                            <div class="position-relative">
+                                                                <input type="number"
+                                                                    placeholder="Enter specific EF"
+                                                                    class="form-control Dashboard-tab text-white"
+                                                                    name="vendotEf" required ngModel
+                                                                   />
+                                                                <p-dropdown
+                                                                    class="ct_select_op_input ct_position_small_quantity"
+                                                                    ngModel [options]="vendorUnits"
+                                                                    optionLabel="units" optionValue="units"
+                                                                    name="vendor_unit" >
+                                                                </p-dropdown>
+                                                             
+                                                            </div>
+                                                   
+    
+    
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row p-2">
-                                        <div class="col-md-5">
-                                            <div class="">
-                                                <label for="fname ">Upload template <small class="attachments"> (
-                                                        *.csv
-                                                        .xlsx files only )</small></label>
-                                                <p-toast></p-toast>
-                                                <!-- <div
-                                                class="d-flex justify-content-end border rounded ct_upload_btn1">
-                                                <p-fileUpload  #fileUpload mode="basic" accept=".xlsx , .csv"
-                                                    chooseLabel="Please select a File" (onSelect)="
-                                                onFileSelected($event.files)
-                                            "></p-fileUpload>
-                                            </div> -->
-                                            </div>
-                                            <div class="input-group ct_file_upload_1">
-                                                <span class="input-group-btn">
-                                                    <div class="btn btn-default browse-button">
-                                                        <span class="browse-button-text">
-                                                            <i class="fa fa-folder-open"></i> Browse</span>
-                                                        <input type="file" accept=".xlsx" name="attachment"
-                                                            (change)="onFileSelected($event)" #inputFile />
-                                                    </div>
-
-                                                </span>
-                                                <input type="text" class="form-control filename" disabled="disabled"
-                                                    placeholder="Please click on browse button">
-                                                <span *ngIf="uploadButton" class="">
-                                                    <button type="button" class="btn  trackingsubmitb"
-                                                        (click)="purchaseGoodsUpload($event)">
-                                                        <i class="fa fa-upload"></i>
-                                                        Upload
-                                                    </button>
-                                                </span>
-                                            </div>
-
-                                        </div>
+                                      
 
                                     </div>
+                                    
 
                                     <div class="col-12 mt-5">
                                         <button type="submit" class="px-4 trackingsubmitb">
@@ -1395,11 +1576,11 @@
                                             <div class=" mt-0">
 
                                                 <div class="row">
-                                                    <div class="col-md-6">
+                                                    <div class="col-lg-6">
                                                         <div class="mb-4" style="gap: 10px;">
-                                                            <label class=" ct_text_wrape">Water Supply</label>
+                                                            <label class=" ct_text_wrape">Total water withdrawn</label>
                                                             <div class="position-relative">
-                                                                <input type="text" placeholder="Enter water supply"
+                                                                <input type="text" placeholder="Enter water withdrawn"
                                                                     class="form-control Dashboard-tab text-white"
                                                                     name="water_supply" ngModel />
                                                                 <p-dropdown
@@ -1411,11 +1592,11 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-6">
+                                                    <div class="col-lg-6">
                                                         <div class="mb-4" style="gap: 10px;">
-                                                            <label class=" ct_text_wrape">Water Treatment</label>
+                                                            <label class=" ct_text_wrape">Total water discharged</label>
                                                             <div class="position-relative">
-                                                                <input type="text" placeholder="Enter water treatment"
+                                                                <input type="text" placeholder="Enter water discharged"
                                                                     class="form-control Dashboard-tab text-white"
                                                                     name="water_treatment" ngModel />
                                                                 <p-dropdown
@@ -1434,154 +1615,241 @@
 
                                         </div>
 
-                                        <div class="col-lg-7">
+                                        <div class="col-lg-6 col-md-4">
                                             <div class=" mt-0">
 
 
-                                                <div class="row ct_home_office_table">
-                                                    <table class="table ">
-                                                        <thead class="thead-dark">
-                                                            <tr>
+                                                <div class=" ct_home_office_table">
+                                                    <div class="table-responsive">
+                                                        <table class="table ">
+                                                            <thead class="thead-dark">
+                                                                <tr>
 
-                                                                <th scope="col">Water withdrawl by source</th>
-                                                                <th scope="col">Kilo Litres</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
+                                                                    <th scope="col">Water withdrawl by source</th>
+                                                                    <th scope="col">Value (%)</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
 
-                                                                <td>Surface water</td>
-                                                                <td><input type="text" class="form-control w-auto"
-                                                                        name="surface_water" ngModel
-                                                                        placeholder="Enter required value"></td>
+                                                                    <td>Surface water</td>
+                                                                    <td><input type="text" class="form-control w-auto"
+                                                                            name="surface_water" ngModel
+                                                                            placeholder="Enter required value"></td>
 
-                                                            <tr>
+                                                                <tr>
 
-                                                                <td>Groundwater</td>
-                                                                <td><input type="text" class="form-control w-auto"
-                                                                        name="groundwater" ngModel
-                                                                        placeholder="Enter required value"></td>
+                                                                    <td>Groundwater</td>
+                                                                    <td><input type="text" class="form-control w-auto"
+                                                                            name="groundwater" ngModel
+                                                                            placeholder="Enter required value"></td>
 
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Third party water</td>
-                                                                <td><input type="text" class="form-control w-auto"
-                                                                        name="thirdParty" ngModel
-                                                                        placeholder="Enter required value"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Third party water</td>
+                                                                    <td><input type="text" class="form-control w-auto"
+                                                                            name="thirdParty" ngModel
+                                                                            placeholder="Enter required value"></td>
 
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Sea water/ desalinated water</td>
-                                                                <td><input type="text" class="form-control w-auto"
-                                                                        name="seaWater" ngModel
-                                                                        placeholder="Enter required value"></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Others</td>
-                                                                <td><input type="text" class="form-control w-auto"
-                                                                        name="others" ngModel
-                                                                        placeholder="Enter required value"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Sea water/ desalinated water</td>
+                                                                    <td><input type="text" class="form-control w-auto"
+                                                                            name="seaWater" ngModel
+                                                                            placeholder="Enter required value"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Others</td>
+                                                                    <td><input type="text" class="form-control w-auto"
+                                                                            name="others" ngModel
+                                                                            placeholder="Enter required value"></td>
 
-                                                            </tr>
+                                                                </tr>
 
-                                                        </tbody>
-                                                    </table>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
                                                 </div>
 
                                             </div>
 
                                         </div>
+                                        <div class="col-lg-6  col-md-4">
+                                            <div class=" mt-0">
+
+
+                                                <div class="row ct_home_office_table">
+                                                    <div class="table-responsive">
+                                                        <table class="table ">
+                                                            <thead class="thead-dark">
+                                                                <tr>
+                                                                    <th scope="col">Water discharge by destination</th>
+                                                                    <th scope="col">Value (%)</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+
+                                                                    <td>Into Surface water</td>
+                                                                    <td><input type="text" class="form-control w-auto"
+                                                                            name="surface_water_dest" ngModel
+                                                                            placeholder="Enter required value"></td>
+
+                                                                <tr>
+
+                                                                    <td>Into Ground water</td>
+                                                                    <td><input type="text" class="form-control w-auto"
+                                                                            name="groundwater_dest" ngModel
+                                                                            placeholder="Enter required value"></td>
+
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Into Seawater</td>
+                                                                    <td><input type="text" class="form-control w-auto"
+                                                                            name="seaWater_dest" ngModel
+                                                                            placeholder="Enter required value"></td>
+
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Send to third-parties</td>
+                                                                    <td><input type="text" class="form-control w-auto"
+                                                                            name="thirdParty_dest" ngModel
+                                                                            placeholder="Enter required value"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Others</td>
+                                                                    <td><input type="text" class="form-control w-auto"
+                                                                            name="others_dest" ngModel
+                                                                            placeholder="Enter required value"></td>
+
+                                                                </tr>
+
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+
                                         <div class="col-12 mt-3">
                                             <div class=" mt-0">
 
 
                                                 <div class="row ct_home_office_table">
-                                                    <table class="table ">
-                                                        <thead class="thead-dark">
-                                                            <tr>
+                                                    <div class="table-responsive">
+                                                        <table class="table ">
+                                                            <thead class="thead-dark">
+                                                                <tr>
 
-                                                                <th scope="col">Water discharge by destination and
-                                                                    level of treatment</th>
-                                                                <th scope="col">No treatment</th>
-                                                                <th scope="col">With treatment</th>
-                                                                <th scope="col">Level of treatment</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
+                                                                    <th scope="col">Treated water by destination</th>
+                                                                    <th scope="col">With treatment (%)</th>
+                                                                    <th scope="col">Level of treatment</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
 
-                                                                <td>Into Surface water</td>
-                                                                <td><input type="text" class="form-control"
-                                                                        name="surface_no_treatment" ngModel
-                                                                        placeholder="Enter required value"></td>
-                                                                <td><input type="number" class="form-control"
-                                                                        name="surface_withTreatment" ngModel
-                                                                        placeholder="Enter required value">
-                                                                </td>
-                                                                <td><input type="number" class="form-control"
-                                                                        name="surface_levelTreatment" ngModel
-                                                                        name="noofmonths_1"
-                                                                        placeholder="Enter required value"></td>
-                                                            </tr>
-                                                            <tr>
+                                                                    <td>Into Surface water</td>
+                                                                    <td><input type="number" class="form-control"
+                                                                            name="surface_withTreatment" ngModel
+                                                                            placeholder="Enter required value">
+                                                                    </td>
+                                                                    <td><p-dropdown
+                                                                            class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                                            ngModel [options]="waterUsageLevel"
+                                                                            optionLabel="unitType"
+                                                                            placeholder="Choose Level"
+                                                                            optionValue="unitType"
+                                                                            name="surface_levelTreatment"
+                                                                            #wasteUnits="ngModel">
+                                                                        </p-dropdown></td>
+                                                                    <td>
 
-                                                                <td>Into Ground water</td>
-                                                                <td><input type="text" class="form-control"
-                                                                        name="ground_no_treatment" ngModel
-                                                                        placeholder="Enter required value"></td>
-                                                                <td><input type="number" class="form-control"
-                                                                        name="ground_withTreatment" ngModel
-                                                                        placeholder="Enter required value">
-                                                                </td>
-                                                                <td><input type="number" class="form-control"
-                                                                        name="ground_levelTreatment" ngModel
-                                                                        placeholder="Enter required value"></td>
-                                                            </tr>
-                                                            <tr>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
 
-                                                                <td>Into Seawater</td>
-                                                                <td><input type="text" class="form-control"
-                                                                        name="seawater_no_treatment" ngModel
-                                                                        placeholder="Enter required value"></td>
-                                                                <td><input type="number" class="form-control"
-                                                                        name="seawater_withTreatment" ngModel
-                                                                        placeholder="Enter required value">
-                                                                </td>
-                                                                <td><input type="number" class="form-control"
-                                                                        name="seawater_levelTreatment" ngModel
-                                                                        placeholder="Enter required value"></td>
-                                                            </tr>
-                                                            <tr>
+                                                                    <td>Into Ground water</td>
+                                                                    <td><input type="number" class="form-control"
+                                                                            name="ground_withTreatment" ngModel
+                                                                            placeholder="Enter required value">
+                                                                    </td>
+                                                                    <td><p-dropdown
+                                                                            class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                                            ngModel [options]="waterUsageLevel"
+                                                                            optionLabel="unitType"
+                                                                            placeholder="Choose Level"
+                                                                            optionValue="unitType"
+                                                                            name="ground_levelTreatment"
+                                                                            #wasteUnits="ngModel">
+                                                                        </p-dropdown></td>
 
-                                                                <td>Send to third-parties</td>
-                                                                <td><input type="text" class="form-control"
-                                                                        name="third_no_treatment" ngModel
-                                                                        placeholder="Enter required value"></td>
-                                                                <td><input type="number" class="form-control"
-                                                                        name="third_withTreatment" ngModel
-                                                                        placeholder="Enter required value">
-                                                                </td>
-                                                                <td><input type="number" class="form-control"
-                                                                        name="third_levelTreatment" ngModel
-                                                                        placeholder="Enter required value"></td>
-                                                            </tr>
-                                                            <tr>
+                                                                </tr>
+                                                                <tr>
 
-                                                                <td>Others</td>
-                                                                <td><input type="text" class="form-control"
-                                                                        name="others_no_treatment" ngModel
-                                                                        placeholder="Enter required value"></td>
-                                                                <td><input type="number" class="form-control"
-                                                                        name="others_withTreatment" ngModel
-                                                                        placeholder="Enter required value">
-                                                                </td>
-                                                                <td><input type="number" class="form-control"
-                                                                        name="others_levelTreatment" ngModel
-                                                                        placeholder="Enter required value"></td>
-                                                            </tr>
+                                                                    <td>Into Seawater</td>
 
-                                                        </tbody>
-                                                    </table>
+                                                                    <td><input type="number" class="form-control"
+                                                                            name="seawater_withTreatment" ngModel
+                                                                            placeholder="Enter required value">
+                                                                    </td>
+
+                                                                    <td><p-dropdown
+                                                                            class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                                            ngModel [options]="waterUsageLevel"
+                                                                            optionLabel="unitType"
+                                                                            placeholder="Choose Level"
+                                                                            optionValue="unitType"
+                                                                            name="seawater_levelTreatment"
+                                                                            #wasteUnits="ngModel">
+                                                                        </p-dropdown></td>
+
+                                                                </tr>
+                                                                <tr>
+
+                                                                    <td>Send to third-parties</td>
+
+                                                                    <td><input type="number" class="form-control"
+                                                                            name="third_withTreatment" ngModel
+                                                                            placeholder="Enter required value">
+                                                                    </td>
+
+                                                                    <td><p-dropdown
+                                                                            class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                                            ngModel [options]="waterUsageLevel"
+                                                                            optionLabel="unitType"
+                                                                            placeholder="Choose Level"
+                                                                            optionValue="unitType"
+                                                                            name="third_levelTreatment"
+                                                                            #wasteUnits="ngModel">
+                                                                        </p-dropdown></td>
+                                                                </tr>
+                                                                <tr>
+
+                                                                    <td>Others</td>
+
+                                                                    <td><input type="number" class="form-control"
+                                                                            name="others_withTreatment" ngModel
+                                                                            placeholder="Enter required value">
+                                                                    </td>
+
+                                                                    <td><p-dropdown
+                                                                            class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                                            ngModel [options]="waterUsageLevel"
+                                                                            optionLabel="unitType"
+                                                                            placeholder="Choose Level"
+                                                                            optionValue="unitType"
+                                                                            name="others_levelTreatment"
+                                                                            #wasteUnits="ngModel">
+                                                                        </p-dropdown></td>
+                                                                </tr>
+
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
                                                 </div>
                                             </div>
 
@@ -1726,165 +1994,52 @@
                                                                 <tr>
                                                                     <th scope="col">S.No.</th>
                                                                     <th scope="col">Type of transport</th>
+                                                                    <th scope="col">Sub categories</th>
                                                                     <th scope="col">% of all employees commute</th>
                                                                     <th scope="col">Avg commute distance (one-way
                                                                         trip)
                                                                         km</th>
                                                                 </tr>
                                                             </thead>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td scope="row">1</td>
-                                                                    <td>Petrol Card</td>
-                                                                    <td><input type="text" class="form-control"
-                                                                            name="employeescommute_1" ngModel>
+                                                            <tbody #commuteTable>
+                                                                <tr *ngFor="let row of rows">
+                                                                    <td scope="row">{{ row.id }}</td>
+                                                                    <td>
+                                                                        <p-dropdown
+                                                                            class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                                            [(ngModel)]="row.vehicleType1"
+                                                                            [options]="VehicleGrid"
+                                                                            optionLabel="category" optionValue="id"
+                                                                            name="vehicle_type_{{row.id}}"
+                                                                            placeholder="Select type"
+                                                                            (onChange)="onEmpTypeChange($event , row)">
+                                                                        </p-dropdown>
                                                                     </td>
-                                                                    <td><input type="text" class="form-control"
-                                                                            name="avgcommute_1" ngModel>
+                                                                    <td>
+                                                                        <p-dropdown
+                                                                            class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                                            [(ngModel)]="row.vehicleType2"
+                                                                            [options]="row.subVehicleCategory"
+                                                                            optionLabel="subcategory" optionValue="id"
+                                                                            name="vehicle_type_{{row.id}}"
+                                                                            placeholder="Select type">
+                                                                        </p-dropdown>
                                                                     </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td scope="row">2</td>
-                                                                    <td>Diesel Car</td>
-                                                                    <td><input type="text" class="form-control"
-                                                                            name="employeescommute_2" ngModel>
+                                                                    <td>
+                                                                        <input type="text" class="form-control"
+                                                                            name="employeescommute_{{row.id}}"
+                                                                            [(ngModel)]="row.employeesCommute">
                                                                     </td>
-                                                                    <td><input type="text" class="form-control"
-                                                                            name="avgcommute_2" ngModel>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td scope="row">3</td>
-                                                                    <td>LPG Car</td>
-                                                                    <td><input type="text" class="form-control"
-                                                                            name="employeescommute_3" ngModel>
-                                                                    </td>
-                                                                    <td><input type="text" class="form-control"
-                                                                            name="avgcommute_3" ngModel>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td scope="row">4</td>
-                                                                    <td>CNG Car</td>
-                                                                    <td><input type="text" class="form-control"
-                                                                            name="employeescommute_4" ngModel>
-                                                                    </td>
-                                                                    <td><input type="text" class="form-control"
-                                                                            name="avgcommute_4" ngModel>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td scope="row">5</td>
-                                                                    <td>Hybrid Car</td>
-                                                                    <td><input type="text" class="form-control"
-                                                                            name="employeescommute_5" ngModel>
-                                                                    </td>
-                                                                    <td><input type="text" class="form-control"
-                                                                            name="avgcommute_5" ngModel>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td scope="row">6</td>
-                                                                    <td>Battery EV Car</td>
-                                                                    <td><input type="text" class="form-control"
-                                                                            name="employeescommute_6" ngModel>
-                                                                    </td>
-                                                                    <td><input type="text" class="form-control"
-                                                                            name="avgcommute_6" ngModel>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td scope="row">7</td>
-                                                                    <td>MotorBike</td>
-                                                                    <td><input type="text" class="form-control"
-                                                                            name="employeescommute_7" ngModel>
-                                                                    </td>
-                                                                    <td><input type="text" class="form-control"
-                                                                            name="avgcommute_7" ngModel>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td scope="row">8</td>
-                                                                    <td>LPG Car</td>
-                                                                    <td><input type="text" class="form-control"
-                                                                            name="employeescommute_8" ngModel>
-                                                                    </td>
-                                                                    <td><input type="text" class="form-control"
-                                                                            name="avgcommute_8" ngModel>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td scope="row">9</td>
-                                                                    <td>Three-wheeler Petrol</td>
-                                                                    <td><input type="text" class="form-control"
-                                                                            name="employeescommute_9" ngModel>
-                                                                    </td>
-                                                                    <td><input type="text" class="form-control"
-                                                                            name="avgcommute_9" ngModel>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td scope="row">10</td>
-                                                                    <td>Three-wheeler Diesel</td>
-                                                                    <td><input type="text" class="form-control"
-                                                                            name="employeescommute_10" ngModel>
-                                                                    </td>
-                                                                    <td><input type="text" class="form-control"
-                                                                            name="avgcommute_10" ngModel>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td scope="row">11</td>
-                                                                    <td>Three-wheeler CNG</td>
-                                                                    <td><input type="text" class="form-control"
-                                                                            name="employeescommute_11" ngModel>
-                                                                    </td>
-                                                                    <td><input type="text" class="form-control"
-                                                                            name="avgcommute_11" ngModel>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td scope="row">12</td>
-                                                                    <td>Carpool</td>
-                                                                    <td><input type="text" class="form-control"
-                                                                            name="employeescommute_12" ngModel>
-                                                                    </td>
-                                                                    <td><input type="text" class="form-control"
-                                                                            name="avgcommute_12" ngModel>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td scope="row">13</td>
-                                                                    <td>Bus</td>
-                                                                    <td><input type="text" class="form-control"
-                                                                            name="employeescommute_13" ngModel>
-                                                                    </td>
-                                                                    <td><input type="text" class="form-control"
-                                                                            name="avgcommute_13" ngModel>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td scope="row">14</td>
-                                                                    <td>Local Train</td>
-                                                                    <td><input type="text" class="form-control"
-                                                                            name="employeescommute_14" ngModel>
-                                                                    </td>
-                                                                    <td><input type="text" class="form-control"
-                                                                            name="avgcommute_14" ngModel>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td scope="row">15</td>
-                                                                    <td>Ferry</td>
-                                                                    <td><input type="text" class="form-control"
-                                                                            name="employeescommute_15" ngModel>
-                                                                    </td>
-                                                                    <td><input type="text" class="form-control"
-                                                                            name="avgcommute_15" ngModel>
+                                                                    <td>
+                                                                        <input type="text" class="form-control"
+                                                                            name="avgcommute_{{row.id}}"
+                                                                            [(ngModel)]="row.avgCommute">
                                                                     </td>
                                                                 </tr>
 
+
                                                             </tbody>
+                                                            <p class="p-3" (click)="addCommutes()">+</p>
                                                         </table>
                                                     </div>
                                                 </div>
@@ -4088,7 +4243,7 @@
 
                             <div class="ElectricityTable mt-0 ct_overflow_hidden_data_table_500"
                                 style="height: auto !important;">
-                                <p-table [paginator]="true" [rowHover]="true"  [rows]="10"
+                                <p-table [paginator]="true" [rowHover]="true" [rows]="10"
                                     styleClass="statusTable ct_status_tble_230_space ct_status_table_main"
                                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" #dt1
                                     [value]="dataEntriesPending" dataKey="id">
@@ -4597,7 +4752,7 @@
                             </div>
                             <div class="ElectricityTable mt-0 ct_overflow_hidden_data_table_500"
                                 style="height: auto !important;">
-                                <p-table [paginator]="true" [rowHover]="true"  [rows]="10"
+                                <p-table [paginator]="true" [rowHover]="true" [rows]="10"
                                     styleClass="statusTable ct_status_tble_230_space ct_status_table_main"
                                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" #dt1
                                     [value]="dataEntriesPending" dataKey="id">

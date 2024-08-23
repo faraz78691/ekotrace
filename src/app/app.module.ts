@@ -113,6 +113,7 @@ import { SetEmissionInventoryComponent } from './pages/target_setting/set-emissi
 import { TargetSettingComponent } from './pages/target_setting/target-setting/target-setting.component';
 import { ActionsComponent } from './pages/target_setting/actions/actions.component';
 import { VendorsComponent } from './pages/vendors/vendors.component';
+import { FinanceDashboardComponent } from './pages/finance-dashboard/finance-dashboard.component';
 
 defineCustomElements();
 registerLocaleData(localeEn, 'en-EN');
@@ -183,7 +184,8 @@ registerLocaleData(localeEn, 'en-EN');
         SetEmissionInventoryComponent,
         TargetSettingComponent,
         ActionsComponent,
-        VendorsComponent
+        VendorsComponent,
+        FinanceDashboardComponent
     ],
     imports: [
         HeaderComponent,
@@ -249,6 +251,7 @@ registerLocaleData(localeEn, 'en-EN');
         MessageService,
         CustomerService
     ],
+    exports:[ControlSidebarComponent],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

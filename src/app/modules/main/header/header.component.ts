@@ -153,7 +153,7 @@ export class HeaderComponent implements OnInit {
       }
 
     checkFacilityID() {
-        
+        console.log(this.selectedFacilityID);
         this.facilityService.facilitySelected(this.selectedFacilityID.id)
         console.log(this.facilityService.selectedfacilitiesSignal())
         localStorage.setItem('SelectedfacilityID', this.selectedFacilityID.id);
@@ -232,7 +232,7 @@ export class HeaderComponent implements OnInit {
         const formData = new URLSearchParams();
         formData.set('tenantID', tenantID)
         this.facilityService
-            .getSubGroupsByTenantId(formData.toString())
+            .getActualSubGroups(formData.toString())
             .subscribe((res) => {
                 console.log(res);
                 this.facilitygrouplist = res.categories;

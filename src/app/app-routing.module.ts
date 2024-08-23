@@ -54,6 +54,7 @@ import { SetEmissionInventoryComponent } from '@pages/target_setting/set-emissio
 import { TargetSettingComponent } from '@pages/target_setting/target-setting/target-setting.component';
 import { ActionsComponent } from '@pages/target_setting/actions/actions.component';
 import { VendorsComponent } from '@pages/vendors/vendors.component';
+import { FinanceDashboardComponent } from '@pages/finance-dashboard/finance-dashboard.component';
 
 const routes: Routes = [
     {
@@ -99,6 +100,16 @@ const routes: Routes = [
                         'Platform Admin'
                     ]
                 }
+            },
+            {
+                path: 'financeDash',
+                canActivate: [RoleGuard],
+                component: FinanceDashboardComponent,
+                data: { roles: ['Super Admin',
+                'Admin',
+                'Manager',
+                'Preparer',
+                'Approver',] }
             },
             {
                 path: 'company-register',
@@ -233,7 +244,7 @@ const routes: Routes = [
                 'Preparer',
                 'Approver'] }
             },
-            { path: 'tracking',   canActivate: [RoleGuard],             data: {
+            { path: 'tracking',   canActivate: [RoleGuard],data: {
                 roles: [
                     'Super Admin',
                     'Admin',
@@ -242,6 +253,11 @@ const routes: Routes = [
                     'Approver'
                 ]
             }, loadChildren: () => import('./pages/tracking/tracking.module').then(m => m.TrackingModule) },
+            { path: 'platformAdmin',canActivate: [RoleGuard],data: {
+                roles: [
+                    'Platform Admin'
+                ]
+            }, loadChildren: () => import('./pages/platform-admin/platform-admin.module').then(m => m.PlatformAdminModule) },
             // {
             //     path: 'tracking',
             //     canActivate: [RoleGuard],
@@ -496,6 +512,7 @@ const routes: Routes = [
         canActivate: [NonAuthGuard]
     },
     { path: 'settings', loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule) },
+  
 
     { path: '**', redirectTo: '' }
 ];
