@@ -35,12 +35,17 @@ import { FileUpload } from 'primeng/fileupload';
 import { TabView } from 'primeng/tabview';
 import { countries } from '@/store/countrieslist';
 import { GroupService } from '@services/group.service';
+import { TreeviewItem, TreeviewEventParser, OrderDownlineTreeviewEventParser } from '@treeview/ngx-treeview';
+
 declare var $: any;
 
 @Component({
     selector: 'app-tracking',
     templateUrl: './tracking.component.html',
-    styleUrls: ['./tracking.component.scss']
+    styleUrls: ['./tracking.component.scss'],
+    providers: [
+        { provide: TreeviewEventParser, useClass: OrderDownlineTreeviewEventParser }
+    ]
 })
 export class TrackingComponent {
     public countriesList: any = countries
@@ -57,12 +62,13 @@ export class TrackingComponent {
     AddManageDataPoint = '';
     value_tab = 'Scope 1';
     selectedValues: string[] = [];
+    selectedTreeValues: any[] = [];
     selectMonths: any[] = [];
     statusData: any;
     hotelTypeGrid: any[] = [];
     yearOptions: any[] = [];
     checked: boolean = false;
-    items: MenuItem[];
+    multiLevelItems: TreeviewItem[] = [];
     active: MenuItem;
     notevalue: string;
     selectedAirport: string;
@@ -203,6 +209,8 @@ export class TrackingComponent {
     selectedFuelItem: any;
     fuelEnergyTypes: any[] = [];
     vendorList: any[] = [];
+    purchaseHSNCode: any[] = [];
+    standard: any[] = [];
     ModesTravelGrid: any[] = [];
     refrigeratedTypes: any[] = [];
     calculationGrid: any[] = [];
@@ -249,7 +257,10 @@ export class TrackingComponent {
     recycle = false;
     recycleSelectedMethod = '';
     rows: any[] = [];
+    items: any[] = [];
+    rowsPurchased: any[] = [];
     vendorUnits: any[] = [];
+    productHSNSelect: any;
 
     storagef_typeValue: string = this.storageGrid[0]?.storagef_type;
     openDatapointDialog() {
@@ -280,7 +291,14 @@ export class TrackingComponent {
     ];
 
 
-
+    config = {
+        paddingAtStart: true,
+        classname: 'my-custom-class',
+        listBackgroundColor: 'rgb(208, 241, 239)',
+        fontColor: 'rgb(8, 54, 71)',
+        backgroundColor: 'rgb(208, 241, 239)',
+        selectedListFontColor: 'red',
+    };
     constructor(
         private messageService: MessageService,
         private router: Router,
@@ -292,11 +310,14 @@ export class TrackingComponent {
         private notification: NotificationService,
         private toastr: ToastrService,
         private confirmationService: ConfirmationService,
-        private renderer: Renderer2
+        private renderer: Renderer2,
     ) {
         // Initialize with the first 5 rows
         for (let i = 1; i <= 5; i++) {
             this.rows.push({ id: i, subVehicleCategory: [], vehicleType1: null, vehicleType2: null, employeesCommute: '', avgCommute: '' });
+        }
+        for (let i = 1; i <= 5; i++) {
+            this.rowsPurchased.push({ id: i, months: [], purchaseType1: null, productService: null, employeesCommute: '', avgCommute: '' });
         }
 
         this.facilityService.headerTracking.set(true);
@@ -817,30 +838,15 @@ export class TrackingComponent {
                     "unitsExpElec": "Years"
                 }
             ]
-        this.purchaseProductTypes =
-            [
-                {
-                    "id": 1,
-                    "product": "Standard Goods"
-                },
-                {
-                    "id": 2,
-                    "product": "Capital Goods"
-                },
-                {
-                    "id": 3,
-                    "product": "Standard Services"
-                },
-             
-            ]
+
         this.purchaseProductCategoryTypes =
             [
                 {
                     "id": 1,
                     "product": "Testing"
                 },
-             
-             
+
+
             ]
         this.active = this.items[0];
         this.SCdataEntry.blendPercent = 20;
@@ -857,8 +863,12 @@ export class TrackingComponent {
     }
 
 
+
+
+
     //runs when component intialize
     ngOnInit() {
+        this.multiLevelItems = this.getBooks();
         $(document).ready(function () {
             $('.ct_custom_dropdown').click(function () {
 
@@ -952,7 +962,14 @@ export class TrackingComponent {
             // this.facilitynothavedp = environment.none;
         }
     };
-
+    getBooks(): TreeviewItem[] {
+        const childrenCategory = new TreeviewItem({
+            text: 'Choose Product Service', value: 0, collapsed: false, children: [
+            ]
+        });
+  
+        return [childrenCategory];
+    }
 
     //display a dialog
     showDialog() {
@@ -1045,8 +1062,21 @@ export class TrackingComponent {
                 .manageDataPointSubCategorySeedID);
         }
         if (catID == 8) {
-
-            this.GetVendors()
+            this.months = [
+                { name: 'Jan', value: 'Jan' },
+                { name: 'Feb', value: 'Feb' },
+                { name: 'Mar', value: 'Mar' },
+                { name: 'Apr', value: 'Apr' },
+                { name: 'May', value: 'May' },
+                { name: 'June', value: 'Jun' },
+                { name: 'July', value: 'July' },
+                { name: 'Aug', value: 'Aug' },
+                { name: 'Sep', value: 'Sep' },
+                { name: 'Oct', value: 'Oct' },
+                { name: 'Nov', value: 'Nov' },
+                { name: 'Dec', value: 'Dec' }
+            ];
+            this.GetVendors();
         }
         if (catID == 10) {
             this.getVehicleTypes();
@@ -1121,6 +1151,7 @@ export class TrackingComponent {
             }
         })
     };
+
 
     getRegionName() {
 
@@ -1815,14 +1846,14 @@ export class TrackingComponent {
             formData.set('month', monthString);
             formData.set('year', this.dataEntry.year);
             formData.set('typeofpurchase', form.value.productType);
-            formData.set('productcodestandard',  form.value.HSNcode);
-            formData.set('valuequantity',  form.value.valueQuantity);
-            formData.set('unit',  form.value.distance_unit);
-            formData.set('vendor',  form.value.vendorName);
-            formData.set('vendorunit',  form.value.vendor_unit);
-            formData.set('vendorspecificEF',  form.value.vendotEf);
-            formData.set('product_subcategory',  form.value.productSubCateggory);
-            formData.set('product_category',  form.value.productCateggory);
+            formData.set('productcodestandard', form.value.HSNcode);
+            formData.set('valuequantity', form.value.valueQuantity);
+            formData.set('unit', form.value.distance_unit);
+            formData.set('vendor', form.value.vendorName);
+            formData.set('vendorunit', form.value.vendor_unit);
+            formData.set('vendorspecificEF', form.value.vendotEf);
+            formData.set('product_subcategory', form.value.productSubCateggory);
+            formData.set('product_category', form.value.productCateggory);
             formData.set('facilities', this.facilityID);
 
 
@@ -1836,13 +1867,13 @@ export class TrackingComponent {
                         );
                         this.resetForm();
                         this.ALLEntries();
-                    
+
                     } else {
                         this.notification.showError(
                             response.message,
                             'Error'
                         );
-                   
+
                     }
                 },
                 error: (err) => {
@@ -3442,12 +3473,14 @@ export class TrackingComponent {
                                         if ((response.categories)[i].manageDataPointCategories[j].manageDataPointCategorySeedID == 8) {
                                             console.log("Df");
                                             this.categoryId = 8;
-                                            this.ALLEntries()
+                                            this.ALLEntries();
+                                            this.GetHSN()
                                             this.getsubCategoryType(this.SubCatAllData
                                                 .manageDataPointSubCategorySeedID);
-                                                this.GetVendors()
-                                        
-                                    
+                                            this.GetVendors();
+                                            this.GetHSN();
+
+
                                             found = true; // Set the flag to true
                                             break;
                                         }
@@ -3665,17 +3698,44 @@ export class TrackingComponent {
     }
 
     GetVendors() {
-        //   let formData = new URLSearchParams();
-
-        //   formData.set('tenant_id', tenantID.toString());
-
+     
         this.GroupService.getVendors().subscribe({
             next: (response) => {
 
                 if (response.success == true) {
                     this.vendorList = response.categories;
+                }
+            },
+            error: (err) => {
+                console.error('errrrrrr>>>>>>', err);
+            },
+            complete: () => console.info('Group Added')
+        });
+    };
 
+    GetHSN() {
 
+        this.GroupService.getHSN().subscribe({
+            next: (response) => {
+
+                if (response.success == true) {
+                    this.purchaseHSNCode = response.categories;
+                }
+            },
+            error: (err) => {
+                console.error('errrrrrr>>>>>>', err);
+            },
+            complete: () => console.info('Group Added')
+        });
+    };
+
+    GetStandardType(typeID) {
+
+        this.GroupService.getStandardType(typeID).subscribe({
+            next: (response) => {
+
+                if (response.success == true) {
+                    this.purchaseProductTypes = response.categories;
                 }
             },
             error: (err) => {
@@ -4434,7 +4494,35 @@ export class TrackingComponent {
 
         this.getSubEmployeeCommuTypes(selectedIndex, row)
     }
+    onProductHSNChange(event: any) {
+        console.log(event.value);
+        const selectedIndex = event.value;
+        this.productHSNSelect = selectedIndex
+this.GetStandardType(this.productHSNSelect)
+        // this.getSubEmployeeCommuTypes(selectedIndex, row)
+    }
+    onProductStandardChange(event: any) {
+        console.log(event.value);
+        const selectedIndex = event.value;
+this.getProductPurchaseItems(selectedIndex)
+        // this.getSubEmployeeCommuTypes(selectedIndex, row)
+    }
 
+    getProductPurchaseItems(standardType ) {
+        let formData = new URLSearchParams();
+
+        formData.set('product_code_id', this.productHSNSelect);
+        formData.set('typeofpurchase', standardType);
+        this.trackingService.getPurchaseCategorires(formData.toString()).subscribe({
+            next: (response) => {
+
+                if (response.success == true) {
+                    console.log(response);
+                    this.multiLevelItems = response.categories.map(item => new TreeviewItem(item));
+                }
+            }
+        })
+    };
     getEmployeeCommuTypes() {
         this.trackingService.getEmployeeType().subscribe({
             next: (response) => {
@@ -4953,6 +5041,31 @@ export class TrackingComponent {
             }
         })
     };
+
+
+    onSelectedChange(selectedItems: TreeviewItem[]): void {
+        this.selectedTreeValues = selectedItems.map(item => this.getFullPath(item, this.items));
+        console.log('Selected items with full path:', this.selectedTreeValues);
+    }
+
+    getFullPath(item: TreeviewItem, items: TreeviewItem[], path: any[] = []): any {
+        for (let i = 0; i < items.length; i++) {
+            const currentItem = items[i];
+            const currentPath = [...path, { text: currentItem.text, value: currentItem.value }];
+
+            if (currentItem.value === item.value) {
+                return currentPath;
+            }
+
+            if (currentItem.children) {
+                const result = this.getFullPath(item, currentItem.children, currentPath);
+                if (result) {
+                    return result;
+                }
+            }
+        }
+        return null;
+    }
 
 
     //retrieves the emission factor for a given subcategory seed ID and category ID.

@@ -95,7 +95,7 @@ import { FireExtinguisherComponent } from './pages/fire-extinguisher/fire-exting
 import { VehicleComponent } from './pages/vehicle/vehicle.component';
 import { ElectricityComponent } from './pages/electricity/electricity.component';
 import { HeatandSteamComponent } from './pages/heatand-steam/heatand-steam.component';
-import { Scope3TrackingComponent } from './scope3-tracking/scope3-tracking.component';
+
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { GhgEmmissionsComponent } from './pages/dashboard/ghg-emmissions/ghg-emmissions.component';
 import { EnergyEmmsionsComponent } from './pages/dashboard/energy-emmsions/energy-emmsions.component';
@@ -114,7 +114,8 @@ import { TargetSettingComponent } from './pages/target_setting/target-setting/ta
 import { ActionsComponent } from './pages/target_setting/actions/actions.component';
 import { VendorsComponent } from './pages/vendors/vendors.component';
 import { FinanceDashboardComponent } from './pages/finance-dashboard/finance-dashboard.component';
-
+import { SubgroupComponent } from './pages/subgroup/subgroup.component';
+import { TreeviewModule } from '@treeview/ngx-treeview';
 defineCustomElements();
 registerLocaleData(localeEn, 'en-EN');
 
@@ -168,7 +169,6 @@ registerLocaleData(localeEn, 'en-EN');
         VehicleComponent,
         ElectricityComponent,
         HeatandSteamComponent,
-        Scope3TrackingComponent,
         GhgEmmissionsComponent,
         EnergyEmmsionsComponent,
         BusinessTravelComponent,
@@ -185,7 +185,8 @@ registerLocaleData(localeEn, 'en-EN');
         TargetSettingComponent,
         ActionsComponent,
         VendorsComponent,
-        FinanceDashboardComponent
+        FinanceDashboardComponent,
+        SubgroupComponent
     ],
     imports: [
         HeaderComponent,
@@ -238,7 +239,9 @@ registerLocaleData(localeEn, 'en-EN');
         NgxDocViewerModule,
         ScrollerModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        TreeviewModule.forRoot()
+       
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     providers: [

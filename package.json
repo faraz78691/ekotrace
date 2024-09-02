@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "@angular/animations": "^16.2.12",
-    "@angular/cdk": "^15.2.8",
+    "@angular/cdk": "^16.2.14",
     "@angular/common": "16.2.12",
     "@angular/compiler": "16.2.12",
     "@angular/core": "16.2.12",
@@ -32,6 +32,7 @@
     "@ngrx/store": "14.3.0",
     "@profabric/angular-components": "0.1.2",
     "@swimlane/ngx-charts": "^20.1.2",
+    "@treeview/ngx-treeview": "^14.0.0",
     "apexcharts": "^3.46.0",
     "bootstrap": "^4.6.1",
     "core-js": "3.25.0",

@@ -4,14 +4,14 @@ import { TrackingRoutingModule } from './tracking-routing.module';
 import { CalendarModule } from 'primeng/calendar';
 import { FormsModule } from '@angular/forms';
 
-
+import { TableModule } from 'primeng/table';
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
     TrackingRoutingModule,
     CalendarModule,
-    FormsModule
+    FormsModule,TableModule
   ]
 })
 export class TrackingModule { }

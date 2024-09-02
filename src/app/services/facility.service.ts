@@ -109,6 +109,9 @@ export class FacilityService {
     public FacilityDataUpdate(data): Observable<any> {
         return this.http.post(environment.baseUrl + '/Updatefacilities', data);
     };
+    public AssignCountrySubGroup(data): Observable<any> {
+        return this.http.post(environment.baseUrl + '/Updatecountry', data);
+    };
 
     public FacilityDataGet(tenantId): Observable<Facility[]> {
         return this.http.get<Facility[]>(

@@ -36,7 +36,7 @@ import { NotificationsComponent } from '@modules/main/header/notifications/notif
 import { WaterCustomReportComponent } from '@pages/reports/water-custom-report/water-custom-report.component';
 import { BrsrQaComponent } from '@modules/brsr-qa/brsr-qa.component';
 import { ReportDocComponent } from '@pages/report-doc/report-doc.component';
-import { Scope3TrackingComponent } from './scope3-tracking/scope3-tracking.component';
+
 
 import { GhgEmmissionsComponent } from '@pages/dashboard/ghg-emmissions/ghg-emmissions.component';
 import { EnergyEmmsionsComponent } from '@pages/dashboard/energy-emmsions/energy-emmsions.component';
@@ -55,6 +55,7 @@ import { TargetSettingComponent } from '@pages/target_setting/target-setting/tar
 import { ActionsComponent } from '@pages/target_setting/actions/actions.component';
 import { VendorsComponent } from '@pages/vendors/vendors.component';
 import { FinanceDashboardComponent } from '@pages/finance-dashboard/finance-dashboard.component';
+import { SubgroupComponent } from '@pages/subgroup/subgroup.component';
 
 const routes: Routes = [
     {
@@ -163,6 +164,7 @@ const routes: Routes = [
                     {path:'',redirectTo:'view', pathMatch:'full'},
                     {path:'view', component:TreeComponent},
                     {path:'facility', component:FacilityComponent},
+                    {path:'subgroup', component:SubgroupComponent},
                     {path:'group', component:GroupComponent}
                 ]
             },
@@ -272,20 +274,7 @@ const routes: Routes = [
             //         ]
             //     }
             // },
-            {
-                path: 'scope3tracking',
-                canActivate: [RoleGuard],
-                component: Scope3TrackingComponent,
-                data: {
-                    roles: [
-                        'Super Admin',
-                        'Admin',
-                        'Manager',
-                        'Preparer',
-                        'Approver'
-                    ]
-                }
-            },
+        
             // {
             //     path: 'Ntracking',
             //     canActivate: [RoleGuard],

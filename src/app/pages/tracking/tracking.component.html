@@ -1260,22 +1260,128 @@
 
                                 </div>
                                 <div class="trackingFooter" *ngIf="categoryId ==8">
-                                    <div class="row p-2">
-
-                                        <div class="col-md-6">
+                                    <div class="row ">
+                                        <div class="col-md-6 mt-3">
                                             <div class="mb-4" style="gap: 10px;">
-                                                <label class=" ct_text_wrape">Type of purchase</label>
-                                                <p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230 
-
-                                            " ngModel [options]="purchaseProductTypes" optionLabel="product"
-                                                    optionValue="product" name="productType"
-                                                   >
+                                                <label class=" ct_text_wrape">Product Code Conv.</label>
+                                                <div class="position-relative">
+                                                    <p-dropdown
+                                                    class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                   (onChange)="onProductHSNChange($event)" [(ngModel)]="productHSNSelect"
+                                                    [options]="purchaseHSNCode"
+                                                    optionLabel="code" optionValue="id"
+                                                    name="HSNCode"
+                                                    placeholder="Select type">
                                                 </p-dropdown>
+
+                                                </div>
                                             </div>
                                         </div>
-                                       
+                                        <div class="col-md-6 mt-3">
+                                            <div class="mb-4" style="gap: 10px;">
+                                                <label class=" ct_text_wrape">Is Entry annual ?</label>
+                                                <div class="position-relative">
+                                                    <input type="text" name="noofemployees" ngModel
+                                                        placeholder="Enter no of employees"
+                                                        class="form-control Dashboard-tab text-white" />
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 ">
+                                            <table class="table ct_home_office_table">
+                                                <thead class="thead-dark">
+                                                    <tr>
+                                                        <th scope="col">S.No.</th>
+                                                        <th scope="col">Purchase type</th>
+                                                        <th scope="col">Product/Service</th>
+                                                        <th scope="col">HSN/SAC <Code></Code></th>
+                                                        <th scope="col">Month of purchase</th>
+                                                        <th scope="col">Quantity</th>
+                                                        <th scope="col">Unit</th>
+                                                        <th scope="col">Vendor</th>
+                                                        <th scope="col">Vendor Specific EF</th>
+                                                        <th scope="col">EF unit</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody #commuteTable>
+                                                    <tr *ngFor="let row of rowsPurchased">
+                                                        <td scope="row">{{ row.id }}</td>
+
+                                                        <td>
+                                                            <p-dropdown
+                                                                class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                                [(ngModel)]="row.productService"
+                                                                [options]="purchaseProductTypes"  (onChange)="onProductStandardChange($event)"
+                                                                optionLabel="typesofpurchasename" optionValue="id"
+                                                                name="standardType"
+                                                                placeholder="Select type">
+                                                            </p-dropdown>
+                                                        </td>
+                                                        <td>
+                                                            <ngx-dropdown-treeview class="ct_custom_dropdown_123" [placeholder]="'Choose product type'"                         
+                                                            [items]="multiLevelItems" (selectedChange)="onSelectedChange($event)"
+                                                          >
+                                                          </ngx-dropdown-treeview>
+                                                        </td>
+                                                        <td>
+                                                            <p-dropdown
+                                                                class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                                [(ngModel)]="row.productService"
+                                                                [options]="row.subVehicleCategory"
+                                                                optionLabel="subcategory" optionValue="id"
+                                                                name="vehicle_type_{{row.id}}"
+                                                                placeholder="Select type">
+                                                            </p-dropdown>
+                                                        </td>
+
+                                                        <td>
+                                                            <p-dropdown
+                                                                class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                                [options]="months" optionLabel="name"
+                                                                optionValue="value" name="months_{{row.id}}"
+                                                                placeholder="Select month">
+                                                            </p-dropdown>
+
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control"
+                                                                name="quantity_{{row.id}}" [(ngModel)]="row.quantity">
+                                                        </td>
+                                                        <td>
+                                                            <p-dropdown
+                                                                class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                                [options]="months" optionLabel="name"
+                                                                optionValue="value" name="unit_{{row.id}}"
+                                                                placeholder="Select month">
+                                                            </p-dropdown>
+                                                        </td>
+                                                        <td>
+                                                            <p-dropdown
+                                                                class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                                [options]="months" optionLabel="name"
+                                                                optionValue="value" name="vendor_{{row.id}}"
+                                                                placeholder="Select vendor">
+                                                            </p-dropdown>
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control"
+                                                                name="vendorSpecific_{{row.id}}"
+                                                                [(ngModel)]="row.quantity">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control"
+                                                                name="quantity_{{row.id}}" [(ngModel)]="row.quantity">
+                                                        </td>
+                                                    </tr>
+
+
+                                                </tbody>
+                                                <p class="p-3" (click)="addCommutes()">+</p>
+                                            </table>
+                                        </div>
                                     </div>
-                                    <div class="row">
+                                    <!-- <div class="row">
                                         <div class="col-md-6">
                                             <div class="mb-4  " style="gap: 10px;">
                                                 <label class=" ct_text_wrape">Product category</label>
@@ -1329,11 +1435,7 @@
                                                         optionLabel="units" optionValue="units"
                                                         name="distance_unit" >
                                                     </p-dropdown>
-                                                    <!-- <p class="validation"
-                                                    *ngIf="distanceInKms.invalid && dataEntryForm.submitted">
-                                                    Distance Travelled by
-                                                    Product value required
-                                                </p> -->
+                                                  
 
                                                 </div>
 
@@ -1353,10 +1455,7 @@
                                                         name="vendorName"
                                                        >
                                                     </p-dropdown>
-                                                        <!-- <p class="validation"
-                                                        *ngIf="noOfVehicles.invalid && dataEntryForm.submitted">
-                                                        No. of Vehicles value required
-                                                    </p> -->
+                                                    
                                                     </div>
     
     
@@ -1387,8 +1486,8 @@
                                         </div>
                                       
 
-                                    </div>
-                                    
+                                    </div> -->
+
 
                                     <div class="col-12 mt-5">
                                         <button type="submit" class="px-4 trackingsubmitb">
@@ -1540,9 +1639,7 @@
                                                                     optionLabel="energyTypes" optionValue="energyTypes"
                                                                     name="area_unit" #upfacilityUnits="ngModel">
                                                                 </p-dropdown>
-                                                                <!-- <div class="ct_quantity_text">
-                                                                    <p>sr mtr</p>
-                                                                </div> -->
+
                                                             </div>
                                                         </div>
                                                     </div>

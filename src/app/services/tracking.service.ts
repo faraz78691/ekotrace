@@ -637,6 +637,9 @@ export class TrackingService {
     getEmployeeType(): Observable<any> {
         return this.http.get(environment.baseUrl + '/employeeCommunityCategory')
     };
+    getPurchaseCategorires(formData: any): Observable<any> {
+        return this.http.post(environment.baseUrl + '/purchaseGoodsAllcategories', formData)
+    };
     getEmployeeSubVehicleCat(id:any): Observable<any> {
         return this.http.get(environment.baseUrl + `/employeeCommunitysubCategory/${id}`)
     };

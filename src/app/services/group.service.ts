@@ -56,6 +56,17 @@ export class GroupService {
             environment.baseUrl + '/getVendorlist'
         );
     };
+    public getHSN(): Observable<any> {
+        return this.http.get(
+            environment.baseUrl + '/getpurchaseproduct_code'
+        );
+    };
+    public getStandardType(id): Observable<any> {
+        return this.http.get(
+            environment.baseUrl + `/getTypesofpurchase/${id}`
+            
+        );
+    };
     public getCostCentre(): Observable<any> {
         return this.http.get(
             environment.baseUrl + '/getcostCenter'
