@@ -35,7 +35,7 @@ import { FileUpload } from 'primeng/fileupload';
 import { TabView } from 'primeng/tabview';
 import { countries } from '@/store/countrieslist';
 import { GroupService } from '@services/group.service';
-import { TreeviewItem, TreeviewEventParser, OrderDownlineTreeviewEventParser } from '@treeview/ngx-treeview';
+import { TreeviewItem, TreeviewEventParser, OrderDownlineTreeviewEventParser, TreeviewConfig } from '@treeview/ngx-treeview';
 
 declare var $: any;
 
@@ -94,7 +94,7 @@ export class TrackingComponent {
     id_var: any;
     dataEntrySetting: DataEntrySetting = new DataEntrySetting();
     dataEntry: DataEntry = new DataEntry();
-
+    selectedVendor:any;
 
     SCdataEntry: StationaryCombustionDE = new StationaryCombustionDE();
     RefrigerantDE: RefrigerantsDE = new RefrigerantsDE();
@@ -154,6 +154,7 @@ export class TrackingComponent {
     vehcilestransporationchecked: boolean = false;
     storageTransporationChecked: boolean = false;
     VehicleGrid: any[] = [];
+    selectedUnit:any;
     selectedVehicleIndex: number = 1;
     franchiseCategoryValue: string;
     subFranchiseCategoryValue: string = 'Bank Branch';
@@ -260,6 +261,20 @@ export class TrackingComponent {
     items: any[] = [];
     rowsPurchased: any[] = [];
     vendorUnits: any[] = [];
+    config = {
+        // Example configuration options
+        hasAllCheckBox: false,
+        hasAll: false,
+        hasFilter: true,
+        hasCollapseExpand: true,
+        closeOnSelect: false,
+      };
+      values: number[];
+     
+    annualEntry: any[] = [
+        { label: 'yes', value: 'YES' },
+        { label: 'no', value: 'NO' },
+    ];
     productHSNSelect: any;
 
     storagef_typeValue: string = this.storageGrid[0]?.storagef_type;
@@ -291,14 +306,7 @@ export class TrackingComponent {
     ];
 
 
-    config = {
-        paddingAtStart: true,
-        classname: 'my-custom-class',
-        listBackgroundColor: 'rgb(208, 241, 239)',
-        fontColor: 'rgb(8, 54, 71)',
-        backgroundColor: 'rgb(208, 241, 239)',
-        selectedListFontColor: 'red',
-    };
+ 
     constructor(
         private messageService: MessageService,
         private router: Router,
@@ -316,8 +324,20 @@ export class TrackingComponent {
         for (let i = 1; i <= 5; i++) {
             this.rows.push({ id: i, subVehicleCategory: [], vehicleType1: null, vehicleType2: null, employeesCommute: '', avgCommute: '' });
         }
-        for (let i = 1; i <= 5; i++) {
-            this.rowsPurchased.push({ id: i, months: [], purchaseType1: null, productService: null, employeesCommute: '', avgCommute: '' });
+        for (let i = 1; i <= 1; i++) {
+            this.rowsPurchased.push({
+                id: i,
+                multiLevelItems: [],
+                productService: null,
+                productType: null,
+                subVehicleCategory: [],  // Add any other nested dropdown arrays here if needed
+                months: '',
+                quantity: '',
+                selectedUnit: '',
+                vendorName: '',
+                vendorspecificEF: '',
+                vendorspecificEFUnit: '' // Make sure to initialize this as well
+            });;
         }
 
         this.facilityService.headerTracking.set(true);
@@ -868,7 +888,7 @@ export class TrackingComponent {
 
     //runs when component intialize
     ngOnInit() {
-        this.multiLevelItems = this.getBooks();
+        this.multiLevelItems = this.getTreeData();
         $(document).ready(function () {
             $('.ct_custom_dropdown').click(function () {
 
@@ -962,14 +982,14 @@ export class TrackingComponent {
             // this.facilitynothavedp = environment.none;
         }
     };
-    getBooks(): TreeviewItem[] {
-        const childrenCategory = new TreeviewItem({
-            text: 'Choose Product Service', value: 0, collapsed: false, children: [
-            ]
-        });
-  
-        return [childrenCategory];
-    }
+    // getBooks(): TreeviewItem[] {
+    //     const childrenCategory = new TreeviewItem({
+    //         text: 'Choose Product Service', value: 0, collapsed: false, children: [
+    //         ]
+    //     });
+
+    //     return [childrenCategory];
+    // }
 
     //display a dialog
     showDialog() {
@@ -1077,6 +1097,7 @@ export class TrackingComponent {
                 { name: 'Dec', value: 'Dec' }
             ];
             this.GetVendors();
+            this.getPurchaseGoodsCurrency()
         }
         if (catID == 10) {
             this.getVehicleTypes();
@@ -3268,6 +3289,9 @@ export class TrackingComponent {
     addCommutes() {
         this.rows.push({ id: this.rows.length + 1, subVehicleCategory: [], vehicleType1: null, vehicleType2: null, employeesCommute: '', avgCommute: '' });
     }
+    addPurchaseRows() {
+        this.rowsPurchased.push({ id: this.rowsPurchased.length + 1, multiLevelItems: [], productService: null, productType: null, months: '', quantity: '', selectedUnit: '', vendorName: '',vendorspecificEF:'' });
+    }
 
 
     CostCentre() {
@@ -3479,6 +3503,7 @@ export class TrackingComponent {
                                                 .manageDataPointSubCategorySeedID);
                                             this.GetVendors();
                                             this.GetHSN();
+                                            this.getPurchaseGoodsCurrency()
 
 
                                             found = true; // Set the flag to true
@@ -3698,7 +3723,7 @@ export class TrackingComponent {
     }
 
     GetVendors() {
-     
+
         this.GroupService.getVendors().subscribe({
             next: (response) => {
 
@@ -3978,6 +4003,9 @@ export class TrackingComponent {
         const baseUrl = window.location.origin;
         return `${baseUrl}/api/DownloadFile/${encodeURIComponent(filePath)}`;
     }
+    onFilterChange(value: string): void {
+        console.log('filter:', value);
+      }
 
     //getFileNameFromPath function is used to extract the file name from a given filePath
     private getFileNameFromPath(filePath: string): string {
@@ -4423,6 +4451,10 @@ export class TrackingComponent {
         }
     };
 
+    onUnitChange(row) {
+        row.vendorspecificEFUnit = 'kgCO2e/' + row.selectedUnit;
+    }
+
     enableCharging(subcatName: any) {
         if (subcatName == "Passenger Vehicle") {
             if (this.VehicleDE.vehicleTypeID == 7 || this.VehicleDE.vehicleTypeID == 8 || this.VehicleDE.vehicleTypeID == 9 || this.VehicleDE.vehicleTypeID == 12 || this.VehicleDE.vehicleTypeID == 17) {
@@ -4498,17 +4530,17 @@ export class TrackingComponent {
         console.log(event.value);
         const selectedIndex = event.value;
         this.productHSNSelect = selectedIndex
-this.GetStandardType(this.productHSNSelect)
+        this.GetStandardType(this.productHSNSelect)
         // this.getSubEmployeeCommuTypes(selectedIndex, row)
     }
-    onProductStandardChange(event: any) {
+    onProductStandardChange(event: any , row:any) {
         console.log(event.value);
         const selectedIndex = event.value;
-this.getProductPurchaseItems(selectedIndex)
+        this.getProductPurchaseItems(selectedIndex, row)
         // this.getSubEmployeeCommuTypes(selectedIndex, row)
     }
 
-    getProductPurchaseItems(standardType ) {
+    getProductPurchaseItems(standardType, row:any) {
         let formData = new URLSearchParams();
 
         formData.set('product_code_id', this.productHSNSelect);
@@ -4518,7 +4550,8 @@ this.getProductPurchaseItems(selectedIndex)
 
                 if (response.success == true) {
                     console.log(response);
-                    this.multiLevelItems = response.categories.map(item => new TreeviewItem(item));
+                    row.multiLevelItems = this.getTreeData();
+                    // row.multiLevelItems = response.categories.map(item => new TreeviewItem(item));
                 }
             }
         })
@@ -4533,6 +4566,31 @@ this.getProductPurchaseItems(selectedIndex)
             }
         })
     };
+    getTreeData(): TreeviewItem[] {
+        // Your tree structure goes here as previously described
+        return [
+          new TreeviewItem({
+            text: 'Category 1', value: 1, collapsed: true, children: [
+              {
+                text: 'Subcategory 1-1', value: 11, collapsed: true, children: [
+                  { text: 'Item 1-1-1', value: 111, collapsed: true },
+                  { text: 'Item 1-1-2', value: 112, collapsed: true }
+                ]
+              }
+            ]
+          }),
+          new TreeviewItem({
+            text: 'Category 2', value: 2, collapsed: true, children: [
+              {
+                text: 'Subcategory 2-1', value: 21, collapsed: true, children: [
+                  { text: 'Item 2-1-1', value: 211, collapsed: true },
+                  { text: 'Item 2-1-2', value: 212, collapsed: true }
+                ]
+              }
+            ]
+          })
+        ];
+      }
 
     getSubEmployeeCommuTypes(id, row: any) {
 
@@ -5044,28 +5102,11 @@ this.getProductPurchaseItems(selectedIndex)
 
 
     onSelectedChange(selectedItems: TreeviewItem[]): void {
-        this.selectedTreeValues = selectedItems.map(item => this.getFullPath(item, this.items));
-        console.log('Selected items with full path:', this.selectedTreeValues);
+      
+        console.log('Selected items with full path:', selectedItems);
     }
 
-    getFullPath(item: TreeviewItem, items: TreeviewItem[], path: any[] = []): any {
-        for (let i = 0; i < items.length; i++) {
-            const currentItem = items[i];
-            const currentPath = [...path, { text: currentItem.text, value: currentItem.value }];
-
-            if (currentItem.value === item.value) {
-                return currentPath;
-            }
-
-            if (currentItem.children) {
-                const result = this.getFullPath(item, currentItem.children, currentPath);
-                if (result) {
-                    return result;
-                }
-            }
-        }
-        return null;
-    }
+  
 
 
     //retrieves the emission factor for a given subcategory seed ID and category ID.

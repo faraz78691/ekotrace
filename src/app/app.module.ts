@@ -115,7 +115,9 @@ import { ActionsComponent } from './pages/target_setting/actions/actions.compone
 import { VendorsComponent } from './pages/vendors/vendors.component';
 import { FinanceDashboardComponent } from './pages/finance-dashboard/finance-dashboard.component';
 import { SubgroupComponent } from './pages/subgroup/subgroup.component';
-import { TreeviewModule } from '@treeview/ngx-treeview';
+import { TreeviewEventParser, TreeviewModule } from '@treeview/ngx-treeview';
+
+
 defineCustomElements();
 registerLocaleData(localeEn, 'en-EN');
 
