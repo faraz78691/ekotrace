@@ -888,7 +888,7 @@ export class TrackingComponent {
 
     //runs when component intialize
     ngOnInit() {
-        this.multiLevelItems = this.getTreeData();
+        this.multiLevelItems = this.getItems();
         $(document).ready(function () {
             $('.ct_custom_dropdown').click(function () {
 
@@ -4550,7 +4550,7 @@ export class TrackingComponent {
 
                 if (response.success == true) {
                     console.log(response);
-                    row.multiLevelItems = this.getTreeData();
+                    // row.multiLevelItems = this.getTreeData();
                     // row.multiLevelItems = response.categories.map(item => new TreeviewItem(item));
                 }
             }
@@ -4566,30 +4566,28 @@ export class TrackingComponent {
             }
         })
     };
-    getTreeData(): TreeviewItem[] {
-        // Your tree structure goes here as previously described
-        return [
-          new TreeviewItem({
-            text: 'Category 1', value: 1, collapsed: true, children: [
-              {
-                text: 'Subcategory 1-1', value: 11, collapsed: true, children: [
-                  { text: 'Item 1-1-1', value: 111, collapsed: true },
-                  { text: 'Item 1-1-2', value: 112, collapsed: true }
-                ]
-              }
-            ]
-          }),
-          new TreeviewItem({
-            text: 'Category 2', value: 2, collapsed: true, children: [
-              {
-                text: 'Subcategory 2-1', value: 21, collapsed: true, children: [
-                  { text: 'Item 2-1-1', value: 211, collapsed: true },
-                  { text: 'Item 2-1-2', value: 212, collapsed: true }
-                ]
-              }
-            ]
-          })
-        ];
+    getItems(): TreeviewItem[] {
+        const childrenCategory = new TreeviewItem({
+          text: 'Children', value: 1, checked: false, children: [
+            { text: 'Baby 3-5', value: 11, checked: false },
+            { text: 'Baby 6-8', value: 12, checked: false }
+          ]
+        });
+        const itCategory = new TreeviewItem({
+          text: 'IT', value: 9, checked: false, children: [
+            { text: 'Programming', value: 91, checked: false, children: [
+              { text: 'Frontend', value: 911, checked: false, children: [
+                { text: 'Angular', value: 9111, checked: false },
+                { text: 'ReactJS', value: 9112, checked: false }
+              ]},
+              { text: 'Backend', value: 912, checked: false, children: [
+                { text: 'Java', value: 9121, checked: false },
+                { text: 'Python', value: 9122, checked: false }
+              ]}
+            ]}
+          ]
+        });
+        return [childrenCategory, itCategory];
       }
 
     getSubEmployeeCommuTypes(id, row: any) {
@@ -5101,12 +5099,33 @@ export class TrackingComponent {
     };
 
 
-    onSelectedChange(selectedItems: TreeviewItem[]): void {
-      
-        console.log('Selected items with full path:', selectedItems);
-    }
+    onSelectedChange(event: any) {
+        this.deselectAllItems(this.multiLevelItems);
+        console.log(event)
+        if (!event.children && event.length === 1) {
+          event.checked = true;
+          console.log('Selected item:', event);
+        } else {
+          this.deselectAllItems(event);
+        }
+        this.updatePlaceholder();
+      }
 
-  
+      deselectAllItems(items: TreeviewItem[]) {
+        items.forEach(item => {
+           
+          item.checked = false;
+          if (item.children) {
+            this.deselectAllItems(item.children);
+          }
+        });
+      };
+
+      updatePlaceholder() {
+        const selectedItems = this.multiLevelItems.filter(item => item.checked);
+        const placeholder = selectedItems.length > 0 ? `${selectedItems.length} options` : 'Choose product type';
+        console.log('Placeholder:', placeholder);
+      }
 
 
     //retrieves the emission factor for a given subcategory seed ID and category ID.
