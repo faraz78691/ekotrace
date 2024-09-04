@@ -26,9 +26,9 @@ export class GroupService {
             environment.baseUrl + '/getuser_offseting',tenantID
         );
     };
-    public getEmissionInventory(): Observable<any> {
+    public getEmissionInventory(superAdminID): Observable<any> {
         return this.http.get(
-            environment.baseUrl + '/targetsetting/getTargetEmissionInventory'
+            environment.baseUrl + `/targetsetting/getTargetEmissionInventory/${superAdminID}`
         );
     };
     public getSuperAdmins(): Observable<any> {
@@ -46,14 +46,14 @@ export class GroupService {
             environment.baseUrl + '/getuser_offseting',tenantID
         );
     };
-    public getTargetSetting(): Observable<any> {
+    public getTargetSetting(superTenantId): Observable<any> {
         return this.http.get(
-            environment.baseUrl + '/targetsetting/getTargetSettingDetails'
+            environment.baseUrl + `/targetsetting/getTargetSettingDetails/${superTenantId}`
         );
     };
-    public getVendors(): Observable<any> {
+    public getVendors(superId): Observable<any> {
         return this.http.get(
-            environment.baseUrl + '/getVendorlist'
+            environment.baseUrl + `/getVendorlist/${superId}`
         );
     };
     public getHSN(): Observable<any> {
@@ -67,9 +67,9 @@ export class GroupService {
             
         );
     };
-    public getCostCentre(): Observable<any> {
+    public getCostCentre(sID): Observable<any> {
         return this.http.get(
-            environment.baseUrl + '/getcostCenter'
+            environment.baseUrl + `/getcostCenter/${sID}`
         );
     };
     public getTargetGraphsPoints(data): Observable<any> {
@@ -133,8 +133,8 @@ export class GroupService {
     public addTargetActions(groupdetails): Observable<any> {
         return this.http.post( environment.baseUrl + '/targetsetting/addActions', groupdetails);
     }
-    public getActions(): Observable<any> {
-        return this.http.get( environment.baseUrl + '/targetsetting/getActions');
+    public getActions(superAdminTenentID): Observable<any> {
+        return this.http.get( environment.baseUrl + `/targetsetting/getActions/${superAdminTenentID}`);
     }
 
     public deleteGroups(id) {

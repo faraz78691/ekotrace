@@ -111,6 +111,7 @@ export class TargetSettingComponent {
   project_details = '';
   carbon_offset = '';
   selectedScope: any;
+  superAdminTenentID: any;
   carbon_credit_value: string;
   type: string;
   date3: string;
@@ -215,6 +216,7 @@ export class TargetSettingComponent {
     this.getTenantsDetailById(Number(this.loginInfo.tenantID));
     // this.GetAllFacility();
     let tenantID = this.loginInfo.tenantID;
+    this.superAdminTenentID = this.loginInfo.super_admin_id;
     this.GetTarget();
     this.updatedtheme = this.themeservice.getValue('theme');
   }
@@ -231,7 +233,7 @@ export class TargetSettingComponent {
 
     //   formData.set('tenant_id', tenantID.toString());
 
-    this.GroupService.getTargetSetting().subscribe({
+    this.GroupService.getTargetSetting( this.superAdminTenentID).subscribe({
       next: (response) => {
 
         if (response.success == true) {

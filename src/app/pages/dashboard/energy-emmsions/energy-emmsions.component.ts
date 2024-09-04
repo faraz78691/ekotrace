@@ -217,7 +217,6 @@ export class EnergyEmmsionsComponent {
     formData.set('facilities', facility);
     this.dashboardService.GEByFuelType(formData.toString()).subscribe((result: any) => {
 
-
       this.scopeWiseSeries = result.flueType;
       this.labelScopeDonut1 = result.series;
       this.airTotal = result.totalEmssion;

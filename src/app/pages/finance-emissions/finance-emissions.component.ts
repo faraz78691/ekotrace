@@ -227,6 +227,7 @@ export class FinanceEmissionsComponent {
   marketTypes: any[] = [];
   marketEElecID: any;;
   categoryId = 23;
+  superAdminTenantID :any;
 
   carFuel_type: any[] = [];
   wasteMethod: string;
@@ -413,11 +414,13 @@ effect(()=>{
           this.loginInfo = jsonObj as LoginInfo;
       }
       let tenantID = this.loginInfo.tenantID;
+      this.superAdminTenantID = this.loginInfo.super_admin_id;
+   console.log(this.superAdminTenantID);
       this.facilityID = localStorage.getItem('SelectedfacilityID');
       this.flag = localStorage.getItem('Flag');
       const dataEntry = this.trackingService.dataEntry;
       this.getInvestmentCategories();
-      this.getInvestmentSubCategory('Coke, Refined Petroleum, and Nuclear Fuel')
+    //   this.getInvestmentSubCategory('Coke, Refined Petroleum, and Nuclear Fuel')
  
   };
 
@@ -510,6 +513,7 @@ effect(()=>{
               formData.set('equity_share', form.value.share_Equity);
               formData.set('facilities', '');
               formData.set('sub_group_id', fId);
+              formData.set('tenant_id', this.superAdminTenantID);
             //   formData.set('month', monthString);
               formData.set('year', this.dataEntry.year);
           } else if (this.investmentTypeValue.includes('Equity investments') && this.franchiseMethodValue == 'Average data method') {
@@ -521,6 +525,7 @@ effect(()=>{
               formData.set('equity_share', form.value.share_Equity);
               formData.set('facilities', '');
               formData.set('sub_group_id', fId);
+              formData.set('tenant_id', this.superAdminTenantID);
             //   formData.set('month', monthString);
               formData.set('year', this.dataEntry.year);
           } else if ((this.investmentTypeValue == 'Debt investments' || this.investmentTypeValue == 'Project finance') && this.franchiseMethodValue == 'Average data method') {
@@ -533,6 +538,7 @@ effect(()=>{
               formData.set('equity_project_cost', form.value.equity_project_cost);
               formData.set('facilities', '');
               formData.set('sub_group_id', fId);
+              formData.set('tenant_id', this.superAdminTenantID);
             //   formData.set('month', monthString);
               formData.set('year', this.dataEntry.year);
           } else if ((this.investmentTypeValue == 'Debt investments' || this.investmentTypeValue == 'Project finance') && this.franchiseMethodValue == 'Investment Specific method') {
@@ -546,6 +552,7 @@ effect(()=>{
               formData.set('equity_project_cost', form.value.project_cost);
               formData.set('facilities', '');
               formData.set('sub_group_id', fId);
+              formData.set('tenant_id', this.superAdminTenantID);
             //   formData.set('month', monthString);
               formData.set('year', this.dataEntry.year);
           }
@@ -700,24 +707,14 @@ effect(()=>{
       })
   };
 
-  onFranchiseChange(event: any) {
-      const frachiseTypevalue = event.value;
+//   onFranchiseChange(event: any) {
+//       const frachiseTypevalue = event.value;
 
-      this.franchiseCategoryValue = frachiseTypevalue
-      this.getSubFranchiseCategory(frachiseTypevalue)
-  };
+//       this.franchiseCategoryValue = frachiseTypevalue
+//       this.getSubFranchiseCategory(frachiseTypevalue)
+//   };
 
-  getSubFranchiseCategory(category: any) {
-      this.trackingService.getSubFranchiseCat(category).subscribe({
-          next: (response) => {
-              // console.log(response);
-              if (response.success == true) {
-                  this.subFranchiseCategory = response.categories;
-
-              }
-          }
-      })
-  };
+ 
 
   onCalculationMethodChange(event: any) {
       const calMethod = event.value;
@@ -844,18 +841,7 @@ effect(()=>{
       })
   };
 
-  getEndWasteType() {
-      this.trackingService.getWasteType().subscribe({
-          next: (response) => {
-              console.log(response, "sdgs");
-              if (response.success == true) {
-                  this.wasteGrid = response.categories;
-                  this.waterWasteProduct = this.wasteGrid[0].type
-                  // this.franchiseCategoryValue = this.franchiseGrid[0].categories
-              }
-          }
-      })
-  };
+
 
 
 
@@ -867,11 +853,14 @@ effect(()=>{
 
               if (response.success == true) {
                   this.wasteGrid = response.categories;
+                  this.getInvestmentSubCategory(this.wasteGrid[0].investment_type)
                   // this.franchiseCategoryValue = this.franchiseGrid[0].categories
               }
           }
       })
   };
+
+
 
 
 

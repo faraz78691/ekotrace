@@ -94,7 +94,7 @@ export class TrackingComponent {
     id_var: any;
     dataEntrySetting: DataEntrySetting = new DataEntrySetting();
     dataEntry: DataEntry = new DataEntry();
-    selectedVendor:any;
+    selectedVendor: any;
 
     SCdataEntry: StationaryCombustionDE = new StationaryCombustionDE();
     RefrigerantDE: RefrigerantsDE = new RefrigerantsDE();
@@ -154,7 +154,7 @@ export class TrackingComponent {
     vehcilestransporationchecked: boolean = false;
     storageTransporationChecked: boolean = false;
     VehicleGrid: any[] = [];
-    selectedUnit:any;
+    selectedUnit: any;
     selectedVehicleIndex: number = 1;
     franchiseCategoryValue: string;
     subFranchiseCategoryValue: string = 'Bank Branch';
@@ -226,6 +226,7 @@ export class TrackingComponent {
     returnGrid: any[] = [];
     projectPhaseTypes: any[] = [];
     batchId: any;
+    superAdminID: any;
     flightTime: any[] = [];
     upstreamMassUnitsGrid: any[] = [];
     uploadButton = false;
@@ -268,12 +269,12 @@ export class TrackingComponent {
         hasFilter: true,
         hasCollapseExpand: true,
         closeOnSelect: false,
-      };
-      values: number[];
-     
+    };
+    values: number[];
+
     annualEntry: any[] = [
-        { label: 'yes', value: 'YES' },
-        { label: 'no', value: 'NO' },
+        { name: 'Yes', value: 1 },
+        { name: 'No', value: 0 },
     ];
     productHSNSelect: any;
 
@@ -306,7 +307,7 @@ export class TrackingComponent {
     ];
 
 
- 
+
     constructor(
         private messageService: MessageService,
         private router: Router,
@@ -888,7 +889,7 @@ export class TrackingComponent {
 
     //runs when component intialize
     ngOnInit() {
-        this.multiLevelItems = this.getItems();
+        // this.multiLevelItems = this.getItems();
         $(document).ready(function () {
             $('.ct_custom_dropdown').click(function () {
 
@@ -912,6 +913,7 @@ export class TrackingComponent {
             console.log(this.haveBasicPackage);
         }
         let tenantID = this.loginInfo.tenantID;
+        this.superAdminID = this.loginInfo.super_admin_id;
         this.facilityID = localStorage.getItem('SelectedfacilityID');
         this.flag = localStorage.getItem('Flag');
         const dataEntry = this.trackingService.dataEntry;
@@ -1863,19 +1865,48 @@ export class TrackingComponent {
         }
         if (this.categoryId == 8) {
 
+            // Filter out rows where no field is filled
+            const filledRows = this.rowsPurchased.filter(row =>
+                // console.log(row.employeesCommute !== '')
+                row.productType == null
+            );
+            console.log(filledRows);
+            if (filledRows.length > 0) {
+                this.notification.showInfo(
+                    "Please select product service code",
+                    'Warning'
+                );
+                return;
+            }
+            if(form.value.annualEntry == ''){
+                this.notification.showInfo(
+                    "Please select annual entry",
+                    'Warning'
+                );
+                return;
+            }
+            
+            // Prepare the payload
+            const payload = this.rowsPurchased.map(row => ({
+                month: row.months,
+                typeofpurchase: row.productService,
+                valuequantity: row.quantity,
+                unit: row.selectedUnit,
+                vendor: row.vendorName,
+                vendorunit: row.vendorspecificEFUnit,
+                vendorspecificEF: row.vendorspecificEF,
+                product_category: row.productType
+            }));
+            console.log(payload);
+            var purchaseTableStringfy = JSON.stringify(payload)
+
             let formData = new URLSearchParams();
-            formData.set('month', monthString);
+            // formData.set('month', monthString);
             formData.set('year', this.dataEntry.year);
-            formData.set('typeofpurchase', form.value.productType);
-            formData.set('productcodestandard', form.value.HSNcode);
-            formData.set('valuequantity', form.value.valueQuantity);
-            formData.set('unit', form.value.distance_unit);
-            formData.set('vendor', form.value.vendorName);
-            formData.set('vendorunit', form.value.vendor_unit);
-            formData.set('vendorspecificEF', form.value.vendotEf);
-            formData.set('product_subcategory', form.value.productSubCateggory);
-            formData.set('product_category', form.value.productCateggory);
+            formData.set('productcodestandard', this.productHSNSelect);
+            formData.set('is_annual', form.value.annualEntry);
             formData.set('facilities', this.facilityID);
+            formData.set('jsonData', purchaseTableStringfy);
 
 
             this.trackingService.submitPurchaseGoods(formData.toString()).subscribe({
@@ -1886,6 +1917,29 @@ export class TrackingComponent {
                             response.message,
                             'Success'
                         );
+                        this.rowsPurchased.forEach(levels => {
+                            levels.productType = null
+                            this.deselectAllItems(levels.multiLevelItems)
+                        })
+                        this.rowsPurchased = [];
+                        for (let i = 1; i <= 1; i++) {
+                            this.rowsPurchased.push({
+                                id: i,
+                                multiLevelItems: [],
+                                productService: null,
+                                productType: null,
+                                subVehicleCategory: [],  // Add any other nested dropdown arrays here if needed
+                                months: '',
+                                quantity: '',
+                                selectedUnit: '',
+                                vendorName: '',
+                                vendorspecificEF: '',
+                                vendorspecificEFUnit: '' // Make sure to initialize this as well
+                            });;
+                        }
+                        this.GetHSN();
+                        // this.deselectAllItems(this.rowsPurchased)
+                        console.log(this.rowsPurchased);
                         this.resetForm();
                         this.ALLEntries();
 
@@ -2143,10 +2197,10 @@ export class TrackingComponent {
 
             // Filter out rows where no field is filled
             const filledRows = this.rows.filter(row =>
-                // console.log(row.employeesCommute !== '')
+
                 row.vehicleType1 !== null && row.employeesCommute.trim() !== ''
             );
-            console.log(filledRows);
+
             if (filledRows.length === 0) {
                 this.notification.showError(
                     "Fill fields",
@@ -3290,13 +3344,13 @@ export class TrackingComponent {
         this.rows.push({ id: this.rows.length + 1, subVehicleCategory: [], vehicleType1: null, vehicleType2: null, employeesCommute: '', avgCommute: '' });
     }
     addPurchaseRows() {
-        this.rowsPurchased.push({ id: this.rowsPurchased.length + 1, multiLevelItems: [], productService: null, productType: null, months: '', quantity: '', selectedUnit: '', vendorName: '',vendorspecificEF:'' });
+        this.rowsPurchased.push({ id: this.rowsPurchased.length + 1, multiLevelItems: [], productService: null, productType: null, months: '', quantity: '', selectedUnit: '', vendorName: '', vendorspecificEF: '' });
     }
 
 
     CostCentre() {
 
-        this.GroupService.getCostCentre().subscribe({
+        this.GroupService.getCostCentre(this.superAdminID).subscribe({
             next: (response) => {
 
                 if (response.success == true) {
@@ -3559,13 +3613,11 @@ export class TrackingComponent {
     }
 
     setActive(index: number): void {
-
+       
         this.categoryId = 13;
         this.ALLEntries();
         this.categoryId = index;
-        // this.flightDisplay1 = 'block'
-        // this.flightDisplay2 = 'none'
-        // this.flightDisplay3 = 'none'
+
         this.noOfItems = false;
 
         // this.ModeSelected = false;
@@ -3576,24 +3628,22 @@ export class TrackingComponent {
 
             this.ModeSelected = false;
             this.categoryName = 'Flight'
-            this.SubCatAllData.subCatName = 'Flight'
+            // this.SubCatAllData.subCatName = 'Flight'
             this.getFlightType();
             this.CostCentre();
 
-            // this.getSubFranchiseCategory('Banking Financial Services');
-            // this.getVehicleTypes();
-            // this.getSubVehicleCategory(1)
+          
         } else if (this.categoryId == 25) {
             this.ModeSelected = false;
             this.categoryName = 'Hotel Stay';
-            this.SubCatAllData.subCatName = 'Hotel Stay'
+            // this.SubCatAllData.subCatName = 'Hotel Stay'
         } else if (this.categoryId == 26) {
 
             this.categoryName = 'Other Modes of Transport';
-            this.SubCatAllData.subCatName = 'Other Modes of Transport'
+            // this.SubCatAllData.subCatName = 'Other Modes of Transport'
         }
 
-        // this.getStatusData(this.activeCategoryIndex);
+       
     };
 
 
@@ -3724,7 +3774,7 @@ export class TrackingComponent {
 
     GetVendors() {
 
-        this.GroupService.getVendors().subscribe({
+        this.GroupService.getVendors(this.superAdminID).subscribe({
             next: (response) => {
 
                 if (response.success == true) {
@@ -3745,6 +3795,8 @@ export class TrackingComponent {
 
                 if (response.success == true) {
                     this.purchaseHSNCode = response.categories;
+                    this.productHSNSelect = this.purchaseHSNCode[0].id;
+                    this.GetStandardType(this.productHSNSelect)
                 }
             },
             error: (err) => {
@@ -3761,6 +3813,7 @@ export class TrackingComponent {
 
                 if (response.success == true) {
                     this.purchaseProductTypes = response.categories;
+                 
                 }
             },
             error: (err) => {
@@ -4005,7 +4058,7 @@ export class TrackingComponent {
     }
     onFilterChange(value: string): void {
         console.log('filter:', value);
-      }
+    }
 
     //getFileNameFromPath function is used to extract the file name from a given filePath
     private getFileNameFromPath(filePath: string): string {
@@ -4129,156 +4182,7 @@ export class TrackingComponent {
 
 
 
-    //     console.log("seelcted", subCategory.manageDataPointSubCategorySeedID);
-    //     // this.months = new months();
-    //     // this.convertedYear = this.trackingService.getYear(this.year);
-    //     // const formData = new URLSearchParams();
-    //     // formData.set('year', this.convertedYear)
-    //     // formData.set('facilities', facilityID.toString())
-    //     // formData.set('categoryID', this.selectedCategory);
-
-    //     let url = ''
-    //     switch (subCategory.manageDataPointSubCategorySeedID) {
-    //         case 1:
-    //             url = 'reportStationaryCombustion'
-    //             break;
-    //         case 2:
-    //             url = 'reportRegfriegrant'
-    //             break;
-    //         case 3:
-    //             url = 'Getfireextinguisher'
-    //             break;
-    //         case 6:
-    //             url = 'reportStationaryCombustion'
-    //             break;
-    //         case 5:
-    //             url = 'reportRenewableElectricity'
-    //             break;
-    //         case 7:
-    //             url = 'Allrefrigerant'
-    //             break;
-    //         case 8:
-    //             url = 'Getfireextinguisher'
-    //             break;
-    //         case 10:
-    //             url = 'getAllcompanyownedvehicles'
-    //             break;
-    //         case 11:
-    //             url = 'getAllcompanyownedvehicles'
-    //             break;
-    //         case 12:
-    //             url = 'getAllheatandsteam'
-    //             break;
-    //         case 1005:
-    //             url = 'getPurchaseGoodEmissions'
-    //             let formData = new URLSearchParams();
-    //             formData.set('batch', this.batchId);
-    //             url = 'getPurchaseGoodEmissions';
-    //             this.trackingService.getPurchaseGoodEmissions(formData).subscribe({
-    //                 next: (response) => {
-    //                     console.log(response);
-    //                     if (response.success == true) {
-    //                         this.dataEntriesPending = response.categories;
-    //                     }
-    //                 }
-    //             })
-    //             return
-    //             break;
-    //         case 9:
-    //             url = 'reportStationaryCombustion'
-    //             break;
-    //         case 1007:
-    //             url = 'getUpstreamEmissions'
-    //             break;
-    //         case 1008:
-    //             url = 'getwatersupplytreatmentCategory'
-    //             break;
-    //         case 1009:
-    //             url = 'reportWasteGeneratedEmission'
-    //             break;
-    //         case 13:
-    //             // switch (this.selectMode) {
-    //             //     case 1:
-    //             //         url = 'reportFlightTravel'
-    //             //         break;
-    //             //     case 2:
-    //             //         url = 'reportStationaryCombustion'
-    //             //         break;
-    //             //     case 3:
-    //             //         url = 'reportOtherTransport'
-    //             //         break;
-    //             // }
-    //             break;
-    //         case 1011:
-    //             // case 'Employee Commuting':
-    //             url = 'getemployeecommutingCategory'
-    //             break;
-    //         case 1012:
-    //             url = 'gethomeofficeCategory'
-    //             break;
-    //         case 1013:
-    //             url = 'getUpstreamLeaseEmission'
-    //             break;
-    //         case 1014:
-    //             // case 'Downstream Transportation and Distribution':
-    //             url = 'getDownstreamEmissions'
-    //             break;
-    //         case 1015:
-    //             url = 'getprocessing_of_sold_productsCategory'
-    //             break;
-    //         case 1016:
-    //             // case 'Use of Sold Products':
-    //             url = 'reportStationaryCombustion'
-    //             break;
-    //         case 1017:
-    //             url = 'getendof_lifetreatment_category'
-    //             break;
-    //         case 1018:
-    //             url = 'getDownstreamLeaseEmission'
-    //             break;
-    //         case 1019:
-    //             url = 'getFranchiseEmission'
-    //             break;
-    //         case 1020:
-    //             url = 'getInvestmentEmission'
-    //             break;
-    //         default:
-    //             // Handle unknown month value
-    //             break;
-    //     }
-
-
-    //     this.trackingService
-    //         .getStatus(url)
-    //         .subscribe({
-    //             next: (response) => {
-    //                 if (response.success === false) {
-    //                     // this.dataEntriesPending = null;
-    //                 } else {
-    //                     console.log(response);
-    //                     this.dataEntriesPending = response.categories;
-    //                     // console.log("data>", this.dataEntriesPending)
-    //                 }
-
-    //             },
-    //             error: (err) => {
-    //                 this.notification.showError(
-    //                     'Get data Point failed.',
-    //                     'Error'
-    //                 );
-    //                 console.error('errrrrrr>>>>>>', err);
-    //             }
-    //         });
-
-
-
-
-
-
-
-
-    // };
-
+  
 
     getPassengerVehicleType() {
         try {
@@ -4533,14 +4437,14 @@ export class TrackingComponent {
         this.GetStandardType(this.productHSNSelect)
         // this.getSubEmployeeCommuTypes(selectedIndex, row)
     }
-    onProductStandardChange(event: any , row:any) {
+    onProductStandardChange(event: any, row: any) {
         console.log(event.value);
         const selectedIndex = event.value;
         this.getProductPurchaseItems(selectedIndex, row)
         // this.getSubEmployeeCommuTypes(selectedIndex, row)
     }
 
-    getProductPurchaseItems(standardType, row:any) {
+    getProductPurchaseItems(standardType, row: any) {
         let formData = new URLSearchParams();
 
         formData.set('product_code_id', this.productHSNSelect);
@@ -4551,7 +4455,7 @@ export class TrackingComponent {
                 if (response.success == true) {
                     console.log(response);
                     // row.multiLevelItems = this.getTreeData();
-                    // row.multiLevelItems = response.categories.map(item => new TreeviewItem(item));
+                    row.multiLevelItems = response.categories.map(item => new TreeviewItem(item));
                 }
             }
         })
@@ -4568,27 +4472,14 @@ export class TrackingComponent {
     };
     getItems(): TreeviewItem[] {
         const childrenCategory = new TreeviewItem({
-          text: 'Children', value: 1, checked: false, children: [
-            { text: 'Baby 3-5', value: 11, checked: false },
-            { text: 'Baby 6-8', value: 12, checked: false }
-          ]
+            text: 'Children', value: 1, checked: false, children: [
+                { text: 'Baby 3-5', value: 11, checked: false },
+                { text: 'Baby 6-8', value: 12, checked: false }
+            ]
         });
-        const itCategory = new TreeviewItem({
-          text: 'IT', value: 9, checked: false, children: [
-            { text: 'Programming', value: 91, checked: false, children: [
-              { text: 'Frontend', value: 911, checked: false, children: [
-                { text: 'Angular', value: 9111, checked: false },
-                { text: 'ReactJS', value: 9112, checked: false }
-              ]},
-              { text: 'Backend', value: 912, checked: false, children: [
-                { text: 'Java', value: 9121, checked: false },
-                { text: 'Python', value: 9122, checked: false }
-              ]}
-            ]}
-          ]
-        });
-        return [childrenCategory, itCategory];
-      }
+
+        return [childrenCategory];
+    }
 
     getSubEmployeeCommuTypes(id, row: any) {
 
@@ -5099,33 +4990,36 @@ export class TrackingComponent {
     };
 
 
-    onSelectedChange(event: any) {
-        this.deselectAllItems(this.multiLevelItems);
-        console.log(event)
+    onSelectedChange(event: any, row: any) {
+        this.deselectAllItems(row.multiLevelItems);
+
         if (!event.children && event.length === 1) {
-          event.checked = true;
-          console.log('Selected item:', event);
+            event.checked = true;
+            row.productType = event[0].item.value;
+            console.log('Selected item:', event[0].item.value);
         } else {
-          this.deselectAllItems(event);
+            this.deselectAllItems(event);
+            row.productType = null;
+
         }
         this.updatePlaceholder();
-      }
+    }
 
-      deselectAllItems(items: TreeviewItem[]) {
+    deselectAllItems(items: TreeviewItem[]) {
         items.forEach(item => {
-           
-          item.checked = false;
-          if (item.children) {
-            this.deselectAllItems(item.children);
-          }
-        });
-      };
 
-      updatePlaceholder() {
+            item.checked = false;
+            if (item.children) {
+                this.deselectAllItems(item.children);
+            }
+        });
+    };
+
+    updatePlaceholder() {
         const selectedItems = this.multiLevelItems.filter(item => item.checked);
         const placeholder = selectedItems.length > 0 ? `${selectedItems.length} options` : 'Choose product type';
         console.log('Placeholder:', placeholder);
-      }
+    }
 
 
     //retrieves the emission factor for a given subcategory seed ID and category ID.

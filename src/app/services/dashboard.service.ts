@@ -363,6 +363,9 @@ export class DashboardService {
     public GEByFuelType(admininfo) {
         return this.http.post(this.apiURL + '/dashboardenergyConsumption', admininfo);
     };
+    public getFinanceIndustry(admininfo) {
+        return this.http.post(this.apiURL + '/financedashboardtop5emission', admininfo);
+    };
     public financeEmissionDashType(admininfo) {
         return this.http.post(this.apiURL + '/financedashboardemission', admininfo);
     };

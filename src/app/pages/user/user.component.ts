@@ -146,7 +146,7 @@ export class UserComponent {
                 formData.set('firstname', this.admininfo.firstname)
                 formData.set('lastname', this.admininfo.lastname)
                 formData.set('roleID', this.admininfo.roleID)
-                formData.set('tenantId', this.loginInfo.tenantID.toString())
+                formData.set('tenantId', this.loginInfo.super_admin_id.toString())
                 formData.set('facilityID', this.payloadFacilityIds)
                 formData.set('package_id', this.loginInfo.package_id.toString())
                 formData.set('group_id', this.groupId?.toString())
@@ -216,7 +216,7 @@ export class UserComponent {
                         this.GetAllUsers();
                     },
                     error: (err) => {
-                        console.error(err);
+                        console.log(err);
                         this.notification.showError(
                             'Update User failed.',
                             'Error'

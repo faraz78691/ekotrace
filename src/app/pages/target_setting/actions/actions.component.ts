@@ -96,6 +96,7 @@ export class ActionsComponent {
   scope_category:string;
   status_action:string;
   actionId:string;
+  superAdminTenentID:any
 
   constructor(
       private companyService: CompanyService,
@@ -188,9 +189,10 @@ export class ActionsComponent {
           this.loginInfo = jsonObj as LoginInfo;
           // this.facilityGet(this.loginInfo.tenantID);
       }
-      this.getTenantsDetailById(Number(this.loginInfo.tenantID));
+    //   this.getTenantsDetailById(Number(this.loginInfo.tenantID));
       // this.GetAllFacility();
       let tenantID = this.loginInfo.tenantID;
+      this.superAdminTenentID = this.loginInfo.super_admin_id;
       this.GetTarget();
       this.updatedtheme = this.themeservice.getValue('theme');
   }
@@ -199,7 +201,7 @@ export class ActionsComponent {
       this.updatedtheme = this.themeservice.getValue('theme');
   }
 
-  getTenantsDetailById(id: number) {};
+  
 
 
    GetTarget() {
@@ -207,7 +209,7 @@ export class ActionsComponent {
 
     //   formData.set('tenant_id', tenantID.toString());
   
-      this.GroupService.getActions().subscribe({
+      this.GroupService.getActions(this.superAdminTenentID).subscribe({
           next: (response:any) => {
              
               if(response.success == true)

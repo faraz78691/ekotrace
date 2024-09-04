@@ -54,11 +54,11 @@
                                     {{ d.name }}
                                 </td>
                                 <td class="col-lg-4 td text-center">
-                                    {{ d.AssestType }}
+                                Sub group
                                   
                                 </td>
                                 <td class="col-lg-4 td text-center">
-                                    {{ d.city_name }}
+                                    {{ d.country_name }}
                                   
                                 </td>
                                 <!-- <td class="col-lg-4 td text-right">
@@ -159,18 +159,12 @@
     
                     <div class="d-flex text-light text-style scope-Div">
                         <div>
-                            <i class="LocButtonEdit pi pi-user-edit pointer d-flex text-white"
+                            <i class="LocButtonEdit pi  pointer d-flex text-white"
                                 (click)="showEditFacilityDialog()">
                                 <p class="pl-2">Assign Country</p>
                             </i>
                         </div>
-                        <div class="form-group has-search text-light pointer">
-                            <i *ngIf="userdetails.isDisabledDelete !== true"
-                                (click)="deleteFacility($event, facilityDetails.ID)"
-                                class="deleteButton pi pi-trash pointer d-flex text-white">
-                                <p class="pl-2">Delete</p>
-                            </i>
-                        </div>
+                       
                     </div>
     
     

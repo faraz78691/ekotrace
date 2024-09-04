@@ -153,7 +153,7 @@ export class HeaderComponent implements OnInit {
       }
 
     checkFacilityID() {
-        console.log(this.selectedFacilityID);
+        
         this.facilityService.facilitySelected(this.selectedFacilityID.id)
         console.log(this.facilityService.selectedfacilitiesSignal())
         localStorage.setItem('SelectedfacilityID', this.selectedFacilityID.id);
@@ -234,7 +234,7 @@ export class HeaderComponent implements OnInit {
         this.facilityService
             .getActualSubGroups(formData.toString())
             .subscribe((res) => {
-                console.log(res);
+                console.log("ressub group", res);
                 this.facilitygrouplist = res.categories;
                 this.addFacilitesToSignal(this.facilitygrouplist)
                 const allOption: FacilityGroupList = {

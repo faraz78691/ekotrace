@@ -98,6 +98,7 @@ export class VendorsComponent {
   project_details = '';
   carbon_offset = '';
   selectedScope: any;
+  superAdminId: any;
   carbon_credit_value: string;
   type: string;
   date3: string;
@@ -138,6 +139,7 @@ export class VendorsComponent {
     this.getTenantsDetailById(Number(this.loginInfo.tenantID));
     // this.GetAllFacility();
     let tenantID = this.loginInfo.tenantID;
+    this.superAdminId = this.loginInfo.tenantID;
     this.GetVendors();
     this.GetCostCetnre();
     this.updatedtheme = this.themeservice.getValue('theme');
@@ -155,7 +157,7 @@ export class VendorsComponent {
 
     //   formData.set('tenant_id', tenantID.toString());
 
-    this.GroupService.getVendors().subscribe({
+    this.GroupService.getVendors(this.superAdminId).subscribe({
       next: (response) => {
 
         if (response.success == true) {
@@ -180,7 +182,7 @@ export class VendorsComponent {
 
     //   formData.set('tenant_id', tenantID.toString());
 
-    this.GroupService.getCostCentre().subscribe({
+    this.GroupService.getCostCentre(this.superAdminId).subscribe({
       next: (response) => {
 
         if (response.success == true) {
@@ -210,6 +212,7 @@ export class VendorsComponent {
     formData.append('name', data.value.vendor_name);
     formData.append('address', data.value.address);
     formData.append('refer_id', data.value.refer_id);
+    formData.append('tenant_id', this.superAdminId);
   
 
     this.GroupService.addVendors(formData.toString()).subscribe({
@@ -239,13 +242,13 @@ export class VendorsComponent {
 
   //method to add new group
   saveCostCentre(data: NgForm) {
-console.log(data);
+
     const formData = new URLSearchParams();
 
     formData.append('cost_center_name', data.value.cost_center_name);
     formData.append('cost_center_refer_id', data.value.cost_center_refer_id);
+    formData.append('tenant_id', this.superAdminId);
   
-
     this.GroupService.AddCostcenter(formData.toString()).subscribe({
       next: (response) => {
         if (response.success == true) {
@@ -272,11 +275,6 @@ console.log(data);
 
 
  
-
-  
-
-
-
   //method for update group detail by id
   updateGroup(id: any, data: NgForm) {
  

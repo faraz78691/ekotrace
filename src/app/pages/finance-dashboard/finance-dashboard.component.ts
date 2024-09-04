@@ -116,41 +116,7 @@ export class FinanceDashboardComponent {
       this.loginInfo = jsonObj as LoginInfo;
     }
     this.GetAllSubGrups();
-    this.donotOptions1 = {
-      series: this.scopeWiseSeries2,
-      chart: {
-        width: "100%",
-        height: 350,
-        type: "donut"
-      },
-      dataLabels: {
-        enabled: true
-      },
-      fill: {
-        type: "gradient"
-      },
-      legend: {
-        position: "bottom",
-        fontSize: '15px',
-        floating: false,
-        horizontalAlign: 'left',
-      },
-      colors: ['#246377', '#009087', '#002828', '#F9C74F'],
-      labels: this.labelScopeDonut2,
-      responsive: [
-        {
-          breakpoint: 400,
-          options: {
-            chart: {
-              width: 250
-            },
-            legend: {
-              position: "bottom"
-            }
-          }
-        }
-      ]
-    };
+   
   };
 
   GetAllSubGrups() {
@@ -160,11 +126,12 @@ export class FinanceDashboardComponent {
     this.facilityService.getSubGroupsByTenantId(formData.toString()).subscribe((result: any) => {
      
       if (result.success == true) {
-        console.log(result);
+    
         this.dashboardData = result.categories;
-        this.selectedSubGrupId = this.dashboardData[0].id;
+        this.selectedSubGrupId = this.dashboardData[0].ID;
       
         this.getFinancedEmission(this.selectedSubGrupId);
+        this.GetIndustry(this.selectedSubGrupId);
     
 
       }
@@ -188,7 +155,7 @@ export class FinanceDashboardComponent {
       this.labelScopeDonut1 = result.categories;
       this.airTotal = result.totalEmssion;
 
-
+console.log(this.scopeWiseSeries);
       this.pieChart = {
         series: this.scopeWiseSeries,
         chart: {
@@ -229,9 +196,64 @@ export class FinanceDashboardComponent {
     });
   };
 
+  GetIndustry(subGroupID:any) {
+
+    let tenantId = this.loginInfo.tenantID;
+    const formData = new URLSearchParams();
+
+    // formData.set('year', this.year.getFullYear().toString());
+    formData.set('year', this.year.getFullYear().toString());
+    formData.set('sub_group_id', subGroupID);
+    this.dashboardService.getFinanceIndustry(formData.toString()).subscribe((result: any) => {
+      this.scopeWiseSeries2 = result.series;
+      const numericValues = this.scopeWiseSeries2.map(value => parseFloat(value));
+      this.labelScopeDonut2 = result.label;
+      this.renewableTotal = result.totalEmission;
+
+
+      this.donotOptions1 = {
+        series: numericValues,
+        chart: {
+          width: "100%",
+          height: 380,
+          type: "donut"
+        },
+        dataLabels: {
+          enabled: true
+        },
+        fill: {
+          type: "gradient"
+        },
+        legend: {
+          position: "bottom",
+          fontSize: '15px',
+          floating: false,
+          horizontalAlign: 'left',
+        },
+        colors: ['#246377', '#009087', '#002828', '#F9C74F','#F9C14F'],
+        labels: this.labelScopeDonut2,
+        responsive: [
+          {
+            breakpoint: 450,
+            options: {
+              chart: {
+                width: 250
+              },
+              legend: {
+                position: "bottom"
+              }
+            }
+          }
+        ]
+      };
+
+    });
+  };
+
 
   onFacilityChange(event: any) {
     this.getFinancedEmission(this.selectedSubGrupId)
+    this.GetIndustry(this.selectedSubGrupId)
   
   };
 

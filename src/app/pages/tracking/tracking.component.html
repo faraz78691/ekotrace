@@ -141,7 +141,7 @@
                                                                             " class="col pointer d-flex "
                                                                                 pTooltip="{{ child.subCatName }}"
                                                                                 tooltipPosition="bottom">
-                                                                                {{ child.subCatName}}
+                                                                                s{{ child.subCatName}}
 
                                                                             </div>
 
@@ -1267,10 +1267,10 @@
                                                 <div class="position-relative">
                                                     <p-dropdown
                                                         class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
-                                                        (onChange)="onProductHSNChange($event)"
+                                                        (onChange)="onProductHSNChange($event)" ngModel
                                                         [(ngModel)]="productHSNSelect" [options]="purchaseHSNCode"
                                                         optionLabel="code" optionValue="id" name="HSNCode"
-                                                        placeholder="Select type">
+                                                        >
                                                     </p-dropdown>
 
                                                 </div>
@@ -1282,23 +1282,23 @@
                                                 <div class="position-relative">
                                                     <p-dropdown
                                                     class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
-                                                    (onChange)="onProductHSNChange($event)"
-                                                     [options]="annualEntry"
-                                                    optionLabel="value" optionValue="value" name="HSNCode"
+                                                    
+                                                     [options]="annualEntry" ngModel
+                                                    optionLabel="name" optionValue="value" name="annualEntry"
                                                     placeholder="Please select">
                                                 </p-dropdown>
 
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-12 ">
-                                            <table class="table ct_home_office_table">
+                                        <div class="col-md-12 table-responsive">
+                                            <table class="table ct_home_office_table" style="height:357px">
                                                 <thead class="thead-dark">
                                                     <tr>
                                                         <th scope="col">S.No.</th>
                                                         <th scope="col">Purchase type</th>
                                                         <th scope="col">Product/Service</th>
-                                                        <th scope="col">HSN/SAC <Code></Code></th>
+                                                     
                                                         <th scope="col">Month of purchase</th>
                                                         <th scope="col">Quantity</th>
                                                         <th scope="col">Unit</th>
@@ -1318,36 +1318,28 @@
                                                                 [options]="purchaseProductTypes"
                                                                 (onChange)="onProductStandardChange($event , row)"
                                                                 optionLabel="typesofpurchasename" optionValue="id"
-                                                                name="standardType" placeholder="Select type">
+                                                                 placeholder="Select type">
                                                             </p-dropdown>
                                                         </td>
                                                         <td>
-                                                            <ngx-dropdown-treeview
+                                                            <button type="button" *ngIf="!row.productType && row.multiLevelItems.length == 0" class="placeholder form-control" style="    white-space: nowrap;">
+                                                                Choose product type
+                                                            </button>
+                                                            <ngx-dropdown-treeview *ngIf="row.multiLevelItems.length >0"
                                                            
                                                             class="ct_custom_dropdown_123"
-                                                            [placeholder]="'Choose product type'"
-                                                            
-                                                         
-                                                            [items]="multiLevelItems"
-                                                            (selectedChange)="onSelectedChange($event)"
-                                                            
+                                                           
+                                                            [(ngModel)]="row.productType" 
+                                                            [ngModelOptions]="{standalone: true}"
+                                                            [items]="row.multiLevelItems"
+                                                            (selectedChange)="onSelectedChange($event, row)"
                                                             >
                                                           </ngx-dropdown-treeview>
                                                         </td>
+                                                      
                                                         <td>
                                                             <p-dropdown
-                                                                class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
-                                                                [(ngModel)]="row.productService"
-                                                                [options]="row.subVehicleCategory"
-                                                                optionLabel="subcategory" optionValue="id"
-                                                                name="vehicle_type_{{row.id}}"
-                                                                placeholder="Select type">
-                                                            </p-dropdown>
-                                                        </td>
-
-                                                        <td>
-                                                            <p-dropdown
-                                                                class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                                class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230" ngModel
                                                                 [options]="months" optionLabel="name"  [(ngModel)]="row.months"
                                                                 optionValue="value" name="months_{{row.id}}"
                                                                 placeholder="Select month">
@@ -1355,7 +1347,7 @@
 
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="form-control"
+                                                            <input type="text" class="form-control" placeholder="Enter quantity"
                                                                 name="quantity_{{row.id}}" [(ngModel)]="row.quantity">
                                                         </td>
                                                         <td>
@@ -1376,7 +1368,7 @@
                                                         </td>
                                                         <td>
                                                             <input type="text" class="form-control" [(ngModel)]="row.vendorspecificEF"
-                                                                name="vendorSpecific_{{row.id}}"
+                                                                name="vendorSpecific_{{row.id}}" placeholder="Enter specific EF"
                                                                >
                                                         </td>
                                                         <td>
@@ -1388,7 +1380,7 @@
 
 
                                                 </tbody>
-                                                <p class="p-3" (click)="addPurchaseRows()">+</p>
+                                                <p class="ml-2 trackingsubmitb" (click)="addPurchaseRows()">+</p>
                                             </table>
                                         </div>
                                     </div>

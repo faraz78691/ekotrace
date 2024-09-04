@@ -85,6 +85,7 @@ export class SetEmissionInventoryComponent {
     project_details = '';
     carbon_offset = '';
     selectedScope: any;
+   superAdminTenentID : any;
     carbon_credit_value: string;
     type: string;
     relationId: string;
@@ -171,6 +172,7 @@ export class SetEmissionInventoryComponent {
 
         // this.GetAllFacility();
         let tenantID = this.loginInfo.tenantID;
+        this.superAdminTenentID = this.loginInfo.super_admin_id;
         this.GetEmissionInventory();
         this.updatedtheme = this.themeservice.getValue('theme');
     }
@@ -181,7 +183,7 @@ export class SetEmissionInventoryComponent {
     GetEmissionInventory() {
 
 
-        this.GroupService.getEmissionInventory().subscribe({
+        this.GroupService.getEmissionInventory(this.superAdminTenentID).subscribe({
             next: (response) => {
 
                 if (response.success == true) {
