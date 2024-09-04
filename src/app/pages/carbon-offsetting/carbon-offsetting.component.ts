@@ -182,7 +182,8 @@ export class CarbonOffsettingComponent {
         this.getTenantsDetailById(Number(this.loginInfo.tenantID));
         // this.GetAllFacility();
         let tenantID = this.loginInfo.tenantID;
-        this.getOffset(tenantID);
+        let superAdminId = this.loginInfo.super_admin_id;
+        this.getOffset(superAdminId);
         this.updatedtheme = this.themeservice.getValue('theme');
     }
     //checks upadated theme
@@ -246,7 +247,7 @@ export class CarbonOffsettingComponent {
         formData.append('scope1', data.value.scope_1);
         formData.append('scope2', data.value.scope_2);
         formData.append('scope3', data.value.scope_3);
-        formData.append('tenant_id', this.loginInfo.tenantID.toString());
+        formData.append('tenant_id', this.loginInfo.super_admin_id.toString());
         formData.append('comments', data.value.comments);
 
 
@@ -258,10 +259,9 @@ export class CarbonOffsettingComponent {
                         ' Offset Added successfully',
                         'Success'
                     );
-                    this.getOffset(this.loginInfo.tenantID);
+                    this.getOffset(this.loginInfo.super_admin_id);
                 }
-                // return
-                this.getOffset(this.loginInfo.tenantID);
+                
                 this.visible = false;
                 if (localStorage.getItem('FacilityGroupCount') != null) {
                     let fgcount = localStorage.getItem('FacilityGroupCount');
@@ -314,7 +314,7 @@ export class CarbonOffsettingComponent {
         formData.append('scope1', data.value.scope_1);
         formData.append('scope2', data.value.scope_2);
         formData.append('scope3', data.value.scope_3);
-        formData.append('tenant_id', this.loginInfo.tenantID.toString());
+        formData.append('tenant_id', this.loginInfo.super_admin_id.toString());
         formData.append('comments', data.value.comments);
 
 
@@ -361,7 +361,7 @@ export class CarbonOffsettingComponent {
     onCloseHandled() {
         this.visible = false;
         this.isloading = false;
-        let tenantID = this.loginInfo.tenantID;
+        let tenantID = this.loginInfo.super_admin_id;
         this.getOffset(tenantID);
     }
     //display a dialog for editing a group

@@ -139,7 +139,7 @@ export class VendorsComponent {
     this.getTenantsDetailById(Number(this.loginInfo.tenantID));
     // this.GetAllFacility();
     let tenantID = this.loginInfo.tenantID;
-    this.superAdminId = this.loginInfo.tenantID;
+    this.superAdminId = this.loginInfo.super_admin_id;
     this.GetVendors();
     this.GetCostCetnre();
     this.updatedtheme = this.themeservice.getValue('theme');
