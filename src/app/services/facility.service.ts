@@ -180,10 +180,10 @@ export class FacilityService {
             data
         );
     }
-    public getSavedDataPoint(facilityID: any): Observable<savedDataPoint[]> {
-        return this.http.get<savedDataPoint[]>(
+    public getSavedDataPoint(facilityID: any): Observable<any> {
+        return this.http.get(
             environment.baseUrl +
-            'Facilities/facility/getManageDataPointbyfacility/' +
+            '/getAssignedDataPointbyfacility/' +
             facilityID
         );
     }

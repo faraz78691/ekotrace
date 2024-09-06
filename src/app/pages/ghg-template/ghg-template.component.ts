@@ -10,7 +10,7 @@ import { SavedDataPointCategory } from '@/models/savedDataPointCategory';
 import { SavedDataPointSubCategory } from '@/models/savedDataPointSubcategory';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { NavigationEnd, Router } from '@angular/router';
 import { FacilityService } from '@services/facility.service';
@@ -57,7 +57,7 @@ export class GhgTemplateComponent {
     facilityrefresh = true;
     items: MenuItem[];
     active: MenuItem;
-    selectedValues: string[] = [];
+    selectedValues: any;
     checked: boolean = false;
     value_tab = 'Scope 1';
     searchData;
@@ -74,7 +74,7 @@ export class GhgTemplateComponent {
     scope1Category: any[] = [];
     scope2Category: any[] = [];
     scope3Category: any[] = [];
-    savedData: savedDataPoint[] = [];
+    savedData: any[] = [];
     public manageDataPoint1: ManageDataPoint1[] = [];
     public savedDataPoint: savedDataPoint[] = [];
     model2Data;
@@ -100,7 +100,7 @@ export class GhgTemplateComponent {
         private messageService: MessageService,
         private themeservice: ThemeService,
         private trackingService: TrackingService,
-        private router: Router
+        private router: Router, private cd: ChangeDetectorRef
 
     ) {
 
@@ -148,22 +148,18 @@ export class GhgTemplateComponent {
         this.updatedtheme = this.themeservice.getValue('theme');
         this.AllCountry();
         this.GetFacilityGroupList(tenantID);
+       
     }
 
     ngDoCheck() {
         this.updatedtheme = this.themeservice.getValue('theme');
     }
-    //Handles changes in input properties and retrieves facility data for the specified tenant ID.
-    ngOnChanges() {
-        let tenantId = this.loginInfo.tenantID;
-        this.facilityGet(tenantId);
 
-    }
 
     //method for add new facility
     saveFacility(data: NgForm) {
-        
-      
+
+
         this.selectedCountry = this.countryData.find(
             (country) => country.
                 Name === this.facilityDetails.country_name
@@ -276,7 +272,7 @@ export class GhgTemplateComponent {
     facilityGet(tenantId) {
         this.facilityService.nFacilityDataGet(tenantId).subscribe({
             next: (response: any) => {
-                
+
                 this.LocData = response.categories;
                 if (this.LocData.length == 0) {
                     this.NoData = 'block';
@@ -287,7 +283,8 @@ export class GhgTemplateComponent {
                     this.FacilityFullData = 'flex';
                     this.NoData = 'none';
                 }
-                if (this.facilityrefresh == true) this.defaultData();
+                if (this.facilityrefresh == true)
+                 this.defaultData();
                 localStorage.setItem('FacilityCount', String(this.LocData.length));
             }, error: err => {
                 console.log(err)
@@ -299,10 +296,12 @@ export class GhgTemplateComponent {
 
     //retrieves users associated with the facility
 
-    tableData(id: any) {
-        console.log("tbakee", id);
-        this.id_var = id;
-        this.getUserofFacility(id);
+    tableData(data: any) {
+        console.log("tbakee", data.ID);
+        this.id_var = data.ID;
+        this.selectedValues = data.ID;
+        this.GetsavedDataPoint(data.ID)
+        // this.getUserofFacility(id);
     }
     /* 
     The defaultData function sets the default values for the variables id_var, 
@@ -313,7 +312,8 @@ export class GhgTemplateComponent {
         this.id_var = this.LocData[0].ID;
         let tenantId = this.loginInfo.tenantID;
         this.facilityDetails = this.LocData[0];
-        this.getUserofFacility(this.facilityDetails.ID);
+        this.selectedValues = this.facilityDetails.ID;
+        this.GetsavedDataPoint(this.facilityDetails.ID);
     }
 
     //delete a facility by id
@@ -371,51 +371,11 @@ export class GhgTemplateComponent {
     logSelectedFacilityIds() {
         const selectedFacilityIds = this.selectedScope4.map(facility => facility.id).join(',');
         console.log('Selected Facility Ids:', selectedFacilityIds);
-    }
+    };
 
 
 
-    //Retrieves the users associated with a specific facility and updates the lists of managers and staff members.
-    getUserofFacility(id) {
-
-        // let tenantId = this.loginInfo.tenantID;
-        let formdata = new URLSearchParams();
-        formdata.set('ID', id)
-        this.facilityService.newUsersByFacilityID(formdata.toString()).subscribe((result) => {
-         
-            this.facilityDetails = result[0];
-            const facilityUsers = result[0].userInfoModels;
-
-            this.managerList1 = [];
-            this.staffList1 = [];
-            if (facilityUsers.length > 0) {
-                for (let d of facilityUsers) {
-                    if (d.role == 'Manager') {
-                        this.managerList1.push(d);
-                    }
-                    if (d.role == 'Preparer' || d.role == 'Approver') {
-                        this.staffList1.push(d);
-                    }
-                }
-            }
-        });
-        // this.UserService.getUsers(tenantId).subscribe((result) => {
-        //     this.admininfoList = result;
-        //     this.managerList = [];
-        //     this.staffList = [];
-        //     this.staffList;
-        //     for (let d of this.admininfoList) {
-        //         if (id == d.facilityID) {
-        //             if (d.role == 'Manager') {
-        //                 this.managerList.push(d);
-        //             }
-        //             if (d.role == 'Preparer' || d.role == 'Approver') {
-        //                 this.staffList.push(d);
-        //             }
-        //         }
-        //     }
-        // });
-    }
+  
     //display a dialog for adding a facility
     showAddFacilityDialog() {
         this.visible = true;
@@ -430,7 +390,7 @@ export class GhgTemplateComponent {
         this.visible = true;
         this.isEdit = true;
 
-        this.searchState();
+        // this.searchState();
     }
     //handles the closing of Add facility dialog
     closeAddFacilityDialog() {
@@ -467,36 +427,8 @@ export class GhgTemplateComponent {
             }
         });
     }
-    //method for search state
-    searchState() {
-        console.log(this.countryData);
-        this.selectedCountry = this.countryData.find(
-            (country) => country.Name === this.facilityDetails.country_name
-        );
-        console.log(this.selectedCountry);
-        let formdata = new URLSearchParams();
-        formdata.set('CountryID', this.selectedCountry.ID)
-        this.facilityService.newGetState(formdata.toString()).subscribe({
-            next: (response) => {
 
-                this.stateData = response;
-                // this.searchCity();
-            }
-        });
-    };
-    //method for search city
-    searchCity() {
-        this.selectedState = this.stateData.find(
-            (state) => state.Name === this.facilityDetails.state_name
-        );
-        let formdata = new URLSearchParams();
-        formdata.set('StateID', this.selectedState.ID)
-        this.facilityService.newGetCity(formdata.toString()).subscribe({
-            next: (response) => {
-                this.cityData = response;
-            }
-        });
-    };
+
     //toggles the active state of a manageDataPointSubCategories
     updateActiveState(manageDataPointSubCategories: any, event: any) {
         manageDataPointSubCategories.active =
@@ -510,28 +442,12 @@ export class GhgTemplateComponent {
                 this.scope1Category = response.scope1;
                 this.scope2Category = response.scope2;
                 this.scope3Category = response.scope3;
-                // this.seedData.forEach((seed) => {
-                //     seed.categorySeedData.forEach((cat) => {
-                //         cat.subCategorySeedDatas.forEach((subcat) => {
-                //             subcat.isMandatory = false;
-                //             subcat.active = false;
-                //         });
-                //     });
-                // });
-                this.GetsavedDataPoint(this.facilityDetails.ID);
             }
         });
     };
 
-    onMultiSelectChange(event: { originalEvent: Event, value: any }) {
+  
 
-        console.log(this.selectedScope1);
-        this.selectedScope1
-        // this.selectedScope1 = event.value.map((item: any) => {
-
-        //   return { groupId: item.scopeid, itemId: item.value };
-        // });
-    }
     getAllSeedData2(newfacilityid) {
         this.facilityService.getSeedData().subscribe({
             next: (response) => {
@@ -547,7 +463,8 @@ export class GhgTemplateComponent {
                 this.AddDPinfacility(newfacilityid);
             }
         });
-    }
+    };
+
     AddDPinfacility(newfacilityid) {
         this.manageDataPoint1 = []
         this.seedData.forEach(scope => {
@@ -636,11 +553,13 @@ export class GhgTemplateComponent {
     //method for save manage data points
     SaveManageDataPoint() {
 
-        if(this.loginInfo.role != 'Super Admin'){
+        if (this.loginInfo.role != 'Super Admin') {
             this.notification.showWarning('You are not allowed to set the tempalte', '');
             return
         }
-        if (this.selectedValues.length == 0) {
+        
+        if (this.selectedValues.length == 0 || this.selectedValues == '') {
+           
             return
         }
         const fomdata = new URLSearchParams();
@@ -771,49 +690,44 @@ export class GhgTemplateComponent {
 
     //Retrieves the saved data points for a specific facility
     GetsavedDataPoint(facilityID: any) {
+        this.selectedScope1 = []
+        this.selectedScope2 = []
+        this.selectedScope3 = []
         this.facilityService.getSavedDataPoint(facilityID).subscribe({
-            next: (response) => {
-                this.savedData = response;
+            next: (response: any) => {
+                this.savedData = response.categories;
+
                 if (this.savedData != null) {
-                    this.savedData.forEach(saved => {
-                        this.seedData.forEach((seed) => {
-                            seed.categorySeedData.forEach((cat) => {
-                                const saveCatdata =
-                                    saved.categorySeedData.find(
-                                        (saveCat) =>
-                                            saveCat.manageDataPointCategorySeedID ===
-                                            cat.id
-                                    );
-                                if (saveCatdata) {
-                                    cat.id = saveCatdata.id;
-                                    cat.manageDataPointCategorySeedID =
-                                        saveCatdata.manageDataPointCategorySeedID;
-                                    cat.subCategorySeedDatas.forEach((subcat) => {
-                                        const subCatdata =
-                                            saveCatdata.subCategorySeedDatas.find(
-                                                (saveSubCat) =>
-                                                    saveSubCat.manageDataPointSubCategorySeedID ===
-                                                    subcat.id
-                                            );
+                    this.savedData.forEach(items => {
 
-                                        if (subCatdata) {
-                                            subcat.SubCategorySeedID =
-                                                subCatdata.manageDataPointSubCategorySeedID;
-                                            subcat.subCatsavedID = subCatdata.id;
-                                            subcat.isMandatory =
-                                                subCatdata.isMandatory;
-                                            subcat.active = subCatdata.active;
-                                        } else {
-                                            subcat.SubCategorySeedID = null;
-                                            subcat.isMandatory = false;
-                                            subcat.active = false;
-                                        }
-                                    });
-                                }
-                            });
-                        });
+                        if (items.ScopeID == 1) {
+                            const newScope1 = [];
+                            items.manageDataPointCategories.forEach((categories: any) => {
+                                categories.manageDataPointSubCategories.forEach((subcategory: any) => {
+                                    newScope1.push(subcategory.ManageDataPointSubCategorySeedID)
+                                })
+                            })
+                           
+                            this.selectedScope1 = [...newScope1];
+                        } else if (items.ScopeID == 2) {
+                            const newScope2 = [];
+                            items.manageDataPointCategories.forEach((categories: any) => {
+                                categories.manageDataPointSubCategories.forEach((subcategory: any) => {
+                                    newScope2.push(subcategory.ManageDataPointSubCategorySeedID)
+                                })
+                            })
+                            this.selectedScope2 = [...newScope2];
+                        } else if (items.ScopeID == 3) {
+                            const newScope3 = [];
+                            items.manageDataPointCategories.forEach((categories: any) => {
+                                categories.manageDataPointSubCategories.forEach((subcategory: any) => {
+                                    newScope3.push(subcategory.ManageDataPointSubCategorySeedID)
+                                })
+                            })
+                            this.selectedScope3 = [...newScope3];
+                        }
                     })
-
+                    this.cd.detectChanges();
                 }
             }
         });
@@ -821,6 +735,10 @@ export class GhgTemplateComponent {
     //method for reset form
     resetForm() {
         this.addCompForm.resetForm();
+    }
+
+    scope1Cick() {
+        console.log("cleikced");
     }
     //method for update datapoint
     updateDataPoint() {

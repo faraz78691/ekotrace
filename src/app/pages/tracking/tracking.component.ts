@@ -68,6 +68,7 @@ export class TrackingComponent {
     hotelTypeGrid: any[] = [];
     yearOptions: any[] = [];
     checked: boolean = false;
+    annualMonths: boolean = false;
     multiLevelItems: TreeviewItem[] = [];
     active: MenuItem;
     notevalue: string;
@@ -78,6 +79,10 @@ export class TrackingComponent {
     formGroup: FormGroup;
     //units: units[];
     // setlimit: setlimit[];
+
+
+
+
     emissiontable: EmissionFactorTable[];
     visible: boolean;
     maxCharacters: number = 9;
@@ -262,14 +267,7 @@ export class TrackingComponent {
     items: any[] = [];
     rowsPurchased: any[] = [];
     vendorUnits: any[] = [];
-    config = {
-        // Example configuration options
-        hasAllCheckBox: false,
-        hasAll: false,
-        hasFilter: true,
-        hasCollapseExpand: true,
-        closeOnSelect: false,
-    };
+    config :any;
     values: number[];
 
     annualEntry: any[] = [
@@ -889,6 +887,13 @@ export class TrackingComponent {
 
     //runs when component intialize
     ngOnInit() {
+        this.config = {
+            hasAllCheckBox: true,
+            hasFilter: true, // Enable the filter
+            hasCollapseExpand: false,
+            decoupleChildFromParent: false,
+            maxHeight: 500
+          };
         // this.multiLevelItems = this.getItems();
         $(document).ready(function () {
             $('.ct_custom_dropdown').click(function () {
@@ -1099,6 +1104,7 @@ export class TrackingComponent {
                 { name: 'Dec', value: 'Dec' }
             ];
             this.GetVendors();
+            this.GetHSN()
             this.getPurchaseGoodsCurrency()
         }
         if (catID == 10) {
@@ -1680,7 +1686,7 @@ export class TrackingComponent {
                         this.getUnit(this.SubCatAllData
                             .manageDataPointSubCategorySeedID);
                         this.VehicleDE.modeOfDE = this.ModeType[0].modeName;
-                        console.log("this.VehicleDE.modeOfDE", this.VehicleDE.modeOfDE);
+               
                         if (this.SubCatAllData.manageDataPointSubCategorySeedID == 10) {
 
                             this.getPassengerVehicleType();
@@ -1870,7 +1876,7 @@ export class TrackingComponent {
                 // console.log(row.employeesCommute !== '')
                 row.productType == null
             );
-            console.log(filledRows);
+            console.log(form.value.annualEntry);
             if (filledRows.length > 0) {
                 this.notification.showInfo(
                     "Please select product service code",
@@ -1878,14 +1884,21 @@ export class TrackingComponent {
                 );
                 return;
             }
-            if(form.value.annualEntry == ''){
+            if (form.value.annualEntry === '') {
                 this.notification.showInfo(
                     "Please select annual entry",
                     'Warning'
                 );
                 return;
             }
-            
+            if (this.selectMonths.length == 0 && form.value.annualEntry == 0) {
+                this.notification.showInfo(
+                    'Select month',
+                    ''
+                );
+                return
+            }
+
             // Prepare the payload
             const payload = this.rowsPurchased.map(row => ({
                 month: row.months,
@@ -1897,7 +1910,7 @@ export class TrackingComponent {
                 vendorspecificEF: row.vendorspecificEF,
                 product_category: row.productType
             }));
-            console.log(payload);
+          
             var purchaseTableStringfy = JSON.stringify(payload)
 
             let formData = new URLSearchParams();
@@ -1907,6 +1920,7 @@ export class TrackingComponent {
             formData.set('is_annual', form.value.annualEntry);
             formData.set('facilities', this.facilityID);
             formData.set('jsonData', purchaseTableStringfy);
+            formData.set('month', monthString);
 
 
             this.trackingService.submitPurchaseGoods(formData.toString()).subscribe({
@@ -3549,14 +3563,14 @@ export class TrackingComponent {
                                             break;
                                         }
                                         if ((response.categories)[i].manageDataPointCategories[j].manageDataPointCategorySeedID == 8) {
-                                            console.log("Df");
+
                                             this.categoryId = 8;
                                             this.ALLEntries();
                                             this.GetHSN()
                                             this.getsubCategoryType(this.SubCatAllData
                                                 .manageDataPointSubCategorySeedID);
                                             this.GetVendors();
-                                            this.GetHSN();
+
                                             this.getPurchaseGoodsCurrency()
 
 
@@ -3613,7 +3627,7 @@ export class TrackingComponent {
     }
 
     setActive(index: number): void {
-       
+
         this.categoryId = 13;
         this.ALLEntries();
         this.categoryId = index;
@@ -3632,7 +3646,7 @@ export class TrackingComponent {
             this.getFlightType();
             this.CostCentre();
 
-          
+
         } else if (this.categoryId == 25) {
             this.ModeSelected = false;
             this.categoryName = 'Hotel Stay';
@@ -3643,7 +3657,7 @@ export class TrackingComponent {
             // this.SubCatAllData.subCatName = 'Other Modes of Transport'
         }
 
-       
+
     };
 
 
@@ -3813,7 +3827,7 @@ export class TrackingComponent {
 
                 if (response.success == true) {
                     this.purchaseProductTypes = response.categories;
-                 
+
                 }
             },
             error: (err) => {
@@ -4056,10 +4070,10 @@ export class TrackingComponent {
         const baseUrl = window.location.origin;
         return `${baseUrl}/api/DownloadFile/${encodeURIComponent(filePath)}`;
     }
-    onFilterChange(value: string): void {
-        console.log('filter:', value);
-    }
-
+    onFilterChange(event: any) {
+        console.log('Filter changed:', event);
+        // Add your custom filter logic here if needed
+      }
     //getFileNameFromPath function is used to extract the file name from a given filePath
     private getFileNameFromPath(filePath: string): string {
         const startIndex = filePath.lastIndexOf('/') + 1;
@@ -4182,7 +4196,7 @@ export class TrackingComponent {
 
 
 
-  
+
 
     getPassengerVehicleType() {
         try {
@@ -4436,6 +4450,17 @@ export class TrackingComponent {
         this.productHSNSelect = selectedIndex
         this.GetStandardType(this.productHSNSelect)
         // this.getSubEmployeeCommuTypes(selectedIndex, row)
+    }
+    onAnnualChange(event: any) {
+        console.log(event.value);
+        const selectedIndex = event.value;
+        if (selectedIndex == '0') {
+            this.annualMonths = false
+        } else {
+            this.annualMonths = true
+        }
+   
+        
     }
     onProductStandardChange(event: any, row: any) {
         console.log(event.value);

@@ -40,7 +40,7 @@
                     <table class="table_loc ct_billing_table_bg_120">
                         <thead>
                             <tr>
-                                <th></th>
+                           
                                 <th>Assest Name</th>
                                 <th class="text-center">Assest Type</th>
                                 <th class="text-right">City Name</th>
@@ -48,10 +48,10 @@
                         </thead>
                         <tbody>
 
-                            <tr clickable  *ngFor="let d of LocData"
+                            <tr clickable (click)="tableData(d)"  *ngFor="let d of LocData"
                                 class="col-12 tableRow border-bottom rounded pointer"
                                 [ngClass]="{tableRowclicked: id_var === d.ID}">
-                                <td><p-checkbox name="groupname" [value]="d.ID" [(ngModel)]="selectedValues"></p-checkbox></td>
+                                <!-- <td><p-checkbox name="groupname" [value]="d.ID" (onChange)="onSelectChange($event)" [(ngModel)]="selectedValues"></p-checkbox></td> -->
                                 <td class="col-lg-4 td text-initial">
                                     {{ d.AssestName }}
                                 </td>
@@ -63,12 +63,7 @@
                                     {{ d.city_name }}
                                     <i class="fa fa-map-marker-alt" style="font-size: 15px"></i>
                                 </td>
-                                <!-- <td class="col-lg-4 td text-right">
-                                    <button type="button" (click)="tableData(d.id)"
-                                        [ngClass]="{vdtextColor: id_var === d.id}">
-                                        view details>>
-                                    </button>
-                                </td> -->
+                              
                             </tr>
                         </tbody>
                     </table>
@@ -100,11 +95,9 @@
                             <div class="">
                                 <div class="ct_company_profile_input">
                                     <label for="" class="text-dark w-100">Scope 1</label>
-                                    <!-- <p-multiSelect class="ct_drop_scroll" [options]="scope1Category" name="Item" defaultLabel="Select a template"
                                  
-                                    optionLabel="Item" optionValue="Id"></p-multiSelect> -->
                                     <p-multiSelect class="ct_select_2_full_width12 ct_input_dark_text_145 ct_multi_select_overlap_text_302"
-                                        (onChange)="onMultiSelectChange($event)" [options]="scope1Category"
+                                         [options]="scope1Category" 
                                         [(ngModel)]="selectedScope1" [ngModelOptions]="{standalone: true}"
                                         [group]="true" defaultLabel="Select category" scrollHeight="250px"
                                         display="chip">
@@ -126,7 +119,7 @@
                                 <p-multiSelect class="ct_select_2_full_width12 ct_input_dark_text_145 ct_multi_select_overlap_text_302"
                                     [options]="scope2Category" [group]="true"
                                     [(ngModel)]="selectedScope2" [ngModelOptions]="{standalone: true}"
-                                    defaultLabel="Select category" scrollHeight="250px" display="chip">
+                                    placeholder="Select category" scrollHeight="250px" display="chip">
                                     <ng-template let-group pTemplate="group">
                                         <div class="flex align-items-center">
                                             <!-- <img src="assets/showcase/images/demo/flag/flag_placeholder.png" [class]="'mr-2 flag flag-' + group.value" style="width: 20px"/> -->
@@ -139,14 +132,7 @@
                         <div class="col-md-12 mb-4">
                             <div class="">
                                 <label for="" class="text-dark w-100">Scope 3</label>
-                                <!-- <p-multiSelect class="ct_calender_input_1234 ct_drop_scroll" [options]="scope3Category" [group]="true" [(ngModel)]="selectedScope3" [ngModelOptions]="{standalone: true}"  defaultLabel="Select category" scrollHeight="250px" display="chip">
-                                    <ng-template let-group pTemplate="group">
-                                        <div class="flex align-items-center">
-                              
-                                            <span>{{group.label}}</span>
-                                        </div>
-                                    </ng-template>
-                                </p-multiSelect> -->
+                                
 
                                 <p-multiSelect class="ct_select_2_full_width12 ct_input_dark_text_145 ct_multi_select_overlap_text_302"
                                     [options]="scope3Category" [(ngModel)]="selectedScope3"
