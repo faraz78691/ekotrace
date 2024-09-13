@@ -17,8 +17,10 @@ export class RoleGuard  {
         | Promise<boolean | UrlTree>
         | boolean
         | UrlTree {
-        const allowedRoles: string[] = route.data.roles; // Get the allowed roles from the route data
-        const userRole = this.authService.getUserRole(); // Get the user's role from the authentication service
+        const allowedRoles: string[] = route.data.roles;
+        // Get the allowed roles from the route data
+        const userRole = this.authService.getUserRole(); 
+        // Get the user's role from the authentication service
         if (allowedRoles.includes(userRole)) {
             // Check if the user's role is included in the allowed roles
             return true; // Allow access

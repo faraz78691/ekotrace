@@ -116,7 +116,7 @@ import { VendorsComponent } from './pages/vendors/vendors.component';
 import { FinanceDashboardComponent } from './pages/finance-dashboard/finance-dashboard.component';
 import { SubgroupComponent } from './pages/subgroup/subgroup.component';
 import { TreeviewEventParser, TreeviewModule } from '@treeview/ngx-treeview';
-
+import { TriStateCheckboxModule } from 'primeng/tristatecheckbox';
 
 defineCustomElements();
 registerLocaleData(localeEn, 'en-EN');
@@ -242,6 +242,7 @@ registerLocaleData(localeEn, 'en-EN');
         ScrollerModule,
         FormsModule,
         ReactiveFormsModule,
+        TriStateCheckboxModule,
         TreeviewModule.forRoot()
        
     ],

@@ -83,6 +83,9 @@ export class EnergyCustomReportComponent {
     Modes: any[] = [];
     modeShow = false;
     CustomReportData: CustomReportModel[] = [];
+    isMultiple: boolean = undefined
+    selectedMultipleCategories: any;
+    selectedMultipleFacility: any;
 
     reportmonths: any[] = [
         { name: 'Jan', value: 'Jan' },
@@ -105,9 +108,9 @@ export class EnergyCustomReportComponent {
         public facilityService: FacilityService,
         private trackingService: TrackingService
     ) {
- 
 
-      
+
+
         this.AssignedDataPoint = [];
         this.Modes =
             [
@@ -128,27 +131,27 @@ export class EnergyCustomReportComponent {
             ];
     };
 
-   
 
-   async ngOnInit() {
-   
+
+    async ngOnInit() {
+
         this.loginInfo = new LoginInfo();
         if (localStorage.getItem('LoginInfo') != null) {
             let userInfo = localStorage.getItem('LoginInfo');
             let jsonObj = JSON.parse(userInfo); // string to "any" object first
             this.loginInfo = jsonObj as LoginInfo;
             this.facilityID = localStorage.getItem('SelectedfacilityID');
-       
-           
-            setTimeout(()=>{
+
+
+            setTimeout(() => {
                 console.log("here");
-                    if(this.facilityService.facilitiesSignal()){
-                         this.GetAssignedDataPoint(this.facilityService
-                            .facilitiesSignal()[0].id
-                        )
-                    }
-            },1000)
-      
+                if (this.facilityService.facilitiesSignal()) {
+                    this.GetAssignedDataPoint(this.facilityService
+                        .facilitiesSignal()[0].id
+                    )
+                }
+            }, 1000)
+
         }
     };
 
@@ -161,8 +164,8 @@ export class EnergyCustomReportComponent {
         // }
     };
 
-    ngAfterViewInit(){
-      
+    ngAfterViewInit() {
+
     }
 
     //Retrieves all facilities for a tenant
@@ -181,7 +184,7 @@ export class EnergyCustomReportComponent {
     //Checks the facility ID and calls the GetAssignedDataPoint function with the provided ID.
     checkFacilityID(id) {
         console.log("faciliyt cahnged call");
-      
+
 
         this.GetAssignedDataPoint(id);
     };
@@ -192,9 +195,28 @@ export class EnergyCustomReportComponent {
         } else {
             this.modeShow = false
         }
-
-      
     };
+
+    multipleDataPointsChanged(event: any) {
+        this.selectedMultipleCategories = event.value; // This stores the selected IDs in the array
+        console.log('Selected multiple IDs:', this.selectedMultipleCategories);
+        if (this.selectedMultipleCategories.includes(13)) {
+            this.modeShow = true;  // Show the mode section if ID 13 is selected
+        } else {
+            this.modeShow = false; // Hide the mode section if ID 13 is not selected
+        }
+    }
+
+
+    dataInputType: string = 'single';
+
+    // multipleDataPointsChanged(id: any){
+    //     if (id == 13) {
+    //         this.modeShow = true
+    //     } else {
+    //         this.modeShow = false
+    //     }
+    // }
     //method for get assigned datapoint to a facility by facility id
     // GetAssignedDataPoint(facilityID: number) {
     //     this.trackingService
@@ -217,7 +239,7 @@ export class EnergyCustomReportComponent {
             .getDataPointsByFacility(facilityID)
             .subscribe({
                 next: (response) => {
-               
+
                     if (response === environment.NoData) {
                         this.AssignedDataPoint = [];
                     } else {
@@ -419,117 +441,167 @@ export class EnergyCustomReportComponent {
     // }
 
     newgenerateReport() {
-
         this.dataEntry.month = this.selectMonths.map((month) => month.value).join(','); //this.getMonthName();
         this.dataEntry.year = this.date.getFullYear().toString();
-        console.log(typeof(this.dataEntry.month));
+        console.log(typeof (this.dataEntry.month));
         const selectedMonths = this.dataEntry.month.split(',').map(month => `'${month}'`).join(',');
-       
+
         this.CustomReportData = [];
         const reportFormData = new URLSearchParams();
         // this.selectedCategory = 'Stationary Combustion';
         let url = ''
-        switch (this.selectedCategory) {
-            case 1:
-                url = 'reportStationaryCombustion'
-                break;
-            case 2:
-                url = 'reportRegfriegrant'
-                break;
-            case 3:
-                url = 'reportFireExtinguisher'
-                break;
-            case 6:
-                url = 'reportCompanyOwnedVehicles'
-                break;
-            case 5:
-                url = 'reportRenewableElectricity'
-                break;
-            case 7:
-                url = 'reportHeatandSteam'
-                break;
-            case 8:
-                url = 'reportFilterPurchaseGoods'
-                break;
-            case 9:
-                url = 'reportStationaryCombustion'
-                break;
-            case 10:
-                url = 'reportUpStreamVehicles'
-                break;
-            case 11:
-                url = 'reportWaterSupplyandTreatment'
-                break;
-            case 12:
-                url = 'reportWasteGeneratedEmission'
-                break;
-            case 13:
-                switch (this.selectMode) {
-                    case 1:
-                        url = 'reportFlightTravel'
-                        break;
-                    case 2:
-                        url = 'reportHotelStays'
-                        break;
-                    case 3:
-                        url = 'reportOtherTransport'
-                        break;
+
+        if (this.isMultiple) {
+            url = 'reportFilterMultipleCategory'
+            let selectedFacilities = this.selectedMultipleFacility.map(String).map(item => `'${item}'`).join(',');
+
+            const categoryMap = {
+                "Purchased goods and services": "purchase_goods",
+                "Upstream Transportation and Distribution": "upstream",
+                "Downstream Transportation and Distribution": "downstream",
+                "Franchises": "franchise_emission",
+                "Investment Emissions": "investment_emission",
+                "Stationary Combustion": "stationary_combustion",
+                "Upstream Leased Assets": "upstreamlease_emission",
+                "Downstream Leased Assets": "downstreamlease_emission",
+                "Waste generated in operations": "waste_generation",
+                "Business Travel": "other_transport",
+                "Other Transportation": "other_transport",
+                "Employee Commuting": "employee_commuting",
+                "Home Office": "home_office",
+                "Use of Sold Products": "sold_products",
+                "Processing of Sold Products": "process_sold_products",
+                "Refrigerants": "refrigerant",
+                "Heat and Steam": "heat_steam",
+                "Electricity": "renewable_electricity",
+                "Water Supply and Treatment": "water_supply_treatment",
+                "End-of-Life Treatment of Sold Products": "end_of_life_treatment",
+                "Fire Extinguisher": "fire_extinguisher"
+            };
+
+
+            this.AssignedDataPoint.forEach(category => {
+                const field = categoryMap[category.CatName];
+                if(field){
+                    if (this.selectedMultipleCategories.includes(category.Id)) {
+                        reportFormData.set(field, '1'); // Set selected category to 1
+                    } else {
+                        reportFormData.set(field, '0'); // Set unselected category to 0
+                    }
                 }
-                break;
-            case 14:
-                // case 'Employee Commuting':
-                url = 'reportEmployeeCommuting'
-                break;
-            case 15:
-                url = 'reportHomeOffice'
-                break;
-            case 16:
-                url = 'reportUpstreamLeaseEmission'
-                break;
-            case 17:
-                // case 'Downstream Transportation and Distribution':
-                url = 'reportDownStreamVehicles'
-                break;
-            case 18:
-                url = 'reportProOfSoldProducts'
-                break;
-            case 19:
-                // case 'Use of Sold Products':
-                url = 'reportSoldProducts'
-                break;
-            case 20:
-                url = 'reportEndOfLifeTreatment'
-                break;
-            case 21:
-                url = 'reportDownstreamLeaseEmission'
-                break;
-            case 22:
-                url = 'reportFranchiseEmission'
-                break;
-            case 23:
-                url = 'reportInvestmentEmission'
-                break;
-            default:
-                // Handle unknown month value
-                break;
+            })
+             
+            reportFormData.set('facility',selectedFacilities)
+            reportFormData.set('investment_emission','0')
+            reportFormData.set('flight_travel','0')
+            reportFormData.set('hotel_stays','0')
+
+
+        } else {
+            switch (this.selectedCategory) {
+                case 1:
+                    url = 'reportStationaryCombustion'
+                    break;
+                case 2:
+                    url = 'reportRegfriegrant'
+                    break;
+                case 3:
+                    url = 'reportFireExtinguisher'
+                    break;
+                case 6:
+                    url = 'reportCompanyOwnedVehicles'
+                    break;
+                case 5:
+                    url = 'reportRenewableElectricity'
+                    break;
+                case 7:
+                    url = 'reportHeatandSteam'
+                    break;
+                case 8:
+                    url = 'reportFilterPurchaseGoods'
+                    break;
+                case 9:
+                    url = 'reportStationaryCombustion'
+                    break;
+                case 10:
+                    url = 'reportUpStreamVehicles'
+                    break;
+                case 11:
+                    url = 'reportWaterSupplyandTreatment'
+                    break;
+                case 12:
+                    url = 'reportWasteGeneratedEmission'
+                    break;
+                case 13:
+                    switch (this.selectMode) {
+                        case 1:
+                            url = 'reportFlightTravel'
+                            break;
+                        case 2:
+                            url = 'reportHotelStays'
+                            break;
+                        case 3:
+                            url = 'reportOtherTransport'
+                            break;
+                    }
+                    break;
+                case 14:
+                    // case 'Employee Commuting':
+                    url = 'reportEmployeeCommuting'
+                    break;
+                case 15:
+                    url = 'reportHomeOffice'
+                    break;
+                case 16:
+                    url = 'reportUpstreamLeaseEmission'
+                    break;
+                case 17:
+                    // case 'Downstream Transportation and Distribution':
+                    url = 'reportDownStreamVehicles'
+                    break;
+                case 18:
+                    url = 'reportProOfSoldProducts'
+                    break;
+                case 19:
+                    // case 'Use of Sold Products':
+                    url = 'reportSoldProducts'
+                    break;
+                case 20:
+                    url = 'reportEndOfLifeTreatment'
+                    break;
+                case 21:
+                    url = 'reportDownstreamLeaseEmission'
+                    break;
+                case 22:
+                    url = 'reportFranchiseEmission'
+                    break;
+                case 23:
+                    url = 'reportInvestmentEmission'
+                    break;
+                default:
+                    // Handle unknown month value
+                    break;
+            }
+            reportFormData.set('facility', this.selectedFacilityID)
+            reportFormData.set('page', '1')
+            reportFormData.set('page_size', '10')
         }
 
-    
-        reportFormData.set('facility', this.selectedFacilityID)
+
+
         reportFormData.set('year', this.dataEntry.year)
-        if(url != 'reportEmployeeCommuting' && url != 'reportHomeOffice' ){
+        if (url != 'reportEmployeeCommuting' && url != 'reportHomeOffice') {
             reportFormData.set('month', selectedMonths)
         }
+
+        
       
-        reportFormData.set('page', '1')
-        reportFormData.set('page_size', '10')
-
-
         this.facilityService.gerReport(url, reportFormData.toString()).subscribe({
             next: res => {
-                if(res.success){
+                if (res.success) {
                     this.reportData = res.result
-                }else{
+                    console.log("Report Data" + this.reportData);
+                } else {
                     this.notification.showSuccess(
                         'No data found for tihs month',
                         'Success'
@@ -570,5 +642,4 @@ export class EnergyCustomReportComponent {
     //     })
 
     // }
-
 }

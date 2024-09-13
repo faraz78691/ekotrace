@@ -167,18 +167,19 @@
                     <p-calendar class="w-100 ct_input_dark_text_145 ct_calender_input_38_action_12" ngModel
                         name="year_added" [showIcon]="true" view="year" placeholder="Select year" dateFormat="yy"
                         inputId="yearpicker" styleClass="pcalender"></p-calendar>
-                    <p class="text-danger mb-0" *ngIf="GroupForm.submitted && groupName.errors?.['required']">
-                        Year is required
-                    </p>
+                        <p class="text-danger mb-0" *ngIf="GroupForm.submitted && !GroupForm.controls['year_added']?.value">
+                            Year is required
+                        </p>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="fname"> Total Scope 1</label>
                     <input name="scope_1_emissions" ngModel id="search-input" type="text"
                         class="form-control Dashboard-tab text-white" placeholder="Enter emissions"
-                        #groupName="ngModel" [disabled]="isloading" required />
-                    <p class="text-danger mb-0" *ngIf="GroupForm.submitted && groupName.errors?.['required']">
-                        Group name is required
-                    </p>
+                        #scope1="ngModel" [disabled]="isloading" required />
+                  
+                        <p class="text-danger mb-0" *ngIf="GroupForm.submitted && scope1.errors?.['required']">
+                            Scope 1 emission is required
+                        </p>
                     <p class="text-danger mb-0" *ngIf="
                     isgroupExist === true && groupName.touched
                 ">
@@ -189,10 +190,10 @@
                     <label for="fname"> Total Scope 2</label>
                     <input name="scope_2_emissions" ngModel id="search-input" type="text"
                         class="form-control Dashboard-tab text-white" placeholder="Enter emissions"
-                        #groupName="ngModel" [disabled]="isloading" required />
-                    <p class="text-danger mb-0" *ngIf="GroupForm.submitted && groupName.errors?.['required']">
-                        Group name is required
-                    </p>
+                        #scope2="ngModel" [disabled]="isloading" required />
+                        <p class="text-danger mb-0" *ngIf="GroupForm.submitted && !GroupForm.controls['scope2']?.value">
+                            Scope 2 emission required
+                        </p>
                     <p class="text-danger mb-0" *ngIf="
                     isgroupExist === true && groupName.touched
                 ">
@@ -203,10 +204,10 @@
                     <label for="fname"> Total Scope 3</label>
                     <input name="scope_3_emissions" ngModel id="search-input" type="text"
                         class="form-control Dashboard-tab text-white" placeholder="Enter emissions"
-                        #groupName="ngModel" [disabled]="isloading" required />
-                    <p class="text-danger mb-0" *ngIf="GroupForm.submitted && groupName.errors?.['required']">
-                        Group name is required
-                    </p>
+                        #scope3="ngModel" [disabled]="isloading" required />
+                        <p class="text-danger mb-0" *ngIf="GroupForm.submitted && !GroupForm.controls['scope3']?.value">
+                            Scope 3 emission required
+                        </p>
                     <p class="text-danger mb-0" *ngIf="
                     isgroupExist === true && groupName.touched
                 ">

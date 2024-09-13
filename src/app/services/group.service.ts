@@ -133,6 +133,9 @@ export class GroupService {
     public addTargetActions(groupdetails): Observable<any> {
         return this.http.post( environment.baseUrl + '/targetsetting/addActions', groupdetails);
     }
+    public updateActions(groupdetails): Observable<any> {
+        return this.http.post( environment.baseUrl + '/updateActions', groupdetails);
+    }
     public getActions(superAdminTenentID): Observable<any> {
         return this.http.get( environment.baseUrl + `/targetsetting/getActions/${superAdminTenentID}`);
     }

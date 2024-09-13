@@ -1,10 +1,11 @@
 <div class="containerfluid px-4">
-   
+
     <div class="row pt-4">
         <div class="col-sm-12" [ngClass]="
                 this.updatedtheme === 'dark' ? 'headlinetextD' : 'headlinetextL'
             ">
-            <div class="d-flex align-items-center justify-content-between gap-2  card-header card-headerL m-0 ct_header_grey_1202">
+            <div
+                class="d-flex align-items-center justify-content-between gap-2  card-header card-headerL m-0 ct_header_grey_1202">
                 <h4 class="ct_fw_600  mb-0" style="flex: 1;">Actions</h4>
                 <div class="form-group has-search text-light mb-0">
                     <button class="GroupButton ct_assign_package_btn129 p-button  ct_animation_btn_121"
@@ -16,18 +17,18 @@
         </div>
     </div>
     <div class="ct_box_shadow">
-    <div class="row">
-        <div class="col-md-12  overflow-auto mb-5 ct_custom_flex_basisc"
-            [ngClass]="this.updatedtheme === 'dark' ? 'User-tabD' : 'User-tabL'">
-            <div class="row p-2">
-                <div class="" [ngClass]="
+        <div class="row">
+            <div class="col-md-12  overflow-auto mb-5 ct_custom_flex_basisc"
+                [ngClass]="this.updatedtheme === 'dark' ? 'User-tabD' : 'User-tabL'">
+                <div class="row p-2">
+                    <div class="" [ngClass]="
                         this.updatedtheme === 'dark'
                             ? 'User-headD'
                             : 'User-headL'
                     ">
-                    <!-- <p class="ml-3 ct_fw_600">Set Emission Inventory</p> -->
-                </div>
-                <!-- <div class="d-flex justify-content-between text-style text-light scope-Div">
+                        <!-- <p class="ml-3 ct_fw_600">Set Emission Inventory</p> -->
+                    </div>
+                    <!-- <div class="d-flex justify-content-between text-style text-light scope-Div">
                   
                     <div class="form-group has-search text-light">
                         <button class="GroupButton ct_assign_package_btn129 p-button  ct_animation_btn_121" (click)="showAddGroupDialog()">
@@ -35,102 +36,134 @@
                         </button>
                     </div>
                 </div> -->
-            </div>
+                </div>
 
-            <p-toast></p-toast>
-            <p-confirmDialog #cd [style]="{width: '60vw'}">
-                <ng-template pTemplate="footer">
-                    <button pButton icon="pi pi-check" label="Yes" (click)="cd.accept()"
-                        class="span-color cancel-button"></button>
-                    <button pButton icon="pi pi-times" label="Cancel" (click)="cd.reject()"
-                        class="p-button-raised p-button-danger"></button>
-                </ng-template>
-            </p-confirmDialog>
+                <p-toast></p-toast>
+                <p-confirmDialog #cd [style]="{width: '60vw'}">
+                    <ng-template pTemplate="footer">
+                        <button pButton icon="pi pi-check" label="Yes" (click)="cd.accept()"
+                            class="span-color cancel-button"></button>
+                        <button pButton icon="pi pi-times" label="Cancel" (click)="cd.reject()"
+                            class="p-button-raised p-button-danger"></button>
+                    </ng-template>
+                </p-confirmDialog>
 
 
 
-            <div class="ct_action_horizontel_slider">
-                <div class="ct_action_header_bg_120">
-                    <div class="ct_grid_3_1">
-                        <div class="" style="width: 32.66%">
-                            <h5>Planned <span class="ct_action_dot_11" style="background-color: #ffc543;"></span></h5>
+                <div class="ct_action_horizontel_slider">
+                    <div class="ct_action_header_bg_120">
+                        <div class="ct_grid_3_1">
+                            <div class="" style="width: 32.66%">
+                                <h5>Planned <span class="ct_action_dot_11" style="background-color: #ffc543;"></span>
+                                </h5>
+                            </div>
+                            <div class="" style="width: 32.66%">
+                                <h5>In Progress <span class="ct_action_dot_11"
+                                        style="background-color: #ff974b;"></span>
+                                </h5>
+                            </div>
+                            <div class="" style="width: 32.66%">
+                                <h5>Achieved <span class="ct_action_dot_11" style="background-color: #3dd598;"></span>
+                                </h5>
+                            </div>
                         </div>
-                        <div class="" style="width: 32.66%">
-                            <h5>In Progress <span class="ct_action_dot_11" style="background-color: #ff974b;"></span>
-                            </h5>
+                    </div>
+                    <div class="ct_grid_3_1 mt-3">
+
+                        <div style="width: 32.66%">
+                            <div *ngFor="let group of plannedActions" class="mb-3">
+                                <div class="ct_actiion_box_125">
+                                    <h4 class="ct_h4">{{group.name}}</h4>
+                                    <p>CO2 Saving: <strong>{{group.co2_savings_tcoe}}t CO2e</strong></p>
+
+                                    <div class="test">
+                                        <label for="fname" class="text-dark">Status </label>
+                                        <p-dropdown class="ct_grop_select_2_drop_white123 ct_group_select_dark_124"
+                                            required ngModel placeholder="Select" [options]="status" optionLabel="e_act"
+                                            optionValue="e_act" name="status" #group [(ngModel)]="group.status"
+                                            (onChange)="onStatusChange(group.id, group.status)"></p-dropdown>
+                                    </div>
+
+
+                                    <div class="d-flex align-items-center gap-1 justify-content-between mt-3">
+                                        <span class="ct_fw_600" style="color: #aaa;"><i
+                                                class="fa-solid fa-calendar-days mr-2"></i>{{group.time_period | date
+                                            :'yyyy'}}</span>
+                                        <h6 class="mb-0">{{group.owner}}</h6>
+
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="" style="width: 32.66%">
-                            <h5>Achieved <span class="ct_action_dot_11" style="background-color: #3dd598;"></span></h5>
+
+                        <div style="width: 32.66%">
+                            <div *ngFor="let group of progressActions" class="mb-3">
+                                <div class="ct_actiion_box_125 ct_actiion_box_125_orange" (click)="onEditAction(group)">
+                                    <h4 class="ct_h4">{{group.name}}</h4>
+                                    <p>CO2 Saving: <strong>{{group.co2_savings_tcoe}}t CO2e</strong></p>
+
+                                    <div class="test">
+                                        <label for="fname" class="text-dark">Status </label>
+                                        <p-dropdown class="ct_grop_select_2_drop_white123 ct_group_select_dark_124"
+                                            required ngModel placeholder="Select" [options]="status" optionLabel="e_act"
+                                            optionValue="e_act" name="status" #group [(ngModel)]="group.status"
+                                            (onChange)="onStatusChange(group.id, group.status)"></p-dropdown>
+                                    </div>
+
+                                    <div class="d-flex align-items-center gap-1 justify-content-between mt-3">
+                                        <span class="ct_fw_600" style="color: #aaa;"><i
+                                                class="fa-solid fa-calendar-days mr-2"></i>{{group.time_period | date
+                                            :'yyyy'}}</span>
+                                        <h6 class="mb-0">{{group.owner}}</h6>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+
+
                         </div>
+                        <div style="width: 32.66%">
+                            <div *ngFor="let group of archiveActions" class="mb-3">
+                                <div class="ct_actiion_box_125 ct_actiion_box_125_blue">
+                                    <h4 class="ct_h4">{{group.name}}</h4>
+                                    <p>CO2 Saving: <strong>{{group.co2_savings_tcoe}}t CO2e</strong></p>
+
+                                    <div class="test">
+                                        <label for="fname" class="text-dark">Status </label>
+                                        <p-dropdown class="ct_grop_select_2_drop_white123 ct_group_select_dark_124"
+                                            required ngModel placeholder="Select" [options]="status" optionLabel="e_act"
+                                            optionValue="e_act" name="status" #group [(ngModel)]="group.status"
+                                            (onChange)="onStatusChange(group.id, group.status)"></p-dropdown>
+                                    </div>
+
+                                    <div class="d-flex align-items-center gap-1 justify-content-between mt-3">
+                                        <span class="ct_fw_600" style="color: #aaa;"><i
+                                                class="fa-solid fa-calendar-days mr-2"></i>{{group.time_period | date
+                                            :'yyyy'}}</span>
+                                        <h6 class="mb-0">{{group.owner}}</h6>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+
                     </div>
                 </div>
-                <div class="ct_grid_3_1 mt-3">
 
-                    <div style="width: 32.66%">
-                        <div *ngFor="let group of plannedActions" class="mb-3">
-                            <div class="ct_actiion_box_125">
-                                <h4 class="ct_h4">{{group.name}}</h4>
-                                <p>CO2 Saving: <strong>{{group.co2_savings_tcoe}}t CO2e</strong></p>
-                                <div class="d-flex align-items-center gap-1 justify-content-between mt-3">
-                                    <span class="ct_fw_600" style="color: #aaa;"><i
-                                            class="fa-solid fa-calendar-days mr-2"></i>{{group.time_period | date
-                                        :'yyyy'}}</span>
-                                    <h6 class="mb-0">{{group.owner}}</h6>
-
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
-                    <div style="width: 32.66%">
-                        <div *ngFor="let group of progressActions" class="mb-3">
-                            <div class="ct_actiion_box_125 ct_actiion_box_125_orange" (click)="onEditAction(group)">
-                                <h4 class="ct_h4">{{group.name}}</h4>
-                                <p>CO2 Saving: <strong>{{group.co2_savings_tcoe}}t CO2e</strong></p>
-                                <div class="d-flex align-items-center gap-1 justify-content-between mt-3">
-                                    <span class="ct_fw_600" style="color: #aaa;"><i
-                                            class="fa-solid fa-calendar-days mr-2"></i>{{group.time_period | date
-                                        :'yyyy'}}</span>
-                                    <h6 class="mb-0">{{group.owner}}</h6>
-
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
-                    <div style="width: 32.66%">
-                        <div *ngFor="let group of archiveActions" class="mb-3">
-                            <div class="ct_actiion_box_125 ct_actiion_box_125_blue">
-                                <h4 class="ct_h4">{{group.name}}</h4>
-                                <p>CO2 Saving: <strong>{{group.co2_savings_tcoe}}t CO2e</strong></p>
-                                <div class="d-flex align-items-center gap-1 justify-content-between mt-3">
-                                    <span class="ct_fw_600" style="color: #aaa;"><i
-                                            class="fa-solid fa-calendar-days mr-2"></i>{{group.time_period | date
-                                        :'yyyy'}}</span>
-                                    <h6 class="mb-0">{{group.owner}}</h6>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-                </div>
             </div>
+
 
         </div>
-
-
     </div>
 </div>
-</div>
 
 
-<p-dialog (click)="removeCss()" [(visible)]="visible" [breakpoints]="{'960px': '75vw'}"
-    [style]="{width: '50vw'}">
+<p-dialog (click)="removeCss()" [(visible)]="visible" [breakpoints]="{'960px': '75vw'}" [style]="{width: '50vw'}">
     <p-header *ngIf="FormEdit === false"> Add Actions </p-header>
     <p-header *ngIf="FormEdit === true"> Edit Target </p-header>
 
@@ -158,8 +191,8 @@
                 <div class="col-md-6 mb-3">
                     <label for="fname" class="text-dark">Scope Category</label>
                     <p-dropdown class="ct_grop_select_2_drop_white123 ct_group_select_dark_124" required ngModel
-                     [options]="scopeList" optionLabel="name" optionValue="name" name="scope_category" [(ngModel)]="scope_category"
-                    #group></p-dropdown>
+                        [options]="scopeList" optionLabel="name" optionValue="name" name="scope_category"
+                        [(ngModel)]="scope_category" #group></p-dropdown>
                     <p class="text-danger mb-0" *ngIf="GroupForm.submitted && groupName.errors?.['required']">
                         Scope name is required
                     </p>
@@ -193,8 +226,8 @@
                 <div class="col-md-6 mb-3">
                     <label for="fname" class="text-dark">Owner</label>
                     <input name="owner" ngModel id="search-input" type="text"
-                        class="form-control Dashboard-tab text-white" placeholder="Enter owner Name"
-                        #groupName [disabled]="isloading" required  [(ngModel)]="owner_name"/>
+                        class="form-control Dashboard-tab text-white" placeholder="Enter owner Name" #groupName
+                        [disabled]="isloading" required [(ngModel)]="owner_name" />
                     <!-- <p-dropdown class="ct_grop_select_2_drop_white123 ct_group_select_dark_124" required
                 ngModel placeholder="Select" [options]="emission_activity" 
                 optionLabel="e_act" optionValue="e_act" name="owner" #group></p-dropdown> -->

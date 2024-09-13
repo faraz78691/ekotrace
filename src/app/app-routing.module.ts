@@ -159,7 +159,7 @@ const routes: Routes = [
                 path: 'main_tree',
                 canActivate: [RoleGuard],
                 component: MainTreeComponent,
-                data: { roles: ['Platform Admin','Super Admin','Admin','Manager'] },
+                data: { roles: ['Platform Admin','Super Admin','Admin','Manager','Preparer'] },
                 children:[
                     {path:'',redirectTo:'view', pathMatch:'full'},
                     {path:'view', component:TreeComponent},
