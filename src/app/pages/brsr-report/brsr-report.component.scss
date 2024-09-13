@@ -277,7 +277,18 @@ width: 10px !important;
 background-color: white;
 }
 
+.ct_table_nowrape1234 tr td,.ct_table_nowrape1234 tr th{
+  white-space: nowrap;
+  vertical-align: middle;
+}
 
+.ct_table_nowrape1234 td .fa-check{
+  color: #a6c275;
+}
+
+.ct_table_nowrape1234 td .fa-check,.ct_table_nowrape1234 td .fa-times{
+  font-size: 18px;
+}
 
 
 

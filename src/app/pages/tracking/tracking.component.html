@@ -793,6 +793,630 @@
 
 
                                             </div>
+
+                                            <div *ngIf="categoryId ==8">
+                                                <p class="ct_fs_16 mb-2">
+                                                    This category includes all upstream (i.e., cradle-to-gate) emissions from the production of products purchased or acquired by the reporting company in the reporting year. Products include both goods (tangible products) and services (intangible products). 
+                                                </p>
+                                             
+                                                <h5 class="mb-0 ct_fs_16">Purchased goods can be further classified into:
+
+                                                </h5>
+                                                <ol>
+                                                    <li>Standard goods – Typically have shorter lifespan. They are directly related to making the final goods (such as intermediate goods) or are non-product related inputs (such as office supplies or mfg. spare parts). The emissions are mainly associated with production, transportation, and disposal. E.g. building material, electronics, metal, plastic
+
+
+                                                    </li>
+                                                    <li>Capital goods – These are final products that have a longer lifespan (e.g. buildings, machinery, vehicles) and are used to produce goods, provide service, or sell merchandise. The emissions are primarily associated with production, use and maintenance. 
+                                                    </li>
+                                                  
+                                                </ol>
+                                                <h5 class="ct_fs_16 mb-0">To collect emissions data for purchase goods and services used by the company, follow these steps:
+
+                                                </h5>
+                                                <ol>
+                                                    <li>Identify list of all purchased items: Create a comprehensive inventory of all goods and services procured by the company. 
+
+                                                    </li>
+                                                    <li>Categorize purchases: Group items into categories (e.g., raw materials, components, office supplies, professional services) or based on their product code.
+
+
+                                                    </li>
+                                                    <li>
+                                                        Try to collect the purchased amount data as much as possible in quantity, this gives more accurate emissions results than spend based data. 
+
+                                                    </li>
+                                                    <li>Supplier Identification: Identify key suppliers for each category and map out their supply chains.
+                                                    </li>
+                                                    <li>Data Requests: Request specific emissions data from suppliers, including energy consumption, raw material usage, and transportation details.
+                                                    </li>
+                                                    <li>Relevant department for collecting the data: Procurement / Supply chain department, Finance/Accounting Department, Logistics Department
+                                                    </li>
+                                                </ol>
+                                                <h5 class="ct_fs_16 mb-0">How to use the tool for entering emissions data
+
+                                                </h5>
+                                                <ol>
+                                                    <li>Select the months and year for which you want to enter the emissions data. If you select multiple months, same data will be replicated for the months selected. 
+                                                    </li>
+                                                    <li>Select the product type either based on category or product code (HSN, ISIC, SAC etc). For entering the data in bulk, download the attached template and fill in the details. 
+                                                    </li>
+                                                    <li>In the vendor section, add the details of the supplier and the specific emissions factors in KgCO2e/unit, if available. 
+                                                    </li>
+                                                    <li>Once submitted, data is sent for approval. Manager of facility or the admin has approval rights. Only the approved data is included in emissions calculations. You can check the approval status in ‘Status’ tab
+                                                    </li>
+                                                </ol>
+
+                                            </div>
+
+                                            <div *ngIf="categoryId ==9">
+                                              
+                                                <h5 class="mb-2 ct_fs_16">Fuel and Energy-related activities
+                                                </h5>
+                                               <p>Emissions related to the production (cradle to gate) of fuels and energy purchased and consumed by the company in the reporting year. It excludes emissions from the combustion of fuels and electricity consumed by the company as they are already included in scope 1 or scope 2.
+                                            </p>
+                                                <h5 class="ct_fs_16 mb-2">How to use the tool for entering data emissions
+
+                                                </h5>
+                                                <p>Emissions data for this section is taken from Scope1 - Stationary Combustion and Scope 2 - Electricity and Heat & Steam categories. Cradle to Gate emission factors are then used for fuel data and transmission loss factor for the electricity data to calculate emissions for this category
+
+                                                </p>
+                                               
+
+                                            </div>
+
+                                            <div *ngIf="categoryId ==10">
+                                                <p class="ct_fs_16 mb-2">
+                                                    Emissions from the transportation and distribution of products purchased by the company, from suppliers to the company’s facilities. This includes transportation by land, air, and sea, as well as warehousing and storage. Emissions from the transportation and facilities leased by the company are not included in this category.
+                                                </p>
+                                             
+                                                <h5 class="mb-0 ct_fs_16">Examples of upstream transportation and distribution emissions include:
+                                                </h5>
+                                                <ol>
+                                                    <li>Fuel combustion from trucks, ships, and airplanes transporting goods</li>
+                                                    <li>Emissions from transportation infrastructure, such as roads and ports
+
+                                                    </li>
+                                                    <li>Energy consumption from warehousing and storage facilities
+                                                    </li>
+                                                    <li>Emissions from packaging materials and labelling
+                                                    </li>
+                                                </ol>
+                                                <h5 class="ct_fs_16 mb-2">To collect emissions data for Upstream transportation and distribution used by the company, follow these steps:
+
+                                                </h5>
+                                                <ol>
+                                                    <li>Methods used to collect the data could be of two types: a) Activity-based approach - track the distance, mode, and fuel type of transportation (more accurate), b) Spend-based approach - estimate emissions based on procurement spend data
+                                                    </li>
+                                                    <li>Vehicle Suppliers - Contact your suppliers to gather data on their transportation methods and emissions.
+                                                    </li>
+                                                    <li>
+                                                        Logistics Providers - Obtain emissions data from third-party logistics (3PL) providers or carriers.
+
+                                                    </li>
+                                                    <li>Internal Records - Utilize internal records of transportation activities, including type of fuel consumption and vehicle types.
+                                                    </li>
+                                                    <li>Relevant department for collecting the data – Logistics / Supply chain department, Procurement department
+                                                    </li>
+                                                 
+                                                </ol>
+                                                <h5 class="ct_fs_16 mb-2">How to use the tool for entering emissions data
+
+                                                </h5>
+                                                <ol>
+                                                    <li>Select the months and year for which you want to enter the emissions data. If you select multiple months, same data will be replicated for the months selected
+
+                                                    </li>
+                                                    <li>For Vehicles 
+                                                        <ul class="pl-3" style="list-style: lower-alpha;">
+                                                            <li>
+                                                                Select vehicle type from the dropdown, also sub-category of the vehicle based on the fuel type.
+                                                            </li>
+                                                            <li>
+                                                                Enter the mass of products that were transported.
+                                                            </li>
+                                                            <li>
+                                                                Enter the distance travelled by the product and the number of vehicles used for transportation.
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>For Storage Facility
+                                                        <ul class="pl-3" style="list-style: lower-alpha;">
+                                                            <li>
+                                                                Select the storage facility type from the dropdown.
+                                                            </li>
+                                                            <li>
+                                                                Enter the area occupied by the facility in sq ft or sq. meter. 
+                                                            </li>
+                                                            <li>
+                                                                Enter the number of days of storage of the product. 
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                   
+                                                </ol>
+
+                                            </div>
+
+
+                                            <div *ngIf="categoryId ==12">
+                                                <p class="ct_fs_16 mb-2">
+                                                    Emissions from the disposal and treatment of waste generated in the company’s operations. This includes waste from manufacturing processes, office operations, and other activities.
+                                                </p>
+                                             
+                                                <h5 class="mb-0 ct_fs_16">The different types of waste treatment methods are:
+                                                </h5>
+                                                <ol>
+                                                    <li>Landfilling – Final placement of the waste into or onto the land in a controlled way
+                                                    </li>
+                                                   <li>Incineration – Burning waste at high temp. to reduce volume and produce energy
+                                                </li>
+                                                   <li>Composting – Breaking down organic waste (vegetables, rotten food, garden waste) into nutrient-rich-soil.
+                                                </li>
+                                                   <li>Anaerobic digestion - Microbial breakdown of organic waste to produce biogas.
+                                                </li>
+                                                   <li>Recycling - Processing waste materials into new products. It can be open-loop (recycling of material into other products) or closed-loop (recycling back into the same product).</li>
+                                                </ol>
+                                                <p>Waste diversion rate – It represents how much of waste you divert from your facility without burn (incineration) or by (landfill). It is calculated as (weight of waste treated by recycling + reuse + composting / total waste weight) %.
+                                                </p>
+                                                <h5 class="ct_fs_16 mb-0">To collect emissions data for waste generated in operations used by the company, follow these steps
+                                                </h5>
+                                                <ol>
+                                                    <li>Identify Waste Streams: Catalogue all types of waste produced by the company's operations, including solid waste, liquid waste, hazardous waste, and recyclable materials.
+                                                    </li>
+                                                    <li>Determine Waste Sources: Identify the sources of waste generation within the company's operations, such as production lines, offices, cafeterias, and warehouses.
+                                                    </li>
+                                                    <li>
+                                                        Quantify Waste: Measure the amount of waste generated from each source. This can be done by weighing the waste or using volume estimates. Ensure measurements are taken consistently and regularly.
+                                                    </li>
+                                                    <li>Classify Waste: Classify the waste according to its type (e.g., organic, plastic, metal, paper) and its disposal method (e.g., landfill, incineration, recycling).
+
+                                                    </li>
+                                                    <li>Collect data on Disposal Methods: Gather information on how the waste is disposed of, including the method of disposal, transportation details, and the final disposal site.
+
+                                                    </li>
+                                                </ol>
+                                                <h5 class="ct_fs_16 mb-0">How to use the tool for entering emissions data
+                                                </h5>
+                                                <ol>
+                                                    <li>Select the months and year for which you want to enter the waste items data. If you select multiple months, same data will be replicated for the months selected.
+
+                                                    </li>
+                                                    <li>Select the product and the sub-category of product generated as waste from the dropdown.  
+                                                    </li>
+                                                    <li>
+                                                        Select the type of waste disposal.
+
+                                                    </li>
+                                                    <li>Enter the amount of waste generated in kg or litres or tonnes.
+                                                    </li>
+                                                </ol>
+
+                                            </div>
+
+
+                                            <div *ngIf="categoryId ==24 ||  categoryId ==25 ||  categoryId ==26">
+                                                <h5 class="mb-2 ct_fs_16">Business Travel
+
+                                                </h5>
+                                                <p>Emissions from the transportation of employees for business-related activities. This includes travel by air, rail, bus, car, and other modes of transportation.
+                                                </p>
+                                                <h5 class="mb-2 ct_fs_16">To collect emissions data for business travel used by the company, follow these steps:
+                                                </h5>
+                                                <ol>
+                                                    <li>Identify Travel Modes - List all modes of travel used by employees (e.g., air travel, train, car, bus).
+
+                                                    </li>
+                                                   <li>Travel Data - Collect detailed information on all business trips. This includes travel date, destinations, distances travelled, travel class (e.g., economy, business for flights), type of vehicle (for car travel)
+
+                                                </li>
+                                                <li>Collect Fuel Consumption Data - Obtain fuel consumption details for company-owned or rented vehicles.
+                                                </li>
+                                                <li>For personal vehicles used for business travel, gather mileage reimbursement records.
+                                                </li>
+                                                
+                                                </ol>
+                                              
+                                                <h5 class="ct_fs_16 mb-0">How to use the tool for entering data emissions
+
+                                                </h5>
+                                                <ol>
+                                                    <li>Select the months and year for which you want to enter the travel data. If you select multiple months, same data will be replicated for the months selected
+
+                                                    </li>
+                                                    <li>Select the business travel type such as via flight or other ways of transport and/or hotel stay.
+
+                                                    </li>
+                                                    <li>
+                                                        Flight travel – There are three ways of entering flight travel data; Generic type – select the flight type based on travel time, To/Fro – this allows user to enter the take-off and landing ports and is the most accurate method, Distance – when the flight air distance is available 
+
+                                                    </li>
+                                                  
+                                                </ol>
+                                               
+                                            </div>
+                                            
+                                            
+                                            <div *ngIf="categoryId ==14">
+                                                <p>Emissions from the transportation of employees between their homes and workplaces. This includes emissions from personal vehicles, public transportation, etc.
+                                                </p>
+                                                <h5 class="mb-2 ct_fs_16">To collect emissions data for employee commute used by the company, follow these steps:
+                                                </h5>
+                                          
+                                                <ol>
+                                                    <li>Determine which employees and types of commutes are included.
+                                                    </li>
+                                                   <li>Collect information on commute patterns, such as:
+                                                    <ul class="pl-3" style="list-style: lower-roman;">
+                                                        <li>Mode of transportation (car, bike, public transit, walking, etc.)
+                                                        </li>
+                                                        <li>Average distance of daily commute (one-way)
+                                                        </li>
+                                                        <li>Frequency of commute (days per week)</li>
+                                                    </ul>
+                                                </li>
+                                                </ol>
+                                              
+                                                <h5 class="ct_fs_16 mb-0">How to use the tool for entering data emissions	
+
+                                                </h5>
+                                                <ol>
+                                                    <li>Select the year for which you want to enter the commute data. Note – the data is only entered once for the entire year.  
+
+
+                                                    </li>
+                                                    <li>Enter the total number of employees commuting to office and number of working days during the month. This data is used to calculate the total commutes for the year - no of employees x no of months x working days per month x 2 commutes per day
+
+
+                                                    </li>
+                                                    <li>
+                                                        In the table, enter percentage details of the total commutes to office against the type of transport. Also, enter the average commute distance in km (one-way).
+
+
+                                                    </li>
+                                                  
+                                                </ol>
+                                               
+                                            </div>
+
+                                            <div *ngIf="categoryId ==16">
+                                                
+                                                <h5 class="mb-2 ct_fs_16">Upstream Leased Assets
+
+                                                </h5>
+                                                <p>Emissions from the operation of assets leased by the company from other entities. This includes buildings, vehicles, machinery, and other assets leased for use in the company’s operations.
+                                                </p>
+                                                <h5 class="mb-2 ct_fs_16">To collect emissions data for upstream leased assets used by the company, follow these steps:
+                                                </h5>
+                                          
+                                                <ol>
+                                                   <li>Compile a list of all upstream leased assets. This includes any leased equipment, facilities, and vehicles used in upstream operations such as exploration, extraction, and production of oil and gas.
+                                                </li>
+                                                   <li>Collect operational data for each leased asset. This includes the hours of operation, fuel consumption, and energy usage.
+                                                </li>
+                                                   <li>Request usage logs or billing statements from lessors to get accurate data.
+                                                </li>
+                                                   
+                                                </ol>
+                                              
+                                                <h5 class="ct_fs_16 mb-0">How to use the tool for entering data emissions
+                                                </h5>
+                                                <ol>
+                                                    <li>Select the months and year for which you want to enter the emissions data. If you select multiple months, same data will be replicated for the months selected
+
+                                                    </li>
+                                                    <li>For Leased Facilities+
+                                                        <ul class="pl-3">
+                                                            <li style="list-style: lower-alpha;">Select the facility type and the sub-category of the facility from the dropdown.
+                                                            </li>
+                                                            <li  style="list-style: lower-alpha;">Select the calculation method.
+                                                            </li>
+                                                            <li style="list-style: lower-roman;">If selected ‘Average data method’, enter the area of the franchise in sq meter or sq. feet.
+                                                            </li>
+                                                            <li style="list-style: lower-roman;">If selected ‘Facility specific method’, download the template to collect Scope1 and Scope2 emissions data associated with using the leased facility for the reporting period from the lessor(s).
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>
+                                                        For Leased Vehicles:
+                                                        <ul class="pl-3" style="list-style: lower-alpha;">
+                                                            <li>Select vehicle type from the dropdown, also sub-category of the vehicle based on the fuel type.</li>
+                                                            <li>Enter the distance travelled by the product and the number of vehicles used for transportation.
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                   
+                                                  
+                                                </ol>
+                                               
+                                            </div>
+
+
+                                            <div *ngIf="categoryId ==17">
+                                                <p>Emissions from the transportation and distribution of products sold by the company to end-users, including retail and storage. This category covers emissions from logistics and distribution centres not owned or controlled by the reporting company.
+
+                                                </p>
+                                                <h5 class="mb-2 ct_fs_16">To collect emissions data for Downstream Transportation and Distribution used by the company, follow these steps:
+
+                                                </h5>
+                                          
+                                                <ol>
+                                                   <li>Identify all modes of transportation (road, rail, air, sea) and distribution channels (warehouses, retailers, etc.) involved.
+
+                                                </li>
+                                                   <li>
+                                                    Methods used to collect the data could be of two types: a) Activity-based approach - track the distance, mode, and fuel type of transportation (more accurate), b) Spend-based approach - estimate emissions based on procurement spend data
+
+                                                </li>
+                                                   <li>Gather data on fuel consumption for each transportation mode.
+                                                </li>
+                                                <li>Collect data on distance travelled, types of vehicles used, and load factors (amount of goods transported per trip).
+                                                </li>
+                                                <li>Gather data on energy consumption (electricity, natural gas, etc.) for warehouses and distribution centres.
+                                                </li>
+                                                </ol>
+                                              
+                                                <h5 class="ct_fs_16 mb-0">How to use the tool for entering data emissions
+                                                </h5>
+                                                <ol>
+                                                    <li>Select the months and year for which you want to enter the emissions data. If you select multiple months, same data will be replicated for the months selected
+                                                    </li>
+                                                    <li>For Vehicles 
+                                                        <ol class="pl-3">
+                                                            <li>Select vehicle type from the dropdown, also sub-category of the vehicle based on the fuel type.
+
+                                                            </li>
+                                                            <li >Enter the mass of products that were transported.
+
+                                                            </li>
+                                                            <li>Enter the distance travelled by the product and the number of vehicles used for transportation.
+                                                            </li>
+                                                        </ol>
+                                                    </li>
+                                                    <li>
+                                                        For Storage Facility
+
+                                                        <ol class="pl-3">
+                                                            <li>Select the storage facility type from the dropdown.
+                                                            </li>
+                                                            <li>Enter the area occupied by the facility in sq ft or sq. meter. 
+                                                            </li>
+                                                            <li>
+                                                                Enter the number of days of storage of the product. 
+                                                            </li>
+                                                        </ol>
+                                                    </li>
+                                                   
+                                                  
+                                                </ol>
+                                               
+                                            </div>
+
+                                            <div *ngIf="categoryId ==18">
+                                                <h5 class="mb-2 ct_fs_16">Processing of Sold products
+                                                </h5>
+                                                <p>Emissions from the processing of intermediate products sold by the company. This includes emissions from further manufacturing or assembly of the company’s products by other entities before use by the end consumer. 
+
+
+                                                </p>
+                                                <h5 class="mb-2 ct_fs_16">To collect emissions data for Processing of Sold products, follow these steps:
+                                                </h5>
+                                          
+                                                <ol>
+                                                  <li>List all the intermediate products that your company sells.
+                                                </li>
+                                                  <li>Use one of these methods to collect the data w.r.t processing of intermediate goods:
+                                                    <ul class="pl-3" style="list-style: lower-alpha;">
+                                                        <li>Site specific method - collect either site-specific GHG emissions data provided by downstream value chain partners or site-specific activity data from downstream processes.
+                                                        </li>
+                                                        <li>Average data method - collect data on the type of downstream process(es) involved in transforming or processing sold intermediate products into final products. It takes industry average emission factors to estimate the final emissions and is relatively less accurate than the first method.
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                </ol>
+                                              
+                                                <h5 class="ct_fs_16 mb-0">How to use the tool for entering data emissions
+                                                </h5>
+                                                <ol>
+                                                    <li>Select the “Intermediate Good category” applicable to your company from the dropdown.
+
+                                                    </li>
+                                                    <li>Enter the value of the intermediate good in kg/tonnes/litres.</li>
+                                                    <li>Select the calculation method. If ‘Facility specific method’ is selected, download the template to collect Scope1 and Scope2 emissions data associated with the downstream processes.
+                                                    </li>
+                                                  
+                                                </ol>
+                                               
+                                            </div>
+
+
+                                            <div *ngIf="categoryId ==19">
+                                                <h5 class="mb-2 ct_fs_16">Use of Sold products
+                                                </h5>
+                                                <p>Emissions from the use of products sold by the company. This category is particularly significant for companies that produce goods with significant emissions during their use phase, such as automobiles, appliances, and electronics. It includes the total expected lifetime emissions from all relevant products sold in the reporting year across the company’s product portfolio.
+                                                </p>
+                                             
+                                                <h5 class="mb-2 ct_fs_16">We divide emissions from the use of sold products in two types: 
+                                                </h5>
+                                                <ol>
+                                                    <li>Direct use-phase emissions – includes products which directly consume energy (fuel or electricity) during use like automobiles, engines, electronics. Fuels and feedstocks, products emitting GHGs also come under this category 
+                                                    </li>
+                                                    <li>Indirect use-phase emissions – products which indirectly consume energy. Eg apparel (require washing and drying), food (requires cooking and refrigeration), 	soaps (require heated water) 
+                                                    </li>
+                                                </ol>
+                                              
+                                                <h5 class="ct_fs_16 mb-0">To collect emissions data for use of products sold by the company, follow these steps:
+                                                </h5>
+                                                <ol>
+                                                    <li>List all the products sold by the company that have a significant use-phase emissions profile.
+                                                    </li>
+                                                  <li>Identify the quantity of product sold
+                                                </li>
+                                                  <li>Collect the data on lifetime expected use of product, fuel / electricity consumed per usage and refrigerant leakage per use of the product
+                                                </li>
+                                                  
+                                                </ol>
+                                                <h5 class="ct_fs_16 mb-0">How to use the tool for entering data emissions
+
+                                                </h5>
+                                                <ol>
+                                                    <li>Select the type of energy consumption and product category from the dropdown. 
+
+                                                    </li>
+                                                  <li>Enter the amount or number of products sold in tonnes/Kg/litres. 
+
+                                                </li>
+                                                  <li>If unit selected is ‘no. of units’, enter the fuel / refrigerant data per usage of the product.	
+                                                </li>
+                                                  
+                                                </ol>
+                                               
+                                            </div>
+
+
+                                            <div *ngIf="categoryId ==20">
+                                                <h5 class="mb-2 ct_fs_16">End-of-Life Treatment of Sold Products
+                                                </h5>
+                                                <p>Emissions from the disposal and treatment of products sold by the company at the end of their life. This includes recycling, landfilling, incineration, and other waste treatment processes.
+                                                </p>
+                                                <p>
+                                                    The emissions from downstream end-of-life treatment of sold products follows the calculation methods in category ‘waste generated in operations’, with the difference that instead of collecting data on total mass of waste generated in operations, companies should collect data on total mass of sold products (and packaging) from the point of sale by the reporting company through the end of life after use by consumers.
+
+                                                </p>
+                                             
+                                                <h5 class="mb-2 ct_fs_16">To collect emissions data for End-of-life (EoL) treatment of the products sold by company, follow these steps:
+                                                </h5>
+                                                <ol>
+                                                   <li>List all product categories that the company sells and determine which are relevant for EoL analysis. 
+                                                </li>
+                                                   <li>Determine the various EoL scenarios for each product category, such as recycling, incineration, landfilling, or composting.
+                                                </li>
+                                                   <li>Gather data on the volume or weight of products that have reached the end of their life for each scenario. 
+                                                </li>
+                                                </ol>
+                                              
+                                                <h5 class="ct_fs_16 mb-0">How to use the tool for entering data emissions
+
+                                                </h5>
+                                                <ol>
+                                                    <li>Select the type of waste generated and the product from dropdown list
+
+                                                    </li>
+                                                  <li>Enter the amount of total waste generated from sold goods. In many cases, total waste will be equal to the total products sold in reporting year. However, if the product is actually consumed (e.g., food and drink) the total waste is likely to be lower, and in other cases, such as products combusted to generate energy, could even be zero
+
+                                                </li>
+                                                  <li>Enter the percentage of waste going to Landfill, Combustion, Recycling and Composting.
+                                                </li>
+                                                  
+                                                </ol>
+                                            </div>
+
+
+                                            <div *ngIf="categoryId ==21">
+                                                <h5 class="mb-2 ct_fs_16">Downstream Leased Assets
+
+                                                </h5>
+                                                <p>Emissions from the operation of assets owned by the company and leased to other entities. This category includes buildings, vehicles, and machinery leased to third parties.
+
+                                                </p>
+                                                <h5 class="mb-2 ct_fs_16">To collect emissions data for Downstream Leased assets used by the company, follow these steps:
+
+                                                </h5>
+                                                <ol>
+                                                 <li>List all Downstream Leased assets (e.g., vehicles, equipment) under the company’s control.
+                                                </li>
+                                                 <li>Determine which assets fall under the company's operational boundaries for emissions reporting.
+                                                </li>
+                                                 <li>Collect operational data for each asset (e.g., fuel consumption, mileage, energy use).
+                                                </li>
+                                                </ol>
+                                              
+                                                <h5 class="ct_fs_16 mb-0">How to use the tool for entering data emissions: 
+                                                </h5>
+                                                <ol>
+                                                    <li>
+                                                        Select the months and year for which you want to enter the emissions data. If you select multiple months, same data will be replicated for the months selected
+                                                    </li>
+                                                    <li>For Leased Facilities
+                                                        <ul class="pl-3" style="list-style: lower-alpha;">
+                                                            <li>Select the facility type and the sub-category of the facility from the dropdown.
+                                                            </li>
+                                                            <li>Select the calculation method.
+                                                                <ol class="pl-3">
+                                                                    <li>If selected ‘Average data method’, enter the area of the franchise in sq meter or sq. feet.
+                                                                    </li>
+                                                                    <li>
+                                                                        If selected ‘Facility specific method’, download the template to collect Scope1 and Scope2 emissions data associated with using the leased facility (the allocated space) for the reporting period from the lessor(s).
+                                                                    </li>
+                                                                </ol>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>
+                                                        For Leased Vehicles:
+                                                        <ul class="pl-3" style="list-style: lower-alpha;">
+                                                            <li>Select vehicle type from the dropdown, also sub-category of the vehicle based on the fuel type.
+
+                                                            </li>
+                                                            <li>Enter the distance travelled by the product and the number of vehicles used for transportation.
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                  
+                                                </ol>
+                                                
+                                            </div>
+
+
+                                            <div *ngIf="categoryId ==22">
+                                                <h5 class="mb-2 ct_fs_16">Franchise
+
+                                                </h5>
+                                                <p>Emissions from the operations of franchises owned by the company who grants the license to other entities to sell or distribute its product or service. This includes all emissions resulting from the franchise operations, such as energy use, transportation, and waste.
+                                                </p>
+                                                <h5 class="mb-2 ct_fs_16">To collect emissions data for Franchise used by the company, follow these steps:
+                                                </h5>
+                                                <ol>
+                                                 <li>Identify all potential sources of emissions within the franchise (e.g., electricity usage, heating, vehicle fleets).
+
+                                                </li>
+                                                 <li>Gather utility bills or usage records for each franchise location.
+
+                                                </li>
+                                                 <li>Fuel Usage: Record fuel consumption for any company-owned vehicles and equipment.
+                                                </li>
+                                                <li>Waste Management: Track waste generation and disposal methods, including recycling and landfill use.
+                                                </li>
+                                                <li>Other Sources: Identify any additional sources of emissions specific to your franchise operations (e.g., industrial processes).
+                                                </li>
+                                                </ol>
+                                              
+                                                <h5 class="ct_fs_16 mb-0">How to use the tool for entering data emissions
+
+                                                </h5>
+                                                <ol>
+                                                    <li>
+                                                        Select the franchise asset type and the sub-category from the dropdown.
+
+                                                    </li>
+                                                    <li>Select the calculation method.
+
+                                                        <ul class="pl-3" style="list-style: lower-roman;">
+                                                            <li>If selected ‘Average data method’, enter the area of the franchise in sq meter or sq. feet.
+                                                            </li>
+                                                            <li>If selected ‘Investment specific method’, download the template to collect Scope1 and Scope2 emissions data associated with using the franchise for the reporting period
+                                                               
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                </ol>
+                                                
+                                            </div>
+
+
+                                            
+
+                                            
                                         </div>
                                     </div>
                                 </div>
