@@ -72,8 +72,8 @@
                     <thead>
                         <tr>
 
-                            <th scope="col">Group</th>
-                            <th scope="col">Year</th>
+                            
+                            <th scope="col mx-3">Year</th>
                             <th scope="col">Total Scope1 (tC02e)</th>
                             <th scope="col">Total Scope2 (tC02e)</th>
                             <th scope="col">Total Scope3 (tC02e)</th>
@@ -86,9 +86,9 @@
                                 let group of groupsList;let index = index
                             " class="col-12 tableRow border-bottom rounded pointer" (click)="UnlockComplete(group.id)"
                             [ngClass]="{ 'tableRowclicked': index === selectedRowIndex }">
-                            <td class="td ">
+                            <!-- <td class="td ">
                                 {{ group.group_added }}
-                            </td>
+                            </td> -->
                             <td class="td ">
                                 {{ group.year_added }}
 
@@ -148,7 +148,7 @@
                 : updateGroup(relationId, GroupForm)
         ">
             <div class="mb-5 pb-0 row">
-                <div class="col-md-6 mb-3">
+                <!-- <div class="col-md-6 mb-3">
                     <label for="fname">Group Name</label>
                     <input name="group_added" ngModel id="search-input" type="text"
                         class="form-control Dashboard-tab text-white" placeholder="Enter Group Name"
@@ -161,7 +161,7 @@
                 ">
                         group already exist please use other groupname
                     </p>
-                </div>
+                </div> -->
                 <div class="col-md-6 mb-3">
                     <label for="fname">Year of Emission data</label>
                     <p-calendar class="w-100 ct_input_dark_text_145 ct_calender_input_38_action_12" ngModel
@@ -191,8 +191,8 @@
                     <input name="scope_2_emissions" ngModel id="search-input" type="text"
                         class="form-control Dashboard-tab text-white" placeholder="Enter emissions"
                         #scope2="ngModel" [disabled]="isloading" required />
-                        <p class="text-danger mb-0" *ngIf="GroupForm.submitted && !GroupForm.controls['scope2']?.value">
-                            Scope 2 emission required
+                        <p class="text-danger mb-0" *ngIf="GroupForm.submitted && scope2.errors?.['required']">
+                            Scope 2 emission is required
                         </p>
                     <p class="text-danger mb-0" *ngIf="
                     isgroupExist === true && groupName.touched
@@ -205,8 +205,8 @@
                     <input name="scope_3_emissions" ngModel id="search-input" type="text"
                         class="form-control Dashboard-tab text-white" placeholder="Enter emissions"
                         #scope3="ngModel" [disabled]="isloading" required />
-                        <p class="text-danger mb-0" *ngIf="GroupForm.submitted && !GroupForm.controls['scope3']?.value">
-                            Scope 3 emission required
+                        <p class="text-danger mb-0" *ngIf="GroupForm.submitted && scope3.errors?.['required']">
+                            Scope 3 emission is required
                         </p>
                     <p class="text-danger mb-0" *ngIf="
                     isgroupExist === true && groupName.touched
@@ -221,13 +221,13 @@
                             <label for="fname">Scope1 from Company Vehicles</label>
                             <input name="company_vehicles" ngModel id="search-input" type="text"
                                 class="form-control Dashboard-tab text-white" placeholder="Enter emission"
-                                #groupName="ngModel" [disabled]="isloading" required />
+                                #groupName="ngModel" [disabled]="isloading"  />
                         </div>
                         <div class="col-md-6  mb-3">
                             <label for="fname">Scope1 from Refrigerants</label>
                             <input name="refrigerants" ngModel id="search-input" type="text"
                                 class="form-control Dashboard-tab text-white" placeholder="Enter emission"
-                                #groupName="ngModel" [disabled]="isloading" required />
+                                #groupName="ngModel" [disabled]="isloading"  />
                         </div>
                     </div>
                 </div>
@@ -239,13 +239,13 @@
                             <label for="fname">Scope2 Location Based Emissions</label>
                             <input name="location_based" ngModel id="search-input" type="text"
                                 class="form-control Dashboard-tab text-white" placeholder="Enter emission"
-                                #groupName="ngModel" [disabled]="isloading" required />
+                                #groupName="ngModel" [disabled]="isloading"  />
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="fname">Scope2 Renewable Energy Use</label>
                             <input ngModel name="renewable" id="search-input" type="text"
                                 class="form-control Dashboard-tab text-white " placeholder="Enter emission"
-                                #groupName="ngModel" [disabled]="isloading" required />
+                                #groupName="ngModel" [disabled]="isloading"  />
                         </div>
                     </div>
                 </div>
@@ -257,37 +257,43 @@
                             <label for="fname">Purchased goods and services</label>
                             <input name="purchased_goods" ngModel id="search-input" type="text"
                                 class="form-control Dashboard-tab text-white" placeholder="Enter emission"
-                                #groupName="ngModel" [disabled]="isloading" required />
+                                #groupName="ngModel" [disabled]="isloading"  />
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="fname">Business travel and employee commute</label>
                             <input ngModel name="business_travel" id="search-input" type="text"
                                 class="form-control Dashboard-tab text-white " placeholder="Enter emission"
-                                #groupName="ngModel" [disabled]="isloading" required />
+                                #groupName="ngModel" [disabled]="isloading"  />
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="fname">Waste generated in operations</label>
                             <input ngModel name="waste_generated" id="search-input" type="text"
                                 class="form-control Dashboard-tab text-white " placeholder="Enter emission"
-                                #groupName="ngModel" [disabled]="isloading" required />
+                                #groupName="ngModel" [disabled]="isloading"  />
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="fname">Water Usage</label>
                             <input ngModel name="waste" id="search-input" type="text"
                                 class="form-control Dashboard-tab text-white " placeholder="Enter emission"
-                                #groupName="ngModel" [disabled]="isloading" required />
+                                #groupName="ngModel" [disabled]="isloading"  />
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="fname">Production output</label>
-                            <input ngModel name="production_output" id="search-input" type="text"
+                            <input ngModel name="production_output" id="search-input" type="number"
                                 class="form-control Dashboard-tab text-white " placeholder="Enter production output"
-                                #groupName="ngModel" [disabled]="isloading" required />
+                                #productionOutput="ngModel" [disabled]="isloading" required />
+                                <p class="text-danger mb-0" *ngIf="GroupForm.submitted && productionOutput.errors?.['required']">
+                                    Field is required
+                                </p>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="fname">Economic output</label>
-                            <input ngModel name="economic_output" id="search-input" type="text"
+                            <input ngModel name="economic_output" id="search-input" type="number"
                                 class="form-control Dashboard-tab text-white " placeholder="Enter economic output"
-                                #groupName="ngModel" [disabled]="isloading" required />
+                                #economic="ngModel" [disabled]="isloading" required />
+                                <p class="text-danger mb-0" *ngIf="GroupForm.submitted && economic.errors?.['required']">
+                                    Field is required
+                                </p>
                         </div>
                     </div>
                 </div>

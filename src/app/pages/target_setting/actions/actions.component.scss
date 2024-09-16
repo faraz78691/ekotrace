@@ -89,7 +89,7 @@
 
 .ct_grid_3_1 {
     display: flex;
-    gap: 2%;
+    gap: 8%;
 
 }
 
@@ -112,6 +112,11 @@
 .test{
     position: relative;
     width: 100%;
-    padding-right: 280px;
+  max-width: 30%;
     padding-left: 0px;
+}
+@media screen and (max-width:991px){
+    .ct_grid_3_1{
+        gap: 4%;
+    }
 }

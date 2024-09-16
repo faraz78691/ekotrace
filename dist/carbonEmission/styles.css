@@ -10176,7 +10176,7 @@ h1.bft-edit-form-title {
   right: 25px;
   width: 100%;
   max-width: 900px;
-  background-color: #eee;
+  background-color: #e3e7df;
   padding: 10px;
   border-radius: 10px;
   z-index: 999;
@@ -10190,6 +10190,7 @@ h1.bft-edit-form-title {
   max-height: 620px;
   overflow-y: auto;
   height: auto;
+  border-top: 3px solid #a4c074;
 }
 
 .ct_how_use_tooltip_cnt ol {
@@ -10202,16 +10203,6 @@ h1.bft-edit-form-title {
 
 .ct_how_use_tooltip_cnt.ct_active {
   display: block;
-}
-
-.ct_how_use_tooltip_cnt:before {
-  content: "";
-  position: absolute;
-  border: 6px solid #eee;
-  top: -4px;
-  transform: rotate(45deg);
-  border-radius: 2px;
-  right: 5px;
 }
 
 .ct_status_tble_230_space.p-datatable tr > th {

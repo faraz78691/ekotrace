@@ -64,14 +64,14 @@
         
         
                     <div class="dataTable scrollit mt-4">
-                        <table class="table_loc ct_space_table_21 ct_billing_table_bg_120">
+                        <table class="table_loc ct_space_table_21 ct_billing_table_bg_120 ">
                             <thead>
                                 <tr>
         
-                                    <th scope="col">S.No.</th>
-                                    <th scope="col">Name </th>
-                                    <th scope="col">Address</th>
-                                    <th scope="col">Reference Id</th>
+                                    <th scope="col"  style="font-size: 16px;">S.No.</th>
+                                    <th scope="col"  style="font-size: 16px;">Name </th>
+                                    <th scope="col"  style="font-size: 16px;">Reference Id</th>
+                                    <th scope="col"  style="font-size: 16px;">Address</th>
                                    
                                 </tr>
                             </thead>
@@ -80,21 +80,22 @@
                                         let group of groupsList;let index = index
                                     " class="col-12 tableRow border-bottom rounded pointer" (click)="UnlockComplete(group.id)"
                                     [ngClass]="{ 'tableRowclicked': index === selectedRowIndex }">
-                                    <td class="td text-initial">
+                                    <td class="td text-initial"  style="font-size: 16px;">
                                         {{ index + 1 }}
                                     </td>
-                                    <td class="td ">
+                                    <td class="td "  style="font-size: 16px;">
                                         {{ group.name }}
         
                                     </td>
-                                    <td class="td  pb-1">
-                                        {{ group.address }}
-        
-                                    </td>
-                                    <td class="td  pb-1">
+                                    <td class="td  pb-1"  style="font-size: 16px;">
                                         {{ group.refer_id }}
         
                                     </td>
+                                    <td class="td  pb-1"  style="font-size: 16px;">
+                                        {{ group.address }}
+        
+                                    </td>
+                                  
                                   
         
                                 </tr>
@@ -185,9 +186,9 @@
                             <thead>
                                 <tr>
         
-                                    <th scope="col">S.No.</th>
-                                    <th scope="col"> Cost Centre Name </th>
-                                    <th scope="col">Reference ID</th>
+                                    <th scope="col" style="width: 400px; font-size: 16px;">S.No.</th>
+                                    <th scope="col" style="width: 400px;font-size: 16px;"> Cost Centre Name </th>
+                                    <th scope="col" style="font-size: 16px;">Reference ID</th>
                                    
                                 </tr>
                             </thead>
@@ -196,14 +197,14 @@
                                         let group of groupsCostList;let index = index
                                     " class="col-12 tableRow border-bottom rounded pointer" (click)="UnlockComplete(group.id)"
                                     [ngClass]="{ 'tableRowclicked': index === selectedRowIndex }">
-                                    <td class="td text-initial">
+                                    <td class="td text-initial" style="width: 300px; font-size: 16px;">
                                         {{ index + 1 }}
                                     </td>
-                                    <td class="td ">
+                                    <td class="td " style="width: 400px; font-size: 16px;">
                                         {{ group.cost_center_name }}
         
                                     </td>
-                                    <td class="td  pb-1">
+                                    <td class="td  pb-1" style="font-size: 16px;">
                                         {{ group.cost_center_refer_id }}
         
                                     </td>

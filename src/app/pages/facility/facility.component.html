@@ -401,11 +401,15 @@
                                    
                                     <div class="mb-4">
                                         <label for="equity" class=" text-dark">Equity percentage</label>
-                                        <input ngModel name="equity" type="number"
+                                        <input ngModel name="equity" type="number" required
                                             class="form-control Dashboard-tab text-white"
                                             placeholder="Enter equity percentage.." [(ngModel)]="
                                                 facilityDetails.EquityPercentage
                                             " #equity="ngModel" />
+                                              <p *ngIf="addCompForm.submitted && equity.errors?.['required']"
+                                              class="text-danger mb-0">
+                                              Equity is required
+                                          </p>
 
                                     </div>
                                     <div class="mb-4">

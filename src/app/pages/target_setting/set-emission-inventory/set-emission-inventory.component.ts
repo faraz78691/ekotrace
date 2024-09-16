@@ -85,16 +85,16 @@ export class SetEmissionInventoryComponent {
     project_details = '';
     carbon_offset = '';
     selectedScope: any;
-   superAdminTenentID : any;
+    superAdminTenentID: any;
     carbon_credit_value: string;
     type: string;
     relationId: string;
     date3: string;
     standard: string;
     selectedFile: File;
-    scope_1_emissions:number;
-    scope_2_emissions:number;
-    scope_3_emissions:number;
+    scope_1_emissions: number;
+    scope_2_emissions: number;
+    scope_3_emissions: number;
     constructor(
         private companyService: CompanyService,
         private UserService: UserService,
@@ -211,12 +211,12 @@ export class SetEmissionInventoryComponent {
             next: (response) => {
 
                 if (response.success == true) {
-                   
+
                     let obj = {
                         factor1: response.orders[0].factor1,
                         factor2: response.orders[0].factor2,
                         factor3: response.orders[0].factor3,
-        
+
                     };
 
                     this.projectionForm.control.patchValue(obj);
@@ -240,7 +240,38 @@ export class SetEmissionInventoryComponent {
 
     //method to add new group
     saveOffset(data: NgForm) {
+
+        if (data.valid == false) {
+            return
+        }
+
         var dateYear = (data.value.year_added).getFullYear().toString();
+
+        if (
+            parseFloat(data.value.scope_1_emissions) <
+            (parseFloat(data.value.company_vehicles) + parseFloat(data.value.refrigerants)) 
+        ) {
+
+            this.notification.showInfo('Scope 1 sub categories should be less or equal to Total Scope 1 emission', '');
+            return
+        }
+        if (
+            parseFloat(data.value.scope_2_emissions) <
+            (parseFloat(data.value.location_based) + parseFloat(data.value.renewable))
+        ) {
+
+            this.notification.showInfo('Scope 2 sub categories should be less or equal to Total Scope 2 emission', '');
+            return
+        }
+        if (
+            parseFloat(data.value.scope_3_emissions) <
+            (parseFloat(data.value.purchased_goods) + parseFloat(data.value.business_travel) + parseFloat(data.value.waste_generated) + parseFloat(data.value.waste))
+        ) {
+
+            this.notification.showInfo('Scope 3 sub categories should be less or equal to Total Scope 3 emission', '');
+            return
+        }
+
         var scope1_items = [{ 'category': "Scope1 from Company Vehicles", "emission": Number(data.value.company_vehicles) }, { "category": "Scope1 from Refrigerants", "emission": Number(data.value.refrigerants) }]
         var scope2_items = [{ "category": "Scope2 Location Based Emissions", "emission": Number(data.value.location_based) }, { "category": "Scope2 Renewable Energy Use", "emission": Number(data.value.renewable) }];
         var scope3_items = [{ "category": "Scope3 Purchased goods and services", "emission": Number(data.value.purchased_goods) }, { "category": "Scope3 Business travel and employee commute", "emission": Number(data.value.business_travel) }, { "category": "Scope3 Waste generated in operations", "emission": Number(data.value.waste_generated) }, { "category": "Scope3 Water Usage", "emission": Number(data.value.waste) }];
@@ -253,7 +284,7 @@ export class SetEmissionInventoryComponent {
         const formData = new URLSearchParams();
         formData.append('production_output', data.value.production_output || 1);
         formData.append('economic_output', data.value.economic_output || 1);
-        formData.append('group_added', data.value.group_added);
+        formData.append('group_added', "Default");
         formData.append('year_added', dateYear);
         formData.append('scope1_emission', data.value.scope_1_emissions);
         formData.append('scope2_emission', data.value.scope_2_emissions);
@@ -295,10 +326,10 @@ export class SetEmissionInventoryComponent {
     };
 
     saveProjections(data: NgForm) {
-      
+
 
         const formData = new URLSearchParams();
-     
+
         formData.append('factor1', data.value.factor1);
         formData.append('factor2', data.value.factor2);
         formData.append('factor3', data.value.factor3);
@@ -307,16 +338,16 @@ export class SetEmissionInventoryComponent {
         this.GroupService.AddProjections(formData.toString()).subscribe({
             next: (response) => {
                 if (response.success == true) {
-                  
+
                     this.notification.showSuccess(
                         ' Projection set successfully',
                         'Success'
                     );
                 }
                 // return
-          
+
                 this.visible2 = false;
-           
+
             },
             error: (err) => {
                 this.notification.showError('Group added failed.', 'Error');
@@ -335,12 +366,12 @@ export class SetEmissionInventoryComponent {
         console.log(id);
         // var dateYear = (data.value.year_added).getFullYear().toString();
         console.log(data.value.year_added.length);
-        if(data.value.year_added.length > 4){
+        if (data.value.year_added.length > 4) {
             var dateYear = (data.value.year_added).getFullYear().toString();
-        }else{
+        } else {
             var dateYear = data.value.year_added;
         }
-        
+
         var scope1_items = [{ "emission": Number(data.value.company_vehicles) }, { "emission": Number(data.value.refrigerants) }]
         var scope2_items = [{ "emission": Number(data.value.location_based) }, { "emission": Number(data.value.renewable) }];
         var scope3_items = [{ "emission": Number(data.value.purchased_goods) }, { "emission": Number(data.value.business_travel) }, { "emission": Number(data.value.waste_generated) }, { "emission": Number(data.value.waste) }];
@@ -357,8 +388,8 @@ export class SetEmissionInventoryComponent {
             ...item,
             ...scope3_items[index]
         }));
-        let totalScopeEmision = [...mergedArrayScope1 , ...mergedArrayScope2 , ...mergedArrayScope3]
-        
+        let totalScopeEmision = [...mergedArrayScope1, ...mergedArrayScope2, ...mergedArrayScope3]
+
 
         var scope_1_emissions = Number(data.value.company_vehicles) + Number(data.value.refrigerants);
         var scope_2_emissions = Number(data.value.location_based) + Number(data.value.renewable);
@@ -369,16 +400,16 @@ export class SetEmissionInventoryComponent {
         formData.append('production_output', data.value.production_output);
         formData.append('economic_output', data.value.economic_output);
 
-        formData.append('group_added', data.value.group_added);
-   
-  
+        formData.append('group_added', "Default");
+
+
         formData.append('scope1_emission', data.value.scope_1_emissions);
         formData.append('scope2_emission', data.value.scope_2_emissions);
         formData.append('scope3_emission', data.value.scope_3_emissions);
 
         formData.append('scope_items', JSON.stringify(totalScopeEmision));
         formData.append('relation_id', id);
-      
+
         // formData.append('groupId', id);
 
         this.GroupService.updateInventory(formData.toString()).subscribe({
@@ -415,7 +446,7 @@ export class SetEmissionInventoryComponent {
                 if (response.success == true) {
                     const details = response.individualDetails;
                     const idCompany = details.find(items => items.category == 'Scope1 from Company Vehicles');
-         
+
                     const idRefrigerants = details.find(items => items.category == 'Scope1 from Refrigerants');
                     const idLocation = details.find(items => items.category == 'Scope2 Location Based Emissions');
                     const idRenewable = details.find(items => items.category == 'Scope2 Renewable Energy Use');
@@ -438,8 +469,8 @@ export class SetEmissionInventoryComponent {
                         business_travel: idBusiness.emission,
                         waste_generated: idWaste.emission,
                         waste: idWater.emission,
-                        production_output:response.details[0].production_output,
-                        economic_output:response.details[0].economic_output,
+                        production_output: response.details[0].production_output,
+                        economic_output: response.details[0].economic_output,
                         scope_1_emissions: response.details[0].total_scope1,
                         scope_2_emissions: response.details[0].total_scope2,
                         scope_3_emissions: response.details[0].total_scope3
@@ -466,9 +497,10 @@ export class SetEmissionInventoryComponent {
     //handles the closing of a dialog
     onCloseHandled() {
         this.visible = false;
+        this.visible2 = false;
         this.isloading = false;
         let tenantID = this.loginInfo.tenantID;
-       
+
     }
     //display a dialog for editing a group
 
@@ -562,5 +594,5 @@ export class SetEmissionInventoryComponent {
             }
         });
     };
-   
+
 }

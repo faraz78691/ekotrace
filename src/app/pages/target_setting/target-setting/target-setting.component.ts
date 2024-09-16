@@ -235,11 +235,11 @@ export class TargetSettingComponent {
 
     this.GroupService.getTargetSetting( this.superAdminTenentID).subscribe({
       next: (response) => {
-
+console.log(response);
         if (response.success == true) {
           this.groupsList = response.orders;
           // group.target_emission_change,group.base_year,group.target_year,group.target_type, group.emission_activity
-          // this.ViewGraph( this.groupsList[0].target_emission_change,this.groupsList[0].base_year,this.groupsList[0].target_year,this.groupsList[0].target_type,this.groupsList[0].emission_activity)
+          this.ViewGraph( this.groupsList[0].target_emission_change,this.groupsList[0].base_year,this.groupsList[0].target_year,this.groupsList[0].target_type,this.groupsList[0].emission_activity)
           if (this.groupsList.length > 0) {
             this.groupdetails = this.groupsList[0];
             this.groupdata = true;
@@ -379,7 +379,7 @@ export class TargetSettingComponent {
                 // }
                 
       
-          console.log(newScope1Xcordinate);
+        
           if (scope == 'Scope 1') {
             this.graphMethod(newScope1Xcordinate, response.targetScope1Xcordinate, response.forecastScope1Xcordinate, response.targetYcordinate, response.forecastYcordinate)
           } else if (scope == 'Scope 1 & 2') {
@@ -431,8 +431,7 @@ export class TargetSettingComponent {
   }
 
   graphMethod(normalData, targetData, forecastedData, normalYears, Dashedyears) {
-    console.log(normalData);
-    console.log(forecastedData);
+   
     
 
     var index = 0;

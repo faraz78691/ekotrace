@@ -236,13 +236,15 @@ export class FacilityComponent {
     }
     //method for update a facility by id
     editfacility(id: any, data: NgForm) {
-      
+      if(data.invalid){
+        return
+      }
         let tenantId = this.loginInfo.tenantID;
         let formdata = new URLSearchParams();
         formdata.set('AssestName', this.facilityDetails.AssestName)
         formdata.set('tenantID', (tenantId).toString())
         formdata.set('AssestType', this.facilityDetails.AssestType)
-        formdata.set('EquityPercentage', (this.facilityDetails.EquityPercentage).toString());
+        formdata.set('EquityPercentage', (this.facilityDetails.EquityPercentage)?.toString());
         formdata.set('Address', this.facilityDetails.Address);
         formdata.set('IsWaterStreenArea', (this.facilityDetails.IsWaterStreenArea)?.toString());
         formdata.set('CityId', this.facilityDetails.CityId.toString());
