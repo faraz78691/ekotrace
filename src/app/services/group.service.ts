@@ -93,6 +93,9 @@ export class GroupService {
     public updateInventory( groupdetails) {
         return this.http.post(environment.baseUrl + '/targetsetting/updateEmissionInventoryID', groupdetails);
     };
+    public updateTargetSetting( groupdetails) {
+        return this.http.post(environment.baseUrl + '/targetsetting/updateTargetSetting', groupdetails);
+    };
     public updateSuperAdminPakcages( groupdetails) {
         return this.http.post(environment.baseUrl + '/addpackageBySuperadmin', groupdetails);
     };

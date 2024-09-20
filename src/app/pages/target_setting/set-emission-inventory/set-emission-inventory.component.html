@@ -78,6 +78,7 @@
                             <th scope="col">Total Scope2 (tC02e)</th>
                             <th scope="col">Total Scope3 (tC02e)</th>
                             <th scope="col">Total Emissions (tC02e) </th>
+                            <th scope="col">User </th>
                             <th scope="col"> </th>
                         </tr>
                     </thead>
@@ -107,6 +108,9 @@
                             </td>
                             <td class="td pb-1">
                                 {{ group.total_emission }}
+                            </td>
+                            <td class="td pb-1">
+                                {{ group.user_name }}
                             </td>
                             <td class="td pb-1" (click)="viewDetails(group.relation_id)">
                                 <i class="fas fa-edit"></i>
@@ -148,20 +152,17 @@
                 : updateGroup(relationId, GroupForm)
         ">
             <div class="mb-5 pb-0 row">
-                <!-- <div class="col-md-6 mb-3">
-                    <label for="fname">Group Name</label>
-                    <input name="group_added" ngModel id="search-input" type="text"
-                        class="form-control Dashboard-tab text-white" placeholder="Enter Group Name"
-                        #groupName="ngModel" [disabled]="isloading" required />
-                    <p class="text-danger mb-0" *ngIf="GroupForm.submitted && groupName.errors?.['required']">
-                        Group name is required
-                    </p>
-                    <p class="text-danger mb-0" *ngIf="
-                    isgroupExist === true && groupName.touched
-                ">
-                        group already exist please use other groupname
-                    </p>
-                </div> -->
+                <div class="col-md-6 mb-3">
+                    <label for="fname" class="d-block">Carbon Offsets to be Included </label>
+                    <label class="switch">
+                        <input type="checkbox">
+                        <span class="slider round"></span>
+                    </label>
+                    
+                    
+                  
+                  
+                </div>
                 <div class="col-md-6 mb-3">
                     <label for="fname">Year of Emission data</label>
                     <p-calendar class="w-100 ct_input_dark_text_145 ct_calender_input_38_action_12" ngModel

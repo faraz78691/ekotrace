@@ -446,7 +446,6 @@ export class SetEmissionInventoryComponent {
                 if (response.success == true) {
                     const details = response.individualDetails;
                     const idCompany = details.find(items => items.category == 'Scope1 from Company Vehicles');
-
                     const idRefrigerants = details.find(items => items.category == 'Scope1 from Refrigerants');
                     const idLocation = details.find(items => items.category == 'Scope2 Location Based Emissions');
                     const idRenewable = details.find(items => items.category == 'Scope2 Renewable Energy Use');

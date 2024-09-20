@@ -384,6 +384,15 @@ export class DashboardService {
     public dashboardWaterTreated_nonTreated(admininfo) {
         return this.http.post('http://13.200.247.29:4000/dashboardWaterTreated_nonTreated', admininfo);
     };
+    public waterTreatedByLevel(admininfo) {
+        return this.http.post('http://13.200.247.29:4000/dashboardWaterTreatedbylevel', admininfo);
+    };
+    public WaterEmision(admininfo) {
+        return this.http.post('http://13.200.247.29:4000/dashboardWaterEmission', admininfo);
+    };
+    public waterTreatedDestination(admininfo) {
+        return this.http.post('http://13.200.247.29:4000/dashboardWaterTreatedbydestination', admininfo);
+    };
     public businessdashboardemssionByAir(admininfo) {
         return this.http.post(this.apiURL + '/businessdashboardemssionByAir', admininfo);
     };

@@ -8,6 +8,7 @@ import { Component, ElementRef, HostBinding, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppService } from '@services/app.service';
 import { CompanyService } from '@services/company.service';
+import { FacilityService } from '@services/facility.service';
 import { ReportService } from '@services/report.service';
 import { Observable } from 'rxjs';
 
@@ -33,6 +34,7 @@ export class MenuSidebarComponent implements OnInit {
     selectedTheme: string;
     public brsrdata: BRSR_Doc;
     isBRSRDoc: boolean;
+    haveMainGroup = 2;
 
 
     constructor(
@@ -41,6 +43,7 @@ export class MenuSidebarComponent implements OnInit {
         private store: Store<AppState>,
         private elementRef: ElementRef,
         private reportService: ReportService,
+        private facilityService: FacilityService,
 
     ) {
         this.loginInfo = new LoginInfo();
@@ -60,30 +63,32 @@ export class MenuSidebarComponent implements OnInit {
                 this.IsPAdmin = false;
             }
             // this.checkbrsrdata(this.loginInfo.tenantID);
-
+            if (this.loginInfo.role == 'Admin') {
+                this.GetAllSubGrups();
+            }
             this.getTenantsById(Number(this.loginInfo.tenantID));
             this.getTenantsById(Number(this.loginInfo.tenantID)).then(() => {
-               
-              
+
+
                 if (this.loginInfo.role === 'Super Admin' && this.isExpired) {
                     this.menu =
                         menu.find((item) => item.role === this.loginInfo.role)
                             ?.items || [];
-                          
-             
+
+
                 } else {
                     if (this.brsrdata.docPath != null || this.brsrdata.docPath != undefined) {
                         this.isBRSRDoc = true;
                         this.menu =
-                            menu.find((item) => item.role === this.loginInfo.role && item.isBRSRDoc === this.isBRSRDoc)
+                            menu.find((item) => item.role === this.loginInfo.role)
                                 ?.items || [];
                     }
                     else {
-                      
+                        console.log(this.haveMainGroup);
                         this.isBRSRDoc = false;
-                       
+
                         this.menu =
-                            menu.find((item) => item.role === this.loginInfo.role  && item.package_name ==this.loginInfo.package_name)
+                            menu.find((item) => item.role === this.loginInfo.role && item.package_name == this.loginInfo.package_name && item.haveMainGorup == this.haveMainGroup)
                                 ?.items || [];
                     }
 
@@ -101,7 +106,7 @@ export class MenuSidebarComponent implements OnInit {
     }
 
     handleActiveClass() {
-     
+
     }
     onToggleMenuSidebar() {
         this.store.dispatch(new ToggleSidebarMenu());
@@ -118,14 +123,14 @@ export class MenuSidebarComponent implements OnInit {
             const response = await this.companyService
                 .getTenantsDataById(Number(this.loginInfo.tenantID))
                 .toPromise();
-  
+
             this.companyDetails = response;
             const currentDate = new Date();
             const licenseExpiredDate = new Date(
                 this.companyDetails.licenseExpired
             );
             this.isExpired = licenseExpiredDate < currentDate;
-           
+
 
         } catch (error) {
             // Handle the error appropriately
@@ -149,6 +154,22 @@ export class MenuSidebarComponent implements OnInit {
             this.theme2();
         }
     };
+    GetAllSubGrups() {
+        let tenantId = this.loginInfo.tenantID;
+        const formData = new URLSearchParams();
+        formData.set('tenantID', tenantId.toString())
+        this.facilityService.getSubGroupsByTenantId(formData.toString()).subscribe((result: any) => {
+
+            if (result.success == true) {
+                this.haveMainGroup = result.categories[0].is_subgroup
+                console.log(result);
+                console.log(this.haveMainGroup);
+
+
+            }
+
+        });
+    };
 
     checkbrsrdata(tenantID) {
         this.brsrdata = new BRSR_Doc();
@@ -156,7 +177,7 @@ export class MenuSidebarComponent implements OnInit {
 
         this.reportService.getBRSRdata(tenantID).subscribe((response) => {
             if (response != null) {
-               
+
                 this.brsrdata = response;
 
             }
@@ -200,8 +221,8 @@ export class MenuSidebarComponent implements OnInit {
 export const menu = [
     {
         role: 'Platform Admin',
-        isBRSRDoc: false,
-        package_name : 'Comprehensive',
+        haveMainGorup: 2,
+        package_name: 'Comprehensive',
         items: [
             {
                 head: 'Platform Admin',
@@ -210,13 +231,13 @@ export const menu = [
                 iconSRC: 'assets/img/trees.png',
                 path: ['platformAdmin']
             },
-          
+
         ]
     },
     {
         role: 'Super Admin',
-        isBRSRDoc: false,
-        package_name : 'Comprehensive',
+        haveMainGorup: 2,
+        package_name: 'Comprehensive',
         items: [
             {
                 head: 'Organisation Structure',
@@ -225,16 +246,18 @@ export const menu = [
                 iconSRC: 'assets/img/trees.png',
                 path: ['main_tree']
             },
-            { head: undefined,
+            {
+                head: undefined,
                 name: 'Add User',
                 iconClasses: 'fas fa-user-plus',
                 iconSRC: 'assets/img/user_121.png',
                 path: ['user']
             },
-            {head: undefined,
+            {
+                head: undefined,
                 name: 'Set GHG Template',
                 iconClasses: 'fas fa-star',
-                iconSRC :'assets/img/tracking_icon.svg',
+                iconSRC: 'assets/img/tracking_icon.svg',
                 path: ['setGhgTemplate']
             },
             {
@@ -256,7 +279,7 @@ export const menu = [
                 iconClasses: 'fas fa-star',
                 iconSRC: 'assets/img/trees.png',
                 path: ['tracking']
-            }, 
+            },
             {
                 name: 'Financed Emissions',
                 iconClasses: 'fas fa-table',
@@ -332,8 +355,8 @@ export const menu = [
     },
     {
         role: 'Super Admin',
-        isBRSRDoc: false,
-        package_name : 'Intermediate',
+        haveMainGorup: 2,
+        package_name: 'Intermediate',
         items: [
             {
                 head: 'Organisation Structure',
@@ -342,16 +365,18 @@ export const menu = [
                 iconSRC: 'assets/img/trees.png',
                 path: ['main_tree']
             },
-            { head: undefined,
+            {
+                head: undefined,
                 name: 'Add User',
                 iconClasses: 'fas fa-user-plus',
                 iconSRC: 'assets/img/user_121.png',
                 path: ['user']
             },
-            {head: undefined,
+            {
+                head: undefined,
                 name: 'Set GHG Template',
                 iconClasses: 'fas fa-star',
-                iconSRC :'assets/img/tracking_icon.svg',
+                iconSRC: 'assets/img/tracking_icon.svg',
                 path: ['setGhgTemplate']
             },
             {
@@ -373,7 +398,7 @@ export const menu = [
                 iconClasses: 'fas fa-star',
                 iconSRC: 'assets/img/trees.png',
                 path: ['tracking']
-            }, 
+            },
             // {
             //     name: 'Financed Emissions',
             //     iconClasses: 'fas fa-table',
@@ -449,8 +474,8 @@ export const menu = [
     },
     {
         role: 'Super Admin',
-        isBRSRDoc: false,
-        package_name : 'Basic',
+        haveMainGorup: 2,
+        package_name: 'Basic',
         items: [
             {
                 head: 'Organisation Structure',
@@ -459,16 +484,18 @@ export const menu = [
                 iconSRC: 'assets/img/trees.png',
                 path: ['main_tree']
             },
-            { head: undefined,
+            {
+                head: undefined,
                 name: 'Add User',
                 iconClasses: 'fas fa-user-plus',
                 iconSRC: 'assets/img/user_121.png',
                 path: ['user']
             },
-            {head: undefined,
+            {
+                head: undefined,
                 name: 'Set GHG Template',
                 iconClasses: 'fas fa-star',
-                iconSRC :'assets/img/tracking_icon.svg',
+                iconSRC: 'assets/img/tracking_icon.svg',
                 path: ['setGhgTemplate']
             },
             {
@@ -490,7 +517,7 @@ export const menu = [
                 iconClasses: 'fas fa-star',
                 iconSRC: 'assets/img/trees.png',
                 path: ['tracking']
-            }, 
+            },
             {
                 head: 'Account Details',
                 name: 'Company Profile',
@@ -514,8 +541,8 @@ export const menu = [
     },
     {
         role: 'Admin',
-        isBRSRDoc: false,
-        package_name : 'Comprehensive',
+        haveMainGorup: 1,
+        package_name: 'Comprehensive',
         items: [
             {
                 head: 'Organisation Structure',
@@ -524,16 +551,18 @@ export const menu = [
                 iconSRC: 'assets/img/trees.png',
                 path: ['main_tree']
             },
-            { head: undefined,
+            {
+                head: undefined,
                 name: 'Add User',
                 iconClasses: 'fas fa-user-plus',
                 iconSRC: 'assets/img/user_121.png',
                 path: ['user']
             },
-            {head: undefined,
+            {
+                head: undefined,
                 name: 'Set GHG Template',
                 iconClasses: 'fas fa-star',
-                iconSRC :'assets/img/tracking_icon.svg',
+                iconSRC: 'assets/img/tracking_icon.svg',
                 path: ['setGhgTemplate']
             },
             {
@@ -555,7 +584,7 @@ export const menu = [
                 iconClasses: 'fas fa-star',
                 iconSRC: 'assets/img/trees.png',
                 path: ['tracking']
-            }, 
+            },
             {
                 name: 'Financed Emissions',
                 iconClasses: 'fas fa-table',
@@ -630,8 +659,8 @@ export const menu = [
     },
     {
         role: 'Admin',
-        isBRSRDoc: true,
-        package_name : 'Intermediate',
+        haveMainGorup: 0,
+        package_name: 'Comprehensive',
         items: [
             {
                 head: 'Organisation Structure',
@@ -640,16 +669,136 @@ export const menu = [
                 iconSRC: 'assets/img/trees.png',
                 path: ['main_tree']
             },
-            { head: undefined,
+            {
+                head: undefined,
                 name: 'Add User',
                 iconClasses: 'fas fa-user-plus',
                 iconSRC: 'assets/img/user_121.png',
                 path: ['user']
             },
-            {head: undefined,
+            {
+                head: undefined,
                 name: 'Set GHG Template',
                 iconClasses: 'fas fa-star',
-                iconSRC :'assets/img/tracking_icon.svg',
+                iconSRC: 'assets/img/tracking_icon.svg',
+                path: ['setGhgTemplate']
+            },
+            {
+                head: 'Disclose',
+                name: 'Dashboard',
+                iconClasses: 'fas fa-table',
+                iconSRC: 'assets/img/dashboard.svg',
+                path: ['dashboard']
+            },
+            {
+                name: 'Finance Dashboard',
+                iconClasses: 'fas fa-table',
+                iconSRC: 'assets/img/BRSR.svg',
+                path: ['financeDash']
+            },
+            {
+                head: 'GHG Emissions',
+                name: 'Corporate Emissions',
+                iconClasses: 'fas fa-star',
+                iconSRC: 'assets/img/trees.png',
+                path: ['tracking']
+            },
+            {
+                name: 'Financed Emissions',
+                iconClasses: 'fas fa-table',
+                iconSRC: 'assets/img/BRSR.svg',
+                path: ['finance_emissions']
+            },
+            {
+                name: 'Vendors / Cost Centre',
+                iconClasses: 'fas fa-table',
+                iconSRC: 'assets/img/BRSR.svg',
+                path: ['vendors']
+            },
+            {
+                head: 'Reporting ',
+                name: 'Report',
+                iconClasses: 'fas fa-folder',
+                iconSRC: 'assets/img/report_icon.svg',
+                path: ['report']
+            },
+            {
+                name: 'BRSR',
+                iconClasses: 'fas fa-table',
+                iconSRC: 'assets/img/BRSR.svg',
+                path: ['brsrReport']
+            },
+            // {
+            //     head: 'Target Setting',
+            //     name: 'Set Emission Inventory',
+            //     iconClasses: 'fas fa-folder',
+            //     iconSRC: 'assets/img/report_icon.svg',
+            //     path: ['setEmissionInventory']
+            // },
+            // {
+            //     name: 'Target Setting',
+            //     iconClasses: 'fas fa-table',
+            //     iconSRC: 'assets/img/BRSR.svg',
+            //     path: ['targetSetting']
+            // },
+            // {
+            //     name: 'Actions',
+            //     iconClasses: 'fas fa-table',
+            //     iconSRC: 'assets/img/BRSR.svg',
+            //     path: ['actions']
+            // },
+            // {
+            //     head: 'Carbon offsetting',
+            //     name: 'Offset Entry',
+            //     iconClasses: 'fas fa-eye',
+            //     iconSRC: 'assets/img/building.svg',
+            //     path: ['carbonOffset']
+            // },
+            {
+                head: 'Account Details',
+                name: 'Company Profile',
+                iconClasses: 'fas fa-eye',
+                iconSRC: 'assets/img/building.svg',
+                path: ['company-profile']
+            },
+            {
+                name: 'Billing',
+                iconClasses: 'fas fa-folder',
+                iconSRC: 'assets/img/biling_icon_211.png',
+                path: ['billing']
+            },
+            // {
+            //     name: 'Billing',
+            //     iconClasses: 'fas fa-folder',
+            //     iconSRC: 'assets/img/biling_icon_211.png',
+            //     path: ['adminBilling']
+            // },
+        ]
+    },
+    {
+        role: 'Admin',
+        haveMainGorup: 0,
+        package_name: 'Intermediate',
+        items: [
+            {
+                head: 'Organisation Structure',
+                name: 'Tree',
+                iconClasses: 'fas fa-star',
+                iconSRC: 'assets/img/trees.png',
+                path: ['main_tree']
+            },
+            {
+                head: undefined,
+                name: 'Add User',
+                iconClasses: 'fas fa-user-plus',
+                iconSRC: 'assets/img/user_121.png',
+                path: ['user']
+            },
+            {
+                head: undefined,
+                name: 'Set GHG Template',
+                iconClasses: 'fas fa-star',
+                iconSRC: 'assets/img/tracking_icon.svg',
                 path: ['setGhgTemplate']
             },
             {
@@ -671,7 +820,126 @@ export const menu = [
                 iconClasses: 'fas fa-star',
                 iconSRC: 'assets/img/trees.png',
                 path: ['tracking']
-            }, 
+            },
+            // {
+            //     name: 'Financed Emissions',
+            //     iconClasses: 'fas fa-table',
+            //     iconSRC: 'assets/img/BRSR.svg',
+            //     path: ['finance_emissions']
+            // },
+            // {
+            //     name: 'Vendors / Cost Centre',
+            //     iconClasses: 'fas fa-table',
+            //     iconSRC: 'assets/img/BRSR.svg',
+            //     path: ['vendors']
+            // },
+
+            {
+                head: 'Reporting ',
+                name: 'Report',
+                iconClasses: 'fas fa-folder',
+                iconSRC: 'assets/img/report_icon.svg',
+                path: ['report']
+            },
+            {
+                name: 'BRSR',
+                iconClasses: 'fas fa-table',
+                iconSRC: 'assets/img/BRSR.svg',
+                path: ['brsrReport']
+            },
+            // {
+            //     head: 'Target Setting',
+            //     name: 'Set Emission Inventory',
+            //     iconClasses: 'fas fa-folder',
+            //     iconSRC: 'assets/img/report_icon.svg',
+            //     path: ['setEmissionInventory']
+            // },
+            // {
+            //     name: 'Target Setting',
+            //     iconClasses: 'fas fa-table',
+            //     iconSRC: 'assets/img/BRSR.svg',
+            //     path: ['targetSetting']
+            // },
+            // {
+            //     name: 'Actions',
+            //     iconClasses: 'fas fa-table',
+            //     iconSRC: 'assets/img/BRSR.svg',
+            //     path: ['actions']
+            // },
+            // {
+            //     head: 'Carbon offsetting',
+            //     name: 'Offset Entry',
+            //     iconClasses: 'fas fa-eye',
+            //     iconSRC: 'assets/img/building.svg',
+            //     path: ['carbonOffset']
+            // },
+            {
+                head: 'Account Details',
+                name: 'Company Profile',
+                iconClasses: 'fas fa-eye',
+                iconSRC: 'assets/img/building.svg',
+                path: ['company-profile']
+            },
+            {
+                name: 'Billing',
+                iconClasses: 'fas fa-folder',
+                iconSRC: 'assets/img/biling_icon_211.png',
+                path: ['billing']
+            },
+            // {
+            //     name: 'Billing',
+            //     iconClasses: 'fas fa-folder',
+            //     iconSRC: 'assets/img/biling_icon_211.png',
+            //     path: ['adminBilling']
+            // },
+        ]
+    },
+    {
+        role: 'Admin',
+        haveMainGorup: 1,
+        package_name: 'Intermediate',
+        items: [
+            {
+                head: 'Organisation Structure',
+                name: 'Tree',
+                iconClasses: 'fas fa-star',
+                iconSRC: 'assets/img/trees.png',
+                path: ['main_tree']
+            },
+            {
+                head: undefined,
+                name: 'Add User',
+                iconClasses: 'fas fa-user-plus',
+                iconSRC: 'assets/img/user_121.png',
+                path: ['user']
+            },
+            {
+                head: undefined,
+                name: 'Set GHG Template',
+                iconClasses: 'fas fa-star',
+                iconSRC: 'assets/img/tracking_icon.svg',
+                path: ['setGhgTemplate']
+            },
+            {
+                head: 'Disclose',
+                name: 'Dashboard',
+                iconClasses: 'fas fa-table',
+                iconSRC: 'assets/img/dashboard.svg',
+                path: ['dashboard']
+            },
+            // {
+            //     name: 'Finance Dashboard',
+            //     iconClasses: 'fas fa-table',
+            //     iconSRC: 'assets/img/BRSR.svg',
+            //     path: ['financeDash']
+            // },
+            {
+                head: 'GHG Emissions',
+                name: 'Corporate Emissions',
+                iconClasses: 'fas fa-star',
+                iconSRC: 'assets/img/trees.png',
+                path: ['tracking']
+            },
             // {
             //     name: 'Financed Emissions',
             //     iconClasses: 'fas fa-table',
@@ -747,8 +1015,8 @@ export const menu = [
     },
     {
         role: 'Admin',
-        isBRSRDoc: true,
-        package_name : 'Basic',
+        haveMainGorup: 2,
+        package_name: 'Basic',
         items: [
             {
                 head: 'Organisation Structure',
@@ -757,16 +1025,18 @@ export const menu = [
                 iconSRC: 'assets/img/trees.png',
                 path: ['main_tree']
             },
-            { head: undefined,
+            {
+                head: undefined,
                 name: 'Add User',
                 iconClasses: 'fas fa-user-plus',
                 iconSRC: 'assets/img/user_121.png',
                 path: ['user']
             },
-            {head: undefined,
+            {
+                head: undefined,
                 name: 'Set GHG Template',
                 iconClasses: 'fas fa-star',
-                iconSRC :'assets/img/tracking_icon.svg',
+                iconSRC: 'assets/img/tracking_icon.svg',
                 path: ['setGhgTemplate']
             },
             {
@@ -788,8 +1058,8 @@ export const menu = [
                 iconClasses: 'fas fa-star',
                 iconSRC: 'assets/img/trees.png',
                 path: ['tracking']
-            }, 
-         
+            },
+
             {
                 head: 'Account Details',
                 name: 'Company Profile',
@@ -807,8 +1077,8 @@ export const menu = [
     },
     {
         role: 'Manager',
-        isBRSRDoc: false,
-        package_name : 'Comprehensive',
+        haveMainGorup: 2,
+        package_name: 'Comprehensive',
         items: [
             {
                 head: 'Organisation Structure',
@@ -817,16 +1087,18 @@ export const menu = [
                 iconSRC: 'assets/img/trees.png',
                 path: ['main_tree']
             },
-            { head: undefined,
+            {
+                head: undefined,
                 name: 'Add User',
                 iconClasses: 'fas fa-user-plus',
                 iconSRC: 'assets/img/user_121.png',
                 path: ['user']
             },
-            {head: undefined,
+            {
+                head: undefined,
                 name: 'Set GHG Template',
                 iconClasses: 'fas fa-star',
-                iconSRC :'assets/img/tracking_icon.svg',
+                iconSRC: 'assets/img/tracking_icon.svg',
                 path: ['setGhgTemplate']
             },
             {
@@ -848,7 +1120,7 @@ export const menu = [
                 iconClasses: 'fas fa-star',
                 iconSRC: 'assets/img/trees.png',
                 path: ['tracking']
-            }, 
+            },
             {
                 name: 'Financed Emissions',
                 iconClasses: 'fas fa-table',
@@ -924,8 +1196,8 @@ export const menu = [
     },
     {
         role: 'Manager',
-        isBRSRDoc: false,
-        package_name : 'Intermediate',
+        haveMainGorup: 2,
+        package_name: 'Intermediate',
         items: [
             {
                 head: 'Organisation Structure',
@@ -934,16 +1206,18 @@ export const menu = [
                 iconSRC: 'assets/img/trees.png',
                 path: ['main_tree']
             },
-            { head: undefined,
+            {
+                head: undefined,
                 name: 'Add User',
                 iconClasses: 'fas fa-user-plus',
                 iconSRC: 'assets/img/user_121.png',
                 path: ['user']
             },
-            {head: undefined,
+            {
+                head: undefined,
                 name: 'Set GHG Template',
                 iconClasses: 'fas fa-star',
-                iconSRC :'assets/img/tracking_icon.svg',
+                iconSRC: 'assets/img/tracking_icon.svg',
                 path: ['setGhgTemplate']
             },
             {
@@ -965,7 +1239,7 @@ export const menu = [
                 iconClasses: 'fas fa-star',
                 iconSRC: 'assets/img/trees.png',
                 path: ['tracking']
-            }, 
+            },
             {
                 head: 'Reporting ',
                 name: 'Report',
@@ -1028,8 +1302,8 @@ export const menu = [
     },
     {
         role: 'Manager',
-        isBRSRDoc: false,
-        package_name : 'Basic',
+        haveMainGorup: 2,
+        package_name: 'Basic',
         items: [
             {
                 head: 'Organisation Structure',
@@ -1038,16 +1312,18 @@ export const menu = [
                 iconSRC: 'assets/img/trees.png',
                 path: ['main_tree']
             },
-            { head: undefined,
+            {
+                head: undefined,
                 name: 'Add User',
                 iconClasses: 'fas fa-user-plus',
                 iconSRC: 'assets/img/user_121.png',
                 path: ['user']
             },
-            {head: undefined,
+            {
+                head: undefined,
                 name: 'Set GHG Template',
                 iconClasses: 'fas fa-star',
-                iconSRC :'assets/img/tracking_icon.svg',
+                iconSRC: 'assets/img/tracking_icon.svg',
                 path: ['setGhgTemplate']
             },
             {
@@ -1069,8 +1345,8 @@ export const menu = [
                 iconClasses: 'fas fa-star',
                 iconSRC: 'assets/img/trees.png',
                 path: ['tracking']
-            }, 
-           
+            },
+
             {
                 head: 'Account Details',
                 name: 'Company Profile',
@@ -1088,8 +1364,8 @@ export const menu = [
     },
     {
         role: 'Preparer',
-        isBRSRDoc: false,
-        package_name : 'Comprehensive',
+        haveMainGorup: 2,
+        package_name: 'Comprehensive',
         items: [
             {
                 head: 'Organisation Structure',
@@ -1098,16 +1374,18 @@ export const menu = [
                 iconSRC: 'assets/img/trees.png',
                 path: ['main_tree']
             },
-            { head: undefined,
+            {
+                head: undefined,
                 name: 'Add User',
                 iconClasses: 'fas fa-user-plus',
                 iconSRC: 'assets/img/user_121.png',
                 path: ['user']
             },
-            {head: undefined,
+            {
+                head: undefined,
                 name: 'Set GHG Template',
                 iconClasses: 'fas fa-star',
-                iconSRC :'assets/img/tracking_icon.svg',
+                iconSRC: 'assets/img/tracking_icon.svg',
                 path: ['setGhgTemplate']
             },
             {
@@ -1129,7 +1407,7 @@ export const menu = [
                 iconClasses: 'fas fa-star',
                 iconSRC: 'assets/img/trees.png',
                 path: ['tracking']
-            }, 
+            },
             // {
             //     name: 'Financed Emissions',
             //     iconClasses: 'fas fa-table',
@@ -1205,8 +1483,8 @@ export const menu = [
     },
     {
         role: 'Preparer',
-        isBRSRDoc: false,
-        package_name : 'Intermediate',
+        haveMainGorup: 2,
+        package_name: 'Intermediate',
         items: [
             {
                 head: 'Organisation Structure',
@@ -1215,16 +1493,18 @@ export const menu = [
                 iconSRC: 'assets/img/trees.png',
                 path: ['main_tree']
             },
-            { head: undefined,
+            {
+                head: undefined,
                 name: 'Add User',
                 iconClasses: 'fas fa-user-plus',
                 iconSRC: 'assets/img/user_121.png',
                 path: ['user']
             },
-            {head: undefined,
+            {
+                head: undefined,
                 name: 'Set GHG Template',
                 iconClasses: 'fas fa-star',
-                iconSRC :'assets/img/tracking_icon.svg',
+                iconSRC: 'assets/img/tracking_icon.svg',
                 path: ['setGhgTemplate']
             },
             {
@@ -1246,7 +1526,7 @@ export const menu = [
                 iconClasses: 'fas fa-star',
                 iconSRC: 'assets/img/trees.png',
                 path: ['tracking']
-            }, 
+            },
             {
                 head: 'Reporting ',
                 name: 'Report',
@@ -1279,7 +1559,7 @@ export const menu = [
             //     iconSRC: 'assets/img/BRSR.svg',
             //     path: ['actions']
             // },
-          
+
             {
                 head: 'Account Details',
                 name: 'Company Profile',
@@ -1293,13 +1573,13 @@ export const menu = [
                 iconSRC: 'assets/img/biling_icon_211.png',
                 path: ['billing']
             },
-         
+
         ]
     },
     {
         role: 'Preparer',
-        isBRSRDoc: false,
-        package_name : 'Basic',
+        haveMainGorup: 2,
+        package_name: 'Basic',
         items: [
             {
                 head: 'Organisation Structure',
@@ -1308,16 +1588,18 @@ export const menu = [
                 iconSRC: 'assets/img/trees.png',
                 path: ['main_tree']
             },
-            { head: undefined,
+            {
+                head: undefined,
                 name: 'Add User',
                 iconClasses: 'fas fa-user-plus',
                 iconSRC: 'assets/img/user_121.png',
                 path: ['user']
             },
-            {head: undefined,
+            {
+                head: undefined,
                 name: 'Set GHG Template',
                 iconClasses: 'fas fa-star',
-                iconSRC :'assets/img/tracking_icon.svg',
+                iconSRC: 'assets/img/tracking_icon.svg',
                 path: ['setGhgTemplate']
             },
             {
@@ -1333,8 +1615,8 @@ export const menu = [
                 iconClasses: 'fas fa-star',
                 iconSRC: 'assets/img/trees.png',
                 path: ['tracking']
-            }, 
-          
+            },
+
             {
                 head: 'Account Details',
                 name: 'Company Profile',
@@ -1348,8 +1630,8 @@ export const menu = [
                 iconSRC: 'assets/img/biling_icon_211.png',
                 path: ['billing']
             },
-          
+
         ]
     },
-  
+
 ];

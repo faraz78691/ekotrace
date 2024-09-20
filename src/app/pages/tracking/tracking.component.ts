@@ -48,6 +48,7 @@ declare var $: any;
     ]
 })
 export class TrackingComponent {
+    public Number = Number;
     public countriesList: any = countries
     @ViewChild('dataEntryForm', { static: false }) dataEntryForm: NgForm;
     @ViewChild('tabView') dataentryTab: TabView;
@@ -275,6 +276,7 @@ export class TrackingComponent {
         { name: 'No', value: 0 },
     ];
     productHSNSelect: any;
+    waterSupplyUnit:any;
 
     storagef_typeValue: string = this.storageGrid[0]?.storagef_type;
     openDatapointDialog() {
@@ -2055,6 +2057,13 @@ export class TrackingComponent {
                 );
                 return
             }
+            if(form.value.water_supply < form.value.water_treatment){
+                this.notification.showInfo(
+                    'Water withdrawn should be greater than or equal to water discharged',
+                    'Error'
+                );
+                return
+            }
             var spliteedMonth = this.dataEntry.month.split(",");
             var monthString = JSON.stringify(spliteedMonth)
             var waterobj1 = { "type": "Surface water", "kilolitres": form.value.surface_water };
@@ -2212,7 +2221,7 @@ export class TrackingComponent {
             // Filter out rows where no field is filled
             const filledRows = this.rows.filter(row =>
 
-                row.vehicleType1 !== null && row.employeesCommute.trim() !== ''
+                row.vehicleType1 !== null && row.employeesCommute?.trim() !== ''
             );
 
             if (filledRows.length === 0) {
@@ -2258,7 +2267,7 @@ export class TrackingComponent {
 
 
                     } else {
-                        this.notification.showError(
+                        this.notification.showWarning(
                             response.message,
                             'Error'
                         );

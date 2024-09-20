@@ -16,6 +16,7 @@ import { months } from '@/models/months';
 import { DatePipe } from '@angular/common';
 import { DataEntry } from '@/models/DataEntry';
 import { NotificationService } from '@services/notification.service';
+import * as XLSX from 'xlsx';
 interface financialyear {
     financialyear: string;
 }
@@ -86,6 +87,9 @@ export class EnergyCustomReportComponent {
     isMultiple: boolean = undefined
     selectedMultipleCategories: any;
     selectedMultipleFacility: any;
+    @ViewChild('dt', { static: false }) table: any;
+
+
 
     reportmonths: any[] = [
         { name: 'Jan', value: 'Jan' },
@@ -642,4 +646,19 @@ export class EnergyCustomReportComponent {
     //     })
 
     // }
+
+    exportTableToExcel() {
+        // Get the table element
+        const tableElement = this.table.el.nativeElement.querySelector('.p-datatable-table');
+    
+        // Create a new worksheet from the table element
+        const worksheet: XLSX.WorkSheet = XLSX.utils.table_to_sheet(tableElement);
+    
+        // Create a new workbook and append the worksheet
+        const workbook: XLSX.WorkBook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'ReportData');
+    
+        // Generate the Excel file and download it
+        XLSX.writeFile(workbook, 'ReportData.xlsx');
+      }
 }

@@ -72,7 +72,6 @@ export class VendorsComponent {
   rootUrl: string;
   uploadedImageUrl: string;
   Groupby: groupby[];
-  countryData: Location[] = [];
   stateData: Location[] = [];
   selectedValue: string;
   selectedCountry: any[] = [];
@@ -103,7 +102,8 @@ export class VendorsComponent {
   type: string;
   date3: string;
   standard: string;
-  selectedFile: File
+  selectedFile: File;
+  countryData:any[]=[]
   constructor(
     private companyService: CompanyService,
     private UserService: UserService,
@@ -142,6 +142,7 @@ export class VendorsComponent {
     this.superAdminId = this.loginInfo.super_admin_id;
     this.GetVendors();
     this.GetCostCetnre();
+    this.AllCountry();
     this.updatedtheme = this.themeservice.getValue('theme');
   }
   //checks upadated theme
@@ -210,6 +211,7 @@ export class VendorsComponent {
     const formData = new URLSearchParams();
 
     formData.append('name', data.value.vendor_name);
+    formData.append('country_id', data.value.country);
     formData.append('address', data.value.address);
     formData.append('refer_id', data.value.refer_id);
     formData.append('tenant_id', this.superAdminId);
@@ -239,6 +241,21 @@ export class VendorsComponent {
     });
   };
 
+  AllCountry() {
+       
+    this.facilityService.GetCountry().subscribe({
+        next: (response) => {
+
+            this.countryData = response;
+           
+            // this.facilityDetails.CountryId = 2
+           
+        },
+        error: err => {
+            console.log(err)
+        }
+    });
+}
 
   //method to add new group
   saveCostCentre(data: NgForm) {

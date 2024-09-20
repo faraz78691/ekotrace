@@ -206,6 +206,7 @@
 
                 <ng-container *ngIf="isMultiple else default">
                     <div class="col-md-12" *ngIf="reportData.length >0; else emptyList">
+                        <button (click)="exportTableToExcel()">Generate Report</button>
                         <p-table class="ct_bottom_table_tr" #dt [value]="reportData" [rowHover]="true"
                             styleClass="p-datatable-striped" editMode="row">
                             <ng-template pTemplate="header">
@@ -245,6 +246,7 @@
                 </ng-container>
                 <ng-template #default>
                     <div class="col-md-12" *ngIf="reportData.length >0; else emptyList">
+                        <button (click)="exportTableToExcel()">Generate Report</button>
                         <p-table class="ct_bottom_table_tr" #dt [value]="reportData" [rowHover]="true"
                             styleClass="p-datatable-striped" editMode="row">
                             <ng-template pTemplate="header">

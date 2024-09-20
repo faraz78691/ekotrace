@@ -12,7 +12,7 @@
                 <div id="ct_emission_by_month" *ngIf="chartOptions">
                     <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart"
                         [dataLabels]="chartOptions.dataLabels" [yaxis]="chartOptions.yaxis"
-                        [legend]="chartOptions.legend" [stroke]="chartOptions.stroke" [tooltip]="chartOptions.tooltip"
+                        [legend]="chartOptions.legend" [stroke]="chartOptions.stroke" [tooltip]="chartOptions.tooltip"  [annotations]="chartOptions.annotations"
                         [xaxis]="chartOptions.xaxis"></apx-chart>
                 </div>
             </div>
@@ -98,7 +98,9 @@
                             <th scope="col">Target Year</th>
                             <th scope="col">Target Emission change %</th>
                             <th scope="col">Other Target KPI Change%</th>
+                            <th scope="col">User</th>
                             <th scope="col">View Graph</th>
+                            <th scope="col">Edit</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -137,9 +139,16 @@
                                 {{ group.other_target_kpichange }}
 
                             </td>
+                            <td class="td  pb-1">
+                                {{ group.user_name }}
+
+                            </td>
                             <td class="td  pb-1" (click)="ViewGraph(group.target_emission_change,group.base_year,group.target_year,group.target_type, group.emission_activity )">
                                 Click
 
+                            </td>
+                            <td class="td pb-1" (click)="viewDetails(group)">
+                                <i class="fas fa-edit"></i>
                             </td>
                           
                         </tr>
@@ -169,7 +178,7 @@
         <form #GroupForm="ngForm" class="col-12" (ngSubmit)="
             FormEdit === false
                 ? saveOffset(GroupForm)
-                : updateGroup(groupdetails.id, GroupForm.value)
+                : updateGroup(groupdetails.id, GroupForm)
         ">
             <div class="mb-5 pb-0 row">
                 <div class="col-md-6 mb-3">
@@ -181,8 +190,7 @@
                         Group name is required
                     </p>
                     <p class="text-danger mb-0" *ngIf="
-                    isgroupExist === true && groupName.touched
-                ">
+                    isgroupExist === true && groupName.touched">
                         group already exist please use other groupname
                     </p>
                 </div>

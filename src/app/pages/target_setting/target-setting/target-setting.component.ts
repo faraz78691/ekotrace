@@ -17,7 +17,7 @@ import { environment } from 'environments/environment';
 import { GroupService } from '@services/group.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { UserService } from '@services/user.service';
-import { ApexAxisChartSeries, ApexChart, ApexXAxis, ApexStroke, ApexDataLabels, ApexMarkers, ApexYAxis, ApexGrid, ApexLegend, ApexTitleSubtitle } from 'ng-apexcharts';
+import { ApexAxisChartSeries, ApexChart, ApexXAxis, ApexStroke, ApexDataLabels, ApexMarkers, ApexYAxis, ApexGrid, ApexLegend, ApexTitleSubtitle, ApexAnnotations } from 'ng-apexcharts';
 
 interface groupby {
   name: string;
@@ -35,6 +35,7 @@ export type ChartOptions = {
   grid: ApexGrid;
   legend: ApexLegend;
   title: ApexTitleSubtitle;
+  annotations: ApexAnnotations;
 };
 
 
@@ -233,13 +234,13 @@ export class TargetSettingComponent {
 
     //   formData.set('tenant_id', tenantID.toString());
 
-    this.GroupService.getTargetSetting( this.superAdminTenentID).subscribe({
+    this.GroupService.getTargetSetting(this.superAdminTenentID).subscribe({
       next: (response) => {
-console.log(response);
+        console.log(response);
         if (response.success == true) {
           this.groupsList = response.orders;
           // group.target_emission_change,group.base_year,group.target_year,group.target_type, group.emission_activity
-          this.ViewGraph( this.groupsList[0].target_emission_change,this.groupsList[0].base_year,this.groupsList[0].target_year,this.groupsList[0].target_type,this.groupsList[0].emission_activity)
+          this.ViewGraph(this.groupsList[0].target_emission_change, this.groupsList[0].base_year, this.groupsList[0].target_year, this.groupsList[0].target_type, this.groupsList[0].emission_activity)
           if (this.groupsList.length > 0) {
             this.groupdetails = this.groupsList[0];
             this.groupdata = true;
@@ -329,12 +330,19 @@ console.log(response);
 
 
   ViewGraph(percentage, base_year, target_year, intensity, scope) {
-    console.log(intensity);
 
+    var baseYear: any;
+    if (base_year.length == 4) {
+      baseYear = base_year;
+    } else {
+      var date = new Date(base_year);
+      baseYear = date.getFullYear();
+
+    }
     const formData = new URLSearchParams();
 
     formData.append('percentage', percentage);
-    formData.append('base_year', base_year);
+    formData.append('base_year', baseYear);
     formData.append('target_year', target_year);
     if (intensity == 'Emission Reduction') {
       formData.append('intensity', 'A');
@@ -350,9 +358,9 @@ console.log(response);
           const Data = response;
           let getBaseYear = response.yCordinate[0];
           let getYcoridnate = response.yCordinate;
-     
+
           let getscope1Xcordinate = response.scope1Xcordinate;
-         
+
           const currentYear = new Date().getFullYear();
 
           const years = [];
@@ -364,22 +372,22 @@ console.log(response);
 
             let resultIndex = getYcoridnate.indexOf(years[i]);
 
-             if( resultIndex != -1){
+            if (resultIndex != -1) {
               newScope1Xcordinate.push(getscope1Xcordinate[resultIndex])
-             }else{
+            } else {
               newScope1Xcordinate.push(0)
-             }
             }
-            
-          
-            // if(years[i] == getYcoridnate[i]){
-              //   newScope1Xcordinate.push(getscope1Xcordinate[i])
-              // }else{
-                //   newScope1Xcordinate.push(null)
-                // }
-                
-      
-        
+          }
+
+
+          // if(years[i] == getYcoridnate[i]){
+          //   newScope1Xcordinate.push(getscope1Xcordinate[i])
+          // }else{
+          //   newScope1Xcordinate.push(null)
+          // }
+
+
+
           if (scope == 'Scope 1') {
             this.graphMethod(newScope1Xcordinate, response.targetScope1Xcordinate, response.forecastScope1Xcordinate, response.targetYcordinate, response.forecastYcordinate)
           } else if (scope == 'Scope 1 & 2') {
@@ -398,15 +406,15 @@ console.log(response);
               years.push(year);
             }
             for (let i = 0; i < years.length; i++) {
-  
+
               let resultIndex = getYcoridnate.indexOf(years[i]);
-  
-               if( resultIndex != -1){
+
+              if (resultIndex != -1) {
                 newScope12Xcordinate.push(actualCordinate[resultIndex])
-               }else{
+              } else {
                 newScope12Xcordinate.push(0)
-               }
               }
+            }
             this.graphMethod(newScope12Xcordinate, targetCordinate, forecastCordinate, response.targetYcordinate, response.forecastYcordinate)
 
           } else {
@@ -431,8 +439,6 @@ console.log(response);
   }
 
   graphMethod(normalData, targetData, forecastedData, normalYears, Dashedyears) {
-   
-    
 
     var index = 0;
     const normalsLine: number[] = normalData.map(str => parseFloat(str));
@@ -441,7 +447,7 @@ console.log(response);
     const mergedYears = [...normalYear, ...Dashedyears];
     let uniqueYears = [...new Set(mergedYears)];
 
-
+    console.log(normalYear);
     // for (let i = 0; i < cars.length; i++) {
     //   text += cars[i] + "<br>";
     // }
@@ -458,38 +464,63 @@ console.log(response);
       series: [
         {
           name: "Actual Emissions",
-          //  data: [1.2, null, null
-          //  , 5, 15]
-          data: normalsLine
+          data: normalsLine,
         },
         {
           name: "Target",
-          // data: [35, 41, 62, 42, 13, 18, 29, 37, 36, 51, 32, 35]
-          data: parallelLine
+          data: parallelLine,
         },
         {
           name: "Forecasted",
-          // data: [87, 57, 74, 99, 75, 38, 62, 47, 82, 56, 45, 47]
-          data: dashedLine
-        }
+          data: dashedLine,
+        },
       ],
       chart: {
         height: 350,
         type: "line",
-        
+      },
+      annotations: {
+        xaxis: [
+          {
+          x: new Date().getFullYear(),
+          strokeDashArray: 1,
+          borderColor: '#7755D0',
+          label: {
+            borderColor: '#7755D0',
+            style: {
+              color: '#fff',
+              background: '#775DD0',
+            },
+            text: 'Current year',
+          }
+        },
+          {
+          x: normalYear[normalYear.length -1],
+          strokeDashArray: 1,
+          borderColor: '#7755D0',
+          label: {
+            borderColor: '#7755D0',
+            style: {
+              color: '#fff',
+              background: '#775DD0',
+            },
+            text: 'Target year',
+          }
+        }
+
+        ],
       },
       dataLabels: {
-        enabled: false
+        enabled: false,
       },
       stroke: {
         width: 5,
         curve: "straight",
         dashArray: [0, 0, 5],
-        
       },
       title: {
         text: "Page Statistics",
-        align: "left"
+        align: "left",
       },
       legend: {
         tooltipHoverFormatter: function (val, opts) {
@@ -499,22 +530,22 @@ console.log(response);
             opts.w.globals.series[opts.seriesIndex][opts.dataPointIndex] +
             "</strong>"
           );
-        }
+        },
       },
       markers: {
         size: 0,
         hover: {
-          sizeOffset: 6
-        }
+          sizeOffset: 6,
+        },
       },
       xaxis: {
         labels: {
-          trim: false
+          trim: false,
         },
-        categories: normalYear
+        categories: normalYear, // Make sure this matches the year format as numbers
       },
       yaxis: {
-        min: 0 // Ensure y-axis starts from zero
+        min: 0, // Ensure y-axis starts from zero
       },
       tooltip: {
         y: [
@@ -522,88 +553,79 @@ console.log(response);
             title: {
               formatter: function (val) {
                 return val + " (mins)";
-              }
-            }
+              },
+            },
           },
           {
             title: {
               formatter: function (val) {
                 return val + " per session";
-              }
-            }
+              },
+            },
           },
           {
             title: {
               formatter: function (val) {
                 return val;
-              }
-            }
-          }
-        ]
+              },
+            },
+          },
+        ],
       },
       grid: {
-        borderColor: "#f1f1f1"
-      }
+        borderColor: "#f1f1f1",
+      },
+      
     };
+
+
   }
 
 
 
   //method for update group detail by id
   updateGroup(id: any, data: NgForm) {
-    // this.groupdetails.groupMappings = [];
-    // if (this.groupdetails.groupBy === 'Country') {
-    //     this.selectedCountry.forEach((val) => {
-    //         this.groupMappingDetails = new GroupMapping();
-    //         this.groupMappingDetails.stateId = 0;
-    //         this.groupMappingDetails.groupId = 0;
-    //         this.groupMappingDetails.facilityId = 0;
-    //         this.groupMappingDetails.countryId = val;
-    //         this.groupdetails.groupMappings.push(this.groupMappingDetails);
-    //     });
-    // } else if (this.groupdetails.groupBy === 'State') {
-    //     this.selectedState.forEach((val) => {
-    //         this.groupMappingDetails = new GroupMapping();
-    //         this.groupMappingDetails.stateId = val;
-    //         this.groupMappingDetails.countryId = 0;
-    //         this.groupMappingDetails.groupId = 0;
-    //         this.groupMappingDetails.facilityId = 0;
-    //         this.groupdetails.groupMappings.push(this.groupMappingDetails);
-    //     });
-    // } else {
-    //     this.selectedFaciltiy.forEach((val) => {
-    //         this.groupMappingDetails = new GroupMapping();
-    //         this.groupMappingDetails.stateId = 0;
-    //         this.groupMappingDetails.countryId = 0;
-    //         this.groupMappingDetails.groupId = 0;
-    //         this.groupMappingDetails.facilityId = val;
-    //         this.groupdetails.groupMappings.push(this.groupMappingDetails);
-    //     });
-    // }
-    let tenantID = this.loginInfo.tenantID;
-    let formData = new URLSearchParams();
-    formData.set('groupId', id);
-    formData.set('groupname', this.groupdetails.groupname);
-    // formData.set('tenantID',  this.groupdetails.tenantID.toString());
-    formData.set('facility', this.selectedFaciltiy);
-    this.GroupService.newEditGroup(formData.toString()).subscribe({
+
+    if (data.value.base_year.length == 4) {
+      var dateYear = data.value.base_year;
+    } else {
+      var dateYear = (data.value.base_year).getFullYear().toString();
+    }
+    if (data.value.target_year.length == 4) {
+      var targetYear = data.value.target_year;
+    } else {
+      var targetYear = (data.value.target_year).getFullYear().toString();
+    }
+    const formData = new URLSearchParams();
+
+    formData.append('target_name', data.value.target_name);
+    formData.append('emission_activity', data.value.emission_activity);
+    formData.append('target_type', data.value.target_type);
+    formData.append('base_year', dateYear.toString());
+    formData.append('target_year', targetYear.toString());
+    formData.append('target_emission_change', data.value.target_emission_change);
+    formData.append('other_target_kpichange', data.value.other_target_kpichange);
+    formData.append('other_target_kpi', data.value.other_target_kpi);
+    formData.append('id', id);
+
+    this.GroupService.updateTargetSetting(formData.toString()).subscribe({
       next: (response) => {
         console.log(response);
         this.GetTarget();
 
         this.visible = false;
         this.notification.showSuccess(
-          'Group Edited successfully',
+          'Target Setting updated successfully',
           'Success'
         );
       },
       error: (err) => {
-        this.notification.showError('Group edited failed.', 'Error');
+        this.notification.showError('Target edited failed.', 'Error');
         console.error(err);
       },
       complete: () => console.info('Group edited')
     });
-  }
+  };
 
   //retrieves all facilities for a given tenant
 
@@ -756,4 +778,28 @@ console.log(response);
   //         });
   //     });
   // }
+
+  viewDetails(details: any) {
+    console.log(details);
+    this.visible = true;
+    // this.relationId = id;
+    this.FormEdit = true;
+    const formData = new URLSearchParams();
+
+    let obj = {
+      target_name: details.target_name,
+      emission_activity: details.emission_activity,
+      e_act: details.target_type,
+      base_year: details.base_year,
+      target_year: details.target_year,
+      target_emission_change: details.target_emission_change,
+      other_target_kpichange: details.other_target_kpichange,
+      target_type:details.target_type,
+      other_target_kpi :details.other_target_kpi
+
+    };
+    this.GroupForm.control.patchValue(obj);
+
+
+  };
 }

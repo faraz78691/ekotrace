@@ -26,27 +26,7 @@
                                 </button>
                             </div>
                         </div>
-                        <!-- <h3 class="pl-4 card-header card-headerL">Set Target</h3> -->
-                        <!-- <div class="d-flex justify-content-between text-style text-light scope-Div">
-                            <div class="form-group has-search">
-                                <span class="fa fa-search form-control-feedback" [ngClass]="
-                                        this.updatedtheme === 'dark'
-                                            ? 'form-control-feedbackD'
-                                            : 'form-control-feedbackL'
-                                    ">
-                                </span>
-                                <input type="text" name="search" [ngClass]="
-                                        this.updatedtheme === 'dark'
-                                            ? 'form-controlD'
-                                            : 'form-controlL'
-                                    " class="form-control" placeholder="Search" [(ngModel)]="searchData" />
-                            </div>
-                            <div class="form-group has-search text-light">
-                                <button class="GroupButton ct_assign_package_btn129 ct_animation_btn_121" (click)="showAddGroupDialog()">
-                                    + Add Target
-                                </button>
-                            </div>
-                        </div> -->
+        
                     </div>
         
                     <p-toast></p-toast>
@@ -70,6 +50,7 @@
         
                                     <th scope="col"  style="font-size: 16px;">S.No.</th>
                                     <th scope="col"  style="font-size: 16px;">Name </th>
+                                    <th scope="col"  style="font-size: 16px;">Country </th>
                                     <th scope="col"  style="font-size: 16px;">Reference Id</th>
                                     <th scope="col"  style="font-size: 16px;">Address</th>
                                    
@@ -85,6 +66,10 @@
                                     </td>
                                     <td class="td "  style="font-size: 16px;">
                                         {{ group.name }}
+        
+                                    </td>
+                                    <td class="td "  style="font-size: 16px;">
+                                        {{ group.country_name }}
         
                                     </td>
                                     <td class="td  pb-1"  style="font-size: 16px;">
@@ -144,27 +129,7 @@
                                 </button>
                             </div>
                         </div>
-                        <!-- <h3 class="pl-4 card-header card-headerL">Set Target</h3> -->
-                        <!-- <div class="d-flex justify-content-between text-style text-light scope-Div">
-                            <div class="form-group has-search">
-                                <span class="fa fa-search form-control-feedback" [ngClass]="
-                                        this.updatedtheme === 'dark'
-                                            ? 'form-control-feedbackD'
-                                            : 'form-control-feedbackL'
-                                    ">
-                                </span>
-                                <input type="text" name="search" [ngClass]="
-                                        this.updatedtheme === 'dark'
-                                            ? 'form-controlD'
-                                            : 'form-controlL'
-                                    " class="form-control" placeholder="Search" [(ngModel)]="searchData" />
-                            </div>
-                            <div class="form-group has-search text-light">
-                                <button class="GroupButton ct_assign_package_btn129 ct_animation_btn_121" (click)="showAddGroupDialog()">
-                                    + Add Target
-                                </button>
-                            </div>
-                        </div> -->
+                   
                     </div>
         
                     <p-toast></p-toast>
@@ -259,6 +224,17 @@
                 ">
                         group already exist please use other groupname
                     </p>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="fname">Country</label>
+                    <p-dropdown
+                    class=" finput ct_input_white_bg13 ct_select_2_drop_white ct_input_dark_text_145" ngModel
+                    placeholder="Select" name="country" [options]="countryData" [filter]="true" filterBy="Name"
+                    optionLabel="Name" optionValue="ID" styleClass="facilitydropdown"
+                   >
+                </p-dropdown>
+                  
+                 
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="fname">Reference Id</label>

@@ -24,11 +24,14 @@ export class WaterUsageComponent {
   public areaBusinesschart: Partial<ChartAreaOptions>;
   public donotOptions1: Partial<ChartOptions2>;
   public donotOptions2: Partial<ChartOptions2>;
+  public donotOptions3: Partial<ChartOptions2>;
   public pieChart: Partial<ChartOptions2>;
+  public pieChart2: Partial<ChartOptions2>;
+  public pieChart3: Partial<ChartOptions2>;
   public groupChart: Partial<Chart3Options>;
   dashboardData: any[] = [];
   public loginInfo: LoginInfo;
-  selectedFacility:number;
+  selectedFacility: number;
   year: Date;
   scopeWiseSeries: any[] = [];
   scopeWiseSeries2: any[] = [];
@@ -44,24 +47,27 @@ export class WaterUsageComponent {
   seriesScopeDonut1: any[] = [];
   seriesScopeDonut2: any[] = [];
   seriesScopeDonut3: any[] = [];
+  seriesScopeDonut4: any[] = [];
   labelScopeDonut1: any[] = [];
   labelScopeDonut2: any[] = [];
   labelScopeDonut3: any[] = [];
+  labelScopeDonut4: any[] = [];
   upstreamArray: any[] = [];
   downstreamArray: any[] = [];
   vendorData: any[] = [];
   labelSeries1: any[] = [];
-  waterDisposed:any;
-  totalConsumed:any;
-  totalDischarged:any;
-  totalTreated:any;  
-  totalDisposed:any;  
+  waterDisposed: any;
+  totalConsumed: any;
+  totalDischarged: any;
+  totalTreated: any;
+  totalDisposed: any;
+  waterTotal: any;
 
   constructor(private route: ActivatedRoute,
     private facilityService: FacilityService,
     private trackingService: TrackingService,
     private dashboardService: DashboardService) {
-      this.year = new Date();
+    this.year = new Date();
 
     this.groupChart = {
       series: [
@@ -106,7 +112,7 @@ export class WaterUsageComponent {
           ["Joe"],
           ["Jake"],
           ["Peter"],
-      
+
         ],
         labels: {
           style: {
@@ -126,76 +132,21 @@ export class WaterUsageComponent {
       }
     };
 
-   
-    this.chartOptions2 = {
-      series: [
-        {
-          name: "Net Emission",
-          data: [44, 55, 57, 56, 61, 58, 63]
-        }
-  
-      ],
-      chart: {
-        type: "bar",
-        height: 350
-      },
-      plotOptions: {
-        bar: {
-          horizontal: false,
-          columnWidth: "55%",
-          
-        }
-      },
-      dataLabels: {
-        enabled: false
-      },
-      stroke: {
-        show: true,
-        width: 2,
-        colors: ["transparent"]
-      },
-      xaxis: {
-        categories: [
-          "Feb",
-          "Mar",
-          "Apr",
-          "May",
-          "Jun",
-          "Jul",
-          "Aug",
-          "Sep",
-          "Oct"
-        ]
-      },
-      yaxis: {
-        title: {
-          text: "$ (thousands)"
-        }
-      },
-      fill: {
-        opacity: 1
-      },
-      tooltip: {
-        y: {
-          formatter: function(val) {
-            return "$ " + val + " thousands";
-          }
-        }
-      }
-    };
-   
-    
+
+
+
     this.donotOptions2 = {
-      series:[44, 55, 13, 43, 22],
+      series: [44, 55, 13, 43, 22],
       chart: {
-        width: 380,
+        width: 400,
         type: "donut"
       },
       dataLabels: {
         enabled: true
       },
       legend: {
-        position: "bottom"
+        position: "bottom",
+        fontSize:"14px"
       },
       labels: ["Team A", "Team B", "Team C", "Team D", "Team E"],
       responsive: [
@@ -236,19 +187,22 @@ export class WaterUsageComponent {
     const formData = new URLSearchParams();
     formData.set('tenantID', tenantId.toString())
     this.dashboardService.getdashboardfacilities(formData.toString()).subscribe((result: any) => {
-     
+
       if (result.success == true) {
         this.dashboardData = result.categories;
-        if(this.facilityService.selectedfacilitiesSignal() == 0){
+        if (this.facilityService.selectedfacilitiesSignal() == 0) {
           this.selectedFacility = result.categories[0].ID;
 
-        }else{
+        } else {
           this.selectedFacility = this.facilityService.selectedfacilitiesSignal();
         }
         this.Waterwithdrawnby_source(this.selectedFacility);
         this.dashboardWaterDischargedbydestination(this.selectedFacility);
         this.dashboardWaterTreated_nonTreated(this.selectedFacility);
         this.waterWaste(this.selectedFacility);
+        this.waterTreatedByLevel(this.selectedFacility);
+        this.waterTreatedByDestination(this.selectedFacility);
+        this.waterEmission(this.selectedFacility);
         // this.getTopFiveE(this.selectedFacility);
         //  this.getScopeDonnutsE(this.selectedFacility);85
         //  this.getActivityE(this.selectedFacility);
@@ -259,97 +213,53 @@ export class WaterUsageComponent {
   };
 
   Waterwithdrawnby_source(facility) {
-    
+
     let tenantId = this.loginInfo.tenantID;
     const formData = new URLSearchParams();
-   
+
     // formData.set('year', this.year.getFullYear().toString());
     formData.set('year', this.year.getFullYear().toString());
     formData.set('facilities', facility);
     this.dashboardService.Waterwithdrawnby_source(formData.toString()).subscribe((result: any) => {
-      
 
-      this.scopeWiseSeries = result.series[0].data;
-      this.labelSeries1 = result.series;
-      this.labelScopeDonut1 = result.categories;
-      this.chartOptions = {
-        series: [
-          {
-            name: "Net Emission",
-            data: this.scopeWiseSeries
-          }
-        ],
+
+      this.scopeWiseSeries = result.series;
+      this.labelSeries1 = result.month;
+      this.labelScopeDonut1 = result.water_withdrawl;
+      this.pieChart = {
+        series: this.scopeWiseSeries,
         chart: {
-          type: "bar",
-          height: 350
-        },
-        plotOptions: {
-          bar: {
-            horizontal: false,
-            columnWidth: "55%",
-            
-          }
-        },
-        dataLabels: {
-          enabled: false,
-          style: {
-            fontSize: "140px",
-            fontFamily: "Helvetica, Arial, sans-serif",
-            fontWeight: "bold"
-          }
-        },
-        stroke: {
-          show: true,
-          width: 2,
-          colors: ["transparent"]
-        },
-        xaxis: {
-          categories: [
-            "Apr",
-            "May",
-            "Jun",
-            "Jul",
-            "Aug",
-            "Sep",
-            "Oct",
-            "Nov",
-            "Dec",
-            "Jan",
-            "Feb",
-            "Mar"
-          ],
-          labels: {
-            style: {
-              fontSize: '14px',
-              fontWeight: 500,
-            }
-        }
-      },
-        yaxis: {
-          labels: {
-            style: {
-              fontSize: '14px',
-              fontWeight: 500,
-            }
-        }
-          // title: {
-          //   text: "$ (thousands)"
-          // }
-        },
-        fill: {
-          opacity: 1
-        },
-        tooltip: {
-          y: {
-            formatter: function(val) {
-              return "$ " + val + " thousands";
-            }
-          }
-        }
-      };
-     
+          width: "100%",
+          height: 350,
+          type: "pie",
 
-     
+        },
+        legend: {
+          position: "bottom",
+          fontSize: '15px',
+          floating: false,
+          horizontalAlign: 'left',
+
+        },
+        labels: this.labelScopeDonut1,
+        colors: ['#246377', '#009087', '#002828', '#F9C74F', '#BADA55',],
+        responsive: [
+          {
+            breakpoint: 480,
+            options: {
+              chart: {
+                width: 300
+              },
+              legend: {
+                position: "bottom"
+              }
+            }
+          }
+        ]
+      };
+
+
+
 
 
 
@@ -360,99 +270,65 @@ export class WaterUsageComponent {
   };
 
   waterWaste(facility) {
-  
+
     let tenantId = this.loginInfo.tenantID;
     const formData = new URLSearchParams();
-   
+
     // formData.set('year', this.year.getFullYear().toString());
     formData.set('year', this.year.getFullYear().toString());
     formData.set('facilities', facility);
     this.dashboardService.waterWaste(formData.toString()).subscribe((result: any) => {
       this.totalDischarged = result.water_discharge
       this.totalConsumed = result.water_consumed
-       this.totalTreated =result.water_treated
-       this.totalDisposed =result.water_withdrawn;
-   
+      this.totalTreated = result.water_treated
+      this.totalDisposed = result.water_withdrawn;
+      this.waterTotal = result.water_total;
+
     });
   };
- dashboardWaterDischargedbydestination(facility) {
-   
+
+  dashboardWaterDischargedbydestination(facility) {
+
     let tenantId = this.loginInfo.tenantID;
     const formData = new URLSearchParams();
- 
-    // formData.set('year', this.year.getFullYear().toString());
+
     formData.set('year', this.year.getFullYear().toString());
     formData.set('facilities', facility);
     this.dashboardService.WaterDischargedbydestination(formData.toString()).subscribe((result: any) => {
-    
 
-      this.scopeWiseSeries2 = result.series[0].data;
-      this.labelScopeDonut1 = result.categories;
+      this.scopeWiseSeries2 = result.series;
+      this.labelScopeDonut2 = result.water_discharge;
 
-      this.chartOptions2 = {
-        series: [
-          {
-            name: "Net Emission",
-            data: this.scopeWiseSeries
-          }
-        ],
+      this.pieChart2 = {
+        series: this.scopeWiseSeries2,
         chart: {
-          type: "bar",
-          height: 350
+          width: "100%",
+          height: 350,
+          type: "pie",
+
         },
-        plotOptions: {
-          bar: {
-            horizontal: false,
-            columnWidth: "55%",
-            
-          }
+        legend: {
+          position: "bottom",
+          fontSize: '15px',
+          floating: false,
+          horizontalAlign: 'left',
+
         },
-        dataLabels: {
-          enabled: false
-        },
-        stroke: {
-          show: true,
-          width: 2,
-          colors: ["transparent"]
-        },
-        xaxis: {
-          categories: [
-            "Apr",
-            "May",
-            "Jun",
-            "Jul",
-            "Aug",
-            "Sep",
-            "Oct",
-            "Nov",
-            "Dec",
-            "Jan",
-            "Feb",
-            "Mar"
-          ],
-          labels: {
-            style: {
-              fontSize: '14px',
-              fontWeight: 500,
-            }
-        }
-        }
-      ,
-        yaxis: {
-          // title: {
-          //   text: "$ (thousands)"
-          // }
-        },
-        fill: {
-          opacity: 1
-        },
-        tooltip: {
-          y: {
-            formatter: function(val) {
-              return "$ " + val + " thousands";
+        labels: this.labelScopeDonut2,
+        colors: ['#246377', '#009087', '#002828', '#F9C74F', '#BADA55',],
+        responsive: [
+          {
+            breakpoint: 480,
+            options: {
+              chart: {
+                width: 300
+              },
+              legend: {
+                position: "bottom"
+              }
             }
           }
-        }
+        ]
       };
 
 
@@ -463,16 +339,16 @@ export class WaterUsageComponent {
     });
   };
 
- dashboardWaterTreated_nonTreated(facility) {
-   
+  dashboardWaterTreated_nonTreated(facility) {
+
     let tenantId = this.loginInfo.tenantID;
     const formData = new URLSearchParams();
-  
+
     // formData.set('year', this.year.getFullYear().toString());
     formData.set('year', this.year.getFullYear().toString());
     formData.set('facilities', facility);
     this.dashboardService.dashboardWaterTreated_nonTreated(formData.toString()).subscribe((result: any) => {
-    
+
 
       this.seriesScopeDonut1 = result.water_treated_nontreated;
       this.labelScopeDonut1 = result.category;
@@ -480,7 +356,7 @@ export class WaterUsageComponent {
       this.donotOptions1 = {
         series: this.seriesScopeDonut1,
         chart: {
-          width: 380,
+          width: 400,
           type: "donut"
         },
         dataLabels: {
@@ -490,7 +366,8 @@ export class WaterUsageComponent {
           type: "gradient"
         },
         legend: {
-          position: "bottom"
+          position: "bottom",
+          fontSize:"14px"
         },
         labels: this.labelScopeDonut1,
         responsive: [
@@ -507,7 +384,166 @@ export class WaterUsageComponent {
           }
         ]
       };
-    
+
+
+
+
+
+
+
+    });
+  };
+
+  waterTreatedByDestination(facility) {
+
+    let tenantId = this.loginInfo.tenantID;
+    const formData = new URLSearchParams();
+
+    // formData.set('year', this.year.getFullYear().toString());
+    formData.set('year', this.year.getFullYear().toString());
+    formData.set('facilities', facility);
+    this.dashboardService.waterTreatedDestination(formData.toString()).subscribe((result: any) => {
+     
+      this.seriesScopeDonut3 = result.series;
+      this.labelScopeDonut3 = result.water_discharge;
+
+      this.pieChart3 = {
+        series: this.seriesScopeDonut3,
+        chart: {
+          width: "100%",
+          height: 350,
+          type: "pie",
+
+        },
+        legend: {
+          position: "bottom",
+          fontSize: '15px',
+          floating: false,
+          horizontalAlign: 'left',
+
+        },
+        labels: this.labelScopeDonut3,
+        colors: ['#246377', '#009087', '#002828', '#F9C74F', '#BADA55',],
+        responsive: [
+          {
+            breakpoint: 480,
+            options: {
+              chart: {
+                width: 300
+              },
+              legend: {
+                position: "bottom"
+              }
+            }
+          }
+        ]
+      };
+
+
+
+
+
+
+    });
+  };
+  waterTreatedByLevel(facility) {
+
+    let tenantId = this.loginInfo.tenantID;
+    const formData = new URLSearchParams();
+
+    // formData.set('year', this.year.getFullYear().toString());
+    formData.set('year', this.year.getFullYear().toString());
+    formData.set('facilities', facility);
+    this.dashboardService.waterTreatedByLevel(formData.toString()).subscribe((result: any) => {
+      console.log(result);
+      this.seriesScopeDonut2 = result.series;
+      this.labelScopeDonut2 = result.leveloftreatment;
+
+      this.donotOptions2 = {
+        series: this.seriesScopeDonut2,
+        chart: {
+          width: 380,
+          type: "donut"
+        },
+        dataLabels: {
+          enabled: true
+        },
+        fill: {
+          type: "gradient"
+        },
+        legend: {
+          position: "bottom",
+          fontSize:"15px"
+        },
+        labels: this.labelScopeDonut2,
+        responsive: [
+          {
+            breakpoint: 480,
+            options: {
+              chart: {
+                width: 200
+              },
+              legend: {
+                position: "bottom"
+              }
+            }
+          }
+        ]
+      };
+
+
+
+
+
+
+
+    });
+  };
+  waterEmission(facility) {
+
+    let tenantId = this.loginInfo.tenantID;
+    const formData = new URLSearchParams();
+
+    // formData.set('year', this.year.getFullYear().toString());
+    formData.set('year', this.year.getFullYear().toString());
+    formData.set('facilities', facility);
+    this.dashboardService.WaterEmision(formData.toString()).subscribe((result: any) => {
+      console.log(result);
+      this.seriesScopeDonut4 = result.water_treated_wiitdrawn;
+      this.labelScopeDonut4 = result.category;
+
+      this.donotOptions3 = {
+        series: this.seriesScopeDonut4,
+        chart: {
+          width: 400,
+          type: "donut"
+        },
+        dataLabels: {
+          enabled: true
+        },
+        fill: {
+          type: "gradient"
+        },
+        legend: {
+          position: "bottom",
+          fontSize:"15px"
+        },
+        labels: this.labelScopeDonut4,
+        responsive: [
+          {
+            breakpoint: 480,
+            options: {
+              chart: {
+                width: 200
+              },
+              legend: {
+                position: "bottom"
+              }
+            }
+          }
+        ]
+      };
+
 
 
 
@@ -519,10 +555,13 @@ export class WaterUsageComponent {
 
   onFacilityChange(event: any) {
     this.facilityService.facilitySelected(this.selectedFacility)
-    this.waterWaste(this.selectedFacility);
+    this.Waterwithdrawnby_source(this.selectedFacility);
     this.dashboardWaterDischargedbydestination(this.selectedFacility);
     this.dashboardWaterTreated_nonTreated(this.selectedFacility);
-    this.Waterwithdrawnby_source(this.selectedFacility);
+    this.waterWaste(this.selectedFacility);
+    this.waterTreatedByLevel(this.selectedFacility);
+    this.waterTreatedByDestination(this.selectedFacility);
+    this.waterEmission(this.selectedFacility);
     // console.log(event.target.value)
     // console.log(this.selectedFacility);
     // this.emssionByTravel(this.selectedFacility)
