@@ -1,7 +1,7 @@
 <!-- Brand Logo -->
 
 <div class="d-flex align-items-center gap-2">
-    <a [routerLink]="['/']" class="brand-link">
+    <a [routerLink]="loginInfo.role == 'Platform Admin' ? '/platformAdmin' : '/dashboard/ghgEmision'" class="brand-link">
         <pf-image *ngIf="updatedtheme === 'dark'" class="pl-4" src="assets/img/ekobon.png" alt="Ekobon Logo"
             height="33"></pf-image>
     

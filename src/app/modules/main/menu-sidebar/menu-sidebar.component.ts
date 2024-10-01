@@ -86,10 +86,16 @@ export class MenuSidebarComponent implements OnInit {
                     else {
                         console.log(this.haveMainGroup);
                         this.isBRSRDoc = false;
-
-                        this.menu =
-                            menu.find((item) => item.role === this.loginInfo.role && item.package_name == this.loginInfo.package_name && item.haveMainGorup == this.haveMainGroup)
+                        if (this.loginInfo.role == 'Platform Admin') {
+                            this.menu =
+                            menu.find((item) => item.role === this.loginInfo.role && item.haveMainGorup == this.haveMainGroup)
                                 ?.items || [];
+                        }else{
+                            this.menu =
+                                menu.find((item) => item.role === this.loginInfo.role && item.package_name == this.loginInfo.package_name && item.haveMainGorup == this.haveMainGroup)
+                                    ?.items || [];
+
+                        }
                     }
 
                 }

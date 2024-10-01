@@ -2,7 +2,7 @@
  
     <div class="container-fluid row d-flex justify-content-end "
         [ngClass]="this.updatedtheme === 'dark' ? 'headertextD' : 'headertextL'">
-        <a [routerLink]="['/']" class="brand-link ct_logo_collape">
+        <a  class="brand-link ct_logo_collape">
             <p-image *ngIf="updatedtheme === 'dark'" class="pl-4" src="assets/img/ekobon.png" alt="Ekobon Logo"
                 height="33"></p-image>
         
@@ -63,7 +63,8 @@
                     <div (click)="toggleMenu($event)">
                         <i class="pi  pi-user pt-1 pl-1"></i>
                     </div> -->
-                    <a routerLink="settings" class="mx-3 pt-0 pointer d-flex headertextL"><i class="fa-solid fa-gear"></i></a>
+
+                    <a *ngIf="loginInfo.role != 'Platform Admin'" routerLink="settings" class="mx-3 pt-0 pointer d-flex headertextL"><i class="fa-solid fa-gear"></i></a>
 
                     <a (click)="logout()" class="mr-2 pt-0 pointer d-flex" [ngClass]="
                             this.updatedtheme === 'dark'

@@ -276,7 +276,7 @@ export class TrackingComponent {
         { name: 'No', value: 0 },
     ];
     productHSNSelect: any;
-    waterSupplyUnit:any;
+    waterSupplyUnit = 'kilo litres'
 
     storagef_typeValue: string = this.storageGrid[0]?.storagef_type;
     openDatapointDialog() {
@@ -2050,6 +2050,9 @@ export class TrackingComponent {
             });
         }
         if (this.categoryId == 11) {
+         
+            console.log(form.value.water_supply);
+            console.log(form.value.water_treatment);
             if (this.selectMonths.length == 0) {
                 this.notification.showInfo(
                     'Select month',
@@ -2063,6 +2066,13 @@ export class TrackingComponent {
                     'Error'
                 );
                 return
+            }
+
+            if(this.waterSupplyUnit == 'kilo litres'){
+                var allUnits = 1
+            }
+            if(this.waterSupplyUnit == 'cubic m'){
+                var allUnits = 2
             }
             var spliteedMonth = this.dataEntry.month.split(",");
             var monthString = JSON.stringify(spliteedMonth)
@@ -2097,9 +2107,8 @@ export class TrackingComponent {
 
             formData.set('water_supply', form.value.water_supply);
             formData.set('water_treatment', form.value.water_treatment);
-            formData.set('water_supply_unit', form.value.workingdays);
-            formData.set('water_treatment_unit', form.value.waterTreatmentUnits);
-            formData.set('water_supply_unit', form.value.waterSupplyUnits);
+            formData.set('water_supply_unit', allUnits.toString());
+            formData.set('water_treatment_unit', allUnits.toString());
             formData.set('water_withdrawl', water_withdrawlStringfy);
             formData.set('water_discharge_only', water_DischargeonlyStringfy);
             formData.set('water_discharge', waterDischargeStringfy);
@@ -2118,7 +2127,7 @@ export class TrackingComponent {
                             'Success'
                         );
                         this.dataEntryForm.reset();
-
+this.waterSupplyUnit = 'kilo litres'
 
                     } else {
                         this.notification.showError(
@@ -2126,6 +2135,7 @@ export class TrackingComponent {
                             'Error'
                         );
                         this.dataEntryForm.reset();
+                        this.waterSupplyUnit = 'kilo litres'
 
                     }
                     this.ALLEntries();
