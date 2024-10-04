@@ -6,7 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./main-tree.component.scss']
 })
 export class MainTreeComponent {
+  isHowtoUse = false;
 ngOnInit(){
-  console.log("coming o ntrro");
+ 
 }
 }

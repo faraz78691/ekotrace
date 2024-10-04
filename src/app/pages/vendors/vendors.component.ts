@@ -303,7 +303,7 @@ export class VendorsComponent {
     formData.set('facility', this.selectedFaciltiy);
     this.GroupService.newEditGroup(formData.toString()).subscribe({
       next: (response) => {
-        console.log(response);
+       
         this.GetVendors();
 
         this.visible = false;
@@ -374,10 +374,7 @@ export class VendorsComponent {
   selectGroup(group: Group, index: number) {
     this.selectedRowIndex = index;
     this.groupdetails = group;
-    console.log(
-      '🚀 ~ file: group.component.ts:304 ~ GroupComponent ~ selectGroup ~ this.groupdetails:',
-      this.groupdetails
-    );
+   
   }
   //The removeCss function is used to remove CSS styles applied to the body element
   removeCss() {

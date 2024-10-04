@@ -117,6 +117,7 @@ import { FinanceDashboardComponent } from './pages/finance-dashboard/finance-das
 import { SubgroupComponent } from './pages/subgroup/subgroup.component';
 import { TreeviewEventParser, TreeviewModule } from '@treeview/ngx-treeview';
 import { TriStateCheckboxModule } from 'primeng/tristatecheckbox';
+import { CreateSuperAdminComponent } from './pages/create-super-admin/create-super-admin.component';
 
 defineCustomElements();
 registerLocaleData(localeEn, 'en-EN');
@@ -188,7 +189,8 @@ registerLocaleData(localeEn, 'en-EN');
         ActionsComponent,
         VendorsComponent,
         FinanceDashboardComponent,
-        SubgroupComponent
+        SubgroupComponent,
+        CreateSuperAdminComponent
     ],
     imports: [
         HeaderComponent,

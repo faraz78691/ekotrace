@@ -216,9 +216,90 @@
                                                                                     head.manageDataPointCategorySeedID, head.catName
                                                                                 )
                                                                             " class="col pointer d-flex"
-                                                                            pTooltip="{{ child.subCatName }}"
+                                                                            
                                                                             tooltipPosition="bottom">
                                                                             {{ child.subCatName}}
+                                                                            <div class="iicon">
+                                                                                <i *ngIf="child.subCatName == 'Purchased goods and services'"
+                                                                                    class="fa fa-info-circle tooltip-icon"
+                                                                                    pTooltip="Upstream emissions from the production of goods and services that the reporting company purchases.
+                                                                                  
+                                                                                   " tooltipPosition="top"
+                                                                                    style="color: #88ad47"></i>
+                                                                                <i *ngIf="head.catName == 'Fuel and Energy-related Activities'"
+                                                                                    class="fa fa-info-circle tooltip-icon"
+                                                                                    pTooltip="Indirect emissions associated with the production, processing, and transportation of fuels and energy that are consumed by the reporting company but not included in Scope 1 or Scope 2 emissions.
+                                                                                    "
+                                                                                    tooltipPosition="top"
+                                                                                    style="color: #88ad47"></i>
+                                                                                <i *ngIf="head.catName == 'Upstream Transportation and Distribution'"
+                                                                                    class="fa fa-info-circle tooltip-icon"
+                                                                                    pTooltip="Emissions from the transportation and distribution of products purchased by the company, from suppliers to the company’s facilities.
+                                                                                    
+                                                                                    " tooltipPosition="top"
+                                                                                    style="color: #88ad47"></i>
+                                                                                <i *ngIf="head.catName == 'Water Supply and Treatment'"
+                                                                                    class="fa fa-info-circle tooltip-icon"
+                                                                                    pTooltip="Emissions from the disposal and treatment of waste generated in the company’s operations."
+                                                                                    tooltipPosition="top"
+                                                                                    style="color: #88ad47"></i>
+                                                                                <i *ngIf="head.catName == 'Waste generated in operations'"
+                                                                                    class="fa fa-info-circle tooltip-icon"
+                                                                                    pTooltip="Emissions from the disposal and treatment of waste generated in the company’s operations.
+                                                                                    "
+                                                                                    tooltipPosition="top"
+                                                                                    style="color: #88ad47"></i>
+                                                                                <i *ngIf="head.catName == 'Employee Commuting'"
+                                                                                    class="fa fa-info-circle tooltip-icon"
+                                                                                    pTooltip="Emissions from the transportation of employees between their homes and workplaces.
+                                                                                    "
+                                                                                    tooltipPosition="top"
+                                                                                    style="color: #88ad47"></i>
+                                                                                <i *ngIf="head.catName == 'Home Office'"
+                                                                                    class="fa fa-info-circle tooltip-icon"
+                                                                                    pTooltip="Emissions associated with company staff working from home."
+                                                                                    tooltipPosition="top"
+                                                                                    style="color: #88ad47"></i>
+                                                                                <i *ngIf="head.catName == 'Upstream Leased Assets'"
+                                                                                    class="fa fa-info-circle tooltip-icon"
+                                                                                    pTooltip=" Emissions from the operation of assets leased by the company from other entities.
+                                                                                    "
+                                                                                    tooltipPosition="top"
+                                                                                    style="color: #88ad47"></i>
+                                                                                <i *ngIf="head.catName == 'Downstream Transportation and Distribution'"
+                                                                                    class="fa fa-info-circle tooltip-icon"
+                                                                                    pTooltip="Emissions from the transportation and distribution of products sold by the company to end-users, including retail and storage."
+                                                                                    tooltipPosition="top"
+                                                                                    style="color: #88ad47"></i>
+                                                                                <i *ngIf="head.catName == 'Processing of Sold Products'"
+                                                                                    class="fa fa-info-circle tooltip-icon"
+                                                                                    pTooltip="Emissions from the processing of intermediate products sold by the company. 
+                                                                                    "
+                                                                                    tooltipPosition="top"
+                                                                                    style="color: #88ad47"></i>
+                                                                               
+                                                                                <i *ngIf="head.catName == 'Use of Sold Products'"
+                                                                                    class="fa fa-info-circle tooltip-icon"
+                                                                                    pTooltip="Emissions from the use of products sold by the company."
+                                                                                    tooltipPosition="top"
+                                                                                    style="color: #88ad47"></i>
+                                                                                <i *ngIf="head.catName == 'End-of-life Treatment of Sold Products'"
+                                                                                    class="fa fa-info-circle tooltip-icon"
+                                                                                    pTooltip="Emissions from the disposal and treatment of products sold by the company at the end of their life."
+                                                                                    tooltipPosition="top"
+                                                                                    style="color: #88ad47"></i>
+                                                                                <i *ngIf="head.catName == 'Downstream Leased Assets'"
+                                                                                    class="fa fa-info-circle tooltip-icon"
+                                                                                    pTooltip="Emissions from the operation of assets owned by the company and leased to other entities."
+                                                                                    tooltipPosition="top"
+                                                                                    style="color: #88ad47"></i>
+                                                                               
+                                                                                <i *ngIf="head.catName == 'Franchises'"
+                                                                                    class="fa fa-info-circle tooltip-icon"
+                                                                                    pTooltip="Emissions from the operations of franchises owned by the company."
+                                                                                    tooltipPosition="top"
+                                                                                    style="color: #88ad47"></i>
+                                                                            </div>
                                                                         </div>
                                                                         <p-accordion>
 
@@ -5555,6 +5636,24 @@
                                             <th pSortableColumn="unit" *ngIf="categoryId ==12 || categoryId == 19">
                                                 Unit <p-sortIcon field="unit"></p-sortIcon>
                                             </th>
+                                            <th pSortableColumn="unit" *ngIf="categoryId == 19">
+                                                Expected Life 
+                                            </th>
+                                            <th pSortableColumn="unit" *ngIf="categoryId == 19">
+                                                Electricity Use 
+                                            </th>
+                                            <th pSortableColumn="unit" *ngIf="categoryId == 19">
+                                                Fuel Type 
+                                            </th>
+                                            <th pSortableColumn="unit" *ngIf="categoryId == 19">
+                                                Fuel used
+                                            </th>
+                                            <th pSortableColumn="unit" *ngIf="categoryId == 19">
+                                                Refrig. Type 
+                                            </th>
+                                            <th pSortableColumn="unit" *ngIf="categoryId == 19">
+                                                Refrig. Leak 
+                                            </th>
 
 
                                             <th pSortableColumn="catName" *ngIf="categoryId == 10 || categoryId == 17">
@@ -5827,6 +5926,12 @@
                                             <td *ngIf="categoryId == 19">{{ de.productcategory_name }}</td>
                                             <td *ngIf="categoryId == 19">{{ de.no_of_Items }}</td>
                                             <td *ngIf="categoryId == 19">{{ de.no_of_Items_unit }}</td>
+                                            <td *ngIf="categoryId == 19">{{ de.expectedlifetimeproduct }}</td>
+                                            <td *ngIf="categoryId == 19">{{ de.electricity_use }}</td>
+                                            <td *ngIf="categoryId == 19">{{ de.fuel_type }}</td>
+                                            <td *ngIf="categoryId == 19">{{ de.fuel_consumed }}</td>
+                                            <td *ngIf="categoryId == 19">{{ de.referigentused }}</td>
+                                            <td *ngIf="categoryId == 19">{{ de.referigerantleakage }}</td>
                                             <td *ngIf="categoryId == 20 ">{{ de.waste_type_name }}</td>
                                             <td *ngIf="categoryId == 20 ">{{ de.subcategory }}</td>
                                             <td *ngIf="categoryId == 20 ">{{ de.total_waste }}</td>
@@ -6041,11 +6146,19 @@
                                                 <p-sortIcon field="catName"></p-sortIcon>
                                             </th>
                                             <th pSortableColumn="catName" *ngIf="categoryId == 11">
-                                                Water Treatment
+                                                Water Withdrawn
                                                 <p-sortIcon field="catName"></p-sortIcon>
                                             </th>
                                             <th pSortableColumn="catName" *ngIf="categoryId == 11">
-                                                Water Supply
+                                                Water Discharge
+                                                <p-sortIcon field="catName"></p-sortIcon>
+                                            </th>
+                                            <th pSortableColumn="catName" *ngIf="categoryId == 11">
+                                                Water Withdrawn EF
+                                                <p-sortIcon field="catName"></p-sortIcon>
+                                            </th>
+                                            <th pSortableColumn="catName" *ngIf="categoryId == 11">
+                                                Water Treatment EF
                                                 <p-sortIcon field="catName"></p-sortIcon>
                                             </th>
 
@@ -6120,8 +6233,10 @@
                                                 {{ de.TypeName || '-' }}</td>
 
                                             <td *ngIf="categoryId == 15 ">{{ de.typeof_homeoffice_name }}</td>
-                                            <td *ngIf="categoryId == 11 ">{{ de.water_treatment }}</td>
-                                            <td *ngIf="categoryId == 11 ">{{ de.water_supply }}</td>
+                                            <td *ngIf="categoryId == 11 ">{{ de.water_withdrawn_value }}</td>
+                                            <td *ngIf="categoryId == 11 ">{{ de.water_discharged_value }}</td>
+                                            <td *ngIf="categoryId == 11 ">{{ de.water_withdrawn_emission }}</td>
+                                            <td *ngIf="categoryId == 11 ">{{ de.water_treatment_emission }}</td>
                                             <td *ngIf="categoryId == 22">{{ de.franchise_type }}
                                             </td>
                                             <td *ngIf="categoryId == 22 || categoryId == 23  ">{{ de.sub_category }}
@@ -6167,9 +6282,17 @@
                                             <td *ngIf="categoryId == 26">{{ de.no_of_trips }}
                                             </td> -->
                                             <td>{{de.emissionFactorUsed != 'NaN' ? de.emissionFactorUsed : '-' }}</td>
-                                            <td *ngIf=" categoryId !=25 && categoryId !=12  && categoryId !=26">kg
+                                            <td *ngIf=" categoryId !=25 && categoryId !=12  && categoryId !=26 && categoryId !=10 && categoryId !=19">kg
                                                 CO2e/{{
                                                 de.unit }}
+                                            </td>
+                                            <td *ngIf=" categoryId ==10">kg
+                                                CO2e/{{
+                                                de.unit_of_mass }}
+                                            </td>
+                                            <td *ngIf=" categoryId ==19">kg
+                                                CO2e/{{
+                                                de.no_of_Items_unit }}
                                             </td>
 
 

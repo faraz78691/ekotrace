@@ -153,9 +153,9 @@ export class HeaderComponent implements OnInit {
       }
 
     checkFacilityID() {
-        
+   
         this.facilityService.facilitySelected(this.selectedFacilityID.id)
-        console.log(this.facilityService.selectedfacilitiesSignal())
+     
         localStorage.setItem('SelectedfacilityID', this.selectedFacilityID.id);
         localStorage.setItem('Flag', this.selectedFacilityID.flag);
     };
@@ -200,32 +200,35 @@ export class HeaderComponent implements OnInit {
 
 
     GetFacilityGroupList(tenantID) {
-
+        this.facilitygrouplist = []
         if (this.loginInfo.role === this.excludedRole) {
             return;
         }
         this.facilityService
             .newGetFacilityByTenant(tenantID)
             .subscribe((res) => {
+                if(res.length >0){
+                 
+                    this.facilitygrouplist = res;
+                    this.addFacilitesToSignal(this.facilitygrouplist)
+                    const allOption: FacilityGroupList = {
+                        id: 0,
+                        name: 'Select',
+                        flag: ''
+                    };
+    
+                    // Add the "All" option to the beginning of the list
+                    this.facilitygrouplist.unshift(allOption);
+    
+                    this.lfgcount = this.facilitygrouplist.length;
+                    localStorage.setItem('FacilityGroupCount', String(this.lfgcount));
 
-                this.facilitygrouplist = res;
-                this.addFacilitesToSignal(this.facilitygrouplist)
-                const allOption: FacilityGroupList = {
-                    id: 0,
-                    name: 'Select',
-                    flag: ''
-                };
-
-                // Add the "All" option to the beginning of the list
-                this.facilitygrouplist.unshift(allOption);
-
-                this.lfgcount = this.facilitygrouplist.length;
-                localStorage.setItem('FacilityGroupCount', String(this.lfgcount));
+                }
             });
     };
 
     GetSubGroupList(tenantID) {
-
+        this.facilitygrouplist = []
         if (this.loginInfo.role === this.excludedRole) {
             return;
         }
@@ -234,20 +237,22 @@ export class HeaderComponent implements OnInit {
         this.facilityService
             .getActualSubGroups(formData.toString())
             .subscribe((res) => {
-                console.log("ressub group", res);
-                this.facilitygrouplist = res.categories;
-                this.addFacilitesToSignal(this.facilitygrouplist)
-                const allOption: FacilityGroupList = {
-                    id: 0,
-                    name: 'Select',
-                    flag: ''
-                };
-
-                // Add the "All" option to the beginning of the list
-                this.facilitygrouplist.unshift(allOption);
-
-                this.lfgcount = this.facilitygrouplist.length;
-                localStorage.setItem('FacilityGroupCount', String(this.lfgcount));
+            
+                if(res.success == true){
+                    this.facilitygrouplist = res.categories;
+                    this.addFacilitesToSignal(this.facilitygrouplist)
+                    const allOption: FacilityGroupList = {
+                        id: 0,
+                        name: 'Select',
+                        flag: ''
+                    };
+    
+                    // Add the "All" option to the beginning of the list
+                    this.facilitygrouplist.unshift(allOption);
+    
+                    this.lfgcount = this.facilitygrouplist.length;
+                    localStorage.setItem('FacilityGroupCount', String(this.lfgcount));
+                }
             });
     };
 

@@ -270,6 +270,7 @@
                             <th scope="col">Date of Purchase</th>
                             <th scope="col">Carbon offset </th>
                             <th scope="col">Carbon credit </th>
+                            <th scope="col">User </th>
                             <th scope="col">Action </th>
                         </tr>
                     </thead>
@@ -299,6 +300,10 @@
                             </td>
                             <td class="td text-center pb-1">
                                 {{ group.carbon_credit_value }}
+
+                            </td>
+                            <td class="td text-center pb-1">
+                                {{ group.user_name }}
 
                             </td>
                             <td class="td text-right">

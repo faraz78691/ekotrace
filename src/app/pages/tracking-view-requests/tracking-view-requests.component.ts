@@ -198,14 +198,14 @@ export class TrackingViewRequestsComponent {
     };
     sendEntryForApproval() {
 
-        console.log("selcted ", this.selectedEntry);
+      
 
         if (this.selectedEntry.length === 0) {
             this.notification.showWarning('Please select any entry', 'Warning');
             return
         }
         if (this.selectedEntry[0].ID == undefined || this.selectedEntry[0].ID == null) {
-            console.log("SDGsdh");
+       
             this.sendSCEntries = [];
             this.selectedEntry.forEach((element) => {
                 this.selectedObjectEntry = {
@@ -217,9 +217,9 @@ export class TrackingViewRequestsComponent {
                 this.sendApprovalEntries.push(this.selectedObjectEntry); // Add the new object to the sendEntries array
             });
         } else {
-            console.log("herer");
+          
             this.sendSCEntries = [];
-            console.log(this.sendApprovalEntries);
+            
             this.sendApprovalEntries = [];
             this.selectedEntry.forEach((element) => {
                 this.selectedObjectEntry = {
@@ -239,8 +239,7 @@ export class TrackingViewRequestsComponent {
 
         this.trackingService.newUpdateSCEntry(formURlData).subscribe({
             next: (response: any) => {
-                console.log(response)
-
+              
                 if (response.success == true) {
                     this.notification.showSuccess(
                         'Entries sent for approval',
@@ -268,11 +267,7 @@ export class TrackingViewRequestsComponent {
     };
 
     ALLEntries(facilityID: number) {
-        console.log(
-
-
-            "seelcted", this.selectedCategory
-        );
+      
         this.modeShow = false;
         this.months = new months();
         this.convertedYear = this.trackingService.getYear(this.year);
@@ -289,7 +284,7 @@ export class TrackingViewRequestsComponent {
                             this.dataEntriesPending = null;
                         } else {
                             this.dataEntriesPending = response.categories;
-                            console.log("data>", this.dataEntriesPending)
+                          
                             if (Array.isArray(this.dataEntriesPending)) {
                                 for (var i = 0; i < this.mandatorySCDP.length; i++) {
                                     for (var j = 0; j < this.dataEntriesPending.length; j++) {
@@ -380,7 +375,7 @@ export class TrackingViewRequestsComponent {
                             this.dataEntriesPending = null;
                         } else {
                             this.dataEntriesPending = response.categories;
-                            console.log("data>", this.dataEntriesPending)
+                          
                             if (Array.isArray(this.dataEntriesPending)) {
                                 for (let d of this.dataEntriesPending) {
                                     if (d.status === environment.approved) {
@@ -460,7 +455,7 @@ export class TrackingViewRequestsComponent {
                             this.dataEntriesPending = null;
                         } else {
                             this.dataEntriesPending = response.categories;
-                            console.log("data>", this.dataEntriesPending)
+                          
                             if (Array.isArray(this.dataEntriesPending)) {
                                 for (let d of this.dataEntriesPending) {
                                     if (d.status === environment.approved) {
@@ -540,7 +535,7 @@ export class TrackingViewRequestsComponent {
                             this.dataEntriesPending = null;
                         } else {
                             this.dataEntriesPending = response.categories;
-                            console.log("data>", this.dataEntriesPending)
+                          
                             if (Array.isArray(this.dataEntriesPending)) {
                                 for (let d of this.dataEntriesPending) {
                                     if (d.status === environment.approved) {
@@ -620,7 +615,7 @@ export class TrackingViewRequestsComponent {
                             this.dataEntriesPending = null;
                         } else {
                             this.dataEntriesPending = response.categories;
-                            console.log("data>", this.dataEntriesPending)
+                          
                             if (Array.isArray(this.dataEntriesPending)) {
                                 for (let d of this.dataEntriesPending) {
                                     if (d.status === environment.approved) {
@@ -700,7 +695,7 @@ export class TrackingViewRequestsComponent {
                             this.dataEntriesPending = null;
                         } else {
                             this.dataEntriesPending = response.categories;
-                            console.log("data>", this.dataEntriesPending)
+                          
                             if (Array.isArray(this.dataEntriesPending)) {
                                 for (let d of this.dataEntriesPending) {
                                     if (d.status === environment.approved) {
@@ -780,7 +775,7 @@ export class TrackingViewRequestsComponent {
                             this.dataEntriesPending = null;
                         } else {
                             this.dataEntriesPending = response.categories;
-                            console.log("data>", this.dataEntriesPending)
+                          
                             if (Array.isArray(this.dataEntriesPending)) {
                                 for (let d of this.dataEntriesPending) {
                                     if (d.status === environment.approved) {
@@ -860,7 +855,7 @@ export class TrackingViewRequestsComponent {
                             this.dataEntriesPending = null;
                         } else {
                             this.dataEntriesPending = response.categories;
-                            console.log("data>", this.dataEntriesPending)
+                          
                             if (Array.isArray(this.dataEntriesPending)) {
                                 for (let d of this.dataEntriesPending) {
                                     if (d.status === environment.approved) {
@@ -940,7 +935,7 @@ export class TrackingViewRequestsComponent {
                             this.dataEntriesPending = null;
                         } else {
                             this.dataEntriesPending = response.categories;
-                            console.log("data>", this.dataEntriesPending)
+                          
                             if (Array.isArray(this.dataEntriesPending)) {
                                 for (let d of this.dataEntriesPending) {
                                     if (d.status === environment.approved) {
@@ -1020,7 +1015,7 @@ export class TrackingViewRequestsComponent {
                             this.dataEntriesPending = null;
                         } else {
                             this.dataEntriesPending = response.categories;
-                            console.log("data>", this.dataEntriesPending)
+                          
                             if (Array.isArray(this.dataEntriesPending)) {
                                 for (let d of this.dataEntriesPending) {
                                     if (d.status === environment.approved) {
@@ -1100,7 +1095,7 @@ export class TrackingViewRequestsComponent {
                             this.dataEntriesPending = null;
                         } else {
                             this.dataEntriesPending = response.categories;
-                            console.log("data>", this.dataEntriesPending)
+                          
                             if (Array.isArray(this.dataEntriesPending)) {
                                 for (let d of this.dataEntriesPending) {
                                     if (d.status === environment.approved) {
@@ -1192,7 +1187,7 @@ export class TrackingViewRequestsComponent {
                                 this.dataEntriesPending = response.categories;
                             }
                             // this.dataEntriesPending = response.categories;
-                            console.log("data entries =====>", this.dataEntriesPending)
+                            
                             if (Array.isArray(this.dataEntriesPending)) {
                                 for (let d of this.dataEntriesPending) {
                                     if (d.status === environment.approved) {
@@ -1272,7 +1267,7 @@ export class TrackingViewRequestsComponent {
                             this.dataEntriesPending = null;
                         } else {
                             this.dataEntriesPending = response.categories;
-                            console.log("data>", this.dataEntriesPending)
+                          
                             if (Array.isArray(this.dataEntriesPending)) {
                                 for (let d of this.dataEntriesPending) {
                                     if (d.status === environment.approved) {
@@ -1352,7 +1347,7 @@ export class TrackingViewRequestsComponent {
                             this.dataEntriesPending = null;
                         } else {
                             this.dataEntriesPending = response.categories;
-                            console.log("data>", this.dataEntriesPending)
+                          
                             if (Array.isArray(this.dataEntriesPending)) {
                                 for (let d of this.dataEntriesPending) {
                                     if (d.status === environment.approved) {
@@ -1432,7 +1427,7 @@ export class TrackingViewRequestsComponent {
                             this.dataEntriesPending = null;
                         } else {
                             this.dataEntriesPending = response.categories;
-                            console.log("data>", this.dataEntriesPending)
+                          
                             if (Array.isArray(this.dataEntriesPending)) {
                                 for (let d of this.dataEntriesPending) {
                                     if (d.status === environment.approved) {
@@ -1512,7 +1507,7 @@ export class TrackingViewRequestsComponent {
                             this.dataEntriesPending = null;
                         } else {
                             this.dataEntriesPending = response.categories;
-                            console.log("data>", this.dataEntriesPending)
+                          
                             if (Array.isArray(this.dataEntriesPending)) {
                                 for (let d of this.dataEntriesPending) {
                                     if (d.status === environment.approved) {
@@ -1592,7 +1587,7 @@ export class TrackingViewRequestsComponent {
                             this.dataEntriesPending = null;
                         } else {
                             this.dataEntriesPending = response.categories;
-                            console.log("data>", this.dataEntriesPending)
+                          
                             if (Array.isArray(this.dataEntriesPending)) {
                                 for (let d of this.dataEntriesPending) {
                                     if (d.status === environment.approved) {
@@ -1672,7 +1667,7 @@ export class TrackingViewRequestsComponent {
                             this.dataEntriesPending = null;
                         } else {
                             this.dataEntriesPending = response.categories;
-                            console.log("data>", this.dataEntriesPending)
+                          
                             if (Array.isArray(this.dataEntriesPending)) {
                                 for (let d of this.dataEntriesPending) {
                                     if (d.status === environment.approved) {
@@ -1752,7 +1747,7 @@ export class TrackingViewRequestsComponent {
                             this.dataEntriesPending = null;
                         } else {
                             this.dataEntriesPending = response.categories;
-                            console.log("data>", this.dataEntriesPending)
+                          
                             if (Array.isArray(this.dataEntriesPending)) {
                                 for (let d of this.dataEntriesPending) {
                                     if (d.status === environment.approved) {
@@ -1832,7 +1827,7 @@ export class TrackingViewRequestsComponent {
                             this.dataEntriesPending = null;
                         } else {
                             this.dataEntriesPending = response.categories;
-                            console.log("data>", this.dataEntriesPending)
+                          
                             if (Array.isArray(this.dataEntriesPending)) {
                                 for (let d of this.dataEntriesPending) {
                                     if (d.status === environment.approved) {
@@ -1912,7 +1907,7 @@ export class TrackingViewRequestsComponent {
                             this.dataEntriesPending = null;
                         } else {
                             this.dataEntriesPending = response.categories;
-                            console.log("data>", this.dataEntriesPending)
+                          
                             if (Array.isArray(this.dataEntriesPending)) {
                                 for (let d of this.dataEntriesPending) {
                                     if (d.status === environment.approved) {
@@ -1992,7 +1987,7 @@ export class TrackingViewRequestsComponent {
                             this.dataEntriesPending = null;
                         } else {
                             this.dataEntriesPending = response.categories;
-                            console.log("data>", this.dataEntriesPending)
+                          
                             if (Array.isArray(this.dataEntriesPending)) {
                                 for (let d of this.dataEntriesPending) {
                                     if (d.status === environment.approved) {

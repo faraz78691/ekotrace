@@ -144,15 +144,19 @@ export class GhgEmmissionsComponent implements OnDestroy {
     formData.set('tenantID', tenantId.toString())
     this.dashboardFacilities$ = this.dashboardService.getdashboardfacilities(formData.toString()).pipe(
       tap(response => {
+        console.log(response);
         // this.selectedFacility = response.categories[0].ID;
-        if (this.facilityService.selectedfacilitiesSignal() == 0) {
-          this.selectedFacility = response.categories[0].ID;
+        if(response.success == true){
+          if (this.facilityService.selectedfacilitiesSignal() == 0) {
+            this.selectedFacility = response.categories[0].ID;
+  
+          } else {
+            this.selectedFacility = this.facilityService.selectedfacilitiesSignal();
+          }
+  
+          this.makeCombinedApiCall(this.selectedFacility);
 
-        } else {
-          this.selectedFacility = this.facilityService.selectedfacilitiesSignal();
         }
-
-        this.makeCombinedApiCall(this.selectedFacility);
 
       })
     );
@@ -553,7 +557,7 @@ console.log(this.series_graph );
   };
 
   ngOnDestroy(): void {
-    this.combinedSubscription.unsubscribe();
+    // this.combinedSubscription.unsubscribe();
   }
 
 

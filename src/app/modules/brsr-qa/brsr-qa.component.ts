@@ -120,10 +120,10 @@ export class BrsrQaComponent {
             formData.append('file', this.selectedFile, this.selectedFile.name);
             if (formData.has('file')) {
                 // File is available in the FormData
-                console.log('File exists in the FormData.');
+           
             } else {
                 // File is not available in the FormData
-                console.log('File does not exist in the FormData.');
+               
             }
             let tenantId = this.loginInfo.tenantID;
             this.reportService.UploadReportDoc(formData, tenantId).subscribe({

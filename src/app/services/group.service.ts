@@ -16,7 +16,7 @@ export class GroupService {
         );
     }
     public newGetGroups(tenantID:any): Observable<any> {
-        console.log("service called")
+     
         return this.http.post(
             environment.baseUrl + '/getGroups',tenantID
         );
@@ -98,6 +98,9 @@ export class GroupService {
     };
     public updateSuperAdminPakcages( groupdetails) {
         return this.http.post(environment.baseUrl + '/addpackageBySuperadmin', groupdetails);
+    };
+    public createSuperAdmin( groupdetails) {
+        return this.http.post(environment.baseUrl + '/AddSuperAdmin', groupdetails);
     };
     public newUpdatePackage( packageDetails) {
         return this.http.post(environment.baseUrl + '/Updategroupmapping' , packageDetails);

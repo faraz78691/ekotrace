@@ -73,7 +73,7 @@ export class TreeComponent {
                 // console.log(items); // Log the entire response
                 if (items.success) {
                     this.treeList = items.familyDetails;
-                    console.log(this.treeList.length);
+                  
                     if (items.familyDetails.length > 1) {
                         if (this.loginInfo.role == 'Manager' || this.loginInfo.role == 'Admin' || this.loginInfo.role == 'Preparer') {
                             this.treeSection = false;
@@ -81,7 +81,7 @@ export class TreeComponent {
                         if (items.new_data == 1) {
                             this.familyId = items.family_id;
                             const selectedTempate = items.familyDetails.filter(value => value.family_id == this.familyId);
-                            console.log(selectedTempate);
+                           
                             this.selectedTemplateId = selectedTempate[0].id;
                             this.createClone()
                         } else {
@@ -368,7 +368,7 @@ export class TreeComponent {
                     this.createClone();
 
                 }
-                console.log(res);
+             
                 // this.getTreeViewByID(this.selectedTemplateId);
             },
             error: err =>

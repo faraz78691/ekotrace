@@ -30,7 +30,7 @@ export class NotificationsComponent {
 
   }
   ngOnInit() {
-    console.log("hi")
+ 
     if (localStorage.getItem('LoginInfo') != null) {
       let userInfo = localStorage.getItem('LoginInfo');
       let jsonObj = JSON.parse(userInfo); // string to "any" object first

@@ -268,9 +268,9 @@ export class TrackingComponent {
     items: any[] = [];
     rowsPurchased: any[] = [];
     vendorUnits: any[] = [];
-    config :any;
+    config: any;
     values: number[];
-
+    currency: any;
     annualEntry: any[] = [
         { name: 'Yes', value: 1 },
         { name: 'No', value: 0 },
@@ -521,6 +521,10 @@ export class TrackingComponent {
                 {
                     "id": 2,
                     "modeName": "Average qty of fuel per trip"
+                },
+                {
+                    "id": 3,
+                    "modeName": "Avg. amount spent per trip"
                 }
 
             ]
@@ -895,7 +899,7 @@ export class TrackingComponent {
             hasCollapseExpand: false,
             decoupleChildFromParent: false,
             maxHeight: 500
-          };
+        };
         // this.multiLevelItems = this.getItems();
         $(document).ready(function () {
             $('.ct_custom_dropdown').click(function () {
@@ -1062,15 +1066,17 @@ export class TrackingComponent {
                 .manageDataPointSubCategorySeedID);
         }
 
-        if (catID == 5) {
 
+
+        if (catID == 5) {
+          
             this.getRegionName();
             this.getUnit(this.SubCatAllData
                 .manageDataPointSubCategorySeedID);
         }
 
         if (catID == 6) {
-
+            this.getPurchaseGoodsCurrency()
             if (data.manageDataPointSubCategorySeedID == 10) {
                 this.getPassengerVehicleType();
             }
@@ -1170,6 +1176,7 @@ export class TrackingComponent {
 
     // getting subcategory types
     getsubCategoryType(subCatID: number) {
+
         this.dataEntry.typeID = null;
         this.trackingService.newgetsubCatType(subCatID).subscribe({
             next: (response) => {
@@ -1688,7 +1695,7 @@ export class TrackingComponent {
                         this.getUnit(this.SubCatAllData
                             .manageDataPointSubCategorySeedID);
                         this.VehicleDE.modeOfDE = this.ModeType[0].modeName;
-               
+
                         if (this.SubCatAllData.manageDataPointSubCategorySeedID == 10) {
 
                             this.getPassengerVehicleType();
@@ -1912,7 +1919,7 @@ export class TrackingComponent {
                 vendorspecificEF: row.vendorspecificEF,
                 product_category: row.productType
             }));
-          
+
             var purchaseTableStringfy = JSON.stringify(payload)
 
             let formData = new URLSearchParams();
@@ -2050,7 +2057,7 @@ export class TrackingComponent {
             });
         }
         if (this.categoryId == 11) {
-         
+
             console.log(form.value.water_supply);
             console.log(form.value.water_treatment);
             if (this.selectMonths.length == 0) {
@@ -2060,7 +2067,7 @@ export class TrackingComponent {
                 );
                 return
             }
-            if(form.value.water_supply < form.value.water_treatment){
+            if (form.value.water_supply < form.value.water_treatment) {
                 this.notification.showInfo(
                     'Water withdrawn should be greater than or equal to water discharged',
                     'Error'
@@ -2068,10 +2075,10 @@ export class TrackingComponent {
                 return
             }
 
-            if(this.waterSupplyUnit == 'kilo litres'){
+            if (this.waterSupplyUnit == 'kilo litres') {
                 var allUnits = 1
             }
-            if(this.waterSupplyUnit == 'cubic m'){
+            if (this.waterSupplyUnit == 'cubic m') {
                 var allUnits = 2
             }
             var spliteedMonth = this.dataEntry.month.split(",");
@@ -2127,7 +2134,7 @@ export class TrackingComponent {
                             'Success'
                         );
                         this.dataEntryForm.reset();
-this.waterSupplyUnit = 'kilo litres'
+                        this.waterSupplyUnit = 'kilo litres'
 
                     } else {
                         this.notification.showError(
@@ -4092,7 +4099,7 @@ this.waterSupplyUnit = 'kilo litres'
     onFilterChange(event: any) {
         console.log('Filter changed:', event);
         // Add your custom filter logic here if needed
-      }
+    }
     //getFileNameFromPath function is used to extract the file name from a given filePath
     private getFileNameFromPath(filePath: string): string {
         const startIndex = filePath.lastIndexOf('/') + 1;
@@ -4478,8 +4485,8 @@ this.waterSupplyUnit = 'kilo litres'
         } else {
             this.annualMonths = true
         }
-   
-        
+
+
     }
     onProductStandardChange(event: any, row: any) {
         console.log(event.value);
@@ -4788,9 +4795,10 @@ this.waterSupplyUnit = 'kilo litres'
     };
 
     onQuantitySoldUnitChange(event: any) {
+        
         const energyMethod = event.value;
 
-        if (energyMethod == 1) {
+        if (energyMethod == 'No. of Item') {
             this.noOfItems = true;
             this.getFuelEnergyCategory();
             this.getRefrigerants();
@@ -4957,8 +4965,10 @@ this.waterSupplyUnit = 'kilo litres'
         if (this.VehicleDE.modeOfDE == 'Average distance per trip') {
             this.dataEntry.unit = "Km"
         }
-        else {
+        else if (this.VehicleDE.modeOfDE == 'Average qty of fuel per trip') {
             this.dataEntry.unit = "Litre"
+        } else {
+            this.dataEntry.unit = this.currency
         }
     };
 
@@ -4980,8 +4990,8 @@ this.waterSupplyUnit = 'kilo litres'
             next: (response) => {
                 // console.log(response);
                 if (response.success == true) {
-                    const curreny = response.categories;
-                    this.purchaseGoodsUnitsGrid.push({ id: 1, units: curreny })
+                    this.currency = response.categories;
+                    this.purchaseGoodsUnitsGrid.push({ id: 1, units: this.currency })
                     const concatUnits =
                         [
                             {

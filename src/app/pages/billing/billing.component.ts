@@ -168,7 +168,7 @@ export class BillingComponent {
         formData.set('tenant_id', this.loginInfo.tenantID.toString())
         this.userService.getNewPackageDetails(formData.toString()).subscribe({
             next: (response: any) => {
-                console.log(response);
+              
                 this.companyDetails = response.userinfo[0];
                 this.expirationDate = new Date(this.companyDetails.expiration);
                 this.expirationDate.setDate(this.expirationDate.getDate() - 1);
@@ -206,7 +206,7 @@ export class BillingComponent {
                 console.log(err)
             }
         })
-        console.log(this.companyDetails);
+       
 
     };
 

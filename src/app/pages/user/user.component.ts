@@ -394,7 +394,7 @@ export class UserComponent {
     //---method for get selected role for user model Radio button ---
     onSelected(value: string): void {
         this.selectedRole = value;
-        console.log(this.selectedRole);
+       
         if (this.selectedRole == '525debfd-cd64-4936-ae57-346d57de3585') {
             this.GetGroups()
         } else {

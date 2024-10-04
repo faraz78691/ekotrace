@@ -84,7 +84,7 @@ export class MenuSidebarComponent implements OnInit {
                                 ?.items || [];
                     }
                     else {
-                        console.log(this.haveMainGroup);
+                       
                         this.isBRSRDoc = false;
                         if (this.loginInfo.role == 'Platform Admin') {
                             this.menu =
@@ -167,9 +167,10 @@ export class MenuSidebarComponent implements OnInit {
         this.facilityService.getSubGroupsByTenantId(formData.toString()).subscribe((result: any) => {
 
             if (result.success == true) {
-                this.haveMainGroup = result.categories[0].is_subgroup
-                console.log(result);
-                console.log(this.haveMainGroup);
+                if(result.categories.length > 0){
+                    this.haveMainGroup = result.categories[0].is_subgroup
+                  
+                }
 
 
             }
@@ -665,7 +666,7 @@ export const menu = [
     },
     {
         role: 'Admin',
-        haveMainGorup: 0,
+        haveMainGorup: 2,
         package_name: 'Comprehensive',
         items: [
             {
@@ -783,7 +784,7 @@ export const menu = [
     },
     {
         role: 'Admin',
-        haveMainGorup: 0,
+        haveMainGorup: 2,
         package_name: 'Intermediate',
         items: [
             {

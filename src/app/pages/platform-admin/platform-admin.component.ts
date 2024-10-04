@@ -50,6 +50,12 @@ export class PlatformAdminComponent {
 
     isloading: boolean = false;
 
+    superAdmin = {
+        company_name: '',
+        email: '',
+        password: ''
+      };
+
 
 
 
@@ -132,7 +138,47 @@ export class PlatformAdminComponent {
 
 
 
+  // Method to handle form submission
+  onSubmit(form: any) {
+    if (form.valid) {
+      this.isloading = true;
+      // Call your API or add the necessary logic for form submission
+      this.AddSuperAdmin(form);
+    } else {
+      // If the form is invalid, mark all fields as touched to display validation errors
+      form.form.markAllAsTouched();
+    }
+  };
 
+    // Your existing method for adding a Super Admin
+    AddSuperAdmin(data:any) {
+        // Simulate a loading state
+        const formData = new URLSearchParams();
+
+        formData.append('companyName', data.value.company_name);
+        formData.append('email',data.value.email);
+        formData.append('password', data.value.password);
+
+
+        this.GroupService.createSuperAdmin(formData.toString()).subscribe({
+            next: (response:any) => {
+
+                // this.GetEmissionInventory();
+
+                this.visible = false;
+                this.notification.showSuccess(
+                   response.message,
+                    'Success'
+                );
+                this.getSuperAdmin()
+            },
+            error: (err) => {
+                this.notification.showError(err.message, 'Error');
+                console.error(err);
+            },
+            complete: () => console.info('Group edited')
+        });
+      }
 
 
     //method for update group detail by id
@@ -177,12 +223,17 @@ export class PlatformAdminComponent {
 
     };
 
+    clickAddSuperAdmin(){
+        this.visible2 = true;
+    }
+
     //retrieves all facilities for a given tenant
 
     //handles the closing of a dialog
     onCloseHandled() {
         this.visible = false;
         this.isloading = false;
+        this.visible2 = false;
     }
 
     showAddGroupDialog2() {
@@ -193,6 +244,7 @@ export class PlatformAdminComponent {
         // this.resetForm();
     };
 
+   
 
     //display a dialog for add a group.
     showAddGroupDialog() {
