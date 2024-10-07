@@ -268,14 +268,14 @@ export const menu = [
                 path: ['setGhgTemplate']
             },
             {
-                head: 'Disclose',
-                name: 'Dashboard',
+                head: 'Dashboard',
+                name: 'GHG Dashboard',
                 iconClasses: 'fas fa-table',
                 iconSRC: 'assets/img/dashboard.svg',
                 path: ['dashboard']
             },
             {
-                name: 'Finance Dashboard',
+                name: 'Financed E. Dashboard',
                 iconClasses: 'fas fa-table',
                 iconSRC: 'assets/img/BRSR.svg',
                 path: ['financeDash']
@@ -387,14 +387,14 @@ export const menu = [
                 path: ['setGhgTemplate']
             },
             {
-                head: 'Disclose',
-                name: 'Dashboard',
+                head: 'Dashboard',
+                name: 'GHG Dashboard',
                 iconClasses: 'fas fa-table',
                 iconSRC: 'assets/img/dashboard.svg',
                 path: ['dashboard']
             },
             // {
-            //     name: 'Finance Dashboard',
+            //     name: 'Financed E. Dashboard',
             //     iconClasses: 'fas fa-table',
             //     iconSRC: 'assets/img/BRSR.svg',
             //     path: ['financeDash']
@@ -506,14 +506,14 @@ export const menu = [
                 path: ['setGhgTemplate']
             },
             {
-                head: 'Disclose',
-                name: 'Dashboard',
+                head: 'Dashboard',
+                name: 'GHG Dashboard',
                 iconClasses: 'fas fa-table',
                 iconSRC: 'assets/img/dashboard.svg',
                 path: ['dashboard']
             },
             // {
-            //     name: 'Finance Dashboard',
+            //     name: 'Financed E. Dashboard',
             //     iconClasses: 'fas fa-table',
             //     iconSRC: 'assets/img/BRSR.svg',
             //     path: ['financeDash']
@@ -573,14 +573,14 @@ export const menu = [
                 path: ['setGhgTemplate']
             },
             {
-                head: 'Disclose',
-                name: 'Dashboard',
+                head: 'Dashboard',
+                name: 'GHG Dashboard',
                 iconClasses: 'fas fa-table',
                 iconSRC: 'assets/img/dashboard.svg',
                 path: ['dashboard']
             },
             {
-                name: 'Finance Dashboard',
+                name: 'Financed E. Dashboard',
                 iconClasses: 'fas fa-table',
                 iconSRC: 'assets/img/BRSR.svg',
                 path: ['financeDash']
@@ -691,14 +691,14 @@ export const menu = [
                 path: ['setGhgTemplate']
             },
             {
-                head: 'Disclose',
-                name: 'Dashboard',
+                head: 'Dashboard',
+                name: 'GHG Dashboard',
                 iconClasses: 'fas fa-table',
                 iconSRC: 'assets/img/dashboard.svg',
                 path: ['dashboard']
             },
             {
-                name: 'Finance Dashboard',
+                name: 'Financed E. Dashboard',
                 iconClasses: 'fas fa-table',
                 iconSRC: 'assets/img/BRSR.svg',
                 path: ['financeDash']
@@ -809,14 +809,14 @@ export const menu = [
                 path: ['setGhgTemplate']
             },
             {
-                head: 'Disclose',
-                name: 'Dashboard',
+                head: 'Dashboard',
+                name: 'GHG Dashboard',
                 iconClasses: 'fas fa-table',
                 iconSRC: 'assets/img/dashboard.svg',
                 path: ['dashboard']
             },
             // {
-            //     name: 'Finance Dashboard',
+            //     name: 'Financed E. Dashboard',
             //     iconClasses: 'fas fa-table',
             //     iconSRC: 'assets/img/BRSR.svg',
             //     path: ['financeDash']
@@ -928,14 +928,14 @@ export const menu = [
                 path: ['setGhgTemplate']
             },
             {
-                head: 'Disclose',
-                name: 'Dashboard',
+                head: 'Dashboard',
+                name: 'GHG Dashboard',
                 iconClasses: 'fas fa-table',
                 iconSRC: 'assets/img/dashboard.svg',
                 path: ['dashboard']
             },
             // {
-            //     name: 'Finance Dashboard',
+            //     name: 'Financed E. Dashboard',
             //     iconClasses: 'fas fa-table',
             //     iconSRC: 'assets/img/BRSR.svg',
             //     path: ['financeDash']
@@ -1047,14 +1047,14 @@ export const menu = [
                 path: ['setGhgTemplate']
             },
             {
-                head: 'Disclose',
-                name: 'Dashboard',
+                head: 'Dashboard',
+                name: 'GHG Dashboard',
                 iconClasses: 'fas fa-table',
                 iconSRC: 'assets/img/dashboard.svg',
                 path: ['dashboard']
             },
             // {
-            //     name: 'Finance Dashboard',
+            //     name: 'Financed E. Dashboard',
             //     iconClasses: 'fas fa-table',
             //     iconSRC: 'assets/img/BRSR.svg',
             //     path: ['financeDash']
@@ -1109,14 +1109,14 @@ export const menu = [
                 path: ['setGhgTemplate']
             },
             {
-                head: 'Disclose',
-                name: 'Dashboard',
+                head: 'Dashboard',
+                name: 'GHG Dashboard',
                 iconClasses: 'fas fa-table',
                 iconSRC: 'assets/img/dashboard.svg',
                 path: ['dashboard']
             },
             {
-                name: 'Finance Dashboard',
+                name: 'Financed E. Dashboard',
                 iconClasses: 'fas fa-table',
                 iconSRC: 'assets/img/BRSR.svg',
                 path: ['financeDash']
@@ -1228,14 +1228,14 @@ export const menu = [
                 path: ['setGhgTemplate']
             },
             {
-                head: 'Disclose',
-                name: 'Dashboard',
+                head: 'Dashboard',
+                name: 'GHG Dashboard',
                 iconClasses: 'fas fa-table',
                 iconSRC: 'assets/img/dashboard.svg',
                 path: ['dashboard']
             },
             // {
-            //     name: 'Finance Dashboard',
+            //     name: 'Financed E. Dashboard',
             //     iconClasses: 'fas fa-table',
             //     iconSRC: 'assets/img/BRSR.svg',
             //     path: ['financeDash']
@@ -1334,14 +1334,14 @@ export const menu = [
                 path: ['setGhgTemplate']
             },
             {
-                head: 'Disclose',
-                name: 'Dashboard',
+                head: 'Dashboard',
+                name: 'GHG Dashboard',
                 iconClasses: 'fas fa-table',
                 iconSRC: 'assets/img/dashboard.svg',
                 path: ['dashboard']
             },
             // {
-            //     name: 'Finance Dashboard',
+            //     name: 'Financed E. Dashboard',
             //     iconClasses: 'fas fa-table',
             //     iconSRC: 'assets/img/BRSR.svg',
             //     path: ['financeDash']
@@ -1396,14 +1396,14 @@ export const menu = [
                 path: ['setGhgTemplate']
             },
             {
-                head: 'Disclose',
-                name: 'Dashboard',
+                head: 'Dashboard',
+                name: 'GHG Dashboard',
                 iconClasses: 'fas fa-table',
                 iconSRC: 'assets/img/dashboard.svg',
                 path: ['dashboard']
             },
             // {
-            //     name: 'Finance Dashboard',
+            //     name: 'Financed E. Dashboard',
             //     iconClasses: 'fas fa-table',
             //     iconSRC: 'assets/img/BRSR.svg',
             //     path: ['financeDash']
@@ -1515,14 +1515,14 @@ export const menu = [
                 path: ['setGhgTemplate']
             },
             {
-                head: 'Disclose',
-                name: 'Dashboard',
+                head: 'Dashboard',
+                name: 'GHG Dashboard',
                 iconClasses: 'fas fa-table',
                 iconSRC: 'assets/img/dashboard.svg',
                 path: ['dashboard']
             },
             // {
-            //     name: 'Finance Dashboard',
+            //     name: 'Financed E. Dashboard',
             //     iconClasses: 'fas fa-table',
             //     iconSRC: 'assets/img/BRSR.svg',
             //     path: ['financeDash']
@@ -1610,8 +1610,8 @@ export const menu = [
                 path: ['setGhgTemplate']
             },
             {
-                head: 'Disclose',
-                name: 'Dashboard',
+                head: 'Dashboard',
+                name: 'GHG Dashboard',
                 iconClasses: 'fas fa-table',
                 iconSRC: 'assets/img/dashboard.svg',
                 path: ['dashboard']

@@ -98,12 +98,13 @@ export class VendorsComponent {
   carbon_offset = '';
   selectedScope: any;
   superAdminId: any;
+  vendorId: any;
   carbon_credit_value: string;
   type: string;
   date3: string;
   standard: string;
   selectedFile: File;
-  countryData:any[]=[]
+  countryData: any[] = []
   constructor(
     private companyService: CompanyService,
     private UserService: UserService,
@@ -124,10 +125,10 @@ export class VendorsComponent {
     this.selectedValue = '';
 
 
-   
 
 
- 
+
+
   }
   ngOnInit() {
     if (localStorage.getItem('LoginInfo') != null) {
@@ -169,7 +170,7 @@ export class VendorsComponent {
           } else {
             this.groupdata = false;
           }
-   
+
         }
       },
       error: (err) => {
@@ -194,7 +195,7 @@ export class VendorsComponent {
           } else {
             this.groupdata = false;
           }
-   
+
         }
       },
       error: (err) => {
@@ -207,7 +208,11 @@ export class VendorsComponent {
 
   //method to add new group
   saveOffset(data: NgForm) {
-
+    console.log(data.value);
+    
+    if (data.invalid) {
+      return; // Stop if form is invalid
+    }
     const formData = new URLSearchParams();
 
     formData.append('name', data.value.vendor_name);
@@ -215,7 +220,7 @@ export class VendorsComponent {
     formData.append('address', data.value.address);
     formData.append('refer_id', data.value.refer_id);
     formData.append('tenant_id', this.superAdminId);
-  
+
 
     this.GroupService.addVendors(formData.toString()).subscribe({
       next: (response) => {
@@ -231,7 +236,7 @@ export class VendorsComponent {
         // return
         //   this.getOffset(this.loginInfo.tenantID);
         this.visible = false;
- 
+
       },
       error: (err) => {
         this.notification.showError('Group added failed.', 'Error');
@@ -241,21 +246,40 @@ export class VendorsComponent {
     });
   };
 
-  AllCountry() {
-       
-    this.facilityService.GetCountry().subscribe({
-        next: (response) => {
+  viewDetails(details: any) {
+    this.vendorId = details.id;
+    console.log(details);
+    this.visible = true;
+    this.FormEdit = true;
+    const countryId = this.countryData.filter(items => items.Name == details.country_name);
 
-            this.countryData = response;
-           
-            // this.facilityDetails.CountryId = 2
-           
-        },
-        error: err => {
-            console.log(err)
-        }
+    let obj = {
+      vendor_name: details.name,
+      refer_id: details.refer_id,
+      address: details.address,
+      country: countryId[0].ID
+    };
+
+    this.GroupForm.control.patchValue(obj);
+
+  };
+
+
+  AllCountry() {
+
+    this.facilityService.GetCountry().subscribe({
+      next: (response) => {
+
+        this.countryData = response;
+
+        // this.facilityDetails.CountryId = 2
+
+      },
+      error: err => {
+        console.log(err)
+      }
     });
-}
+  }
 
   //method to add new group
   saveCostCentre(data: NgForm) {
@@ -265,7 +289,7 @@ export class VendorsComponent {
     formData.append('cost_center_name', data.value.cost_center_name);
     formData.append('cost_center_refer_id', data.value.cost_center_refer_id);
     formData.append('tenant_id', this.superAdminId);
-  
+
     this.GroupService.AddCostcenter(formData.toString()).subscribe({
       next: (response) => {
         if (response.success == true) {
@@ -280,7 +304,7 @@ export class VendorsComponent {
         // return
         //   this.getOffset(this.loginInfo.tenantID);
         this.visible2 = false;
- 
+
       },
       error: (err) => {
         this.notification.showError('Group added failed.', 'Error');
@@ -291,24 +315,24 @@ export class VendorsComponent {
   };
 
 
- 
+
   //method for update group detail by id
-  updateGroup(id: any, data: NgForm) {
- 
+  updateGroup(data: any) {
+
     let tenantID = this.loginInfo.tenantID;
     let formData = new URLSearchParams();
-    formData.set('groupId', id);
-    formData.set('groupname', this.groupdetails.groupname);
-    // formData.set('tenantID',  this.groupdetails.tenantID.toString());
-    formData.set('facility', this.selectedFaciltiy);
-    this.GroupService.newEditGroup(formData.toString()).subscribe({
+    formData.set('address', data.address);
+    formData.set('name', data.name);
+    formData.set('id', this.vendorId.toString());
+    formData.set('refer_id', data.refer_id);
+    this.GroupService.updateVendor(formData.toString()).subscribe({
       next: (response) => {
-       
-        this.GetVendors();
 
+        this.GetVendors();
+        this.FormEdit = false;
         this.visible = false;
         this.notification.showSuccess(
-          'Group Edited successfully',
+          'Edited successfully',
           'Success'
         );
       },
@@ -355,14 +379,14 @@ export class VendorsComponent {
     }
   }
   //display a dialog for add a group.
-  showAddGroupDialog(id:any) {
-    if(id ==2){
+  showAddGroupDialog(id: any) {
+    if (id == 2) {
       this.visible = false;
       this.visible2 = true;
       this.groupdetails = new Group();
       this.FormEdit = false;
       this.resetForm();
-    }else {
+    } else {
       this.visible2 = false;
       this.visible = true;
       this.groupdetails = new Group();
@@ -374,7 +398,7 @@ export class VendorsComponent {
   selectGroup(group: Group, index: number) {
     this.selectedRowIndex = index;
     this.groupdetails = group;
-   
+
   }
   //The removeCss function is used to remove CSS styles applied to the body element
   removeCss() {

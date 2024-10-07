@@ -6,7 +6,7 @@
             <h3 class="pl-4 card-header card-headerL">Set Target</h3>
         </div>
     </div> -->
-    <p-tabView #dataentryTab >
+    <p-tabView #dataentryTab>
         <p-tabPanel header="Vendors">
             <div class="row pt-3">
                 <div class="col-md-12  overflow-auto mb-5 ct_custom_flex_basisc"
@@ -26,9 +26,9 @@
                                 </button>
                             </div>
                         </div>
-        
+
                     </div>
-        
+
                     <p-toast></p-toast>
                     <p-confirmDialog #cd [style]="{width: '60vw'}">
                         <ng-template pTemplate="footer">
@@ -38,51 +38,55 @@
                                 class="p-button-raised p-button-danger"></button>
                         </ng-template>
                     </p-confirmDialog>
-        
-        
-        
-        
-        
-                    <div class="dataTable scrollit mt-4">
+
+
+
+
+
+                    <div class="dataTable scrollit mt-4 ct_vender_scroll_320">
                         <table class="table_loc ct_space_table_21 ct_billing_table_bg_120 ">
                             <thead>
                                 <tr>
-        
-                                    <th scope="col"  style="font-size: 16px;">S.No.</th>
-                                    <th scope="col"  style="font-size: 16px;">Name </th>
-                                    <th scope="col"  style="font-size: 16px;">Country </th>
-                                    <th scope="col"  style="font-size: 16px;">Reference Id</th>
-                                    <th scope="col"  style="font-size: 16px;">Address</th>
-                                   
+
+                                    <th scope="col" style="font-size: 16px;">S.No.</th>
+                                    <th scope="col" style="font-size: 16px;">Name </th>
+                                    <th scope="col" style="font-size: 16px;">Country </th>
+                                    <th scope="col" style="font-size: 16px;">Reference Id</th>
+                                    <th scope="col" style="font-size: 16px;">Address</th>
+                                    <th scope="col" style="font-size: 16px;">Action</th>
+
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr clickable (click)="selectGroup(group,index)" *ngFor="
                                         let group of groupsList;let index = index
-                                    " class="col-12 tableRow border-bottom rounded pointer" (click)="UnlockComplete(group.id)"
+                                    " class="col-12 tableRow border-bottom rounded pointer"
+                                    (click)="UnlockComplete(group.id)"
                                     [ngClass]="{ 'tableRowclicked': index === selectedRowIndex }">
-                                    <td class="td text-initial"  style="font-size: 16px;">
+                                    <td class="td text-initial" style="font-size: 16px;">
                                         {{ index + 1 }}
                                     </td>
-                                    <td class="td "  style="font-size: 16px;">
+                                    <td class="td " style="font-size: 16px;">
                                         {{ group.name }}
-        
+
                                     </td>
-                                    <td class="td "  style="font-size: 16px;">
+                                    <td class="td " style="font-size: 16px;">
                                         {{ group.country_name }}
-        
+
                                     </td>
-                                    <td class="td  pb-1"  style="font-size: 16px;">
+                                    <td class="td  pb-1" style="font-size: 16px;">
                                         {{ group.refer_id }}
-        
+
                                     </td>
-                                    <td class="td  pb-1"  style="font-size: 16px;">
+                                    <td class="td  pb-1" style="font-size: 16px;">
                                         {{ group.address }}
-        
+
                                     </td>
-                                  
-                                  
-        
+                                    <td class="td pb-1" (click)="viewDetails(group)">
+                                        <i class="fas fa-edit"></i>
+                                    </td>
+
+
                                 </tr>
                             </tbody>
                         </table>
@@ -95,10 +99,10 @@
                         </div>
                     </div>
                 </div>
-        
-        
+
+
             </div>
-         
+
         </p-tabPanel>
 
 
@@ -129,9 +133,9 @@
                                 </button>
                             </div>
                         </div>
-                   
+
                     </div>
-        
+
                     <p-toast></p-toast>
                     <p-confirmDialog #cd [style]="{width: '60vw'}">
                         <ng-template pTemplate="footer">
@@ -141,40 +145,41 @@
                                 class="p-button-raised p-button-danger"></button>
                         </ng-template>
                     </p-confirmDialog>
-        
-        
-        
-        
-        
+
+
+
+
+
                     <div class="dataTable scrollit mt-4">
                         <table class="table_loc ct_space_table_21 ct_billing_table_bg_120">
                             <thead>
                                 <tr>
-        
+
                                     <th scope="col" style="width: 400px; font-size: 16px;">S.No.</th>
                                     <th scope="col" style="width: 400px;font-size: 16px;"> Cost Centre Name </th>
                                     <th scope="col" style="font-size: 16px;">Reference ID</th>
-                                   
+
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr clickable (click)="selectGroup(group,index)" *ngFor="
                                         let group of groupsCostList;let index = index
-                                    " class="col-12 tableRow border-bottom rounded pointer" (click)="UnlockComplete(group.id)"
+                                    " class="col-12 tableRow border-bottom rounded pointer"
+                                    (click)="UnlockComplete(group.id)"
                                     [ngClass]="{ 'tableRowclicked': index === selectedRowIndex }">
                                     <td class="td text-initial" style="width: 300px; font-size: 16px;">
                                         {{ index + 1 }}
                                     </td>
                                     <td class="td " style="width: 400px; font-size: 16px;">
                                         {{ group.cost_center_name }}
-        
+
                                     </td>
                                     <td class="td  pb-1" style="font-size: 16px;">
                                         {{ group.cost_center_refer_id }}
-        
+
                                     </td>
-                                  
-        
+
+
                                 </tr>
                             </tbody>
                         </table>
@@ -187,20 +192,19 @@
                         </div>
                     </div>
                 </div>
-        
-        
+
+
             </div>
         </p-tabPanel>
 
-       
+
     </p-tabView>
-    
+
 </div>
 
 
 
-<p-dialog (click)="removeCss()" [(visible)]="visible" [breakpoints]="{'960px': '75vw'}" 
-    [style]="{width: '50vw'}">
+<p-dialog (click)="removeCss()" [(visible)]="visible" [breakpoints]="{'960px': '75vw'}" [style]="{width: '50vw'}">
     <p-header *ngIf="FormEdit === false"> Add New Vendor </p-header>
     <p-header *ngIf="FormEdit === true"> Edit Target </p-header>
 
@@ -208,65 +212,51 @@
         <form #GroupForm="ngForm" class="col-12" (ngSubmit)="
             FormEdit === false
                 ? saveOffset(GroupForm)
-                : updateGroup(groupdetails.id, GroupForm.value)
+                : updateGroup( GroupForm.value)
         ">
             <div class="mb-5 pb-0 row">
                 <div class="col-md-6 mb-3">
                     <label for="fname">Name</label>
                     <input name="vendor_name" ngModel id="search-input" type="text"
-                        class="form-control Dashboard-tab text-white" placeholder="Enter Name"
-                        #groupName="ngModel" [disabled]="isloading" required />
-                    <p class="text-danger mb-0" *ngIf="GroupForm.submitted && groupName.errors?.['required']">
-                         Name is required
+                      class="form-control Dashboard-tab text-white" placeholder="Enter Name"
+                      #groupName="ngModel" [disabled]="isloading" required />
+                    <!-- Error messages -->
+                    <p class="text-danger mb-0" *ngIf="(groupName.touched || GroupForm.submitted) && groupName.errors?.['required']">
+                      Name is required
                     </p>
-                    <p class="text-danger mb-0" *ngIf="
-                    isgroupExist === true && groupName.touched
-                ">
-                        group already exist please use other groupname
+                    <p class="text-danger mb-0" *ngIf="isgroupExist === true && groupName.touched">
+                      Group already exists, please use another group name.
                     </p>
-                </div>
-                <div class="col-md-6 mb-3">
+                  </div>
+                  <div class="col-md-6 mb-3">
                     <label for="fname">Country</label>
-                    <p-dropdown
-                    class=" finput ct_input_white_bg13 ct_select_2_drop_white ct_input_dark_text_145" ngModel
-                    placeholder="Select" name="country" [options]="countryData" [filter]="true" filterBy="Name"
-                    optionLabel="Name" optionValue="ID" styleClass="facilitydropdown"
-                   >
-                </p-dropdown>
-                  
-                 
-                </div>
-                <div class="col-md-6 mb-3">
+                    <p-dropdown class="finput ct_input_white_bg13 ct_select_2_drop_white ct_input_dark_text_145"
+                      ngModel name="country" placeholder="Select" [options]="countryData" [filter]="true" filterBy="Name"
+                      optionLabel="Name" optionValue="ID" styleClass="facilitydropdown" #country="ngModel" required>
+                    </p-dropdown>
+                    <p class="text-danger mb-0" *ngIf="(country.touched || GroupForm.submitted) && country.errors?.['required']">
+                      Country is required.
+                    </p>
+                  </div>
+                  <div class="col-md-6 mb-3">
                     <label for="fname">Reference Id</label>
-                    <input ngModel id="search-input" type="text"
-                    class="form-control Dashboard-tab text-white " name="refer_id"
-                    placeholder="Enter reference id" #groupName="ngModel" [disabled]="isloading" required >
-                    <!-- <p class="text-danger mb-0" *ngIf="GroupForm.submitted && groupName.errors?.['required']">
-                        Group name is required
-                    </p> -->
-                    <!-- <p class="text-danger mb-0" *ngIf="
-                    isgroupExist === true && groupName.touched
-                ">
-                        group already exist please use other groupname
-                    </p> -->
-                </div>
-                <div class="col-md-6 mb-3">
+                    <input ngModel id="search-input" type="text" class="form-control Dashboard-tab text-white" name="refer_id"
+                      placeholder="Enter reference id" #referId="ngModel" [disabled]="isloading" required />
+                    <p class="text-danger mb-0" *ngIf="(referId.touched || GroupForm.submitted) && referId.errors?.['required']">
+                      Reference ID is required.
+                    </p>
+                  </div>
+                  <div class="col-md-6 mb-3">
                     <label for="fname">Address</label>
-                    <input ngModel id="search-input" type="text"
-                    class="form-control Dashboard-tab text-white " name="address"
-                    placeholder="Enter address" #groupName="ngModel" [disabled]="isloading" required >
-                    <!-- <p class="text-danger mb-0" *ngIf="GroupForm.submitted && groupName.errors?.['required']">
-                        Group name is required
-                    </p> -->
-                    <!-- <p class="text-danger mb-0" *ngIf="
-                    isgroupExist === true && groupName.touched
-                ">
-                        group already exist please use other groupname
-                    </p> -->
-                </div>
-               
-              
-             
+                    <input ngModel id="search-input" type="text" class="form-control Dashboard-tab text-white" name="address"
+                      placeholder="Enter address" #address="ngModel" [disabled]="isloading" required />
+                    <p class="text-danger mb-0" *ngIf="(address.touched || GroupForm.submitted) && address.errors?.['required']">
+                      Address is required.
+                    </p>
+                  </div>
+
+
+
 
             </div>
             <div style="height: 80px;"></div>
@@ -296,8 +286,7 @@
 </p-dialog>
 
 
-<p-dialog (click)="removeCss()" [(visible)]="visible2" [breakpoints]="{'960px': '75vw'}" 
-    [style]="{width: '50vw'}">
+<p-dialog (click)="removeCss()" [(visible)]="visible2" [breakpoints]="{'960px': '75vw'}" [style]="{width: '50vw'}">
     <p-header *ngIf="FormEdit === false"> Add Cost Centre </p-header>
     <p-header *ngIf="FormEdit === true"> Edit Target </p-header>
 
@@ -305,16 +294,16 @@
         <form #GroupCostForm="ngForm" class="col-12" (ngSubmit)="
             FormEdit === false
                 ? saveCostCentre(GroupCostForm)
-                : updateGroup(groupdetails.id, GroupCostForm.value)
+                : updateGroup(GroupCostForm.value)
         ">
             <div class="mb-5 pb-0 row">
                 <div class="col-md-6 mb-3">
                     <label for="fname"> Cost centre name</label>
                     <input name="cost_center_name" ngModel id="search-input" type="text"
-                        class="form-control Dashboard-tab text-white" placeholder="Enter Name"
-                        #groupName="ngModel" [disabled]="isloading" required />
+                        class="form-control Dashboard-tab text-white" placeholder="Enter Name" #groupName="ngModel"
+                        [disabled]="isloading" required />
                     <p class="text-danger mb-0" *ngIf="GroupCostForm.submitted && groupName.errors?.['required']">
-                         Name is required
+                        Name is required
                     </p>
                     <p class="text-danger mb-0" *ngIf="
                     isgroupExist === true && groupName.touched
@@ -324,9 +313,9 @@
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="fname">Reference Id </label>
-                    <input ngModel id="search-input" type="text"
-                    class="form-control Dashboard-tab text-white " name="cost_center_refer_id"
-                    placeholder="Enter address" #groupName="ngModel" [disabled]="isloading" required >
+                    <input ngModel id="search-input" type="text" class="form-control Dashboard-tab text-white "
+                        name="cost_center_refer_id" placeholder="Enter address" #groupName="ngModel"
+                        [disabled]="isloading" required>
                     <!-- <p class="text-danger mb-0" *ngIf="GroupForm.submitted && groupName.errors?.['required']">
                         Group name is required
                     </p> -->
@@ -336,9 +325,9 @@
                         group already exist please use other groupname
                     </p> -->
                 </div>
-               
-              
-             
+
+
+
 
             </div>
             <div style="height: 80px;"></div>
@@ -366,4 +355,3 @@
         </form>
     </div>
 </p-dialog>
-

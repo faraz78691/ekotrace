@@ -122,13 +122,15 @@ export class LoginComponent implements OnInit {
                     if(res.success == true){
 
                         this.loginInfo = res.userinfo[0];
-                        if(this.loginInfo.package_id == null || this.loginInfo.package_id == undefined){
-                            this.toastr.error(
-                                'You dont have any package assigned, Please contact platform admin'
-                            );
-                            this.showLoader = false;
-                            this.isLoading = false;
-                            return false
+                        if(this.loginInfo.role !='Platform Admin'){
+                            if(this.loginInfo.package_id == null || this.loginInfo.package_id == undefined){
+                                this.toastr.error(
+                                    'You dont have any package assigned, Please contact platform admin'
+                                );
+                                this.showLoader = false;
+                                this.isLoading = false;
+                                return false
+                            }
                         }
                         localStorage.setItem('accessToken', this.loginInfo.token);
                         // localStorage.setItem('accessToken', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6Ijc1ZGZjYWViMmY4ZGRlZTAyZjU2MTRmYThhMjRkMmMyIn0.eyJ1c2VyX2lkIjoidXVpZGQxMjQzMiJ9.lkY3ctvaxcV2Jx0d88b4gn5TJmka09BC3slDZpALe1IqoIWi4wWVkJzSTuIIM2dX1WZjLgcmZJguO-Neaz4sBQ');

@@ -165,7 +165,8 @@ export class PlatformAdminComponent {
 
                 // this.GetEmissionInventory();
 
-                this.visible = false;
+                this.visible2 = false;
+                this.isloading = false
                 this.notification.showSuccess(
                    response.message,
                     'Success'

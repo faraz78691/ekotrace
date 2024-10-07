@@ -153,7 +153,7 @@ export class HeaderComponent implements OnInit {
       }
 
     checkFacilityID() {
-   
+   console.log(this.selectedFacilityID);
         this.facilityService.facilitySelected(this.selectedFacilityID.id)
      
         localStorage.setItem('SelectedfacilityID', this.selectedFacilityID.id);
@@ -219,7 +219,7 @@ export class HeaderComponent implements OnInit {
     
                     // Add the "All" option to the beginning of the list
                     this.facilitygrouplist.unshift(allOption);
-    
+    console.log(this.facilitygrouplist);
                     this.lfgcount = this.facilitygrouplist.length;
                     localStorage.setItem('FacilityGroupCount', String(this.lfgcount));
 
@@ -240,7 +240,7 @@ export class HeaderComponent implements OnInit {
             
                 if(res.success == true){
                     this.facilitygrouplist = res.categories;
-                    this.addFacilitesToSignal(this.facilitygrouplist)
+                   
                     const allOption: FacilityGroupList = {
                         id: 0,
                         name: 'Select',
@@ -249,7 +249,7 @@ export class HeaderComponent implements OnInit {
     
                     // Add the "All" option to the beginning of the list
                     this.facilitygrouplist.unshift(allOption);
-    
+    console.log(this.facilitygrouplist);
                     this.lfgcount = this.facilitygrouplist.length;
                     localStorage.setItem('FacilityGroupCount', String(this.lfgcount));
                 }

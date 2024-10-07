@@ -215,8 +215,7 @@
                                                                                     child,
                                                                                     head.manageDataPointCategorySeedID, head.catName
                                                                                 )
-                                                                            " class="col pointer d-flex"
-                                                                            
+                                                                            " class="col pointer d-flex align-items-center"
                                                                             tooltipPosition="bottom">
                                                                             {{ child.subCatName}}
                                                                             <div class="iicon">
@@ -229,8 +228,7 @@
                                                                                 <i *ngIf="head.catName == 'Fuel and Energy-related Activities'"
                                                                                     class="fa fa-info-circle tooltip-icon"
                                                                                     pTooltip="Indirect emissions associated with the production, processing, and transportation of fuels and energy that are consumed by the reporting company but not included in Scope 1 or Scope 2 emissions.
-                                                                                    "
-                                                                                    tooltipPosition="top"
+                                                                                    " tooltipPosition="top"
                                                                                     style="color: #88ad47"></i>
                                                                                 <i *ngIf="head.catName == 'Upstream Transportation and Distribution'"
                                                                                     class="fa fa-info-circle tooltip-icon"
@@ -246,14 +244,12 @@
                                                                                 <i *ngIf="head.catName == 'Waste generated in operations'"
                                                                                     class="fa fa-info-circle tooltip-icon"
                                                                                     pTooltip="Emissions from the disposal and treatment of waste generated in the company’s operations.
-                                                                                    "
-                                                                                    tooltipPosition="top"
+                                                                                    " tooltipPosition="top"
                                                                                     style="color: #88ad47"></i>
                                                                                 <i *ngIf="head.catName == 'Employee Commuting'"
                                                                                     class="fa fa-info-circle tooltip-icon"
                                                                                     pTooltip="Emissions from the transportation of employees between their homes and workplaces.
-                                                                                    "
-                                                                                    tooltipPosition="top"
+                                                                                    " tooltipPosition="top"
                                                                                     style="color: #88ad47"></i>
                                                                                 <i *ngIf="head.catName == 'Home Office'"
                                                                                     class="fa fa-info-circle tooltip-icon"
@@ -263,8 +259,7 @@
                                                                                 <i *ngIf="head.catName == 'Upstream Leased Assets'"
                                                                                     class="fa fa-info-circle tooltip-icon"
                                                                                     pTooltip=" Emissions from the operation of assets leased by the company from other entities.
-                                                                                    "
-                                                                                    tooltipPosition="top"
+                                                                                    " tooltipPosition="top"
                                                                                     style="color: #88ad47"></i>
                                                                                 <i *ngIf="head.catName == 'Downstream Transportation and Distribution'"
                                                                                     class="fa fa-info-circle tooltip-icon"
@@ -274,10 +269,9 @@
                                                                                 <i *ngIf="head.catName == 'Processing of Sold Products'"
                                                                                     class="fa fa-info-circle tooltip-icon"
                                                                                     pTooltip="Emissions from the processing of intermediate products sold by the company. 
-                                                                                    "
-                                                                                    tooltipPosition="top"
+                                                                                    " tooltipPosition="top"
                                                                                     style="color: #88ad47"></i>
-                                                                               
+
                                                                                 <i *ngIf="head.catName == 'Use of Sold Products'"
                                                                                     class="fa fa-info-circle tooltip-icon"
                                                                                     pTooltip="Emissions from the use of products sold by the company."
@@ -293,7 +287,7 @@
                                                                                     pTooltip="Emissions from the operation of assets owned by the company and leased to other entities."
                                                                                     tooltipPosition="top"
                                                                                     style="color: #88ad47"></i>
-                                                                               
+
                                                                                 <i *ngIf="head.catName == 'Franchises'"
                                                                                     class="fa fa-info-circle tooltip-icon"
                                                                                     pTooltip="Emissions from the operations of franchises owned by the company."
@@ -303,16 +297,21 @@
                                                                         </div>
                                                                         <p-accordion>
 
-
+                                                                           
                                                                             <p-accordionTab
-                                                                                class="ct_business_drop_12_main"
+                                                                                class="ct_business_drop_12_main position-relative"
                                                                                 header="Business Travel"
                                                                                 *ngIf="head.manageDataPointCategorySeedID ==13"
                                                                                 clickable (click)="
                                                                                 ToggleClick(
                                                                                     )
                                                                             " pTooltip="{{ child.subCatName }}">
-
+                                                                             <div class="iicon ct_business_icon_info12">
+                                                                                <i 
+                                                                                    class="fa fa-info-circle tooltip-icon"
+                                                                                    pTooltip="Emissions from the transportation of employees for business-related activities." tooltipPosition="top" style="color: #88ad47"></i>
+                                                                            </div>
+                                                                              
                                                                                 <ul class="ct_dropdwon_item"
                                                                                     [class.ct_open_modal]="isVisited == true">
                                                                                     <li (click)="setActive(24)">Flight
@@ -2302,6 +2301,7 @@
                                                         </td>
                                                         <td>
                                                             <input type="text" class="form-control"
+                                                                style="width:200px;height:38px"
                                                                 placeholder="Enter quantity" name="quantity_{{row.id}}"
                                                                 [(ngModel)]="row.quantity">
                                                         </td>
@@ -2325,12 +2325,14 @@
                                                         </td>
                                                         <td>
                                                             <input type="text" class="form-control"
+                                                                style="width:200px;height:38px"
                                                                 [(ngModel)]="row.vendorspecificEF"
                                                                 name="vendorSpecific_{{row.id}}"
                                                                 placeholder="Enter specific EF">
                                                         </td>
                                                         <td>
                                                             <input type="text" class="form-control"
+                                                                style="width:200px;height:38px"
                                                                 name="vendorspecificEF_{{row.id}}"
                                                                 [(ngModel)]="row.vendorspecificEFUnit"
                                                                 [value]="'kgCO2e/' + row.selectedUnit">
@@ -3841,7 +3843,7 @@
                                                                 <p-dropdown
                                                                     class="ct_select_op_input ct_position_small_quantity"
                                                                     ngModel [options]="energyUnitsGrid"
-                                                                    optionLabel="units" optionValue="units"
+                                                                    optionLabel="units" optionValue="id"
                                                                     placeholder="Select a Unit" name="noofunits"
                                                                     #noofunits="ngModel"
                                                                     (onChange)="onQuantitySoldUnitChange($event)">
@@ -5322,7 +5324,7 @@
                                                 <!-- <p-sortIcon field="subcatName"></p-sortIcon> -->
                                             </th>
                                             <th pSortableColumn="type"
-                                                *ngIf="categoryId != 3 && categoryId != 8 && categoryId != 10 && categoryId != 11 && categoryId != 19 && categoryId != 10 && categoryId != 12 && categoryId != 14 && categoryId != 16 && categoryId !=18 && categoryId != 21  && categoryId != 15 && categoryId != 24 && categoryId != 20 && categoryId !=25 && categoryId !=26">
+                                                *ngIf="categoryId != 3 && categoryId != 8 && categoryId != 10 && categoryId != 11 && categoryId != 17 && categoryId != 19 && categoryId != 10 && categoryId != 12 && categoryId != 14 && categoryId != 16 && categoryId !=18 && categoryId != 21  && categoryId != 15 && categoryId != 24 && categoryId != 20 && categoryId !=25 && categoryId !=26">
 
                                                 Type
                                                 <!-- <p-sortIcon field="catName"></p-sortIcon> -->
@@ -5330,20 +5332,19 @@
                                             <th pSortableColumn="type" *ngIf="categoryId ==20">
 
                                                 Waste Type
-                                               
+
                                             </th>
                                             <th pSortableColumn="type" *ngIf="categoryId == 16 || categoryId == 21">
 
                                                 Facility Type
-                                               
+
                                             </th>
                                             <th pSortableColumn="type" *ngIf="categoryId == 16 || categoryId == 21">
 
                                                 Facility sub category
                                                 <!-- <p-sortIcon field="catName"></p-sortIcon> -->
                                             </th>
-                                            <th pSortableColumn="catName"
-                                                *ngIf="categoryId == 22">
+                                            <th pSortableColumn="catName" *ngIf="categoryId == 22">
                                                 Franchise Sub Category
 
                                             </th>
@@ -5361,23 +5362,19 @@
                                                 Scope 2 (kg co2e)
                                                 <!-- <p-sortIcon field="catName"></p-sortIcon> -->
                                             </th>
-                                            <th pSortableColumn="catName"
-                                                *ngIf="categoryId == 16 || categoryId == 21">
+                                            <th pSortableColumn="catName" *ngIf="categoryId == 16 || categoryId == 21">
                                                 Vehicle
 
                                             </th>
-                                            <th pSortableColumn="catName"
-                                                *ngIf="categoryId == 16 || categoryId == 21">
+                                            <th pSortableColumn="catName" *ngIf="categoryId == 16 || categoryId == 21">
                                                 Sub category
 
                                             </th>
-                                            <th pSortableColumn="catName"
-                                                *ngIf="categoryId == 16 || categoryId == 21">
+                                            <th pSortableColumn="catName" *ngIf="categoryId == 16 || categoryId == 21">
                                                 No of Vehicles
 
                                             </th>
-                                            <th pSortableColumn="catName"
-                                                *ngIf="categoryId == 16 || categoryId == 21">
+                                            <th pSortableColumn="catName" *ngIf="categoryId == 16 || categoryId == 21">
                                                 Distance Travelled
 
                                             </th>
@@ -5482,20 +5479,18 @@
 
                                             </th>
                                             <th pSortableColumn="catName"
-                                            *ngIf="categoryId == 18 || categoryId == 19 || categoryId == 8 || categoryId ==20">
-                                            Category
+                                                *ngIf="categoryId == 18 || categoryId == 19 || categoryId == 8 || categoryId ==20">
+                                                Category
 
-                                        </th>
-                                            <th pSortableColumn="catName"
-                                            *ngIf="categoryId ==20">
-                                            Total Waste
+                                            </th>
+                                            <th pSortableColumn="catName" *ngIf="categoryId ==20">
+                                                Total Waste
 
-                                        </th>
-                                            <th pSortableColumn="catName"
-                                            *ngIf="categoryId ==20">
-                                            Unit
+                                            </th>
+                                            <th pSortableColumn="catName" *ngIf="categoryId ==20">
+                                                Unit
 
-                                        </th>
+                                            </th>
                                             <th pSortableColumn="catName" *ngIf="categoryId == 20">
                                                 Combustion
                                                 <!-- <p-sortIcon field="catName"></p-sortIcon> -->
@@ -5512,7 +5507,7 @@
                                                 Recycling
                                                 <!-- <p-sortIcon field="catName"></p-sortIcon> -->
                                             </th>
-                                           
+
                                             <th pSortableColumn="catName" *ngIf="categoryId == 18  ">
                                                 Processing Activity
 
@@ -5533,8 +5528,7 @@
                                                 Quantity
                                                 <!-- <p-sortIcon field="catName"></p-sortIcon> -->
                                             </th>
-                                            <th pSortableColumn="catName"
-                                                *ngIf=" categoryId == 19 || categoryId == 23">
+                                            <th pSortableColumn="catName" *ngIf=" categoryId == 19 || categoryId == 23">
                                                 Sub Category
 
                                             </th>
@@ -5553,8 +5547,7 @@
                                             <th pSortableColumn="unit" *ngIf="categoryId ==18">
                                                 Unit <p-sortIcon field="unit"></p-sortIcon>
                                             </th>
-                                            <th pSortableColumn="catName"
-                                                *ngIf="categoryId ==18 ||categoryId == 23">
+                                            <th pSortableColumn="catName" *ngIf="categoryId ==18 ||categoryId == 23">
                                                 Calculation Method
                                                 <!-- <p-sortIcon field="catName"></p-sortIcon> -->
                                             </th>
@@ -5637,22 +5630,22 @@
                                                 Unit <p-sortIcon field="unit"></p-sortIcon>
                                             </th>
                                             <th pSortableColumn="unit" *ngIf="categoryId == 19">
-                                                Expected Life 
+                                                Expected Life
                                             </th>
                                             <th pSortableColumn="unit" *ngIf="categoryId == 19">
-                                                Electricity Use 
+                                                Electricity Use
                                             </th>
                                             <th pSortableColumn="unit" *ngIf="categoryId == 19">
-                                                Fuel Type 
+                                                Fuel Type
                                             </th>
                                             <th pSortableColumn="unit" *ngIf="categoryId == 19">
                                                 Fuel used
                                             </th>
                                             <th pSortableColumn="unit" *ngIf="categoryId == 19">
-                                                Refrig. Type 
+                                                Refrig. Type
                                             </th>
                                             <th pSortableColumn="unit" *ngIf="categoryId == 19">
-                                                Refrig. Leak 
+                                                Refrig. Leak
                                             </th>
 
 
@@ -5806,7 +5799,7 @@
                                                 Value <p-sortIcon field="amount"></p-sortIcon>
                                             </th>
                                             <th pSortableColumn="unit"
-                                                *ngIf="categoryId !=10 &&categoryId !=12  &&categoryId !=15 &&categoryId !=19 &&categoryId !=18 && categoryId !=11 && categoryId !=17 && categoryId !=16  && categoryId !=22 && categoryId !=24 && categoryId !=25  && categoryId !=26 && categoryId !=20">
+                                                *ngIf="categoryId !=10 &&categoryId !=12  &&categoryId !=15 &&categoryId !=19 &&categoryId !=18 && categoryId !=11 && categoryId !=17 && categoryId !=16 && categoryId !=21  && categoryId !=22 && categoryId !=24 && categoryId !=25  && categoryId !=26 && categoryId !=20">
                                                 Unit <p-sortIcon field="unit"></p-sortIcon>
                                             </th>
                                             <th *ngIf="categoryId==5" pSortableColumn="sourceName">
@@ -5850,7 +5843,7 @@
                                                 *ngIf="categoryId != 8 && categoryId != 7 && categoryId != 10 && categoryId != 12 && categoryId != 14 && categoryId != 15 && categoryId != 16 && categoryId != 17 && categoryId != 18 && categoryId != 19 && categoryId != 20 && categoryId !=21 && categoryId !=22 && categoryId !=11 && categoryId !=23 && categoryId !=24 && categoryId != 25 && categoryId != 26">
                                                 {{ de.subcatName }}</td>
                                             <td
-                                                *ngIf="categoryId != 3 && categoryId != 8  && categoryId != 10 && categoryId != 11 && categoryId != 12 && categoryId != 14 && categoryId != 15  &&  categoryId != 24 && categoryId != 16 && categoryId !=18 && categoryId !=19 && categoryId !=20 && categoryId !=21   && categoryId !=22 && categoryId !=23 && categoryId != 25 && categoryId != 26">
+                                                *ngIf="categoryId != 3 && categoryId != 8  && categoryId != 10 && categoryId != 17 && categoryId != 11 && categoryId != 12 && categoryId != 14 && categoryId != 15  &&  categoryId != 24 && categoryId != 16 && categoryId !=18 && categoryId !=19 && categoryId !=20 && categoryId !=21   && categoryId !=22 && categoryId !=23 && categoryId != 25 && categoryId != 26">
                                                 {{ de.TypeName || '-' }}</td>
 
                                             <td *ngIf="categoryId == 11 ">
@@ -5948,8 +5941,7 @@
                                             <td *ngIf="categoryId == 23">{{ de.investement_type }}</td>
                                             <td *ngIf="categoryId == 18">{{ de.valueofsoldintermediate }}</td>
                                             <td *ngIf="categoryId == 18">{{ de.unit }}</td>
-                                            <td
-                                                *ngIf="categoryId ==18 || categoryId == 21 ||categoryId == 23">
+                                            <td *ngIf="categoryId ==18 || categoryId == 21 ||categoryId == 23">
                                                 {{ de.calculation_method }}</td>
                                             <td *ngIf="categoryId == 16 || categoryId == 21">{{
                                                 de.franchise_space }}</td>
@@ -5960,10 +5952,11 @@
                                                 de.scope1_emission }}</td>
                                             <td *ngIf="categoryId == 16 || categoryId == 21 || categoryId == 22  ">{{
                                                 de.scope2_emission }}</td>
-                                            <td *ngIf="categoryId == 16">{{ de.vehicle_type }}</td>
-                                            <td *ngIf="categoryId == 16">{{ de.vehicle_subtype }}</td>
-                                            <td *ngIf="categoryId == 16">fg veh</td>
-                                            <td *ngIf="categoryId == 16">{{ de.distance_travelled }}&nbsp;{{de.unit}}</td>
+                                            <td *ngIf="categoryId == 16 || categoryId == 21">{{ de.vehicle_type }}</td>
+                                            <td *ngIf="categoryId == 16 || categoryId == 21">{{ de.vehicle_subtype }}</td>
+                                            <!-- <td *ngIf="categoryId == 16 || categoryId == 21">fg veh</td> -->
+                                            <td *ngIf="categoryId == 16 || categoryId == 21">{{ de.distance_travelled }}&nbsp;{{de.unit}}
+                                            </td>
                                             <td *ngIf="categoryId == 15">{{ de.typeof_homeoffice_name }}</td>
                                             <td *ngIf="categoryId == 15">{{ de.noofemployees }}</td>
                                             <td *ngIf="categoryId == 15">{{ de.noofdays }}</td>
@@ -6051,7 +6044,7 @@
                                                     </ng-template>{{ de.readingValue }}</p-cellEditor>
                                             </td>
                                             <td *ngIf="categoryId==8">{{ de.valuequantity }}</td>
-                                        
+
                                             <td *ngIf="categoryId==3"><p-cellEditor><ng-template pTemplate="input">
                                                         <input name="numberOfExtinguisher_{{ ri }}" id="{{ ri }}"
                                                             pInputText type="text" [(ngModel)]="de.numberOfExtinguisher"
@@ -6081,7 +6074,7 @@
                                             <td *ngIf="categoryId==6">{{ de.ModeofDEID }}</td>
                                             <td *ngIf="categoryId==6">{{ de.Value }}</td>
                                             <td
-                                                *ngIf=" categoryId !=10 && categoryId !=11 && categoryId !=12 && categoryId !=15 && categoryId !=16 && categoryId !=18 && categoryId !=17 && categoryId !=19 && categoryId !=22 && categoryId !=24 && categoryId !=25  && categoryId !=26 && categoryId != 20">
+                                                *ngIf=" categoryId !=10 && categoryId !=11 && categoryId !=12 && categoryId !=15 && categoryId !=16 && categoryId !=18 && categoryId !=17 && categoryId !=19 && categoryId !=21 && categoryId !=22 && categoryId !=24 && categoryId !=25  && categoryId !=26 && categoryId != 20">
                                                 {{
                                                 de.unit }}
                                             </td>
@@ -6282,11 +6275,13 @@
                                             <td *ngIf="categoryId == 26">{{ de.no_of_trips }}
                                             </td> -->
                                             <td>{{de.emissionFactorUsed != 'NaN' ? de.emissionFactorUsed : '-' }}</td>
-                                            <td *ngIf=" categoryId !=25 && categoryId !=12  && categoryId !=26 && categoryId !=10 && categoryId !=19">kg
+                                            <td
+                                                *ngIf=" categoryId !=25  && categoryId !=26 && categoryId !=10 && categoryId !=17 && categoryId !=19">
+                                                kg
                                                 CO2e/{{
                                                 de.unit }}
                                             </td>
-                                            <td *ngIf=" categoryId ==10">kg
+                                            <td *ngIf=" categoryId ==10 || categoryId ==17">kg
                                                 CO2e/{{
                                                 de.unit_of_mass }}
                                             </td>

@@ -84,6 +84,9 @@ export class GroupService {
     public newEditGroup( groupdetails) {
         return this.http.post(environment.baseUrl + '/Updategroupmapping' , groupdetails);
     };
+    public updateVendor( groupdetails) {
+        return this.http.post(environment.baseUrl + '/updateVendor' , groupdetails);
+    };
     public updateAction( groupdetails) {
         return this.http.post(environment.baseUrl + '/updateActions' , groupdetails);
     };
