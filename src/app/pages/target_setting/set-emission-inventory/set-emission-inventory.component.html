@@ -21,6 +21,47 @@
 
 
                         <h4 class=" ct_fw_600 m-0 m-0" style="flex: 1;">Set Emission Inventory</h4>
+                        <div class="ct_how_use_tooltip_main ml-auto">
+                            <i class="fa-solid fa-circle-question" (click)="isHowtoUse = !isHowtoUse"></i>
+                            <div class="ct_how_use_tooltip_cnt" [ngClass]="isHowtoUse ? 'ct_active' : ''">
+                                <div>
+                                    <p class="mb-1">EKO Trace aligns with science-based target initiative (SBTi) to set the targets for emission reductions.  SBTs are in line with the scale of reductions that the latest climate science deems necessary to keep global warming below 1.5°C.  The goal is to reduce global GHG emissions by 50% by 2030 and reach net zero emissions by no later than 2050. 
+                                        Setting SBTs in EKO Trace is a three-step process:
+                                        
+                                    </p>
+                                    <p class="ct_fs_16 mt-2 mb-0"><span class="ct_fw_600">Set Emissions Inventory:</span> An annual emissions inventory is a prerequisite for emissions forecasting and setting targets. The target setting can only be done for the parent company. 	
+
+    
+                                    </p>
+                        
+                                    <ol class="mb-0">
+                                        <li>Entering the inventory data 
+                                            <ul style="list-style: lower-roman;" class="mb-0">
+                                                <li>Inputting scope1, scope2 and scope3 data for the corresponding year is mandatory. Subcategory emissions data is optional and is required only when you are selecting other target KPIs. 
+                                                </li>
+                                                <li>Product output is required for target type ‘physical intensity convergence.’ This target type is useful in the case of single product manufacturing.  The unit of product output can be no. of items / tonnes / kg etc. 
+                                                </li>
+                                                <li>Economic output is required for ‘economic intensity convergence’ and is useful when the company generates revenue from multiple products. The unit of economic output is the local ccy of revenue output
+                                                </li>
+                                            </ul>
+                        
+                                        </li>
+                                        <li>Emissions growth, revenue and output growth projections are required for emissions forecasting. To do the forecasting, you at-least need the base year data (the year when target setting was done), current year (which has latest emissions data) and the target year (by when you want to achieve the target reduction in emissions).
+
+                                        </li>
+                                      
+                                    </ol>
+                                  
+                                  
+                                </div>
+                               
+                        
+                        
+                        
+                        
+                        
+                            </div>
+                        </div>
                         <button class="GroupButton ct_assign_package_btn129 ct_animation_btn_121 w-auto px-2 mr-3"
                             (click)="showAddGroupDialog2()">
                             Set Revenue Projections
@@ -29,6 +70,7 @@
                             (click)="showAddGroupDialog()">
                             + Add Inventory
                         </button>
+                     
                     </div>
                 </div>
                 <!-- <div class="d-flex justify-content-between text-style text-light scope-Div">

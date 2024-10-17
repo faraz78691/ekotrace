@@ -7,11 +7,71 @@
             <div
                 class="d-flex align-items-center justify-content-between gap-2  card-header card-headerL m-0 ct_header_grey_1202">
                 <h4 class="ct_fw_600  mb-0" style="flex: 1;">Actions</h4>
+                <div class="ct_how_use_tooltip_main ml-auto">
+                    <i class="fa-solid fa-circle-question" (click)="isHowtoUse = !isHowtoUse"></i>
+                    <div class="ct_how_use_tooltip_cnt" [ngClass]="isHowtoUse ? 'ct_active' : ''">
+                        <div>
+                         
+                            <h5 class="ct_fs_16 mb-2">Taking actions
+
+                            </h5>
+                            <p class="mb-0 ct_fs_16">The actions taken to reduce carbon emissions have a three-stage lifecycle. This three-stage approach allows for a clear understanding of the status of each action, enabling effective tracking, monitoring, and reporting of progress towards carbon reduction goals. It also helps to identify areas where more planning or action is needed to achieve desired outcomes.
+                            </p>
+                
+                            <ol class="mb-0">
+                                <li>Planned:
+                                <ul class="mb-0" style="list-style: none;">
+                                    <li>- The action is in the planning stage</li>
+                                    <li>- It has been identified as a potential carbon reduction opportunity
+                                    </li>
+                                    <li>- Plans and strategies are being developed to implement the action
+                                    </li>
+                                </ul>
+                
+                                </li>
+                                <li> Progress
+                                    <ul class="mb-0" style="list-style: none;">
+                                        <li> - The action is ongoing and active
+                                        </li>
+                                        <li> - Implementation has started, and progress is being made
+
+                                        </li>
+                                        <li>- Data is being collected to track the effectiveness of the action
+                                        </li>
+                                    </ul>
+
+                                </li>
+                                <li> Achieved
+                                    <ul class="mb-0" style="list-style: none;">
+                                        <li> - The action is completed
+
+                                        </li>
+                                        <li> - It has become a permanent part of the organization's carbon reduction measures
+
+                                        </li>
+                                        <li>- The action is now considered a success and is now being reported as part of the organization's overall carbon reduction achievements for the reporting year
+                                        </li>
+                                    </ul>
+
+                                </li>
+                               
+                            </ol>
+                           
+                        </div>
+                       
+                
+                
+                
+                
+                
+                    </div>
+                </div>
                 <div class="form-group has-search text-light mb-0">
                     <button class="GroupButton ct_assign_package_btn129 p-button  ct_animation_btn_121"
                         (click)="showAddGroupDialog()">
                         + Add Actions
                     </button>
+                   
                 </div>
             </div>
         </div>

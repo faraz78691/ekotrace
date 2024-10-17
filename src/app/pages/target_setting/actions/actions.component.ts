@@ -26,6 +26,7 @@ interface groupby {
     styleUrls: ['./actions.component.scss']
 })
 export class ActionsComponent {
+    isHowtoUse = false;
     @ViewChild('GroupForm', { static: false }) GroupForm: NgForm;
     public companyDetails: CompanyDetails;
     companyData: CompanyDetails = new CompanyDetails();

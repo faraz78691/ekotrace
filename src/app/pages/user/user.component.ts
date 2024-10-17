@@ -20,6 +20,7 @@ import { CompanyService } from '@services/company.service';
     styleUrls: ['./user.component.scss']
 })
 export class UserComponent {
+    isHowtoUse = false;
     @ViewChild('UserForm', { static: false }) UserForm: NgForm;
     public companyDetails: CompanyDetails;
     companyData: CompanyDetails = new CompanyDetails();
