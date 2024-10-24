@@ -42,10 +42,76 @@
                     <div
                         class="card-header card-headerL ct_header_grey_1202 d-flex align-items-center justify-content-between">
                         <h4 class=" ct_fw_600 m-0 my-0" style="flex: 1;">Set Target</h4>
+                        <div class="ct_how_use_tooltip_main ml-auto">
+                            <i class="fa-solid fa-circle-question" (click)="isHowtoUse = !isHowtoUse"></i>
+                            <div class="ct_how_use_tooltip_cnt" [ngClass]="isHowtoUse ? 'ct_active' : ''">
+                                <div>
+                                  
+                        
+                                    <ol class="mb-0">
+                                        <li>There are three types of target setting – Absolute emissions reduction, Physical intensity convergence, Economic Intensity convergence
+                                            <ul style="list-style: lower-roman;" class="mb-0">
+                                                <li>
+                                                    <strong>Absolute contraction:</strong> A one-size-fits-all approach that helps achieve a linear absolute reduction in the GHG emissions in the target year, relative to the base year. Using this method, a company reduces emissions at the same rate year-on-year, irrespective of the company’s performance, size, sector, or base year emissions. As per SBTi, the minimum annual linear reduction for targets in line with the 1.5°C climate commitment is 4.2%. To align a target to a well below 2°C commitment, the required annual linear reduction is 2.5%. Absolute targets are straightforward to measure and communicate, and are therefore most popular. Example target: To reduce absolute scope 1 and scope 2 GHG emissions by 35% by 2030, from 2020 levels.
+                                                </li>
+                                                <li>
+                                                    <strong>Physical Intensity Convergence:</strong> An approach in which the intensity target is defined by a reduction in emissions relative to a specific business metric. For example, production output of the company (tCO₂e per tonne product produced). A physical intensity target is best suited for use within sectors that create a uniform product, such as in steel or cement sectors. Example target for a steel company: To reduce scope 1 and scope 2 GHG emissions per tonne of steel produced 35% by 2030, from a 2017 base year.
+
+                                                </li>
+                                                <li>
+                                                   <strong> Economic Intensity convergence: </strong>An approach that sets a company’s emissions targets using contraction of economic intensity. The target is formulated by considering intensity reduction of a company's emissions relative to the company's economic output (tCO₂e per value added). This method is best suited for use within sectors whose products vary a lot and are difficult to directly compare against each other, such as retail or chemical sectors. Example target for an apparel company like NTO: To reduce scope 3 GHG emissions from purchased goods and services and use of sold products 40% per unit of value added by 2035 from a 2021 base year.
+
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>Other KPI targets  
+                                            <ul style="list-style: lower-roman;" class="mb-0">
+                                                <li>
+                                                    Renewable energy: Indicates targets to increase the amount of renewable energy production or consumption. For example, switching from fossil fuel-based onsite generation to renewables can significantly reduce a company’s direct operational emissions. Eg Company commits to increase annual sourcing of renewable electricity from 7% in 2023 to 100% by 2029.
+
+                                                </li>
+                                                <li>
+                                                    Supplier engagement: Indicates targets to increase the adoption of SBTs among the company’s suppliers or customers. For example, getting the energy-intensive suppliers to set SBTs, and, in effect, reduce the company’s scope 3 emissions. E.g. company further commits that 65% of its supplier spend, by covering purchased goods and services and capital goods, has science-based targets by 2025.
+
+                                                </li>
+                                               
+                                            </ul>
+                                        </li>
+                                       
+                                    </ol>
+                        
+                                    <h5 class="ct_fs_16 mb-0 mt-2">Emissions forecasting
+    
+                                    </h5>
+                                    <ol class="mb-2">
+                                        <li>Emissions are forecasted using current year data and adding the annual emission change % to it. For eg if the scope 1 emissions in 2024 is 50 tCO2e and the annual growth rate of emissions is 5%, next year forecasted emission will be 50*(1+ 5%). 
+
+                                        </li>
+                                        <li>Intensity forecasting – If the target type is ‘physical intensity convergence’, physical intensity is calculated for each year using the following formula.  <br>Forecasted Intensity_i = Emissions_i-1 * (1 + x%) / Output_i-1 * (1 + y%) where
+                                            x% - annual growth rate of emissions, y% - annual growth rate of output
+                                            
+
+                        
+                                        </li>
+                                        <li>To calculate the target emissions, base year emissions and output data is taken and target reduction is applied till the target year
+
+                                        </li>
+                                    </ol>
+                                  
+                                </div>
+                               
+                        
+                        
+                        
+                        
+                        
+                            </div>
+                        </div>
                         <button class="GroupButton ct_assign_package_btn129 ct_animation_btn_121 w-auto px-3"
                             (click)="showAddGroupDialog()">
                             + Add Target
                         </button>
+                    
                     </div>
                 </div>
                 <!-- <h3 class="pl-4 card-header card-headerL">Set Target</h3> -->

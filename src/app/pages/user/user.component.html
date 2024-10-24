@@ -16,7 +16,103 @@
                             ? 'User-headD'
                             : 'User-headL'
                     ">
+                  <div class="d-flex align-items-center gap-3">
                     <p class="ml-3 ct_fw_600">Users List</p>
+                    <div class="ct_how_use_tooltip_main ml-auto">
+                        <i class="fa-solid fa-circle-question" (click)="isHowtoUse = !isHowtoUse"></i>
+                        <div class="ct_how_use_tooltip_cnt" [ngClass]="isHowtoUse ? 'ct_active' : ''">
+                            <div>
+                                <p class="mb-1 ">There are four types of users with different access rights in the tool. This access control system ensures that users have appropriate permissions to view and edit data based on their role and responsibilities within the organization.
+                                </p>
+                                <h5 class="ct_fs_16 mt-2 mb-0">1. Super-Admin:
+
+                                </h5>
+                    
+                                <ol style="list-style: none;"class="mb-0">
+                                    <li>- Has read and edit rights to all sections of the tool, which can be accessed as a part of the package taken by the company
+                    
+                                    </li>
+                                    <li>- Only Super-Admin has access to the 'Tree' and 'set GHG template' section
+                                    </li>
+                                    <li>- Can add users as Admins, Managers, and Data Preparers
+                                    </li>
+                                    <li>- Works with Ekobon team to set up organization tree and save GHG templates of Scope1, 2 &3 sub-categories relevant for different facilities.
+                                    </li>
+                                </ol>
+                    
+                                <h5 class="ct_fs_16 mb-0 mt-2">2. Admin:
+
+                                </h5>
+                                <ol style="list-style: none;" class="mb-2">
+                                    <li>- Has read and edit rights to associated sub-group and facilities
+                                    </li>
+                                    <li>- Admin of main group has access to all sub-groups and facilities
+                    
+                                    </li>
+                                    <li>- Can add users as Admins, Managers, and Data Preparers for sub-groups/facilities they have access to
+                                    </li>
+                                </ol>
+                                <h5 class="ct_fs_16  mb-0">3. Manager:
+
+                    
+                                </h5>
+                                <ol style="list-style: none;" class="mb-2">
+                                    <li>    - Has read and edit rights only to associated facility
+
+                                    </li>
+                                    <li>- Can add other Managers and Data Preparers for specific facility
+
+                                    </li>
+                                  
+                                </ol>
+                    
+                                <h5 class="ct_fs_16 mb-2 ">4. Data Preparer:</h5>
+                                <ol class="mb-2">
+                                    <li>    - Has read and edit rights only to associated facility
+
+                                    </li>
+                                    <li>    - Cannot add any users
+
+                                    </li>
+                                   
+                                </ol>
+                                <h5 class="ct_fs_16 ">Additionally, there are specific access rights for GHG Emissions and Financed Emissions:
+
+                                </h5>
+                                <ol class="mb-2">
+                                    <li> GHG Emissions:
+
+                                        <ul style="list-style: none;">
+                                            <li>- Reported at facility level
+
+                                            </li>
+                                            <li> - Can be entered by Super-Admin, Admin, Manager, or Data Preparer
+                                            </li>
+                                           
+                                        </ul>
+                                    </li>
+                                    <li>- Financed Emissions:
+ 
+                                        <ul style="list-style: none;">
+                                            <li>    - Reported at sub-group level
+                                            </li>
+                                            <li>    - Only Admins can input data for financed emissions of associated sub-group
+                                            </li>
+                                           
+                                        </ul>
+                                    </li>
+                                   
+                                </ol>
+                            </div>
+                           
+                    
+                    
+                    
+                    
+                    
+                        </div>
+                    </div>
+                  </div>
                 </div>
                 <div class="d-flex justify-content-between text-style text-light scope-Div">
                     <div class="form-group has-search">

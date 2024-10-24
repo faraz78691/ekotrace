@@ -28,6 +28,7 @@ interface groupby {
     styleUrls: ['./set-emission-inventory.component.scss']
 })
 export class SetEmissionInventoryComponent {
+    isHowtoUse = false;
     @ViewChild('GroupForm', { static: false }) GroupForm: NgForm;
     @ViewChild('projectionForm', { static: false }) projectionForm: NgForm;
     public companyDetails: CompanyDetails;

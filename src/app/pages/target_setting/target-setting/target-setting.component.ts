@@ -45,6 +45,7 @@ export type ChartOptions = {
   styleUrls: ['./target-setting.component.scss']
 })
 export class TargetSettingComponent {
+  isHowtoUse = false;
   // @ViewChild("chart") chart: ChartComponent;
   public chartOptions: Partial<ChartOptions>;
   @ViewChild('GroupForm', { static: false }) GroupForm: NgForm;
