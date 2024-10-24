@@ -5941,7 +5941,7 @@
                                             <td *ngIf="categoryId == 23">{{ de.investement_type }}</td>
                                             <td *ngIf="categoryId == 18">{{ de.valueofsoldintermediate }}</td>
                                             <td *ngIf="categoryId == 18">{{ de.unit }}</td>
-                                            <td *ngIf="categoryId ==18 || categoryId == 21 ||categoryId == 23">
+                                            <td *ngIf="categoryId ==18  ||categoryId == 23">
                                                 {{ de.calculation_method }}</td>
                                             <td *ngIf="categoryId == 16 || categoryId == 21">{{
                                                 de.franchise_space }}</td>
@@ -5954,7 +5954,7 @@
                                                 de.scope2_emission }}</td>
                                             <td *ngIf="categoryId == 16 || categoryId == 21">{{ de.vehicle_type }}</td>
                                             <td *ngIf="categoryId == 16 || categoryId == 21">{{ de.vehicle_subtype }}</td>
-                                            <!-- <td *ngIf="categoryId == 16 || categoryId == 21">fg veh</td> -->
+                                            <td *ngIf="categoryId == 16 || categoryId == 21">{{de.no_of_vehicles}}</td>
                                             <td *ngIf="categoryId == 16 || categoryId == 21">{{ de.distance_travelled }}&nbsp;{{de.unit}}
                                             </td>
                                             <td *ngIf="categoryId == 15">{{ de.typeof_homeoffice_name }}</td>
