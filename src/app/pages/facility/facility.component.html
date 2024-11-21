@@ -42,7 +42,7 @@
                         <tr>
                             <th>Assest Name</th>
                             <th class="text-center">Assest Type</th>
-                            <th class="text-right">City Name</th>
+                            <th class="text-right">Country</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -51,10 +51,11 @@
                             class="col-12 tableRow border-bottom rounded pointer"
                             [ngClass]="{tableRowclicked: id_var === d.ID}">
                             <td class="col-lg-4 td text-initial">
-                                {{ d.AssestType }}
+                                {{ d.AssestName }}
+                            
                             </td>
                             <td class="col-lg-4 td text-center">
-                                {{ d.AssestName }}
+                                {{ d.AssestType }}
                                 <i class="fa fa-industry" style="font-size: 15px"></i>
                             </td>
                             <td class="col-lg-4 td text-center">

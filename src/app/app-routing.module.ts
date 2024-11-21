@@ -56,6 +56,11 @@ import { ActionsComponent } from '@pages/target_setting/actions/actions.componen
 import { VendorsComponent } from '@pages/vendors/vendors.component';
 import { FinanceDashboardComponent } from '@pages/finance-dashboard/finance-dashboard.component';
 import { SubgroupComponent } from '@pages/subgroup/subgroup.component';
+import { WaterSupplyComponent } from '@pages/reports/water-supply/water-supply.component';
+import { WasteReportComponent } from '@pages/reports/waste-report/waste-report.component';
+import { BusinessTravelReportComponent } from '@pages/reports/business-travel-report/business-travel-report.component';
+import { VendorReportComponent } from '@pages/reports/vendor-report/vendor-report.component';
+import { FinancedEmissionReportComponent } from '@pages/reports/financed-emission-report/financed-emission-report.component';
 
 const routes: Routes = [
     {
@@ -427,6 +432,76 @@ const routes: Routes = [
             {
                 path: 'water-custom-report',
                 component: WaterCustomReportComponent,
+                canActivate: [RoleGuard],
+                data: {
+                    roles: [
+                        'Super Admin',
+                        'Admin',
+                        'Manager',
+                        'Preparer',
+                        'Approver'
+                    ]
+                }
+            },
+            {
+                path: 'water-supply-report',
+                component: WaterSupplyComponent,
+                canActivate: [RoleGuard],
+                data: {
+                    roles: [
+                        'Super Admin',
+                        'Admin',
+                        'Manager',
+                        'Preparer',
+                        'Approver'
+                    ]
+                }
+            },
+            {
+                path: 'waste-report',
+                component: WasteReportComponent,
+                canActivate: [RoleGuard],
+                data: {
+                    roles: [
+                        'Super Admin',
+                        'Admin',
+                        'Manager',
+                        'Preparer',
+                        'Approver'
+                    ]
+                }
+            },
+            {
+                path: 'businessTravel-report',
+                component: BusinessTravelReportComponent,
+                canActivate: [RoleGuard],
+                data: {
+                    roles: [
+                        'Super Admin',
+                        'Admin',
+                        'Manager',
+                        'Preparer',
+                        'Approver'
+                    ]
+                }
+            },
+            {
+                path: 'vendor-report',
+                component: VendorReportComponent,
+                canActivate: [RoleGuard],
+                data: {
+                    roles: [
+                        'Super Admin',
+                        'Admin',
+                        'Manager',
+                        'Preparer',
+                        'Approver'
+                    ]
+                }
+            },
+            {
+                path: 'financed-report',
+                component: FinancedEmissionReportComponent,
                 canActivate: [RoleGuard],
                 data: {
                     roles: [

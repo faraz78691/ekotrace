@@ -30,7 +30,7 @@
                     <label for="fname">Facility</label>
                     <div class="row facilityrow">
                         <p-dropdown class="mx-2 finput" name="facility" #facility="ngModel" [options]="facilityData"
-                            optionLabel="assestName" optionValue="id" styleClass="facilitydropdown"
+                            optionLabel="AssestType" optionValue="id" styleClass="facilitydropdown"
                             [(ngModel)]="selectedFacilityID" (ngModelChange)="checkFacilityID(selectedFacilityID)">
                         </p-dropdown>
                     </div>

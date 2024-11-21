@@ -118,6 +118,12 @@ import { SubgroupComponent } from './pages/subgroup/subgroup.component';
 import { TreeviewEventParser, TreeviewModule } from '@treeview/ngx-treeview';
 import { TriStateCheckboxModule } from 'primeng/tristatecheckbox';
 import { CreateSuperAdminComponent } from './pages/create-super-admin/create-super-admin.component';
+import { WaterSupplyComponent } from './pages/reports/water-supply/water-supply.component';
+import { WasteReportComponent } from './pages/reports/waste-report/waste-report.component';
+import { BusinessTravelReportComponent } from './pages/reports/business-travel-report/business-travel-report.component';
+import { VendorReportComponent } from './pages/reports/vendor-report/vendor-report.component';
+import { FinancedEmissionReportComponent } from './pages/reports/financed-emission-report/financed-emission-report.component';
+import { SingleReportComponent } from './pages/reports/single-report/single-report.component';
 
 defineCustomElements();
 registerLocaleData(localeEn, 'en-EN');
@@ -190,7 +196,13 @@ registerLocaleData(localeEn, 'en-EN');
         VendorsComponent,
         FinanceDashboardComponent,
         SubgroupComponent,
-        CreateSuperAdminComponent
+        CreateSuperAdminComponent,
+        WaterSupplyComponent,
+        WasteReportComponent,
+        BusinessTravelReportComponent,
+        VendorReportComponent,
+        FinancedEmissionReportComponent,
+        SingleReportComponent
     ],
     imports: [
         HeaderComponent,

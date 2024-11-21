@@ -1,7 +1,8 @@
 export const environment = {
     production: true,
     // baseUrl: 'http://ec2-3-110-165-252.ap-south-1.compute.amazonaws.com/api/',
-    baseUrl: 'http://13.200.247.29:4000',
+    // baseUrl: 'https://13.200.247.29:4000',
+    baseUrl: 'https://ekotrace.ekobon.com:4000',
     NoData: 'No Data Point',
     none: 'none',
     flex: 'flex',

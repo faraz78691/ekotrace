@@ -23,6 +23,7 @@ import { ImageModule } from 'primeng/image';
 import { BrowserModule } from '@angular/platform-browser';
 
 
+
 interface CustomFacility {
     id: any;
     flag: any;
@@ -53,7 +54,8 @@ export class HeaderComponent implements OnInit {
     excludedRole = 'Platform Admin';
     ProfileMenu: MenuItem[] | undefined;
     public facilityGroup: FacilityGroupList;
-    facilitygrouplist: facilities[] = [];
+    facilitygrouplist: any[] = [];
+    facilitysubgrouplist: any[] = [];
     @ViewChild('menu', { static: true }) menu: any;
     public href: string = null;
     displayTracker = false;
@@ -103,6 +105,7 @@ export class HeaderComponent implements OnInit {
             this.router.events.pipe(
                 filter(event => event instanceof NavigationEnd)
             ).subscribe(() => {
+                console.log("route  changed");
                 this.checkRolesAndLoadData();
             })
         
@@ -144,20 +147,21 @@ export class HeaderComponent implements OnInit {
         }
     
         if (this.router.url === '/finance_emissions') {
-         
+            this.facilitygrouplist = [];
+       
           this.GetSubGroupList(this.loginInfo.tenantID);
-        } else {
-     
+        } else if(this.router.url === '/tracking' ) {
+            this.facilitysubgrouplist = []
+    
           this.GetFacilityGroupList(this.loginInfo.tenantID);
         }
       }
 
     checkFacilityID() {
-   console.log(this.selectedFacilityID);
-        this.facilityService.facilitySelected(this.selectedFacilityID.id)
+        this.facilityService.facilitySelected(this.selectedFacilityID?.id)
      
-        localStorage.setItem('SelectedfacilityID', this.selectedFacilityID.id);
-        localStorage.setItem('Flag', this.selectedFacilityID.flag);
+        localStorage.setItem('SelectedfacilityID', this.selectedFacilityID?.id);
+       
     };
 
     logout() {
@@ -211,15 +215,16 @@ export class HeaderComponent implements OnInit {
                  
                     this.facilitygrouplist = res;
                     this.addFacilitesToSignal(this.facilitygrouplist)
-                    const allOption: FacilityGroupList = {
+                    const allOption: any = {
                         id: 0,
                         name: 'Select',
+                        AssestType: 'Select',
                         flag: ''
                     };
     
                     // Add the "All" option to the beginning of the list
                     this.facilitygrouplist.unshift(allOption);
-    console.log(this.facilitygrouplist);
+    
                     this.lfgcount = this.facilitygrouplist.length;
                     localStorage.setItem('FacilityGroupCount', String(this.lfgcount));
 
@@ -228,7 +233,7 @@ export class HeaderComponent implements OnInit {
     };
 
     GetSubGroupList(tenantID) {
-        this.facilitygrouplist = []
+        this.facilitysubgrouplist = []
         if (this.loginInfo.role === this.excludedRole) {
             return;
         }
@@ -239,19 +244,17 @@ export class HeaderComponent implements OnInit {
             .subscribe((res) => {
             
                 if(res.success == true){
-                    this.facilitygrouplist = res.categories;
-                   
-                    const allOption: FacilityGroupList = {
+                    this.facilitysubgrouplist = res.categories;
+                   console.log();
+                    const allOption: any = {
                         id: 0,
                         name: 'Select',
                         flag: ''
                     };
     
                     // Add the "All" option to the beginning of the list
-                    this.facilitygrouplist.unshift(allOption);
-    console.log(this.facilitygrouplist);
-                    this.lfgcount = this.facilitygrouplist.length;
-                    localStorage.setItem('FacilityGroupCount', String(this.lfgcount));
+                    this.facilitysubgrouplist.unshift(allOption);
+                  
                 }
             });
     };

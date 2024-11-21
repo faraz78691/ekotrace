@@ -415,7 +415,7 @@ effect(()=>{
       }
       let tenantID = this.loginInfo.tenantID;
       this.superAdminTenantID = this.loginInfo.super_admin_id;
-   console.log(this.superAdminTenantID);
+   
       this.facilityID = localStorage.getItem('SelectedfacilityID');
       this.flag = localStorage.getItem('Flag');
       const dataEntry = this.trackingService.dataEntry;

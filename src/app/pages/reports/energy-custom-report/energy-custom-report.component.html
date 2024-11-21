@@ -8,37 +8,88 @@
         </div>
         <div class="d-flex gap-3 align-items-center">
             <label class="switch">
-                <input type="checkbox" [(ngModel)]="isMultiple">
+                <input type="checkbox" (change)="onMultpleChange($event)" [(ngModel)]="isMultiple">
                 <span class="slider round"></span>
             </label>
             <!-- <p-triStateCheckbox [(ngModel)]="isMultiple" inputId="tricheckbox"></p-triStateCheckbox> -->
             <label for="tricheckbox" class="ml-2">Multiple</label>
+            <p-dropdown *ngIf="isMultiple" class="ct_grop_select_2_drop_white123 ct_group_select_dark_124 mx-4" required
+            ngModel placeholder="select" [options]="reportType"
+            [(ngModel)]="selectReportType" optionLabel="value" optionValue="value"
+            name="group" #group="ngModel"></p-dropdown>
         </div>
     </div>
 
     <div class="row firstbox">
         <div class="col">
             <div class="row mt-4  text-white">
-                <div class="col-md-6 mb-3">
-                    <label for="fyear" class="text-dark">Financial Year</label>
-                    <div class="selectyear mx-0">
-                        <p-calendar placeholder="Select Year" #calendarRef
-                            class="calenderinput ct_border_none_input ct_input_dark_text_145 ct_year_input_full_w"
-                            [(ngModel)]="date" view="year" dateFormat="yy" inputId="yearpicker"></p-calendar>
+                <ng-container *ngIf="isMultiple">
+                    <div class="col-md-6 mb-3">
+                        <label for="fyear" class="text-dark">Start Month</label>
 
-                        <div class="icon-wrapper">
-                            <i class="pi pi-chevron-down" (click)="openCalendar(calendarRef)"></i>
+                        <p-dropdown class="finput ct_input_white_bg13 ct_select_2_drop_white ct_input_dark_text_145"
+                            [options]="reportmonths" placeholder="Months" name="months" [(ngModel)]="startMonth"
+                            optionLabel="name"></p-dropdown>
+
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="fyear" class="text-dark">Start Year</label>
+                        <div class="selectyear mx-0">
+                            <p-calendar placeholder="Select Year" #calendarRef
+                                class="calenderinput ct_border_none_input ct_input_dark_text_145 ct_year_input_full_w"
+                                [(ngModel)]="startYear" view="year" dateFormat="yy" inputId="yearpicker"></p-calendar>
+
+                            <div class="icon-wrapper">
+                                <i class="pi pi-chevron-down" (click)="openCalendar(calendarRef)"></i>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label for="fyear" class="text-dark">Month</label>
-                    <div
-                        class="ct_box_shadow_none selectmonth card justify-content-center ct_month_select_clr ct_multi_input_38 ct_input_white_bg13 ct_select_2_drop_white ct_input_dark_text_145 ct_month_light_green">
-                        <p-multiSelect [options]="reportmonths" placeholder="Months" name="months"
-                            [(ngModel)]="selectMonths" styleClass="pcalender" optionLabel="name"></p-multiSelect>
+                    <div class="col-md-6 mb-3">
+                        <label for="fyear" class="text-dark">End Month</label>
+
+                        <p-dropdown class="finput ct_input_white_bg13 ct_select_2_drop_white ct_input_dark_text_145"
+                            [options]="reportmonths" placeholder="Months" name="months" [(ngModel)]="endMonth"
+                            optionLabel="name"></p-dropdown>
+
                     </div>
-                </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="fyear" class="text-dark">End Year</label>
+                        <div class="selectyear mx-0">
+                            <p-calendar placeholder="Select Year" #calendarRef
+                                class="calenderinput ct_border_none_input ct_input_dark_text_145 ct_year_input_full_w"
+                                [(ngModel)]="endYear" view="year" dateFormat="yy" inputId="yearpicker"></p-calendar>
+
+                            <div class="icon-wrapper">
+                                <i class="pi pi-chevron-down" (click)="openCalendar(calendarRef)"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                </ng-container>
+                <ng-container *ngIf="!isMultiple">
+                    <div class="col-md-6 mb-3">
+                        <label for="fyear" class="text-dark">Financial Year</label>
+                        <div class="selectyear mx-0">
+                            <p-calendar placeholder="Select Year" #calendarRef
+                                class="calenderinput ct_border_none_input ct_input_dark_text_145 ct_year_input_full_w"
+                                [(ngModel)]="date" view="year" dateFormat="yy" inputId="yearpicker"></p-calendar>
+
+                            <div class="icon-wrapper">
+                                <i class="pi pi-chevron-down" (click)="openCalendar(calendarRef)"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="fyear" class="text-dark">Month</label>
+                        <div
+                            class="ct_box_shadow_none selectmonth card justify-content-center ct_month_select_clr ct_multi_input_38 ct_input_white_bg13 ct_select_2_drop_white ct_input_dark_text_145 ct_month_light_green">
+                            <p-multiSelect [options]="reportmonths" placeholder="Months" name="months"
+                                [(ngModel)]="selectMonths" styleClass="pcalender" optionLabel="name"></p-multiSelect>
+                        </div>
+                    </div>
+                </ng-container>
+
+
             </div>
             <div class="row mt-4  text-white">
                 <div class="col-md-6 mb-3">
@@ -46,16 +97,16 @@
                     <ng-container *ngIf="isMultiple; else defaultfacilitydropdown">
                         <div
                             class="ct_box_shadow_none selectmonth card justify-content-center ct_month_select_clr ct_multi_input_38 ct_input_white_bg13 ct_select_2_drop_white ct_input_dark_text_145 ct_month_light_green">
-                            <p-multiSelect [options]="facilityService.facilitiesSignal()"
-                                [(ngModel)]="selectedMultipleFacility" optionLabel="name" optionValue="id"
+                            <p-multiSelect [options]="facilityData"
+                                [(ngModel)]="selectedMultipleFacility" optionLabel="AssestType" optionValue="id"
                                 styleClass="pcalender" defaultLabel="Select Multiple Data Points" name="facility">
                             </p-multiSelect>
                         </div>
                     </ng-container>
                     <ng-template #defaultfacilitydropdown>
                         <p-dropdown class=" finput ct_input_white_bg13 ct_select_2_drop_white ct_input_dark_text_145"
-                            name="facility" #facility="ngModel" [options]="facilityService.facilitiesSignal()"
-                            optionLabel="name" optionValue="id" styleClass="facilitydropdown"
+                            name="facility" #facility="ngModel" [options]="facilityData"
+                            optionLabel="AssestType" optionValue="id" styleClass="facilitydropdown"
                             [(ngModel)]="selectedFacilityID" (onChange)="checkFacilityID(selectedFacilityID)">
                         </p-dropdown>
                     </ng-template>
@@ -145,8 +196,11 @@
     <div class="row Secondbox" *ngIf="reportData.length >0">
         <div class="col">
             <div class="row mt-4 mx-2 text-white">
-                <div class="col">
+                <div class="col d-flex justify-content-between">
                     <h4>Report</h4>
+                    <button (click)="exportTableToExcel()"
+                        class="generateReportButton ct_report_button_12 ct_animation_btn_121 ml-3">Download
+                        Report</button>
                 </div>
                 <!-- <div *ngIf="CustomReportData && CustomReportData.length > 0"
                     class="col d-flex justify-content-end pointer">
@@ -206,39 +260,52 @@
 
                 <ng-container *ngIf="isMultiple else default">
                     <div class="col-md-12" *ngIf="reportData.length >0; else emptyList">
-                        <button (click)="exportTableToExcel()">Generate Report</button>
-                        <p-table class="ct_bottom_table_tr" #dt [value]="reportData" [rowHover]="true"
+
+                        <p-table class="ct_bottom_table_tr ct_chev_icon_dark230" [paginator]="true" [rowHover]="true"
+                            [rows]="10" [rowsPerPageOptions]="[10, 20, 50]"
+                            styleClass="statusTable ct_status_tble_230_space ct_status_table_main"
+                            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" #dt1
+                            class="ct_bottom_table_tr" #dt [value]="reportData" [rowHover]="true"
                             styleClass="p-datatable-striped" editMode="row">
                             <ng-template pTemplate="header">
                                 <tr>
                                     <th>
-                                        Scope
+                                        Category
                                     </th>
                                     <th>
-                                        Category
+                                        Data Point
+                                    </th>
+                                    <th>
+                                        Data Point 2
                                     </th>
                                     <th>
                                         Facility
                                     </th>
                                     <th>
+                                        Emissions (tCO2e)
+                                    </th>
+                                    <th *ngIf="!this.isMultiple || (this.isMultiple && this.selectReportType == 'Monthly')">
                                         Month
                                     </th>
-                                    <th>
+                                    <th *ngIf="!this.isMultiple || (this.isMultiple && this.selectReportType == 'Monthly')">
                                         Year
                                     </th>
-                                    <th>
-                                        Emission
+                                    <th *ngIf="this.isMultiple && this.selectReportType == 'Consolidated'">
+                                        Time period
                                     </th>
+
                                 </tr>
                             </ng-template>
                             <ng-template pTemplate="body" let-de let-editing="editing" let-ri="rowIndex">
                                 <tr [pEditableRow]="de">
-                                    <td> {{de.scope}}</td>
+
                                     <td> {{de.category}}</td>
+                                    <td> {{de.DataPoint1}}</td>
+                                    <td> {{de.DataPoint2}}</td>
                                     <td> {{de.facility}}</td>
-                                    <td> {{de.month}}</td>
-                                    <td> {{de.year}}</td>
-                                    <td> {{de.emission}}</td>
+                                    <td> {{de.Emission}}</td>
+                                    <td> {{de.Months}}</td>
+                                    <td> {{de.Years}}</td>
                                 </tr>
                             </ng-template>
                         </p-table>
@@ -246,7 +313,7 @@
                 </ng-container>
                 <ng-template #default>
                     <div class="col-md-12" *ngIf="reportData.length >0; else emptyList">
-                        <button (click)="exportTableToExcel()">Generate Report</button>
+                      
                         <p-table class="ct_bottom_table_tr" #dt [value]="reportData" [rowHover]="true"
                             styleClass="p-datatable-striped" editMode="row">
                             <ng-template pTemplate="header">

@@ -30,28 +30,38 @@
                         {{ loginInfo.userName }}
                     </p> -->
                     <p  class="mr-2 pt-1 pointer ct_filter_dropdown" >
-                        <p-dropdown name="facility" *ngIf="loginInfo.role !== 'Platform Admin'" #facility="ngModel"
-                            [options]="facilitygrouplist" optionLabel="name" itemValue="id" styleClass="headerFacility"
+                        <ng-container *ngIf="facilitygrouplist.length > 0">
+                            <p-dropdown name="facility" *ngIf="loginInfo.role !== 'Platform Admin'" #facility="ngModel"
+                            [options]="facilitygrouplist" optionLabel="AssestType" itemValue="id" styleClass="headerFacility"
                             [(ngModel)]="selectedFacilityID" (ngModelChange)="checkFacilityID()">
                             <ng-template let-option pTemplate="item" >
                                 <div  class="d-flex justify-content-between">
-                                    <div>{{ option.name }}</div>
+                                    <div>{{ option.AssestType }}</div>
                                     <div class="d-flex justify-content-end pt-1 ml-1">
                                         <i class="fa fa-users"></i>
                                     </div>
                                 </div>
-                                <!-- <div *ngIf="option.flag === 'F'" class="d-flex justify-content-between">
-                                    <div>{{ option.name }}</div>
-                                    <div class="d-flex justify-content-end pt-1">
-                                        <i class="pi pi-map-marker"></i>
-                                    </div>
-                                </div>
-                                <div *ngIf="option.flag === ''" class="d-flex justify-content-between">
-                                    <div>{{ option.name }}</div>
-                                    <div class="d-flex justify-content-end pt-1"></div>
-                                </div> -->
+                             
                             </ng-template>
                         </p-dropdown>
+                        </ng-container>
+                       
+                        <ng-container *ngIf="facilitysubgrouplist.length > 0">
+                            <p-dropdown name="facility" *ngIf="loginInfo.role !== 'Platform Admin'" #facility="ngModel"
+                                [options]="facilitysubgrouplist" optionLabel="name" itemValue="id" styleClass="headerFacility"
+                                [(ngModel)]="selectedFacilityID" (ngModelChange)="checkFacilityID()">
+                                <ng-template let-option pTemplate="item" >
+                                    <div  class="d-flex justify-content-between">
+                                        <div>{{ option.name }}</div>
+                                        <div class="d-flex justify-content-end pt-1 ml-1">
+                                            <i class="fa fa-users"></i>
+                                        </div>
+                                    </div>
+                                 
+                                </ng-template>
+                            </p-dropdown>
+
+                        </ng-container >
                     </p>
                 </div>
                 <div class="ct_log_out_btn d-flex flex-row">

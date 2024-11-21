@@ -11,7 +11,7 @@
                     <select class="ct_all_vender_select" *ngIf="dashboardFacilities$ | async as dashboardData"
                         [(ngModel)]="selectedFacility" (change)="onFacilityChange($event)">
                         <option value="" *ngFor="let items of dashboardData.categories" [value]="items.ID">
-                            {{items.name}}</option>
+                            {{items.AssestType}}</option>
 
                     </select>
                     <div class="mt-4">

@@ -20,7 +20,7 @@
         >
             <h4>{{ report.heading }}</h4>
             <p>{{ report.pera }}</p>
-            <button routerLink="/energy-custom-report">{{ report.button }}</button>
+            <button [routerLink]="report.route">{{ report.button }}</button>
         </div>
     </div>
 </div>

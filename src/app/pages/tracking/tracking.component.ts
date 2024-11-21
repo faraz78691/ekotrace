@@ -921,7 +921,6 @@ export class TrackingComponent {
             this.loginInfo = jsonObj as LoginInfo;
             this.haveBasicPackage = this.loginInfo.package_id
 
-            console.log(this.haveBasicPackage);
         }
         let tenantID = this.loginInfo.tenantID;
         this.superAdminID = this.loginInfo.super_admin_id;
@@ -944,6 +943,7 @@ export class TrackingComponent {
                     this.facilitynothavedp = 'none';
                     this.forGroup = 'flex';
                 } else {
+                    console.log("here");
                     this.GetAssignedDataPoint(this.facilityID);
                 }
 
@@ -963,7 +963,7 @@ export class TrackingComponent {
         // this.getVehicleDEMode();
         // this.getElectricitySource();
         this.setDefaultMonth();
-        this.getElectricityGrid();
+    
 
     };
 
@@ -2168,6 +2168,13 @@ export class TrackingComponent {
                 );
                 return
             }
+            if (form.value.waste_quantity == null || form.value.waste_quantity == '' ) {
+                this.notification.showInfo(
+                    'Enter waste quantity',
+                    ''
+                );
+                return
+            }
             var spliteedMonth = this.dataEntry.month.split(",");
             var monthString = JSON.stringify(spliteedMonth)
 
@@ -3148,6 +3155,13 @@ export class TrackingComponent {
                     ''
                 );
                 return
+            }
+            if (form.value.no_of_trips === '' || form.value.no_of_trips === null) {
+                this.notification.showInfo(
+                    "Please select no of trips",
+                    'Warning'
+                );
+                return;
             }
             var spliteedMonth = this.dataEntry.month.split(",");
             var monthString = JSON.stringify(spliteedMonth)

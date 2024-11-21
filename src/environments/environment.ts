@@ -8,11 +8,9 @@ export const environment = {
     // baseUrl: 'http://192.168.1.31:4003',
 
     // scope 3 url
-    baseUrl: 'http://13.200.247.29:4000',
+    // baseUrl: 'https://13.200.247.29:4000',
+    baseUrl: 'https://ekotrace.ekobon.com:4000',
     // baseUrl: 'http://192.168.1.49:5000/api/',
-    //baseUrl: 'http://ec2-13-232-86-195.ap-south-1.compute.amazonaws.com/api/',
-
-    // baseUrl: 'http://ec2-3-110-200-97.ap-south-1.compute.amazonaws.com/api/',
     NoData: 'No Data Point',
     none: 'none',
     flex: 'flex',

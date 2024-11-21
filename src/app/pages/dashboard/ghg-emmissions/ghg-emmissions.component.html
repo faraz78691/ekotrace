@@ -72,7 +72,7 @@
                     <select class="ct_all_vender_select" [(ngModel)]="selectedFacility"
                         *ngIf="dashboardFacilities$ | async as dashboardData" (change)="onFacilityChange($event)">
                         <option value="" *ngFor="let items of dashboardData.categories" [value]="items.ID">
-                            {{items.name}}</option>
+                            {{items.AssestType}}</option>
                     </select>
                     <div class="mt-4">
                         <p class="mb-1 ct_fw_500">Financial Year</p>

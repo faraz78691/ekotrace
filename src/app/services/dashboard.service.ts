@@ -373,25 +373,25 @@ export class DashboardService {
         return this.http.post(this.apiURL + '/dashboardenergyConsumptionWellTank', admininfo);
     };
     public Waterwithdrawnby_source(admininfo) {
-        return this.http.post('http://13.200.247.29:4000/dashboardWaterwithdrawnby_source', admininfo);
+        return this.http.post(this.apiURL + '/dashboardWaterwithdrawnby_source', admininfo);
     };
     public waterWaste(admininfo) {
-        return this.http.post('http://13.200.247.29:4000/dashboardWaterTotal', admininfo);
+        return this.http.post(this.apiURL + '/dashboardWaterTotal', admininfo);
     };
     public WaterDischargedbydestination(admininfo) {
-        return this.http.post('http://13.200.247.29:4000/dashboardWaterDischargedbydestination', admininfo);
+        return this.http.post(this.apiURL + '/dashboardWaterDischargedbydestination', admininfo);
     };
     public dashboardWaterTreated_nonTreated(admininfo) {
-        return this.http.post('http://13.200.247.29:4000/dashboardWaterTreated_nonTreated', admininfo);
+        return this.http.post(this.apiURL + '/dashboardWaterTreated_nonTreated', admininfo);
     };
     public waterTreatedByLevel(admininfo) {
-        return this.http.post('http://13.200.247.29:4000/dashboardWaterTreatedbylevel', admininfo);
+        return this.http.post(this.apiURL + '/dashboardWaterTreatedbylevel', admininfo);
     };
     public WaterEmision(admininfo) {
-        return this.http.post('http://13.200.247.29:4000/dashboardWaterEmission', admininfo);
+        return this.http.post(this.apiURL + '/dashboardWaterEmission', admininfo);
     };
     public waterTreatedDestination(admininfo) {
-        return this.http.post('http://13.200.247.29:4000/dashboardWaterTreatedbydestination', admininfo);
+        return this.http.post(this.apiURL + '/dashboardWaterTreatedbydestination', admininfo);
     };
     public businessdashboardemssionByAir(admininfo) {
         return this.http.post(this.apiURL + '/businessdashboardemssionByAir', admininfo);

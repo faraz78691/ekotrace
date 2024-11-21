@@ -9,7 +9,7 @@
                 <div>
                     <select class="ct_all_vender_select" [(ngModel)]="selectedFacility"
                         (change)="onFacilityChange($event)">
-                        <option value="" *ngFor="let items of dashboardData" [value]="items.ID">{{items.name}}
+                        <option value="" *ngFor="let items of dashboardData" [value]="items.ID">{{items.AssestType}}
                         </option>
 
                     </select>

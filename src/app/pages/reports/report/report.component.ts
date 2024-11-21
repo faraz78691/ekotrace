@@ -24,6 +24,36 @@ export class ReportComponent {
                 button: 'view',
                 route: '/energy-custom-report'
             },
+            {
+                heading: 'Water Report',
+                pera: ' Pick and choose the data and analysis for review and audits from the array of options provided.',
+                button: 'view',
+                route: '/water-supply-report'
+            },
+            {
+                heading: 'Waste Report',
+                pera: ' Pick and choose the data and analysis for review and audits from the array of options provided.',
+                button: 'view',
+                route: '/waste-report'
+            },
+            {
+                heading: 'Business Travel Report',
+                pera: ' Pick and choose the data and analysis for review and audits from the array of options provided.',
+                button: 'view',
+                route: '/businessTravel-report'
+            },
+            {
+                heading: 'Vendor Report',
+                pera: ' Pick and choose the data and analysis for review and audits from the array of options provided.',
+                button: 'view',
+                route: '/vendor-report'
+            },
+            {
+                heading: 'Financed Report',
+                pera: ' Pick and choose the data and analysis for review and audits from the array of options provided.',
+                button: 'view',
+                route: '/financed-report'
+            },
           
         ];
     }
