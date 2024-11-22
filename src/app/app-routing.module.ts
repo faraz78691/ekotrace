@@ -61,6 +61,7 @@ import { WasteReportComponent } from '@pages/reports/waste-report/waste-report.c
 import { BusinessTravelReportComponent } from '@pages/reports/business-travel-report/business-travel-report.component';
 import { VendorReportComponent } from '@pages/reports/vendor-report/vendor-report.component';
 import { FinancedEmissionReportComponent } from '@pages/reports/financed-emission-report/financed-emission-report.component';
+import { VendorDashboardComponent } from '@pages/vendor-dashboard/vendor-dashboard.component';
 
 const routes: Routes = [
     {
@@ -158,6 +159,12 @@ const routes: Routes = [
                 path: 'vendors',
                 canActivate: [RoleGuard],
                 component: VendorsComponent,
+                data: { roles: ['Platform Admin','Super Admin','Admin','Manager','Preparer'] }
+            },
+            {
+                path: 'vendorDashboard',
+                canActivate: [RoleGuard],
+                component: VendorDashboardComponent,
                 data: { roles: ['Platform Admin','Super Admin','Admin','Manager','Preparer'] }
             },
             {

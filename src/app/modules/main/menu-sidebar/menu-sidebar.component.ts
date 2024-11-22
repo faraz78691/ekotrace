@@ -299,7 +299,12 @@ export const menu = [
                 iconSRC: 'assets/img/BRSR.svg',
                 path: ['vendors']
             },
-
+            {
+                name: 'Vendor Dashboard',
+                iconClasses: 'fas fa-table',
+                iconSRC: 'assets/img/BRSR.svg',
+                path: ['vendorDashboard']
+            },
             {
                 head: 'Reporting ',
                 name: 'Report',
@@ -603,6 +608,12 @@ export const menu = [
                 iconClasses: 'fas fa-table',
                 iconSRC: 'assets/img/BRSR.svg',
                 path: ['vendors']
+            },
+            {
+                name: 'Vendor Dashboard',
+                iconClasses: 'fas fa-table',
+                iconSRC: 'assets/img/BRSR.svg',
+                path: ['vendorDashboard']
             },
             {
                 head: 'Reporting ',

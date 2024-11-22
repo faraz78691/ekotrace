@@ -124,6 +124,7 @@ import { BusinessTravelReportComponent } from './pages/reports/business-travel-r
 import { VendorReportComponent } from './pages/reports/vendor-report/vendor-report.component';
 import { FinancedEmissionReportComponent } from './pages/reports/financed-emission-report/financed-emission-report.component';
 import { SingleReportComponent } from './pages/reports/single-report/single-report.component';
+import { VendorDashboardComponent } from './pages/vendor-dashboard/vendor-dashboard.component';
 
 defineCustomElements();
 registerLocaleData(localeEn, 'en-EN');
@@ -202,7 +203,8 @@ registerLocaleData(localeEn, 'en-EN');
         BusinessTravelReportComponent,
         VendorReportComponent,
         FinancedEmissionReportComponent,
-        SingleReportComponent
+        SingleReportComponent,
+        VendorDashboardComponent
     ],
     imports: [
         HeaderComponent,
