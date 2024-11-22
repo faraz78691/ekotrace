@@ -4568,7 +4568,8 @@ export class TrackingComponent {
                 if (response.success == true) {
                     this.VehicleGrid = response.categories;
                     const selectedIndex = this.selectedVehicleIndex;
-                    this.selectedVehicleType = this.VehicleGrid[selectedIndex - 1]?.vehicle_type
+                    this.selectedVehicleType = this.VehicleGrid[selectedIndex - 1]?.vehicle_type;
+                 
 
                 }
             }

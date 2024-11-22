@@ -299,7 +299,6 @@ export const menu = [
                 iconSRC: 'assets/img/BRSR.svg',
                 path: ['vendors']
             },
-
             {
                 head: 'Reporting ',
                 name: 'Report',

@@ -118,9 +118,10 @@ export class LoginComponent implements OnInit {
              formData.set('password', this.loginForm.value.password.trim());
             this.appService.newloginByAuth(formData).subscribe(
                 (res) => {
-                console.log(res);
+              
                     if(res.success == true){
 
+                        
                         this.loginInfo = res.userinfo[0];
                         if(this.loginInfo.role !='Platform Admin'){
                             if(this.loginInfo.package_id == null || this.loginInfo.package_id == undefined){
@@ -133,7 +134,6 @@ export class LoginComponent implements OnInit {
                             }
                         }
                         localStorage.setItem('accessToken', this.loginInfo.token);
-                        // localStorage.setItem('accessToken', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6Ijc1ZGZjYWViMmY4ZGRlZTAyZjU2MTRmYThhMjRkMmMyIn0.eyJ1c2VyX2lkIjoidXVpZGQxMjQzMiJ9.lkY3ctvaxcV2Jx0d88b4gn5TJmka09BC3slDZpALe1IqoIWi4wWVkJzSTuIIM2dX1WZjLgcmZJguO-Neaz4sBQ');
                         
                         localStorage.setItem(
                             'LoginInfo',
@@ -146,10 +146,7 @@ export class LoginComponent implements OnInit {
                         let userInfo = localStorage.getItem('LoginInfo');
                         let jsonObj = JSON.parse(userInfo); // string to "any" object first
                         this.loginInfo = jsonObj as LoginInfo;
-                        console.log(
-                            'loginInfo:',
-                            this.loginInfo.role
-                        );
+                      
                         this.invalidLogin = false;
                         const currentDate = new Date();
                         const licenseExpiredDate = new Date(
