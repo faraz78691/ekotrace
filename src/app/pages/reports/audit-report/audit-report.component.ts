@@ -1,21 +1,19 @@
+import { CustomReportModel } from '@/models/CustomReportModel';
+import { DataEntry } from '@/models/DataEntry';
 import { DataEntrySetting } from '@/models/DataEntrySettings';
-import { Facility } from '@/models/Facility';
-
 import { EmissionFactor } from '@/models/EmissionFactorALL';
+import { Facility } from '@/models/Facility';
+import { LoginInfo } from '@/models/loginInfo';
+import { months } from '@/models/months';
 import { TrackingDataPoint } from '@/models/TrackingDataPoint';
 import { ManageDataPointSubCategories } from '@/models/TrackingDataPointSubCategories';
-import { LoginInfo } from '@/models/loginInfo';
-import { Component, ViewChild, effect } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FacilityService } from '@services/facility.service';
+import { NotificationService } from '@services/notification.service';
 import { TrackingService } from '@services/tracking.service';
 import { environment } from 'environments/environment';
-import { Calendar } from 'primeng/calendar';
-import { CustomReportModel } from '@/models/CustomReportModel';
 import jsPDF from 'jspdf';
-import { months } from '@/models/months';
-import { DatePipe } from '@angular/common';
-import { DataEntry } from '@/models/DataEntry';
-import { NotificationService } from '@services/notification.service';
+import { Calendar } from 'primeng/calendar';
 import * as XLSX from 'xlsx';
 interface financialyear {
     financialyear: string;
@@ -39,14 +37,13 @@ interface reportDatapoints {
     november: string;
     december: string;
 }
-
 @Component({
-    selector: 'app-energy-custom-report',
-    templateUrl: './energy-custom-report.component.html',
-    styleUrls: ['./energy-custom-report.component.scss']
+  selector: 'app-audit-report',
+  templateUrl: './audit-report.component.html',
+  styleUrls: ['./audit-report.component.scss']
 })
-export class EnergyCustomReportComponent {
-    public loginInfo: LoginInfo;
+export class AuditReportComponent {
+  public loginInfo: LoginInfo;
     financialyear: financialyear[];
     locations: locations[];
     reportdatapoints: reportDatapoints[];
@@ -54,7 +51,7 @@ export class EnergyCustomReportComponent {
     months: months;
     entryExist: boolean = false;
     convertedYear: string;
-    selectReportType = 'Monthly'
+    selectReportType = 'Consolidated'
     notevalue: string;
     Datapoints: string;
     AssignedDataPoint: TrackingDataPoint[] = [];
@@ -450,7 +447,7 @@ this.GetAllFacility()
             if(this.selectReportType == 'Monthly'){
                 url = 'reportFilterMultipleCategoryNew'
             }else{
-                  url = 'reportFilterMultipleCategoryConsolidated'
+                  url = 'reportFilterMultipleCategoryAudit'
             }
             let selectedFacilities = this.selectedMultipleFacility.map(String).map(item => `'${item}'`).join(',');
 

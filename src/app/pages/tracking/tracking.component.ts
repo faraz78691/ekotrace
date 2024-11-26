@@ -2067,7 +2067,7 @@ export class TrackingComponent {
                 );
                 return
             }
-            if (form.value.water_supply < form.value.water_treatment) {
+            if (form.value.water_supply >= form.value.water_treatment) {
                 this.notification.showInfo(
                     'Water withdrawn should be greater than or equal to water discharged',
                     'Error'

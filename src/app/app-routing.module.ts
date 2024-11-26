@@ -61,6 +61,8 @@ import { WasteReportComponent } from '@pages/reports/waste-report/waste-report.c
 import { BusinessTravelReportComponent } from '@pages/reports/business-travel-report/business-travel-report.component';
 import { VendorReportComponent } from '@pages/reports/vendor-report/vendor-report.component';
 import { FinancedEmissionReportComponent } from '@pages/reports/financed-emission-report/financed-emission-report.component';
+import { SingleReportComponent } from '@pages/reports/single-report/single-report.component';
+import { AuditReportComponent } from '@pages/reports/audit-report/audit-report.component';
 
 const routes: Routes = [
     {
@@ -184,6 +186,14 @@ const routes: Routes = [
             {
                 path: 'water-section',
                 component: WaterSectionComponent
+            },
+            {
+                path: 'single-report',
+                component: SingleReportComponent
+            },
+            {
+                path: 'audit-report',
+                component: AuditReportComponent
             },
             {
                 path: 'social-section',

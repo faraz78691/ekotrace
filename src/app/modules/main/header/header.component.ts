@@ -150,7 +150,7 @@ export class HeaderComponent implements OnInit {
             this.facilitygrouplist = [];
        
           this.GetSubGroupList(this.loginInfo.tenantID);
-        } else if(this.router.url === '/tracking' ) {
+        } else if(this.router.url === '/tracking' || this.router.url == '/tracking-view-requests') {
             this.facilitysubgrouplist = []
     
           this.GetFacilityGroupList(this.loginInfo.tenantID);

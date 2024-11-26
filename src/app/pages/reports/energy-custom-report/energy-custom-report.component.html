@@ -4,15 +4,15 @@
             <div class="backicon">
                 <i class="fa fa-arrow-left"></i>
             </div>
-            <h3>Energy Report</h3>
+            <h3>GHG Report - multiple data points</h3>
         </div>
         <div class="d-flex gap-3 align-items-center">
-            <label class="switch">
-                <input type="checkbox" (change)="onMultpleChange($event)" [(ngModel)]="isMultiple">
+            <!-- <label class="switch">
+                <input type="checkbox" >
                 <span class="slider round"></span>
-            </label>
+            </label> -->
             <!-- <p-triStateCheckbox [(ngModel)]="isMultiple" inputId="tricheckbox"></p-triStateCheckbox> -->
-            <label for="tricheckbox" class="ml-2">Multiple</label>
+            <!-- <label for="tricheckbox" class="ml-2">Multiple</label> -->
             <p-dropdown *ngIf="isMultiple" class="ct_grop_select_2_drop_white123 ct_group_select_dark_124 mx-4" required
             ngModel placeholder="select" [options]="reportType"
             [(ngModel)]="selectReportType" optionLabel="value" optionValue="value"
@@ -304,8 +304,9 @@
                                     <td> {{de.DataPoint2}}</td>
                                     <td> {{de.facility}}</td>
                                     <td> {{de.Emission}}</td>
-                                    <td> {{de.Months}}</td>
-                                    <td> {{de.Years}}</td>
+                                    <td *ngIf="!this.isMultiple || (this.isMultiple && this.selectReportType == 'Monthly')"> {{de.Months}}</td>
+                                    <td *ngIf="!this.isMultiple || (this.isMultiple && this.selectReportType == 'Monthly')"> {{de.Years}}</td>
+                                    <td *ngIf="!this.isMultiple || (this.isMultiple && this.selectReportType == 'Consolidated')"> {{startMonth.value + ' '+ startYear.getFullYear().toString() + '-'+ endMonth.value + ' '+ endYear.getFullYear().toString()}}</td>
                                 </tr>
                             </ng-template>
                         </p-table>

@@ -148,11 +148,14 @@
                                         Emissons (t CO2e)
 
                                     </th>
-                                    <th>
+                                    <th *ngIf="!this.isMultiple || (this.isMultiple && this.selectReportType == 'Monthly')">
                                         Month
                                     </th>
-                                    <th>
+                                    <th *ngIf="!this.isMultiple || (this.isMultiple && this.selectReportType == 'Monthly')">
                                         Year
+                                    </th>
+                                    <th *ngIf="this.isMultiple && this.selectReportType == 'Consolidated'">
+                                        Time period
                                     </th>
 
                                 </tr>
@@ -165,8 +168,9 @@
                                     <td> {{de.DataPoint2}}</td>
                                     <td> {{de.facility}}</td>
                                     <td> {{de.Emission}}</td>
-                                    <td> {{de.Months}}</td>
-                                    <td> {{de.Years}}</td>
+                                    <td *ngIf="!this.isMultiple || (this.isMultiple && this.selectReportType == 'Monthly')"> {{de.Months}}</td>
+                                    <td *ngIf="!this.isMultiple || (this.isMultiple && this.selectReportType == 'Monthly')"> {{de.Years}}</td>
+                                    <td *ngIf="!this.isMultiple || (this.isMultiple && this.selectReportType == 'Consolidated')"> {{startMonth.value + ' '+ startYear.getFullYear().toString() + '-'+ endMonth.value + ' '+ endYear.getFullYear().toString()}}</td>
                                 </tr>
                             </ng-template>
                         </p-table>

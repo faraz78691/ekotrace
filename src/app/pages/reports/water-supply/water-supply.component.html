@@ -138,7 +138,7 @@
                                         Total
                                     </th>
                                     <th>
-                                       Surgface water_supply
+                                        Surface water
                                     </th>
                                     <th>
                                         Ground water
@@ -170,13 +170,18 @@
                             <ng-template pTemplate="body" let-de let-editing="editing" let-ri="rowIndex">
                                 <tr [pEditableRow]="de">
 
-                                    <td> {{de.category}}</td>
-                                    <td> {{de.DataPoint1}}</td>
+                                    <td> Water Withdrawn</td>
+                                    <td>  {{ de.water_withdrawl[0].totalwaterwithdrawl +
+                                        de.water_withdrawl[1].totalwaterwithdrawl +
+                                        de.water_withdrawl[2].totalwaterwithdrawl +
+                                        de.water_withdrawl[3].totalwaterwithdrawl +
+                                        de.water_withdrawl[4].totalwaterwithdrawl | number:'1.2-2' }}</td>
                                     <td> {{de.DataPoint2}}</td>
                                     <td> {{de.facility}}</td>
                                     <td> {{de.Emission}}</td>
-                                    <td> {{de.Months}}</td>
-                                    <td> {{de.Years}}</td>
+                                    <td *ngIf="!this.isMultiple || (this.isMultiple && this.selectReportType == 'Monthly')"> {{de.Months}}</td>
+                                    <td *ngIf="!this.isMultiple || (this.isMultiple && this.selectReportType == 'Monthly')"> {{de.Years}}</td>
+                                    <td *ngIf="!this.isMultiple || (this.isMultiple && this.selectReportType == 'Consolidated')"> {{startMonth.value + ' '+ startYear.getFullYear().toString() + '-'+ endMonth.value + ' '+ endYear.getFullYear().toString()}}</td>
                                 </tr>
                             </ng-template>
                         </p-table>

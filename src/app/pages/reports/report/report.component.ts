@@ -19,10 +19,22 @@ export class ReportComponent {
     constructor(private themeservice: ThemeService) {
         this.reports = [
             {
+                heading: 'GHG Data',
+                pera: ' Pick and choose the data and analysis for review and audits from the array of options provided.',
+                button: 'view',
+                route: '/single-report'
+            },
+            {
                 heading: 'Custom Report',
                 pera: ' Pick and choose the data and analysis for review and audits from the array of options provided.',
                 button: 'view',
                 route: '/energy-custom-report'
+            },
+            {
+                heading: 'Audit Report',
+                pera: ' Pick and choose the data and analysis for review and audits from the array of options provided.',
+                button: 'view',
+                route: '/audit-report'
             },
             {
                 heading: 'Water Report',
