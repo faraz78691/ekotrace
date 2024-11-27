@@ -1,0 +1,382 @@
+<section class="mt-4">
+    <div class="container-fluid px-0">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="ct_vendor_dash_top_bar">
+                    <div class="ct_vendor_dah_small_card">
+                        <p class=" text-center">Total Suppliers
+                        </p>
+                        <h4 class="text-center ct_fw_600 mb-0">10
+                        </h4>
+                    </div>
+                    <div class="ct_vendor_dah_small_card ">
+                        <p class=" text-center">Procurement Emissions (tCO2e)
+                        </p>
+                        <h4 class="text-center ct_fw_600 mb-0">1.2k
+                        </h4>
+                    </div>
+
+                    <div class="ct_vendor_dah_small_card">
+                        <p class=" text-center">Procurement Expense
+                        </p>
+                        <h4 class="text-center ct_fw_600 mb-0">10m INR
+                        </h4>
+                    </div>
+
+                    <div class="ct_vendor_dah_small_card">
+                        <p class=" text-center">Emissions to Expense Ratio
+
+                        </p>
+                        <h4 class="text-center ct_fw_600 mb-0">12.2 u
+
+                        </h4>
+                    </div>
+
+                    <div class="ct_vendor_dah_small_card">
+                        <p class=" text-center">Contribution To Total Emissions
+
+                        </p>
+                        <h4 class="text-center ct_fw_600 mb-0">40%
+
+                        </h4>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+        <div class="d-flex align-items-center justify-content-between gap-3   mt-3 ct_flex_column_767 flex-wrap">
+            <h4 class="ct_fs_24 ct_fw_600 mb-0">Select the product types
+            </h4>
+            <div class="d-flex align-items-center gap-3  ct_gap_10 flex-wrap ct_flex_column_767">
+                <div class="form-group d-flex align-items-center ct_gap_10 flex-wrap ct_res_100_767 mb-0">
+                    <label for="" class="ct_white_space_nowrape mb-0">Select the product types
+                    </label>
+                    <p-dropdown
+                        class="finput ct_res_100_767 ct_input_white_bg13 ct_w_150_select_345 ct_select_2_drop_white ct_input_dark_text_145"
+                        ngModel placeholder="Select" [options]="flightsTravelTypes" optionLabel="flightType"
+                        optionValue="flightType" styleClass="facilitydropdown" #country="ngModel" required>
+                    </p-dropdown>
+                </div>
+                <div class="form-group d-flex align-items-center ct_gap_10 flex-wrap ct_res_100_767 mb-0">
+                    <label for="" class="ct_white_space_nowrape mb-0">Sort by
+                    </label>
+                    <!-- <select name="" id="" class="form-control">
+                        <option value="">Rank high to Low</option>
+                        <option value="">Rank by Emisissions
+                        </option>
+                        <option value="">Rank by Emissions to Expense Ratio
+                        </option>
+                    </select> -->
+                    <p-dropdown
+                        class="finput ct_input_white_bg13 ct_res_100_767 ct_w_150_select_345 ct_select_2_drop_white ct_input_dark_text_145"
+                        ngModel placeholder="Select" [options]="shortBy" optionLabel="shortBy" optionValue="shortBy"
+                        styleClass="facilitydropdown" #country="ngModel" required>
+                    </p-dropdown>
+                </div>
+                <div class="form-group d-flex align-items-center ct_gap_10 flex-wrap ct_res_100_767 mb-0">
+                    <label for="" class="ct_white_space_nowrape mb-0">Show
+                    </label>
+                    <p-dropdown
+                        class="finput ct_res_100_767 ct_input_white_bg13 ct_w_150_select_345 ct_select_2_drop_white ct_input_dark_text_145"
+                        ngModel placeholder="Select" [options]="Show" optionLabel="Show" optionValue="Show"
+                        styleClass="facilitydropdown" #country="ngModel" required>
+                    </p-dropdown>
+                </div>
+            </div>
+
+        </div>
+        <div class="row pt-4">
+            <div class="col-lg-3 mb-4 mb-lg-0">
+                <div class="ct_vendor_dash_left">
+                    <div class="ct_supplier_emission mb-4">
+                        <h4 class="ct_fs_24 ct_fw_600">Supplier Emissions by Location
+                        </h4>
+                        <!-- <p>in tC02e</p> -->
+                    </div>
+                    <div class="ct_supplier_emission mb-4">
+                        <h4 class="ct_fs_24 ct_fw_600">Supplier Emissions by Product
+                        </h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9 mb-4 mb-lg-0">
+                <div class="row">
+                    <div class="col-xxl-4 col-xl-6 col-lg-6 col-md-6 mb-4">
+                        <div class="ct_vendor_card_45_bg">
+                            <div class="ct_vender_card_head_bg">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <h6 class="mb-0 ct_fw_600 ">#1</h6>
+                                    <p class="mb-0 ">Pinnacle Partners</p>
+                                    <p class="ct_red_text2 mb-0">No</p>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-between mt-2">
+                                    <p class="mb-0 ct_fs_14">Out of 57</p>
+                                    <p class="mb-0 ct_fs_14">Scorboard</p>
+                                </div>
+
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"
+                                    aria-valuemin="0" aria-valuemax="100">25%</div>
+                            </div>
+
+                            <div class="ct_grid_sec_2">
+                                <div class="d-flex align-items-center ct_gap_10 justify-content-between  ">
+                                    <p class="ct_fs_14 mb-0">Total Emissions</p>
+                                    <p class="ct_fs_14 mb-0">443</p>
+                                </div>
+                                <div class="d-flex align-items-center ct_gap_10 justify-content-between  ">
+                                    <p class="ct_fs_14 mb-0">tCo2e</p>
+                                    <p class="ct_fs_14 mb-0 ct_green_text"><i class="fa-solid fa-caret-up"></i>2,717%
+                                    </p>
+                                </div>
+                                <div class="d-flex align-items-center ct_gap_10 justify-content-between  ">
+                                    <p class="ct_fs_14 mb-0">Emissions to Expense Ratio</p>
+                                    <p class="ct_fs_14 mb-0">0.000</p>
+                                </div>
+                                <div class="d-flex align-items-center ct_gap_10 justify-content-between  ">
+                                    <p class="ct_fs_14 mb-0">tCo2e/USD</p>
+                                    <p class="ct_fs_14 mb-0 ct_green_text"><i class="fa-solid fa-caret-up"></i>77.09%
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="pt-3 mt-3 ct_border_top_1_grey">
+                                <div class="d-flex align-items-center justify-content-between ct_gap_10 mb-2">
+                                    <p class="mb-0 ct_fs_14">SBTI Target Status</p>
+                                    <p class="mb-0 ct_fs_14">None</p>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-between ct_gap_10">
+                                    <p class="mb-0 ct_fs_14">Emissions Calculation Method</p>
+                                    <p class="mb-0 ct_fs_14">Spend_Based</p>
+                                </div>
+                            </div>
+
+                            <!-- <table class="table">
+                                <tr>
+                                    <td>Total Emissions</td>
+                                    <td>443</td>
+                                    <td>tCo2e</td>
+                                    <td>2,717%</td>
+                                </tr>
+                                <tr>
+                                    <td>Emissions to Expense Ratio</td>
+                                    <td>0.000</td>
+                                    <td>tCo2e/USD</td>
+                                    <td>77.09%</td>
+                                </tr>
+                            </table> -->
+                        </div>
+
+                    </div>
+                    <div class="col-xxl-4 col-xl-6 col-lg-6 col-md-6 mb-4">
+                        <div class="ct_vendor_card_45_bg">
+                            <div class="ct_vender_card_head_bg">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <h6 class="mb-0 ct_fw_600 ">#2</h6>
+                                    <p class="mb-0 ">Pinnacle Partners</p>
+                                    <p class="ct_red_text2 mb-0">No</p>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-between mt-2">
+                                    <p class="mb-0 ct_fs_14">Out of 57</p>
+                                    <p class="mb-0 ct_fs_14">Scorboard</p>
+                                </div>
+
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"
+                                    aria-valuemin="0" aria-valuemax="100">25%</div>
+                            </div>
+
+                            <div class="ct_grid_sec_2">
+                                <div class="d-flex align-items-center ct_gap_10 justify-content-between  ">
+                                    <p class="ct_fs_14 mb-0">Total Emissions</p>
+                                    <p class="ct_fs_14 mb-0">443</p>
+                                </div>
+                                <div class="d-flex align-items-center ct_gap_10 justify-content-between  ">
+                                    <p class="ct_fs_14 mb-0">tCo2e</p>
+                                    <p class="ct_fs_14 mb-0 ct_green_text"><i class="fa-solid fa-caret-up"></i>2,717%
+                                    </p>
+                                </div>
+                                <div class="d-flex align-items-center ct_gap_10 justify-content-between  ">
+                                    <p class="ct_fs_14 mb-0">Emissions to Expense Ratio</p>
+                                    <p class="ct_fs_14 mb-0">0.000</p>
+                                </div>
+                                <div class="d-flex align-items-center ct_gap_10 justify-content-between">
+                                    <p class="ct_fs_14 mb-0">tCo2e/USD</p>
+                                    <p class="ct_fs_14 mb-0 ct_green_text"><i class="fa-solid fa-caret-up"></i>77.09%
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="pt-3 mt-3 ct_border_top_1_grey">
+                                <div class="d-flex align-items-center justify-content-between ct_gap_10 mb-2">
+                                    <p class="mb-0 ct_fs_14">SBTI Target Status</p>
+                                    <p class="mb-0 ct_fs_14">None</p>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-between ct_gap_10">
+                                    <p class="mb-0 ct_fs_14">Emissions Calculation Method</p>
+                                    <p class="mb-0 ct_fs_14">Spend_Based</p>
+                                </div>
+                            </div>
+
+                            <!-- <table class="table">
+                                <tr>
+                                    <td>Total Emissions</td>
+                                    <td>443</td>
+                                    <td>tCo2e</td>
+                                    <td>2,717%</td>
+                                </tr>
+                                <tr>
+                                    <td>Emissions to Expense Ratio</td>
+                                    <td>0.000</td>
+                                    <td>tCo2e/USD</td>
+                                    <td>77.09%</td>
+                                </tr>
+                            </table> -->
+                        </div>
+
+                    </div>
+                    <div class="col-xxl-4 col-xl-6 col-lg-6 col-md-6 mb-4">
+                        <div class="ct_vendor_card_45_bg">
+                            <div class="ct_vender_card_head_bg">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <h6 class="mb-0 ct_fw_600 ">#3</h6>
+                                    <p class="mb-0 ">Pinnacle Partners</p>
+                                    <p class="ct_red_text2 mb-0">No</p>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-between mt-2">
+                                    <p class="mb-0 ct_fs_14">Out of 57</p>
+                                    <p class="mb-0 ct_fs_14">Scorboard</p>
+                                </div>
+
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"
+                                    aria-valuemin="0" aria-valuemax="100">25%</div>
+                            </div>
+
+                            <div class="ct_grid_sec_2">
+                                <div class="d-flex align-items-center ct_gap_10 justify-content-between  ">
+                                    <p class="ct_fs_14 mb-0">Total Emissions</p>
+                                    <p class="ct_fs_14 mb-0">443</p>
+                                </div>
+                                <div class="d-flex align-items-center ct_gap_10 justify-content-between  ">
+                                    <p class="ct_fs_14 mb-0">tCo2e</p>
+                                    <p class="ct_fs_14 mb-0 ct_green_text"><i class="fa-solid fa-caret-up"></i>2,717%
+                                    </p>
+                                </div>
+                                <div class="d-flex align-items-center ct_gap_10 justify-content-between  ">
+                                    <p class="ct_fs_14 mb-0">Emissions to Expense Ratio</p>
+                                    <p class="ct_fs_14 mb-0">0.000</p>
+                                </div>
+                                <div class="d-flex align-items-center ct_gap_10 justify-content-between  ">
+                                    <p class="ct_fs_14 mb-0">tCo2e/USD</p>
+                                    <p class="ct_fs_14 mb-0 ct_green_text"><i class="fa-solid fa-caret-up"></i>77.09%
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="pt-3 mt-3 ct_border_top_1_grey">
+                                <div class="d-flex align-items-center justify-content-between ct_gap_10 mb-2">
+                                    <p class="mb-0 ct_fs_14">SBTI Target Status</p>
+                                    <p class="mb-0 ct_fs_14">None</p>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-between ct_gap_10">
+                                    <p class="mb-0 ct_fs_14">Emissions Calculation Method</p>
+                                    <p class="mb-0 ct_fs_14">Spend_Based</p>
+                                </div>
+                            </div>
+
+                            <!-- <table class="table">
+                                <tr>
+                                    <td>Total Emissions</td>
+                                    <td>443</td>
+                                    <td>tCo2e</td>
+                                    <td>2,717%</td>
+                                </tr>
+                                <tr>
+                                    <td>Emissions to Expense Ratio</td>
+                                    <td>0.000</td>
+                                    <td>tCo2e/USD</td>
+                                    <td>77.09%</td>
+                                </tr>
+                            </table> -->
+                        </div>
+
+                    </div>
+                    <div class="col-xxl-4 col-xl-6 col-lg-6 col-md-6 mb-4">
+                        <div class="ct_vendor_card_45_bg">
+                            <div class="ct_vender_card_head_bg">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <h6 class="mb-0 ct_fw_600 ">#4</h6>
+                                    <p class="mb-0 ">Pinnacle Partners</p>
+                                    <p class="ct_red_text2 mb-0">No</p>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-between mt-2">
+                                    <p class="mb-0 ct_fs_14">Out of 57</p>
+                                    <p class="mb-0 ct_fs_14">Scorboard</p>
+                                </div>
+
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"
+                                    aria-valuemin="0" aria-valuemax="100">25%</div>
+                            </div>
+
+                            <div class="ct_grid_sec_2">
+                                <div class="d-flex align-items-center ct_gap_10 justify-content-between  ">
+                                    <p class="ct_fs_14 mb-0">Total Emissions</p>
+                                    <p class="ct_fs_14 mb-0">443</p>
+                                </div>
+                                <div class="d-flex align-items-center ct_gap_10 justify-content-between  ">
+                                    <p class="ct_fs_14 mb-0">tCo2e</p>
+                                    <p class="ct_fs_14 mb-0 ct_green_text"><i class="fa-solid fa-caret-up"></i>2,717%
+                                    </p>
+                                </div>
+                                <div class="d-flex align-items-center ct_gap_10 justify-content-between  ">
+                                    <p class="ct_fs_14 mb-0">Emissions to Expense Ratio</p>
+                                    <p class="ct_fs_14 mb-0">0.000</p>
+                                </div>
+                                <div class="d-flex align-items-center ct_gap_10 justify-content-between  ">
+                                    <p class="ct_fs_14 mb-0">tCo2e/USD</p>
+                                    <p class="ct_fs_14 mb-0 ct_green_text"><i class="fa-solid fa-caret-up"></i>77.09%
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="pt-3 mt-3 ct_border_top_1_grey">
+                                <div class="d-flex align-items-center justify-content-between ct_gap_10 mb-2">
+                                    <p class="mb-0 ct_fs_14">SBTI Target Status</p>
+                                    <p class="mb-0 ct_fs_14">None</p>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-between ct_gap_10">
+                                    <p class="mb-0 ct_fs_14">Emissions Calculation Method</p>
+                                    <p class="mb-0 ct_fs_14">Spend_Based</p>
+                                </div>
+                            </div>
+
+                            <!-- <table class="table">
+                                <tr>
+                                    <td>Total Emissions</td>
+                                    <td>443</td>
+                                    <td>tCo2e</td>
+                                    <td>2,717%</td>
+                                </tr>
+                                <tr>
+                                    <td>Emissions to Expense Ratio</td>
+                                    <td>0.000</td>
+                                    <td>tCo2e/USD</td>
+                                    <td>77.09%</td>
+                                </tr>
+                            </table> -->
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>

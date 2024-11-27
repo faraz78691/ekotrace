@@ -125,6 +125,7 @@ import { VendorReportComponent } from './pages/reports/vendor-report/vendor-repo
 import { FinancedEmissionReportComponent } from './pages/reports/financed-emission-report/financed-emission-report.component';
 import { SingleReportComponent } from './pages/reports/single-report/single-report.component';
 import { AuditReportComponent } from './pages/reports/audit-report/audit-report.component';
+import { VendorDashboardComponent } from './pages/vendor-dashboard/vendor-dashboard.component';
 
 defineCustomElements();
 registerLocaleData(localeEn, 'en-EN');
@@ -204,7 +205,8 @@ registerLocaleData(localeEn, 'en-EN');
         VendorReportComponent,
         FinancedEmissionReportComponent,
         SingleReportComponent,
-        AuditReportComponent
+        AuditReportComponent,
+        VendorDashboardComponent
     ],
     imports: [
         HeaderComponent,
