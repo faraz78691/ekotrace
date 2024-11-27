@@ -395,16 +395,22 @@ export class WaterSupplyComponent {
                     }
                     return acc;
                 }, {})
-            );
+            ).map((item :any)=> {
+                // Convert totalwaterwithdrawl explicitly to a number before returning
+                return {
+                    ...item,
+                    treatper: Number(item.treatper.toFixed(2)) // Ensure it's a number with two decimals if needed
+                };
+            });
     
             // Convert totalwaterwithdrawl back to string if needed
             // mergedWithdrawal.forEach((item:any) => {
             //     item.totalwaterwithdrawl = item.totalwaterwithdrawl.toFixed(2);
             // });
 
-            mergedDischarge.forEach((item:any) => {
-                item.treatper = item.treatper.toFixed(2);
-            });
+            // mergedDischarge.forEach((item:any) => {
+            //     item.treatper = item.treatper.toFixed(2);
+            // });
     
             // Push grouped data
             groupedData.push({

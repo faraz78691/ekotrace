@@ -176,13 +176,32 @@
                                         de.water_withdrawl[2].totalwaterwithdrawl +
                                         de.water_withdrawl[3].totalwaterwithdrawl +
                                         de.water_withdrawl[4].totalwaterwithdrawl | number:'1.2-2' }}</td>
-                                    <td> {{de.DataPoint2}}</td>
-                                    <td> {{de.facility}}</td>
-                                    <td> {{de.Emission}}</td>
-                                    <td *ngIf="!this.isMultiple || (this.isMultiple && this.selectReportType == 'Monthly')"> {{de.Months}}</td>
-                                    <td *ngIf="!this.isMultiple || (this.isMultiple && this.selectReportType == 'Monthly')"> {{de.Years}}</td>
-                                    <td *ngIf="!this.isMultiple || (this.isMultiple && this.selectReportType == 'Consolidated')"> {{startMonth.value + ' '+ startYear.getFullYear().toString() + '-'+ endMonth.value + ' '+ endYear.getFullYear().toString()}}</td>
+                                    <td>{{ de.water_withdrawl[0].totalwaterwithdrawl}}</td>
+                                    <td> {{ de.water_withdrawl[1].totalwaterwithdrawl}}</td>
+                                    <td> {{ de.water_withdrawl[2].totalwaterwithdrawl}}</td>
+                                    <td > {{ de.water_withdrawl[3].totalwaterwithdrawl}}</td>
+                                    <td > {{ de.water_withdrawl[4].totalwaterwithdrawl}}</td>
+                                    <td > -</td>
+                                    <td >{{ de.water_withdrawl[0].month}}</td>
+                                    <td > {{ de.water_withdrawl[0].year}}</td>
                                 </tr>
+                                <tr [pEditableRow]="de">
+                                    <td> Water Discharged</td>
+                                    <td>  {{ de.water_discharge[0].treatper +
+                                        de.water_discharge[1].treatper +
+                                        de.water_discharge[2].treatper +
+                                        de.water_discharge[3].treatper +
+                                        de.water_discharge[4].treatper | number:'1.2-2' }}</td>
+                                    <td>{{ de.water_discharge[0].treatper}}</td>
+                                    <td> {{ de.water_discharge[1].treatper}}</td>
+                                    <td> {{ de.water_discharge[2].treatper}}</td>
+                                    <td > {{ de.water_discharge[3].treatper}}</td>
+                                    <td > {{ de.water_discharge[4].treatper}}</td>
+                                    <td > -</td>
+                                    <td >{{ de.water_discharge[0].month}}</td>
+                                    <td > {{ de.water_discharge[0].year}}</td>
+                                </tr>
+                                
                             </ng-template>
                         </p-table>
                     </div>
