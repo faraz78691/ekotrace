@@ -26,7 +26,7 @@ import { FacilityService } from '@services/facility.service';
 })
 export class LoginComponent implements OnInit {
     protected aFormGroup: FormGroup;
-
+    facilitysubgrouplist: any[] = [];
     @HostBinding('class') class = 'login-box';
     loginForm!: FormGroup;
     submitted = false;
@@ -57,7 +57,8 @@ export class LoginComponent implements OnInit {
         private fb: FormBuilder,
         private companyService: CompanyService,
         private notification: NotificationService,
-        private router: Router
+        private router: Router,
+        private facilityService: FacilityService
     ) {
         this.companyDetails = new CompanyDetails();
     }
@@ -113,18 +114,18 @@ export class LoginComponent implements OnInit {
             this.isLoading = true;
             this.showLoader = true;
             this.isAuthLoading = true;
-             const formData = new URLSearchParams();
-             formData.set('email', this.loginForm.value.email.trim());
-             formData.set('password', this.loginForm.value.password.trim());
+            const formData = new URLSearchParams();
+            formData.set('email', this.loginForm.value.email.trim());
+            formData.set('password', this.loginForm.value.password.trim());
             this.appService.newloginByAuth(formData).subscribe(
                 (res) => {
-              
-                    if(res.success == true){
 
-                        
+                    if (res.success == true) {
+
+
                         this.loginInfo = res.userinfo[0];
-                        if(this.loginInfo.role !='Platform Admin'){
-                            if(this.loginInfo.package_id == null || this.loginInfo.package_id == undefined){
+                        if (this.loginInfo.role != 'Platform Admin') {
+                            if (this.loginInfo.package_id == null || this.loginInfo.package_id == undefined) {
                                 this.toastr.error(
                                     'You dont have any package assigned, Please contact platform admin'
                                 );
@@ -134,7 +135,7 @@ export class LoginComponent implements OnInit {
                             }
                         }
                         localStorage.setItem('accessToken', this.loginInfo.token);
-                        
+
                         localStorage.setItem(
                             'LoginInfo',
                             JSON.stringify(this.loginInfo)
@@ -146,19 +147,21 @@ export class LoginComponent implements OnInit {
                         let userInfo = localStorage.getItem('LoginInfo');
                         let jsonObj = JSON.parse(userInfo); // string to "any" object first
                         this.loginInfo = jsonObj as LoginInfo;
-                      
+
                         this.invalidLogin = false;
                         const currentDate = new Date();
                         const licenseExpiredDate = new Date(
                             this.loginInfo.licenseExpired
                         );
+
                         this.isExpired = licenseExpiredDate < currentDate;
+                        this.GetSubGroupList(this.loginInfo.tenantID)
                         if (
                             this.loginInfo.role === 'Super Admin' &&
                             this.isExpired
                         ) {
                             this.router.navigate(['/billing']);
-                        } else if(this.loginInfo.role === 'Platform Admin'){
+                        } else if (this.loginInfo.role === 'Platform Admin') {
                             this.router.navigate(['/platformAdmin']);
                         }
                         else {
@@ -166,7 +169,7 @@ export class LoginComponent implements OnInit {
                         }
                         this.showLoader = false;
                         this.isAuthLoading = false;
-                    }else{
+                    } else {
                         this.notification.showError(
                             res.message,
                             ''
@@ -212,4 +215,26 @@ export class LoginComponent implements OnInit {
             'login-page'
         );
     }
+
+    GetSubGroupList(tenantID) {
+        this.facilitysubgrouplist = []
+
+        const formData = new URLSearchParams();
+        formData.set('tenantID', tenantID)
+        this.facilityService
+            .getActualSubGroups(formData.toString())
+            .subscribe((res) => {
+
+                if (res.success == true) {
+                    this.facilitysubgrouplist = res.categories;
+                    const isMainGroup = this.facilitysubgrouplist.filter(items => items.is_main_group == 1)
+                    if (isMainGroup.length > 0) {
+                        this.facilityService.targetAllowed.set(true)
+                    } else {
+                        this.facilityService.targetAllowed.set(false)
+                    }
+
+                }
+            });
+    };
 }

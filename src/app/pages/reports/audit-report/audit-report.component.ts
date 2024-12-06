@@ -487,6 +487,13 @@ this.GetAllFacility()
                     }
                 }
             })
+            for (let key in categoryMap) {
+                let value = this.AssignedDataPoint.find(items=>items.CatName == key)
+                if (!value){
+                
+                    reportFormData.set(categoryMap[key], '0');
+                }
+            } 
              
             reportFormData.set('facility',selectedFacilities)
             reportFormData.set('investment_emission','0')

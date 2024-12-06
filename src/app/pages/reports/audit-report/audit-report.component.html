@@ -261,11 +261,11 @@
                 <ng-container *ngIf="isMultiple else default">
                     <div class="col-md-12" *ngIf="reportData.length >0; else emptyList">
 
-                        <p-table class="ct_bottom_table_tr ct_chev_icon_dark230" [paginator]="true" [rowHover]="true"
+                        <p-table class="ct_chev_icon_dark230" [paginator]="true" [rowHover]="true"
                             [rows]="10" [rowsPerPageOptions]="[10, 20, 50]"
                             styleClass="statusTable ct_status_tble_230_space ct_status_table_main"
                             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" #dt1
-                            class="ct_bottom_table_tr" #dt [value]="reportData" [rowHover]="true"
+                             #dt [value]="reportData" [rowHover]="true"
                             styleClass="p-datatable-striped" editMode="row">
                             <ng-template pTemplate="header">
                                 <tr>
@@ -314,8 +314,8 @@
                                     <td> {{de.DataPoint2}}</td>
                                     <td> {{de.facility}}</td>
                                     <td> {{de.Emission}}</td>
-                                    <td> {{de.Months}}</td>
-                                    <td> {{de.Years}}</td>
+                                    <td> {{de.kgCO2e_kg}}</td>
+                                    <td> {{de.kgCO2e_kg}}</td>
                                 </tr>
                             </ng-template>
                         </p-table>

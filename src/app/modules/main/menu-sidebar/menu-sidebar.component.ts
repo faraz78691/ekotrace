@@ -294,6 +294,7 @@ export const menu = [
                 path: ['finance_emissions']
             },
             {
+                head: 'Vendor',
                 name: 'Vendors / Cost Centre',
                 iconClasses: 'fas fa-table',
                 iconSRC: 'assets/img/BRSR.svg',
@@ -604,6 +605,7 @@ export const menu = [
                 path: ['finance_emissions']
             },
             {
+                head: 'Vendor',
                 name: 'Vendors / Cost Centre',
                 iconClasses: 'fas fa-table',
                 iconSRC: 'assets/img/BRSR.svg',
@@ -728,10 +730,17 @@ export const menu = [
                 path: ['finance_emissions']
             },
             {
+                head: 'Vendor',
                 name: 'Vendors / Cost Centre',
                 iconClasses: 'fas fa-table',
                 iconSRC: 'assets/img/BRSR.svg',
                 path: ['vendors']
+            },
+            {
+                name: 'Vendor Dashboard',
+                iconClasses: 'fas fa-table',
+                iconSRC: 'assets/img/BRSR.svg',
+                path: ['vendorDashboard']
             },
             {
                 head: 'Reporting ',
@@ -746,32 +755,32 @@ export const menu = [
                 iconSRC: 'assets/img/BRSR.svg',
                 path: ['brsrReport']
             },
-            // {
-            //     head: 'Target Setting',
-            //     name: 'Set Emission Inventory',
-            //     iconClasses: 'fas fa-folder',
-            //     iconSRC: 'assets/img/report_icon.svg',
-            //     path: ['setEmissionInventory']
-            // },
-            // {
-            //     name: 'Target Setting',
-            //     iconClasses: 'fas fa-table',
-            //     iconSRC: 'assets/img/BRSR.svg',
-            //     path: ['targetSetting']
-            // },
-            // {
-            //     name: 'Actions',
-            //     iconClasses: 'fas fa-table',
-            //     iconSRC: 'assets/img/BRSR.svg',
-            //     path: ['actions']
-            // },
-            // {
-            //     head: 'Carbon offsetting',
-            //     name: 'Offset Entry',
-            //     iconClasses: 'fas fa-eye',
-            //     iconSRC: 'assets/img/building.svg',
-            //     path: ['carbonOffset']
-            // },
+            {
+                head: 'Target Setting',
+                name: 'Set Emission Inventory',
+                iconClasses: 'fas fa-folder',
+                iconSRC: 'assets/img/report_icon.svg',
+                path: ['setEmissionInventory']
+            },
+            {
+                name: 'Target Setting',
+                iconClasses: 'fas fa-table',
+                iconSRC: 'assets/img/BRSR.svg',
+                path: ['targetSetting']
+            },
+            {
+                name: 'Actions',
+                iconClasses: 'fas fa-table',
+                iconSRC: 'assets/img/BRSR.svg',
+                path: ['actions']
+            },
+            {
+                head: 'Carbon offsetting',
+                name: 'Offset Entry',
+                iconClasses: 'fas fa-eye',
+                iconSRC: 'assets/img/building.svg',
+                path: ['carbonOffset']
+            },
             {
                 head: 'Account Details',
                 name: 'Company Profile',
@@ -984,25 +993,25 @@ export const menu = [
                 iconSRC: 'assets/img/BRSR.svg',
                 path: ['brsrReport']
             },
-            {
-                head: 'Target Setting',
-                name: 'Set Emission Inventory',
-                iconClasses: 'fas fa-folder',
-                iconSRC: 'assets/img/report_icon.svg',
-                path: ['setEmissionInventory']
-            },
-            {
-                name: 'Target Setting',
-                iconClasses: 'fas fa-table',
-                iconSRC: 'assets/img/BRSR.svg',
-                path: ['targetSetting']
-            },
-            {
-                name: 'Actions',
-                iconClasses: 'fas fa-table',
-                iconSRC: 'assets/img/BRSR.svg',
-                path: ['actions']
-            },
+            // {
+            //     head: 'Target Setting',
+            //     name: 'Set Emission Inventory',
+            //     iconClasses: 'fas fa-folder',
+            //     iconSRC: 'assets/img/report_icon.svg',
+            //     path: ['setEmissionInventory']
+            // },
+            // {
+            //     name: 'Target Setting',
+            //     iconClasses: 'fas fa-table',
+            //     iconSRC: 'assets/img/BRSR.svg',
+            //     path: ['targetSetting']
+            // },
+            // {
+            //     name: 'Actions',
+            //     iconClasses: 'fas fa-table',
+            //     iconSRC: 'assets/img/BRSR.svg',
+            //     path: ['actions']
+            // },
             // {
             //     head: 'Carbon offsetting',
             //     name: 'Offset Entry',
@@ -1126,12 +1135,12 @@ export const menu = [
                 iconSRC: 'assets/img/dashboard.svg',
                 path: ['dashboard']
             },
-            {
-                name: 'Financed E. Dashboard',
-                iconClasses: 'fas fa-table',
-                iconSRC: 'assets/img/BRSR.svg',
-                path: ['financeDash']
-            },
+            // {
+            //     name: 'Financed E. Dashboard',
+            //     iconClasses: 'fas fa-table',
+            //     iconSRC: 'assets/img/BRSR.svg',
+            //     path: ['financeDash']
+            // },
             {
                 head: 'GHG Emissions',
                 name: 'Corporate Emissions',
@@ -1139,12 +1148,12 @@ export const menu = [
                 iconSRC: 'assets/img/trees.png',
                 path: ['tracking']
             },
-            {
-                name: 'Financed Emissions',
-                iconClasses: 'fas fa-table',
-                iconSRC: 'assets/img/BRSR.svg',
-                path: ['finance_emissions']
-            },
+            // {
+            //     name: 'Financed Emissions',
+            //     iconClasses: 'fas fa-table',
+            //     iconSRC: 'assets/img/BRSR.svg',
+            //     path: ['finance_emissions']
+            // },
             {
                 name: 'Vendors / Cost Centre',
                 iconClasses: 'fas fa-table',
@@ -1271,25 +1280,25 @@ export const menu = [
                 iconSRC: 'assets/img/BRSR.svg',
                 path: ['brsrReport']
             },
-            {
-                head: 'Target Setting',
-                name: 'Set Emission Inventory',
-                iconClasses: 'fas fa-folder',
-                iconSRC: 'assets/img/report_icon.svg',
-                path: ['setEmissionInventory']
-            },
-            {
-                name: 'Target Setting',
-                iconClasses: 'fas fa-table',
-                iconSRC: 'assets/img/BRSR.svg',
-                path: ['targetSetting']
-            },
-            {
-                name: 'Actions',
-                iconClasses: 'fas fa-table',
-                iconSRC: 'assets/img/BRSR.svg',
-                path: ['actions']
-            },
+            // {
+            //     head: 'Target Setting',
+            //     name: 'Set Emission Inventory',
+            //     iconClasses: 'fas fa-folder',
+            //     iconSRC: 'assets/img/report_icon.svg',
+            //     path: ['setEmissionInventory']
+            // },
+            // {
+            //     name: 'Target Setting',
+            //     iconClasses: 'fas fa-table',
+            //     iconSRC: 'assets/img/BRSR.svg',
+            //     path: ['targetSetting']
+            // },
+            // {
+            //     name: 'Actions',
+            //     iconClasses: 'fas fa-table',
+            //     iconSRC: 'assets/img/BRSR.svg',
+            //     path: ['actions']
+            // },
             // {
             //     head: 'Carbon offsetting',
             //     name: 'Offset Entry',
@@ -1433,10 +1442,17 @@ export const menu = [
             //     path: ['finance_emissions']
             // },
             {
+                head: 'Vendor',
                 name: 'Vendors / Cost Centre',
                 iconClasses: 'fas fa-table',
                 iconSRC: 'assets/img/BRSR.svg',
                 path: ['vendors']
+            },
+            {
+                name: 'Vendor Dashboard',
+                iconClasses: 'fas fa-table',
+                iconSRC: 'assets/img/BRSR.svg',
+                path: ['vendorDashboard']
             },
 
             {
@@ -1452,25 +1468,25 @@ export const menu = [
                 iconSRC: 'assets/img/BRSR.svg',
                 path: ['brsrReport']
             },
-            // {
-            //     head: 'Target Setting',
-            //     name: 'Set Emission Inventory',
-            //     iconClasses: 'fas fa-folder',
-            //     iconSRC: 'assets/img/report_icon.svg',
-            //     path: ['setEmissionInventory']
-            // },
-            // {
-            //     name: 'Target Setting',
-            //     iconClasses: 'fas fa-table',
-            //     iconSRC: 'assets/img/BRSR.svg',
-            //     path: ['targetSetting']
-            // },
-            // {
-            //     name: 'Actions',
-            //     iconClasses: 'fas fa-table',
-            //     iconSRC: 'assets/img/BRSR.svg',
-            //     path: ['actions']
-            // },
+            {
+                head: 'Target Setting',
+                name: 'Set Emission Inventory',
+                iconClasses: 'fas fa-folder',
+                iconSRC: 'assets/img/report_icon.svg',
+                path: ['setEmissionInventory']
+            },
+            {
+                name: 'Target Setting',
+                iconClasses: 'fas fa-table',
+                iconSRC: 'assets/img/BRSR.svg',
+                path: ['targetSetting']
+            },
+            {
+                name: 'Actions',
+                iconClasses: 'fas fa-table',
+                iconSRC: 'assets/img/BRSR.svg',
+                path: ['actions']
+            },
             {
                 head: 'Carbon offsetting',
                 name: 'Offset Entry',

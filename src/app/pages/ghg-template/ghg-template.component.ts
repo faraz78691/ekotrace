@@ -218,6 +218,10 @@ export class GhgTemplateComponent {
     }
     //method for update a facility by id
     editfacility(id: any, data: NgForm) {
+        if (this.loginInfo.role  == 'Preparer' || this.loginInfo.role  == 'Manager' ) {
+            this.notification.showInfo('You are not authrised to submit form', '')
+            return
+        }
         this.selectedCountry = this.countryData.find(
             (country) => country.Name === this.facilityDetails.country_name
         );

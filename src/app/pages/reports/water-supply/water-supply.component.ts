@@ -307,11 +307,13 @@ export class WaterSupplyComponent {
 
         this.facilityService.gerReport(url, reportFormData.toString()).subscribe({
             next: res => {
+                console.log(res);
                 if (res.waterWithdrawal.length > 0) {
                     const waterWithDrwal = res.waterWithdrawal;
-                    const waterDischarge = res.waterDischarge;
+                    const waterDischarge = res.waterDischargeOnly;
+                    const waterTreated = res.waterDischarge;
 
-                    const groupedWaterData = this.groupDataByMonth(waterWithDrwal, waterDischarge);
+                    const groupedWaterData = this.groupDataByMonth(waterWithDrwal, waterDischarge,waterTreated);
                     console.log(groupedWaterData);
                     this.reportData = groupedWaterData;
 
@@ -328,7 +330,7 @@ export class WaterSupplyComponent {
     };
 
 
-    groupDataByMonth(waterWithdrawal: any[], waterDischarge: any[]) {
+    groupDataByMonth(waterWithdrawal: any[], waterDischarge: any[], waterTreated:any[]) {
         const groupedData: any[] = [];
     
         // Get unique months and years from withdrawal data
@@ -340,7 +342,8 @@ export class WaterSupplyComponent {
             // Filter withdrawal and discharge data for the current month
             const withdrawalForMonth = waterWithdrawal.filter(w => w.month === month && w.year === year);
             const dischargeForMonth = waterDischarge.filter(d => d.month === month && d.year === year);
-    
+            const treatmentForMonth = waterTreated.filter(d => d.month === month && d.year === year);
+        
             // Merge and sum water withdrawal data by 'water_withdrawl'
             const mergedWithdrawal = Object.values(
                 withdrawalForMonth.reduce((acc: any, item: any) => {
@@ -402,22 +405,47 @@ export class WaterSupplyComponent {
                     treatper: Number(item.treatper.toFixed(2)) // Ensure it's a number with two decimals if needed
                 };
             });
-    
-            // Convert totalwaterwithdrawl back to string if needed
-            // mergedWithdrawal.forEach((item:any) => {
-            //     item.totalwaterwithdrawl = item.totalwaterwithdrawl.toFixed(2);
-            // });
 
-            // mergedDischarge.forEach((item:any) => {
-            //     item.treatper = item.treatper.toFixed(2);
-            // });
+
+            const dischargeCategories = [
+                "Into Surface water",
+                "Into Ground water",
+                "Into Seawater",
+                "Send to third-parties",
+                "Others",
+            ];
+            const treatmentLevels = ["Primary", "Secondary", "Tertiary"];
     
-            // Push grouped data
+            const treatedData = treatmentLevels.map(level => {
+                const row: any = { leveloftreatment: level, month, year };
+   
+                // Initialize all discharge categories to 0
+                dischargeCategories.forEach(category => {
+                    row[category] = 0;
+                });
+              
+                // Populate the row with actual values
+                treatmentForMonth.forEach(item => {
+                    if (item.leveloftreatment === level && dischargeCategories.includes(item.water_discharge)) {
+                        row[item.water_discharge] += parseFloat(item.totalwaterdischarge) || 0;
+                    }
+                });
+    
+                // Ensure numerical values are properly formatted
+                dischargeCategories.forEach(category => {
+                    row[category] = parseFloat(row[category].toFixed(3)); // Round to 3 decimals
+                });
+    
+                return row;
+            });
+         
+    
             groupedData.push({
                 month,
                 year,
                 water_withdrawl: mergedWithdrawal,
-                water_discharge: mergedDischarge
+                water_discharge: mergedDischarge,
+                water_treated: treatedData,
             });
         });
     

@@ -193,6 +193,7 @@ this.GetAllFacility()
       } else {
           this.modeShow = false
       }
+      this.reportData = []
   };
 
   multipleDataPointsChanged(event: any) {

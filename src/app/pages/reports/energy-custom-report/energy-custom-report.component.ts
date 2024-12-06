@@ -17,6 +17,7 @@ import { DatePipe } from '@angular/common';
 import { DataEntry } from '@/models/DataEntry';
 import { NotificationService } from '@services/notification.service';
 import * as XLSX from 'xlsx';
+import { of } from 'rxjs';
 interface financialyear {
     financialyear: string;
 }
@@ -202,6 +203,7 @@ this.GetAllFacility()
         } else {
             this.modeShow = false; // Hide the mode section if ID 13 is not selected
         }
+        this.reportData = []
     }
 
 
@@ -455,11 +457,7 @@ this.GetAllFacility()
             let selectedFacilities = this.selectedMultipleFacility.map(String).map(item => `'${item}'`).join(',');
 
             const categoryMap = {
-                "Purchased goods and services": "purchase_goods",
-                "Upstream Transportation and Distribution": "upstream",
-                "Downstream Transportation and Distribution": "downstream",
-                "Franchises": "franchise_emission",
-                "Investment Emissions": "investment_emission",
+             
                 "Stationary Combustion": "stationary_combustion",
                 "Upstream Leased Assets": "upstreamlease_emission",
                 "Downstream Leased Assets": "downstreamlease_emission",
@@ -476,7 +474,12 @@ this.GetAllFacility()
                 "Company Owned Vehicles" : "company_owned_vehicles",
                 // "Water Supply and Treatment": "water_supply_treatment",
                 "End-of-Life Treatment of Sold Products": "end_of_life_treatment",
-                "Fire Extinguisher": "fire_extinguisher"
+                "Fire Extinguisher": "fire_extinguisher",
+                "Purchased goods and services": "purchase_goods",
+                "Upstream Transportation and Distribution": "upstream",
+                "Downstream Transportation and Distribution": "downstream",
+                "Franchises": "franchise_emission",
+                "Investment Emissions": "investment_emission",
             };
 
 
@@ -490,7 +493,17 @@ this.GetAllFacility()
                     }
                 }
             })
-             
+           
+
+            for (let key in categoryMap) {
+                let value = this.AssignedDataPoint.find(items=>items.CatName == key)
+                if (!value){
+                
+                    reportFormData.set(categoryMap[key], '0');
+                }
+            } 
+            
+        
             reportFormData.set('facility',selectedFacilities)
             reportFormData.set('investment_emission','0')
             reportFormData.set('flight_travel','0')

@@ -195,17 +195,6 @@
         ">
             <div class="mb-5 pb-0 row">
                 <div class="col-md-6 mb-3">
-                    <label for="fname" class="d-block">Carbon Offsets to be Included </label>
-                    <label class="switch">
-                        <input type="checkbox">
-                        <span class="slider round"></span>
-                    </label>
-                    
-                    
-                  
-                  
-                </div>
-                <div class="col-md-6 mb-3">
                     <label for="fname">Year of Emission data</label>
                     <p-calendar class="w-100 ct_input_dark_text_145 ct_calender_input_38_action_12" ngModel
                         name="year_added" [showIcon]="true" view="year" placeholder="Select year" dateFormat="yy"
@@ -343,6 +332,35 @@
                                 <p class="text-danger mb-0" *ngIf="GroupForm.submitted && economic.errors?.['required']">
                                     Field is required
                                 </p>
+                        </div>
+                    </div>
+                </div>
+        
+                <div class="col-md-12 ">
+                    <div class="ct_inventry_light_bg_1234 py-2 mb-3" style="border-radius: 0px;"></div>
+                    <h5 class="mb-3 ">Carbon Offsets (tC02e) (optional)</h5>
+                    <input name="carbonOffset" ngModel id="search-input" type="number"
+                    class="form-control Dashboard-tab text-white mb-3" placeholder="Enter emission"
+                    #groupName="ngModel" [disabled]="isloading"  />
+                    <!-- <label for="fname">Total Scope3 Emissions (tC02e)</label> -->
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="fname">Allocation to Scope 1</label>
+                            <input name="allocatedScope1" ngModel id="search-input" type="number"
+                                class="form-control Dashboard-tab text-white" placeholder="Enter emission %"
+                                #groupName="ngModel" [disabled]="isloading"  />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="fname">Allocation to Scope 2 </label>
+                            <input ngModel name="allocatedScope2" id="search-input" type="number"
+                                class="form-control Dashboard-tab text-white " placeholder="Enter emission %"
+                                #groupName="ngModel" [disabled]="isloading"  />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="fname">Allocation to Scope 3</label>
+                            <input ngModel name="allocatedScope3" id="search-input" type="number"
+                                class="form-control Dashboard-tab text-white " placeholder="Enter emission %"
+                                #groupName="ngModel" [disabled]="isloading"  />
                         </div>
                     </div>
                 </div>

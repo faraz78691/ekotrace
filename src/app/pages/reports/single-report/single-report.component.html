@@ -6,13 +6,7 @@
             </div>
             <h3>GHG Report - single</h3>
         </div>
-        <div class="d-flex gap-3 align-items-center">
-            <label class="switch">
-                <input type="checkbox">
-                <span class="slider round"></span>
-            </label>
-        
-        </div>
+    
     </div>
 
     <div class="row firstbox">
@@ -212,7 +206,7 @@
                 </div> -->
 
             
-                <ng-template #default>
+              
                     <div class="col-md-12" *ngIf="reportData.length >0; else emptyList">
                       
                         <p-table class="ct_bottom_table_tr" #dt [value]="reportData" [rowHover]="true"
@@ -714,7 +708,7 @@
                             </ng-template>
                         </p-table>
                     </div>
-                </ng-template>
+              
                 <ng-template #emptyList>
                     <p class="nodata text-dark">No data available</p>
                 </ng-template>

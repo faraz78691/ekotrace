@@ -152,6 +152,22 @@
                                     <th>
                                         Unit
                                     </th>
+                                    <th>
+                                        Facility
+                                     </th>
+                                     <th>
+                                         Emissons (t CO2e)
+ 
+                                     </th>
+                                     <th *ngIf=" (this.selectReportType == 'Monthly')">
+                                         Month
+                                     </th>
+                                     <th *ngIf="(this.selectReportType == 'Monthly')">
+                                         Year
+                                     </th>
+                                     <th *ngIf="this.selectReportType == 'Consolidated'">
+                                         Time period
+                                     </th>
                                    
                                 </tr>
                             </ng-template>
@@ -161,10 +177,13 @@
                                     <td> {{de.category}}</td>
                                     <td> {{de.DataPoint1}}</td>
                                     <td> {{de.DataPoint2}}</td>
+                                    <td> {{de.quantity}}</td>
+                                    <td> {{de.unit}}</td>
                                     <td> {{de.facility}}</td>
                                     <td> {{de.Emission}}</td>
-                                    <td> {{de.Months}}</td>
-                                    <td> {{de.Years}}</td>
+                                    <td *ngIf="(this.selectReportType == 'Monthly')"> {{de.Months}}</td>
+                                    <td *ngIf="(this.selectReportType == 'Monthly')"> {{de.Years}}</td>
+                                    <td *ngIf="(this.selectReportType == 'Consolidated')"> {{startMonth.value + ' '+ startYear.getFullYear().toString() + '-'+ endMonth.value + ' '+ endYear.getFullYear().toString()}}</td>
                                 </tr>
                             </ng-template>
                         </p-table>

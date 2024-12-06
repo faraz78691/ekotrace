@@ -298,7 +298,7 @@ export class TrackingComponent {
         { name: 'Apr', value: 'Apr' },
         { name: 'May', value: 'May' },
         { name: 'June', value: 'Jun' },
-        { name: 'July', value: 'July' },
+        { name: 'July', value: 'Jul' },
         { name: 'Aug', value: 'Aug' },
         { name: 'Sep', value: 'Sep' },
         { name: 'Oct', value: 'Oct' },
@@ -1327,9 +1327,10 @@ export class TrackingComponent {
 
         this.dataEntry.month = this.selectMonths
             .map((month) => month.value)
-            .join(', '); //this.getMonthName();
+            .join(','); //this.getMonthName();
         this.dataEntry.year = this.year.getFullYear().toString(); //this.getYear();
         var spliteedMonth = this.dataEntry.month.split(",");
+       
         var monthString = JSON.stringify(spliteedMonth);
         let fId = localStorage.getItem('SelectedfacilityID');
         if (fId == '0') {
@@ -1885,7 +1886,7 @@ export class TrackingComponent {
                 // console.log(row.employeesCommute !== '')
                 row.productType == null
             );
-            console.log(form.value.annualEntry);
+       
             if (filledRows.length > 0) {
                 this.notification.showInfo(
                     "Please select product service code",
@@ -2150,6 +2151,7 @@ export class TrackingComponent {
                     this.ALLEntries();
                 },
                 error: (err) => {
+                        this.waterSupplyUnit = 'kilo litres'
                     this.notification.showError(
                         'Data entry added failed.',
                         'Error'

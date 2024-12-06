@@ -5,7 +5,7 @@ import { Group } from '@/models/group';
 import { GroupMapping } from '@/models/group-mapping';
 import { LoginInfo } from '@/models/loginInfo';
 import { CompanyDetails } from '@/shared/company-details';
-import { Component, ViewChild } from '@angular/core';
+import { Component, computed, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { CompanyService } from '@services/company.service';
 import { FacilityService } from '@services/facility.service';
@@ -96,6 +96,7 @@ export class SetEmissionInventoryComponent {
     scope_1_emissions: number;
     scope_2_emissions: number;
     scope_3_emissions: number;
+    targetAllowed = computed(() => this.facilityService.targetAllowed());
     constructor(
         private companyService: CompanyService,
         private UserService: UserService,
@@ -183,7 +184,6 @@ export class SetEmissionInventoryComponent {
 
     GetEmissionInventory() {
 
-
         this.GroupService.getEmissionInventory(this.superAdminTenentID).subscribe({
             next: (response) => {
 
@@ -196,8 +196,6 @@ export class SetEmissionInventoryComponent {
                     } else {
                         this.groupdata = false;
                     }
-
-
                 }
             },
             error: (err) => {
@@ -206,6 +204,7 @@ export class SetEmissionInventoryComponent {
             complete: () => console.info('Group Added')
         });
     };
+
     GetEmissionProjections() {
 
         this.GroupService.getEmissionProjections().subscribe({
@@ -241,16 +240,26 @@ export class SetEmissionInventoryComponent {
 
     //method to add new group
     saveOffset(data: NgForm) {
+        console.log(data.value.carbonOffset);
+        var dateYear = (data.value.year_added).getFullYear().toString();
 
         if (data.valid == false) {
             return
         }
+        if (this.loginInfo.role  == 'Preparer' || this.loginInfo.role  == 'Manager' ) {
+            this.notification.showInfo('You are not authorised to submit form', '')
+            return
+        }
 
-        var dateYear = (data.value.year_added).getFullYear().toString();
+        if (this.targetAllowed() == false ) {
+            this.notification.showInfo('You are not authorised to submit form', '')
+            return
+        }
+
 
         if (
             parseFloat(data.value.scope_1_emissions) <
-            (parseFloat(data.value.company_vehicles) + parseFloat(data.value.refrigerants)) 
+            (parseFloat(data.value.company_vehicles) + parseFloat(data.value.refrigerants))
         ) {
 
             this.notification.showInfo('Scope 1 sub categories should be less or equal to Total Scope 1 emission', '');
@@ -272,6 +281,15 @@ export class SetEmissionInventoryComponent {
             this.notification.showInfo('Scope 3 sub categories should be less or equal to Total Scope 3 emission', '');
             return
         }
+        if (
+            parseFloat(data.value.carbonOffset) > 0
+        ) {
+            if ((parseFloat(data.value.allocatedScope1)) + (parseFloat(data.value.allocatedScope2)) + (parseFloat(data.value.allocatedScope3)) != 100) {
+                console.log((parseFloat(data.value.allocatedScope1)) + (parseFloat(data.value.allocatedScope2)) + (parseFloat(data.value.allocatedScope3)), "df");
+                this.notification.showInfo('Allocated emission should be total', '');
+                return
+            }
+        }
 
         var scope1_items = [{ 'category': "Scope1 from Company Vehicles", "emission": Number(data.value.company_vehicles) }, { "category": "Scope1 from Refrigerants", "emission": Number(data.value.refrigerants) }]
         var scope2_items = [{ "category": "Scope2 Location Based Emissions", "emission": Number(data.value.location_based) }, { "category": "Scope2 Renewable Energy Use", "emission": Number(data.value.renewable) }];
@@ -282,18 +300,41 @@ export class SetEmissionInventoryComponent {
         var scope_2_emissions = Number(data.value.location_based) + Number(data.value.renewable);
         var scope_3_emissions = Number(data.value.purchased_goods) + Number(data.value.business_travel) + Number(data.value.waste_generated) + Number(data.value.waste);
 
+        let finalScope1 = data.value.scope_1_emissions
+        let finalScope2 = data.value.scope_2_emissions
+        let finalScope3 = data.value.scope_3_emissions
+        if (data.value.carbonOffset) {
+            const carbonOffset = data.value.carbonOffset;
+            const allocatedScope1 = data.value.allocatedScope1
+            const allocatedScope2 = data.value.allocatedScope2
+            const allocatedScope3 = data.value.allocatedScope3
+
+            const convertedScope1 = carbonOffset * (allocatedScope1 / 100);
+            const convertedScope2 = carbonOffset * (allocatedScope2 / 100);
+            const convertedScope3 = carbonOffset * (allocatedScope3 / 100);
+
+            finalScope1 = data.value.scope_1_emissions - convertedScope1
+            finalScope2 = data.value.scope_2_emissions - convertedScope2
+            finalScope3 = data.value.scope_3_emissions - convertedScope3
+
+        } else {
+
+        }
+
+
         const formData = new URLSearchParams();
         formData.append('production_output', data.value.production_output || 1);
         formData.append('economic_output', data.value.economic_output || 1);
         formData.append('group_added', "Default");
         formData.append('year_added', dateYear);
-        formData.append('scope1_emission', data.value.scope_1_emissions);
-        formData.append('scope2_emission', data.value.scope_2_emissions);
-        formData.append('scope3_emission', data.value.scope_3_emissions);
+        formData.append('scope1_emission', finalScope1);
+        formData.append('scope2_emission', finalScope2);
+        formData.append('scope3_emission', finalScope3);
 
         formData.append('scope1_items', JSON.stringify(scope1_items));
         formData.append('scope2_items', JSON.stringify(scope2_items));
         formData.append('scope3_items', JSON.stringify(scope3_items));
+        formData.append('tenantId', this.superAdminTenentID);
 
 
         this.GroupService.AddEmissionInventory(formData.toString()).subscribe({
@@ -327,7 +368,10 @@ export class SetEmissionInventoryComponent {
     };
 
     saveProjections(data: NgForm) {
-
+        if (this.loginInfo.role  == 'Preparer' || this.loginInfo.role  == 'Manager' ) {
+            this.notification.showInfo('You are not authrised to submit form', '')
+            return
+        }
 
         const formData = new URLSearchParams();
 
@@ -364,7 +408,10 @@ export class SetEmissionInventoryComponent {
 
     //method for update group detail by id
     updateGroup(id: any, data: NgForm) {
-        console.log(id);
+        if (this.loginInfo.role  == 'Preparer' || this.loginInfo.role  == 'Manager' ) {
+            this.notification.showInfo('You are not authrised to submit form', '')
+            return
+        }
         // var dateYear = (data.value.year_added).getFullYear().toString();
         console.log(data.value.year_added.length);
         if (data.value.year_added.length > 4) {
@@ -556,6 +603,10 @@ export class SetEmissionInventoryComponent {
     }
     //method for delete a group by id
     deleteGroup(event: Event, id) {
+        if (this.loginInfo.role  == 'Preparer' || this.loginInfo.role  == 'Manager' ) {
+            this.notification.showInfo('You are not authrised to submit form', '')
+            return
+        }
         let tenantID = this.loginInfo.tenantID;
         this.confirmationService.confirm({
             target: event.target,

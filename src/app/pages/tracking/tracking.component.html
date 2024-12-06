@@ -5964,11 +5964,11 @@
                                                 {{ de.TypeName || '-' }}</td>
 
                                             <td *ngIf="categoryId == 11 ">
-                                                {{de.water_withdrawl_by_source[0].totalwaterwithdrawl +
-                                                de.water_withdrawl_by_source[1].totalwaterwithdrawl +
-                                                de.water_withdrawl_by_source[2].totalwaterwithdrawl +
-                                                de.water_withdrawl_by_source[3].totalwaterwithdrawl +
-                                                de.water_withdrawl_by_source[4].totalwaterwithdrawl}}</td>
+                                                {{de.water_withdrawl_by_source[0]?.totalwaterwithdrawl +
+                                                de.water_withdrawl_by_source[1]?.totalwaterwithdrawl +
+                                                de.water_withdrawl_by_source[2]?.totalwaterwithdrawl +
+                                                de.water_withdrawl_by_source[3]?.totalwaterwithdrawl +
+                                                de.water_withdrawl_by_source[4]?.totalwaterwithdrawl}}</td>
                                             <td *ngIf="categoryId == 11 ">{{
                                                 de.water_withdrawl_by_source[0].totalwaterwithdrawl }}</td>
                                             <td *ngIf="categoryId == 11 ">{{

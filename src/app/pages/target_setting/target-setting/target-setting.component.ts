@@ -5,7 +5,7 @@ import { Group } from '@/models/group';
 import { GroupMapping } from '@/models/group-mapping';
 import { LoginInfo } from '@/models/loginInfo';
 import { CompanyDetails } from '@/shared/company-details';
-import { Component, ViewChild } from '@angular/core';
+import { Component, computed, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { CompanyService } from '@services/company.service';
 import { FacilityService } from '@services/facility.service';
@@ -98,6 +98,7 @@ export class TargetSettingComponent {
   target_type: any[] = [];
   targetKPI: any[] = [];
   responseGraph: any[] = [];
+  facilitysubgrouplist: any[] = [];
   id: any;
   isgroupExist: boolean = false;
   selectedFaciltiy: any;
@@ -118,7 +119,10 @@ export class TargetSettingComponent {
   type: string;
   date3: string;
   standard: string;
-  selectedFile: File
+  selectedFile: File;
+  allowedUser  = false;
+
+  targetAllowed = computed(() => this.facilityService.targetAllowed());
   constructor(
     private companyService: CompanyService,
     private UserService: UserService,
@@ -220,6 +224,7 @@ export class TargetSettingComponent {
     let tenantID = this.loginInfo.tenantID;
     this.superAdminTenentID = this.loginInfo.super_admin_id;
     this.GetTarget();
+    this.GetSubGroupList(tenantID);
     this.updatedtheme = this.themeservice.getValue('theme');
   }
   //checks upadated theme
@@ -286,7 +291,19 @@ export class TargetSettingComponent {
 
   //method to add new group
   saveOffset(data: NgForm) {
+    if (this.loginInfo.role  == 'Preparer' || this.loginInfo.role  == 'Manager' ) {
+      this.notification.showInfo('You are not authrised to submit form', '')
+      return
+  }
+    if ( this.allowedUser  == false) {
+      this.notification.showInfo('You are not authorised to submit form', '')
+      return
+  }
 
+  if (this.targetAllowed() == false ) {
+    this.notification.showInfo('You are not authorised to submit form', '')
+    return
+}
     const formData = new URLSearchParams();
 
     formData.append('target_name', data.value.target_name);
@@ -297,6 +314,7 @@ export class TargetSettingComponent {
     formData.append('target_emission_change', data.value.target_emission_change);
     formData.append('other_target_kpichange', data.value.other_target_kpichange);
     formData.append('other_target_kpi', data.value.other_target_kpi);
+    formData.append('tenantId', this.superAdminTenentID);
 
     this.GroupService.addTargetSetting(formData).subscribe({
       next: (response) => {
@@ -586,7 +604,10 @@ export class TargetSettingComponent {
 
   //method for update group detail by id
   updateGroup(id: any, data: NgForm) {
-
+    if (this.loginInfo.role  == 'Preparer' || this.loginInfo.role  == 'Manager' ) {
+      this.notification.showInfo('You are not authrised to submit form', '')
+      return
+  }
     if (data.value.base_year.length == 4) {
       var dateYear = data.value.base_year;
     } else {
@@ -803,4 +824,26 @@ export class TargetSettingComponent {
 
 
   };
+
+  GetSubGroupList(tenantID) {
+    this.facilitysubgrouplist = []
+   
+    const formData = new URLSearchParams();
+    formData.set('tenantID', tenantID)
+    this.facilityService
+        .getActualSubGroups(formData.toString())
+        .subscribe((res) => {
+        
+            if(res.success == true){
+                this.facilitysubgrouplist = res.categories;
+               const isMainGroup =    this.facilitysubgrouplist.filter(items=> items.is_main_group ==1)
+      if(isMainGroup.length > 0 ){
+        this.allowedUser = true
+      }else{
+        this.allowedUser = false
+      }
+              
+            }
+        });
+};
 }

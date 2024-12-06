@@ -20,6 +20,7 @@ export class FacilityService {
     facilitiesSignal = signal<facilities[]>([])
     selectedfacilitiesSignal = signal<number>(0)
     headerTracking = signal<boolean>(false);
+    targetAllowed = signal<boolean>(false);
     localapiURL = 'http://192.168.1.31:4003';
     totalAngularPackages;
     errorMessage;
@@ -154,6 +155,16 @@ export class FacilityService {
     public newGetCity(id): Observable<Location[]> {
         return this.http.post<Location[]>(
             environment.baseUrl + '/getcityBystate', id
+        );
+    };
+    public getVendorDashboard(): Observable<Location[]> {
+        return this.http.post<Location[]>(
+            environment.baseUrl + '/report/vendorDashboardReport', 'id'
+        );
+    };
+    public getVendorLocation(): Observable<any> {
+        return this.http.get(
+            environment.baseUrl + '/report/getEmisionByLocation'
         );
     };
 

@@ -5,7 +5,7 @@ import { Actions, Group } from '@/models/group';
 import { GroupMapping } from '@/models/group-mapping';
 import { LoginInfo } from '@/models/loginInfo';
 import { CompanyDetails } from '@/shared/company-details';
-import { Component, ViewChild } from '@angular/core';
+import { Component, computed, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { CompanyService } from '@services/company.service';
 import { FacilityService } from '@services/facility.service';
@@ -98,7 +98,7 @@ export class ActionsComponent {
     status_action: string;
     actionId: string;
     superAdminTenentID: any
-
+    targetAllowed = computed(() => this.facilityService.targetAllowed());
     constructor(
         private companyService: CompanyService,
         private UserService: UserService,
@@ -241,7 +241,14 @@ export class ActionsComponent {
 
     //method to add new group
     saveOffset(data: NgForm) {
-
+        if (this.loginInfo.role  == 'Preparer' || this.loginInfo.role  == 'Manager' ) {
+            this.notification.showInfo('You are not authorised to submit form', '')
+            return
+        }
+        if (this.targetAllowed() == false ) {
+            this.notification.showInfo('You are not authorised to submit form', '')
+            return
+        }
         const formData = new URLSearchParams();
 
         formData.append('name', data.value.name);
@@ -250,6 +257,7 @@ export class ActionsComponent {
         formData.append('time_period', data.value.time_period);
         formData.append('owner', data.value.owner);
         formData.append('status', data.value.status);
+        formData.append('tenantId',this.superAdminTenentID);
 
 
         this.GroupService.addTargetActions(formData).subscribe({
@@ -286,6 +294,10 @@ export class ActionsComponent {
     current_status_action: any;
 
     onEditAction(data) {
+        if (this.loginInfo.role  == 'Preparer' || this.loginInfo.role  == 'Manager' ) {
+            this.notification.showInfo('You are not authrised to submit form', '')
+            return
+        }
         this.FormEdit = true;
         this.actionId = data.id;
         //this.current_status_action = data.status;
@@ -316,7 +328,10 @@ export class ActionsComponent {
 
     //method for update group detail by id
     updateGroup(id: any, data: NgForm) {
-
+        if (this.loginInfo.role  == 'Preparer' || this.loginInfo.role  == 'Manager' ) {
+            this.notification.showInfo('You are not authrised to submit form', '')
+            return
+        }
         const formData = new URLSearchParams();
 
         formData.append('id', this.actionId);
@@ -422,6 +437,10 @@ export class ActionsComponent {
     }
     //method for delete a group by id
     deleteGroup(event: Event, id) {
+        if (this.loginInfo.role  == 'Preparer' || this.loginInfo.role  == 'Manager' ) {
+            this.notification.showInfo('You are not authrised to submit form', '')
+            return
+        }
         let tenantID = this.loginInfo.tenantID;
         this.confirmationService.confirm({
             target: event.target,
@@ -462,39 +481,5 @@ export class ActionsComponent {
             }
         });
     };
-    //method for get facility by id
-    // facilityGet(tenantId) {
-    //     this.facilityService.FacilityDataGet(tenantId).subscribe((response) => {
-    //         this.facilityList = response;
-    //         console.log(
-    //             '🚀 ~ file: group.component.ts:370 ~ GroupComponent ~ this.facilityService.FacilityDataGet ~ this.facilityList:',
-    //             this.facilityList
-    //         );
-    //         const uniqueCountries = new Set(
-    //             this.facilityList.map((item) => item.countryName)
-    //         );
-    //         this.countryData = Array.from(uniqueCountries).map((country) => {
-    //             return {
-    //                 name: country,
-    //                 shortName: '', // Provide the appropriate value for shortName
-    //                 id: this.facilityList.find(
-    //                     (item) => item.countryName === country
-    //                 ).countryID
-    //             };
-    //         });
 
-    //         const uniqueStates = new Set(
-    //             this.facilityList.map((item) => item.stateName)
-    //         );
-    //         this.stateData = Array.from(uniqueStates).map((state) => {
-    //             return {
-    //                 name: state,
-    //                 shortName: '', // Provide the appropriate value for shortName
-    //                 id: this.facilityList.find(
-    //                     (item) => item.stateName === state
-    //                 ).stateID
-    //             };
-    //         });
-    //     });
-    // }
 }

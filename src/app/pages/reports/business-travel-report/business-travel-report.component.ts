@@ -50,7 +50,7 @@ export class BusinessTravelReportComponent {
   reportData: any[] = [];
 
   CustomReportData: CustomReportModel[] = [];
-  isMultiple: boolean = undefined
+  isMultiple: boolean = true
   selectedMultipleCategories: any;
   selectedMultipleFacility: any;
   @ViewChild('dt', { static: false }) table: any;
