@@ -211,7 +211,7 @@ subGroupGet(tenantId) {
     this.facilityService.getActualSubGroups(formdata).subscribe({
         next: (response: any) => {
 
-            this.LocData = response.categories;
+            this.LocData = response.categories.reverse();
             this.facilityDetails = this.LocData[0];
             this.managerList1 = [];
             this.staffList1 = [];

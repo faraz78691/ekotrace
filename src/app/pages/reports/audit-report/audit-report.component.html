@@ -313,9 +313,9 @@
                                     <td> {{de.DataPoint1}}</td>
                                     <td> {{de.DataPoint2}}</td>
                                     <td> {{de.facility}}</td>
-                                    <td> {{de.Emission}}</td>
-                                    <td> {{de.kgCO2e_kg}}</td>
-                                    <td> {{de.kgCO2e_kg}}</td>
+                                    <td> {{(de.Emission)/1000 | number:'1.2-2'}}</td>
+                                    <td> {{de.emission_factor}}</td>
+                                    <td> {{de.emission_factor_name}}</td>
                                 </tr>
                             </ng-template>
                         </p-table>

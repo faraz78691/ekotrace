@@ -52,7 +52,7 @@ export class FinancedEmissionReportComponent {
   reportData: any[] = [];
 
   CustomReportData: CustomReportModel[] = [];
-  isMultiple: boolean = undefined
+  isMultiple: boolean = true
   selectedMultipleCategories: any;
   selectedMultipleFacility: any;
   @ViewChild('dt', { static: false }) table: any;
@@ -112,7 +112,7 @@ export class FinancedEmissionReportComponent {
       this.loginInfo = jsonObj as LoginInfo;
       this.facilityID = localStorage.getItem('SelectedfacilityID');
 
-this.GetAllFacility()
+this.GetAllSubGrups()
     
 
     }
@@ -437,4 +437,26 @@ this.GetAllFacility()
 
     doc.save('report.pdf');
   };
+
+  GetAllSubGrups() {
+    let tenantId = this.loginInfo.tenantID;
+    const formData = new URLSearchParams();
+    formData.set('tenantID', tenantId.toString())
+    this.facilityService.getActualSubGroups(formData.toString()).subscribe((result: any) => {
+
+        if (result.success == true) {
+          console.log(result);
+            if(result.categories.length > 0){
+              this.facilityData = result.categories;
+              console.log(this.facilityData);
+                // this.haveMainGroup = result.categories[0].is_subgroup
+              
+            }
+
+
+        }
+
+    });
+};
+
 }

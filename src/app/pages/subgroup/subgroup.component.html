@@ -42,7 +42,7 @@
                             <tr>
                                 <th>Sub Group Name</th>
                                 <th class="text-center"> Type</th>
-                                <th class="text-right">Country</th>
+                                <th class="text-center">Country</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -54,7 +54,7 @@
                                     {{ d.name }}
                                 </td>
                                 <td class="col-lg-4 td text-center">
-                                Sub group
+                                    {{ d.is_main_group == 1 ? 'Main Group' : 'Sub Group'  }}
                                   
                                 </td>
                                 <td class="col-lg-4 td text-center">

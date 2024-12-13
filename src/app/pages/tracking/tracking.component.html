@@ -5596,6 +5596,11 @@
 
                                             </th>
                                             <th pSortableColumn="catName"
+                                                *ngIf="categoryId == 19 ">
+                                                Product Energy Use
+
+                                            </th>
+                                            <th pSortableColumn="catName"
                                                 *ngIf="categoryId == 18 || categoryId == 19 || categoryId == 8 || categoryId ==20">
                                                 Category
 
@@ -5645,7 +5650,7 @@
                                                 Quantity
                                                 <!-- <p-sortIcon field="catName"></p-sortIcon> -->
                                             </th>
-                                            <th pSortableColumn="catName" *ngIf=" categoryId == 19 || categoryId == 23">
+                                            <th pSortableColumn="catName" *ngIf=" categoryId == 23">
                                                 Sub Category
 
                                             </th>

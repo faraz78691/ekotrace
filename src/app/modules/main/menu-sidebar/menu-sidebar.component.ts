@@ -294,8 +294,14 @@ export const menu = [
                 path: ['finance_emissions']
             },
             {
+                name: 'Cost Centre',
+                iconClasses: 'fas fa-table',
+                iconSRC: 'assets/img/BRSR.svg',
+                path: ['cost_centre']
+            },
+            {
                 head: 'Vendor',
-                name: 'Vendors / Cost Centre',
+                name: 'Vendors',
                 iconClasses: 'fas fa-table',
                 iconSRC: 'assets/img/BRSR.svg',
                 path: ['vendors']
@@ -605,8 +611,14 @@ export const menu = [
                 path: ['finance_emissions']
             },
             {
+                name: 'Cost Centre',
+                iconClasses: 'fas fa-table',
+                iconSRC: 'assets/img/BRSR.svg',
+                path: ['cost_centre']
+            },
+            {
                 head: 'Vendor',
-                name: 'Vendors / Cost Centre',
+                name: 'Vendors',
                 iconClasses: 'fas fa-table',
                 iconSRC: 'assets/img/BRSR.svg',
                 path: ['vendors']
@@ -730,8 +742,14 @@ export const menu = [
                 path: ['finance_emissions']
             },
             {
+                name: 'Cost Centre',
+                iconClasses: 'fas fa-table',
+                iconSRC: 'assets/img/BRSR.svg',
+                path: ['cost_centre']
+            },
+            {
                 head: 'Vendor',
-                name: 'Vendors / Cost Centre',
+                name: 'Vendors',
                 iconClasses: 'fas fa-table',
                 iconSRC: 'assets/img/BRSR.svg',
                 path: ['vendors']
@@ -1155,12 +1173,24 @@ export const menu = [
             //     path: ['finance_emissions']
             // },
             {
-                name: 'Vendors / Cost Centre',
+                name: 'Cost Centre',
+                iconClasses: 'fas fa-table',
+                iconSRC: 'assets/img/BRSR.svg',
+                path: ['cost_centre']
+            },
+            {
+                head: 'Vendor',
+                name: 'Vendors',
                 iconClasses: 'fas fa-table',
                 iconSRC: 'assets/img/BRSR.svg',
                 path: ['vendors']
             },
-
+            {
+                name: 'Vendor Dashboard',
+                iconClasses: 'fas fa-table',
+                iconSRC: 'assets/img/BRSR.svg',
+                path: ['vendorDashboard']
+            },
             {
                 head: 'Reporting ',
                 name: 'Report',
@@ -1442,8 +1472,14 @@ export const menu = [
             //     path: ['finance_emissions']
             // },
             {
+                name: 'Cost Centre',
+                iconClasses: 'fas fa-table',
+                iconSRC: 'assets/img/BRSR.svg',
+                path: ['cost_centre']
+            },
+            {
                 head: 'Vendor',
-                name: 'Vendors / Cost Centre',
+                name: 'Vendors',
                 iconClasses: 'fas fa-table',
                 iconSRC: 'assets/img/BRSR.svg',
                 path: ['vendors']

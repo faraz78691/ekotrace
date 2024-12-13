@@ -4,12 +4,12 @@
 
 export const environment = {
     production: false,
-    baseUrl: 'http://localhost:4000',
+    // baseUrl: 'http://localhost:4000',
     // baseUrl: 'http://192.168.1.31:4003',
 
     // scope 3 url
     // baseUrl: 'https://13.200.247.29:4000',
-    // baseUrl: 'https://ekotrace.ekobon.com:4000',
+    baseUrl: 'https://ekotrace.ekobon.com:4000',
     // baseUrl: 'http://192.168.1.49:5000/api/',
     NoData: 'No Data Point',
     none: 'none',

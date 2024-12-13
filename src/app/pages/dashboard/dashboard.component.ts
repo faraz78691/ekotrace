@@ -138,7 +138,6 @@ export class DashboardComponent {
                     this.EnvironmentDataPoints = response;
                 }
             });
-
     }
     //retrieves the top carbon consuming data for a specific environment based on the provided parameters
 

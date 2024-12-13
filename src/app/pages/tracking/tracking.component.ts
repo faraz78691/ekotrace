@@ -1038,7 +1038,9 @@ export class TrackingComponent {
         this.id_var = data.manageDataPointSubCategorySeedID;
 
         this.categoryId = catID;
-
+        this.flightDisplay1 = 'block';
+        this.flightDisplay2 = 'none';
+        this.flightDisplay3 = 'none';
 
         this.SubCatAllData = data;
         this.ALLEntries()
@@ -2715,7 +2717,7 @@ export class TrackingComponent {
             var monthString = JSON.stringify(spliteedMonth)
 
             let formData = new URLSearchParams();
-            if (form.value.units == 1) {
+            if (form.value.noofunits == 1) {
                 formData.set('type', form.value.energyTypes);
                 formData.set('productcategory', form.value.productCategoryitem);
                 formData.set('no_of_Items', form.value.numberofitems);
@@ -2877,6 +2879,7 @@ export class TrackingComponent {
                     formData.set('franchise_space', form.value.downLeasefranchise_space);
                     formData.set('unit', form.value.upfacilityUnits);
                     formData.set('is_vehicle', is_vehicle.toString());
+                    formData.set('distance_unit', '0');
                     formData.set('is_facility', is_facility.toString());
                     formData.set('facility_id', this.facilityID);
                 } else if (this.franchiseMethod == true) {
@@ -3160,12 +3163,14 @@ export class TrackingComponent {
                 );
                 return
             }
-            if (form.value.no_of_trips === '' || form.value.no_of_trips === null) {
-                this.notification.showInfo(
-                    "Please select no of trips",
-                    'Warning'
-                );
-                return;
+            if(form.value.flightMode == 'Generic'){
+                if (form.value.no_of_trips === '' || form.value.no_of_trips === null) {
+                    this.notification.showInfo(
+                        "Please select no of trips",
+                        'Warning'
+                    );
+                    return;
+                }
             }
             var spliteedMonth = this.dataEntry.month.split(",");
             var monthString = JSON.stringify(spliteedMonth)
@@ -3232,7 +3237,7 @@ export class TrackingComponent {
                             response.message,
                             'Error'
                         );
-                        this.dataEntryForm.reset();
+                        // this.dataEntryForm.reset();
 
 
                     }
@@ -4817,7 +4822,7 @@ export class TrackingComponent {
         
         const energyMethod = event.value;
 
-        if (energyMethod == 'No. of Item') {
+        if (energyMethod == 1) {
             this.noOfItems = true;
             this.getFuelEnergyCategory();
             this.getRefrigerants();

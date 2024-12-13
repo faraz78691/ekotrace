@@ -157,9 +157,9 @@ export class FacilityService {
             environment.baseUrl + '/getcityBystate', id
         );
     };
-    public getVendorDashboard(): Observable<Location[]> {
+    public getVendorDashboard(data): Observable<Location[]> {
         return this.http.post<Location[]>(
-            environment.baseUrl + '/report/vendorDashboardReport', 'id'
+            environment.baseUrl + '/report/vendorDashboardReport', data
         );
     };
     public getVendorLocation(): Observable<any> {

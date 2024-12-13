@@ -9079,6 +9079,11 @@ span.p-ripple.p-element.p-button.p-component.p-fileupload-choose {
   background-color: #f5f5f5;
 }
 
+.p-icon {
+  display: inline-block;
+  color: black !important;
+}
+
 .ct_accordianclass212 {
   height: auto !important;
   max-height: 325px;

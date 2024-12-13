@@ -36,6 +36,7 @@ export class TreeComponent {
     paylaodFamilyData: any;
     newFamilyData: any[] = [];
     familyId: any;
+    tenantId: any;
     selectedTemplateId = 1;
     facilityTab = false;
     nodeType: any[] = [];
@@ -60,10 +61,8 @@ export class TreeComponent {
             let userInfo = localStorage.getItem('LoginInfo');
             let jsonObj = JSON.parse(userInfo); // string to "any" object first
             this.loginInfo = jsonObj as LoginInfo;
-
+            this.tenantId = this.loginInfo.super_admin_id
         };
-
-
     };
 
     ngOnInit() {
@@ -73,7 +72,7 @@ export class TreeComponent {
                 // console.log(items); // Log the entire response
                 if (items.success) {
                     this.treeList = items.familyDetails;
-                  
+
                     if (items.familyDetails.length > 1) {
                         if (this.loginInfo.role == 'Manager' || this.loginInfo.role == 'Admin' || this.loginInfo.role == 'Preparer') {
                             this.treeSection = false;
@@ -81,7 +80,7 @@ export class TreeComponent {
                         if (items.new_data == 1) {
                             this.familyId = items.family_id;
                             const selectedTempate = items.familyDetails.filter(value => value.family_id == this.familyId);
-                           
+
                             this.selectedTemplateId = selectedTempate[0].id;
                             this.createClone()
                         } else {
@@ -368,7 +367,7 @@ export class TreeComponent {
                     this.createClone();
 
                 }
-             
+
                 // this.getTreeViewByID(this.selectedTemplateId);
             },
             error: err =>
@@ -764,7 +763,42 @@ export class TreeComponent {
         this.familyService.createTree(formData.toString()).subscribe({
             next: (value) => {
                 if (value.success == true) {
-                    window.location.reload();
+                    // window.location.reload();
+                    this.treeList$ = this.familyService.getTreeList(this.loginInfo.super_admin_id).pipe(
+                        tap(items => {
+                            // console.log(items); // Log the entire response
+                            if (items.success) {
+                                this.treeList = items.familyDetails;
+            
+                                if (items.familyDetails.length > 1) {
+                                    if (this.loginInfo.role == 'Manager' || this.loginInfo.role == 'Admin' || this.loginInfo.role == 'Preparer') {
+                                        this.treeSection = false;
+                                    }
+                                    if (items.new_data == 1) {
+                                        this.familyId = items.family_id;
+                                        const selectedTempate = items.familyDetails.filter(value => value.family_id == this.familyId);
+            
+                                        this.selectedTemplateId = selectedTempate[0].id;
+                                        this.createClone()
+                                    } else {
+                                        // this.familyId = items.familyDetails[0]?.family_id;
+                                        // this.getTreeViewByID(this.familyId); 
+                                    }
+                                } else {
+                                    this.treeSection = true;
+                                    this.familyId = items.familyDetails[0].family_id;
+                                    this.selectedTemplateId = items.familyDetails[0].id;
+                                    if (this.loginInfo.role == 'Manager' || this.loginInfo.role == 'Admin' || this.loginInfo.role == 'Preparer') {
+                                        this.getTreeForOtherUser();
+                                    } else {
+                                        this.createClone();
+                                    }
+                                    this.saveButtton = false;
+                                }
+                            }
+                        })
+                    );
+                    FamilyTree.templates.hugo.link_field_0 = '<text width="230" style="font-size: 18px;" fill="#ffffff" x="145" y="150" text-anchor="middle" class="field_0">{val}</text>';
 
                 }
 
@@ -792,6 +826,7 @@ export class TreeComponent {
 
         const nodeForm = new URLSearchParams();
         nodeForm.set('family_id', this.familyId);
+        nodeForm.set('tenantId', this.tenantId);
 
         this.familyService.deleteSampleTree(nodeForm.toString()).subscribe({
             next: res => {

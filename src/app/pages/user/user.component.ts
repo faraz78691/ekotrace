@@ -445,9 +445,10 @@ export class UserComponent {
             else {
                 this.userdetails = user;
             }
-        } else {
-            this.userdetails = user;
-        }
+        } 
+        // else {
+        //     this.userdetails = user;
+        // }
         if (this.loginInfo.role == 'Super Admin') {
             if (user.role == 'Super Admin') {
                 user.isDisabledDelete = true;
@@ -456,9 +457,7 @@ export class UserComponent {
             } else {
                 this.userdetails = user;
             }
-        } else {
-            this.userdetails = user;
-        }
+        } 
         if (this.loginInfo.role == 'Admin') {
             if (user.role == 'Super Admin') {
                 user.isDisabledDelete = true;
@@ -472,9 +471,7 @@ export class UserComponent {
             } else {
                 this.userdetails = user;
             }
-        } else {
-            this.userdetails = user;
-        }
+        } 
     }
     UnlockComplete(userId) {
         this.unlock = userId;

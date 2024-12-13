@@ -188,6 +188,7 @@ this.GetAllFacility()
   };
 
   dataPointChangedID(id) {
+    console.log(id);
       if (id == 13) {
           this.modeShow = true
       } else {
@@ -593,10 +594,10 @@ this.GetAllFacility()
           }
           reportFormData.set('facility', this.selectedFacilityID)
           reportFormData.set('year', this.dataEntry.year)
-          reportFormData.set('month', selectedMonths)
           // reportFormData.set('page', '1')
           // reportFormData.set('page_size', '10')
           if (url != 'reportEmployeeCommuting' && url != 'reportHomeOffice') {
+              reportFormData.set('month', selectedMonths)
            
           }
       }

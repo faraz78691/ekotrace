@@ -64,6 +64,7 @@ import { FinancedEmissionReportComponent } from '@pages/reports/financed-emissio
 import { SingleReportComponent } from '@pages/reports/single-report/single-report.component';
 import { AuditReportComponent } from '@pages/reports/audit-report/audit-report.component';
 import { VendorDashboardComponent } from '@pages/vendor-dashboard/vendor-dashboard.component';
+import { CostCentreComponent } from '@pages/cost-centre/cost-centre.component';
 
 const routes: Routes = [
     {
@@ -161,6 +162,12 @@ const routes: Routes = [
                 path: 'vendors',
                 canActivate: [RoleGuard],
                 component: VendorsComponent,
+                data: { roles: ['Platform Admin','Super Admin','Admin','Manager','Preparer'] }
+            },
+            {
+                path: 'cost_centre',
+                canActivate: [RoleGuard],
+                component: CostCentreComponent,
                 data: { roles: ['Platform Admin','Super Admin','Admin','Manager','Preparer'] }
             },
             {
