@@ -18,7 +18,7 @@ import { Message } from 'primeng/api';
 export class BillingComponent {
     searchData;
     public loginInfo: LoginInfo;
-    public companyDetails: CompanyDetails;
+    public companyDetails: any;
     companyName: string;
     expirationDate: Date;
     oneDayBefore: Date;
@@ -178,7 +178,7 @@ export class BillingComponent {
 
                 // Calculate the difference in days
                 const timeDifference =
-                    this.expirationDate.getTime() - currentDate.getTime();
+                    licenseExpiredDate.getTime() - currentDate.getTime();
                 let leftDays = Math.ceil(timeDifference / (1000 * 3600 * 24));
                 if (leftDays <= 7) {
                     this.messages = [

@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
     companyData: CompanyDetails = new CompanyDetails();
     isLoading: boolean = false;
     showLoader = false;
-    isExpired: boolean;
+    isExpired: boolean = false;
     public isAuthLoading = false;
     @ViewChild('captchaElem')
     captchaElem!: ReCaptcha2Component;
@@ -149,12 +149,23 @@ export class LoginComponent implements OnInit {
                         this.loginInfo = jsonObj as LoginInfo;
 
                         this.invalidLogin = false;
-                        const currentDate = new Date();
-                        const licenseExpiredDate = new Date(
-                            this.loginInfo.licenseExpired
-                        );
+                        // const currentDate = new Date();
+                        // const licenseExpiredDate = new Date(
+                        //     this.loginInfo.licenseExpired
+                        // );
 
-                        this.isExpired = licenseExpiredDate < currentDate;
+
+                        const currentDate = new Date();
+                        const licenseExpiredDate = new Date(this.loginInfo.licenseExpired);
+
+                        // Calculate the difference in milliseconds
+                        const differenceInMilliseconds = licenseExpiredDate.getTime() - currentDate.getTime();
+
+                        // Convert the difference to days
+                        const differenceInDays = differenceInMilliseconds / (1000 * 60 * 60 * 24);
+                        console.log("differenceInDays", differenceInDays);
+                        // Check if the difference is 7 days or less
+                        this.isExpired = differenceInDays <= 7;
                         this.GetSubGroupList(this.loginInfo.tenantID)
                         if (
                             this.loginInfo.role === 'Super Admin' &&
