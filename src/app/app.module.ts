@@ -127,6 +127,7 @@ import { SingleReportComponent } from './pages/reports/single-report/single-repo
 import { AuditReportComponent } from './pages/reports/audit-report/audit-report.component';
 import { VendorDashboardComponent } from './pages/vendor-dashboard/vendor-dashboard.component';
 import { CostCentreComponent } from './pages/cost-centre/cost-centre.component';
+import { DataProgressComponent } from './pages/data-progress/data-progress.component';
 
 defineCustomElements();
 registerLocaleData(localeEn, 'en-EN');
@@ -208,7 +209,8 @@ registerLocaleData(localeEn, 'en-EN');
         SingleReportComponent,
         AuditReportComponent,
         VendorDashboardComponent,
-        CostCentreComponent
+        CostCentreComponent,
+        DataProgressComponent
     ],
     imports: [
         HeaderComponent,

@@ -1332,7 +1332,6 @@ export class TrackingComponent {
             .join(','); //this.getMonthName();
         this.dataEntry.year = this.year.getFullYear().toString(); //this.getYear();
         var spliteedMonth = this.dataEntry.month.split(",");
-       
         var monthString = JSON.stringify(spliteedMonth);
         let fId = localStorage.getItem('SelectedfacilityID');
         if (fId == '0') {
@@ -1373,8 +1372,6 @@ export class TrackingComponent {
                 if (this.dataEntry.typeID == 1) {
                     if (this.SCdataEntry.blendType == 'No Blend') {
                         this.SCdataEntry.blendID = 1;
-
-
                     }
                     if (this.SCdataEntry.blendType == 'Average Blend') {
                         this.SCdataEntry.blendID = 2;

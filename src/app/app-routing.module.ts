@@ -65,6 +65,7 @@ import { SingleReportComponent } from '@pages/reports/single-report/single-repor
 import { AuditReportComponent } from '@pages/reports/audit-report/audit-report.component';
 import { VendorDashboardComponent } from '@pages/vendor-dashboard/vendor-dashboard.component';
 import { CostCentreComponent } from '@pages/cost-centre/cost-centre.component';
+import { DataProgressComponent } from '@pages/data-progress/data-progress.component';
 
 const routes: Routes = [
     {
@@ -168,6 +169,12 @@ const routes: Routes = [
                 path: 'cost_centre',
                 canActivate: [RoleGuard],
                 component: CostCentreComponent,
+                data: { roles: ['Platform Admin','Super Admin','Admin','Manager','Preparer'] }
+            },
+            {
+                path: 'dataProgress',
+                canActivate: [RoleGuard],
+                component: DataProgressComponent,
                 data: { roles: ['Platform Admin','Super Admin','Admin','Manager','Preparer'] }
             },
             {

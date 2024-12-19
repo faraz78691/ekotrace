@@ -43,16 +43,8 @@ export class VendorsComponent {
   facilityList: Facility[] = [];
   RolesList: RoleModel[] = [];
   public groupsList: any[] = [];
-  public scope1_data: any[] = [];
-  public scope2_data: any[] = [];
-  public scope3_data: any[] = [];
-  public forecast1_data: any[] = [];
-  public forecast2_data: any[] = [];
-  public forecast3_data: any[] = [];
-  public dashed1_data: any[] = [];
-  public dashed2_data: any[] = [];
-  public dashed3_data: any[] = [];
-  public x_axis_years: any[] = [];
+
+
   display = 'none';
   visible: boolean;
   visible2: boolean;
@@ -142,7 +134,6 @@ export class VendorsComponent {
     let tenantID = this.loginInfo.tenantID;
     this.superAdminId = this.loginInfo.super_admin_id;
     this.GetVendors();
-    this.GetCostCetnre();
     this.AllCountry();
     this.updatedtheme = this.themeservice.getValue('theme');
   }
@@ -179,31 +170,7 @@ export class VendorsComponent {
       complete: () => console.info('Group Added')
     });
   };
-  GetCostCetnre() {
-    //   let formData = new URLSearchParams();
 
-    //   formData.set('tenant_id', tenantID.toString());
-
-    this.GroupService.getCostCentre(this.superAdminId).subscribe({
-      next: (response) => {
-
-        if (response.success == true) {
-          this.groupsCostList = response.categories;
-          if (this.groupsList.length > 0) {
-            this.groupdetails = this.groupsList[0];
-            this.groupdata = true;
-          } else {
-            this.groupdata = false;
-          }
-
-        }
-      },
-      error: (err) => {
-        console.error('errrrrrr>>>>>>', err);
-      },
-      complete: () => console.info('Group Added')
-    });
-  };
 
 
   //method to add new group
@@ -298,7 +265,6 @@ export class VendorsComponent {
             ' Cost Centre Added successfully',
             'Success'
           );
-          this.GetCostCetnre();
           this.GroupForm.reset();
         }
         // return

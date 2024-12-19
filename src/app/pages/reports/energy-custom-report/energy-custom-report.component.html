@@ -303,7 +303,7 @@
                                     <td> {{de.DataPoint1}}</td>
                                     <td> {{de.DataPoint2}}</td>
                                     <td> {{de.facility}}</td>
-                                    <td> {{de.Emission}}</td>
+                                    <td>{{ (+de.Emission / 1000) | number: '1.4-4' }}</td>
                                     <td *ngIf="!this.isMultiple || (this.isMultiple && this.selectReportType == 'Monthly')"> {{de.Months}}</td>
                                     <td *ngIf="!this.isMultiple || (this.isMultiple && this.selectReportType == 'Monthly')"> {{de.Years}}</td>
                                     <td *ngIf="!this.isMultiple || (this.isMultiple && this.selectReportType == 'Consolidated')"> {{startMonth.value + ' '+ startYear.getFullYear().toString() + '-'+ endMonth.value + ' '+ endYear.getFullYear().toString()}}</td>

@@ -31,7 +31,9 @@ export class VendorDashboardComponent {
   public pieChart: Partial<ChartOptions2>;
   vendorData: any[] = [];
   dashboardData: any[] = [];
-  selectedFacility = ''
+  originalData: any[] = [];
+  selectedFacility: any[] = [];
+  selectedProduct: any[] = [];
   labelScopeDonut2: any[] = [];
   businessClass: any[] = [];
   flightsTravelTypes =
@@ -56,17 +58,24 @@ export class VendorDashboardComponent {
 
       {
         "id": 1,
-        "shortBy": "Rank high to Low"
+        "shortBy": "High to Low"
       },
       {
         "id": 2,
-        "shortBy": "Rank by Emisissions"
+        "shortBy": "Low to High"
+      }
+    ];
+  rankBy =
+    [
+
+      {
+        "id": 1,
+        "shortBy": "Emissions"
       },
       {
-        "id": 3,
-        "shortBy": "Rank by Emissions to Expense Ratio"
+        "id": 2,
+        "shortBy": "Emissions to Expense Ratio"
       }
-
     ];
   Show =
     [
@@ -99,18 +108,19 @@ export class VendorDashboardComponent {
       let jsonObj = JSON.parse(userInfo); // string to "any" object first
       this.loginInfo = jsonObj as LoginInfo;
 
-   
+
       this.getVendorLocation();
       this.GetAllfacilities();
     }
   };
 
 
-  getVendorDash(id:any) {
+  getVendorDash(id: any) {
     const formData = new URLSearchParams();
     formData.set('facilities', id)
     this.facilityService.getVendorDashboard(formData).subscribe((response: any) => {
       if (response.success == true) {
+        this.originalData = response.vendorWiseEmission
         this.vendorData = response.vendorWiseEmission;
       }
 
@@ -119,13 +129,18 @@ export class VendorDashboardComponent {
   GetAllfacilities() {
     let tenantId = this.loginInfo.tenantID;
     const formData = new URLSearchParams();
-    formData.set('tenantID', tenantId.toString())
+    formData.set('tenantID', tenantId.toString());
+
     this.dashboardService.getdashboardfacilities(formData.toString()).subscribe((result: any) => {
-   if(result.success){
-     this.dashboardData = result.categories;
-     this.selectedFacility = this.dashboardData[0].ID;
-     this.getVendorDash(   this.selectedFacility );
-   }
+      if (result.success) {
+        this.dashboardData = result.categories;
+
+        // Initialize selectedFacility with the first ID as default
+        this.selectedFacility = this.dashboardData.length ? [this.dashboardData[0].ID] : [];
+
+        // Call getVendorDash with the selected value
+        this.getVendorDash(this.selectedFacility);
+      }
     });
   }
 
@@ -174,6 +189,49 @@ export class VendorDashboardComponent {
 
   onFacilityChange(event: any) {
 
-  this.getVendorDash(this.selectedFacility)
+    this.getVendorDash(this.selectedFacility)
   };
+  onProductChange() {
+
+    if (this.selectedProduct.length > 0) {
+      const filtered = this.originalData.filter(item =>
+        this.selectedProduct.includes(item.typesofpurchasename)
+      );
+
+      this.vendorData = filtered
+    } else {
+      this.vendorData = this.originalData
+    }
+
+  }
+  onSortChange(event:any) {
+    const sortVal = event.value;
+
+    if (sortVal) {
+      const filtered = this.sortDataByEmission(sortVal)
+
+      this.vendorData = filtered
+    } else {
+      this.vendorData = this.originalData
+    }
+
+  };
+
+  sortDataByEmission(order: string) {
+    const sortedData = [...this.originalData].sort((a, b) => {
+      const emissionA = parseFloat(a.perVenderEmission);
+      const emissionB = parseFloat(b.perVenderEmission);
+  
+      if (order === 'Low to High') {
+        return emissionA - emissionB; // Ascending order
+      } else if (order === 'High to Low') {
+        return emissionB - emissionA; // Descending order
+      } else {
+        return 0; // No sorting if order is invalid
+      }
+    });
+  
+    console.log(sortedData); // Sorted data for debugging
+    return sortedData; // Return sorted data for further use
+  }
 }

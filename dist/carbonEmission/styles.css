@@ -10403,6 +10403,19 @@ h1.bft-edit-form-title {
   overflow-y: auto;
 }
 
+.en_select_last_right_0 .p-multiselect.p-component {
+  width: 250px;
+}
+
+.en_select_last_right_0 .p-component.ng-star-inserted {
+  left: auto;
+  right: 0px;
+}
+
+.en_select_last_right_0 .p-component.ng-star-inserted input {
+  width: 100% !important;
+}
+
 @media screen and (max-width: 575px) {
   .ct_how_use_tooltip_cnt {
     min-width: 250px;

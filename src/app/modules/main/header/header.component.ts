@@ -105,7 +105,7 @@ export class HeaderComponent implements OnInit {
             this.router.events.pipe(
                 filter(event => event instanceof NavigationEnd)
             ).subscribe(() => {
-                console.log("route  changed");
+               
                 this.checkRolesAndLoadData();
             })
         

@@ -738,8 +738,8 @@
                                     *ngIf="selectedCategory != 20 && selectedCategory != 15 && selectedCategory != 13 && selectedCategory != 19 ">
                                     {{ de.unit }}</td>
                                 <td *ngIf="selectedCategory == 20 ">{{ de.waste_unit }}</td>
-                                <td *ngIf="selectedCategory == 8 "> {{(de.Emission/1000) | number: '1.4-4'}}</td>
-                                <td *ngIf="selectedCategory != 8 "> {{(de.emission/1000) | number: '1.4-4'}}</td>
+                                <td *ngIf="selectedCategory == 8 "> {{(+de.Emission/1000) | number: '1.4-4'}}</td>
+                                <td *ngIf="selectedCategory != 8 "> {{(+de.emission/1000) | number: '1.4-4'}}</td>
                                 <td *ngIf="selectedCategory == 8 ">{{ de.vendor }}</td>
                                 <td *ngIf="selectedCategory == 8 ">{{ de.vendor_ef }}</td>
                                 <td *ngIf="selectedCategory == 8 ">{{ de.vendor_ef_unit }}</td>
