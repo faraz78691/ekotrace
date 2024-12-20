@@ -226,6 +226,7 @@ export class WaterUsageComponent {
       this.scopeWiseSeries = result.series;
       this.labelSeries1 = result.month;
       this.labelScopeDonut1 = result.water_withdrawl;
+      console.log();
       this.pieChart = {
         series: this.scopeWiseSeries,
         chart: {
@@ -298,7 +299,8 @@ export class WaterUsageComponent {
 
       this.scopeWiseSeries2 = result.series;
       this.labelScopeDonut2 = result.water_discharge;
-
+console.log(this.scopeWiseSeries2 );
+console.log( this.labelScopeDonut2);
       this.pieChart2 = {
         series: this.scopeWiseSeries2,
         chart: {

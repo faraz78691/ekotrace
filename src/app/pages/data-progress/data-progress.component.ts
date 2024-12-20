@@ -100,13 +100,8 @@ export class DataProgressComponent {
           this.transformData(this.dataProgress),
           this.facilityData
         );
-        console.log(   this.transformedData );
-   const tt = this.transformedData[0]['1'];
-   console.log(tt);
-   const yy = [tt];
-const uu = yy;
-     this.dataPreparer =uu
-        console.log("sfd" ,  this.dataPreparer );
+    
+        this.onFacilityClick(this.transformedData[0].facilityId , 0)
        }
      },
      error: (err) => {
@@ -118,7 +113,10 @@ const uu = yy;
 
  transformData(data: any[]) {
   return data.map((facility, index) => {
-    const facilityId = index + 1; // Assuming IDs are sequential
+    const fetchIds = Object.keys(facility)
+  
+    const facilityId = fetchIds[0];
+   // Assuming IDs are sequential
     const facilityKey = `${facilityId}`;
     const facilityScopes = facility[facilityKey].reduce((scopes: any, item: any) => {
       const scopeKey = item.scope;
@@ -138,10 +136,37 @@ const uu = yy;
     };
   });
 }
+// transformData(data: any[]) {
+//   const tableData = [];
+
+//   data.forEach((facility, facilityIndex) => {
+//     const facilityId = Object.keys(facility).find((key) => !key.startsWith('scope')) || '';
+//     const facilityEntries = facility[facilityId] || [];
+//     const { scope1, scope2, scope3 } = facility;
+
+//     facilityEntries.forEach((entry: any) => {
+//       tableData.push({
+//         Facility: `Facility ${facilityId}`,
+//         Category: entry.category,
+//         Scope: entry.scope,
+//         Percentage: entry.percentage,
+//         Data: entry.data,
+//         Scope1: scope1,
+//         Scope2: scope2,
+//         Scope3: scope3,
+//       });
+//     });
+//   });
+
+//   return tableData;
+// }
+
+
 
 mergeData(facilityData: any[], assetTypeData: any[]) {
+
   return facilityData.map((facility) => {
-    const asset = assetTypeData.find((a) => a.id === facility.facilityId);
+    const asset = assetTypeData.find((a) => a.id == facility.facilityId);
     return {
       ...facility,
       facilityName: asset ? asset.AssestType : `Facility ${facility.facilityId}`,
@@ -151,8 +176,13 @@ mergeData(facilityData: any[], assetTypeData: any[]) {
 };
 
 
-onFacilityClick(id:any){
-
+onFacilityClick(id:any, index:any){ 
+  this.selectedRowIndex = index;
+  const filterred = this.transformedData.filter(items=>
+    
+    Object.keys(items)[0]== id)
+  console.log(filterred[0][id]);
+  this.dataPreparer = [filterred[0][id]];
 }
 
 

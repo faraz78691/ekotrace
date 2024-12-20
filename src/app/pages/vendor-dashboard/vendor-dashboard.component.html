@@ -6,17 +6,17 @@
                     <div class="ct_vendor_dah_small_card">
                         <p class=" text-center">Total Suppliers
                         </p>
-                        <h4 class="text-center ct_fw_600 mb-0">10
+                        <h4 class="text-center ct_fw_600 mb-0">{{allVendorReport?.vendorCount}}
                         </h4>
                     </div>
-                    <div class="ct_vendor_dah_small_card ">
+                    <div class="ct_vendor_dah_small_card">
                         <p class=" text-center">Procurement Emissions (tCO2e)
                         </p>
-                        <h4 class="text-center ct_fw_600 mb-0">1.2k
+                        <h4 class="text-center ct_fw_600 mb-0">{{allVendorReport?.vendorEmission}}
                         </h4>
                     </div>
 
-                    <div class="ct_vendor_dah_small_card">
+                    <!-- <div class="ct_vendor_dah_small_card">
                         <p class=" text-center">Procurement Expense
                         </p>
                         <h4 class="text-center ct_fw_600 mb-0">10m INR
@@ -30,7 +30,7 @@
                         <h4 class="text-center ct_fw_600 mb-0">12.2 u
 
                         </h4>
-                    </div>
+                    </div> -->
 
                     <div class="ct_vendor_dah_small_card">
                         <p class=" text-center">Contribution To Total Emissions
@@ -80,7 +80,7 @@
                         styleClass="facilitydropdown" #country="ngModel" required>
                     </p-dropdown>
                 </div>
-                <div class="form-group d-flex align-items-center ct_gap_10 flex-wrap ct_res_100_767 mb-0">
+                <!-- <div class="form-group d-flex align-items-center ct_gap_10 flex-wrap ct_res_100_767 mb-0">
                     <label for="" class="ct_white_space_nowrape mb-0">Rank by
                     </label>
 
@@ -89,7 +89,7 @@
                         ngModel placeholder="Select" [options]="rankBy" optionLabel="shortBy" optionValue="shortBy"
                         styleClass="facilitydropdown" #country="ngModel" required>
                     </p-dropdown>
-                </div>
+                </div> -->
                 <div class="form-group d-flex align-items-center ct_gap_10 flex-wrap ct_res_100_767 mb-0">
                     <label for="" class="ct_white_space_nowrape mb-0">Show
                     </label>
@@ -132,6 +132,11 @@
                     <div class="ct_supplier_emission mb-4">
                         <h4 class="ct_fs_24 ct_fw_600">Supplier Emissions by Product
                         </h4>
+                        <div id="By_employee_location" *ngIf="pieChart2">
+                            <apx-chart [series]="pieChart2.series" [chart]="pieChart2.chart" [labels]="pieChart2.labels"
+                                [legend]="pieChart2.legend" [responsive]="pieChart2.responsive"
+                                [colors]="pieChart2.colors"></apx-chart>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -151,12 +156,12 @@
                                 </div>
 
                             </div>
-                            <div class="progress">
+                            <!-- <div class="progress">
                                 <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"
                                     aria-valuemin="0" aria-valuemax="100">25%</div>
-                            </div>
+                            </div> -->
 
-                            <div class="ct_grid_sec_2">
+                            <div class="ct_grid_sec_2 mt-3">
                                 <div class="d-flex align-items-center ct_gap_10 justify-content-between  ">
                                     <p class="ct_fs_14 mb-0">Total Emissions</p>
                                     <p class="ct_fs_14 mb-0">{{items.perVenderEmission}}</p>
@@ -164,7 +169,7 @@
                              
                                 <div class="d-flex align-items-center ct_gap_10 justify-content-between  ">
                                     <p class="ct_fs_14 mb-0">Emissions to Expense Ratio</p>
-                                    <p class="ct_fs_14 mb-0">{{items.perVendoremiToExpRatio}}</p>
+                                    <p class="ct_fs_14 mb-0">{{items.perVendoremiToExpRatio | number:'1.4-4'}}</p>
                                 </div>
                               
                             </div>

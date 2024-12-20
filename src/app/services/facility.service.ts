@@ -170,6 +170,11 @@ export class FacilityService {
             environment.baseUrl + '/report/getEmisionByLocation'
         );
     };
+    public getEmissionProducts(): Observable<any> {
+        return this.http.post(
+            environment.baseUrl + '/report/getVendorProductDashboard', ''
+        );
+    };
 
     public getSeedData(): Observable<ManageDataPoint[]> {
         return this.http.get<ManageDataPoint[]>(

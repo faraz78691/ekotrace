@@ -29,6 +29,7 @@ export class VendorDashboardComponent {
   // flightsTravelTypes:any[]= []
   public loginInfo: LoginInfo;
   public pieChart: Partial<ChartOptions2>;
+  public pieChart2: Partial<ChartOptions2>;
   vendorData: any[] = [];
   dashboardData: any[] = [];
   originalData: any[] = [];
@@ -36,6 +37,10 @@ export class VendorDashboardComponent {
   selectedProduct: any[] = [];
   labelScopeDonut2: any[] = [];
   businessClass: any[] = [];
+  productsSeries: any[] = [];
+  productsEmission: any[] = [];
+  allVendorReport:any;
+
   flightsTravelTypes =
     [
       {
@@ -111,6 +116,7 @@ export class VendorDashboardComponent {
 
       this.getVendorLocation();
       this.GetAllfacilities();
+      this.getEmissionProducts();
     }
   };
 
@@ -122,6 +128,7 @@ export class VendorDashboardComponent {
       if (response.success == true) {
         this.originalData = response.vendorWiseEmission
         this.vendorData = response.vendorWiseEmission;
+        this.allVendorReport = response
       }
 
     });
@@ -155,7 +162,7 @@ export class VendorDashboardComponent {
           series: this.businessClass,
           chart: {
             width: "100%",
-            height: 350,
+            height: 250,
             type: "pie",
 
           },
@@ -168,6 +175,51 @@ export class VendorDashboardComponent {
           },
           labels: this.labelScopeDonut2,
           colors: ['#246377', '#009087', '#002828', '#F9C74F'],
+          responsive: [
+            {
+              breakpoint: 480,
+              options: {
+                chart: {
+                  width: 300
+                },
+                legend: {
+                  position: "bottom"
+                }
+              }
+            }
+          ]
+        };
+      }
+
+    });
+  };
+
+
+  getEmissionProducts() {
+
+    this.facilityService.getEmissionProducts().subscribe((response: any) => {
+      if (response.success == true) {
+        this.productsSeries = response.emissions.map(items=>items.Product);
+        this.productsEmission = response.emissions.map(items=>Number(items.emission));
+     console.log(  this.productsSeries);
+     console.log(  this.productsEmission);
+        this.pieChart2 = {
+          series: this.productsEmission,
+          chart: {
+            width: "100%",
+            height: 250,
+            type: "pie",
+
+          },
+          legend: {
+            position: "bottom",
+            fontSize: '15px',
+            floating: false,
+            horizontalAlign: 'left',
+
+          },
+          labels: this.productsSeries,
+          colors: ['#246377', '#009087', '#002828', '#F9C74F','#F9C74F'],
           responsive: [
             {
               breakpoint: 480,
