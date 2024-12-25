@@ -208,6 +208,7 @@ export class HeaderComponent implements OnInit {
         if (this.loginInfo.role === this.excludedRole) {
             return;
         }
+        console.log(tenantID);
         this.facilityService
             .newGetFacilityByTenant(tenantID)
             .subscribe((res) => {

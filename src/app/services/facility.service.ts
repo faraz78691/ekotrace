@@ -86,6 +86,11 @@ export class FacilityService {
             environment.baseUrl + '/getFacilityByTenantIdMainGroup/' + tenantId 
         );
     };
+    public getGroupsForAdmin(tenantId): Observable<any> {
+        return this.http.get<any>(
+            environment.baseUrl + '/getFacilityGroupsByTenantIdAdmin/' + tenantId 
+        );
+    };
 
     AddFacilites(facilities: facilities[]) {
         this.facilitiesSignal.set(facilities)

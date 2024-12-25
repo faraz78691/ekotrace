@@ -12,7 +12,7 @@ export class Facility {
     CityId: number;
     EquityPercentage: number;
     Address: string;
-    IsWaterStreenArea = false;
+    IsWaterStreenArea : any;
     tenantID: number;
     createdDate = new Date();
     modifiedDate = new Date();

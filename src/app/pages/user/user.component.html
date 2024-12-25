@@ -148,7 +148,7 @@
             </p-confirmDialog>
 
             <p-dialog (click)="removeCss()" [(visible)]="visible" [breakpoints]="{'960px': '75vw'}"
-                [style]="{width: '80vw'}">
+                [style]="{width: '80vw'}" [closable]="false">
                 <p-header *ngIf="FormEdit === false"> Add New User </p-header>
                 <p-header *ngIf="FormEdit === true"> Edit User </p-header>
 
@@ -246,7 +246,7 @@
                                             <p-radioButton  ngModel
                                                 [inputId]="Role.Id" name="Role" [value]="Role.Id"
                                                 (click)="onSelected(Role.Id)" [(ngModel)]="admininfo.roleID"
-                                                [disabled]="isloading"></p-radioButton>
+                                                ></p-radioButton>
 
 
                                                 <div>
@@ -289,7 +289,7 @@
                                         <ng-container *ngIf="loginInfo.role == 'Manager'">
                                             <p-radioButton *ngIf="Role.Name !='Admin'" ngModel
                                                 [inputId]="Role.Id" name="Role" [value]="Role.Id"
-                                                (click)="onSelected(Role.Id)" [(ngModel)]="admininfo.roleID"
+                                                (click)="onSelected(Role.Id)" [(ngModel)]="selectedRole"
                                                 [disabled]="isloading"></p-radioButton>
 
 
@@ -325,7 +325,7 @@
                                 <p-dropdown
                                     class=" finput ct_input_white_bg13 ct_select_2_drop_white ct_input_dark_text_145"
                                     placeholder="Select" name="facility" #facility="ngModel" [options]="facilityList"
-                                    optionLabel="name" optionValue="id" styleClass="facilitydropdown"
+                                    optionLabel="AssestType" optionValue="id" styleClass="facilitydropdown"
                                     [(ngModel)]="admininfo.facilityID" (ngModelChange)="checkFacilityID()">
                                 </p-dropdown>
 
@@ -344,7 +344,7 @@
                                 <p-dropdown
                                     class=" finput ct_input_white_bg13 ct_select_2_drop_white ct_input_dark_text_145"
                                     placeholder="Select" name="facility" #facility="ngModel" [options]="facilityList"
-                                    optionLabel="AssestName" styleClass="facilitydropdown"
+                                    optionLabel="name" styleClass="facilitydropdown"
                                     [(ngModel)]="admininfo.facilityID" (ngModelChange)="checkFacilityID()">
                                 </p-dropdown>
 
@@ -468,7 +468,7 @@
                             <p class="mb-0">{{ userdetails.role }}</p>
                         </td>
                     </tr>
-                    <tr>
+                    <tr *ngIf="!userdetails.group_name;else haveGroup">
                         <td>
                             <p class="mb-0">Facility:</p>
                         </td>
@@ -476,6 +476,17 @@
                             <p class="mb-0">{{ userdetails.facilityName }}</p>
                         </td>
                     </tr>
+                    <ng-template #haveGroup>
+                        <tr >
+                            <td>
+                                <p class="mb-0">{{ userdetails.is_main_group == 1 ? 'Main Group' : 'Sub Group' }}</p>
+                            </td>
+                            <td>
+                                <p class="mb-0">{{ userdetails.group_name }}</p>
+                            </td>
+                        </tr>
+
+                    </ng-template>
                 </table>
                 <!-- <div class="col-5 ml-3">
                     <p>Name :</p>

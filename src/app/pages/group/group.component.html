@@ -115,7 +115,7 @@
                                 <div class="row mt-4" *ngIf="groupdetails.groupBy === 'Facility'">
                                     <div class="col-lg-4" *ngFor="let facility of facilityList">
                                         <p-checkbox name="groupname" [value]="facility.id" [inputId]="facility.id"
-                                            label="{{ facility.name }}" [(ngModel)]="selectedFaciltiy"></p-checkbox>
+                                            label="{{ facility.AssestType }}" [(ngModel)]="selectedFaciltiy"></p-checkbox>
                                     </div>
                                 </div>
                                 <div class="row mt-4" *ngIf="groupdetails.groupBy === 'Sub Group'">

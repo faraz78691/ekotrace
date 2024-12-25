@@ -235,21 +235,25 @@ export class FacilityComponent {
         });
     }
     //method for update a facility by id
-    editfacility(id: any, data: NgForm) {
-      if(data.invalid){
+    editfacility(id: any, data: any) {
+        console.log(data.yes);
+        
+        console.log(this.facilityDetails.CountryId);
+    if(this.facilityDetails.CountryId == 0 || this.facilityDetails.CountryId == null){
+        this.notification.showError('Please select country', 'Error');
         return
-      }
+    }
         let tenantId = this.loginInfo.tenantID;
         let formdata = new URLSearchParams();
-        formdata.set('AssestName', this.facilityDetails.AssestName)
-        formdata.set('tenantID', (tenantId).toString())
-        formdata.set('AssestType', this.facilityDetails.AssestType)
-        formdata.set('EquityPercentage', (this.facilityDetails.EquityPercentage)?.toString());
+        formdata.set('AssestName', this.facilityDetails.AssestName);
+        formdata.set('tenantID', (tenantId).toString());
+        formdata.set('AssestType', this.facilityDetails.AssestType);
+        formdata.set('EquityPercentage',this.facilityDetails.EquityPercentage ?  (this.facilityDetails.EquityPercentage)?.toString() : '0');
         formdata.set('Address', this.facilityDetails.Address);
-        formdata.set('IsWaterStreenArea', (this.facilityDetails.IsWaterStreenArea)?.toString());
-        formdata.set('CityId', this.facilityDetails.CityId.toString());
-        formdata.set('CountryId', this.facilityDetails.CountryId.toString());
-        formdata.set('StateId', this.facilityDetails.StateId.toString());
+        formdata.set('IsWaterStreenArea', data.yes);
+        formdata.set('CityId',  (this.facilityDetails?.CityId)?.toString());
+        formdata.set('CountryId', this.facilityDetails?.CountryId.toString());
+        formdata.set('StateId', (this.facilityDetails?.StateId)?.toString());
         formdata.set('ID', this.id_var);
         this.facilityService
             .FacilityDataUpdate(formdata.toString())
@@ -1231,4 +1235,12 @@ export class FacilityComponent {
             })
             .filter((item) => item.categorySeedData.length > 0);
     }
+
+    get isWaterStreenArea(): boolean {
+        return this.facilityDetails.IsWaterStreenArea === 'true';
+      }
+      
+      set isWaterStreenArea(value: boolean) {
+        this.facilityDetails.IsWaterStreenArea = value.toString();
+      }
 }

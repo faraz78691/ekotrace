@@ -104,6 +104,7 @@ export class UserComponent {
 
     //Checks the facility ID and calls the GetAssignedDataPoint function with the provided ID.
     checkFacilityID() {
+        
         if (this.selectedRole == '525debfd-cd64-4936-ae57-346d57de3585') {
             this.groupId = this.admininfo.facilityID['id'];
             const stringfyIDs = JSON.stringify(this.admininfo.facilityID['ID']);
@@ -119,12 +120,12 @@ export class UserComponent {
     //The onSubmit function handles form submission, including validation, user addition, and user update, with success/error notifications.
     onSubmit(x: any) {
         if (
-            this.admininfo.username.length &&
-            this.admininfo.firstname.length &&
-            this.admininfo.lastname.length &&
-            this.admininfo.email.length > 0
+            this.admininfo.username.length ==0 &&
+            this.admininfo.firstname.length == 0 &&
+            this.admininfo.lastname.length == 0 &&
+            this.admininfo.email.length ==  0
         ) {
-            this.isloading = true;
+            return
         }
         if (this.FormEdit === false) {
             if (
@@ -139,14 +140,20 @@ export class UserComponent {
                 if (this.loginInfo.role == 'Manager') {
                     this.admininfo.facilityID = this.loginInfo.facilityID;
                 }
-
+if(this.selectedRole == ''){
+    this.notification.showWarning(
+        'Please select role',
+        'Warning'
+    );
+return
+}
                 const formData = new URLSearchParams();
                 formData.set('email', this.admininfo.email)
                 formData.set('username', this.admininfo.username)
                 formData.set('password', this.admininfo.password)
                 formData.set('firstname', this.admininfo.firstname)
                 formData.set('lastname', this.admininfo.lastname)
-                formData.set('roleID', this.admininfo.roleID)
+                formData.set('roleID', this.selectedRole)
                 formData.set('tenantId', this.loginInfo.super_admin_id.toString())
                 formData.set('facilityID', this.payloadFacilityIds)
                 formData.set('package_id', this.loginInfo.package_id.toString())
@@ -163,6 +170,7 @@ export class UserComponent {
                                 );
                                 this.GetAllUsers();
                                 this.visible = false;
+                                this.selectedRole = ''
                                 this.isloading = false;
 
                             } else {
@@ -195,6 +203,7 @@ export class UserComponent {
                     'You have reached the maximum limit, and you will need to either upgrade your plan or delete your user account.',
                     'Warning'
                 );
+                return
             } else {
 
                 const formData = new URLSearchParams();
@@ -203,7 +212,7 @@ export class UserComponent {
                 formData.set('password', this.admininfo.password)
                 formData.set('firstname', this.admininfo.firstname)
                 formData.set('lastname', this.admininfo.lastname)
-                formData.set('roleID', this.admininfo.roleID)
+                formData.set('roleID', this.selectedRole)
                 formData.set('tenantId', this.loginInfo.tenantID.toString())
                 formData.set('facilityID', this.admininfo.facilityID.toString())
                 this.UserService.NUpdateUsers(formData.toString()).subscribe({
@@ -316,9 +325,19 @@ export class UserComponent {
     GetGroups() {
         let tenantId = this.loginInfo.tenantID;
         this.facilitydata = false;
-        // const formData = new URLSearchParams();
-        // formData.set('tenantID', tenantId.toString())
+        const formData = new URLSearchParams();
+        formData.set('tenantID', tenantId.toString())
         this.facilityService.getMainSubGroupByTenantId(tenantId).subscribe((response) => {
+            this.facilityList = response;
+            if (this.facilityList.length === 0) {
+                this.facilitydata = true;
+            }
+        });
+    }
+    GetGroupsForAdmin() {
+        let tenantId = this.loginInfo.tenantID;
+        this.facilitydata = false;
+        this.facilityService.getGroupsForAdmin(tenantId).subscribe((response) => {
             this.facilityList = response;
             if (this.facilityList.length === 0) {
                 this.facilitydata = true;
@@ -395,12 +414,22 @@ export class UserComponent {
     //---method for get selected role for user model Radio button ---
     onSelected(value: string): void {
         this.selectedRole = value;
-       
-        if (this.selectedRole == '525debfd-cd64-4936-ae57-346d57de3585') {
-            this.GetGroups()
-        } else {
-            this.GetAllFacility()
+
+        if(this.loginInfo.role =='Admin'){
+            if (this.selectedRole == '525debfd-cd64-4936-ae57-346d57de3585') {
+                this.GetGroupsForAdmin()
+            } else {
+                this.GetAllFacility()
+            }
+        }else{
+            if (this.selectedRole == '525debfd-cd64-4936-ae57-346d57de3585') {
+                this.GetGroups()
+            } else {
+                this.GetAllFacility()
+            }
+
         }
+       
     }
 
     // ---Method for open user dialog or model---
@@ -422,6 +451,7 @@ export class UserComponent {
     onCloseHandled() {
         this.visible = false;
         this.isloading = false;
+        this.selectedRole = ''
         this.GetAllUsers();
     }
 

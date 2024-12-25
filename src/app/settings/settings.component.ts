@@ -104,6 +104,8 @@ export class SettingsComponent {
     };
 
     saveCurrency() {
+console.log( this.yearId);
+console.log(this.yearSelect);
 
         const formData = new URLSearchParams();
 

@@ -27,7 +27,7 @@
                                     <div>
                                         <select class="ct_all_vender_select" [(ngModel)]="selectedSubGrupId"
                                             (change)="onFacilityChange($event)">
-                                            <option value="" *ngFor="let items of dashboardData" [value]="items.ID">{{items.AssestName}}
+                                            <option value="" *ngFor="let items of dashboardData" [value]="items.ID">{{items.name}}
                                             </option>
                     
                                         </select>

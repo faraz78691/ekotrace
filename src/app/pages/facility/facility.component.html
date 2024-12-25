@@ -116,7 +116,7 @@
                             <p class="mb-0">Water Stress Area :</p>
                         </td>
                         <td>
-                            <p class="mb-0">{{ facilityDetails.IsWaterStreenArea }}</p>
+                            <p class="mb-0" *ngIf="facilityDetails.IsWaterStreenArea != 'undefined'">{{ facilityDetails.IsWaterStreenArea }}</p>
                         </td>
                     </tr>
                     <tr>
@@ -124,7 +124,7 @@
                             <p class="mb-0" >Equity Percentage :</p>
                         </td>
                         <td>
-                            <p class="mb-0" *ngIf="facilityDetails.EquityPercentage != undefined">{{ facilityDetails.EquityPercentage }}%</p>
+                            <p class="mb-0" *ngIf="facilityDetails.EquityPercentage != undefined && facilityDetails.EquityPercentage != 0">{{ facilityDetails.EquityPercentage }}%</p>
                         </td>
                     </tr>
                     <tr>
@@ -132,7 +132,7 @@
                             <p class="mb-0" >Address :</p>
                         </td>
                         <td>
-                            <p class="mb-0">{{ facilityDetails.Address }}</p> 
+                            <p class="mb-0" *ngIf="facilityDetails.Address != null && facilityDetails.Address != 'null'">{{ facilityDetails.Address }}</p> 
                         </td>
                     </tr>
                     <tr>
@@ -318,6 +318,7 @@
                         Add new Facility
                     </p-header>
                     <p-header *ngIf="isEdit === true"> Edit Facility </p-header>
+                    {{facilityDetails.IsWaterStreenArea | json}}
                     <div class="modal-body text-white text-style">
                         <form style="height: 100%;" #addCompForm="ngForm" class="col-12" (ngSubmit)="
                                 isEdit === false
@@ -333,7 +334,7 @@
                                         <label for="Aname" class="text-dark">Asset name</label>
                                         <input required ngModel name="assetName" type="text"
                                             class="form-control Dashboard-tab text-white"
-                                            placeholder="Enter Asset Name.." #assetName="ngModel"
+                                            placeholder="Enter Asset Name.." #assetName="ngModel" disabled="true"
                                             [(ngModel)]="facilityDetails.AssestName" assetName />
                                         <p *ngIf="addCompForm.submitted && assetName.errors?.['required']"
                                             class="text-danger mb-0">
@@ -362,7 +363,7 @@
                                     </div>
                                     <div class="ct_input_white_bg13 mb-4 ct_input_dark_text_121 ct_city_name_select_2_search">
                                         <label for="state" class=" text-dark">State Name</label>
-                                        <p-dropdown required ngModel name="state" #state="ngModel" [options]="stateData"
+                                        <p-dropdown  ngModel name="state" #state="ngModel" [options]="stateData"
                                             optionLabel="Name" optionValue="ID" [filter]="true" filterBy="Name"
                                             [showClear]="true" [(ngModel)]="facilityDetails.StateId" [ngModelOptions]="{standalone: true}"
                                             placeholder="Select a State" (onChange)="searchCity()">
@@ -374,7 +375,7 @@
                                     </div>
                                     <div class="ct_input_white_bg13 mb-4 ct_input_dark_text_121 ct_city_name_select_2_search">
                                         <label for="city" class=" text-dark">City Name</label>
-                                        <p-dropdown required ngModel name="city" #city="ngModel" [options]="cityData"
+                                        <p-dropdown  ngModel name="city" #city="ngModel" [options]="cityData"
                                             optionLabel="Name" optionValue="ID" [filter]="true" filterBy="Name"
                                             [showClear]="true" [(ngModel)]="facilityDetails.CityId" [ngModelOptions]="{standalone: true}"
                                             placeholder="Select a City"></p-dropdown>
@@ -389,7 +390,7 @@
                                 <div class="facilitygrid col-lg-6 ">
                                     <div class="mb-4">
                                         <label for="atype" class=" text-dark">Asset type / Department</label>
-                                        <input required ngModel name="assetType" type="text"
+                                        <input  ngModel name="assetType" type="text" disabled="true"
                                             class="form-control Dashboard-tab text-white"
                                             placeholder="Enter Asset Type.." [(ngModel)]="facilityDetails.AssestType"
                                             #assetType="ngModel" />
@@ -402,7 +403,7 @@
                                    
                                     <div class="mb-4">
                                         <label for="equity" class=" text-dark">Equity percentage</label>
-                                        <input ngModel name="equity" type="number" required
+                                        <input ngModel name="equity" type="number"
                                             class="form-control Dashboard-tab text-white"
                                             placeholder="Enter equity percentage.." [(ngModel)]="
                                                 facilityDetails.EquityPercentage
@@ -415,7 +416,7 @@
                                     </div>
                                     <div class="mb-4">
                                         <label for="address" class=" text-dark">Address</label>
-                                        <input required ngModel name="address" type="text"
+                                        <input  ngModel name="address" type="text"
                                             class="form-control Dashboard-tab text-white"
                                             placeholder="Enter full address.." [(ngModel)]="facilityDetails.Address"
                                             #address="ngModel" />
@@ -426,11 +427,12 @@
                                         </p>
                                     </div>
                                     <div class="mb-4">
+                                       
                                         <label for="fname" class="text-dark">Water stress area</label>
                                         <div class="form-check">
-                                            <input ngModel class="form-check-input" type="checkbox" name="yes"
-                                                value="false" [(ngModel)]="
-                                                    facilityDetails.IsWaterStreenArea
+                                            <input ngModel class="form-check-input" type="checkbox" name="yes" 
+                                                 [(ngModel)]="
+                                                    isWaterStreenArea
                                                 " />
                                             <label class="form-check-label text-dark" for="false">
                                                 Yes

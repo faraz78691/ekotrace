@@ -15,6 +15,9 @@ export class UserInfo {
     isDisabledDelete = false;
     isDisabledEdit = false;
     success:boolean;
+    group_name: string | null;
+    group_id:string | null;
+    is_main_group:number
 
 }
 export class newUserInfo {

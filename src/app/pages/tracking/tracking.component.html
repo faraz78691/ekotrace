@@ -449,7 +449,7 @@
 
 
                     </form>
-                    <div class="view-request ct_view_request_btn d-flex justify-content-center" (click)="showDialog()"
+                    <div *ngIf="loginInfo.role != 'Preparer'" class="view-request ct_view_request_btn d-flex justify-content-center" (click)="showDialog()"
                         [routerLink]="['/tracking-view-requests']" [queryParams]="{data: facilityID}">
                         View and Approve Request
                     </div>
@@ -2360,7 +2360,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-12 table-responsive">
+                                        <div class="col-md-12 table-responsive"style="height: 53vh;">
                                             <table class="table ct_home_office_table" style="height:357px">
                                                 <thead class="thead-dark">
                                                     <tr>

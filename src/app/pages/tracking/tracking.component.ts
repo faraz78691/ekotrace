@@ -1333,6 +1333,8 @@ export class TrackingComponent {
         this.dataEntry.year = this.year.getFullYear().toString(); //this.getYear();
         var spliteedMonth = this.dataEntry.month.split(",");
         var monthString = JSON.stringify(spliteedMonth);
+        console.log(monthString);
+        
         let fId = localStorage.getItem('SelectedfacilityID');
         if (fId == '0') {
             this.notification.showInfo(
