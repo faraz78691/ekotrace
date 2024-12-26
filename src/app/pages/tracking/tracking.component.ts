@@ -5073,7 +5073,6 @@ export class TrackingComponent {
         if (!event.children && event.length === 1) {
             event.checked = true;
             row.productType = event[0].item.value;
-            console.log('Selected item:', event[0].item.value);
         } else {
             this.deselectAllItems(event);
             row.productType = null;

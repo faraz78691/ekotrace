@@ -550,6 +550,12 @@ export const menu = [
                 path: ['tracking']
             },
             {
+                name: 'Data Progress',
+                iconClasses: 'fas fa-table',
+                iconSRC: 'assets/img/BRSR.svg',
+                path: ['dataProgress']
+            },
+            {
                 head: 'Account Details',
                 name: 'Company Profile',
                 iconClasses: 'fas fa-eye',
@@ -616,11 +622,18 @@ export const menu = [
                 iconSRC: 'assets/img/trees.png',
                 path: ['tracking']
             },
+
             {
                 name: 'Financed Emissions',
                 iconClasses: 'fas fa-table',
                 iconSRC: 'assets/img/BRSR.svg',
                 path: ['finance_emissions']
+            },
+            {
+                name: 'Data Progress',
+                iconClasses: 'fas fa-table',
+                iconSRC: 'assets/img/BRSR.svg',
+                path: ['dataProgress']
             },
             {
                 name: 'Cost Centre',
@@ -752,6 +765,12 @@ export const menu = [
                 iconClasses: 'fas fa-table',
                 iconSRC: 'assets/img/BRSR.svg',
                 path: ['finance_emissions']
+            },
+            {
+                name: 'Data Progress',
+                iconClasses: 'fas fa-table',
+                iconSRC: 'assets/img/BRSR.svg',
+                path: ['dataProgress']
             },
             {
                 name: 'Cost Centre',
@@ -877,6 +896,12 @@ export const menu = [
                 iconClasses: 'fas fa-star',
                 iconSRC: 'assets/img/trees.png',
                 path: ['tracking']
+            },
+            {
+                name: 'Data Progress',
+                iconClasses: 'fas fa-table',
+                iconSRC: 'assets/img/BRSR.svg',
+                path: ['dataProgress']
             },
             // {
             //     name: 'Financed Emissions',
@@ -996,6 +1021,12 @@ export const menu = [
                 iconClasses: 'fas fa-star',
                 iconSRC: 'assets/img/trees.png',
                 path: ['tracking']
+            },
+            {
+                name: 'Data Progress',
+                iconClasses: 'fas fa-table',
+                iconSRC: 'assets/img/BRSR.svg',
+                path: ['dataProgress']
             },
             // {
             //     name: 'Financed Emissions',
@@ -1115,6 +1146,12 @@ export const menu = [
                 iconClasses: 'fas fa-star',
                 iconSRC: 'assets/img/trees.png',
                 path: ['tracking']
+            },
+            {
+                name: 'Data Progress',
+                iconClasses: 'fas fa-table',
+                iconSRC: 'assets/img/BRSR.svg',
+                path: ['dataProgress']
             },
 
             {

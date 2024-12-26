@@ -123,7 +123,8 @@ export class VendorDashboardComponent {
 
   getVendorDash(id: any) {
     const formData = new URLSearchParams();
-    formData.set('facilities', id)
+    formData.set('facility', id)
+    formData.set('tenant_id',  this.loginInfo.super_admin_id.toString())
     this.facilityService.getVendorDashboard(formData).subscribe((response: any) => {
       if (response.success == true) {
         this.originalData = response.vendorWiseEmission
@@ -162,7 +163,7 @@ export class VendorDashboardComponent {
           series: this.businessClass,
           chart: {
             width: "100%",
-            height: 250,
+            height: 350,
             type: "pie",
 
           },
@@ -207,7 +208,7 @@ export class VendorDashboardComponent {
           series: this.productsEmission,
           chart: {
             width: "100%",
-            height: 250,
+            height: 350,
             type: "pie",
 
           },
