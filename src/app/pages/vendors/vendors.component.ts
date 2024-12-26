@@ -26,7 +26,7 @@ interface groupby {
 @Component({
   selector: 'app-vendors',
   templateUrl: './vendors.component.html',
-  styleUrls: ['./vendors.component.scss']
+  styleUrls: ['./vendors.component.scss'],
 })
 export class VendorsComponent {
   // @ViewChild("chart") chart: ChartComponent;
@@ -467,5 +467,20 @@ export class VendorsComponent {
   //         });
   //     });
   // }
+  handleDropdownShow(): void {
+    window.addEventListener('scroll', this.preventScroll, true);
+  }
+  
+  handleDropdownHide(): void {
+    window.removeEventListener('scroll', this.preventScroll, true);
+  }
+  
+  preventScroll(event: Event): void {
+    const dropdown = document.querySelector('.p-dropdown-panel');
+    if (dropdown) {
+      console.log('Preventing scroll');
+      event.stopPropagation();
+    }
+  }
 }
 

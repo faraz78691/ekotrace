@@ -128,6 +128,7 @@ import { AuditReportComponent } from './pages/reports/audit-report/audit-report.
 import { VendorDashboardComponent } from './pages/vendor-dashboard/vendor-dashboard.component';
 import { CostCentreComponent } from './pages/cost-centre/cost-centre.component';
 import { DataProgressComponent } from './pages/data-progress/data-progress.component';
+import { DisableScrollDirective } from './utils/disable-scroll.directive';
 
 defineCustomElements();
 registerLocaleData(localeEn, 'en-EN');
@@ -210,7 +211,8 @@ registerLocaleData(localeEn, 'en-EN');
         AuditReportComponent,
         VendorDashboardComponent,
         CostCentreComponent,
-        DataProgressComponent
+        DataProgressComponent,
+        DisableScrollDirective
     ],
     imports: [
         HeaderComponent,

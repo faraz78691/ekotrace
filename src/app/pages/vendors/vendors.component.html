@@ -229,14 +229,17 @@
                     </p>
                   </div>
                   <div class="col-md-6 mb-3">
-                    <label for="fname">Country</label>
-                    <p-dropdown class="finput ct_input_white_bg13 ct_select_2_drop_white ct_input_dark_text_145"
-                      ngModel name="country" placeholder="Select" [options]="countryData" [filter]="true" filterBy="Name"
-                      optionLabel="Name" optionValue="ID" styleClass="facilitydropdown" #country="ngModel" required>
-                    </p-dropdown>
-                    <p class="text-danger mb-0" *ngIf="(country.touched || GroupForm.submitted) && country.errors?.['required']">
-                      Country is required.
-                    </p>
+                    
+                        <label for="fname">Country</label>
+                        <p-dropdown class="finput ct_input_white_bg13 ct_select_2_drop_white ct_input_dark_text_145"
+                          ngModel name="country" placeholder="Select" [options]="countryData" [filter]="true" filterBy="Name"   (onShow)="handleDropdownShow()"  (onHide)="handleDropdownHide()" filterInputAutoFocus="false"
+                          optionLabel="Name" optionValue="ID" styleClass="facilitydropdown" #country="ngModel" required>
+                        </p-dropdown>
+                        <p class="text-danger mb-0" *ngIf="(country.touched || GroupForm.submitted) && country.errors?.['required']">
+                          Country is required.
+                        </p>
+
+                   
                   </div>
                   <div class="col-md-6 mb-3">
                     <label for="fname">Reference Id</label>

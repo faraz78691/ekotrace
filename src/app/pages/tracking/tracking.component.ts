@@ -2126,7 +2126,7 @@ export class TrackingComponent {
             formData.set('facilities', this.facilityID);
             formData.set('month', monthString);
             formData.set('year', this.dataEntry.year);
-            formData.set('batch', this.batchId);
+            formData.set('batch', '1');
 
 
             this.trackingService.AddwatersupplytreatmentCategory(formData.toString()).subscribe({
@@ -2276,7 +2276,7 @@ export class TrackingComponent {
 
             let formData = new URLSearchParams();
 
-            formData.set('batch', this.batchId);
+            formData.set('batch', '1');
             formData.set('noofemployees', form.value.noofemployees);
             formData.set('workingdays', form.value.workingdays);
             formData.set('typeoftransport', typeoftransportStringfy);
@@ -2335,7 +2335,7 @@ export class TrackingComponent {
 
             let formData = new URLSearchParams();
 
-            formData.set('batch', this.batchId);
+            formData.set('batch', '1');
             formData.set('typeofhomeoffice', typeofhomeofficeStringfy);
             formData.set('facilities', this.facilityID);
             formData.set('month', monthString);
@@ -2609,7 +2609,7 @@ export class TrackingComponent {
                     formData.set('calculation_method', form.value.calculationmethod);
                     // formData.set('franchise_space', form.value.downLeasefranchise_space);
                     formData.set('unit', form.value.goodsUnits);
-                    formData.set('batch', this.batchId);
+                    formData.set('batch', '1');
                     formData.set('facilities', this.facilityID);
 
                 } else if (this.franchiseMethod == true) {
@@ -2625,7 +2625,7 @@ export class TrackingComponent {
                     formData.set('scope1emissions', form.value.scope1_emission);
                     formData.set('scope2emissions', form.value.scope2_emission);
                     formData.set('unit', form.value.goodsUnits);
-                    formData.set('batch', this.batchId);
+                    formData.set('batch', '1');
                     formData.set('facilities', this.facilityID);
                 }
 
@@ -2640,7 +2640,7 @@ export class TrackingComponent {
                     formData.set('valueofsoldintermediate', form.value.valueofsoldintermediate);
                     // formData.set('franchise_space', form.value.downLeasefranchise_space);
                     formData.set('unit', form.value.goodsUnits);
-                    formData.set('batch', this.batchId);
+                    formData.set('batch', '1');
                     formData.set('facilities', this.facilityID);
 
                 } else if (this.franchiseMethod == true) {
@@ -2654,7 +2654,7 @@ export class TrackingComponent {
                     formData.set('scope1emissions', form.value.scope1_emission);
                     formData.set('scope2emissions', form.value.scope2_emission);
                     formData.set('unit', form.value.goodsUnits);
-                    formData.set('batch', this.batchId);
+                    formData.set('batch', '1');
                     formData.set('facilities', this.facilityID);
 
                 }
@@ -2731,7 +2731,7 @@ export class TrackingComponent {
                 formData.set('referigentused', form.value.ItemRefrigerant);
                 formData.set('referigerantleakage', form.value.refLeakageValue);
                 formData.set('referigerant_usage', form.value.unitsExpElec);
-                formData.set('batch', this.batchId);
+                formData.set('batch', '1');
                 formData.set('month', monthString);
                 formData.set('year', this.dataEntry.year);
                 formData.set('facilities', this.facilityID);
@@ -2741,7 +2741,7 @@ export class TrackingComponent {
                 formData.set('productcategory', form.value.productCategoryitem);
                 formData.set('no_of_Items', form.value.numberofitems);
                 formData.set('no_of_Items_unit', form.value.noofunits);
-                formData.set('batch', this.batchId);
+                formData.set('batch', '1');
                 formData.set('month', monthString);
                 formData.set('year', this.dataEntry.year);
                 formData.set('facilities', this.facilityID);
@@ -2809,7 +2809,7 @@ export class TrackingComponent {
             formData.set('combustion', form.value.combustion);
             formData.set('recycling', form.value.recycling);
             formData.set('composing', form.value.composing);
-            formData.set('batch', this.batchId);
+            formData.set('batch','1');
             formData.set('facilities', this.facilityID);
 
 
@@ -3182,7 +3182,7 @@ export class TrackingComponent {
                 formData.set('no_of_trips', form.value.no_of_trips);
                 formData.set('return_flight', this.storageTransporationChecked.toString());
                 formData.set('cost_centre', form.value.businessunits);
-                formData.set('batch', this.batchId);
+                formData.set('batch', '1');
                 formData.set('month', monthString);
                 formData.set('year', this.dataEntry.year);
                 formData.set('facilities', this.facilityID);
@@ -3196,7 +3196,7 @@ export class TrackingComponent {
                 formData.set('return_flight', this.storageTransporationChecked.toString());
                 formData.set('reference_id', form.value.reference_id);
                 formData.set('cost_centre', form.value.businessunits);
-                formData.set('batch', this.batchId);
+                formData.set('batch', '1');
                 formData.set('month', monthString);
                 formData.set('year', this.dataEntry.year);
                 formData.set('facilities', this.facilityID);
@@ -3209,7 +3209,7 @@ export class TrackingComponent {
                 formData.set('return_flight', this.storageTransporationChecked.toString());
                 formData.set('reference_id', form.value.reference_id);
                 formData.set('cost_centre', form.value.businessunits);
-                formData.set('batch', this.batchId);
+                formData.set('batch', '1');
                 formData.set('month', monthString);
                 formData.set('year', this.dataEntry.year);
                 formData.set('facilities', this.facilityID);
@@ -3270,7 +3270,7 @@ export class TrackingComponent {
             formData.set('type_of_hotel', form.value.hoteltype);
             formData.set('no_of_occupied_rooms', form.value.noOfOccoupied);
             formData.set('no_of_nights_per_room', form.value.noOfNights);
-            formData.set('batch', this.batchId);
+            formData.set('batch', '1');
             formData.set('month', monthString);
             formData.set('year', this.dataEntry.year);
             formData.set('facilities', this.facilityID);
@@ -3328,7 +3328,7 @@ export class TrackingComponent {
                 formData.set('fuel_type', form.value.fuelCar_type);
                 formData.set('distance_travelled', form.value.distance);
                 formData.set('no_of_trips', form.value.no_ofTrips);
-                formData.set('batch', this.batchId);
+                formData.set('batch', '1');
                 formData.set('month', monthString);
                 formData.set('year', this.dataEntry.year);
                 formData.set('facilities', this.facilityID);
@@ -3339,7 +3339,7 @@ export class TrackingComponent {
                 formData.set('no_of_passengers', form.value.no_of_passengers);
                 formData.set('distance_travelled', form.value.distance);
                 formData.set('no_of_trips', form.value.no_ofTrips);
-                formData.set('batch', this.batchId);
+                formData.set('batch', '1');
                 formData.set('month', monthString);
                 formData.set('year', this.dataEntry.year);
                 formData.set('facilities', this.facilityID);
@@ -4040,7 +4040,7 @@ export class TrackingComponent {
         var monthString = JSON.stringify(spliteedMonth);
         const formData: FormData = new FormData();
         formData.append('file', this.selectedFile, this.selectedFile.name);
-        formData.append('batch', this.batchId);
+        formData.append('batch','1');
         formData.append('facilities', this.facilityID);
         formData.append('year', this.dataEntry.year);
         formData.append('month', monthString);
@@ -4173,7 +4173,7 @@ export class TrackingComponent {
         let url = ''
         if (categoryIndex == 1) {
             let formData = new URLSearchParams();
-            formData.set('batch', this.batchId);
+            formData.set('batch', '1');
             url = 'getPurchaseGoodEmissions';
             this.trackingService.getPurchaseGoodEmissions(formData).subscribe({
                 next: (response) => {
