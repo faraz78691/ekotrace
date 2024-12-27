@@ -104,7 +104,7 @@ export class UserComponent {
 
     //Checks the facility ID and calls the GetAssignedDataPoint function with the provided ID.
     checkFacilityID() {
-        
+
         if (this.selectedRole == '525debfd-cd64-4936-ae57-346d57de3585') {
             this.groupId = this.admininfo.facilityID['id'];
             const stringfyIDs = JSON.stringify(this.admininfo.facilityID['ID']);
@@ -112,24 +112,24 @@ export class UserComponent {
         } else {
             const stringfyIDs = JSON.stringify([this.admininfo.facilityID.toString()]);
             this.payloadFacilityIds = stringfyIDs;
-            
+
         }
-      
+
         // this.GetAssignedDataPoint(id);
     };
     //The onSubmit function handles form submission, including validation, user addition, and user update, with success/error notifications.
     onSubmit(x: any) {
         if (
-            this.admininfo.username.length ==0 &&
+            this.admininfo.username.length == 0 &&
             this.admininfo.firstname.length == 0 &&
             this.admininfo.lastname.length == 0 &&
-            this.admininfo.email.length ==  0
+            this.admininfo.email.length == 0
         ) {
             return
         }
         if (this.FormEdit === false) {
             if (
-                this.loginInfo.package_info.users  <= this.admininfoList.length
+                this.loginInfo.package_info.users <= this.admininfoList.length
             ) {
                 this.notification.showWarning(
                     'You have reached the maximum limit, and you will need to either upgrade your plan or delete your user account.',
@@ -140,13 +140,13 @@ export class UserComponent {
                 if (this.loginInfo.role == 'Manager') {
                     this.admininfo.facilityID = this.loginInfo.facilityID;
                 }
-if(this.selectedRole == ''){
-    this.notification.showWarning(
-        'Please select role',
-        'Warning'
-    );
-return
-}
+                if (this.selectedRole == '') {
+                    this.notification.showWarning(
+                        'Please select role',
+                        'Warning'
+                    );
+                    return
+                }
                 const formData = new URLSearchParams();
                 formData.set('email', this.admininfo.email)
                 formData.set('username', this.admininfo.username)
@@ -215,6 +215,7 @@ return
                 formData.set('roleID', this.selectedRole)
                 formData.set('tenantId', this.loginInfo.tenantID.toString())
                 formData.set('facilityID', this.admininfo.facilityID.toString())
+                formData.set('user_id', this.admininfo.user_id.toString())
                 this.UserService.NUpdateUsers(formData.toString()).subscribe({
                     next: (response) => {
                         this.notification.showSuccess(
@@ -310,7 +311,7 @@ return
 
 
     };
-  
+
 
     GetAllFacility() {
         let tenantId = this.loginInfo.tenantID;
@@ -356,8 +357,9 @@ return
             this.showDialog();
         }
 
-        this.admininfo = userdetails as UserInfo;
-        this.onSelected(this.admininfo.roleID);
+        this.admininfo = userdetails;
+        console.log(this.admininfo);
+        this.onEditSelected(this.admininfo.role , this.admininfo.roleId);
     }
 
     // ----Delete user Method ---
@@ -412,16 +414,48 @@ return
     }
 
     //---method for get selected role for user model Radio button ---
+    onEditSelected(value: string , roldId:any): void {
+     
+        const EditRole = value;
+        this.selectedRole = roldId;
+    
+        this.admininfo.roleID = roldId;
+
+        if (EditRole == 'Super Admin') {
+            return
+
+        } else if (EditRole == 'Admin') {
+            if (this.loginInfo.role == 'Admin') {
+                this.GetGroupsForAdmin()
+            } else {
+                this.GetGroups()
+            }
+
+          
+
+        } else if (EditRole == 'Manager') {
+            this.GetAllFacility()
+
+        } else if (EditRole == 'Preparer') {
+            this.GetAllFacility()
+
+        }
+
+
+    };
+
+
+
     onSelected(value: string): void {
         this.selectedRole = value;
 
-        if(this.loginInfo.role =='Admin'){
+        if (this.loginInfo.role == 'Admin') {
             if (this.selectedRole == '525debfd-cd64-4936-ae57-346d57de3585') {
                 this.GetGroupsForAdmin()
             } else {
                 this.GetAllFacility()
             }
-        }else{
+        } else {
             if (this.selectedRole == '525debfd-cd64-4936-ae57-346d57de3585') {
                 this.GetGroups()
             } else {
@@ -429,7 +463,7 @@ return
             }
 
         }
-       
+
     }
 
     // ---Method for open user dialog or model---
@@ -475,7 +509,7 @@ return
             else {
                 this.userdetails = user;
             }
-        } 
+        }
         // else {
         //     this.userdetails = user;
         // }
@@ -487,7 +521,7 @@ return
             } else {
                 this.userdetails = user;
             }
-        } 
+        }
         if (this.loginInfo.role == 'Admin') {
             if (user.role == 'Super Admin') {
                 user.isDisabledDelete = true;
@@ -501,7 +535,7 @@ return
             } else {
                 this.userdetails = user;
             }
-        } 
+        }
     }
     UnlockComplete(userId) {
         this.unlock = userId;

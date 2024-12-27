@@ -49,7 +49,7 @@ export class UserService {
         return this.http.put<UserInfo[]>(this.apiURL + admininfo.id, admininfo);
     }
     public NUpdateUsers(admininfo) {
-        return this.http.post<UserInfo[]>(this.apiURL + 'Updateregister', admininfo);
+        return this.http.post<UserInfo[]>(this.apiURL + '/Updateregister', admininfo);
     }
     public deleteUsers(userid) {
         return this.http.delete(this.apiURL + userid);

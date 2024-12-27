@@ -4,6 +4,7 @@ export class UserInfo {
     lastname = '';
     email = '';
     roleID = '';
+    roleId = '';
     tenantId = '';
     password = '';
     username = '';

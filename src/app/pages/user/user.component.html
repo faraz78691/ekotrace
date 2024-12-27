@@ -268,7 +268,7 @@
                                             <p-radioButton  ngModel
                                                 [inputId]="Role.Id" name="Role" [value]="Role.Id"
                                                 (click)="onSelected(Role.Id)" [(ngModel)]="admininfo.roleID"
-                                                [disabled]="isloading"></p-radioButton>
+                                            ></p-radioButton>
 
 
                                             <div>
@@ -345,7 +345,7 @@
                                     class=" finput ct_input_white_bg13 ct_select_2_drop_white ct_input_dark_text_145"
                                     placeholder="Select" name="facility" #facility="ngModel" [options]="facilityList"
                                     optionLabel="name" styleClass="facilitydropdown"
-                                    [(ngModel)]="admininfo.facilityID" (ngModelChange)="checkFacilityID()">
+                                    [(ngModel)]="admininfo.group_id" (ngModelChange)="checkFacilityID()">
                                 </p-dropdown>
 
                             </div>
