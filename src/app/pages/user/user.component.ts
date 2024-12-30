@@ -43,7 +43,7 @@ export class UserComponent {
     Roleaccess = environment.adminRoleId;
     searchData: '';
     isloading: boolean = false;
-    maxCharacters: number = 8;
+    maxCharacters: number = 15;
     facilitydata: boolean = false;
     updatedtheme: string;
     rootUrl: string;

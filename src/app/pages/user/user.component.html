@@ -401,7 +401,17 @@
                 </div>
                 <div class="col d-flex justify-content-end">
                     <div class=" span-color border rounded Role-box ointer">
-                        <p class="text-limit text-white ct_line_height_26 mb-0" style="height: 26px;"
+                        <p *ngIf="user.group_name;else haveGroup" class="text-limit text-white ct_line_height_26 mb-0" style="height: 26px;"
+                            title="{{ user.group_name }}">
+                            {{ user.group_name | slice: 0:maxCharacters
+                            }}{{
+                            user.group_name?.length > maxCharacters
+                            ? '...'
+                            : ''
+                            }}
+                        </p>
+                        <ng-template #haveGroup>
+                            <p  class="text-limit text-white ct_line_height_26 mb-0" style="height: 26px;"
                             title="{{ user.facilityName }}">
                             {{ user.facilityName | slice: 0:maxCharacters
                             }}{{
@@ -410,6 +420,8 @@
                             : ''
                             }}
                         </p>
+    
+                        </ng-template>
                     </div>
                 </div>
             </div>

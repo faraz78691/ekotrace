@@ -59,7 +59,7 @@
                                     <!-- <td class="td text-initial" style="font-size: 16px;">
                                         {{ index + 1 }}
                                     </td> -->
-                                    <td class="td " style="font-size: 16px;" (click)="onFacilityClick(group.facilityId , index)">
+                                    <td class="td " style="font-size: 16px;" (click)="onFacilityClick(group.facilityId , index,group.facilityName )">
                                         {{ group.facilityName }}
 
                                     </td>
@@ -104,7 +104,7 @@
                         <div class="User-headL" >
                             <div
                                 class="card-header card-headerL ct_header_grey_1202 d-flex align-items-center justify-content-between">
-                                <h4 class=" ct_fw_600 m-0 my-0" style="flex: 1;">Data Preparer</h4>
+                                <h4 class=" ct_fw_600 m-0 my-0" style="flex: 1;">{{selectedFaciltiy}}</h4>
                                
                             </div>
                         </div>

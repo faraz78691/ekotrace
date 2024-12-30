@@ -105,7 +105,7 @@ export class HeaderComponent implements OnInit {
             this.router.events.pipe(
                 filter(event => event instanceof NavigationEnd)
             ).subscribe(() => {
-               
+               console.log("coming here");
                 this.checkRolesAndLoadData();
             })
         
@@ -205,10 +205,10 @@ export class HeaderComponent implements OnInit {
 
     GetFacilityGroupList(tenantID) {
         this.facilitygrouplist = []
+        this.selectedFacilityID = undefined;
         if (this.loginInfo.role === this.excludedRole) {
             return;
         }
-        console.log(tenantID);
         this.facilityService
             .newGetFacilityByTenant(tenantID)
             .subscribe((res) => {
@@ -223,9 +223,8 @@ export class HeaderComponent implements OnInit {
                         flag: ''
                     };
     
-                    // Add the "All" option to the beginning of the list
+                   
                     this.facilitygrouplist.unshift(allOption);
-    
                     this.lfgcount = this.facilitygrouplist.length;
                     localStorage.setItem('FacilityGroupCount', String(this.lfgcount));
 

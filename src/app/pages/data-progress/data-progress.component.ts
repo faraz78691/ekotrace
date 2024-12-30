@@ -101,7 +101,7 @@ export class DataProgressComponent {
           this.facilityData
         );
     
-        this.onFacilityClick(this.transformedData[0].facilityId , 0)
+        this.onFacilityClick(this.transformedData[0].facilityId , 0 , this.transformedData[0].facilityName )
        }
      },
      error: (err) => {
@@ -176,7 +176,8 @@ mergeData(facilityData: any[], assetTypeData: any[]) {
 };
 
 
-onFacilityClick(id:any, index:any){ 
+onFacilityClick(id:any, index:any , fName:any){ 
+  this.selectedFaciltiy = fName
   this.selectedRowIndex = index;
   const filterred = this.transformedData.filter(items=>
     

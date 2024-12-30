@@ -121,10 +121,16 @@ export class GroupComponent {
             // this.facilityGet(this.loginInfo.tenantID);
         }
         // this.getTenantsDetailById(Number(this.loginInfo.tenantID));
-        this.GetAllFacility();
-        this.GetAllSubGroups();
+     
         let tenantID = this.loginInfo.tenantID;
-        this.newGetAllGroups(tenantID);
+        if(this.loginInfo.role =='Super Admin' || this.loginInfo.role =='Admin'){
+            this.newGetAllGroups(tenantID);
+            this.GetAllFacility();
+            this.GetAllSubGroups();
+        }else{
+      
+        }
+      
         this.updatedtheme = this.themeservice.getValue('theme');
 
         // this.groupList$ = this.GroupService.newGetGroups(tenantID).pipe()
@@ -191,80 +197,88 @@ export class GroupComponent {
     //method to add new group
     saveGroup(data: NgForm) {
        
-        
-       
-        this.groupdetails.groupMappings = [];
-        if (this.groupdetails.groupBy === 'Country') {
-            this.selectedCountry.forEach((val) => {
-                this.groupMappingDetails = new GroupMapping();
-                this.groupMappingDetails.stateId = 0;
-                this.groupMappingDetails.groupId = 0;
-                this.groupMappingDetails.facilityId = 0;
-                this.groupMappingDetails.countryId = val;
-                this.groupdetails.groupMappings.push(this.groupMappingDetails);
-            });
-        } else if (this.groupdetails.groupBy === 'State') {
-            this.selectedState.forEach((val) => {
-                this.groupMappingDetails = new GroupMapping();
-                this.groupMappingDetails.stateId = val;
-                this.groupMappingDetails.countryId = 0;
-                this.groupMappingDetails.groupId = 0;
-                this.groupMappingDetails.facilityId = 0;
-                this.groupdetails.groupMappings.push(this.groupMappingDetails);
-            });
-        } else {
-            this.selectedFaciltiy.forEach((val) => {
-                this.groupMappingDetails = new GroupMapping();
-                this.groupMappingDetails.stateId = 0;
-                this.groupMappingDetails.countryId = 0;
-                this.groupMappingDetails.groupId = 0;
-                this.groupMappingDetails.facilityId = val;
-                this.groupdetails.groupMappings.push(this.groupMappingDetails);
-            });
-
-        this.groupdetails.tenantID = this.loginInfo.tenantID;
-        let formData = new URLSearchParams();
-        formData.set('groupname',this.groupdetails.groupname);
-        formData.set('tenantID',  this.groupdetails.tenantID.toString());
-        formData.set('facility',this.selectedFaciltiy);
-        if(this.groupdetails.groupBy === 'Facility'){
-            formData.set('group_by', '1');
-        }else if (this.groupdetails.groupBy === 'Sub Group'){
-            formData.set('group_by', '2');
-        }
-     
-        this.GroupService.newSaveGroups(formData.toString()).subscribe({
-            next: (response) => {
-                console.log(response);
-                if(response.success == true)
-                {
-                    this.visible = false;
-                    this.notification.showSuccess(
-                        'Group Added successfully',
-                        'Success'
-                    );
+        if(this.loginInfo.role == 'Super Admin'){
+            this.groupdetails.groupMappings = [];
+            if (this.groupdetails.groupBy === 'Country') {
+                this.selectedCountry.forEach((val) => {
+                    this.groupMappingDetails = new GroupMapping();
+                    this.groupMappingDetails.stateId = 0;
+                    this.groupMappingDetails.groupId = 0;
+                    this.groupMappingDetails.facilityId = 0;
+                    this.groupMappingDetails.countryId = val;
+                    this.groupdetails.groupMappings.push(this.groupMappingDetails);
+                });
+            } else if (this.groupdetails.groupBy === 'State') {
+                this.selectedState.forEach((val) => {
+                    this.groupMappingDetails = new GroupMapping();
+                    this.groupMappingDetails.stateId = val;
+                    this.groupMappingDetails.countryId = 0;
+                    this.groupMappingDetails.groupId = 0;
+                    this.groupMappingDetails.facilityId = 0;
+                    this.groupdetails.groupMappings.push(this.groupMappingDetails);
+                });
+            } else {
+                this.selectedFaciltiy.forEach((val) => {
+                    this.groupMappingDetails = new GroupMapping();
+                    this.groupMappingDetails.stateId = 0;
+                    this.groupMappingDetails.countryId = 0;
+                    this.groupMappingDetails.groupId = 0;
+                    this.groupMappingDetails.facilityId = val;
+                    this.groupdetails.groupMappings.push(this.groupMappingDetails);
+                });
+    
+            this.groupdetails.tenantID = this.loginInfo.tenantID;
+            let formData = new URLSearchParams();
+            formData.set('groupname',this.groupdetails.groupname);
+            formData.set('tenantID',  this.groupdetails.tenantID.toString());
+            formData.set('facility',this.selectedFaciltiy);
+            if(this.groupdetails.groupBy === 'Facility'){
+                formData.set('group_by', '1');
+            }else if (this.groupdetails.groupBy === 'Sub Group'){
+                formData.set('group_by', '2');
+            }
+         
+            this.GroupService.newSaveGroups(formData.toString()).subscribe({
+                next: (response) => {
+                    console.log(response);
+                    if(response.success == true)
+                    {
+                        this.visible = false;
+                        this.notification.showSuccess(
+                            'Group Added successfully',
+                            'Success'
+                        );
+                        this.newGetAllGroups(this.groupdetails.tenantID);
+                    }
+                    return
                     this.newGetAllGroups(this.groupdetails.tenantID);
-                }
+                    this.visible = false;
+                    if (localStorage.getItem('FacilityGroupCount') != null) {
+                        let fgcount = localStorage.getItem('FacilityGroupCount');
+                        let newcount = Number(fgcount) + 1;
+                        localStorage.setItem(
+                            'FacilityGroupCount',
+                            String(newcount)
+                        );
+                    }
+                 
+                },
+                error: (err) => {
+                    this.notification.showError('Group added failed.', 'Error');
+                    console.error('errrrrrr>>>>>>', err);
+                },
+                complete: () => console.info('Group Added')
+            });
+        }
+
+        }else{
+         
+                this.notification.showWarning('You are not allowed to create Groups', '');
                 return
-                this.newGetAllGroups(this.groupdetails.tenantID);
-                this.visible = false;
-                if (localStorage.getItem('FacilityGroupCount') != null) {
-                    let fgcount = localStorage.getItem('FacilityGroupCount');
-                    let newcount = Number(fgcount) + 1;
-                    localStorage.setItem(
-                        'FacilityGroupCount',
-                        String(newcount)
-                    );
-                }
-             
-            },
-            error: (err) => {
-                this.notification.showError('Group added failed.', 'Error');
-                console.error('errrrrrr>>>>>>', err);
-            },
-            complete: () => console.info('Group Added')
-        });
-    }
+            
+
+        }
+       
     }
     //method for update group detail by id
     updateGroup(id: any, data: NgForm) {

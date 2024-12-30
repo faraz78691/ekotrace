@@ -141,7 +141,15 @@ ngOnInit() {
         this.loginInfo = jsonObj as LoginInfo;
     }
     let tenantID = this.loginInfo.tenantID;
-    this.subGroupGet(tenantID);
+    if(this.loginInfo.role =='Super Admin' || this.loginInfo.role =='Admin'){
+    
+        this.subGroupGet(tenantID);
+
+    }else{
+        this.FacilityData = 'block';
+  
+        this.NoData = 'none';
+    }
 
     this.items = [
         {
