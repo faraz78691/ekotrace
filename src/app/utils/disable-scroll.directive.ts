@@ -8,10 +8,10 @@ export class DisableScrollDirective {
 
   @HostListener('document:scroll', ['$event'])
   onScroll(event: Event): void {
-    console.log(event);
+    // console.log(event);
       const dropdown = document.querySelector('.p-dropdown-panel');
       if (dropdown) {
-        console.log("dr");
+        // console.log("dr");
           event.stopImmediatePropagation();
       }
   }

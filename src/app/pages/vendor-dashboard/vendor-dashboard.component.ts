@@ -202,8 +202,8 @@ export class VendorDashboardComponent {
       if (response.success == true) {
         this.productsSeries = response.emissions.map(items=>items.Product);
         this.productsEmission = response.emissions.map(items=>Number(items.emission));
-     console.log(  this.productsSeries);
-     console.log(  this.productsEmission);
+     // console.log(  this.productsSeries);
+     // console.log(  this.productsEmission);
         this.pieChart2 = {
           series: this.productsEmission,
           chart: {
@@ -284,7 +284,7 @@ export class VendorDashboardComponent {
       }
     });
   
-    console.log(sortedData); // Sorted data for debugging
+    // console.log(sortedData); // Sorted data for debugging
     return sortedData; // Return sorted data for further use
   }
 }

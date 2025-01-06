@@ -224,7 +224,7 @@ export class WaterCustomReportComponent {
                     let subCategories = category.manageDataPointSubCategories;
                     return subCategories;
                 } else {
-                    console.log('Category not found');
+                    // console.log('Category not found');
                     return [];
                 }
             }

@@ -81,7 +81,7 @@ export class WaterUsageComponent {
         type: "bar",
         events: {
           click: function (chart, w, e) {
-            // console.log(chart, w, e)
+            // // console.log(chart, w, e)
           }
         }
       },
@@ -226,7 +226,7 @@ export class WaterUsageComponent {
       this.scopeWiseSeries = result.series;
       this.labelSeries1 = result.month;
       this.labelScopeDonut1 = result.water_withdrawl;
-      console.log();
+   
       this.pieChart = {
         series: this.scopeWiseSeries,
         chart: {
@@ -299,8 +299,7 @@ export class WaterUsageComponent {
 
       this.scopeWiseSeries2 = result.series;
       this.labelScopeDonut2 = result.water_discharge;
-console.log(this.scopeWiseSeries2 );
-console.log( this.labelScopeDonut2);
+
       this.pieChart2 = {
         series: this.scopeWiseSeries2,
         chart: {
@@ -457,7 +456,7 @@ console.log( this.labelScopeDonut2);
     formData.set('year', this.year.getFullYear().toString());
     formData.set('facilities', facility);
     this.dashboardService.waterTreatedByLevel(formData.toString()).subscribe((result: any) => {
-      console.log(result);
+   
       this.seriesScopeDonut2 = result.series;
       this.labelScopeDonut2 = result.leveloftreatment;
 
@@ -510,7 +509,7 @@ console.log( this.labelScopeDonut2);
     formData.set('year', this.year.getFullYear().toString());
     formData.set('facilities', facility);
     this.dashboardService.WaterEmision(formData.toString()).subscribe((result: any) => {
-      console.log(result);
+      // console.log(result);
       this.seriesScopeDonut4 = result.water_treated_wiitdrawn;
       this.labelScopeDonut4 = result.category;
 
@@ -564,8 +563,8 @@ console.log( this.labelScopeDonut2);
     this.waterTreatedByLevel(this.selectedFacility);
     this.waterTreatedByDestination(this.selectedFacility);
     this.waterEmission(this.selectedFacility);
-    // console.log(event.target.value)
-    // console.log(this.selectedFacility);
+    // // console.log(event.target.value)
+    // // console.log(this.selectedFacility);
     // this.emssionByTravel(this.selectedFacility)
   };
 }

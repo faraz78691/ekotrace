@@ -92,9 +92,9 @@ export class GroupComponent {
 
         this.source$
   .pipe(
-    tap(value => console.log(`1: ${value}`))
+    tap(value =>  console.log(`1: ${value}`))
   )
-  .subscribe(value => console.log(`Final value: ${value}`));
+  .subscribe(value =>  console.log(`Final value: ${value}`));
         this.admininfo = new UserInfo();
         this.userdetails = new UserInfo();
         this.groupdetails = new Group();
@@ -140,10 +140,6 @@ export class GroupComponent {
         this.updatedtheme = this.themeservice.getValue('theme');
     }
 
- 
-
- 
-    
      newGetAllGroups(tenantID:any) {
 
         let formData = new URLSearchParams();
@@ -172,7 +168,7 @@ export class GroupComponent {
     
         // this.GroupService.newGetGroups(formData.toString()).subscribe({
         //     next: (response) => {
-        //         console.log(response);
+        //         // console.log(response);
         //         if(response.success == true)
         //         {
         //             this.groupsList = response.categories;
@@ -240,7 +236,7 @@ export class GroupComponent {
          
             this.GroupService.newSaveGroups(formData.toString()).subscribe({
                 next: (response) => {
-                    console.log(response);
+                  
                     if(response.success == true)
                     {
                         this.visible = false;
@@ -291,7 +287,7 @@ export class GroupComponent {
         formData.set('facility',this.selectedFaciltiy);
         this.GroupService.newEditGroup(formData.toString()).subscribe({
             next: (response) => {
-                console.log(response);
+               
                 this.newGetAllGroups(tenantID);
 
                 this.visible = false;
@@ -370,10 +366,7 @@ export class GroupComponent {
     selectGroup(group: Group,index: number) {
         this.selectedRowIndex = index;
         this.groupdetails = group;
-        console.log(
-            '🚀 ~ file: group.component.ts:304 ~ GroupComponent ~ selectGroup ~ this.groupdetails:',
-            this.groupdetails
-        );
+       
     }
     //The removeCss function is used to remove CSS styles applied to the body element
     removeCss() {

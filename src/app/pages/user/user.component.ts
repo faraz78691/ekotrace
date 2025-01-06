@@ -238,7 +238,7 @@ export class UserComponent {
                 });
             }
         }
-    }
+    };
 
     // ----Get all users method ---
     GetAllUsers() {
@@ -284,8 +284,6 @@ export class UserComponent {
             }
         });
     };
-
-
 
 
     // ----Get all Roles of user in dropdown method ---
@@ -358,7 +356,7 @@ export class UserComponent {
         }
 
         this.admininfo = userdetails;
-        console.log(this.admininfo);
+        // console.log(this.admininfo);
         this.onEditSelected(this.admininfo.role , this.admininfo.roleId);
     }
 

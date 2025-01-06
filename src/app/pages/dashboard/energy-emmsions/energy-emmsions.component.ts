@@ -487,8 +487,8 @@ export class EnergyEmmsionsComponent {
   };
 
   onFacilityChange(event: any) {
-    // console.log(event.target.value)
-    // console.log(this.selectedFacility);
+    // // console.log(event.target.value)
+    // // console.log(this.selectedFacility);
     this.facilityService.facilitySelected(this.selectedFacility)
     this.emssionByTravel(this.selectedFacility)
     this.totalEmissionByMonth(this.selectedFacility)

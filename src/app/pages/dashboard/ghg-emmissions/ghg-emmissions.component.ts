@@ -426,9 +426,9 @@ export class GhgEmmissionsComponent implements OnDestroy {
     this.scopeMonths = scopeWiseResult.month;
     this.scopeWiseSeries = scopeWiseResult.series;
     this.series_graph = scopeWiseResult.series_graph;
-console.log(this.series_graph );
+
     this.sumofScope2 = parseFloat(scopeWiseResult.scope1) + parseFloat(scopeWiseResult.scope2) + parseFloat(scopeWiseResult.scope3);
-    console.log(this.sumofScope2);
+   
     this.scope1E = scopeWiseResult.scope1;
     this.scope2E = scopeWiseResult.scope2;
     this.scope3E = scopeWiseResult.scope3;

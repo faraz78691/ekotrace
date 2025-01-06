@@ -68,7 +68,7 @@ export class SettingsComponent {
     }
     ngOnInit() {
 
-        console.log("here");
+        // console.log("here");
     }
 
     dialogOpen(num: string) {
@@ -104,8 +104,8 @@ export class SettingsComponent {
     };
 
     saveCurrency() {
-console.log( this.yearId);
-console.log(this.yearSelect);
+// console.log( this.yearId);
+// console.log(this.yearSelect);
 
         const formData = new URLSearchParams();
 

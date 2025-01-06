@@ -135,9 +135,9 @@ export class AppService {
         if (localStorage.getItem('LoginInfo') != null) {
             let userInfo = localStorage.getItem('LoginInfo');
             let jsonObj = JSON.parse(userInfo);
-            // console.log("jsonObj",jsonObj)
+            // // console.log("jsonObj",jsonObj)
             this.loginInfo = jsonObj as LoginInfo;
-            // console.log("inggooo,", this.loginInfo);
+            // // console.log("inggooo,", this.loginInfo);
             return this.loginInfo.role;
         }
     }

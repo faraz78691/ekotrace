@@ -105,7 +105,7 @@ export class HeaderComponent implements OnInit {
             this.router.events.pipe(
                 filter(event => event instanceof NavigationEnd)
             ).subscribe(() => {
-               console.log("coming here");
+              
                 this.checkRolesAndLoadData();
             })
         
@@ -139,6 +139,8 @@ export class HeaderComponent implements OnInit {
     };
 
     private checkRolesAndLoadData(): void {
+        const baseUrl = this.router.url.split('?')[0];
+      
         if (this.loginInfo.role !== 'Manager' &&
             this.loginInfo.role !== 'Preparer' &&
             this.loginInfo.role !== 'Approver') {
@@ -150,9 +152,9 @@ export class HeaderComponent implements OnInit {
             this.facilitygrouplist = [];
        
           this.GetSubGroupList(this.loginInfo.tenantID);
-        } else if(this.router.url === '/tracking' || this.router.url == '/tracking-view-requests') {
+        } else if(this.router.url === '/tracking' || baseUrl == '/tracking-view-requests') {
             this.facilitysubgrouplist = []
-    
+  
           this.GetFacilityGroupList(this.loginInfo.tenantID);
         }
       }
@@ -245,7 +247,7 @@ export class HeaderComponent implements OnInit {
             
                 if(res.success == true){
                     this.facilitysubgrouplist = res.categories;
-                   console.log();
+                
                     const allOption: any = {
                         id: 0,
                         name: 'Select',

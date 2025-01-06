@@ -84,7 +84,7 @@ export class HazardNonhazardComponent {
   getEndWasteType() {
     this.companyService.getWasteType().subscribe({
         next: (response) => {
-            console.log(response, "sdgs");
+            // console.log(response, "sdgs");
             if (response.success == true) {
                 this.wasteGrid = response.categories;
                 // this.waterWasteProduct = this.wasteGrid[0].type

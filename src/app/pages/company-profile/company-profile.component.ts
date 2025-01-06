@@ -69,7 +69,7 @@ export class CompanyProfileComponent {
         const formdata = new URLSearchParams();
         formdata.set('tenant_id', this.loginInfo.tenantID.toString())
         this.companyService.newgetTenantsDataById(formdata.toString()).subscribe((response) => {
-            console.log(response);
+      
             this.companyDetails = response.categories[0];
             this.selectedCountry = this.companyDetails.location
             this.uploadedImageUrl = this.companyDetails.logoPath;
@@ -93,7 +93,7 @@ export class CompanyProfileComponent {
     }
     //method to update company profile
     saveChanges() {
-        console.log(this.selectedSecondaryIndustryTypes);
+       
         
         const stringifySelectedIndustryTypes = JSON.stringify(this.selectedIndustryTypes);
         const stringifySelectedSecondaryIndustryTypes = JSON.stringify(this.selectedSecondaryIndustryTypes);
@@ -133,10 +133,10 @@ export class CompanyProfileComponent {
             formData.append('file', this.selectedFile, this.selectedFile.name);
             if (formData.has('file')) {
                 // File is available in the FormData
-                console.log('File exists in the FormData.');
+             
             } else {
                 // File is not available in the FormData
-                console.log('File does not exist in the FormData.');
+              
             }
             let tenantId = this.loginInfo.tenantID;
             this.companyService
@@ -184,7 +184,7 @@ export class CompanyProfileComponent {
                             this.toastr.error('Image upload failed');
                         }
                         // Handle the error
-                        console.log('Error-->>: ', JSON.stringify(err));
+                      
                         //this.toastr.error('Image uploadd failed');
                     }
                 });
@@ -217,7 +217,7 @@ export class CompanyProfileComponent {
     getCompanyCategory() {
 
         this.companyService.newgetComapnyProfile().subscribe((response) => {
-            console.log(response);
+      
             this.companyProfile = response.categories;
             this.getCompanySubCategory(this.selectedIndustryTypes)
         });

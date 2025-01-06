@@ -175,7 +175,7 @@ export class VendorsComponent {
 
   //method to add new group
   saveOffset(data: NgForm) {
-    console.log(data.value);
+    // console.log(data.value);
     
     if (data.invalid) {
       return; // Stop if form is invalid
@@ -215,7 +215,7 @@ export class VendorsComponent {
 
   viewDetails(details: any) {
     this.vendorId = details.id;
-    console.log(details);
+    // console.log(details);
     this.visible = true;
     this.FormEdit = true;
     const countryId = this.countryData.filter(items => items.Name == details.country_name);
@@ -436,7 +436,7 @@ export class VendorsComponent {
   // facilityGet(tenantId) {
   //     this.facilityService.FacilityDataGet(tenantId).subscribe((response) => {
   //         this.facilityList = response;
-  //         console.log(
+  //         // console.log(
   //             '🚀 ~ file: group.component.ts:370 ~ GroupComponent ~ this.facilityService.FacilityDataGet ~ this.facilityList:',
   //             this.facilityList
   //         );
@@ -478,7 +478,7 @@ export class VendorsComponent {
   preventScroll(event: Event): void {
     const dropdown = document.querySelector('.p-dropdown-panel');
     if (dropdown) {
-      console.log('Preventing scroll');
+      // console.log('Preventing scroll');
       event.stopPropagation();
     }
   }

@@ -139,7 +139,7 @@ export class BusinessTravelReportComponent {
   };
 
   GetAssignedDataPoint(facilityID: number) {
-    console.log(facilityID);
+    // console.log(facilityID);
     this.trackingService
       .getDataPointsByFacility(facilityID)
       .subscribe({
@@ -220,7 +220,7 @@ export class BusinessTravelReportComponent {
             'Success'
           );
         }
-        // console.log( this.reportData );
+        // // console.log( this.reportData );
 
       }
     })

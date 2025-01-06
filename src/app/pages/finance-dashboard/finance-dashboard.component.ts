@@ -155,7 +155,7 @@ export class FinanceDashboardComponent {
       this.labelScopeDonut1 = result.categories;
       this.airTotal = result.totalEmssion;
 
-console.log(this.scopeWiseSeries);
+// console.log(this.scopeWiseSeries);
       this.pieChart = {
         series: this.scopeWiseSeries,
         chart: {

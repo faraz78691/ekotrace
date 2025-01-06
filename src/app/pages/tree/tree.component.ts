@@ -69,7 +69,7 @@ export class TreeComponent {
 
         this.treeList$ = this.familyService.getTreeList(this.loginInfo.super_admin_id).pipe(
             tap(items => {
-                // console.log(items); // Log the entire response
+                // // console.log(items); // Log the entire response
                 if (items.success) {
                     this.treeList = items.familyDetails;
 
@@ -218,7 +218,7 @@ export class TreeComponent {
 
                                     var nodeData = family.get(node);
                                     var relationCat = nodeData['relation']
-                                    console.log("nodeData", nodeData['relation']);
+                                    // console.log("nodeData", nodeData['relation']);
 
 
                                     localStorage.setItem("selectedNode", node);
@@ -296,7 +296,7 @@ export class TreeComponent {
                             .then(response => response.json())
                             .then(data =>
                                 window.location.reload()
-                                // console.log(data)
+                                // // console.log(data)
                             )
                             .catch(error => console.error('Error:', error));
 
@@ -466,7 +466,7 @@ export class TreeComponent {
                                     onClick: (node: string) => {
                                         $(".ct_custom_modal_120").show(500)
                                         var nodeData = family.get(node);
-                                        console.log("nodeData", nodeData);
+                                        // console.log("nodeData", nodeData);
                                         localStorage.setItem("selectedNode", node);
                                         var relationCat = nodeData['relation']
                                         if (relationCat == 'Main Group') {
@@ -539,7 +539,7 @@ export class TreeComponent {
                             })
                                 .then(response => response.json())
                                 .then(data => family.removeNode(nodeId)
-                                    // console.log(data)
+                                    // // console.log(data)
                                 )
                                 .catch(error => console.error('Error:', error));
 
@@ -569,7 +569,7 @@ export class TreeComponent {
                                 body: formData
                             })
                                 .then(response => response.json())
-                                .then(data => console.log(data))
+                                .then(data =>  console.log(data))
                                 .catch(error => console.error('Error:', error));
                         }
                         )
@@ -582,7 +582,7 @@ export class TreeComponent {
                     this.facilityTab = false;
 
                 }
-                console.log(res);
+                // console.log(res);
                 // this.getTreeViewByID(this.selectedTemplateId);
             },
             error: err =>
@@ -712,7 +712,7 @@ export class TreeComponent {
                     this.facilityTab = false;
 
                 }
-                console.log(res);
+                // console.log(res);
                 // this.getTreeViewByID(this.selectedTemplateId);
             },
             error: err =>
@@ -729,7 +729,7 @@ export class TreeComponent {
         formData.set('main_name', data.value.rootName);
         this.familyService.createTree(formData).subscribe({
             next: (response) => {
-                console.log("response---", response);
+                // console.log("response---", response);
                 if (response.success == true) {
                     this.notification.showSuccess(
                         'Data entry added successfully',
@@ -766,7 +766,7 @@ export class TreeComponent {
                     // window.location.reload();
                     this.treeList$ = this.familyService.getTreeList(this.loginInfo.super_admin_id).pipe(
                         tap(items => {
-                            // console.log(items); // Log the entire response
+                            // // console.log(items); // Log the entire response
                             if (items.success) {
                                 this.treeList = items.familyDetails;
             
@@ -811,13 +811,13 @@ export class TreeComponent {
 
 
     ngOnDestroy() {
-        console.log(this.treeList.length > 1)
+        // console.log(this.treeList.length > 1)
 
 
         if (this.treeList.length > 1) {
             this.onDeleteFamilySample()
         }
-        console.log("destroying child...")
+        // console.log("destroying child...")
     };
 
 
@@ -834,7 +834,7 @@ export class TreeComponent {
 
 
                 }
-                console.log(res);
+                // console.log(res);
                 // this.getTreeViewByID(this.selectedTemplateId);
             },
             error: err =>

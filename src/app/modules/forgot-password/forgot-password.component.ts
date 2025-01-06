@@ -73,7 +73,7 @@ the given email exists.
             },
             error: (err) => {
                 this.isLoading = false;
-                console.log('error', err);
+                // console.log('error', err);
             }
         });
     }

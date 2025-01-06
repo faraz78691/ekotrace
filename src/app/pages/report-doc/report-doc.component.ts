@@ -54,7 +54,7 @@ export class ReportDocComponent {
         this.reportService.getBRSRdata(tenantID).subscribe((response) => {
             if (response != null) {
                 this.brsrdata = response;
-                console.log("brsr>>>", this.brsrdata)
+          
                 if (this.brsrdata.isAccept != null || this.brsrdata.isAccept != undefined) {
                     this.AcceptorReject = true;
                 }
@@ -96,14 +96,14 @@ export class ReportDocComponent {
     }
     // updateDocument(value) {
 
-    //     console.log(
+    //     // console.log(
     //         '🚀 ~ file: brsr-qa.component.ts:172 ~ BrsrQaComponent ~ this.reportService.saveReportDocument ~ this.brsrdoc:',
     //         this.brsrdoc
     //     );
     //     this.brsrdoc.isAccept = value;
     //     this.brsrdoc.tenantID = this.loginInfo.tenantID;
 
-    //     console.log('brsrsdocname', this.brsrdoc.docName);
+    //     // console.log('brsrsdocname', this.brsrdoc.docName);
 
     //     this.reportService
     //         .saveReportDocument(this.brsrdoc, this.brsrdoc.tenantID)
@@ -136,12 +136,10 @@ export class ReportDocComponent {
     //         });
     // }
     updateDocument(value) {
-        console.log('🚀 ~ file: brsr-qa.component.ts:172 ~ BrsrQaComponent ~ this.reportService.saveReportDocument ~ this.brsrdoc:', this.brsrdoc);
+   
 
         this.brsrdoc.isAccept = value;
         this.brsrdoc.tenantID = this.loginInfo.tenantID;
-
-        console.log('brsrsdocname', this.brsrdoc.docName);
 
         this.reportService.saveReportDocument(this.brsrdoc, this.brsrdoc.tenantID).subscribe({
             next: (response) => {

@@ -709,7 +709,7 @@ SaveManageDataPoint() {
     }
 
 
-    // console.log(this.selectedScope3);
+    // // console.log(this.selectedScope3);
 
     // this.manageDataPoint1 = []
     // if (

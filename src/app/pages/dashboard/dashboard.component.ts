@@ -183,10 +183,10 @@ export class DashboardComponent {
         const formData = new URLSearchParams();
         formData.set('tenantID', tenantId.toString())
         this.dashboardService.getdashboardfacilities(formData.toString()).subscribe((result: any) => {
-            console.log(result)
+          
             this.dashboardData = result.categories;
             this.selectedFacility = this.dashboardData[0].ID;
-            console.log(this.selectedFacility);
+           
             // this.admininfoList = result;
 
 

@@ -236,9 +236,9 @@ export class FacilityComponent {
     }
     //method for update a facility by id
     editfacility(id: any, data: any) {
-        console.log(data.yes);
+       
         
-        console.log(this.facilityDetails.CountryId);
+      
     if(this.facilityDetails.CountryId == 0 || this.facilityDetails.CountryId == null){
         this.notification.showError('Please select country', 'Error');
         return
@@ -785,7 +785,7 @@ export class FacilityComponent {
         }
 
 
-        // console.log(this.selectedScope3);
+        // // console.log(this.selectedScope3);
 
         // this.manageDataPoint1 = []
         // if (

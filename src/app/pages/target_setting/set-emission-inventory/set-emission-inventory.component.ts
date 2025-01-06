@@ -240,7 +240,7 @@ export class SetEmissionInventoryComponent {
 
     //method to add new group
     saveOffset(data: NgForm) {
-        console.log(data.value.carbonOffset);
+      
         var dateYear = (data.value.year_added).getFullYear().toString();
 
         if (data.valid == false) {
@@ -285,7 +285,7 @@ export class SetEmissionInventoryComponent {
             parseFloat(data.value.carbonOffset) > 0
         ) {
             if ((parseFloat(data.value.allocatedScope1)) + (parseFloat(data.value.allocatedScope2)) + (parseFloat(data.value.allocatedScope3)) != 100) {
-                console.log((parseFloat(data.value.allocatedScope1)) + (parseFloat(data.value.allocatedScope2)) + (parseFloat(data.value.allocatedScope3)), "df");
+              
                 this.notification.showInfo('Allocated emission should be total', '');
                 return
             }
@@ -413,7 +413,7 @@ export class SetEmissionInventoryComponent {
             return
         }
         // var dateYear = (data.value.year_added).getFullYear().toString();
-        console.log(data.value.year_added.length);
+ 
         if (data.value.year_added.length > 4) {
             var dateYear = (data.value.year_added).getFullYear().toString();
         } else {
@@ -572,10 +572,7 @@ export class SetEmissionInventoryComponent {
     selectGroup(group: Group, index: number) {
         this.selectedRowIndex = index;
         this.groupdetails = group;
-        console.log(
-            '🚀 ~ file: group.component.ts:304 ~ GroupComponent ~ selectGroup ~ this.groupdetails:',
-            this.groupdetails
-        );
+     
     }
     //The removeCss function is used to remove CSS styles applied to the body element
     removeCss() {

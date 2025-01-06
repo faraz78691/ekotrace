@@ -451,7 +451,7 @@
                                 <th *ngIf="selectedCategory==5" pSortableColumn="sourceName">
                                     Source <p-sortIcon field="sourceName"></p-sortIcon>
                                 </th>
-                                <th>
+                                <th >
                                     <p-sortIcon pSortableColumn="status" field="status"></p-sortIcon>
                                     Status
                                     <p-columnFilter field="status" matchMode="equals" display="menu" [showMenu]="true"
@@ -466,6 +466,9 @@
                                 </th>
                                 <th pSortableColumn="sourceName" pTooltip="tCO2" tooltipPosition="top">
                                     Emission
+                                </th>
+                                <th >
+                                    User
                                 </th>
                                 <th>Action</th>
                                 <!-- <th >Details</th> -->
@@ -491,10 +494,10 @@
                                             loginInfo.role === Approver &&
                                             de.status === Pending
                                         " [value]="de" [disabled]="isOutOfStock(de)"></p-tableCheckbox> -->
-                                    <p-tableCheckbox *ngIf="
+                                    <!-- <p-tableCheckbox *ngIf="
                                             loginInfo.role === Manager &&
                                             de.status === Pending
-                                        " [value]="de"></p-tableCheckbox>
+                                        " [value]="de"></p-tableCheckbox> -->
                                 </td>
                                 <td *ngIf="selectedCategory == 8"> {{de.typeofpurchase}}</td>
                                 <td
@@ -644,7 +647,7 @@
 
                                 <td *ngIf="selectedCategory==5">{{ de.SourceName }}</td>
                                 <td>
-                                    <div class="d-flex text-white">
+                                    <div class="d-flex text-white justify-content-center">
                                         <span [ngClass]="{
                                                 Rejected:
                                                     de.status === Rejected,
@@ -663,7 +666,11 @@
                                 </td>
                                 <td>{{ de.emission | number :'1.2-2' }}</td>
 
+                                
+                                <td>{{ de.user_name }}</td>
+
                                 <td>
+
 
 
                                     <!-- <div *ngIf="

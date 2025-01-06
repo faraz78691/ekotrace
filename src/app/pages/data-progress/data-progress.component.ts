@@ -182,7 +182,7 @@ onFacilityClick(id:any, index:any , fName:any){
   const filterred = this.transformedData.filter(items=>
     
     Object.keys(items)[0]== id)
-  console.log(filterred[0][id]);
+  // console.log(filterred[0][id]);
   this.dataPreparer = [filterred[0][id]];
 }
 
@@ -192,7 +192,7 @@ onFacilityClick(id:any, index:any , fName:any){
 
  viewDetails(details: any) {
   //  this.vendorId = details.id;
-  //  console.log(details);
+  //  // console.log(details);
   //  this.visible = true;
   //  this.FormEdit = true;
   //  const countryId = this.countryData.filter(items => items.Name == details.country_name);

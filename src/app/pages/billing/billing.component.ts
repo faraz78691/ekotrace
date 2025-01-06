@@ -158,14 +158,14 @@ export class BillingComponent {
     //             console.log(err)
     //         }
     //     })
-    //     console.log(this.companyDetails);
+    //     // console.log(this.companyDetails);
 
     // };
 
 
     getpackagesByusers() {
         const formData = new URLSearchParams();
-        formData.set('tenant_id', this.loginInfo.tenantID.toString())
+        formData.set('tenant_id', this.loginInfo.super_admin_id.toString())
         this.userService.getNewPackageDetails(formData.toString()).subscribe({
             next: (response: any) => {
               
@@ -232,7 +232,7 @@ export class BillingComponent {
     //             console.log(err)
     //         }
     //     })
-    //     console.log(this.companyDetails);
+    //     // console.log(this.companyDetails);
 
     // };
     showAddFacilityDialog() {
@@ -243,7 +243,7 @@ export class BillingComponent {
     };
 
     tableData(id: any) {
-        console.log("tbakee", id);
+        // console.log("tbakee", id);
         this.id_var = id;
         // this.getUserofFacility(id);
     };

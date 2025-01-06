@@ -226,7 +226,7 @@ export class VendorReportComponent {
             'Success'
           );
         }
-        // console.log( this.reportData );
+        // // console.log( this.reportData );
 
       }
     })

@@ -242,7 +242,7 @@ export class TargetSettingComponent {
 
     this.GroupService.getTargetSetting(this.superAdminTenentID).subscribe({
       next: (response) => {
-        console.log(response);
+     
         if (response.success == true) {
           this.groupsList = response.orders;
           // group.target_emission_change,group.base_year,group.target_year,group.target_type, group.emission_activity
@@ -373,7 +373,7 @@ export class TargetSettingComponent {
     this.GroupService.getGraphsTarget(formData.toString()).subscribe({
       next: (response) => {
         if (response.success == true) {
-          console.log("graph response", response);
+        
           const Data = response;
           let getBaseYear = response.yCordinate[0];
           let getYcoridnate = response.yCordinate;
@@ -450,7 +450,7 @@ export class TargetSettingComponent {
         }
       },
       error: (err) => {
-        this.notification.showError('Group added failed.', 'Error');
+        this.notification.showError(err.error.message, 'Error');
         console.error('errrrrrr>>>>>>', err);
       },
       complete: () => console.info('Group Added')
@@ -466,14 +466,14 @@ export class TargetSettingComponent {
     const mergedYears = [...normalYear, ...Dashedyears];
     let uniqueYears = [...new Set(mergedYears)];
 
-    console.log(normalYear);
+
     // for (let i = 0; i < cars.length; i++) {
     //   text += cars[i] + "<br>";
     // }
     for (index = 0; index < normalsLine.length - 1; index++) {
       dashedLine.unshift(null);
     };
-    console.log(dashedLine);
+   
 
 
     const parallelLine: number[] = targetData.map(str => parseFloat(str));
@@ -632,7 +632,7 @@ export class TargetSettingComponent {
 
     this.GroupService.updateTargetSetting(formData.toString()).subscribe({
       next: (response) => {
-        console.log(response);
+      
         this.GetTarget();
 
         this.visible = false;
@@ -694,10 +694,6 @@ export class TargetSettingComponent {
   selectGroup(group: Group, index: number) {
     this.selectedRowIndex = index;
     this.groupdetails = group;
-    console.log(
-      '🚀 ~ file: group.component.ts:304 ~ GroupComponent ~ selectGroup ~ this.groupdetails:',
-      this.groupdetails
-    );
   }
   //The removeCss function is used to remove CSS styles applied to the body element
   removeCss() {
@@ -769,7 +765,7 @@ export class TargetSettingComponent {
   // facilityGet(tenantId) {
   //     this.facilityService.FacilityDataGet(tenantId).subscribe((response) => {
   //         this.facilityList = response;
-  //         console.log(
+  //         // console.log(
   //             '🚀 ~ file: group.component.ts:370 ~ GroupComponent ~ this.facilityService.FacilityDataGet ~ this.facilityList:',
   //             this.facilityList
   //         );
@@ -802,7 +798,7 @@ export class TargetSettingComponent {
   // }
 
   viewDetails(details: any) {
-    console.log(details);
+   
     this.visible = true;
     // this.relationId = id;
     this.FormEdit = true;

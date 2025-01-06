@@ -141,7 +141,7 @@ this.GetAllSubGrups()
   };
 
   GetAssignedDataPoint(facilityID: number) {
-    console.log(facilityID);
+   
     this.trackingService
       .getDataPointsByFacility(facilityID)
       .subscribe({
@@ -212,7 +212,7 @@ this.GetAllSubGrups()
             'Success'
           );
         }
-        // console.log( this.reportData );
+        // // console.log( this.reportData );
 
       }
     })
@@ -445,10 +445,10 @@ this.GetAllSubGrups()
     this.facilityService.getActualSubGroups(formData.toString()).subscribe((result: any) => {
 
         if (result.success == true) {
-          console.log(result);
+     
             if(result.categories.length > 0){
               this.facilityData = result.categories;
-              console.log(this.facilityData);
+         
                 // this.haveMainGroup = result.categories[0].is_subgroup
               
             }

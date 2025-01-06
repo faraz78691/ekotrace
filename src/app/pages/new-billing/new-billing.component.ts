@@ -167,7 +167,7 @@ export class NewBillingComponent {
 
       this.UserService.newSavepackages(billingForm.toString()).subscribe({
           next: (response) => {
-              console.log(response);
+          
               if(response.success == true)
               {
                   this.visible = false;
@@ -210,7 +210,7 @@ export class NewBillingComponent {
    
       this.UserService.newSavepackages(billingForm.toString()).subscribe({
           next: (response) => {
-              console.log(response);
+              
             //   this.newGetAllGroups(tenantID);
 
               this.visible = false;
@@ -248,7 +248,7 @@ export class NewBillingComponent {
           this.packageList = response.categories;
           this.groupdata = true;
            this.groupdetails = this.packageList[0]
-           console.log(this.groupdetails);
+     
           if (this.packageList.length === 0) {
               this.facilitydata = true;
           }
@@ -305,13 +305,13 @@ export class NewBillingComponent {
   }
   //sets the selected group details
   selectGroup(group: any,index: number) {
-    console.log(group);
+   
    const IDS = group.packageusers.map(items => items.ID);
-   console.log(IDS)
+  
    this.selectedFacility = IDS;
       this.selectedRowIndex = index;
       this.packageID = group.id;
-      console.log(this.packageID);
+    
       this.groupdetails = group;
      
   }
@@ -383,7 +383,7 @@ export class NewBillingComponent {
   // facilityGet(tenantId) {
   //     this.facilityService.FacilityDataGet(tenantId).subscribe((response) => {
   //         this.facilityList = response;
-  //         console.log(
+  //         // console.log(
   //             '🚀 ~ file: group.component.ts:370 ~ GroupComponent ~ this.facilityService.FacilityDataGet ~ this.facilityList:',
   //             this.facilityList
   //         );

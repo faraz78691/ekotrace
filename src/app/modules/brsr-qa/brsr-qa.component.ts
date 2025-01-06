@@ -152,7 +152,7 @@ export class BrsrQaComponent {
                         this.toastr.error('Image upload failed');
                     }
                     // Handle the error
-                    console.log('Error-->>: ', JSON.stringify(err));
+                    // console.log('Error-->>: ', JSON.stringify(err));
                     //this.toastr.error('Document uploadd failed');
                 }
             });
@@ -168,13 +168,10 @@ export class BrsrQaComponent {
     }
 
     saveDocument() {
-        console.log('savetenantid', this.tenantId);
-        console.log(
-            '🚀 ~ file: brsr-qa.component.ts:172 ~ BrsrQaComponent ~ this.reportService.saveReportDocument ~ this.brsrdoc:',
-            this.brsrdoc
-        );
+      
+    
         this.brsrdoc.docName = this.selectedFile?.name;
-        console.log('brsrsdocname', this.brsrdoc.docName);
+     
         this.reportService
             .saveReportDocument(this.brsrdoc, this.tenantId)
             .subscribe({
@@ -243,10 +240,7 @@ export class BrsrQaComponent {
     getQuestions() {
         this.reportService.getQuestions().subscribe((response) => {
             if (response != null) {
-                console.log(
-                    '🚀 ~ file: brsr-report.component.ts:280 ~ this.reportService.getBRSRdata ~ response:',
-                    response
-                );
+              
                 this.brsrPrinciplesandQA = response;
 
                 this.brsrPrinciplesandQA.forEach(principle => {

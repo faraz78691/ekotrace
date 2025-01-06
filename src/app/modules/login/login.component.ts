@@ -35,6 +35,7 @@ export class LoginComponent implements OnInit {
     companyData: CompanyDetails = new CompanyDetails();
     isLoading: boolean = false;
     showLoader = false;
+    isExpiring: boolean = false;
     isExpired: boolean = false;
     public isAuthLoading = false;
     @ViewChild('captchaElem')
@@ -89,20 +90,20 @@ export class LoginComponent implements OnInit {
     }
     //logs a message to the console indicating that the reCAPTCHA verification has succeeded.
     handleSuccess(data: Event) {
-        console.log('reCAPTCHA verification succeeded');
+        // console.log('reCAPTCHA verification succeeded');
     }
     //logs a message to the console indicating that the reCAPTCHA loaded has successfully.
     handleLoad() {
-        console.log('reCAPTCHA loaded successfully');
+        // console.log('reCAPTCHA loaded successfully');
     }
 
     //logs a message to the console indicating that the reCAPTCHA token has expired.
     handleExpire() {
-        console.log('reCAPTCHA token expired');
+        // console.log('reCAPTCHA token expired');
     }
     //logs a message to the console indicating that the reCAPTCHA has been reset.
     handleReset() {
-        console.log('reCAPTCHA reset');
+        // console.log('reCAPTCHA reset');
     }
 
     /* This function handles the login authentication process.
@@ -134,19 +135,7 @@ export class LoginComponent implements OnInit {
                                 return false
                             }
                         }
-                        localStorage.setItem('accessToken', this.loginInfo.token);
-
-                        localStorage.setItem(
-                            'LoginInfo',
-                            JSON.stringify(this.loginInfo)
-                        );
-                        localStorage.setItem(
-                            'refreshToken',
-                            this.loginInfo.refreshToken
-                        );
-                        let userInfo = localStorage.getItem('LoginInfo');
-                        let jsonObj = JSON.parse(userInfo); // string to "any" object first
-                        this.loginInfo = jsonObj as LoginInfo;
+                  
 
                         this.invalidLogin = false;
                         // const currentDate = new Date();
@@ -163,23 +152,76 @@ export class LoginComponent implements OnInit {
 
                         // Convert the difference to days
                         const differenceInDays = differenceInMilliseconds / (1000 * 60 * 60 * 24);
-                        console.log("differenceInDays", differenceInDays);
+                     
                         // Check if the difference is 7 days or less
-                        this.isExpired = differenceInDays <= 7;
-                        this.GetSubGroupList(this.loginInfo.tenantID)
-                        if (
-                            this.loginInfo.role === 'Super Admin' &&
-                            this.isExpired
-                        ) {
-                            this.router.navigate(['/billing']);
-                        } else if (this.loginInfo.role === 'Platform Admin') {
+                        this.isExpiring = differenceInDays <= 7 && differenceInDays > 0;
+                        this.isExpired = differenceInDays < 0;
+                     
+                     
+                        this.GetSubGroupList(this.loginInfo.tenantID);
+
+                        if (this.loginInfo.role === 'Platform Admin') {
+                    
+                            localStorage.setItem('accessToken', this.loginInfo.token);
+
+                            localStorage.setItem(
+                                'LoginInfo',
+                                JSON.stringify(this.loginInfo)
+                            );
+                            localStorage.setItem(
+                                'refreshToken',
+                                this.loginInfo.refreshToken
+                            );
+                            let userInfo = localStorage.getItem('LoginInfo');
+                            let jsonObj = JSON.parse(userInfo); // string to "any" object first
+                            this.loginInfo = jsonObj as LoginInfo;
                             this.router.navigate(['/platformAdmin']);
+                            return
                         }
-                        else {
+                        if (this.isExpiring
+                        ) {
+                            localStorage.setItem('accessToken', this.loginInfo.token);
+
+                            localStorage.setItem(
+                                'LoginInfo',
+                                JSON.stringify(this.loginInfo)
+                            );
+                            localStorage.setItem(
+                                'refreshToken',
+                                this.loginInfo.refreshToken
+                            );
+                            let userInfo = localStorage.getItem('LoginInfo');
+                            let jsonObj = JSON.parse(userInfo); // string to "any" object first
+                            this.loginInfo = jsonObj as LoginInfo;
+                            this.router.navigate(['/billing']);
+                        } else if(this.isExpired) {
+                            this.notification.showError(
+                                'Your plan has expired. Please contact the platform admin for renewal.',
+                                ''
+                            );
+                            this.showLoader = false;
+                            this.isAuthLoading = false;
+                            this.isLoading = false;
+                            return false
+                        }else{
+                            localStorage.setItem('accessToken', this.loginInfo.token);
+
+                            localStorage.setItem(
+                                'LoginInfo',
+                                JSON.stringify(this.loginInfo)
+                            );
+                            localStorage.setItem(
+                                'refreshToken',
+                                this.loginInfo.refreshToken
+                            );
+                            let userInfo = localStorage.getItem('LoginInfo');
+                            let jsonObj = JSON.parse(userInfo); // string to "any" object first
+                            this.loginInfo = jsonObj as LoginInfo;
                             this.router.navigate(['/dashboard']);
                         }
                         this.showLoader = false;
                         this.isAuthLoading = false;
+                        this.isLoading = false;
                     } else {
                         this.notification.showError(
                             res.message,

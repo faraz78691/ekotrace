@@ -181,14 +181,14 @@ this.GetAllFacility()
   };
   //Checks the facility ID and calls the GetAssignedDataPoint function with the provided ID.
   checkFacilityID(id) {
-      console.log("faciliyt cahnged call");
+     
 
 
       this.GetAssignedDataPoint(id);
   };
 
   dataPointChangedID(id) {
-    console.log(id);
+  
       if (id == 13) {
           this.modeShow = true
       } else {
@@ -199,7 +199,7 @@ this.GetAllFacility()
 
   multipleDataPointsChanged(event: any) {
       this.selectedMultipleCategories = event.value; // This stores the selected IDs in the array
-      console.log('Selected multiple IDs:', this.selectedMultipleCategories);
+   
       if (this.selectedMultipleCategories.includes(13)) {
           this.modeShow = true;  // Show the mode section if ID 13 is selected
       } else {
@@ -234,7 +234,7 @@ this.GetAllFacility()
   // };
 
   GetAssignedDataPoint(facilityID: number) {
-      console.log(facilityID);
+
       this.trackingService
           .getDataPointsByFacility(facilityID)
           .subscribe({
@@ -616,7 +616,7 @@ this.GetAllFacility()
                       'Success'
                   );
               }
-              // console.log( this.reportData );
+              // // console.log( this.reportData );
              
           }
       })
@@ -644,7 +644,7 @@ this.GetAllFacility()
   //                 let subCategories = category.manageDataPointSubCategories;
   //                 return subCategories;
   //             } else {
-  //                 console.log('Category not found');
+  //                 // console.log('Category not found');
   //                 return [];
   //             }
   //         }
@@ -670,6 +670,6 @@ this.GetAllFacility()
     onMultpleChange(e:any){
       this.reportData = []
     
-console.log(this.isMultiple);
+
     }
 }

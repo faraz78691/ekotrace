@@ -667,7 +667,7 @@ effect(()=>{
           url = 'getPurchaseGoodEmissions';
           this.trackingService.getPurchaseGoodEmissions(formData).subscribe({
               next: (response) => {
-                  console.log(response);
+       
                   if (response.success == true) {
                       this.statusData = response.categories;
                   }
@@ -682,7 +682,7 @@ effect(()=>{
     
       this.trackingService.getStatus(url).subscribe({
           next: (response) => {
-              console.log(response);
+           
               if (response.success == true) {
                   this.statusData = response.categories;
               } else {

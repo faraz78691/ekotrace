@@ -220,7 +220,7 @@ export class ActionsComponent {
                     this.groupsList = response.orders;
                     this.plannedActions = this.groupsList.filter((items) => items.status == 'Planned');
                     this.progressActions = this.groupsList.filter((items) => items.status == 'Progress');
-                    console.log(this.progressActions);
+                  
                     this.archiveActions = this.groupsList.filter((items) => items.status == 'Achieved');
                     if (this.groupsList.length > 0) {
                         this.groupdetails = this.groupsList[0];
@@ -317,7 +317,7 @@ export class ActionsComponent {
     
         this.GroupService.updateActions(payload).subscribe(
           response => {
-            console.log('Status updated successfully', response);
+          
             this.GetTarget();
           },
           error => {
@@ -344,7 +344,7 @@ export class ActionsComponent {
         formData.append('status', data.value.status);
         this.GroupService.updateAction(formData.toString()).subscribe({
             next: (response) => {
-                console.log(response);
+               
                 this.GetTarget();
 
                 this.visible = false;
@@ -406,10 +406,7 @@ export class ActionsComponent {
     selectGroup(group: Group, index: number) {
         this.selectedRowIndex = index;
         this.groupdetails = group;
-        console.log(
-            '🚀 ~ file: group.component.ts:304 ~ GroupComponent ~ selectGroup ~ this.groupdetails:',
-            this.groupdetails
-        );
+     
     }
     //The removeCss function is used to remove CSS styles applied to the body element
     removeCss() {

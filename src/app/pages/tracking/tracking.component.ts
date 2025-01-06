@@ -943,7 +943,7 @@ export class TrackingComponent {
                     this.facilitynothavedp = 'none';
                     this.forGroup = 'flex';
                 } else {
-                    console.log("here");
+                    // // console.log("here");
                     this.GetAssignedDataPoint(this.facilityID);
                 }
 
@@ -989,7 +989,7 @@ export class TrackingComponent {
             this.facilityID = fId;
         }
         else {
-            // console.log("flkexxxx");
+            // // // console.log("flkexxxx");
             // this.forGroup = environment.flex;
             // this.facilityhavedp = environment.none;
             // this.facilitynothavedp = environment.none;
@@ -1027,7 +1027,7 @@ export class TrackingComponent {
 
     // getting status, units, subCategory types where ever required
     SubCatData(data: any, catID: any, categoryName) {
-        console.log("called", catID);
+   
         this.categoryName = categoryName;
         this.recycle = false;
         this.isVisited = false;
@@ -1249,7 +1249,7 @@ export class TrackingComponent {
                 });
             return
         }
-        console.log(this.categoryId);
+     
         if (this.facilityID == 0) {
             this.notification.showInfo(
                 'Select Facility',
@@ -1333,7 +1333,7 @@ export class TrackingComponent {
         this.dataEntry.year = this.year.getFullYear().toString(); //this.getYear();
         var spliteedMonth = this.dataEntry.month.split(",");
         var monthString = JSON.stringify(spliteedMonth);
-        console.log(monthString);
+       
         
         let fId = localStorage.getItem('SelectedfacilityID');
         if (fId == '0') {
@@ -1654,7 +1654,7 @@ export class TrackingComponent {
             });
         }
         if (this.categoryId == 6) {
-            console.log("this.VehicleDE.vehicleTypeID", this.VehicleDE.vehicleTypeID);
+      
 
             if (this.selectMonths.length == 0) {
                 this.notification.showInfo(
@@ -1670,7 +1670,7 @@ export class TrackingComponent {
             else {
                 this.VehicleDE.modeofDEID = 2;
             }
-            console.log(this.VehicleDE.modeOfDE);
+          
             let formData = new URLSearchParams();
             formData.set('NoOfVehicles', this.VehicleDE.noOfVehicles.toString());
             formData.set('TotalnoOftripsPerVehicle', this.VehicleDE.totalnoOftripsPerVehicle.toString());
@@ -1789,7 +1789,7 @@ export class TrackingComponent {
 
                 this.trackingService.newPostElectricityMarket(formData.toString()).subscribe({
                     next: (response) => {
-                        console.log(response);
+                       
                         if (response.success == true) {
                             this.resetForm();
                             //this.GetAssignedDataPoint(this.facilityID);
@@ -1884,7 +1884,7 @@ export class TrackingComponent {
 
             // Filter out rows where no field is filled
             const filledRows = this.rowsPurchased.filter(row =>
-                // console.log(row.employeesCommute !== '')
+                // // // console.log(row.employeesCommute !== '')
                 row.productType == null
             );
        
@@ -1964,7 +1964,7 @@ export class TrackingComponent {
                         }
                         this.GetHSN();
                         // this.deselectAllItems(this.rowsPurchased)
-                        console.log(this.rowsPurchased);
+                  
                         this.resetForm();
                         this.ALLEntries();
 
@@ -2060,8 +2060,7 @@ export class TrackingComponent {
         }
         if (this.categoryId == 11) {
 
-            console.log(form.value.water_supply);
-            console.log(form.value.water_treatment);
+      
             if (this.selectMonths.length == 0) {
                 this.notification.showInfo(
                     'Select month',
@@ -2268,7 +2267,7 @@ export class TrackingComponent {
                 employeesCommute: row.employeesCommute,
                 avgCommute: row.avgCommute
             }));
-            console.log(payload);
+         
 
             // const typoOfOffice = [empobj1, empobj2, empobj3, empobj4, empobj5, empobj6, empobj7, empobj8, empobj9, empobj10, empobj11, empobj12, empobj13, empobj14, empobj15]
             var typeoftransportStringfy = JSON.stringify(payload)
@@ -2385,10 +2384,10 @@ export class TrackingComponent {
             })
         }
         if (this.categoryId == 16) {
-            console.log(form.value.distanceUnit);
+         
             var spliteedMonth = this.dataEntry.month.split(",");
             var monthString = JSON.stringify(spliteedMonth)
-            console.log(monthString);
+          
             if (this.selectMonths.length == 0) {
                 this.notification.showInfo(
                     'Select month',
@@ -3451,7 +3450,7 @@ export class TrackingComponent {
                             this.facilitynothavedp = environment.flex;
                             this.forGroup = environment.none;
                         } else {
-                            // console.log("scopees", response)
+                            // // // console.log("scopees", response)
                             this.AssignedDataPoint = response.categories;
                             this.AssignedDataPoint.forEach(scope => {
                                 scope.manageDataPointCategories.forEach(
@@ -3506,7 +3505,7 @@ export class TrackingComponent {
 
                                         const subCatID = response.categories[i].manageDataPointCategories[j].manageDataPointSubCategories[0].manageDataPointSubCategorySeedID;
                                         this.SubCatAllData = response.categories[i].manageDataPointCategories[j].manageDataPointSubCategories[0];
-                                        console.log(this.SubCatAllData);
+                                 
                                         this.id_var = subCatID;
                                         if ((response.categories)[i].manageDataPointCategories[j].manageDataPointCategorySeedID == 1) {
 
@@ -3666,7 +3665,7 @@ export class TrackingComponent {
 
 
     wastemethodChange(event: any) {
-        console.log(event.value);
+    
         if (event.value == 'recycling') {
             this.recycle = true
         } else {
@@ -3798,7 +3797,7 @@ export class TrackingComponent {
                 if (response.success == true) {
 
                     this.airportGrid = response.categories
-                    console.log(this.airportGrid);
+                  
                 } else {
 
                 }
@@ -3942,10 +3941,10 @@ export class TrackingComponent {
             formData.append('file', this.selectedFile, this.selectedFile.name);
             if (formData.has('file')) {
                 // File is available in the FormData
-                console.log('File exists in the FormData.');
+             
             } else {
                 // File is not available in the FormData
-                console.log('File does not exist in the FormData.');
+               
             }
             this.trackingService.UploadFile(formData).subscribe({
                 next: (response) => {
@@ -3983,7 +3982,7 @@ export class TrackingComponent {
                         this.toastr.error('Doc upload failed');
                     }
                     // Handle the error
-                    console.log('Error-->>: ', JSON.stringify(err));
+                    // // console.log('Error-->>: ', JSON.stringify(err));
                 }
             });
         }
@@ -4119,7 +4118,7 @@ export class TrackingComponent {
         return `${baseUrl}/api/DownloadFile/${encodeURIComponent(filePath)}`;
     }
     onFilterChange(event: any) {
-        console.log('Filter changed:', event);
+       
         // Add your custom filter logic here if needed
     }
     //getFileNameFromPath function is used to extract the file name from a given filePath
@@ -4177,7 +4176,7 @@ export class TrackingComponent {
             url = 'getPurchaseGoodEmissions';
             this.trackingService.getPurchaseGoodEmissions(formData).subscribe({
                 next: (response) => {
-                    console.log(response);
+                  
                     if (response.success == true) {
                         this.statusData = response.categories;
                     }
@@ -4232,7 +4231,7 @@ export class TrackingComponent {
         }
         this.trackingService.getStatus(url).subscribe({
             next: (response) => {
-                console.log(response);
+             
                 if (response.success == true) {
                     this.statusData = response.categories;
                 } else {
@@ -4262,7 +4261,7 @@ export class TrackingComponent {
             })
         }
         catch (ex) {
-            console.log("error", ex);
+            // // console.log("error", ex);
         }
 
     };
@@ -4282,7 +4281,7 @@ export class TrackingComponent {
             })
         }
         catch (ex) {
-            console.log("error", ex);
+            // // console.log("error", ex);
         }
 
     }
@@ -4487,20 +4486,20 @@ export class TrackingComponent {
     };
 
     onEmpTypeChange(event: any, row: any) {
-        console.log(event.value, row);
+      
         const selectedIndex = event.value;
 
         this.getSubEmployeeCommuTypes(selectedIndex, row)
     }
     onProductHSNChange(event: any) {
-        console.log(event.value);
+      
         const selectedIndex = event.value;
         this.productHSNSelect = selectedIndex
         this.GetStandardType(this.productHSNSelect)
         // this.getSubEmployeeCommuTypes(selectedIndex, row)
     }
     onAnnualChange(event: any) {
-        console.log(event.value);
+       
         const selectedIndex = event.value;
         if (selectedIndex == '0') {
             this.annualMonths = false
@@ -4511,7 +4510,7 @@ export class TrackingComponent {
 
     }
     onProductStandardChange(event: any, row: any) {
-        console.log(event.value);
+        // // console.log(event.value);
         const selectedIndex = event.value;
         this.getProductPurchaseItems(selectedIndex, row)
         // this.getSubEmployeeCommuTypes(selectedIndex, row)
@@ -4526,7 +4525,7 @@ export class TrackingComponent {
             next: (response) => {
 
                 if (response.success == true) {
-                    console.log(response);
+                  
                     // row.multiLevelItems = this.getTreeData();
                     row.multiLevelItems = response.categories.map(item => new TreeviewItem(item));
                 }
@@ -4589,7 +4588,7 @@ export class TrackingComponent {
 
                 if (response.success == true) {
                     this.VehicleGrid = response.categories;
-                    console.log(this.VehicleGrid);
+                
                     this.selectedVehicleType = 'Cars'
 
                 }
@@ -4605,20 +4604,15 @@ export class TrackingComponent {
     };
 
     onVehicleTypeChangeLease(event: any) {
-
         const selectedIndex = event.value;
-        console.log(this.dataEntryForm.value);
         this.selectedVehicleType = this.VehicleGrid.find(items => items.id == selectedIndex).vehicle_type;
-        console.log(this.selectedVehicleType);
-        // this.selectedVehicleType = this.VehicleGrid[selectedIndex - 1].vehicle_type
-
         this.getSubVehicleCategoryLease(selectedIndex)
     };
 
     getSubVehicleCategory(categoryId: any) {
         this.trackingService.getSubVehicleCat(categoryId).subscribe({
             next: (response) => {
-                // console.log(response);
+                // // // console.log(response);
                 if (response.success == true) {
                     // this.VehicleGrid = response.categories;
                     this.subVehicleCategory = response.categories;
@@ -4633,7 +4627,7 @@ export class TrackingComponent {
     getSubVehicleCategoryLease(categoryId: any) {
         this.trackingService.getSubVehicleCatLease(categoryId).subscribe({
             next: (response) => {
-                // console.log(response);
+                // // // console.log(response);
                 if (response.success == true) {
                     // this.VehicleGrid = response.categories;
                     this.subVehicleCategory = response.categories;
@@ -4647,7 +4641,7 @@ export class TrackingComponent {
 
     onWasteTypeChange(event: any) {
         const energyMethod = event.value;
-        console.log("energy method,", energyMethod);
+        // // console.log("energy method,", energyMethod);
         this.waterWasteProduct = this.wasteGrid[energyMethod - 1].type
 
         this.getWasteSubCategory(energyMethod);
@@ -4662,7 +4656,7 @@ export class TrackingComponent {
             next: (response) => {
 
                 if (response.success == true) {
-                    console.log(response);
+                    // // console.log(response);
                     this.wasteSubTypes = response.categories;
 
                 }
@@ -4714,7 +4708,7 @@ export class TrackingComponent {
     getSubFranchiseCategory(category: any) {
         this.trackingService.getSubFranchiseCat(category).subscribe({
             next: (response) => {
-                // console.log(response);
+                // // // console.log(response);
                 if (response.success == true) {
                     this.subFranchiseCategory = response.categories;
 
@@ -4760,7 +4754,7 @@ export class TrackingComponent {
         formData.set('type', typeId);
         this.trackingService.getProductsEnergy(formData).subscribe({
             next: (response) => {
-                // console.log(response);
+                // // // console.log(response);
                 if (response.success == true) {
                     this.prodductEnergySubTypes = response.categories;
 
@@ -4974,7 +4968,7 @@ export class TrackingComponent {
     getEndWasteType() {
         this.trackingService.getWasteType().subscribe({
             next: (response) => {
-                console.log(response, "sdgs");
+                // // console.log(response, "sdgs");
                 if (response.success == true) {
                     this.wasteGrid = response.categories;
                     this.waterWasteProduct = this.wasteGrid[0].type
@@ -4998,7 +4992,7 @@ export class TrackingComponent {
     getPurchaseGoodsCategory() {
         this.trackingService.getPurchaseGoodsType().subscribe({
             next: (response) => {
-                // console.log(response);
+                // // // console.log(response);
                 if (response.success == true) {
                     this.purchaseGoodsTypes = response.categories;
                 }
@@ -5011,7 +5005,7 @@ export class TrackingComponent {
         formdata.set('facilities', this.facilityID);
         this.trackingService.getPurchaseGoodsCurrency(formdata).subscribe({
             next: (response) => {
-                // console.log(response);
+                // // // console.log(response);
                 if (response.success == true) {
                     this.currency = response.categories;
                     this.purchaseGoodsUnitsGrid.push({ id: 1, units: this.currency })
@@ -5094,7 +5088,7 @@ export class TrackingComponent {
     updatePlaceholder() {
         const selectedItems = this.multiLevelItems.filter(item => item.checked);
         const placeholder = selectedItems.length > 0 ? `${selectedItems.length} options` : 'Choose product type';
-        console.log('Placeholder:', placeholder);
+        // // console.log('Placeholder:', placeholder);
     }
 
 

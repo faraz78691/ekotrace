@@ -449,7 +449,7 @@
 
 
                     </form>
-                    <div *ngIf="loginInfo.role != 'Preparer'" class="view-request ct_view_request_btn d-flex justify-content-center" (click)="showDialog()"
+                    <div  class="view-request ct_view_request_btn d-flex justify-content-center" (click)="showDialog()"
                         [routerLink]="['/tracking-view-requests']" [queryParams]="{data: facilityID}">
                         View and Approve Request
                     </div>

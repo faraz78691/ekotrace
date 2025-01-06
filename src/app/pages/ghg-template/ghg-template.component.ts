@@ -294,14 +294,14 @@ export class GhgTemplateComponent {
                 console.log(err)
             }
         })
-        console.log(this.LocData);
+       
 
     };
 
     //retrieves users associated with the facility
 
     tableData(data: any) {
-        console.log("tbakee", data.ID);
+    
         this.id_var = data.ID;
         this.selectedValues = data.ID;
         this.GetsavedDataPoint(data.ID)
@@ -374,7 +374,7 @@ export class GhgTemplateComponent {
 
     logSelectedFacilityIds() {
         const selectedFacilityIds = this.selectedScope4.map(facility => facility.id).join(',');
-        console.log('Selected Facility Ids:', selectedFacilityIds);
+      
     };
 
 
@@ -383,9 +383,9 @@ export class GhgTemplateComponent {
     //display a dialog for adding a facility
     showAddFacilityDialog() {
         this.visible = true;
-        console.log(this.facilityDetails);
+     
         this.facilityDetails = new Facility();
-        console.log(this.facilityDetails);
+      
         this.isEdit = false;
         this.resetForm();
     }
@@ -420,7 +420,7 @@ export class GhgTemplateComponent {
     }
     //method for retrieve all country name
     AllCountry() {
-        console.log("calling");
+    
         this.facilityService.GetCountry().subscribe({
             next: (response) => {
 
@@ -671,7 +671,7 @@ export class GhgTemplateComponent {
                 .newManageDataPointSave(fomdata.toString())
                 .subscribe({
                     next: (response) => {
-                        console.log(response);
+                      
                         if (response.success == true) {
                             this.DP_BoxVisible = false;
                             this.notification.showSuccess(
@@ -742,7 +742,7 @@ export class GhgTemplateComponent {
     }
 
     scope1Cick() {
-        console.log("cleikced");
+       
     }
     //method for update datapoint
     updateDataPoint() {

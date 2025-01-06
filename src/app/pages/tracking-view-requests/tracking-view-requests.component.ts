@@ -198,8 +198,13 @@ export class TrackingViewRequestsComponent {
     };
     sendEntryForApproval() {
 
-      
-
+        if(this.loginInfo.role =='Preparer'){
+            this.notification.showWarning(
+                'You are not authorized to approve entry',
+                'Warning'
+            );
+            return false
+        }
         if (this.selectedEntry.length === 0) {
             this.notification.showWarning('Please select any entry', 'Warning');
             return
@@ -267,7 +272,9 @@ export class TrackingViewRequestsComponent {
     };
 
     ALLEntries(facilityID: number) {
-      
+
+        
+      // console.log("here",facilityID)
         this.modeShow = false;
         this.months = new months();
         this.convertedYear = this.trackingService.getYear(this.year);
@@ -293,8 +300,8 @@ export class TrackingViewRequestsComponent {
                                         }
                                     }
                                 }
-                                // console.log("dp mandatory>", this.mandatorySCDP);
-                                // console.log("dp list >", this.dataEntriesPending);
+                                // // console.log("dp mandatory>", this.mandatorySCDP);
+                                // // console.log("dp list >", this.dataEntriesPending);
 
                                 for (let d of this.dataEntriesPending) {
 
@@ -2999,9 +3006,14 @@ export class TrackingViewRequestsComponent {
 
     }
     AcceptSingleEntry() {
+        if(this.loginInfo.role =='Preparer'){
+            this.notification.showWarning(
+                'You are not authorized to approve entry',
+                'Warning'
+            );
+            return false
+        }
         const entry = this.dataEntry;
-        console.log(this.dataEntry);
-        console.log(this.sendApprovalEntries);
         this.sendApprovalEntries = [];
         if (entry.ID == undefined || entry.ID == null) {
             this.selectedObjectEntry = {
@@ -3030,7 +3042,7 @@ export class TrackingViewRequestsComponent {
             .newSendSCSingleDataforApprove(formURlData)
             .subscribe({
                 next: (response) => {
-                    console.log(response);
+                    // console.log(response);
                     if (response.success == true) {
                         this.notification.showSuccess(
                             'Entry Approved',
@@ -3160,6 +3172,8 @@ export class TrackingViewRequestsComponent {
         }
     }
     FilterByYear() {
+        this.ALLEntries(this.facilityID);
+        return
         if (this.loginInfo.role == environment.Approver) {
             this.GetsendforApprovalDataPoint(this.loginInfo.facilityID);
         }
@@ -3590,7 +3604,7 @@ export class TrackingViewRequestsComponent {
         this.trackingService.newgetCategory().subscribe({
             next: (response) => {
 
-                console.log(response);
+                // console.log(response);
                 this.AllCategory = response;
                 this.selectedCategory = this.AllCategory[0].id;
                 if (this.loginInfo.role == environment.Approver) {

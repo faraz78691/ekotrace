@@ -70,7 +70,7 @@ export class BrsrReportComponent {
             let userInfo = localStorage.getItem('LoginInfo');
             let jsonObj = JSON.parse(userInfo); // string to "any" object first
             this.loginInfo = jsonObj as LoginInfo;
-            console.log(this.loginInfo);
+          
         }
         this.updatedtheme = this.themeservice.getValue('theme');
         this.getQuestions();
@@ -138,7 +138,7 @@ export class BrsrReportComponent {
                     }
                     this.toastr.error('Doc upload failed');
                     // Handle the error
-                    console.log('Error-->>: ', JSON.stringify(err));
+                  
                 }
             });
         }else if(name == 'HR'){
@@ -179,7 +179,7 @@ export class BrsrReportComponent {
                     }
                     this.toastr.error('Doc upload failed');
                     // Handle the error
-                    console.log('Error-->>: ', JSON.stringify(err));
+                    // console.log('Error-->>: ', JSON.stringify(err));
                 }
             });
         }else if(name =='FD'){
@@ -220,7 +220,7 @@ export class BrsrReportComponent {
                     }
                     this.toastr.error('Doc upload failed');
                     // Handle the error
-                    console.log('Error-->>: ', JSON.stringify(err));
+                    // console.log('Error-->>: ', JSON.stringify(err));
                 }
             });
         }else if(name == 'FCD'){
@@ -261,7 +261,7 @@ export class BrsrReportComponent {
                     }
                     this.toastr.error('Doc upload failed');
                     // Handle the error
-                    console.log('Error-->>: ', JSON.stringify(err));
+                    // console.log('Error-->>: ', JSON.stringify(err));
                 }
             });
         }
@@ -414,7 +414,7 @@ export class BrsrReportComponent {
         this.brsrdata.isAccept = null;
         var answered: number = 0;
         var totalQue: number = 0;
-        console.log('QA2', this.brsrdata);
+        // console.log('QA2', this.brsrdata);
         this.brsrPrinciplesandQA.forEach(principles => {
             for (let i = 0; i < principles.brsR_Q_As.length; i++) {
                 totalQue += 1;
@@ -455,7 +455,7 @@ export class BrsrReportComponent {
         this.brsrdata.isLock = true;
         var answered: number = 0;
         var totalQue: number = 0;
-        console.log('QA2', this.brsrdata);
+        // console.log('QA2', this.brsrdata);
         this.brsrPrinciplesandQA.forEach(principles => {
             for (let i = 0; i < principles.brsR_Q_As.length; i++) {
                 totalQue += 1;
@@ -523,7 +523,7 @@ export class BrsrReportComponent {
                 complete: () => console.info('notification send')
             });
     }
-    //     console.log("QA", this.Questions);
+    //     // console.log("QA", this.Questions);
     //     this.brsrdata = new BRSR_Doc;
 
     //     // Set the tenantID property of 'brsrdata' from 'loginInfo'
@@ -548,7 +548,7 @@ export class BrsrReportComponent {
     //         }
     //     });
 
-    //     console.log("QA2", this.brsrdata);
+    //     // console.log("QA2", this.brsrdata);
     // }
 
     // Method to generate and download the PDF
@@ -668,10 +668,7 @@ export class BrsrReportComponent {
 
         this.reportService.getBRSRdata(tenantID).subscribe((response) => {
             if (response != null) {
-                console.log(
-                    '🚀 ~ file: brsr-report.component.ts:280 ~ this.reportService.getBRSRdata ~ response:',
-                    response
-                );
+              
                 this.brsrdata = response;
                 this.brsrQuestions = response;
                 this.brsrPrinciplesandQA.forEach(principle => {
@@ -691,7 +688,7 @@ export class BrsrReportComponent {
                         }
                     });
                 });
-                console.log("checkque>", this.brsrPrinciplesandQA)
+                // console.log("checkque>", this.brsrPrinciplesandQA)
                 //this.brsrQuestions.brsR_Q_As = this.brsrdata.brsR_Q_As;
                 this.nobrsrSaved = false;
                 if (this.brsrdata.docPath != null || this.brsrdata.docPath != undefined) {
@@ -728,10 +725,7 @@ export class BrsrReportComponent {
     getQuestions() {
         this.reportService.getQuestions().subscribe((response) => {
             if (response != null) {
-                console.log(
-                    '🚀 ~ file: brsr-report.component.ts:280 ~ this.reportService.getBRSRdata ~ response:',
-                    response
-                );
+              
                 this.brsrPrinciplesandQA = response;
 
                 this.brsrPrinciplesandQA.forEach(principle => {

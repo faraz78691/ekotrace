@@ -262,7 +262,7 @@ export class WasteComponent {
             type: "bar",
             events: {
               click: function (chart, w, e) {
-                // console.log(chart, w, e)
+                // // console.log(chart, w, e)
               }
             }
           },
@@ -576,8 +576,8 @@ export class WasteComponent {
   onFacilityChange(event: any) {
        this.facilityService.facilitySelected(this.selectedFacility)
     this.makeCombinedApiCall(this.selectedFacility)
-    // console.log(event.target.value)
-    // console.log(this.selectedFacility);
+    // // console.log(event.target.value)
+    // // console.log(this.selectedFacility);
     // this.emssionByTravel(this.selectedFacility)
   };
 }

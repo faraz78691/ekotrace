@@ -145,7 +145,7 @@ const routes: Routes = [
                 path: 'brsr-qa',
                 canActivate: [RoleGuard],
                 component: BrsrQaComponent,
-                data: { roles: ['Platform Admin'] }
+                data: { roles: ['Platform Admin','Super Admin','Admin','Manager','Preparer'] }
             },
             {
                 path: 'finance_emissions',

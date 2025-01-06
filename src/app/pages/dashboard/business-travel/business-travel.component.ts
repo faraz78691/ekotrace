@@ -238,7 +238,7 @@ export class BusinessTravelComponent {
     formData.set('year', this.year.getFullYear().toString());
     formData.set('facilities', facility);
     this.dashboardService.BycostTravel(formData.toString()).subscribe((result: any) => {
-    console.log(result);
+  
     this.totalCostCentre = result.totalemssion;
 
       this.donotOptions3 = {
@@ -499,7 +499,7 @@ export class BusinessTravelComponent {
           type: "bar",
           events: {
             click: function (chart, w, e) {
-              // console.log(chart, w, e)
+              // // console.log(chart, w, e)
             }
           }
         },
@@ -558,8 +558,8 @@ export class BusinessTravelComponent {
   };
 
   onFacilityChange(event: any) {
-    // console.log(event.target.value)
-    // console.log(this.selectedFacility);
+    // // console.log(event.target.value)
+    // // console.log(this.selectedFacility);
     this.facilityService.facilitySelected(this.selectedFacility)
     this.emssionByTravel(this.selectedFacility)
     this.totalEmissionByMonth(this.selectedFacility)

@@ -52,8 +52,8 @@ export class ReportService {
     }
 
     // public saveReportDocument(file, tenantId: number){
-    //     console.log("file>>>>",file);
-    //     console.log("tenantId>>",tenantId);
+    //     // console.log("file>>>>",file);
+    //     // console.log("tenantId>>",tenantId);
     //     return this.http.put(
     //         environment.baseUrl + 'Report/UpdateBRSR_Doc/' +
     //         file,tenantId
@@ -61,8 +61,8 @@ export class ReportService {
     // }
 
     public saveReportDocument(bRSR_Doc, id: number) {
-        // console.log("file>>>>", file);
-        console.log('id>>', id);
+        // // console.log("file>>>>", file);
+        // console.log('id>>', id);
 
         // Create a FormData object and append the file to it
         // const formData: FormData = new FormData();
