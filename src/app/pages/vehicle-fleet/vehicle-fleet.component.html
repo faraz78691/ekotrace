@@ -1,0 +1,208 @@
+<div class="container-fluid p-5">
+    <!-- <div class="row pt-4">
+        <div class="col-sm-6" [ngClass]="
+                this.updatedtheme === 'dark' ? 'headlinetextD' : 'headlinetextL'
+            ">
+            <h3 class="pl-4 card-header card-headerL">Set Target</h3>
+        </div>
+    </div> -->
+  
+      
+            <div class="row pt-3">
+                <div class="col-md-12  overflow-auto mb-5 ct_custom_flex_basisc User-tabL"
+                    [ngClass]="this.updatedtheme === 'dark' ? 'User-tabD' : 'User-tabL'">
+                    <div class="row">
+                        <div class="" [ngClass]="
+                                this.updatedtheme === 'dark'
+                                    ? 'User-headD'
+                                    : 'User-headL'
+                            ">
+                            <div
+                                class="card-header card-headerL ct_header_grey_1202 d-flex align-items-center justify-content-between">
+                                <h4 class=" ct_fw_600 m-0 my-0" style="flex: 1;">Vendors</h4>
+                                <button class="GroupButton ct_assign_package_btn129 ct_animation_btn_121 w-auto px-3"
+                                   >
+                                    + Add vendor
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <p-toast></p-toast>
+                    <p-confirmDialog #cd [style]="{width: '60vw'}">
+                        <ng-template pTemplate="footer">
+                            <button pButton icon="pi pi-check" label="Yes" (click)="cd.accept()"
+                                class="span-color cancel-button"></button>
+                            <button pButton icon="pi pi-times" label="Cancel" (click)="cd.reject()"
+                                class="p-button-raised p-button-danger"></button>
+                        </ng-template>
+                    </p-confirmDialog>
+
+
+
+
+
+                    <div class="dataTable scrollit mt-4 ct_vender_scroll_320">
+                        <table class="table_loc ct_space_table_21 ct_billing_table_bg_120 ">
+                            <thead>
+                                <tr>
+                                    <th scope="col" style="font-size: 16px;">S.No.</th>
+                                    <th scope="col" style="font-size: 16px;">Vehicle Model </th>
+                                    <th scope="col" style="font-size: 16px;">Vehicle Type </th>
+                                    <th scope="col" style="font-size: 16px;">Vehicle Sub-Type</th>
+                                    <th scope="col" style="font-size: 16px;">Type of Engine</th>
+                                    <th scope="col" style="font-size: 16px;">Quantity</th>
+                                    <th scope="col" style="font-size: 16px;">Acquisition Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr clickable (click)="selectGroup(group,index)" *ngFor="
+                                        let group of groupsList;let index = index
+                                    " class="col-12 tableRow border-bottom rounded pointer"
+                                    
+                                    >
+                                    <td class="td text-initial" style="font-size: 16px;">
+                                        {{ index + 1 }}
+                                    </td>
+                                    <td class="td " style="font-size: 16px;">
+                                        {{ group.name }}
+
+                                    </td>
+                                    <td class="td " style="font-size: 16px;">
+                                        {{ group.country_name }}
+
+                                    </td>
+                                    <td class="td  pb-1" style="font-size: 16px;">
+                                        {{ group.refer_id }}
+
+                                    </td>
+                                    <td class="td  pb-1" style="font-size: 16px;">
+                                        {{ group.address }}
+
+                                    </td>
+                                    <td class="td pb-1" (click)="viewDetails(group)">
+                                        <i class="fas fa-edit"></i>
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="text-light" >
+                            <div class="icon">
+                                <i class="fa fa-info-circle" style="font-size: 20px" aria-hidden="true"></i>
+                            </div>
+                            <label class="text-center label">No group available. Start by add a new group using the
+                                add group button.</label>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+     
+
+
+
+
+
+
+
+
+
+        <!-- dhdfjhfjfgk -->
+        <!-- <p-tabPanel header="Cost Centre">
+            <div class="row pt-3">
+                <div class="col-md-12  overflow-auto mb-5 ct_custom_flex_basisc"
+                    [ngClass]="this.updatedtheme === 'dark' ? 'User-tabD' : 'User-tabL'">
+                    <div class="row">
+                        <div class="" [ngClass]="
+                                this.updatedtheme === 'dark'
+                                    ? 'User-headD'
+                                    : 'User-headL'
+                            ">
+                            <div
+                                class="card-header card-headerL ct_header_grey_1202 d-flex align-items-center justify-content-between">
+                                <h4 class=" ct_fw_600 m-0 my-0" style="flex: 1;">Cost Centre</h4>
+                                <button class="GroupButton ct_assign_package_btn129 ct_animation_btn_121 w-auto px-3"
+                                    (click)="showAddGroupDialog('2')">
+                                    + Add Cost Centre
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <p-toast></p-toast>
+                    <p-confirmDialog #cd [style]="{width: '60vw'}">
+                        <ng-template pTemplate="footer">
+                            <button pButton icon="pi pi-check" label="Yes" (click)="cd.accept()"
+                                class="span-color cancel-button"></button>
+                            <button pButton icon="pi pi-times" label="Cancel" (click)="cd.reject()"
+                                class="p-button-raised p-button-danger"></button>
+                        </ng-template>
+                    </p-confirmDialog>
+
+
+
+
+
+                    <div class="dataTable scrollit mt-4">
+                        <table class="table_loc ct_space_table_21 ct_billing_table_bg_120">
+                            <thead>
+                                <tr>
+
+                                    <th scope="col" style="width: 400px; font-size: 16px;">S.No.</th>
+                                    <th scope="col" style="width: 400px;font-size: 16px;"> Cost Centre Name </th>
+                                    <th scope="col" style="font-size: 16px;">Reference ID</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr clickable (click)="selectGroup(group,index)" *ngFor="
+                                        let group of groupsCostList;let index = index
+                                    " class="col-12 tableRow border-bottom rounded pointer"
+                                    (click)="UnlockComplete(group.id)"
+                                    [ngClass]="{ 'tableRowclicked': index === selectedRowIndex }">
+                                    <td class="td text-initial" style="width: 300px; font-size: 16px;">
+                                        {{ index + 1 }}
+                                    </td>
+                                    <td class="td " style="width: 400px; font-size: 16px;">
+                                        {{ group.cost_center_name }}
+
+                                    </td>
+                                    <td class="td  pb-1" style="font-size: 16px;">
+                                        {{ group.cost_center_refer_id }}
+
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="text-light" *ngIf="groupdata === false">
+                            <div class="icon">
+                                <i class="fa fa-info-circle" style="font-size: 20px" aria-hidden="true"></i>
+                            </div>
+                            <label class="text-center label">No group available. Start by add a new group using the
+                                add group button.</label>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </p-tabPanel> -->
+
+
+   
+
+</div>
+
+
+
+
+
+

@@ -211,8 +211,8 @@
     <div class="modal-body text-white text-style Dashboard-tab ct_vertically_scroll">
         <form #GroupForm="ngForm" class="col-12" (ngSubmit)="
             FormEdit === false
-                ? saveOffset(GroupForm)
-                : updateGroup( GroupForm.value)
+                ? saveVendors(GroupForm)
+                : updateVendor( GroupForm)
         ">
             <div class="mb-5 pb-0 row">
                 <div class="col-md-6 mb-3">
@@ -257,6 +257,26 @@
                       Address is required.
                     </p>
                   </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="fname">Scorecard</label>
+                    <p-dropdown class="finput ct_input_white_bg13 ct_select_2_drop_white ct_input_dark_text_145"
+                    ngModel name="scorecard" placeholder="Select" [options]="scorecardData" [filter]="true" filterBy="calculationmethod"   (onShow)="handleDropdownShow()"  (onHide)="handleDropdownHide()" filterInputAutoFocus="false"
+                    optionLabel="calculationmethod" optionValue="calculationmethod" styleClass="facilitydropdown" #country="ngModel" required>
+                  </p-dropdown>
+                  <p class="text-danger mb-0" *ngIf="(country.touched || GroupForm.submitted) && country.errors?.['required']">
+                    Country is required.
+                  </p>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="fname">Target Status</label>
+                    <p-dropdown class="finput ct_input_white_bg13 ct_select_2_drop_white ct_input_dark_text_145"
+                    ngModel name="targetStatus" placeholder="Select" [options]="targetStatusData" [filter]="true" filterBy="calculationmethod"   (onShow)="handleDropdownShow()"  (onHide)="handleDropdownHide()" filterInputAutoFocus="false"
+                    optionLabel="calculationmethod" optionValue="calculationmethod" styleClass="facilitydropdown" #country="ngModel" required>
+                  </p-dropdown>
+                  <p class="text-danger mb-0" *ngIf="(country.touched || GroupForm.submitted) && country.errors?.['required']">
+                    Country is required.
+                  </p>
+                  </div>
 
 
 
@@ -291,13 +311,13 @@
 
 <p-dialog (click)="removeCss()" [(visible)]="visible2" [breakpoints]="{'960px': '75vw'}" [style]="{width: '50vw'}">
     <p-header *ngIf="FormEdit === false"> Add Cost Centre </p-header>
-    <p-header *ngIf="FormEdit === true"> Edit Target </p-header>
+    <p-header *ngIf="FormEdit === true"> Edit Vendor </p-header>
 
     <div class="modal-body text-white text-style Dashboard-tab ct_vertically_scroll">
         <form #GroupCostForm="ngForm" class="col-12" (ngSubmit)="
             FormEdit === false
                 ? saveCostCentre(GroupCostForm)
-                : updateGroup(GroupCostForm.value)
+                : updateVendor(GroupCostForm.value)
         ">
             <div class="mb-5 pb-0 row">
                 <div class="col-md-6 mb-3">

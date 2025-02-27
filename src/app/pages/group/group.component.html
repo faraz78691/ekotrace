@@ -119,10 +119,15 @@
                                     </div>
                                 </div>
                                 <div class="row mt-4" *ngIf="groupdetails.groupBy === 'Sub Group'">
-                                    <div class="col-lg-4" *ngFor="let facility of subGroupsList">
-                                        <p-checkbox name="groupname" [value]="facility.id" [inputId]="facility.id"
-                                            label="{{ facility.name }}" [(ngModel)]="selectedFaciltiy"></p-checkbox>
-                                    </div>
+                                    <ng-container *ngFor="let facility of subGroupsList">
+                                        <div class="col-lg-4  test"*ngIf="facility.is_main_group == 0" >
+                                           
+                                                <p-checkbox name="groupname" [value]="facility.id" [inputId]="facility.id"
+                                                    label="{{ facility.name }}" [(ngModel)]="selectedFaciltiy"></p-checkbox>
+                                            
+                                        </div>
+
+                                    </ng-container>
                                 </div>
                             </div>
 
@@ -231,10 +236,20 @@
                                     ngif="groupdetails.groupBy === 'State'">
                                     {{ gm.stateName }}
                                 </p>
-                                <p class="mb-2" *ngFor="let gm of groupdetails.facilities"
-                                    ngif="groupdetails.groupBy === 'Facitliy'">
-                                    {{ gm.name }}
-                                </p>
+                                <ng-container *ngIf="groupdetails.facilities">
+                                    <p class="mb-2" *ngFor="let gm of groupdetails.facilities"
+                                    >
+                                        {{ gm.name }}
+                                    </p>
+
+                                </ng-container>
+                                <ng-container *ngIf="groupdetails.groups">
+                                    <p class="mb-2" *ngFor="let gm of groupdetails.groups"
+                                       >
+                                        {{ gm.name }}
+                                    </p>
+
+                                </ng-container>
                             </td>
                         </tr>
                     </table>

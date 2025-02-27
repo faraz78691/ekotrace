@@ -223,7 +223,10 @@ export class CarbonOffsettingComponent {
 
     //method to add new group
     saveOffset(data: NgForm) {
-      
+        if(this.loginInfo.role == 'Auditor'){
+            this.notification.showInfo('You are not Authorized', '');
+            return
+        }
         if (parseInt(data.value.scope_1) + parseInt(data.value.scope_2) + parseInt(data.value.scope_3) != 100) {
             this.notification.showError(' Sum of scope allocation should be equal to 100%', 'Error');
             return
@@ -286,7 +289,10 @@ export class CarbonOffsettingComponent {
 
     //method for update group detail by id
     updateGroup(id: any, data: any) {
-      
+        if(this.loginInfo.role == 'Auditor'){
+            this.notification.showInfo('You are not Authorized', '');
+            return
+        }
         this.visible = true;
        
         if (parseInt(data.value.scope_1) + parseInt(data.value.scope_2) + parseInt(data.value.scope_3) != 100) {

@@ -20,7 +20,7 @@ import { VehicleDE } from '@/models/VehicleDE';
 import { VehicleDEmode } from '@/models/VehicleDEmode';
 import { VehicleType } from '@/models/VehicleType';
 import { LoginInfo } from '@/models/loginInfo';
-import { ChangeDetectionStrategy, Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, ElementRef, Renderer2, ViewChild } from '@angular/core';
 import { NgForm, FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FacilityService } from '@services/facility.service';
@@ -36,7 +36,7 @@ import { TabView } from 'primeng/tabview';
 import { countries } from '@/store/countrieslist';
 import { GroupService } from '@services/group.service';
 import { TreeviewItem, TreeviewEventParser, OrderDownlineTreeviewEventParser, TreeviewConfig } from '@treeview/ngx-treeview';
-
+import * as XLSX from 'xlsx';
 declare var $: any;
 
 @Component({
@@ -56,6 +56,9 @@ export class TrackingComponent {
     @ViewChild('dt1') dt!: Table;
     @ViewChild('fileUpload') fileUpload!: FileUpload;
     @ViewChild('inputFile') inputFile: any;
+    computedFacilities = computed(() => {
+        return this.facilityService.selectedfacilitiesSignal()
+    })
     filteredStatus: any; // Variable to store the selected status
     public statusFilter: string;
     public yearFilter: number;
@@ -68,8 +71,10 @@ export class TrackingComponent {
     statusData: any;
     hotelTypeGrid: any[] = [];
     yearOptions: any[] = [];
+    jsonData: any[] = [];
     checked: boolean = false;
     annualMonths: boolean = false;
+    singlePGSTab: boolean = true;
     multiLevelItems: TreeviewItem[] = [];
     active: MenuItem;
     notevalue: string;
@@ -78,6 +83,10 @@ export class TrackingComponent {
     selectedAirport3: string;
     status: TrackingTable[];
     formGroup: FormGroup;
+    productsExcelData = [
+        { category: 'Sports Teams and Clubs', expiryDate: '25-10-2025', quantity: 50, currency: 'INR', brand: 'Samsung', price: 2.00, status: 'Matched', isEditing: false },
+        { category: 'Electronics', expiryDate: '30-12-2025', quantity: 100, currency: 'USD', brand: 'Sony', price: 5.00, status: 'Unmatched', isEditing: false }
+    ];
     //units: units[];
     // setlimit: setlimit[];
 
@@ -101,7 +110,7 @@ export class TrackingComponent {
     dataEntrySetting: DataEntrySetting = new DataEntrySetting();
     dataEntry: DataEntry = new DataEntry();
     selectedVendor: any;
-
+    liveUrl: 'http://192.168.29.45:4500';
     SCdataEntry: StationaryCombustionDE = new StationaryCombustionDE();
     RefrigerantDE: RefrigerantsDE = new RefrigerantsDE();
     FireExtinguisherDE: FireExtinguisherDE = new FireExtinguisherDE();
@@ -140,6 +149,7 @@ export class TrackingComponent {
     kgCO2e: any;
     selectedFile: File;
     uploadedFileUrl: string;
+    downloadExcelUrl: string;
     rootUrl: string;
     fileSelect: File;
     categoryId: number;
@@ -160,7 +170,9 @@ export class TrackingComponent {
     vehcilestransporationchecked: boolean = false;
     storageTransporationChecked: boolean = false;
     VehicleGrid: any[] = [];
+    allPRoducts: any[] = [];
     selectedUnit: any;
+    psg_product: any;
     selectedVehicleIndex: number = 1;
     franchiseCategoryValue: string;
     subFranchiseCategoryValue: string = 'Bank Branch';
@@ -236,6 +248,7 @@ export class TrackingComponent {
     flightTime: any[] = [];
     upstreamMassUnitsGrid: any[] = [];
     uploadButton = false;
+    newExcelData:any[]=[]
     airportGrid: any[] = [];
     public isVisited = false;
     flightDisplay1 = 'block'
@@ -263,6 +276,7 @@ export class TrackingComponent {
     distanceTravelled: any[] = [];
     wasteMethod: string;
     recycle = false;
+    visible2 = false;
     recycleSelectedMethod = '';
     rows: any[] = [];
     items: any[] = [];
@@ -306,7 +320,24 @@ export class TrackingComponent {
         { name: 'Dec', value: 'Dec' }
     ];
 
+    scope3OrderCategories = [
+        { index: 0, name: 'Purchased goods and services' },
+        { index: 1, name: 'Fuel and Energy-related Activities' },
+        { index: 2, name: 'Upstream Transportation and Distribution' },
+        { index: 3, name: 'Water Supply and Treatment' },
+        { index: 4, name: 'Waste generated in operations' },
+        { index: 5, name: 'Business Travel' },
+        { index: 6, name: 'Employee Commuting' },
+        { index: 7, name: 'Home Office' },
+        { index: 8, name: 'Upstream Leased Assets' },
+        { index: 9, name: 'Downstream Transportation and Distribution' },
+        { index: 10, name: 'Processing of Sold Products' },
+        { index: 11, name: 'Use of Sold Products' },
+        { index: 12, name: 'End-of-Life Treatment of Sold Products' },
+        { index: 13, name: 'Downstream Leased Assets' },
+        { index: 14, name: 'Franchises' }
 
+    ]
 
     constructor(
         private messageService: MessageService,
@@ -321,6 +352,14 @@ export class TrackingComponent {
         private confirmationService: ConfirmationService,
         private renderer: Renderer2,
     ) {
+
+        effect(() => {
+            console.log(this.computedFacilities());
+            if (this.computedFacilities() != 0) {
+                this.GetAssignedDataPoint(this.computedFacilities())
+                this.facilityID = this.computedFacilities()
+            }
+        });
         // Initialize with the first 5 rows
         for (let i = 1; i <= 5; i++) {
             this.rows.push({ id: i, subVehicleCategory: [], vehicleType1: null, vehicleType2: null, employeesCommute: '', avgCommute: '' });
@@ -872,7 +911,8 @@ export class TrackingComponent {
                 },
 
 
-            ]
+            ];
+
         this.active = this.items[0];
         this.SCdataEntry.blendPercent = 20;
         const currentYear = new Date().getFullYear();
@@ -900,20 +940,12 @@ export class TrackingComponent {
             decoupleChildFromParent: false,
             maxHeight: 500
         };
-        // this.multiLevelItems = this.getItems();
+
         $(document).ready(function () {
             $('.ct_custom_dropdown').click(function () {
 
                 $('.ct_custom_dropdown').toggleClass('ct_open_modal')
             })
-
-            // $(".browse-button input:file").change(function () {
-            //     $("input[name='attachment']").each(function () {
-            //         var fileName = $(this).val().split('/').pop().split('\\').pop();
-            //         $(".filename").val(fileName);
-            //         $(".browse-button-text").html('<i class="fa fa-refresh"></i> Change');
-            //     });
-            // });
         })
         if (localStorage.getItem('LoginInfo') != null) {
             let userInfo = localStorage.getItem('LoginInfo');
@@ -922,48 +954,30 @@ export class TrackingComponent {
             this.haveBasicPackage = this.loginInfo.package_id
 
         }
+
         let tenantID = this.loginInfo.tenantID;
         this.superAdminID = this.loginInfo.super_admin_id;
-        this.facilityID = localStorage.getItem('SelectedfacilityID');
+
         this.flag = localStorage.getItem('Flag');
         const dataEntry = this.trackingService.dataEntry;
-        if (
-            this.loginInfo.role === environment.SuperAdmin ||
-            this.loginInfo.role === environment.Admin
-        ) {
 
-            if (this.flag === 'F') {
-                this.GetAssignedDataPoint(this.facilityID);
+        if (this.flag === 'F') {
+            this.GetAssignedDataPoint(this.facilityID);
+        } else {
+            if (this.facilityID == 0 || this.facilityID == '' || !this.facilityID) {
+
+                this.facilityhavedp = 'none';
+                this.facilitynothavedp = 'none';
+                this.forGroup = 'flex';
             } else {
 
-                // this.GetAssignedDataPoint(this.loginInfo.facilityID);
-                // this.GetAssignedDataPoint(this.facilityID);
-                if (this.facilityID == 0 || this.facilityID == '') {
-                    this.facilityhavedp = 'none';
-                    this.facilitynothavedp = 'none';
-                    this.forGroup = 'flex';
-                } else {
-                    // // console.log("here");
-                    this.GetAssignedDataPoint(this.facilityID);
-                }
-
+                this.GetAssignedDataPoint(this.facilityID);
             }
-        } else {
-
-            //   this.GetAssignedDataPoint(this.loginInfo.facilityID);
-            // this.GetAssignedDataPoint(this.facilityID);
         }
-        // if (this.defaulttab === '/tracking-status') {
-        //     this.activeindex = 1;
-        // }
 
         this.getBatch();
-
-        // this.getBlendType();
-        // this.getVehicleDEMode();
-        // this.getElectricitySource();
         this.setDefaultMonth();
-    
+
 
     };
 
@@ -975,26 +989,28 @@ export class TrackingComponent {
         });
     };
     // triggered whenever a change detection cycle runs
-    ngDoCheck() {
-        this.updatedtheme = this.themeservice.getValue('theme');
-        let fId = localStorage.getItem('SelectedfacilityID');
-        this.flag = localStorage.getItem('Flag');
-        if (this.facilityID != fId) {
+    // ngDoCheck() {
+    //     this.updatedtheme = this.themeservice.getValue('theme');
+    //     let fId = localStorage.getItem('SelectedfacilityID');
+    //     this.flag = localStorage.getItem('Flag');
+    //     console.log(fId);
+    //     console.log(this.flag);
+    //     if (this.facilityID == 0) {
+    //         this.forGroup = environment.flex;
+    //         this.facilityhavedp = environment.none;
+    //         this.facilitynothavedp = environment.none;
 
-            this.GetAssignedDataPoint(Number(fId));
-            this.facilityID = fId;
 
-        }
-        else if (this.flag === undefined || this.flag === null || this.flag == "") {
-            this.facilityID = fId;
-        }
-        else {
-            // // // console.log("flkexxxx");
-            // this.forGroup = environment.flex;
-            // this.facilityhavedp = environment.none;
-            // this.facilitynothavedp = environment.none;
-        }
-    };
+    //     }
+    //     else if (this.flag === undefined || this.flag === null || this.flag == "") {
+
+    //     }
+    //     else {
+    //         this.GetAssignedDataPoint(Number(fId));
+    //         this.facilityID = fId;
+
+    //     }
+    // };
     // getBooks(): TreeviewItem[] {
     //     const childrenCategory = new TreeviewItem({
     //         text: 'Choose Product Service', value: 0, collapsed: false, children: [
@@ -1027,7 +1043,7 @@ export class TrackingComponent {
 
     // getting status, units, subCategory types where ever required
     SubCatData(data: any, catID: any, categoryName) {
-   
+        console.log("sub carttt");
         this.categoryName = categoryName;
         this.recycle = false;
         this.isVisited = false;
@@ -1071,7 +1087,7 @@ export class TrackingComponent {
 
 
         if (catID == 5) {
-          
+
             this.getRegionName();
             this.getUnit(this.SubCatAllData
                 .manageDataPointSubCategorySeedID);
@@ -1099,6 +1115,10 @@ export class TrackingComponent {
                 .manageDataPointSubCategorySeedID);
         }
         if (catID == 8) {
+            this.downloadExcelUrl = 'http://192.168.29.45:4500' + `/get-excelsheet?facility_id=${this.facilityID}`;
+            this.getALlProducts()
+            console.log(this.downloadExcelUrl);
+            // this.generateExcel();
             this.months = [
                 { name: 'Jan', value: 'Jan' },
                 { name: 'Feb', value: 'Feb' },
@@ -1211,6 +1231,7 @@ export class TrackingComponent {
 
     // to get the status of subcategories in status tab
     ALLEntries() {
+        console.log(this.categoryId);
         if (this.categoryId == 25 || this.categoryId == 26 || this.categoryId == 24) {
             const categoryID = 13
             const formData = new URLSearchParams();
@@ -1235,6 +1256,7 @@ export class TrackingComponent {
 
                                 this.dataEntriesPending = (response.categories).filter(items => items.tablename == 'other_modes_of_transport');
                             } else {
+
                                 this.dataEntriesPending = response.categories;
                             }
                         }
@@ -1249,7 +1271,7 @@ export class TrackingComponent {
                 });
             return
         }
-     
+
         if (this.facilityID == 0) {
             this.notification.showInfo(
                 'Select Facility',
@@ -1270,7 +1292,8 @@ export class TrackingComponent {
                         if (response.success === false) {
                             this.dataEntriesPending = null;
                         } else {
-                            this.dataEntriesPending = response.categories;
+                            const filterEntries = response.categories.filter((items => items.Scope3GHGEmission !== '0.000'));
+                            this.dataEntriesPending = filterEntries;
                         }
                     },
                     error: (err) => {
@@ -1326,15 +1349,18 @@ export class TrackingComponent {
 
     //entrysave function to save dataentry
     EntrySave(form: NgForm) {
-
+        if (this.loginInfo.role == 'Auditor') {
+            this.notification.showError('You are not Authorized', 'Warning');
+            return false
+        }
         this.dataEntry.month = this.selectMonths
             .map((month) => month.value)
             .join(','); //this.getMonthName();
         this.dataEntry.year = this.year.getFullYear().toString(); //this.getYear();
         var spliteedMonth = this.dataEntry.month.split(",");
         var monthString = JSON.stringify(spliteedMonth);
-       
-        
+
+
         let fId = localStorage.getItem('SelectedfacilityID');
         if (fId == '0') {
             this.notification.showInfo(
@@ -1343,7 +1369,7 @@ export class TrackingComponent {
             );
             return
         }
-        if (this.selectMonths.length == 0 && this.categoryId != 8) {
+        if (this.selectMonths.length == 0 && this.categoryId != 8 && this.categoryId != 14) {
             this.notification.showInfo(
                 'Select month',
                 ''
@@ -1654,7 +1680,7 @@ export class TrackingComponent {
             });
         }
         if (this.categoryId == 6) {
-      
+
 
             if (this.selectMonths.length == 0) {
                 this.notification.showInfo(
@@ -1670,7 +1696,7 @@ export class TrackingComponent {
             else {
                 this.VehicleDE.modeofDEID = 2;
             }
-          
+
             let formData = new URLSearchParams();
             formData.set('NoOfVehicles', this.VehicleDE.noOfVehicles.toString());
             formData.set('TotalnoOftripsPerVehicle', this.VehicleDE.totalnoOftripsPerVehicle.toString());
@@ -1789,7 +1815,7 @@ export class TrackingComponent {
 
                 this.trackingService.newPostElectricityMarket(formData.toString()).subscribe({
                     next: (response) => {
-                       
+
                         if (response.success == true) {
                             this.resetForm();
                             //this.GetAssignedDataPoint(this.facilityID);
@@ -1887,7 +1913,7 @@ export class TrackingComponent {
                 // // // console.log(row.employeesCommute !== '')
                 row.productType == null
             );
-       
+
             if (filledRows.length > 0) {
                 this.notification.showInfo(
                     "Please select product service code",
@@ -1909,6 +1935,7 @@ export class TrackingComponent {
                 );
                 return
             }
+            console.log(this.rowsPurchased);
 
             // Prepare the payload
             const payload = this.rowsPurchased.map(row => ({
@@ -1916,7 +1943,8 @@ export class TrackingComponent {
                 typeofpurchase: row.productService,
                 valuequantity: row.quantity,
                 unit: row.selectedUnit,
-                vendor: row.vendorName,
+                vendorId: row.vendorName.id,
+                vendor: row.vendorName.name,
                 vendorunit: row.vendorspecificEFUnit,
                 vendorspecificEF: row.vendorspecificEF,
                 product_category: row.productType
@@ -1964,7 +1992,7 @@ export class TrackingComponent {
                         }
                         this.GetHSN();
                         // this.deselectAllItems(this.rowsPurchased)
-                  
+
                         this.resetForm();
                         this.ALLEntries();
 
@@ -2060,7 +2088,7 @@ export class TrackingComponent {
         }
         if (this.categoryId == 11) {
 
-      
+
             if (this.selectMonths.length == 0) {
                 this.notification.showInfo(
                     'Select month',
@@ -2068,7 +2096,7 @@ export class TrackingComponent {
                 );
                 return
             }
-          
+
             if (form.value.water_supply <= form.value.water_treatment) {
                 this.notification.showInfo(
                     'Water withdrawn should be greater than or equal to water discharged',
@@ -2151,7 +2179,7 @@ export class TrackingComponent {
                     this.ALLEntries();
                 },
                 error: (err) => {
-                        this.waterSupplyUnit = 'kilo litres'
+                    this.waterSupplyUnit = 'kilo litres'
                     this.notification.showError(
                         'Data entry added failed.',
                         'Error'
@@ -2172,7 +2200,7 @@ export class TrackingComponent {
                 );
                 return
             }
-            if (form.value.waste_quantity == null || form.value.waste_quantity == '' ) {
+            if (form.value.waste_quantity == null || form.value.waste_quantity == '') {
                 this.notification.showInfo(
                     'Enter waste quantity',
                     ''
@@ -2253,9 +2281,9 @@ export class TrackingComponent {
             );
 
             if (filledRows.length === 0) {
-                this.notification.showError(
-                    "Fill fields",
-                    'Error'
+                this.notification.showWarning(
+                    "Fields are required",
+                    'Warning'
                 );
                 return;
             }
@@ -2267,7 +2295,7 @@ export class TrackingComponent {
                 employeesCommute: row.employeesCommute,
                 avgCommute: row.avgCommute
             }));
-         
+
 
             // const typoOfOffice = [empobj1, empobj2, empobj3, empobj4, empobj5, empobj6, empobj7, empobj8, empobj9, empobj10, empobj11, empobj12, empobj13, empobj14, empobj15]
             var typeoftransportStringfy = JSON.stringify(payload)
@@ -2384,10 +2412,10 @@ export class TrackingComponent {
             })
         }
         if (this.categoryId == 16) {
-         
+
             var spliteedMonth = this.dataEntry.month.split(",");
             var monthString = JSON.stringify(spliteedMonth)
-          
+
             if (this.selectMonths.length == 0) {
                 this.notification.showInfo(
                     'Select month',
@@ -2808,7 +2836,7 @@ export class TrackingComponent {
             formData.set('combustion', form.value.combustion);
             formData.set('recycling', form.value.recycling);
             formData.set('composing', form.value.composing);
-            formData.set('batch','1');
+            formData.set('batch', '1');
             formData.set('facilities', this.facilityID);
 
 
@@ -3161,7 +3189,7 @@ export class TrackingComponent {
                 );
                 return
             }
-            if(form.value.flightMode == 'Generic'){
+            if (form.value.flightMode == 'Generic') {
                 if (form.value.no_of_trips === '' || form.value.no_of_trips === null) {
                     this.notification.showInfo(
                         "Please select no of trips",
@@ -3400,6 +3428,18 @@ export class TrackingComponent {
             }
         })
     };
+    generateExcel() {
+
+        this.trackingService.getExcelSheet(this.facilityID).subscribe({
+            next: (Response) => {
+                if (Response) {
+
+
+                }
+
+            }
+        })
+    };
 
     addCommutes() {
         this.rows.push({ id: this.rows.length + 1, subVehicleCategory: [], vehicleType1: null, vehicleType2: null, employeesCommute: '', avgCommute: '' });
@@ -3417,11 +3457,8 @@ export class TrackingComponent {
                 if (response.success == true) {
                     this.busineessGrid = response.categories;
                     if (this.busineessGrid.length > 0) {
-
                     } else {
-
                     }
-
                 }
             },
             error: (err) => {
@@ -3498,6 +3535,27 @@ export class TrackingComponent {
                                 // this.facilitynothavedp = environment.none;
                                 // this.forGroup = environment.none;
                             }
+                            // console.log(this.AssignedDataPoint[2]);
+                            // console.log(this.AssignedDataPoint[2]);
+
+                            const findIndexScope3 = this.AssignedDataPoint.findIndex(item => item.ScopeID === 3);
+
+                            if (findIndexScope3 !== -1) {
+                                const tempArr = []
+                                for (let index = 0; index < this.scope3OrderCategories.length; index++) {
+
+
+                                    const findCategory = this.AssignedDataPoint[findIndexScope3].manageDataPointCategories.find(items => items.catName == this.scope3OrderCategories[index].name)
+                                    if (findCategory) {
+                                        findCategory['catIndex'] = index
+                                        tempArr.push(findCategory)
+                                    }
+                                }
+
+                                this.AssignedDataPoint[findIndexScope3].manageDataPointCategories = [...tempArr]
+
+                            }
+
                             let found = false;
                             for (let i = 0; i < (response.categories).length; i++) { // Use < instead of <=
                                 for (let j = 0; j < (response.categories)[i].manageDataPointCategories.length; j++) { // Use < instead of <=
@@ -3505,7 +3563,7 @@ export class TrackingComponent {
 
                                         const subCatID = response.categories[i].manageDataPointCategories[j].manageDataPointSubCategories[0].manageDataPointSubCategorySeedID;
                                         this.SubCatAllData = response.categories[i].manageDataPointCategories[j].manageDataPointSubCategories[0];
-                                 
+                                        console.log(this.SubCatAllData);
                                         this.id_var = subCatID;
                                         if ((response.categories)[i].manageDataPointCategories[j].manageDataPointCategorySeedID == 1) {
 
@@ -3665,7 +3723,7 @@ export class TrackingComponent {
 
 
     wastemethodChange(event: any) {
-    
+
         if (event.value == 'recycling') {
             this.recycle = true
         } else {
@@ -3797,7 +3855,7 @@ export class TrackingComponent {
                 if (response.success == true) {
 
                     this.airportGrid = response.categories
-                  
+
                 } else {
 
                 }
@@ -3849,6 +3907,65 @@ export class TrackingComponent {
         });
     };
 
+    bulkUploadPG() {
+        this.singlePGSTab = !this.singlePGSTab
+    }
+
+    onPurchaseGoodsUpload(event: any) {
+        console.log(event);
+        const file = event[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+            const data = new Uint8Array(e.target.result);
+            const workbook = XLSX.read(data, { type: 'array' });
+
+            // Read first sheet
+            const sheetName = workbook.SheetNames[0];
+            const worksheet = workbook.Sheets[sheetName];
+
+            // Convert to JSON
+            this.jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+
+            // Convert array to key-value pairs
+            this.jsonData = this.convertToKeyValue(this.jsonData);
+            this.sendJSON(this.jsonData);
+            console.log('Parsed JSON:', this.jsonData);
+        };
+        reader.readAsArrayBuffer(file);
+    };
+
+    convertToKeyValue(data: any[]): any[] {
+        if (data.length < 2) return []; // Ensure at least headers and one row exist
+      
+        const headers = data[0]; // Extract headers
+        return data.slice(1).map((row) => {
+          let obj: any = {};
+          headers.forEach((header: string, index: number) => {
+            let value = row[index] || '';
+      
+            // Convert Excel date serial number to readable date
+            if (header.includes('Date') && typeof value === 'number') {
+              value = XLSX.SSF.format('dd-mm-yyyy', value); // Converts to "dd-mm-yyyy"
+            }
+      
+            obj[header] = value;
+          });
+          return obj;
+        });
+      }
+
+    toggleEdit(index: number , id:any) {
+        this.visible2 = true;
+        this.productsExcelData[index].isEditing = !this.productsExcelData[index].isEditing;
+    }
+
+    deleteProduct(index: number) {
+        this.productsExcelData.splice(index, 1);
+    }
+
+
     GetHSN() {
 
         this.GroupService.getHSN().subscribe({
@@ -3858,6 +3975,46 @@ export class TrackingComponent {
                     this.purchaseHSNCode = response.categories;
                     this.productHSNSelect = this.purchaseHSNCode[0].id;
                     this.GetStandardType(this.productHSNSelect)
+                }
+            },
+            error: (err) => {
+                console.error('errrrrrr>>>>>>', err);
+            },
+            complete: () => console.info('Group Added')
+        });
+    };
+    sendJSON(jsonData: any) {
+        const json = jsonData.filter((item: any) => item['Product Description'] !== '');
+        
+        const jsonDataString = JSON.stringify(json);
+        const formData = new URLSearchParams();
+        formData.append('product', jsonDataString);
+
+        this.GroupService.uploadJsonData(formData).subscribe({
+            next: (response) => {
+                if (response.success == true) {
+                    let res = response;
+                    const sortedArray = res.data.sort((a, b) => Number(b.is_find) - Number(a.is_find));
+                    // console.log(sortedArray);
+                    if(this.productHSNSelect ==1){
+                        this.newExcelData = sortedArray.map(items => ({
+                            ...items, // Keep all existing properties
+                            code: items.productResult?.HSN_code // Add new 'code' key, ensuring 'productResult' exists
+                        }));
+                    }else if(this.productHSNSelect ==2){
+                        this.newExcelData = sortedArray.map(items => ({
+                            ...items, // Keep all existing properties
+                            code: items.productResult?.NSIC_code // Add new 'code' key, ensuring 'productResult' exists
+                        }));
+                    }else{
+                        this.newExcelData = sortedArray.map(items => ({
+                            ...items, // Keep all existing properties
+                            code: items.productResult?.ISIC_code // Add new 'code' key, ensuring 'productResult' exists
+                        }));
+                    }
+                   
+
+                    console.log(this.newExcelData);
                 }
             },
             error: (err) => {
@@ -3930,6 +4087,7 @@ export class TrackingComponent {
             this.dataEntry.year,
             this.SubCatAllData.id
         );
+        this.ALLEntries()
     }
 
     //---method for file upload---
@@ -3941,10 +4099,10 @@ export class TrackingComponent {
             formData.append('file', this.selectedFile, this.selectedFile.name);
             if (formData.has('file')) {
                 // File is available in the FormData
-             
+
             } else {
                 // File is not available in the FormData
-               
+
             }
             this.trackingService.UploadFile(formData).subscribe({
                 next: (response) => {
@@ -4039,7 +4197,7 @@ export class TrackingComponent {
         var monthString = JSON.stringify(spliteedMonth);
         const formData: FormData = new FormData();
         formData.append('file', this.selectedFile, this.selectedFile.name);
-        formData.append('batch','1');
+        formData.append('batch', '1');
         formData.append('facilities', this.facilityID);
         formData.append('year', this.dataEntry.year);
         formData.append('month', monthString);
@@ -4118,7 +4276,7 @@ export class TrackingComponent {
         return `${baseUrl}/api/DownloadFile/${encodeURIComponent(filePath)}`;
     }
     onFilterChange(event: any) {
-       
+
         // Add your custom filter logic here if needed
     }
     //getFileNameFromPath function is used to extract the file name from a given filePath
@@ -4176,7 +4334,7 @@ export class TrackingComponent {
             url = 'getPurchaseGoodEmissions';
             this.trackingService.getPurchaseGoodEmissions(formData).subscribe({
                 next: (response) => {
-                  
+
                     if (response.success == true) {
                         this.statusData = response.categories;
                     }
@@ -4231,7 +4389,7 @@ export class TrackingComponent {
         }
         this.trackingService.getStatus(url).subscribe({
             next: (response) => {
-             
+
                 if (response.success == true) {
                     this.statusData = response.categories;
                 } else {
@@ -4486,20 +4644,20 @@ export class TrackingComponent {
     };
 
     onEmpTypeChange(event: any, row: any) {
-      
+
         const selectedIndex = event.value;
 
         this.getSubEmployeeCommuTypes(selectedIndex, row)
     }
     onProductHSNChange(event: any) {
-      
+
         const selectedIndex = event.value;
         this.productHSNSelect = selectedIndex
         this.GetStandardType(this.productHSNSelect)
         // this.getSubEmployeeCommuTypes(selectedIndex, row)
     }
     onAnnualChange(event: any) {
-       
+
         const selectedIndex = event.value;
         if (selectedIndex == '0') {
             this.annualMonths = false
@@ -4525,7 +4683,7 @@ export class TrackingComponent {
             next: (response) => {
 
                 if (response.success == true) {
-                  
+
                     // row.multiLevelItems = this.getTreeData();
                     row.multiLevelItems = response.categories.map(item => new TreeviewItem(item));
                 }
@@ -4576,11 +4734,25 @@ export class TrackingComponent {
                     this.VehicleGrid = response.categories;
                     const selectedIndex = this.selectedVehicleIndex;
                     this.selectedVehicleType = this.VehicleGrid[selectedIndex - 1]?.vehicle_type;
-                 
+
 
                 }
             }
         })
+    };
+    getALlProducts() {
+        this.trackingService.getAllProductsPG().subscribe({
+            next: (response) => {
+
+                if (response.success == true) {
+                    this.allPRoducts = response.data;
+                 
+                }
+            }
+        })
+    };
+    onAllProductChange() {
+      
     };
     getVehicleTypesLease() {
         this.trackingService.getVehicleTypeLease().subscribe({
@@ -4588,7 +4760,7 @@ export class TrackingComponent {
 
                 if (response.success == true) {
                     this.VehicleGrid = response.categories;
-                
+
                     this.selectedVehicleType = 'Cars'
 
                 }
@@ -4812,7 +4984,7 @@ export class TrackingComponent {
     };
 
     onQuantitySoldUnitChange(event: any) {
-        
+
         const energyMethod = event.value;
 
         if (energyMethod == 1) {
@@ -5094,6 +5266,11 @@ export class TrackingComponent {
 
     //retrieves the emission factor for a given subcategory seed ID and category ID.
 
+    ngOnDestroy() {
+        localStorage.removeItem('SelectedfacilityID');
+        this.facilityService.facilitySelected(0)
 
+
+    }
 
 }

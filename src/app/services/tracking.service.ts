@@ -55,6 +55,12 @@ export class TrackingService {
             facilityID
         );
     };
+    public getExcelSheet(facilityID: any): Observable<any> {
+        return this.http.get<any>(
+            environment.baseUrl + `/get-excelsheet?facility_id=${facilityID}`
+            
+        );
+    };
 
 
     public getfacilitybyId(facilityID: any): Observable<any> {
@@ -645,6 +651,9 @@ export class TrackingService {
     };
     getVehicleType(): Observable<any> {
         return this.http.get(environment.baseUrl + '/vehicleCategories')
+    };
+    getAllProductsPG(): Observable<any> {
+        return this.http.get(environment.baseUrl + '/get-all-purchase-categories-ef')
     };
     getVehicleTypeLease(): Observable<any> {
         return this.http.get(environment.baseUrl + '/vehicleCategories_lease')

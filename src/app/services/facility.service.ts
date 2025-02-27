@@ -170,14 +170,14 @@ export class FacilityService {
             environment.baseUrl + '/report/vendorDashboardReport', data
         );
     };
-    public getVendorLocation(): Observable<any> {
-        return this.http.get(
-            environment.baseUrl + '/report/getEmisionByLocation'
+    public getVendorLocation(data): Observable<any> {
+        return this.http.post(
+            environment.baseUrl + '/report/getEmisionByLocation', data
         );
     };
-    public getEmissionProducts(): Observable<any> {
+    public getEmissionProducts(data): Observable<any> {
         return this.http.post(
-            environment.baseUrl + '/report/getVendorProductDashboard', ''
+            environment.baseUrl + '/report/getVendorProductDashboard', data
         );
     };
 
@@ -198,6 +198,9 @@ export class FacilityService {
             data
         );
     }
+    public getScopeDonutsER(admininfo) {
+        return this.http.post( environment.baseUrl + '/dashboardScope', admininfo);
+    };
     public newManageDataPointSave(data: any): Observable<any> {
         return this.http.post(
             environment.baseUrl + '/AddassignedDataPointbyfacility',

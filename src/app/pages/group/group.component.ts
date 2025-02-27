@@ -37,7 +37,7 @@ export class GroupComponent {
     public loginInfo: LoginInfo;
     public admininfo: UserInfo;
     public userdetails: UserInfo;
-    public groupdetails: Group;
+    public groupdetails: any;
     public groupMappingDetails: GroupMapping;
     public admininfoList: UserInfo[] = [];
     facilityList: Facility[] = [];
@@ -123,7 +123,7 @@ export class GroupComponent {
         // this.getTenantsDetailById(Number(this.loginInfo.tenantID));
      
         let tenantID = this.loginInfo.tenantID;
-        if(this.loginInfo.role =='Super Admin' || this.loginInfo.role =='Admin'){
+        if(this.loginInfo.role =='Super Admin' || this.loginInfo.role =='Admin' || this.loginInfo.role =='Auditor'){
             this.newGetAllGroups(tenantID);
             this.GetAllFacility();
             this.GetAllSubGroups();

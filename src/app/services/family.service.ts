@@ -30,7 +30,7 @@ public getTreeList(super_admin_id): Observable<any> {
 // };
 public createTree(data): Observable<any> {
   return this.http.post(environment.baseUrl + `/createaddMainTree`, data);
-  return this.http.post('http://192.168.29.141:4005/createaddMainTree', data);
+
 };
 
 public createCloneTree(data): Observable<any> {

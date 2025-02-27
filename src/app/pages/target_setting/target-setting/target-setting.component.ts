@@ -116,6 +116,7 @@ export class TargetSettingComponent {
   selectedScope: any;
   superAdminTenentID: any;
   carbon_credit_value: string;
+  downloadExcelUrl: string;
   type: string;
   date3: string;
   standard: string;
@@ -300,10 +301,7 @@ export class TargetSettingComponent {
       return
   }
 
-  if (this.targetAllowed() == false ) {
-    this.notification.showInfo('You are not authorised to submit form', '')
-    return
-}
+
     const formData = new URLSearchParams();
 
     formData.append('target_name', data.value.target_name);
@@ -604,6 +602,10 @@ export class TargetSettingComponent {
 
   //method for update group detail by id
   updateGroup(id: any, data: NgForm) {
+    if(this.loginInfo.role == 'Auditor'){
+      this.notification.showInfo('You are not Authorized', '');
+      return
+  }
     if (this.loginInfo.role  == 'Preparer' || this.loginInfo.role  == 'Manager' ) {
       this.notification.showInfo('You are not authrised to submit form', '')
       return
@@ -838,6 +840,7 @@ export class TargetSettingComponent {
       }else{
         this.allowedUser = false
       }
+      console.log(  this.allowedUser);
               
             }
         });

@@ -1,4 +1,4 @@
-<section class="mt-4">
+<section class="mt-2">
     <div class="container-fluid px-0">
         <div class="row">
             <div class="col-md-12">
@@ -12,7 +12,7 @@
                     <div class="ct_vendor_dah_small_card">
                         <p class=" text-center">Procurement Emissions (tCO2e)
                         </p>
-                        <h4 class="text-center ct_fw_600 mb-0">{{allVendorReport?.vendorEmission}}
+                        <h4 class="text-center ct_fw_600 mb-0">{{+allVendorReport?.vendorEmission / 1000 | number :'1.3-3'}}
                         </h4>
                     </div>
 
@@ -36,7 +36,7 @@
                         <p class=" text-center">Contribution To Total Emissions
 
                         </p>
-                        <h4 class="text-center ct_fw_600 mb-0">40%
+                        <h4 class="text-center ct_fw_600 mb-0">{{allVendorReport?.contribution  || 0  | number:'1.2-2'}} %
 
                         </h4>
                     </div>
@@ -46,7 +46,7 @@
             </div>
 
         </div>
-        <div class="d-flex align-items-center justify-content-between gap-3   mt-3 ct_flex_column_767 flex-wrap" style="gap: 20px;">
+        <div class="d-flex align-items-center justify-content-between gap-3   mt-2 ct_flex_column_767 flex-wrap" style="gap: 20px;">
             <h4 class="ct_fs_24 ct_fw_600 mb-0">Supplier Ranking
             </h4>
             <div class="d-flex align-items-center gap-3  ct_gap_10 flex-wrap ct_flex_column_767">
@@ -61,7 +61,7 @@
                     <p-multiSelect class="ct_input_white_bg13 ct_select_2_drop_white ct_input_dark_text_145 en_select_last_right_0"
                     [options]="flightsTravelTypes" [(ngModel)]="selectedProduct" optionLabel="flightType"
                     optionValue="flightType" defaultLabel="Select"
-                    (onChange)="onProductChange()">
+                    (onChange)="onProductChange(selectedProduct)">
                 </p-multiSelect>
                 </div>
                 <div class="form-group d-flex align-items-center ct_gap_10 flex-wrap ct_res_100_767 mb-0">
@@ -104,7 +104,7 @@
                     </label>
                     <p-multiSelect class="ct_input_white_bg13 ct_select_2_drop_white ct_input_dark_text_145 en_select_last_right_0"
                         [options]="dashboardData" [(ngModel)]="selectedFacility" optionLabel="AssestType"
-                        optionValue="id" defaultLabel="Select"
+                        optionValue="ID" defaultLabel="Select"
                         (onChange)="onFacilityChange(selectedFacility)">
                     </p-multiSelect>
                     <!-- <p-dropdown
@@ -148,7 +148,7 @@
                                 <div class="d-flex align-items-center justify-content-between">
                                     <h6 class="mb-0 ct_fw_600 ">#{{i +1}}</h6>
                                     <p class="mb-0 ">{{items.supplier}}</p>
-                                    <p class="ct_red_text2 mb-0">No</p>
+                                    <p class="ct_red_text2 mb-0">{{items.scorecard}}</p>
                                 </div>
                                 <div class="d-flex align-items-center justify-content-between mt-2">
                                     <p class="mb-0 ct_fs_14"></p>
@@ -163,24 +163,28 @@
 
                             <div class="ct_grid_sec_2 mt-3">
                                 <div class="d-flex align-items-center ct_gap_10 justify-content-between  ">
-                                    <p class="ct_fs_14 mb-0">Total Emissions</p>
-                                    <p class="ct_fs_14 mb-0">{{items.perVenderEmission}}</p>
+                                    <p class="ct_fs_14 ct_fw_600 mb-0">Total Emissions</p>
+                                
+                                    <p class="ct_fs_14 mb-0">{{+(items.totalEmission) /1000 | number:'1.3-3'}} (tCO2e)</p>
                                 </div>
-                             
+<!--                              
                                 <div class="d-flex align-items-center ct_gap_10 justify-content-between  ">
                                     <p class="ct_fs_14 mb-0">Emissions to Expense Ratio</p>
                                     <p class="ct_fs_14 mb-0">{{items.perVendoremiToExpRatio | number:'1.4-4'}}</p>
-                                </div>
+                                </div> -->
                               
                             </div>
                             <div class="pt-3 mt-3 ct_border_top_1_grey">
                                 <div class="d-flex align-items-center justify-content-between ct_gap_10 mb-2">
-                                    <p class="mb-0 ct_fs_14">SBTI Target Status</p>
-                                    <p class="mb-0 ct_fs_14">None</p>
+                                    <p class="mb-0 ct_fs_14 ct_fw_600">SBTI Target Status</p>
+                                    <p class="mb-0 ct_fs_14">{{items.target_status}}</p>
                                 </div>
                                 <div class="d-flex align-items-center justify-content-between ct_gap_10">
-                                    <p class="mb-0 ct_fs_14">Emissions Calculation Method</p>
-                                    <p class="mb-0 ct_fs_14">Spend_Based</p>
+                                    <p class="mb-0 ct_fs_14 ct_fw_600">Emissions Calculation Method</p>
+                                    <p class="mb-0 ct_fs_14" *ngIf="items.units.includes('INR') && items.units.length >1">Quantity / Spend based</p>
+                              
+                                    <p class="mb-0 ct_fs_14" *ngIf="items.units =='INR'">Spend based</p>
+                                    <p class="mb-0 ct_fs_14" *ngIf="!items.units.includes('INR')">Quantity</p>
                                 </div>
                             </div>
 

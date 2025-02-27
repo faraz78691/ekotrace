@@ -690,7 +690,7 @@ label:not(.form-check-label):not(.custom-file-label) {
 .ct_modal_scrool_121 {
     overflow-y: auto;
     height: auto;
-    max-height: 500px;
+    max-height: 510px;
 }
 
 
@@ -2272,8 +2272,8 @@ h1.bft-edit-form-title {
 }
 
 .ct_how_use_tooltip_main {
-    width: 100%;
-    max-width: 300px;
+    // width: 100%;
+    // max-width: 300px;
     position: relative;
     text-align: end;
     padding-inline: 25px;
@@ -2567,3 +2567,7 @@ h1.bft-edit-form-title {
         max-width: 250px;
     }
 }
+
+.custom_dropdown .p-overlay {
+    width: 28.8rem !important;
+  }

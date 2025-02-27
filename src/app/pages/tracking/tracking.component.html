@@ -41,7 +41,8 @@
                                 <!-- scope 3 govind categories -->
                                 <!-- {{AssignedDataPoint | json}} -->
                                 <ng-container *ngFor="let seed of AssignedDataPoint; let i = index">
-                                    <p-tabPanel *ngIf="seed.ScopeID !==3">
+                                    <p-tabPanel *ngIf="seed.ScopeID !=3">
+
 
                                         <ng-template pTemplate="header">
                                             {{ seed.scopeName }}
@@ -71,30 +72,26 @@
 
                                                 <div class="card ct_shadow_none flex justify-content-center ">
                                                     <p-accordion class="ct_accordian_height_48vh12"
-                                                    [ngStyle]="{'background-color': '#f5f5f5'}"
+                                                        [ngStyle]="{'background-color': '#f5f5f5'}"
                                                         styleClass="accordianclass bg-unset"
                                                         [activeIndex]="accordianIndex" [multiple]="false">
                                                         <ng-container>
 
-                                                            <ng-container *ngFor="
-                                                        let head of seed.manageDataPointCategories
-                                                    ">
-                                                                <ng-container *ngIf="
-                                                                head
-                                                                    .manageDataPointSubCategories
-                                                                    .length > 0
-                                                            ">
+                                                            <ng-container
+                                                                *ngFor="let head of seed.manageDataPointCategories; let i = index">
+
+                                                                <ng-container
+                                                                    *ngIf="head.manageDataPointSubCategories.length > 0">
                                                                     <p-accordionTab [selected]="false">
                                                                         <ng-template style="height: 8px;"
                                                                             pTemplate="header">
-                                                                            {{
-                                                                            head.catName }}
+                                                                            {{head.catName }}
                                                                             <div class="iicon">
                                                                                 <i *ngIf="head.catName == 'Stationary Combustion'"
                                                                                     class="fa fa-info-circle tooltip-icon"
                                                                                     pTooltip="Direct emissions from owned or controlled stationary sources that uses fossil fuels.
-                                                                                  
-                                                                                   " tooltipPosition="top"
+                                                                                      
+                                                                                       " tooltipPosition="top"
                                                                                     style="color: #88ad47"></i>
                                                                                 <i *ngIf="head.catName == 'Refrigerants'"
                                                                                     class="fa fa-info-circle tooltip-icon"
@@ -104,8 +101,8 @@
                                                                                 <i *ngIf="head.catName == 'Company Owned Vehicles'"
                                                                                     class="fa fa-info-circle tooltip-icon"
                                                                                     pTooltip="Emissions from owned mobile sources (both on-road and non-road vehicles) that are within the company’s inventory boundaries.
-                                                                                    
-                                                                                    " tooltipPosition="top"
+                                                                                        
+                                                                                        " tooltipPosition="top"
                                                                                     style="color: #88ad47"></i>
                                                                                 <i *ngIf="head.catName == 'Fire Extinguisher'"
                                                                                     class="fa fa-info-circle tooltip-icon"
@@ -127,18 +124,19 @@
                                                                         </ng-template>
 
                                                                         <div id="DPRow" *ngFor="
-                                                                            let child of head.manageDataPointSubCategories
-                                                                        " class="py-2 px-4 border-bottom ct_scoope_1_tab "
+                                                                                let child of head.manageDataPointSubCategories
+                                                                            "
+                                                                            class="py-2 px-4 border-bottom ct_scoope_1_tab "
                                                                             [ngClass]="{
-                                                                            ct_tab_active_12:
-                                                                                categoryId === child.manageDataPointSubCategorySeedID
-                                                                        }">
+                                                                                ct_tab_active_12:
+                                                                                    categoryId === child.manageDataPointSubCategorySeedID
+                                                                            }">
                                                                             <div clickable (click)="
-                                                                                SubCatData(
-                                                                                    child,
-                                                                                    head.manageDataPointCategorySeedID, head.catName
-                                                                                )
-                                                                            " class="col pointer d-flex "
+                                                                                    SubCatData(
+                                                                                        child,
+                                                                                        head.manageDataPointCategorySeedID, head.catName
+                                                                                    )
+                                                                                " class="col pointer d-flex "
                                                                                 pTooltip="{{ child.subCatName }}"
                                                                                 tooltipPosition="bottom">
                                                                                 {{ child.subCatName}}
@@ -149,6 +147,8 @@
 
                                                                     </p-accordionTab>
                                                                 </ng-container>
+
+
                                                             </ng-container>
                                                         </ng-container>
                                                     </p-accordion>
@@ -161,6 +161,7 @@
                                     <p-tabPanel *ngIf="seed.ScopeID ==3 && this.haveBasicPackage != 1">
                                         <ng-template pTemplate="header">
                                             {{ seed.scopeName }}
+
                                         </ng-template>
                                         <div class="cardDiv">
                                             <div class="calenderDiv flex row">
@@ -215,9 +216,12 @@
                                                                                     child,
                                                                                     head.manageDataPointCategorySeedID, head.catName
                                                                                 )
-                                                                            " class="col pointer d-flex align-items-center"
+                                                                            "
+                                                                            class="col pointer d-flex align-items-center"
                                                                             tooltipPosition="bottom">
                                                                             {{ child.subCatName}}
+
+
                                                                             <div class="iicon">
                                                                                 <i *ngIf="child.subCatName == 'Purchased goods and services'"
                                                                                     class="fa fa-info-circle tooltip-icon"
@@ -297,7 +301,7 @@
                                                                         </div>
                                                                         <p-accordion>
 
-                                                                           
+
                                                                             <p-accordionTab
                                                                                 class="ct_business_drop_12_main position-relative"
                                                                                 header="Business Travel"
@@ -306,12 +310,14 @@
                                                                                 ToggleClick(
                                                                                     )
                                                                             " pTooltip="{{ child.subCatName }}">
-                                                                             <div class="iicon ct_business_icon_info12">
-                                                                                <i 
-                                                                                    class="fa fa-info-circle tooltip-icon"
-                                                                                    pTooltip="Emissions from the transportation of employees for business-related activities." tooltipPosition="top" style="color: #88ad47"></i>
-                                                                            </div>
-                                                                              
+                                                                                <div
+                                                                                    class="iicon ct_business_icon_info12">
+                                                                                    <i class="fa fa-info-circle tooltip-icon"
+                                                                                        pTooltip="Emissions from the transportation of employees for business-related activities."
+                                                                                        tooltipPosition="top"
+                                                                                        style="color: #88ad47"></i>
+                                                                                </div>
+
                                                                                 <ul class="ct_dropdwon_item"
                                                                                     [class.ct_open_modal]="isVisited == true">
                                                                                     <li (click)="setActive(24)">Flight
@@ -449,7 +455,7 @@
 
 
                     </form>
-                    <div  class="view-request ct_view_request_btn d-flex justify-content-center" (click)="showDialog()"
+                    <div class="view-request ct_view_request_btn d-flex justify-content-center" (click)="showDialog()"
                         [routerLink]="['/tracking-view-requests']" [queryParams]="{data: facilityID}">
                         View and Approve Request
                     </div>
@@ -477,7 +483,7 @@
                         <label class="label"> Please select facility</label>
                     </div>
                 </div>
-                <div class="ct_scroll_60012">
+                <div class="ct_scroll_60012" [ngStyle]="{display: facilityhavedp}">
 
 
 
@@ -492,6 +498,7 @@
                                         {{ SubCatAllData.subCatName }}
 
                                     </p>
+
                                     <p *ngIf="categoryId ==24" class="mb-2 mt-3 ml-4 text-dark">
                                         Flight
                                     </p>
@@ -501,6 +508,12 @@
                                     <p *ngIf="categoryId ==26" class="mb-2 mt-3 ml-4 text-dark">
                                         Other modes
                                     </p>
+                                    <div *ngIf="categoryId ==8" class="ml-auto">
+                                        <button class="btn ct_scoope_1_tab ct_view_request_btn px-4 trackingsubmitb"
+                                            type="button" (click)="bulkUploadPG()"> {{singlePGSTab ? 'Bulk Upload' :
+                                            'Single Upload'}}</button>
+
+                                    </div>
                                     <div class="ct_how_use_tooltip_main">
                                         <i class="fa-solid fa-circle-question" (click)="isHowtoUse = !isHowtoUse"></i>
                                         <div class="ct_how_use_tooltip_cnt" [ngClass]="isHowtoUse ? 'ct_active' : ''">
@@ -1170,62 +1183,87 @@
                                             <div *ngIf="categoryId ==11">
                                                 <h5 class="mb-3 ct_fs_16">Water Supply and Treatment</h5>
                                                 <p class="ct_fs_16 mb-2">
-                                                    Emissions associated with water withdrawn from the source and transported to the point of use and from water treatment processes. 
+                                                    Emissions associated with water withdrawn from the source and
+                                                    transported to the point of use and from water treatment processes.
                                                 </p>
 
-                                                <p class="mb-2 ct_fs_16">Total water consumed = water withdrawn – water discharged 
+                                                <p class="mb-2 ct_fs_16">Total water consumed = water withdrawn – water
+                                                    discharged
                                                 </p>
-                                                <p class="mb-0">Water goes through treatment process before it is discharged. There are three stages of water treatment:
+                                                <p class="mb-0">Water goes through treatment process before it is
+                                                    discharged. There are three stages of water treatment:
                                                 </p>
                                                 <ol style="list-style: lower-roman;">
-                                                    <li>Primary - Removes large objects, debris, and solids from wastewater
+                                                    <li>Primary - Removes large objects, debris, and solids from
+                                                        wastewater
 
                                                     </li>
-                                                    <li>Secondary - Removes dissolved and suspended biological matter, often using microorganisms in a controlled environment 
+                                                    <li>Secondary - Removes dissolved and suspended biological matter,
+                                                        often using microorganisms in a controlled environment
 
                                                     </li>
                                                     <li>Composting – Breaking down organic waste (vegetables, rotten
                                                         food, garden waste) into nutrient-rich-soil.
                                                     </li>
-                                                    <li>Tertiary – This is the last stage and is employed when specific wastewater constituents which cannot be removed by secondary treatment must be removed. 
+                                                    <li>Tertiary – This is the last stage and is employed when specific
+                                                        wastewater constituents which cannot be removed by secondary
+                                                        treatment must be removed.
 
                                                     </li>
-                                                   
+
                                                 </ol>
-                                               
-                                                <h5 class="ct_fs_16 mb-0">To collect emissions data for water withdrawn and treatment, follow these steps:
+
+                                                <h5 class="ct_fs_16 mb-0">To collect emissions data for water withdrawn
+                                                    and treatment, follow these steps:
                                                 </h5>
                                                 <ol>
-                                                    <li>Determine the volume of water withdrawn from various sources (e.g., rivers, lakes, groundwater) and discharged back to different destinations.
+                                                    <li>Determine the volume of water withdrawn from various sources
+                                                        (e.g., rivers, lakes, groundwater) and discharged back to
+                                                        different destinations.
                                                     </li>
-                                                    <li>Estimate the volume of water discharged to various destinations undergoing treatment process. Identify the stages of treatment process applied. 
+                                                    <li>Estimate the volume of water discharged to various destinations
+                                                        undergoing treatment process. Identify the stages of treatment
+                                                        process applied.
 
                                                     </li>
                                                     <li>
-                                                        Department responsible for collection water data – Utilities / Operations department, Resource management / Maintenance department
+                                                        Department responsible for collection water data – Utilities /
+                                                        Operations department, Resource management / Maintenance
+                                                        department
 
                                                     </li>
-                                                   
+
                                                 </ol>
-                                                <h5 class="ct_fs_16 mb-0">How to use the tool for entering water emissions data
+                                                <h5 class="ct_fs_16 mb-0">How to use the tool for entering water
+                                                    emissions data
 
                                                 </h5>
                                                 <ol>
-                                                    <li>Select the months and year for which you want to enter the water data. If you select multiple months, same data will be replicated for the months selected.
+                                                    <li>Select the months and year for which you want to enter the water
+                                                        data. If you select multiple months, same data will be
+                                                        replicated for the months selected.
 
 
                                                     </li>
-                                                    <li>Enter the total water withdrawn and discharged volume in kilo litre or cubic metre.
+                                                    <li>Enter the total water withdrawn and discharged volume in kilo
+                                                        litre or cubic metre.
 
                                                     </li>
                                                     <li>
-                                                        For water withdrawn by source, input the % breakdown of water supplied from various sources. Similarly, input the % breakdown of water discharged to various destination
+                                                        For water withdrawn by source, input the % breakdown of water
+                                                        supplied from various sources. Similarly, input the % breakdown
+                                                        of water discharged to various destination
 
 
                                                     </li>
-                                                    <li>Input the % breakdown of water discharged to various destinations which has undergone the treatment process and select the level of treatment done. 
-                                                        E.g. total water discharged into surface water undergoing treatment = Total water discharged x a% discharged to surface water x b % of discharged to surface water which has been treated
-                                                        
+                                                    <li>Input the % breakdown of water discharged to various
+                                                        destinations which has undergone the treatment process and
+                                                        select the level of treatment done.
+                                                        E.g. total water discharged into surface water undergoing
+                                                        treatment = Total water discharged x a% discharged to surface
+                                                        water x b % of discharged to surface water which has been
+                                                        treated
+
                                                     </li>
                                                 </ol>
 
@@ -1345,53 +1383,71 @@
                                             </div>
 
                                             <div *ngIf="categoryId ==15">
-                                                <p>Emissions associated with company staff working from home, primarily due to energy consumption in heating, cooling, lighting, usage of computer devices and internet.
+                                                <p>Emissions associated with company staff working from home, primarily
+                                                    due to energy consumption in heating, cooling, lighting, usage of
+                                                    computer devices and internet.
 
                                                 </p>
-                                                <h5 class="mb-2 ct_fs_16">Three cases have been covered in this category - 
+                                                <h5 class="mb-2 ct_fs_16">Three cases have been covered in this category
+                                                    -
 
                                                 </h5>
 
                                                 <ol style="list-style: upper-alpha;">
-                                                    <li>With cooling – Summer months for which staff is working from home with the usage of air conditioning (along with office devices)
+                                                    <li>With cooling – Summer months for which staff is working from
+                                                        home with the usage of air conditioning (along with office
+                                                        devices)
 
                                                     </li>
-                                                    <li>With heating – Winter months for which staff is working from home with the usage of heating devices (along with office devices).
+                                                    <li>With heating – Winter months for which staff is working from
+                                                        home with the usage of heating devices (along with office
+                                                        devices).
                                                     </li>
-                                                    <li>No heating / cooling – Months for which staff is working from home with only office devices (computer and internet) contributing to emissions and no usage of heating / cooling. 
+                                                    <li>No heating / cooling – Months for which staff is working from
+                                                        home with only office devices (computer and internet)
+                                                        contributing to emissions and no usage of heating / cooling.
                                                     </li>
                                                 </ol>
 
-                                                <h5 class="ct_fs_16 mb-0">To collect emissions data for home office work, follow these steps:
+                                                <h5 class="ct_fs_16 mb-0">To collect emissions data for home office
+                                                    work, follow these steps:
 
 
                                                 </h5>
                                                 <ol>
-                                                    <li>Setup surveys or questionnaires for home office work. Select sample set of employees working in different location to get a good estimate of the total work from home staff.
+                                                    <li>Setup surveys or questionnaires for home office work. Select
+                                                        sample set of employees working in different location to get a
+                                                        good estimate of the total work from home staff.
 
                                                     </li>
-                                                    <li>Manual data tracking (i.e. spreadsheets / journals) to maintain the data of home office work
+                                                    <li>Manual data tracking (i.e. spreadsheets / journals) to maintain
+                                                        the data of home office work
 
 
                                                     </li>
                                                     <li>
-                                                        Department responsible for collecting the data – Human resources department 
+                                                        Department responsible for collecting the data – Human resources
+                                                        department
 
 
                                                     </li>
 
                                                 </ol>
-                                                <h5 class="ct_fs_16 mb-0">How to use the tool for entering data emissions	
+                                                <h5 class="ct_fs_16 mb-0">How to use the tool for entering data
+                                                    emissions
                                                 </h5>
                                                 <ol>
-                                                    <li>Select the year for which you want to enter the data. Note – the data is only entered once for the entire year.  
+                                                    <li>Select the year for which you want to enter the data. Note – the
+                                                        data is only entered once for the entire year.
                                                     </li>
                                                     <li>
-                                                        Enter the no. of employees working from home in the three different setups. 
+                                                        Enter the no. of employees working from home in the three
+                                                        different setups.
 
                                                     </li>
                                                     <li>
-                                                        Enter the average no. of days per week and the no. of months each year for a certain work from home setup.
+                                                        Enter the average no. of days per week and the no. of months
+                                                        each year for a certain work from home setup.
                                                     </li>
 
                                                 </ol>
@@ -2331,7 +2387,7 @@
 
                                 </div>
                                 <div class="trackingFooter" *ngIf="categoryId ==8">
-                                    <div class="row ">
+                                    <div class="row " *ngIf="singlePGSTab">
                                         <div class="col-md-6 mt-3">
                                             <div class="mb-4" style="gap: 10px;">
                                                 <label class=" ct_text_wrape">Product Code Conv.</label>
@@ -2360,7 +2416,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-12 table-responsive"style="height: 53vh;">
+                                        <div class="col-md-12 table-responsive" style="height: 53vh;">
                                             <table class="table ct_home_office_table" style="height:357px">
                                                 <thead class="thead-dark">
                                                     <tr>
@@ -2436,8 +2492,8 @@
                                                             <p-dropdown
                                                                 class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
                                                                 [options]="vendorList" optionLabel="name"
-                                                                optionValue="name" [(ngModel)]="row.vendorName"
-                                                                name="vendor_{{row.id}}" placeholder="Select vendor">
+                                                                [(ngModel)]="row.vendorName" name="vendor_{{row.id}}"
+                                                                placeholder="Select vendor">
                                                             </p-dropdown>
                                                         </td>
                                                         <td>
@@ -2459,6 +2515,180 @@
 
                                                 </tbody>
                                                 <p class="ml-2 trackingsubmitb" (click)="addPurchaseRows()">+</p>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="row " *ngIf="!singlePGSTab">
+                                        <div class="col-md-12">
+                                            <div
+                                                class="d-flex align-items-center justify-content-between ct_gap_10 flex-wrap py-4">
+                                                <div class="mb-4" style="gap: 10px;">
+                                                    <label class=" ct_text_wrape">Product Code Conv.</label>
+                                                    <div class="position-relative">
+                                                        <p-dropdown
+                                                            class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                            (onChange)="onProductHSNChange($event)" ngModel
+                                                            [(ngModel)]="productHSNSelect" [options]="purchaseHSNCode"
+                                                            optionLabel="code" optionValue="id" name="HSNCode">
+                                                        </p-dropdown>
+
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex align-items-center ct_gap_10 flex-wrap">
+                                                    <div>
+                                                        <div
+                                                            class="d-flex justify-content-end border rounded ct_upload_btn1">
+                                                            <p-fileUpload #fileUpload mode="basic" accept=".xlsx, .xls"
+                                                                chooseLabel="Please select a File" (onSelect)="onPurchaseGoodsUpload($event.files)
+                                                        "></p-fileUpload>
+                                                        </div>
+                                                        <!-- <input type="file" class="form-control"  (change)="onPurchaseGoodsUpload($event)" accept=".xlsx, .xls"  id="ct_product_upload_file" > -->
+                                                    </div>
+                                                    <a [href]="downloadExcelUrl" download
+                                                        class="px-4 trackingsubmitb"><i
+                                                            class="fa-solid fa-download mr-2"></i>Download File</a>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-12 table-responsive" style="height: 53vh;">
+                                            <table class="table ct_home_office_table">
+                                                <thead class="thead-dark">
+                                                    <tr>
+                                                        <th scope="col">S.No.</th>
+                                                        <th scope="col">Product Description</th>
+                                                        <th scope="col">Product Type</th>
+                                                        <th scope="col">Product Code</th>
+                                                        <th scope="col">Purchase date</th>
+
+                                                        <!-- <th *ngIf="annualMonths" scope="col">Month of purchase</th> -->
+                                                        <th scope="col" style="width : 6rem; white-space:normal">Value/
+                                                            Quantity</th>
+                                                        <th scope="col">Unit</th>
+                                                        <th scope="col">Vendor</th>
+                                                        <th scope="col">Vendor Specific EF</th>
+                                                        <th scope="col">Status</th>
+                                                        <th scope="col" class="text-center">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody #commuteTable>
+                                                    <!-- <tr>
+                                                        <td scope="row">1</td>
+
+                                                        <td>Sports Teams and Clubs</td>
+                                                        <td>25-10-2025</td>
+                                                        <td>50</td>
+                                                        <td>INR</td>
+                                                        <td>Samsung</td>
+                                                        <td>2.00</td>
+                                                        <td>Matched</td>
+                                                      
+                                                        <td class="d-flex justify-content-center align-items-center">
+                                                            <button class="btn btn-sm btn-primary mr-1">  <i class="fa-solid fa-edit"></i></button>
+                                                            <button class="btn btn-sm btn-danger mr-1">  <i class="fa-solid fa-trash-can"></i></button>
+                                                            <button class="btn  btn-sm btn-success"> Add Vendor</button>
+                                                          
+                                                           
+                                                        </td>
+
+                                                    </tr> -->
+                                                    <tr *ngFor="let product of newExcelData; let i = index">
+                                                        <td>{{ i + 1 }}</td>
+                                                        <td>
+                                                            <ng-container>
+                                                                <textarea *ngIf="product.isEditing" type="text"
+                                                                    [(ngModel)]="product['Product Description']"
+                                                                    [ngModelOptions]="{standalone: true}"
+                                                                    class="form-control text-dark"></textarea>
+                                                                <span *ngIf="!product.isEditing">{{ product['Product Description'] }}</span>
+                                                            </ng-container>
+
+                                                        </td>
+                                                        <td>
+                                                            <ng-container>
+                                                                <textarea *ngIf="product.isEditing" type="text"
+                                                                    [(ngModel)]="product.productResult.typesofpurchasename"
+                                                                    [ngModelOptions]="{standalone: true}"
+                                                                    class="form-control text-dark"></textarea>
+                                                                <span *ngIf="!product.isEditing">{{
+                                                                    product.productResult.typesofpurchasename }}</span>
+                                                            </ng-container>
+
+                                                        </td>
+                                                        <td>
+                                                            <ng-container>
+                                                                <textarea *ngIf="product.isEditing" type="text"
+                                                                    [(ngModel)]="product.code"
+                                                                    [ngModelOptions]="{standalone: true}"
+                                                                    class="form-control text-dark"></textarea>
+                                                                <span *ngIf="!product.isEditing">{{
+                                                                    product.productResult.product }} {{ product.code
+                                                                    }}</span>
+                                                            </ng-container>
+
+                                                        </td>
+                                                        <td>
+                                                            <input *ngIf="product.isEditing" type="text"
+                                                                [(ngModel)]="product['Purchase Date']"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                class="form-control" />
+                                                            <span *ngIf="!product.isEditing">{{ product['Purchase Date']
+                                                                }}</span>
+                                                        </td>
+                                                        <td>
+                                                            <input *ngIf="product.isEditing" type="text"
+                                                                [(ngModel)]="product['Value / Quantity']"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                class="form-control" />
+                                                            <span *ngIf="!product.isEditing">{{ product['Value /Quantity'] }}</span>
+                                                        </td>
+                                                        <td>
+                                                            <input *ngIf="product.isEditing" type="text"
+                                                                [(ngModel)]="product['Unit']"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                class="form-control" />
+                                                            <span *ngIf="!product.isEditing">{{ product['Unit']
+                                                                }}</span>
+                                                        </td>
+                                                        <td>
+                                                            <input *ngIf="product.isEditing" type="text"
+                                                                [(ngModel)]="product['Vendor']"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                class="form-control" />
+                                                            <span *ngIf="!product.isEditing">{{ product['Vendor']
+                                                                }}</span>
+                                                        </td>
+                                                        <td>
+
+                                                            <span>{{ product['Vendor Specific EF']}}&nbsp;
+                                                                {{product['Vendor Specific Unit'] }}</span>
+                                                        </td>
+                                                        <td>
+
+                                                            <span [ngClass]="{'redColor':!product.is_find}">{{
+                                                                product.is_find ? 'Matched' : 'Unmatched' }}</span>
+                                                        </td>
+
+
+                                                        <td class="d-flex justify-content-center align-items-center">
+                                                            <button type="button" class="btn btn-sm btn-primary mr-1"
+                                                                (click)="toggleEdit(i, product.id)"  class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                                                <i class="fa-solid"
+                                                                    [ngClass]="{'fa-sync-alt': !product.isEditing, 'fa-save': product.isEditing}"></i>
+                                                            </button>
+                                                            <button type="button" class="btn btn-sm btn-danger mr-1"
+                                                                (click)="deleteProduct(i)">
+                                                                <i class="fa-solid fa-trash-can"></i>
+                                                            </button>
+                                                            <!-- <button class="btn btn-sm btn-success"> Add Vendor</button> -->
+                                                        </td>
+                                                    </tr>
+
+
+
+                                                </tbody>
+
                                             </table>
                                         </div>
                                     </div>
@@ -2775,7 +3005,8 @@
                                                         <div class="mb-4" style="gap: 10px;">
                                                             <label class=" ct_text_wrape">Total water discharged</label>
                                                             <div class="position-relative">
-                                                                <input type="number" placeholder="Enter water discharged"
+                                                                <input type="number"
+                                                                    placeholder="Enter water discharged"
                                                                     class="form-control Dashboard-tab text-white"
                                                                     name="water_treatment" ngModel />
                                                                 <div class="ct_quantity_text">
@@ -5595,8 +5826,7 @@
 
 
                                             </th>
-                                            <th pSortableColumn="catName"
-                                                *ngIf="categoryId == 19 ">
+                                            <th pSortableColumn="catName" *ngIf="categoryId == 19 ">
                                                 Product Energy Use
 
                                             </th>
@@ -6075,9 +6305,11 @@
                                             <td *ngIf="categoryId == 16 || categoryId == 21 || categoryId == 22  ">{{
                                                 de.scope2_emission }}</td>
                                             <td *ngIf="categoryId == 16 || categoryId == 21">{{ de.vehicle_type }}</td>
-                                            <td *ngIf="categoryId == 16 || categoryId == 21">{{ de.vehicle_subtype }}</td>
+                                            <td *ngIf="categoryId == 16 || categoryId == 21">{{ de.vehicle_subtype }}
+                                            </td>
                                             <td *ngIf="categoryId == 16 || categoryId == 21">{{de.no_of_vehicles}}</td>
-                                            <td *ngIf="categoryId == 16 || categoryId == 21">{{ de.distance_travelled }}&nbsp;{{de.unit}}
+                                            <td *ngIf="categoryId == 16 || categoryId == 21">{{ de.distance_travelled
+                                                }}&nbsp;{{de.unit}}
                                             </td>
                                             <td *ngIf="categoryId == 15">{{ de.typeof_homeoffice_name }}</td>
                                             <td *ngIf="categoryId == 15">{{ de.noofemployees }}</td>
@@ -6123,7 +6355,7 @@
                                             </td>
                                             <td *ngIf="categoryId == 24">{{ de.no_of_trips }}
                                             </td>
-                                            <td *ngIf="categoryId == 24">{{ de.distance }}
+                                            <td *ngIf="categoryId == 24">{{ de.distance == 0 ? 'NA':de.distance }}
                                             </td>
                                             <td *ngIf="categoryId == 24">{{ de.return_Flight == "true" ? 'Yes' :'No'}}
                                             </td>
@@ -6228,7 +6460,7 @@
                         <p-tabPanel header="Settings">
                             <div class="row text-white border-bottom">
                                 <p class="mb-2 mt-3 ml-4 text-dark">
-                                    {{ SubCatAllData.subCatName }}
+                                    {{ categoryName }}
                                 </p>
                             </div>
                             <div class="ElectricityTable mt-0 ct_overflow_hidden_data_table_500"
@@ -6433,5 +6665,32 @@
                 </div>
             </div>
         </div>
+
+
+
+
+
+
+<div class="modal fade modal-lg" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p-dropdown class="finput ct_input_white_bg13 custom_dropdown" ngModel
+                         name="country" placeholder="Select" [options]="allPRoducts" [filter]="true" filterBy="product"
+                      [(ngModel)]="psg_product"  [ngModelOptions]="{standalone: true}"
+                         optionLabel="product" styleClass="facilitydropdown" #country="ngModel" required  (onChange)="onAllProductChange()">
+                     </p-dropdown>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
     </div>
+  </div>
 </div>

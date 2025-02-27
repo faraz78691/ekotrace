@@ -140,6 +140,10 @@ export class PlatformAdminComponent {
 
   // Method to handle form submission
   onSubmit(form: any) {
+    if(this.loginInfo.role == 'Auditor'){
+        this.notification.showInfo('You are not Authorized', '');
+        return
+    }
     if (form.valid) {
       this.isloading = true;
       // Call your API or add the necessary logic for form submission
@@ -184,6 +188,10 @@ export class PlatformAdminComponent {
 
     //method for update group detail by id
     updateGroup(data: NgForm) {
+        if(this.loginInfo.role == 'Auditor'){
+            this.notification.showInfo('You are not Authorized', '');
+            return
+        }
         const formData = new URLSearchParams();
 
         formData.append('package_id', data.value.packageId);

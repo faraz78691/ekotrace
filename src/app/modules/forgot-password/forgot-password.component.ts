@@ -16,7 +16,7 @@ import {
 import {ToastrService} from 'ngx-toastr';
 import {AppService} from '@services/app.service';
 import {UserService} from '@services/user.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {ForgotPassword} from './forgot-password';
 import {HttpParams} from '@angular/common/http';
 
@@ -42,7 +42,9 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
         private appService: AppService,
         private fb: FormBuilder,
         public userservice: UserService,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private router: Router,
+
     ) {
         this.forgotData = new ForgotPassword();
     }
@@ -65,11 +67,16 @@ the given email exists.
 //The onSubmit function handles the submission of the form for password recovery and displays appropriate messages based on the response.
     onSubmit(fForm: NgForm) {
         this.isLoading = true;
-        this.userservice.forgotPassword(this.forgotData.email).subscribe({
+        
+    const formVendorData = new URLSearchParams();
+    formVendorData.set('email', this.forgotData.email);
+        this.userservice.forgotPassword(formVendorData).subscribe({
             next: (response) => {
+                this.isLoading = false;
                 this.toastr.success(
                     'The link has been sent, please check your email to reset your password'
                 );
+                this.router.navigate(['/login'])
             },
             error: (err) => {
                 this.isLoading = false;
@@ -80,7 +87,7 @@ the given email exists.
     
 //The ngOnDestroy function is called when the component is about to be destroyed. It removes a CSS class from the root element.
     ngOnDestroy(): void {
-        this.renderer.removeClass(document.querySelector('app-root'), '');
+        // this.renderer.removeClass(document.querySelector('app-root'), '');
     }
 
     //Check existing user by username

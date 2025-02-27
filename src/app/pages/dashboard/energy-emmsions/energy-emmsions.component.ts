@@ -92,7 +92,7 @@ export class EnergyEmmsionsComponent {
   public groupChart: Partial<Chart3Options>;
   dashboardData: any[] = [];
   public loginInfo: LoginInfo;
-  selectedFacility: number;
+  selectedFacility:any;
   year: Date;
   scopeWiseSeries: any[] = [];
   progress1: any = '';
@@ -191,12 +191,14 @@ export class EnergyEmmsionsComponent {
 
       if (result.success == true) {
         this.dashboardData = result.categories;
+ 
         if (this.facilityService.selectedfacilitiesSignal() == 0) {
           this.selectedFacility = this.dashboardData[0].ID;
-
+          
         } else {
           this.selectedFacility = this.facilityService.selectedfacilitiesSignal();
         }
+
         this.emssionByTravel(this.selectedFacility);
         this.totalEmissionByMonth(this.selectedFacility)
         this.BygroundTravel(this.selectedFacility)
@@ -206,6 +208,11 @@ export class EnergyEmmsionsComponent {
 
     });
   };
+
+  isArray(value: any): boolean {
+    return Array.isArray(value);
+  }
+
 
   emssionByTravel(facility) {
 

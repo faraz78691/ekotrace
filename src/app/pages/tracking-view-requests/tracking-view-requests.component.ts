@@ -197,10 +197,13 @@ export class TrackingViewRequestsComponent {
         this.display = 'none';
     };
     sendEntryForApproval() {
-
+        if(this.loginInfo.role == 'Auditor'){
+            this.notification.showWarning('You are not Authorized', 'Warning');
+            return
+        }
         if(this.loginInfo.role =='Preparer'){
             this.notification.showWarning(
-                'You are not authorized to approve entry',
+                'You are not Authorized to approve entry',
                 'Warning'
             );
             return false

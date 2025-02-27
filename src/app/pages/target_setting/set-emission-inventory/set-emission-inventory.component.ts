@@ -96,7 +96,7 @@ export class SetEmissionInventoryComponent {
     scope_1_emissions: number;
     scope_2_emissions: number;
     scope_3_emissions: number;
-    targetAllowed = computed(() => this.facilityService.targetAllowed());
+ 
     constructor(
         private companyService: CompanyService,
         private UserService: UserService,
@@ -240,6 +240,11 @@ export class SetEmissionInventoryComponent {
 
     //method to add new group
     saveOffset(data: NgForm) {
+
+        if(this.loginInfo.role == 'Auditor'){
+            this.notification.showInfo('You are not Authorized', '');
+            return
+        }
       
         var dateYear = (data.value.year_added).getFullYear().toString();
 
@@ -251,12 +256,7 @@ export class SetEmissionInventoryComponent {
             return
         }
 
-        if (this.targetAllowed() == false ) {
-            this.notification.showInfo('You are not authorised to submit form', '')
-            return
-        }
-
-
+    
         if (
             parseFloat(data.value.scope_1_emissions) <
             (parseFloat(data.value.company_vehicles) + parseFloat(data.value.refrigerants))
@@ -368,6 +368,10 @@ export class SetEmissionInventoryComponent {
     };
 
     saveProjections(data: NgForm) {
+        if(this.loginInfo.role == 'Auditor'){
+            this.notification.showInfo('You are not Authorized', '');
+            return
+        }
         if (this.loginInfo.role  == 'Preparer' || this.loginInfo.role  == 'Manager' ) {
             this.notification.showInfo('You are not authrised to submit form', '')
             return
@@ -408,6 +412,10 @@ export class SetEmissionInventoryComponent {
 
     //method for update group detail by id
     updateGroup(id: any, data: NgForm) {
+        if(this.loginInfo.role == 'Auditor'){
+            this.notification.showInfo('You are not Authorized', '');
+            return
+        }
         if (this.loginInfo.role  == 'Preparer' || this.loginInfo.role  == 'Manager' ) {
             this.notification.showInfo('You are not authrised to submit form', '')
             return

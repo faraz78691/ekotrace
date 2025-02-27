@@ -98,7 +98,7 @@ export class BusinessTravelComponent {
   public groupChart: Partial<Chart3Options>;
   dashboardData: any[] = [];
   public loginInfo: LoginInfo;
-  selectedFacility:number;
+  selectedFacility:any;
   year: Date;
   scopeWiseSeries: any[] = [];
   progress1: any = '';
@@ -150,6 +150,11 @@ export class BusinessTravelComponent {
     }
     this.GetAllfacilities();
   };
+
+  isArray(value: any): boolean {
+    return Array.isArray(value);
+  }
+
 
   GetAllfacilities() {
     let tenantId = this.loginInfo.tenantID;

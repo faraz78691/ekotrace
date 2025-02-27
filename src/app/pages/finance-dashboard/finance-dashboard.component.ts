@@ -119,6 +119,11 @@ export class FinanceDashboardComponent {
    
   };
 
+  isArray(value: any): boolean {
+    return Array.isArray(value);
+  }
+
+
   GetAllSubGrups() {
     let tenantId = this.loginInfo.tenantID;
     const formData = new URLSearchParams();

@@ -713,6 +713,7 @@ export class GhgTemplateComponent {
                             })
                            
                             this.selectedScope1 = [...newScope1];
+                           
                         } else if (items.ScopeID == 2) {
                             const newScope2 = [];
                             items.manageDataPointCategories.forEach((categories: any) => {

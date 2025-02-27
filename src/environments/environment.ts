@@ -4,20 +4,19 @@
 
 export const environment = {
     production: false,
-    // baseUrl: 'http://localhost:4000',
+    // baseUrl: 'http://localhost:4500',
     // baseUrl: 'http://192.168.1.31:4003',
 
     // scope 3 url
     // baseUrl: 'https://13.200.247.29:4000',
-    baseUrl: 'https://ekotrace.ekobon.com:4000',
-    // baseUrl: 'http://192.168.1.49:5000/api/',
+    // baseUrl: 'https://ekotrace.ekobon.com:4000',
+    baseUrl: 'http://192.168.29.45:4500',
     NoData: 'No Data Point',
     none: 'none',
     flex: 'flex',
     block: 'block',
     // pending: 'pending',
     pending: 'Pending',
-
     approved: 'Approved',
     rejected: 'Rejected',
     nullData: 'Null Data',

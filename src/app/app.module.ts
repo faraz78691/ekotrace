@@ -129,6 +129,7 @@ import { VendorDashboardComponent } from './pages/vendor-dashboard/vendor-dashbo
 import { CostCentreComponent } from './pages/cost-centre/cost-centre.component';
 import { DataProgressComponent } from './pages/data-progress/data-progress.component';
 import { DisableScrollDirective } from './utils/disable-scroll.directive';
+import { VehicleFleetComponent } from './pages/vehicle-fleet/vehicle-fleet.component';
 
 defineCustomElements();
 registerLocaleData(localeEn, 'en-EN');
@@ -212,7 +213,8 @@ registerLocaleData(localeEn, 'en-EN');
         VendorDashboardComponent,
         CostCentreComponent,
         DataProgressComponent,
-        DisableScrollDirective
+        DisableScrollDirective,
+        VehicleFleetComponent
     ],
     imports: [
         HeaderComponent,

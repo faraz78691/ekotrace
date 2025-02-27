@@ -141,7 +141,7 @@ ngOnInit() {
         this.loginInfo = jsonObj as LoginInfo;
     }
     let tenantID = this.loginInfo.tenantID;
-    if(this.loginInfo.role =='Super Admin' || this.loginInfo.role =='Admin'){
+    if(this.loginInfo.role =='Super Admin' || this.loginInfo.role =='Admin' || this.loginInfo.role =='Auditor'){
     
         this.subGroupGet(tenantID);
 
@@ -181,6 +181,10 @@ ngOnInit() {
 
 //method for update a facility by id
 editfacility(id: any, data: NgForm) {
+    if(this.loginInfo.role == 'Auditor'){
+        this.notification.showInfo('You are not Authorized', '');
+        return
+    }
   
     let tenantId = this.loginInfo.tenantID;
     let formdata = new URLSearchParams();

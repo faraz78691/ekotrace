@@ -241,11 +241,11 @@ export class ActionsComponent {
 
     //method to add new group
     saveOffset(data: NgForm) {
-        if (this.loginInfo.role  == 'Preparer' || this.loginInfo.role  == 'Manager' ) {
-            this.notification.showInfo('You are not authorised to submit form', '')
+        if(this.loginInfo.role == 'Auditor'){
+            this.notification.showInfo('You are not Authorized', '');
             return
         }
-        if (this.targetAllowed() == false ) {
+        if (this.loginInfo.role  == 'Preparer' || this.loginInfo.role  == 'Manager' ) {
             this.notification.showInfo('You are not authorised to submit form', '')
             return
         }
@@ -294,6 +294,10 @@ export class ActionsComponent {
     current_status_action: any;
 
     onEditAction(data) {
+        if(this.loginInfo.role == 'Auditor'){
+            this.notification.showInfo('You are not Authorized', '');
+            return
+        }
         if (this.loginInfo.role  == 'Preparer' || this.loginInfo.role  == 'Manager' ) {
             this.notification.showInfo('You are not authrised to submit form', '')
             return
@@ -328,6 +332,10 @@ export class ActionsComponent {
 
     //method for update group detail by id
     updateGroup(id: any, data: NgForm) {
+        if(this.loginInfo.role == 'Auditor'){
+            this.notification.showInfo('You are not Authorized', '');
+            return
+        }
         if (this.loginInfo.role  == 'Preparer' || this.loginInfo.role  == 'Manager' ) {
             this.notification.showInfo('You are not authrised to submit form', '')
             return
@@ -434,6 +442,10 @@ export class ActionsComponent {
     }
     //method for delete a group by id
     deleteGroup(event: Event, id) {
+        if(this.loginInfo.role == 'Auditor'){
+            this.notification.showInfo('You are not Authorized', '');
+            return
+        }
         if (this.loginInfo.role  == 'Preparer' || this.loginInfo.role  == 'Manager' ) {
             this.notification.showInfo('You are not authrised to submit form', '')
             return

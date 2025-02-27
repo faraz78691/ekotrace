@@ -28,7 +28,7 @@ export class UserComponent {
     public admininfo: UserInfo;
     public userdetails: UserInfo;
     public admininfoList: UserInfo[] = [];
-    facilityList: Facility[] = [];
+    facilityList: any[] = [];
     RolesList: newRoleModel[] = [];
 
     display = 'none';
@@ -106,8 +106,8 @@ export class UserComponent {
     checkFacilityID() {
 
         if (this.selectedRole == '525debfd-cd64-4936-ae57-346d57de3585') {
-            this.groupId = this.admininfo.facilityID['id'];
-            const stringfyIDs = JSON.stringify(this.admininfo.facilityID['ID']);
+            this.groupId = this.admininfo.group_id['id'];
+            const stringfyIDs = JSON.stringify(this.admininfo.group_id['ID']);
             this.payloadFacilityIds = stringfyIDs;
         } else {
             const stringfyIDs = JSON.stringify([this.admininfo.facilityID.toString()]);
@@ -119,6 +119,10 @@ export class UserComponent {
     };
     //The onSubmit function handles form submission, including validation, user addition, and user update, with success/error notifications.
     onSubmit(x: any) {
+        if(this.loginInfo.role == 'Auditor'){
+            this.notification.showWarning('You are not Authorized', 'Warning');
+            return
+        }
         if (
             this.admininfo.username.length == 0 &&
             this.admininfo.firstname.length == 0 &&
@@ -146,11 +150,14 @@ export class UserComponent {
                         'Warning'
                     );
                     return
-                }
+                };
+
+
+                
                 const formData = new URLSearchParams();
-                formData.set('email', this.admininfo.email)
+                formData.set('email', this.admininfo.email.trim().toLocaleLowerCase())
                 formData.set('username', this.admininfo.username)
-                formData.set('password', this.admininfo.password)
+                formData.set('password', this.admininfo.password.trim())
                 formData.set('firstname', this.admininfo.firstname)
                 formData.set('lastname', this.admininfo.lastname)
                 formData.set('roleID', this.selectedRole)
@@ -330,9 +337,18 @@ export class UserComponent {
             this.facilityList = response;
             if (this.facilityList.length === 0) {
                 this.facilitydata = true;
+            };
+
+            if(this.selectedRole == 'a34d0ecf-4730-4521-82ee-5e3eg28bdfb0'){
+                const filterMainGroup = this.facilityList.find(item => item.is_main_group == 1);
+                this.groupId = filterMainGroup['id'];
+                const stringfyIDs = JSON.stringify(filterMainGroup['ID']);
+                this.payloadFacilityIds = stringfyIDs;
+                
             }
         });
-    }
+    };
+
     GetGroupsForAdmin() {
         let tenantId = this.loginInfo.tenantID;
         this.facilitydata = false;
@@ -342,10 +358,14 @@ export class UserComponent {
                 this.facilitydata = true;
             }
         });
-    }
+    };
 
     // ----Edit user Method ---
     EditUser(userdetails) {
+        if(this.loginInfo.role == 'Auditor'){
+            this.notification.showWarning('You are not Authorized', 'Warning');
+            return
+        }
         if (
             this.loginInfo.role === 'Super Admin' ||
             this.loginInfo.role === 'Manager' ||
@@ -357,7 +377,7 @@ export class UserComponent {
 
         this.admininfo = userdetails;
         // console.log(this.admininfo);
-        this.onEditSelected(this.admininfo.role , this.admininfo.roleId);
+        this.onEditSelected(this.admininfo.role, this.admininfo.roleId);
     }
 
     // ----Delete user Method ---
@@ -412,11 +432,11 @@ export class UserComponent {
     }
 
     //---method for get selected role for user model Radio button ---
-    onEditSelected(value: string , roldId:any): void {
-     
+    onEditSelected(value: string, roldId: any): void {
+
         const EditRole = value;
         this.selectedRole = roldId;
-    
+
         this.admininfo.roleID = roldId;
 
         if (EditRole == 'Super Admin') {
@@ -429,7 +449,7 @@ export class UserComponent {
                 this.GetGroups()
             }
 
-          
+
 
         } else if (EditRole == 'Manager') {
             this.GetAllFacility()
@@ -453,7 +473,20 @@ export class UserComponent {
             } else {
                 this.GetAllFacility()
             }
-        } else {
+        } else if (this.loginInfo.role == 'Super Admin') {
+            if (this.selectedRole == '525debfd-cd64-4936-ae57-346d57de3585') {
+                //  for admin role
+                this.GetGroups()
+            } else if (this.selectedRole == 'a34d0ecf-4730-4521-82ee-5e3eg28bdfb0') {
+                this.GetGroups();
+                // auditor role
+            }
+            else {
+                this.GetAllFacility()
+            }
+        }
+
+        else {
             if (this.selectedRole == '525debfd-cd64-4936-ae57-346d57de3585') {
                 this.GetGroups()
             } else {
@@ -557,5 +590,21 @@ export class UserComponent {
     //method for reset form
     resetForm() {
         this.UserForm.resetForm();
+    }
+
+    handleDropdownShow(): void {
+        window.addEventListener('scroll', this.preventScroll, true);
+    }
+
+    handleDropdownHide(): void {
+        window.removeEventListener('scroll', this.preventScroll, true);
+    }
+
+    preventScroll(event: Event): void {
+        const dropdown = document.querySelector('.p-dropdown-panel');
+        if (dropdown) {
+            // console.log('Preventing scroll');
+            event.stopPropagation();
+        }
     }
 }

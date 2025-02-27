@@ -93,7 +93,10 @@ export class CompanyProfileComponent {
     }
     //method to update company profile
     saveChanges() {
-       
+        if(this.loginInfo.role == 'Auditor'){
+            this.notification.showInfo('You are not Authorized', '');
+            return
+        }
         
         const stringifySelectedIndustryTypes = JSON.stringify(this.selectedIndustryTypes);
         const stringifySelectedSecondaryIndustryTypes = JSON.stringify(this.selectedSecondaryIndustryTypes);
@@ -126,6 +129,10 @@ export class CompanyProfileComponent {
     }
     //method for upload company-logo
     uploadImage(files: FileList | null) {
+        if(this.loginInfo.role == 'Auditor'){
+            this.notification.showInfo('You are not Authorized', '');
+            return
+        }
         if (files && files.length > 0) {
             this.selectedFile = files[0];
 

@@ -111,10 +111,10 @@ export class LoginComponent implements OnInit {
 */
     loginByAuth() {
         if (this.loginForm.valid) {
-            this.submitted = true;
-            this.isLoading = true;
-            this.showLoader = true;
-            this.isAuthLoading = true;
+            // this.submitted = true;
+            // this.isLoading = true;
+            // this.showLoader = true;
+            // this.isAuthLoading = true;
             const formData = new URLSearchParams();
             formData.set('email', this.loginForm.value.email.trim());
             formData.set('password', this.loginForm.value.password.trim());
@@ -123,7 +123,9 @@ export class LoginComponent implements OnInit {
 
                     if (res.success == true) {
 
+console.log(res);
 
+                        
                         this.loginInfo = res.userinfo[0];
                         if (this.loginInfo.role != 'Platform Admin') {
                             if (this.loginInfo.package_id == null || this.loginInfo.package_id == undefined) {
@@ -135,6 +137,7 @@ export class LoginComponent implements OnInit {
                                 return false
                             }
                         }
+                   
                   
 
                         this.invalidLogin = false;
@@ -157,7 +160,7 @@ export class LoginComponent implements OnInit {
                         this.isExpiring = differenceInDays <= 7 && differenceInDays > 0;
                         this.isExpired = differenceInDays < 0;
                      
-                     
+                  
                         this.GetSubGroupList(this.loginInfo.tenantID);
 
                         if (this.loginInfo.role === 'Platform Admin') {

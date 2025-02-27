@@ -66,12 +66,16 @@ import { AuditReportComponent } from '@pages/reports/audit-report/audit-report.c
 import { VendorDashboardComponent } from '@pages/vendor-dashboard/vendor-dashboard.component';
 import { CostCentreComponent } from '@pages/cost-centre/cost-centre.component';
 import { DataProgressComponent } from '@pages/data-progress/data-progress.component';
+import { VehicleComponent } from '@pages/vehicle/vehicle.component';
+import { VehicleFleetComponent } from '@pages/vehicle-fleet/vehicle-fleet.component';
 
 const routes: Routes = [
+    { path: '', redirectTo: '/dashboard/ghgEmision', pathMatch: 'full' },
     {
         path: '',
         component: MainComponent,
         canActivate: [AuthGuard],
+     
         //canActivateChild: [AuthGuard],
         children: [
             {
@@ -85,7 +89,8 @@ const routes: Routes = [
                         'Manager',
                         'Preparer',
                         'Approver',
-                        'Platform Admin'
+                        'Platform Admin',
+                         'Auditor'
                     ]
                 },
                 children:[
@@ -108,7 +113,8 @@ const routes: Routes = [
                         'Manager',
                         'Preparer',
                         'Approver',
-                        'Platform Admin'
+                        'Platform Admin',
+                        'Auditor'
                     ]
                 }
             },
@@ -120,7 +126,8 @@ const routes: Routes = [
                 'Admin',
                 'Manager',
                 'Preparer',
-                'Approver',] }
+                'Approver',
+                'Auditor'] }
             },
             {
                 path: 'company-register',
@@ -133,61 +140,61 @@ const routes: Routes = [
                 canActivate: [RoleGuard],
                 component: FinanceEmissionsComponent,
                 data: { roles: ['Platform Admin','Super Admin',
-                'Admin']}
+                'Admin', 'Auditor']}
             },
             {
                 path: 'company-register',
                 canActivate: [RoleGuard],
                 component: AdminDashboardComponent,
-                data: { roles: ['Platform Admin'] }
+                data: { roles: ['Platform Admin', 'Auditor'] }
             },
             {
                 path: 'brsr-qa',
                 canActivate: [RoleGuard],
                 component: BrsrQaComponent,
-                data: { roles: ['Platform Admin','Super Admin','Admin','Manager','Preparer'] }
+                data: { roles: ['Platform Admin','Super Admin','Admin','Manager','Preparer', 'Auditor'] }
             },
             {
                 path: 'finance_emissions',
                 canActivate: [RoleGuard],
                 component: FinanceEmissionsComponent,
-                data: { roles: ['Platform Admin','Super Admin','Admin','Manager','Preparer'] }
+                data: { roles: ['Platform Admin','Super Admin','Admin','Manager','Preparer', 'Auditor'] }
             },
             {
                 path: 'setGhgTemplate',
                 canActivate: [RoleGuard],
                 component: GhgTemplateComponent,
-                data: { roles: ['Platform Admin','Super Admin','Admin','Manager','Preparer'] }
+                data: { roles: ['Platform Admin','Super Admin','Admin','Manager','Preparer', 'Auditor'] }
             },
             {
                 path: 'vendors',
                 canActivate: [RoleGuard],
                 component: VendorsComponent,
-                data: { roles: ['Platform Admin','Super Admin','Admin','Manager','Preparer'] }
+                data: { roles: ['Platform Admin','Super Admin','Admin','Manager','Preparer', 'Auditor'] }
             },
             {
                 path: 'cost_centre',
                 canActivate: [RoleGuard],
                 component: CostCentreComponent,
-                data: { roles: ['Platform Admin','Super Admin','Admin','Manager','Preparer'] }
+                data: { roles: ['Platform Admin','Super Admin','Admin','Manager','Preparer', 'Auditor'] }
             },
             {
                 path: 'dataProgress',
                 canActivate: [RoleGuard],
                 component: DataProgressComponent,
-                data: { roles: ['Platform Admin','Super Admin','Admin','Manager','Preparer'] }
+                data: { roles: ['Platform Admin','Super Admin','Admin','Manager','Preparer', 'Auditor'] }
             },
             {
                 path: 'vendorDashboard',
                 canActivate: [RoleGuard],
                 component: VendorDashboardComponent,
-                data: { roles: ['Platform Admin','Super Admin','Admin','Manager','Preparer'] }
+                data: { roles: ['Platform Admin','Super Admin','Admin','Manager','Preparer', 'Auditor'] }
             },
             {
                 path: 'main_tree',
                 canActivate: [RoleGuard],
                 component: MainTreeComponent,
-                data: { roles: ['Platform Admin','Super Admin','Admin','Manager','Preparer'] },
+                data: { roles: ['Platform Admin','Super Admin','Admin','Manager','Preparer', 'Auditor'] },
                 children:[
                     {path:'',redirectTo:'view', pathMatch:'full'},
                     {path:'view', component:TreeComponent},
@@ -195,6 +202,10 @@ const routes: Routes = [
                     {path:'subgroup', component:SubgroupComponent},
                     {path:'group', component:GroupComponent}
                 ]
+            },
+            {
+                path: 'vehicle-fleet',
+                component: VehicleFleetComponent
             },
             {
                 path: 'emission-section',
@@ -214,7 +225,9 @@ const routes: Routes = [
             },
             {
                 path: 'audit-report',
-                component: AuditReportComponent
+                component: AuditReportComponent,
+                canActivate: [RoleGuard],
+                data: { roles: ['Platform Admin', 'Auditor', 'Super Admin'] }
             },
             {
                 path: 'social-section',
@@ -232,19 +245,19 @@ const routes: Routes = [
                 path: 'user',
                 component: UserComponent,
                 canActivate: [RoleGuard],
-                data: { roles: ['Super Admin', 'Admin', 'Manager','Preparer'] }
+                data: { roles: ['Super Admin', 'Admin', 'Manager','Preparer', 'Auditor'] }
             },
             {
                 path: 'tree/:id',
                 component: TreeComponent,
                 canActivate: [RoleGuard],
-                data: { roles: ['Super Admin', 'Admin'] }
+                data: { roles: ['Super Admin', 'Admin', 'Auditor'] }
             },
             {
                 path: 'treeList',
                 component: TreeListComponent,
                 canActivate: [RoleGuard],
-                data: { roles: ['Super Admin', 'Admin'] }
+                data: { roles: ['Super Admin', 'Admin', 'Auditor'] }
             },
             // {
             //     path: 'group',
@@ -264,13 +277,13 @@ const routes: Routes = [
                 component: BillingComponent,
                 data: { roles: ['Super Admin','Admin','Manager',
                 'Preparer',
-                'Approver'] }
+                'Approver', 'Auditor'] }
             },
             {
                 path: 'adminBilling',
                 canActivate: [RoleGuard],
                 component: NewBillingComponent,
-                data: { roles: ['Super Admin'] }
+                data: { roles: ['Super Admin', 'Auditor'] }
             },
             {
                 path: 'carbonOffset',
@@ -280,7 +293,7 @@ const routes: Routes = [
                 'Admin',
                 'Manager',
                 'Preparer',
-                'Approver'] }
+                'Approver', 'Auditor'] }
             },
             { path: 'tracking',   canActivate: [RoleGuard],data: {
                 roles: [
@@ -288,7 +301,7 @@ const routes: Routes = [
                     'Admin',
                     'Manager',
                     'Preparer',
-                    'Approver'
+                    'Approver', 'Auditor'
                 ]
             }, loadChildren: () => import('./pages/tracking/tracking.module').then(m => m.TrackingModule) },
             { path: 'platformAdmin',canActivate: [RoleGuard],data: {
@@ -335,7 +348,7 @@ const routes: Routes = [
                         'Admin',
                         'Manager',
                         'Preparer',
-                        'Approver'
+                        'Approver', 'Auditor'
                     ]
                 }
             },
@@ -358,7 +371,7 @@ const routes: Routes = [
                         'Admin',
                         'Manager',
                         'Preparer',
-                        'Approver'
+                        'Approver', 'Auditor'
                     ]
                 }
             },
@@ -372,7 +385,7 @@ const routes: Routes = [
                         'Admin',
                         'Manager',
                         'Preparer',
-                        'Approver'
+                        'Approver', 'Auditor'
                     ]
                 }
             },
@@ -386,7 +399,7 @@ const routes: Routes = [
                         'Admin',
                         'Manager',
                         'Preparer',
-                        'Approver'
+                        'Approver', 'Auditor'
                     ]
                 }
             },
@@ -400,7 +413,7 @@ const routes: Routes = [
                         'Admin',
                         'Manager',
                         'Preparer',
-                        'Approver'
+                        'Approver', 'Auditor'
                     ]
                 }
             },
@@ -414,7 +427,7 @@ const routes: Routes = [
                         'Admin',
                         'Manager',
                         'Preparer',
-                        'Approver'
+                        'Approver', 'Auditor'
                     ]
                 }
             },
@@ -428,7 +441,7 @@ const routes: Routes = [
                         'Admin',
                         'Manager',
                         'Preparer',
-                        'Approver'
+                        'Approver', 'Auditor'
                     ]
                 }
             },
@@ -442,7 +455,7 @@ const routes: Routes = [
                         'Admin',
                         'Manager',
                         'Preparer',
-                        'Approver'
+                        'Approver', 'Auditor'
                     ]
                 }
             },
@@ -456,7 +469,7 @@ const routes: Routes = [
                         'Admin',
                         'Manager',
                         'Preparer',
-                        'Approver'
+                        'Approver', 'Auditor'
                     ]
                 }
             },
@@ -470,7 +483,7 @@ const routes: Routes = [
                         'Admin',
                         'Manager',
                         'Preparer',
-                        'Approver'
+                        'Approver', 'Auditor'
                     ]
                 }
             },
@@ -484,7 +497,7 @@ const routes: Routes = [
                         'Admin',
                         'Manager',
                         'Preparer',
-                        'Approver'
+                        'Approver', 'Auditor'
                     ]
                 }
             },
@@ -498,7 +511,7 @@ const routes: Routes = [
                         'Admin',
                         'Manager',
                         'Preparer',
-                        'Approver'
+                        'Approver', 'Auditor'
                     ]
                 }
             },
@@ -512,7 +525,7 @@ const routes: Routes = [
                         'Admin',
                         'Manager',
                         'Preparer',
-                        'Approver'
+                        'Approver', 'Auditor'
                     ]
                 }
             },
@@ -526,7 +539,7 @@ const routes: Routes = [
                         'Admin',
                         'Manager',
                         'Preparer',
-                        'Approver'
+                        'Approver', 'Auditor'
                     ]
                 }
             },
@@ -540,7 +553,7 @@ const routes: Routes = [
                         'Admin',
                         'Manager',
                         'Preparer',
-                        'Approver'
+                        'Approver', 'Auditor'
                     ]
                 }
             },
@@ -553,7 +566,7 @@ const routes: Routes = [
                         'Super Admin',
                         'Admin', 'Manager',
                         'Preparer',
-                        'Approver'
+                        'Approver', 'Auditor'
                     ]
                 }
             },
@@ -568,13 +581,14 @@ const routes: Routes = [
                         'Admin',
                         'Manager',
                         'Preparer',
-                        'Approver'
+                        'Approver', 'Auditor'
                     ]
                 }
 
             }
         ]
     },
+  
     {
         path: 'login',
         component: LoginComponent,
@@ -609,7 +623,7 @@ const routes: Routes = [
     { path: 'settings', loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule) },
   
 
-    { path: '**', redirectTo: '' }
+    { path: '**', redirectTo: '/dashboard/ghgEmision' }
 ];
 
 @NgModule({

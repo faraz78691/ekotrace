@@ -18,10 +18,14 @@ export class UserService {
     checkuserURL = environment.baseUrl + 'Authenticate/check/';
     constructor(private http: HttpClient) {}
 
-    forgotPassword(email: string) {
-        let urlUser = this.apiURL + 'sendmail?EmailId=' + email;
-        return this.http.post(urlUser, String);
-    }
+    // forgotPassword(email: string) {
+    //     let urlUser = this.apiURL + 'sendmail?EmailId=' + email;
+    //     return this.http.post(urlUser, String);
+    // }
+    public forgotPassword(email:any): Observable<any> {
+        return this.http.post(environment.baseUrl + `/forget-password`, email);
+     
+      }
 
     reSetPassword(resetData: ResetPassword) {
         let json = {

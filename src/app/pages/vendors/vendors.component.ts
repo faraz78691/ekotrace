@@ -96,7 +96,77 @@ export class VendorsComponent {
   date3: string;
   standard: string;
   selectedFile: File;
-  countryData: any[] = []
+  countryData: any[] = [];
+  targetStatusData =
+  [
+      {
+          "id": 1,
+          "calculationmethod": "None"
+      },
+      {
+          "id": 2,
+          "calculationmethod": "Emission Reduction"
+      },
+      {
+          "id": 2,
+          "calculationmethod": "Physical Intensity Convergence"
+      },
+      {
+          "id": 2,
+          "calculationmethod": "Economic Intensity Convergence"
+      },
+      {
+          "id": 2,
+          "calculationmethod": "Multiple"
+      }
+  ]
+  scorecardData =
+  [
+      {
+          "id": 1,
+          "calculationmethod": "None"
+      },
+      {
+          "id": 2,
+          "calculationmethod": "1"
+      },
+      {
+          "id": 2,
+          "calculationmethod": "2"
+      },
+      {
+          "id": 2,
+          "calculationmethod": "3"
+      },
+      {
+          "id": 2,
+          "calculationmethod": "4"
+      },
+      {
+          "id": 2,
+          "calculationmethod": "5"
+      },
+      {
+          "id": 2,
+          "calculationmethod": "6"
+      },
+      {
+          "id": 2,
+          "calculationmethod": "7"
+      },
+      {
+          "id": 2,
+          "calculationmethod": "8"
+      },
+      {
+          "id": 2,
+          "calculationmethod": "9"
+      },
+      {
+          "id": 2,
+          "calculationmethod": "10"
+      }
+  ]
   constructor(
     private companyService: CompanyService,
     private UserService: UserService,
@@ -116,12 +186,8 @@ export class VendorsComponent {
     this.rootUrl = environment.baseUrl + 'uploads/';
     this.selectedValue = '';
 
+  };
 
-
-
-
-
-  }
   ngOnInit() {
     if (localStorage.getItem('LoginInfo') != null) {
       let userInfo = localStorage.getItem('LoginInfo');
@@ -146,10 +212,7 @@ export class VendorsComponent {
 
 
   GetVendors() {
-    //   let formData = new URLSearchParams();
-
-    //   formData.set('tenant_id', tenantID.toString());
-
+ 
     this.GroupService.getVendors(this.superAdminId).subscribe({
       next: (response) => {
 
@@ -174,7 +237,12 @@ export class VendorsComponent {
 
 
   //method to add new group
-  saveOffset(data: NgForm) {
+  saveVendors(data: NgForm) {
+
+    if(this.loginInfo.role == 'Auditor'){
+      this.notification.showInfo('You are not Authorized', '');
+      return
+  }
     // console.log(data.value);
     
     if (data.invalid) {
@@ -187,6 +255,8 @@ export class VendorsComponent {
     formData.append('address', data.value.address);
     formData.append('refer_id', data.value.refer_id);
     formData.append('tenant_id', this.superAdminId);
+    formData.append('scorecard', data.value.scorecard);
+    formData.append('targetStatus', data.value.targetStatus);
 
 
     this.GroupService.addVendors(formData.toString()).subscribe({
@@ -221,10 +291,12 @@ export class VendorsComponent {
     const countryId = this.countryData.filter(items => items.Name == details.country_name);
 
     let obj = {
-      vendor_name: details.name,
+      vendor_name: details.name.trim(),
       refer_id: details.refer_id,
-      address: details.address,
-      country: countryId[0].ID
+      address: details.address.trim(),
+      country: countryId[0].ID,
+      scorecard:details.scorecard,
+      targetStatus:details.target_status.trim()
     };
 
     this.GroupForm.control.patchValue(obj);
@@ -250,57 +322,51 @@ export class VendorsComponent {
 
   //method to add new group
   saveCostCentre(data: NgForm) {
-
-    const formData = new URLSearchParams();
-
-    formData.append('cost_center_name', data.value.cost_center_name);
-    formData.append('cost_center_refer_id', data.value.cost_center_refer_id);
-    formData.append('tenant_id', this.superAdminId);
-
-    this.GroupService.AddCostcenter(formData.toString()).subscribe({
-      next: (response) => {
-        if (response.success == true) {
-          this.visible2 = false;
-          this.notification.showSuccess(
-            ' Cost Centre Added successfully',
-            'Success'
-          );
-          this.GroupForm.reset();
-        }
-        // return
-        //   this.getOffset(this.loginInfo.tenantID);
-        this.visible2 = false;
-
-      },
-      error: (err) => {
-        this.notification.showError('Group added failed.', 'Error');
-        console.error('errrrrrr>>>>>>', err);
-      },
-      complete: () => console.info('Group Added')
-    });
+ 
   };
 
 
 
   //method for update group detail by id
-  updateGroup(data: any) {
+  updateVendor(data: any) {
 
-    let tenantID = this.loginInfo.tenantID;
+    if(this.loginInfo.role == 'Auditor'){
+      this.notification.showInfo('You are not Authorized', '');
+      return
+  }
+  if (data.invalid) {
+    return; // Stop if form is invalid
+  }
+  
     let formData = new URLSearchParams();
-    formData.set('address', data.address);
-    formData.set('name', data.name);
+    formData.set('address', data.value.address.trim());
+    formData.set('name', data.value.vendor_name.trim());
     formData.set('id', this.vendorId.toString());
-    formData.set('refer_id', data.refer_id);
+    formData.set('refer_id', data.value.refer_id.trim());
+    formData.set('country_id', data.value.country);
+    formData.set('scorecard', data.value.scorecard);
+    formData.set('targetStatus', data.value.targetStatus);
+    formData.append('tenant_id', this.superAdminId);
     this.GroupService.updateVendor(formData.toString()).subscribe({
-      next: (response) => {
+      next: (response:any) => {
+if(response.success){
+  this.GetVendors();
+  this.FormEdit = false;
+  this.visible = false;
+  this.notification.showSuccess(
+    'Edited successfully',
+    'Success'
+  );
 
-        this.GetVendors();
-        this.FormEdit = false;
-        this.visible = false;
-        this.notification.showSuccess(
-          'Edited successfully',
-          'Success'
-        );
+}else{
+  this.GetVendors();
+  this.FormEdit = false;
+  this.visible = false;
+  this.notification.showWarning(
+    response.message,
+    'Success'
+  );
+}
       },
       error: (err) => {
         this.notification.showError('Group edited failed.', 'Error');
@@ -432,41 +498,7 @@ export class VendorsComponent {
       }
     });
   };
-  //method for get facility by id
-  // facilityGet(tenantId) {
-  //     this.facilityService.FacilityDataGet(tenantId).subscribe((response) => {
-  //         this.facilityList = response;
-  //         // console.log(
-  //             '🚀 ~ file: group.component.ts:370 ~ GroupComponent ~ this.facilityService.FacilityDataGet ~ this.facilityList:',
-  //             this.facilityList
-  //         );
-  //         const uniqueCountries = new Set(
-  //             this.facilityList.map((item) => item.countryName)
-  //         );
-  //         this.countryData = Array.from(uniqueCountries).map((country) => {
-  //             return {
-  //                 name: country,
-  //                 shortName: '', // Provide the appropriate value for shortName
-  //                 id: this.facilityList.find(
-  //                     (item) => item.countryName === country
-  //                 ).countryID
-  //             };
-  //         });
-
-  //         const uniqueStates = new Set(
-  //             this.facilityList.map((item) => item.stateName)
-  //         );
-  //         this.stateData = Array.from(uniqueStates).map((state) => {
-  //             return {
-  //                 name: state,
-  //                 shortName: '', // Provide the appropriate value for shortName
-  //                 id: this.facilityList.find(
-  //                     (item) => item.stateName === state
-  //                 ).stateID
-  //             };
-  //         });
-  //     });
-  // }
+ 
   handleDropdownShow(): void {
     window.addEventListener('scroll', this.preventScroll, true);
   }

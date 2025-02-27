@@ -40,6 +40,7 @@ export class TreeComponent {
     selectedTemplateId = 1;
     facilityTab = false;
     nodeType: any[] = [];
+    facilityTypeArray: any[] = [];
     treeList: any[] = [];
     newArray: any[] = [];
     lastObject: any;
@@ -63,13 +64,42 @@ export class TreeComponent {
             this.loginInfo = jsonObj as LoginInfo;
             this.tenantId = this.loginInfo.super_admin_id
         };
+        this.facilityTypeArray = [
+            {
+                "id": '1',
+                "type": "Mfg. Facility"
+            },
+            {
+                "id": '2',
+                "type": "Office"
+            },
+            {
+                "id": '3',
+                "type": "Educational Campus"
+            },
+            {
+                "id": '4',
+                "type": "Retail Centre"
+            },
+            {
+                "id": '5',
+                "type": "Hospital"
+            },
+            {
+                "id": '6',
+                "type": "Warehouse"
+            },
+            {
+                "id": '7',
+                "type": "Others"
+            },
+        ]
     };
 
     ngOnInit() {
-
         this.treeList$ = this.familyService.getTreeList(this.loginInfo.super_admin_id).pipe(
             tap(items => {
-                // // console.log(items); // Log the entire response
+                //  console.log(items); // Log the entire response
                 if (items.success) {
                     this.treeList = items.familyDetails;
 
@@ -91,7 +121,7 @@ export class TreeComponent {
                         this.treeSection = true;
                         this.familyId = items.familyDetails[0].family_id;
                         this.selectedTemplateId = items.familyDetails[0].id;
-                        if (this.loginInfo.role == 'Manager' || this.loginInfo.role == 'Admin' || this.loginInfo.role == 'Preparer') {
+                        if (this.loginInfo.role == 'Manager' || this.loginInfo.role == 'Admin' || this.loginInfo.role == 'Preparer' || this.loginInfo.role == 'Auditor') {
                             this.getTreeForOtherUser();
                         } else {
                             this.createClone();
@@ -122,6 +152,7 @@ export class TreeComponent {
             this.facilityTab = false;
         }
     }
+
 
     onCancel() {
         $(".ct_custom_modal_120").hide()
@@ -346,7 +377,7 @@ export class TreeComponent {
         const getSelectedNode = localStorage.getItem("selectedNode");
         const nodeForm = new URLSearchParams();
         if (this.facilityTab == true) {
-            nodeForm.set('facility_name', data.value.facility_type);
+            nodeForm.set('facility_name', data.value.facilityType);
         }
 
         nodeForm.set('id', getSelectedNode);
@@ -382,6 +413,7 @@ export class TreeComponent {
 
         this.familyService.createCloneTree(nodeForm.toString()).subscribe({
             next: res => {
+                console.log(res);
                 if (res.success == true) {
                     this.oldID = true;
                     this.newFamilyData = res.familyTreeDetails;
@@ -766,7 +798,7 @@ export class TreeComponent {
                     // window.location.reload();
                     this.treeList$ = this.familyService.getTreeList(this.loginInfo.super_admin_id).pipe(
                         tap(items => {
-                            // // console.log(items); // Log the entire response
+                            console.log(items); // Log the entire response
                             if (items.success) {
                                 this.treeList = items.familyDetails;
             

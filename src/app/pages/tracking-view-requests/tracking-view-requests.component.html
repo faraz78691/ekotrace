@@ -160,7 +160,7 @@
                                 issended === false
                             " (click)="sendEntryForApproval()" class="SendforApproval-button text-white mb-0"
                             style="border:1px solid  #88AD47;">
-                            Send for Approval
+                            Approve Selected
                         </button>
                         <button *ngIf="
                                 loginInfo.role === Approver &&
@@ -664,14 +664,12 @@
                                         <p>{{ de.Reason }}</p>
                                     </p-overlayPanel>
                                 </td>
-                                <td>{{ de.emission | number :'1.2-2' }}</td>
+                                <td>{{ de.emission | number :'1.4-4' }}</td>
 
                                 
                                 <td>{{ de.user_name }}</td>
 
                                 <td>
-
-
 
                                     <!-- <div *ngIf="
                                             de.sendForApproval === false &&

@@ -236,9 +236,11 @@ export class FacilityComponent {
     }
     //method for update a facility by id
     editfacility(id: any, data: any) {
-       
+        if(this.loginInfo.role == 'Auditor'){
+            this.notification.showInfo('You are not Authorized', '');
+            return
+        }
         
-      
     if(this.facilityDetails.CountryId == 0 || this.facilityDetails.CountryId == null){
         this.notification.showError('Please select country', 'Error');
         return

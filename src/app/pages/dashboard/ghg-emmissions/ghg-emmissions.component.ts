@@ -138,22 +138,30 @@ export class GhgEmmissionsComponent implements OnDestroy {
       let userInfo = localStorage.getItem('LoginInfo');
       let jsonObj = JSON.parse(userInfo); // string to "any" object first
       this.loginInfo = jsonObj as LoginInfo;
-    }
-    let tenantId = this.loginInfo.tenantID;
+    };
     const formData = new URLSearchParams();
+    let tenantId = 0
+    if (this.loginInfo.role == 'Auditor') {
+      tenantId = this.loginInfo.super_admin_id;
+
+    } else {
+      tenantId = this.loginInfo.tenantID;
+    }
+
+
     formData.set('tenantID', tenantId.toString())
     this.dashboardFacilities$ = this.dashboardService.getdashboardfacilities(formData.toString()).pipe(
       tap(response => {
-       
+
         // this.selectedFacility = response.categories[0].ID;
-        if(response.success == true){
+        if (response.success == true) {
           if (this.facilityService.selectedfacilitiesSignal() == 0) {
             this.selectedFacility = response.categories[0].ID;
-  
+
           } else {
             this.selectedFacility = this.facilityService.selectedfacilitiesSignal();
           }
-  
+
           this.makeCombinedApiCall(this.selectedFacility);
 
         }
@@ -172,6 +180,10 @@ export class GhgEmmissionsComponent implements OnDestroy {
     formData.set('year', this.year.getFullYear().toString());
     formData.set('facilities', facility);
     return formData;
+  };
+
+  isArray(value: any): boolean {
+    return Array.isArray(value);
   }
 
 
@@ -206,10 +218,10 @@ export class GhgEmmissionsComponent implements OnDestroy {
       })
     );
 
-
     const formVendorData = new URLSearchParams();
     formVendorData.set('facilities', facility);
-    const GVEndorActivity$ = this.dashboardService.GVEndorActivity(formVendorData.toString()).pipe(
+
+    const GVEndorActivity$ = this.dashboardService.GVEndorActivity(formData.toString()).pipe(
       catchError(error => {
         console.error('Error occurred in topWiseEmission API call:', error);
         return of(null);
@@ -256,7 +268,18 @@ export class GhgEmmissionsComponent implements OnDestroy {
         this.seriesScopeDonut3 = getScopeSDonuts.seriesScope3;
         this.labelScopeDonut1 = getScopeSDonuts.labelScope1;
         this.labelScopeDonut2 = getScopeSDonuts.labelScope2;
-        this.labelScopeDonut3 = getScopeSDonuts.labelScope3;
+        const lScope3 = getScopeSDonuts.labelScope3;
+        this.labelScopeDonut3 = lScope3
+        .filter(item => !item.includes("Stationary Combustion - 0.000 Tonnes")) // Remove items with 0.000 Tonnes
+        .map(item => {
+          if (item.includes("Stationary Combustion")) {
+            return item.replace("Stationary Combustion", "Fuel and Energy-related Activities");
+          }
+          return item;
+        });
+
+        this.seriesScopeDonut3 = this.seriesScopeDonut3.filter(item =>  item !== 0); // Remove items with 0.000 Tonnes
+      
 
         this.donotOptions1 = {
           series: this.seriesScopeDonut1,
@@ -423,12 +446,13 @@ export class GhgEmmissionsComponent implements OnDestroy {
 
   // Handle the scopeWiseResult
   handleScopeWiseResult(scopeWiseResult: any) {
+  
     this.scopeMonths = scopeWiseResult.month;
     this.scopeWiseSeries = scopeWiseResult.series;
     this.series_graph = scopeWiseResult.series_graph;
 
     this.sumofScope2 = parseFloat(scopeWiseResult.scope1) + parseFloat(scopeWiseResult.scope2) + parseFloat(scopeWiseResult.scope3);
-   
+
     this.scope1E = scopeWiseResult.scope1;
     this.scope2E = scopeWiseResult.scope2;
     this.scope3E = scopeWiseResult.scope3;

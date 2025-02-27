@@ -228,6 +228,8 @@ export class HeaderComponent implements OnInit {
                    
                     this.facilitygrouplist.unshift(allOption);
                     this.lfgcount = this.facilitygrouplist.length;
+                    this.facilityService.facilitySelected(0)
+             
                     localStorage.setItem('FacilityGroupCount', String(this.lfgcount));
 
                 }

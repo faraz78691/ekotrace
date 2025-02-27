@@ -119,7 +119,10 @@ GetCostCetnre() {
 
   //method to add new group
   saveCostCentre(data: NgForm) {
-
+    if(this.loginInfo.role == 'Auditor'){
+      this.notification.showInfo('You are not Authorized', '');
+      return
+  }
     const formData = new URLSearchParams();
 
     formData.append('cost_center_name', data.value.cost_center_name);
@@ -181,7 +184,10 @@ GetCostCetnre() {
     // this.unlock = groupId;
   }
   updateGroup(data: any) {
-
+    if(this.loginInfo.role == 'Auditor'){
+      this.notification.showInfo('You are not Authorized', '');
+      return
+  }
     let tenantID = this.loginInfo.tenantID;
     let formData = new URLSearchParams();
     formData.set('address', data.address);

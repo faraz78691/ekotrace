@@ -8,7 +8,7 @@
     </div>
 
     <div class="row d-flex justify-content-between mx-3 pt-3">
-        <div class="col-7 myCol overflow-auto mb-5"
+        <div class="col-7 myCol overflow-auto mb-5" style="height: 76vh !important;"
             [ngClass]="this.updatedtheme === 'dark' ? 'User-tabD' : 'User-tabL'">
             <div class="row p-2">
                 <div class="" [ngClass]="
@@ -258,6 +258,8 @@
                                                         Manager <br> Access to the associated facility</p>
                                                     <p *ngIf="Role.Name =='Preparer'" style="font-size: 16px; color: #88AD47;" class="mb-0">
                                                         Preparer <br> Access to the associated facility</p>
+                                                    <p *ngIf="Role.Name =='Auditor'" style="font-size: 16px; color: #88AD47;" class="mb-0">
+                                                        Auditor <br> Access to the Audit Report</p>
                                                     <!-- <p style="font-size: 16px; color: #88AD47;" *ngIf="Role.Name == 'Approver'">
                                                 Approver</p> -->
     
@@ -265,10 +267,13 @@
 
                                         </ng-container>
                                         <ng-container *ngIf="loginInfo.role == 'Admin'">
-                                            <p-radioButton  ngModel
-                                                [inputId]="Role.Id" name="Role" [value]="Role.Id"
-                                                (click)="onSelected(Role.Id)" [(ngModel)]="admininfo.roleID"
-                                            ></p-radioButton>
+                                            <ng-container *ngIf="Role.Id != 'a34d0ecf-4730-4521-82ee-5e3eg28bdfb0'">
+                                                <p-radioButton  ngModel
+                                                    [inputId]="Role.Id" name="Role" [value]="Role.Id"
+                                                    (click)="onSelected(Role.Id)" [(ngModel)]="admininfo.roleID"
+                                                ></p-radioButton>
+
+                                            </ng-container>
 
 
                                             <div>
@@ -287,11 +292,10 @@
 
                                         </ng-container>
                                         <ng-container *ngIf="loginInfo.role == 'Manager'">
-                                            <p-radioButton *ngIf="Role.Name !='Admin'" ngModel
+                                            <p-radioButton *ngIf="Role.Name !='Admin' || Role.Id !== 'a34d0ecf-4730-4521-82ee-5e3eg28bdfb0'" ngModel
                                                 [inputId]="Role.Id" name="Role" [value]="Role.Id"
                                                 (click)="onSelected(Role.Id)" [(ngModel)]="selectedRole"
                                                 [disabled]="isloading"></p-radioButton>
-
 
                                             <div>
                                              
@@ -310,8 +314,8 @@
                             </div>
 
                             <!-- <div class="" *ngIf="this.selectedRole !== Roleaccess &&(loginInfo.role === 'Super Admin' ||loginInfo.role === 'Admin')"> -->
-                            <div *ngIf="selectedRole != '525debfd-cd64-4936-ae57-346d57de3585' && selectedRole != ''"
-                                class="">
+                            <div *ngIf="selectedRole == '9782f1b1-27ba-4a5c-861c-94174d73d471' || selectedRole == '8f7e334f-db30-44d6-a3d6-a1d12b29547c'"
+                                >
                                 <p class="mt-3 text-dark">Select Facility</p>
 
                                 <div class="text-light noData" *ngIf="facilitydata === true">
@@ -324,7 +328,7 @@
                                 </div>
                                 <p-dropdown
                                     class=" finput ct_input_white_bg13 ct_select_2_drop_white ct_input_dark_text_145"
-                                    placeholder="Select" name="facility" #facility="ngModel" [options]="facilityList"
+                                    placeholder="Select" name="facility" #facility="ngModel" [options]="facilityList"   (onShow)="handleDropdownShow()"  (onHide)="handleDropdownHide()"
                                     optionLabel="AssestType" optionValue="id" styleClass="facilitydropdown"
                                     [(ngModel)]="admininfo.facilityID" (ngModelChange)="checkFacilityID()">
                                 </p-dropdown>
@@ -343,15 +347,15 @@
                                 </div>
                                 <p-dropdown
                                     class=" finput ct_input_white_bg13 ct_select_2_drop_white ct_input_dark_text_145"
-                                    placeholder="Select" name="facility" #facility="ngModel" [options]="facilityList"
+                                    placeholder="Select" name="facility" #facility="ngModel" [options]="facilityList" (onShow)="handleDropdownShow()" (onHide)="handleDropdownHide()"
                                     optionLabel="name" styleClass="facilitydropdown"
                                     [(ngModel)]="admininfo.group_id" (ngModelChange)="checkFacilityID()">
                                 </p-dropdown>
 
                             </div>
                         </div>
-                        <div style="height: 80px;"></div>
-                        <div class="mt-4 ct_user_add_modal_btn pt-5">
+                        <!-- <div style="height: 80px;"></div> -->
+                        <div class="mt-2 ct_user_add_modal_btn pt-2">
                             <Button (click)="removeCss()" type="submit" *ngIf="FormEdit === false" [disabled]="
                                     (this.selectedRole !== Roleaccess &&
                                         facilitydata === true) ||
@@ -391,6 +395,8 @@
                             class="span-color border rounded-circle d-flex align-items-center justify-content-center px-3 py-2 text-white">A</span>
                         <span *ngIf="user.role === 'Super Admin'"
                             class="span-color border rounded-circle d-flex align-items-center justify-content-center px-3 py-2 text-white">S</span>
+                            <span *ngIf="user.role === 'Auditor'"
+                            class="span-color border rounded-circle d-flex align-items-center justify-content-center px-3 py-2 text-white">AU</span>
                     </div>
                     <div class="ml-3 font-pera">
                         <p>
@@ -456,9 +462,7 @@
                             <p class="mb-0">Name :</p>
                         </td>
                         <td>
-                            <p class="mb-2" *ngIf="userdetails.role === 'Super Admin'">
-                                {{ loginInfo.companyName }}
-                            </p>
+                           
                             <p class="mb-0">
                                 {{ userdetails.firstname }} {{ userdetails.lastname }}
                             </p>
@@ -480,25 +484,28 @@
                             <p class="mb-0">{{ userdetails.role }}</p>
                         </td>
                     </tr>
-                    <tr *ngIf="!userdetails.group_name;else haveGroup">
-                        <td>
-                            <p class="mb-0">Facility:</p>
-                        </td>
-                        <td>
-                            <p class="mb-0">{{ userdetails.facilityName }}</p>
-                        </td>
-                    </tr>
-                    <ng-template #haveGroup>
-                        <tr >
+                    <ng-container *ngIf="userdetails.role !== 'Super Admin'">
+                        <tr *ngIf="!userdetails.group_name;else haveGroup">
                             <td>
-                                <p class="mb-0">{{ userdetails.is_main_group == 1 ? 'Main Group' : 'Sub Group' }}</p>
+                                <p class="mb-0">Facility:</p>
                             </td>
                             <td>
-                                <p class="mb-0">{{ userdetails.group_name }}</p>
+                                <p class="mb-0">{{ userdetails.facilityName }}</p>
                             </td>
                         </tr>
+                        <ng-template #haveGroup>
+                            <tr >
+                                <td>
+                                    <p class="mb-0">{{ userdetails.is_main_group == 1 ? 'Main Group' : 'Sub Group' }}</p>
+                                </td>
+                                <td>
+                                    <p class="mb-0">{{ userdetails.group_name }}</p>
+                                </td>
+                            </tr>
+    
+                        </ng-template>
 
-                    </ng-template>
+                    </ng-container>
                 </table>
                 <!-- <div class="col-5 ml-3">
                     <p>Name :</p>

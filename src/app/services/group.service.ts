@@ -61,6 +61,11 @@ export class GroupService {
             environment.baseUrl + '/getpurchaseproduct_code'
         );
     };
+    public uploadJsonData(data:any): Observable<any> {
+        return this.http.post(
+            environment.baseUrl + '/get-purchase-categories-ef', data
+        );
+    };
     public getStandardType(id): Observable<any> {
         return this.http.get(
             environment.baseUrl + `/getTypesofpurchase/${id}`

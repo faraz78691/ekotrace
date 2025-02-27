@@ -32,7 +32,7 @@ export class WasteComponent {
   public groupChart: Partial<Chart3Options>;
   dashboardData: any[] = [];
   public loginInfo: LoginInfo;
-  selectedFacility: number;
+  selectedFacility:any;
   combinedSubscription: Subscription;
   ;
   year: Date;
@@ -128,7 +128,12 @@ export class WasteComponent {
     formData.set('year', this.year.getFullYear().toString());
     formData.set('facilities', facility);
     return formData;
+  };
+
+  isArray(value: any): boolean {
+    return Array.isArray(value);
   }
+
 
 
   // Combined method to make both API calls

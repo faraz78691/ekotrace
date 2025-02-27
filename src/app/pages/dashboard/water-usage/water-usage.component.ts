@@ -31,7 +31,7 @@ export class WaterUsageComponent {
   public groupChart: Partial<Chart3Options>;
   dashboardData: any[] = [];
   public loginInfo: LoginInfo;
-  selectedFacility: number;
+  selectedFacility:any;
   year: Date;
   scopeWiseSeries: any[] = [];
   scopeWiseSeries2: any[] = [];
@@ -181,6 +181,11 @@ export class WaterUsageComponent {
     }
     this.GetAllfacilities();
   };
+
+  isArray(value: any): boolean {
+    return Array.isArray(value);
+  }
+
 
   GetAllfacilities() {
     let tenantId = this.loginInfo.tenantID;
