@@ -624,6 +624,17 @@ export class TrackingService {
             formData
         );
     };
+    submitPurchaseGoods2(formData: any): Observable<any> {
+        const headers = new HttpHeaders()
+        .set('content-type','application/x-www-form-urlencoded')
+        .set('Access-Control-Allow-Origin', '*')
+        ;  
+        ; 
+        return this.http.post(
+            environment.baseUrl + '/bulk-purchase-goods-upload',
+            formData
+        );
+    };
 
     // http://http://13.200.247.29/:4000/getAllBatches
     getBatches(): Observable<any> {

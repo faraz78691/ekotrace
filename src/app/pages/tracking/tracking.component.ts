@@ -56,6 +56,7 @@ export class TrackingComponent {
     @ViewChild('dt1') dt!: Table;
     @ViewChild('fileUpload') fileUpload!: FileUpload;
     @ViewChild('inputFile') inputFile: any;
+    @ViewChild('closeModal4') closeModal4: ElementRef;
     computedFacilities = computed(() => {
         return this.facilityService.selectedfacilitiesSignal()
     })
@@ -72,8 +73,10 @@ export class TrackingComponent {
     hotelTypeGrid: any[] = [];
     yearOptions: any[] = [];
     jsonData: any[] = [];
+    productID: any;
     checked: boolean = false;
     annualMonths: boolean = false;
+    isAnnual: any
     singlePGSTab: boolean = true;
     multiLevelItems: TreeviewItem[] = [];
     active: MenuItem;
@@ -110,7 +113,8 @@ export class TrackingComponent {
     dataEntrySetting: DataEntrySetting = new DataEntrySetting();
     dataEntry: DataEntry = new DataEntry();
     selectedVendor: any;
-    liveUrl: 'http://192.168.29.45:4500';
+    // liveUrl: 'http://192.168.29.45:4500';
+    liveUrl: 'https://ekotrace.ekobon.com:4000';
     SCdataEntry: StationaryCombustionDE = new StationaryCombustionDE();
     RefrigerantDE: RefrigerantsDE = new RefrigerantsDE();
     FireExtinguisherDE: FireExtinguisherDE = new FireExtinguisherDE();
@@ -248,13 +252,14 @@ export class TrackingComponent {
     flightTime: any[] = [];
     upstreamMassUnitsGrid: any[] = [];
     uploadButton = false;
-    newExcelData:any[]=[]
+    newExcelData: any[] = []
     airportGrid: any[] = [];
     public isVisited = false;
     flightDisplay1 = 'block'
     flightDisplay2 = 'none'
     flightDisplay3 = 'none'
     carMode = false;
+    annaulEntry:any;
     autoMode = false;
     busMode = false;
     railMode = false;
@@ -1115,7 +1120,7 @@ export class TrackingComponent {
                 .manageDataPointSubCategorySeedID);
         }
         if (catID == 8) {
-            this.downloadExcelUrl = 'http://192.168.29.45:4500' + `/get-excelsheet?facility_id=${this.facilityID}`;
+            this.downloadExcelUrl = 'https://ekotrace.ekobon.com:4000' + `/get-excelsheet?facility_id=${this.facilityID}`;
             this.getALlProducts()
             console.log(this.downloadExcelUrl);
             // this.generateExcel();
@@ -1907,112 +1912,174 @@ export class TrackingComponent {
             });
         }
         if (this.categoryId == 8) {
+            if (this.singlePGSTab) {
+              
+                const filledRows = this.rowsPurchased.filter(row =>
 
-            // Filter out rows where no field is filled
-            const filledRows = this.rowsPurchased.filter(row =>
-                // // // console.log(row.employeesCommute !== '')
-                row.productType == null
-            );
-
-            if (filledRows.length > 0) {
-                this.notification.showInfo(
-                    "Please select product service code",
-                    'Warning'
+                    row.productType == null
                 );
-                return;
-            }
-            if (form.value.annualEntry === '') {
-                this.notification.showInfo(
-                    "Please select annual entry",
-                    'Warning'
-                );
-                return;
-            }
-            if (this.selectMonths.length == 0 && form.value.annualEntry == 0) {
-                this.notification.showInfo(
-                    'Select month',
-                    ''
-                );
-                return
-            }
-            console.log(this.rowsPurchased);
 
-            // Prepare the payload
-            const payload = this.rowsPurchased.map(row => ({
-                month: row.months,
-                typeofpurchase: row.productService,
-                valuequantity: row.quantity,
-                unit: row.selectedUnit,
-                vendorId: row.vendorName.id,
-                vendor: row.vendorName.name,
-                vendorunit: row.vendorspecificEFUnit,
-                vendorspecificEF: row.vendorspecificEF,
-                product_category: row.productType
-            }));
+                if (filledRows.length > 0) {
+                    this.notification.showInfo(
+                        "Please select product service code",
+                        'Warning'
+                    );
+                    return;
+                }
+                if (this.isAnnual ==undefined || this.isAnnual ==null) {
+                    this.notification.showInfo(
+                        "Please select annual entry",
+                        'Warning'
+                    );
+                    return;
+                }
+                if (this.selectMonths.length == 0 && form.value.annualEntry == 0) {
+                    this.notification.showInfo(
+                        'Select month',
+                        ''
+                    );
+                    return
+                }
 
-            var purchaseTableStringfy = JSON.stringify(payload)
+                // Prepare the payload
+                const payload = this.rowsPurchased.map(row => ({
+                    month: row.months,
+                    typeofpurchase: row.productService,
+                    valuequantity: row.quantity,
+                    unit: row.selectedUnit,
+                    vendorId: row.vendorName.id,
+                    vendor: row.vendorName.name,
+                    vendorunit: row.vendorspecificEFUnit,
+                    vendorspecificEF: row.vendorspecificEF,
+                    product_category: row.productType
+                }));
 
-            let formData = new URLSearchParams();
-            // formData.set('month', monthString);
-            formData.set('year', this.dataEntry.year);
-            formData.set('productcodestandard', this.productHSNSelect);
-            formData.set('is_annual', form.value.annualEntry);
-            formData.set('facilities', this.facilityID);
-            formData.set('jsonData', purchaseTableStringfy);
-            formData.set('month', monthString);
+                var purchaseTableStringfy = JSON.stringify(payload)
+
+                let formData = new URLSearchParams();
+                // formData.set('month', monthString);
+                formData.set('year', this.dataEntry.year);
+                formData.set('productcodestandard', this.productHSNSelect);
+                formData.set('is_annual', this.isAnnual);
+                formData.set('facilities', this.facilityID);
+                formData.set('jsonData', purchaseTableStringfy);
+                formData.set('month', monthString);
 
 
-            this.trackingService.submitPurchaseGoods(formData.toString()).subscribe({
-                next: (response) => {
+                this.trackingService.submitPurchaseGoods(formData.toString()).subscribe({
+                    next: (response) => {
 
-                    if (response.success == true) {
-                        this.notification.showSuccess(
-                            response.message,
-                            'Success'
-                        );
-                        this.rowsPurchased.forEach(levels => {
-                            levels.productType = null
-                            this.deselectAllItems(levels.multiLevelItems)
-                        })
-                        this.rowsPurchased = [];
-                        for (let i = 1; i <= 1; i++) {
-                            this.rowsPurchased.push({
-                                id: i,
-                                multiLevelItems: [],
-                                productService: null,
-                                productType: null,
-                                subVehicleCategory: [],  // Add any other nested dropdown arrays here if needed
-                                months: '',
-                                quantity: '',
-                                selectedUnit: '',
-                                vendorName: '',
-                                vendorspecificEF: '',
-                                vendorspecificEFUnit: '' // Make sure to initialize this as well
-                            });;
+                        if (response.success == true) {
+                            this.notification.showSuccess(
+                                response.message,
+                                'Success'
+                            );
+                            this.rowsPurchased.forEach(levels => {
+                                levels.productType = null
+                                this.deselectAllItems(levels.multiLevelItems)
+                            })
+                            this.rowsPurchased = [];
+                            for (let i = 1; i <= 1; i++) {
+                                this.rowsPurchased.push({
+                                    id: i,
+                                    multiLevelItems: [],
+                                    productService: null,
+                                    productType: null,
+                                    subVehicleCategory: [],  // Add any other nested dropdown arrays here if needed
+                                    months: '',
+                                    quantity: '',
+                                    selectedUnit: '',
+                                    vendorName: '',
+                                    vendorspecificEF: '',
+                                    vendorspecificEFUnit: '' // Make sure to initialize this as well
+                                });;
+                            }
+                            this.GetHSN();
+                            // this.deselectAllItems(this.rowsPurchased)
+
+                            this.resetForm();
+                            this.ALLEntries();
+
+                        } else {
+                            this.notification.showError(
+                                response.message,
+                                'Error'
+                            );
+
                         }
-                        this.GetHSN();
-                        // this.deselectAllItems(this.rowsPurchased)
-
-                        this.resetForm();
-                        this.ALLEntries();
-
-                    } else {
+                    },
+                    error: (err) => {
                         this.notification.showError(
-                            response.message,
+                            'Data entry added failed.',
                             'Error'
                         );
+                        console.error('errrrrrr>>>>>>', err);
+                    },
+                    complete: () => console.info('Data entry Added')
+                });
+            } else {
 
-                    }
-                },
-                error: (err) => {
-                    this.notification.showError(
-                        'Data entry added failed.',
-                        'Error'
-                    );
-                    console.error('errrrrrr>>>>>>', err);
-                },
-                complete: () => console.info('Data entry Added')
-            });
+                const payload = this.newExcelData.map(row => ({
+                    month: '',
+                    typeofpurchase: row.productResult.typeofpurchase,
+                    valuequantity: row['Value / Quantity'],
+                    unit: row['Unit'],
+                    vendorId: '',
+                    vendor: row['Vendor'],
+                    vendorunit: row['Vendor Specific Unit'],
+                    vendorspecificEF: row['Vendor Specific EF'],
+                    product_category: row.productResult.id,
+                    product_description: row['Product / Service Description'],
+                    purchase_date: row['Purchase Date'],
+                    productcode: row.code,
+                    is_find: row.is_find
+                }));
+                var purchaseTableStringfy = JSON.stringify(payload);
+
+                let formData = new URLSearchParams();
+
+                formData.set('productcodestandard', this.productHSNSelect);
+                formData.set('facilities', this.facilityID);
+                formData.set('jsonData', purchaseTableStringfy);
+                formData.set('is_annual', '0');
+                formData.set('tenant_id', this.superAdminID.toString());
+                this.trackingService.submitPurchaseGoods2(formData.toString()).subscribe({
+                    next: (response) => {
+
+                        if (response.success == true) {
+                            this.notification.showSuccess(
+                                response.message,
+                                'Success'
+                            );
+                            this.newExcelData = [];
+
+
+                            this.GetHSN();
+                            // this.deselectAllItems(this.rowsPurchased)
+
+                            this.resetForm();
+                            this.ALLEntries();
+
+                        } else {
+                            this.notification.showError(
+                                response.message,
+                                'Error'
+                            );
+
+                        }
+                    },
+                    error: (err) => {
+                        this.notification.showError(
+                            'Data entry added failed.',
+                            'Error'
+                        );
+                        console.error('errrrrrr>>>>>>', err);
+                    },
+                    complete: () => console.info('Data entry Added')
+                });
+            }
+
+
         }
         if (this.categoryId == 10) {
             let formData = new URLSearchParams();
@@ -3390,7 +3457,7 @@ export class TrackingComponent {
                     } else {
                         this.notification.showError(
                             response.message,
-                            'Error'
+                            ''
                         );
                         this.dataEntryForm.reset();
                         this.ModeSelected = false;
@@ -3441,12 +3508,17 @@ export class TrackingComponent {
         })
     };
 
+
     addCommutes() {
         this.rows.push({ id: this.rows.length + 1, subVehicleCategory: [], vehicleType1: null, vehicleType2: null, employeesCommute: '', avgCommute: '' });
     }
     addPurchaseRows() {
         this.rowsPurchased.push({ id: this.rowsPurchased.length + 1, multiLevelItems: [], productService: null, productType: null, months: '', quantity: '', selectedUnit: '', vendorName: '', vendorspecificEF: '' });
-    }
+    };
+
+    deletePSG(serialNo: number) {
+        this.newExcelData = this.newExcelData.filter(item => item['S. No.'] !== serialNo);
+    };
 
 
     CostCentre() {
@@ -3911,7 +3983,7 @@ export class TrackingComponent {
         this.singlePGSTab = !this.singlePGSTab
     }
 
-    onPurchaseGoodsUpload(event: any) {
+    onPurchaseGoodsUpload(event: any, fileUpload: any) {
         console.log(event);
         const file = event[0];
         if (!file) return;
@@ -3931,32 +4003,36 @@ export class TrackingComponent {
             // Convert array to key-value pairs
             this.jsonData = this.convertToKeyValue(this.jsonData);
             this.sendJSON(this.jsonData);
-            console.log('Parsed JSON:', this.jsonData);
+            setTimeout(() => {
+                fileUpload.clear();
+            }, 1000);
+
         };
         reader.readAsArrayBuffer(file);
     };
 
     convertToKeyValue(data: any[]): any[] {
         if (data.length < 2) return []; // Ensure at least headers and one row exist
-      
+
         const headers = data[0]; // Extract headers
         return data.slice(1).map((row) => {
-          let obj: any = {};
-          headers.forEach((header: string, index: number) => {
-            let value = row[index] || '';
-      
-            // Convert Excel date serial number to readable date
-            if (header.includes('Date') && typeof value === 'number') {
-              value = XLSX.SSF.format('dd-mm-yyyy', value); // Converts to "dd-mm-yyyy"
-            }
-      
-            obj[header] = value;
-          });
-          return obj;
-        });
-      }
+            let obj: any = {};
+            headers.forEach((header: string, index: number) => {
+                let value = row[index] || '';
 
-    toggleEdit(index: number , id:any) {
+                // Convert Excel date serial number to readable date
+                if (header.includes('Date') && typeof value === 'number') {
+                    value = XLSX.SSF.format('dd-mm-yyyy', value); // Converts to "dd-mm-yyyy"
+                }
+
+                obj[header] = value;
+            });
+            return obj;
+        });
+    }
+
+    toggleEdit(index: number, id: any) {
+        this.productID = id;
         this.visible2 = true;
         this.productsExcelData[index].isEditing = !this.productsExcelData[index].isEditing;
     }
@@ -3985,7 +4061,7 @@ export class TrackingComponent {
     };
     sendJSON(jsonData: any) {
         const json = jsonData.filter((item: any) => item['Product Description'] !== '');
-        
+
         const jsonDataString = JSON.stringify(json);
         const formData = new URLSearchParams();
         formData.append('product', jsonDataString);
@@ -3996,25 +4072,25 @@ export class TrackingComponent {
                     let res = response;
                     const sortedArray = res.data.sort((a, b) => Number(b.is_find) - Number(a.is_find));
                     // console.log(sortedArray);
-                    if(this.productHSNSelect ==1){
+                    if (this.productHSNSelect == 1) {
                         this.newExcelData = sortedArray.map(items => ({
                             ...items, // Keep all existing properties
                             code: items.productResult?.HSN_code // Add new 'code' key, ensuring 'productResult' exists
                         }));
-                    }else if(this.productHSNSelect ==2){
+                    } else if (this.productHSNSelect == 2) {
                         this.newExcelData = sortedArray.map(items => ({
                             ...items, // Keep all existing properties
-                            code: items.productResult?.NSIC_code // Add new 'code' key, ensuring 'productResult' exists
+                            code: items.productResult?.NAIC_code // Add new 'code' key, ensuring 'productResult' exists
                         }));
-                    }else{
+                    } else {
                         this.newExcelData = sortedArray.map(items => ({
                             ...items, // Keep all existing properties
                             code: items.productResult?.ISIC_code // Add new 'code' key, ensuring 'productResult' exists
                         }));
                     }
-                   
 
-                    console.log(this.newExcelData);
+
+                    console.log("geeting json from server", this.newExcelData);
                 }
             },
             error: (err) => {
@@ -4656,6 +4732,30 @@ export class TrackingComponent {
         this.GetStandardType(this.productHSNSelect)
         // this.getSubEmployeeCommuTypes(selectedIndex, row)
     }
+    onProductHSNChange2(event: any) {
+
+        const selectedIndex = event.value;
+        this.productHSNSelect = selectedIndex
+        console.log(this.newExcelData);
+        if (this.productHSNSelect == 1) {
+            this.newExcelData = this.newExcelData.map(items => ({
+                ...items, // Keep all existing properties
+                code: items.productResult?.HSN_code // Add new 'code' key, ensuring 'productResult' exists
+            }));
+        } else if (this.productHSNSelect == 2) {
+            this.newExcelData = this.newExcelData.map(items => ({
+                ...items, // Keep all existing properties
+                code: items.productResult?.NAIC_code // Add new 'code' key, ensuring 'productResult' exists
+            }));
+        } else {
+            this.newExcelData = this.newExcelData.map(items => ({
+                ...items, // Keep all existing properties
+                code: items.productResult?.ISIC_code // Add new 'code' key, ensuring 'productResult' exists
+            }));
+        }
+        // this.GetStandardType(this.productHSNSelect)
+        // this.getSubEmployeeCommuTypes(selectedIndex, row)
+    }
     onAnnualChange(event: any) {
 
         const selectedIndex = event.value;
@@ -4664,8 +4764,6 @@ export class TrackingComponent {
         } else {
             this.annualMonths = true
         }
-
-
     }
     onProductStandardChange(event: any, row: any) {
         // // console.log(event.value);
@@ -4746,14 +4844,52 @@ export class TrackingComponent {
 
                 if (response.success == true) {
                     this.allPRoducts = response.data;
-                 
+
                 }
             }
         })
     };
     onAllProductChange() {
-      
-    };
+
+
+        this.newExcelData = this.newExcelData.map(item => {
+            if (item['S. No.'] === this.productID) {
+                // Determine the correct code value based on productHSNSelect
+                let selectedCode;
+                if (this.productHSNSelect === 1) {
+                    selectedCode = this.psg_product.HSN_code;
+                } else if (this.productHSNSelect === 2) {
+                    selectedCode = this.psg_product.NAIC_code;
+                } else {
+                    selectedCode = this.psg_product.ISIC_code;
+                }
+
+                return {
+                    ...item,
+                    code: selectedCode,
+                    is_find: true, // Assign the selected code
+                    productResult: {
+                        ...item.productResult, // Spread the existing productResult
+                        id: this.psg_product.id,
+                        typeofpurchase: this.psg_product.typeofpurchase,
+                        product: this.psg_product.product,
+                        typesofpurchasename: this.psg_product.typesofpurchasename,
+                        HSN_code: this.psg_product.HSN_code,
+                        NAIC_code: this.psg_product.NAIC_code,
+                        ISIC_code: this.psg_product.ISIC_code
+                    }
+                };
+            }
+            return item;
+        });
+
+
+        setTimeout(() => {
+            this.visible2 = false;
+        }, 100);
+    }
+
+
     getVehicleTypesLease() {
         this.trackingService.getVehicleTypeLease().subscribe({
             next: (response) => {

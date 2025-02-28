@@ -264,7 +264,7 @@ export class VendorsComponent {
         if (response.success == true) {
           this.visible = false;
           this.notification.showSuccess(
-            ' Vendor Added successfully',
+            'Vendor Added successfully',
             'Success'
           );
           this.GetVendors();

@@ -19,53 +19,53 @@ export class ReportComponent {
     constructor(private themeservice: ThemeService) {
         this.reports = [
             {
-                heading: 'GHG Data',
-                pera: ' Pick and choose the data and analysis for review and audits from the array of options provided.',
+                heading: 'GHG Data - Single Category and Facility',
+                pera: 'Generate GHG  report focusing on one category for an individiual facility within a group',
                 button: 'view',
                 route: '/single-report'
             },
             {
-                heading: 'Custom Report',
-                pera: ' Pick and choose the data and analysis for review and audits from the array of options provided.',
+                heading: 'GHG Emisisons Data - Mutiple Categories & Facilities',
+                pera: 'Generate emissions report focusing on multiple categories for one or more facilities in monthly format or aggregated form for the selected time period',
                 button: 'view',
                 route: '/energy-custom-report'
             },
             {
-                heading: 'Audit Report',
-                pera: ' Pick and choose the data and analysis for review and audits from the array of options provided.',
+                heading: 'GHG Emissions Data - Audit Report',
+                pera: 'Generate GHG emissions for audit purpose encompassing EFs and their sources across mutiple facilities',
                 button: 'view',
                 route: '/audit-report'
             },
             {
-                heading: 'Water Report',
-                pera: ' Pick and choose the data and analysis for review and audits from the array of options provided.',
+                heading: 'Water Usage Report',
+                pera: 'Generate comprehensive water report covering total usage, water discharged and it treatment across mutiple facilities ',
                 button: 'view',
                 route: '/water-supply-report'
             },
             {
                 heading: 'Waste Report',
-                pera: ' Pick and choose the data and analysis for review and audits from the array of options provided.',
+                pera: 'Generate detailed waste report covering different types of waste generated and related emisisons for a cetain facility',
                 button: 'view',
                 route: '/waste-report'
             },
             {
                 heading: 'Business Travel Report',
-                pera: ' Pick and choose the data and analysis for review and audits from the array of options provided.',
+                pera: 'Generate detailed business travel report analysing travel pattern and emissions across different travel modes for a certain facility',
                 button: 'view',
                 route: '/businessTravel-report'
             },
             {
                 heading: 'Vendor Report',
-                pera: ' Pick and choose the data and analysis for review and audits from the array of options provided.',
+                pera: 'Generare vendor report to analyse the emisisons from the set of vendors across different products and services',
                 button: 'view',
                 route: '/vendor-report'
             },
             {
-                heading: 'Financed Report',
-                pera: ' Pick and choose the data and analysis for review and audits from the array of options provided.',
+                heading: 'Financed Emissions Report',
+                pera: 'Generate financed emissions report to assess portfolio level emissions across the different investment products',
                 button: 'view',
                 route: '/financed-report'
-            },
+            }
           
         ];
     }

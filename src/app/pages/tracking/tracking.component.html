@@ -2410,7 +2410,7 @@
                                                         class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
                                                         (onChange)="onAnnualChange($event)" [options]="annualEntry"
                                                         ngModel optionLabel="name" optionValue="value"
-                                                        name="annualEntry" placeholder="Please select">
+                                                        [(ngModel)]="isAnnual" [ngModelOptions]="{standalone: true}" placeholder="Please select">
                                                     </p-dropdown>
 
                                                 </div>
@@ -2527,7 +2527,7 @@
                                                     <div class="position-relative">
                                                         <p-dropdown
                                                             class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
-                                                            (onChange)="onProductHSNChange($event)" ngModel
+                                                            (onChange)="onProductHSNChange2($event)" ngModel
                                                             [(ngModel)]="productHSNSelect" [options]="purchaseHSNCode"
                                                             optionLabel="code" optionValue="id" name="HSNCode">
                                                         </p-dropdown>
@@ -2539,7 +2539,7 @@
                                                         <div
                                                             class="d-flex justify-content-end border rounded ct_upload_btn1">
                                                             <p-fileUpload #fileUpload mode="basic" accept=".xlsx, .xls"
-                                                                chooseLabel="Please select a File" (onSelect)="onPurchaseGoodsUpload($event.files)
+                                                                chooseLabel="Please select a File" (onSelect)="onPurchaseGoodsUpload($event.files,fileUpload)
                                                         "></p-fileUpload>
                                                         </div>
                                                         <!-- <input type="file" class="form-control"  (change)="onPurchaseGoodsUpload($event)" accept=".xlsx, .xls"  id="ct_product_upload_file" > -->
@@ -2641,7 +2641,7 @@
                                                                 [(ngModel)]="product['Value / Quantity']"
                                                                 [ngModelOptions]="{standalone: true}"
                                                                 class="form-control" />
-                                                            <span *ngIf="!product.isEditing">{{ product['Value /Quantity'] }}</span>
+                                                            <span *ngIf="!product.isEditing">{{ product['Value / Quantity'] }}</span>
                                                         </td>
                                                         <td>
                                                             <input *ngIf="product.isEditing" type="text"
@@ -2661,24 +2661,25 @@
                                                         </td>
                                                         <td>
 
-                                                            <span>{{ product['Vendor Specific EF']}}&nbsp;
+                                                            <span *ngIf="product['Vendor Specific EF'] !==''">{{ product['Vendor Specific EF']}}&nbsp;
                                                                 {{product['Vendor Specific Unit'] }}</span>
+                                                                <span *ngIf="product['Vendor Specific EF'] ==''"></span>
                                                         </td>
                                                         <td>
 
                                                             <span [ngClass]="{'redColor':!product.is_find}">{{
                                                                 product.is_find ? 'Matched' : 'Unmatched' }}</span>
                                                         </td>
-
+                                                  
 
                                                         <td class="d-flex justify-content-center align-items-center">
-                                                            <button type="button" class="btn btn-sm btn-primary mr-1"
-                                                                (click)="toggleEdit(i, product.id)"  class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                                            <button  type="button" class="btn btn-sm btn-primary mr-1"
+                                                                (click)="toggleEdit(i, product['S. No.'])"   data-toggle="modal" data-target="#exampleModal">
                                                                 <i class="fa-solid"
                                                                     [ngClass]="{'fa-sync-alt': !product.isEditing, 'fa-save': product.isEditing}"></i>
                                                             </button>
-                                                            <button type="button" class="btn btn-sm btn-danger mr-1"
-                                                                (click)="deleteProduct(i)">
+                                                            <button *ngIf="!product.is_find" type="button" class="btn btn-sm btn-danger mr-1"
+                                                                (click)="deletePSG(product['S. No.'])">
                                                                 <i class="fa-solid fa-trash-can"></i>
                                                             </button>
                                                             <!-- <button class="btn btn-sm btn-success"> Add Vendor</button> -->
@@ -6665,16 +6666,18 @@
                 </div>
             </div>
         </div>
+    </div>
+    </div>
 
 
 
 
 
-
-<div class="modal fade modal-lg" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
+<!-- 
+<div class="modal ct_modal_cuatom_center_245 ct_custom_modal" >
+  <div class="modal-dialog ">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header border-0">
         <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -6687,10 +6690,38 @@
                          optionLabel="product" styleClass="facilitydropdown" #country="ngModel" required  (onChange)="onAllProductChange()">
                      </p-dropdown>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+      <div class="modal-footer border-0 pt-4">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" #closeModal4>Close</button>
+       
       </div>
     </div>
   </div>
-</div>
+</div> -->
+
+
+<p-dialog  [(visible)]="visible2" [breakpoints]="{'960px': '75vw'}" [style]="{width: '40vw'}">
+    
+    <p-header> Match Product </p-header>
+    <div class="modal-body text-white text-style Dashboard-tab ct_vertically_scroll">
+        <form class="col-12" >
+            <div class="mb-5 pb-0 row">
+                <div class="col-md-12 mb-">
+                 
+                    <p-dropdown class="finput ct_input_white_bg13 ct_city_name_select_2_search       custom_dropdown" ngModel
+                    name="country" placeholder="Select Product" [options]="allPRoducts" [filter]="true" filterBy="product"
+                 [(ngModel)]="psg_product"  [ngModelOptions]="{standalone: true}"
+                    optionLabel="product" styleClass="facilitydropdown" #country="ngModel" required  (onChange)="onAllProductChange()">
+                </p-dropdown>
+                </div>
+              
+
+
+
+
+            </div>
+            <div style="height: 280px;"></div>
+
+          
+        </form>
+    </div>
+</p-dialog>
