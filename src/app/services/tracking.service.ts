@@ -590,8 +590,8 @@ export class TrackingService {
     public getsubCatType(subCatID): Observable<any> {
         return this.http.get<any>(environment.baseUrl + 'Tracking/GetSubCategoryTypes/' + subCatID)
     }
-    public newgetsubCatType(subCatID): Observable<any> {
-        return this.http.get<any>(environment.baseUrl + '/GetSubCategoryTypes/' + subCatID)
+    public newgetsubCatType(subCatID , facility_id): Observable<any> {
+        return this.http.get<any>(environment.baseUrl + '/GetSubCategoryTypes/' + subCatID + '?facilityId=' + facility_id)
     }
     public newGetRegionType(facility): Observable<any> {
         return this.http.post<any>(environment.baseUrl + '/electricitygridType', facility)
@@ -651,8 +651,8 @@ export class TrackingService {
         );
     };
 
-    getEmployeeType(): Observable<any> {
-        return this.http.get(environment.baseUrl + '/employeeCommunityCategory')
+    getEmployeeType(facilityId): Observable<any> {
+        return this.http.get(environment.baseUrl + `/employeeCommunityCategory?facility_id=${facilityId}`)
     };
     getPurchaseCategorires(formData: any): Observable<any> {
         return this.http.post(environment.baseUrl + '/purchaseGoodsAllcategories', formData)

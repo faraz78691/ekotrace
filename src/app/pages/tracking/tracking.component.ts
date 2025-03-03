@@ -1205,7 +1205,7 @@ export class TrackingComponent {
     getsubCategoryType(subCatID: number) {
 
         this.dataEntry.typeID = null;
-        this.trackingService.newgetsubCatType(subCatID).subscribe({
+        this.trackingService.newgetsubCatType(subCatID , this.facilityID).subscribe({
             next: (response) => {
                 this.SubCategoryType = response.categories;
                 this.dataEntry.typeID = this.SubCategoryType[0]?.subCatTypeID;
@@ -4120,7 +4120,7 @@ export class TrackingComponent {
 
 
     getRefrigerantsubCategoryType(subCatID: number) {
-        this.trackingService.newgetsubCatType(subCatID).subscribe({
+        this.trackingService.newgetsubCatType(subCatID, this.facilityID).subscribe({
             next: (response) => {
                 this.SubCategoryType = response.categories;
             },
@@ -4789,7 +4789,7 @@ export class TrackingComponent {
         })
     };
     getEmployeeCommuTypes() {
-        this.trackingService.getEmployeeType().subscribe({
+        this.trackingService.getEmployeeType(this.facilityID).subscribe({
             next: (response) => {
 
                 if (response.success == true) {

@@ -12,8 +12,10 @@ import { FacilityService } from '@services/facility.service';
 import { NotificationService } from '@services/notification.service';
 import { ThemeService } from '@services/theme.service';
 import { environment } from 'environments/environment';
-
+import { TreeviewItem, TreeviewEventParser, OrderDownlineTreeviewEventParser, TreeviewConfig } from '@treeview/ngx-treeview';
+import * as XLSX from 'xlsx';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-vehicle-fleet',
@@ -34,9 +36,11 @@ export class VehicleFleetComponent {
  facilityList: Facility[] = [];
  RolesList: RoleModel[] = [];
  public groupsList: any[] = [];
+ public jsonData: any[] = [];
  updatedtheme: string;
  superAdminId:any;
-
+facilityName:any;
+facilityId:any;
 
 
 
@@ -47,9 +51,13 @@ export class VehicleFleetComponent {
    private facilityService: FacilityService,
    private confirmationService: ConfirmationService,
    private messageService: MessageService,
-   private themeservice: ThemeService
+   private themeservice: ThemeService,
+   private activatedRoute:ActivatedRoute
  ) {
-
+this.activatedRoute.queryParams.subscribe(params => {
+  this.facilityName = params['name'];
+  this.facilityId = params['id'];
+})
    this.groupdetails = new Array();
    this.groupMappingDetails = new GroupMapping();
    this.loginInfo = new LoginInfo();
@@ -188,5 +196,56 @@ export class VehicleFleetComponent {
      // console.log('Preventing scroll');
      event.stopPropagation();
    }
- }
+ };
+
+
+ onPurchaseGoodsUpload(event: any, fileUpload: any) {
+  console.log(event);
+  const file = event[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = (e: any) => {
+      const data = new Uint8Array(e.target.result);
+      const workbook = XLSX.read(data, { type: 'array' });
+
+      // Read first sheet
+      const sheetName = workbook.SheetNames[0];
+      const worksheet = workbook.Sheets[sheetName];
+
+      // Convert to JSON
+      this.jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+
+      // Convert array to key-value pairs
+      const jsonReading = this.convertToKeyValue(this.jsonData);
+      this.jsonData = jsonReading.filter(items => items['Vehicle Type'] != '' || items['Vehicle Model'] != '');
+
+      setTimeout(() => {
+          fileUpload.clear();
+      }, 1000);
+    
+
+  };
+  reader.readAsArrayBuffer(file);
+};
+
+convertToKeyValue(data: any[]): any[] {
+  if (data.length < 2) return []; // Ensure at least headers and one row exist
+
+  const headers = data[0]; // Extract headers
+  return data.slice(1).map((row) => {
+      let obj: any = {};
+      headers.forEach((header: string, index: number) => {
+          let value = row[index] || '';
+
+          // Convert Excel date serial number to readable date
+          if (header.includes('Date') && typeof value === 'number') {
+              value = XLSX.SSF.format('dd-mm-yyyy', value); // Converts to "dd-mm-yyyy"
+          }
+
+          obj[header] = value;
+      });
+      return obj;
+  });
+}
 }
