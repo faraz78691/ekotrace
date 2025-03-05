@@ -57,6 +57,14 @@ export class AppService {
         );
     }
 
+    postAPI<T, U>(url: string, data: U): Observable<T> {
+        return this.http.post<T>(environment.baseUrl + url, data)
+      };
+
+      getApi<T>(url: string): Observable<T> {
+        return this.http.get<T>(environment.baseUrl + url);
+      };
+
     // public async registerByAuth({email, password}) {
     //     try {
     //         const token = await Gatekeeper.registerByAuth(email, password);

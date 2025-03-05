@@ -11,6 +11,7 @@ export const environment = {
     // baseUrl: 'https://13.200.247.29:4000',
     baseUrl: 'https://ekotrace.ekobon.com:4000',
     // baseUrl: 'http://192.168.29.45:4500',
+  
     NoData: 'No Data Point',
     none: 'none',
     flex: 'flex',

@@ -514,6 +514,12 @@
                                             'Single Upload'}}</button>
 
                                     </div>
+                                    <div *ngIf="categoryId ==6" class="ml-auto">
+                                        <button class="btn ct_scoope_1_tab ct_view_request_btn px-4 trackingsubmitb"
+                                            type="button" (click)="bulkUploadCompany()"> {{singleCompanyTab ? 'Bulk Upload' :
+                                            'Single Upload'}}</button>
+
+                                    </div>
                                     <div class="ct_how_use_tooltip_main">
                                         <i class="fa-solid fa-circle-question" (click)="isHowtoUse = !isHowtoUse"></i>
                                         <div class="ct_how_use_tooltip_cnt" [ngClass]="isHowtoUse ? 'ct_active' : ''">
@@ -2049,107 +2055,252 @@
                                             </p>
                                         </div>
                                         <div *ngIf="categoryId==6" class="row">
-                                            <div class="mb-3"
-                                                [ngClass]="typeEV == true ? 'col-lg-4': typeBusCoach == true ? 'col-lg-4': 'col-lg-4'">
-                                                <label for="fname">Vehicle Type</label>
-                                                <p-dropdown class="ct_select_op_input ct_chev_icon_dark230 
-
-                                            " [options]="VehicleType" optionLabel="VehicleType" optionValue="ID"
-                                                    name="VehicleType" #vehicletype="ngModel"
-                                                    [(ngModel)]="VehicleDE.vehicleTypeID"
-                                                    (onChange)="enableCharging(SubCatAllData.subCatName)"></p-dropdown>
-                                            </div>
-                                            <div class="col-lg-4 mb-3">
-                                                <label for="fname">No. of Vehicles</label>
-                                                <input required ngModel name="NoOfVehicles" #NoOfVehicles="ngModel"
-                                                    [(ngModel)]="VehicleDE.noOfVehicles" NoOfVehicles id="search-input"
-                                                    type="text" class="form-control Dashboard-tab text-white"
-                                                    placeholder="Enter no of vehicles" />
-                                                <p class="validation" *ngIf="
-                                        VehicleDE.noOfVehicles < 0 &&
-                                                dataEntryForm.submitted
-                                            ">
-                                                    No Of Vehicles should be greater than 0
-                                                </p>
-
-                                                <p class="validation"
-                                                    *ngIf="NoOfVehicles.errors?.['required'] && dataEntryForm.submitted">
-                                                    No Of Vehicles value required.
-                                                </p>
-                                            </div>
-
-                                            <div class="col-lg-4 mb-3">
-                                                <label pTooltip="Total number of trips per vehicle"
-                                                    tooltipPosition="top" for="TotalnoOftripsPerVehicle">Trips per
-                                                    vehicle</label>
-
-
-                                                <input required ngModel name="TotalnoOftripsPerVehicle"
-                                                    #TotalnoOftripsPerVehicle="ngModel"
-                                                    [(ngModel)]="VehicleDE.totalnoOftripsPerVehicle"
-                                                    TotalnoOftripsPerVehicle id="search-input" type="text"
-                                                    class="form-control Dashboard-tab text-white"
-                                                    placeholder="Enter trips per vehicle" />
-
-
-                                            </div>
-                                            <div *ngIf="typeEV == true" class="col-lg-4">
-                                                <label pTooltip="Charging done outside company campus (%)"
-                                                    tooltipPosition="top" for="fname">Charging outside %
-                                                </label>
-                                                <i class="fa fa-info-circle tooltip-icon mx-2" pTooltip="
-                                                Charging done outside company campus (%).
-                                                " tooltipPosition="top" style="color: #88ad47"></i>
-                                                <div class="input-group">
-                                                    <input id="chargingInput"
+                                            <ng-container *ngIf="singleCompanyTab">
+                                                <div class="mb-3"
+                                                    [ngClass]="typeEV == true ? 'col-lg-4': typeBusCoach == true ? 'col-lg-4': 'col-lg-4'">
+                                                    <label for="fname">Vehicle Type</label>
+                                                    <p-dropdown class="ct_select_op_input ct_chev_icon_dark230 
+    
+                                                " [options]="VehicleType" optionLabel="VehicleType" optionValue="ID"
+                                                        name="VehicleType" #vehicletype="ngModel"
+                                                        [(ngModel)]="VehicleDE.vehicleTypeID"
+                                                        (onChange)="enableCharging(SubCatAllData.subCatName)"></p-dropdown>
+                                                </div>
+                                                <div class="col-lg-4 mb-3">
+                                                    <label for="fname">No. of Vehicles</label>
+                                                    <input required ngModel name="NoOfVehicles" #NoOfVehicles="ngModel"
+                                                        [(ngModel)]="VehicleDE.noOfVehicles" NoOfVehicles id="search-input"
+                                                        type="text" class="form-control Dashboard-tab text-white"
+                                                        placeholder="Enter no of vehicles" />
+                                                    <p class="validation" *ngIf="
+                                            VehicleDE.noOfVehicles < 0 &&
+                                                    dataEntryForm.submitted
+                                                ">
+                                                        No Of Vehicles should be greater than 0
+                                                    </p>
+    
+                                                    <p class="validation"
+                                                        *ngIf="NoOfVehicles.errors?.['required'] && dataEntryForm.submitted">
+                                                        No Of Vehicles value required.
+                                                    </p>
+                                                </div>
+    
+                                                <div class="col-lg-4 mb-3">
+                                                    <label pTooltip="Total number of trips per vehicle"
+                                                        tooltipPosition="top" for="TotalnoOftripsPerVehicle">Trips per
+                                                        vehicle</label>
+    
+    
+                                                    <input required ngModel name="TotalnoOftripsPerVehicle"
+                                                        #TotalnoOftripsPerVehicle="ngModel"
+                                                        [(ngModel)]="VehicleDE.totalnoOftripsPerVehicle"
+                                                        TotalnoOftripsPerVehicle id="search-input" type="text"
                                                         class="form-control Dashboard-tab text-white"
-                                                        placeholder="Enter value in %" required ngModel
-                                                        name="chargingPerc" #chargingPerc="ngModel"
-                                                        [(ngModel)]="VehicleDE.chargingPerc" />
-                                                    <div class="input-group-append">
-                                                        <span class="input-group-text">%</span>
+                                                        placeholder="Enter trips per vehicle" />
+    
+    
+                                                </div>
+                                                <div *ngIf="typeEV == true" class="col-lg-4">
+                                                    <label pTooltip="Charging done outside company campus (%)"
+                                                        tooltipPosition="top" for="fname">Charging outside %
+                                                    </label>
+                                                    <i class="fa fa-info-circle tooltip-icon mx-2" pTooltip="
+                                                    Charging done outside company campus (%).
+                                                    " tooltipPosition="top" style="color: #88ad47"></i>
+                                                    <div class="input-group">
+                                                        <input id="chargingInput"
+                                                            class="form-control Dashboard-tab text-white"
+                                                            placeholder="Enter value in %" required ngModel
+                                                            name="chargingPerc" #chargingPerc="ngModel"
+                                                            [(ngModel)]="VehicleDE.chargingPerc" />
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text">%</span>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div *ngIf="typeBusCoach == true" class="col-lg-4">
-                                                <label
-                                                    pTooltip="Average number of people travel in one vehicle per trip"
-                                                    tooltipPosition="top" for="AvgNoPeople">Avg No. of People</label>
-                                                <input required ngModel name="AvgNoPeople" #AvgNoPeople="ngModel"
-                                                    placeholder="Enter avg no of people"
-                                                    [(ngModel)]="VehicleDE.avgPeoplePerTrip" AvgNoPeople
-                                                    id="search-input" type="text"
-                                                    class="form-control Dashboard-tab text-white" />
-
-                                            </div>
-                                            <div
-                                                [ngClass]="typeEV == true ? 'col-lg-4': typeBusCoach == true ? 'col-lg-4': 'col-lg-4'">
-                                                <label pTooltip="Mode of Data Entry" tooltipPosition="top"
-                                                    for="fname">Mode
-                                                    of data entry</label>
-                                                <p-dropdown class="ct_select_op_input ct_chev_icon_dark230 
-                                            " ngModel [options]="ModeType" optionLabel="modeName"
-                                                    optionValue="modeName" name="modeName" #DEMode="ngModel"
-                                                    [(ngModel)]="VehicleDE.modeOfDE"
-                                                    (onChange)="setUnit()"></p-dropdown>
-                                            </div>
-
-
-
-                                            <div
-                                                [ngClass]="typeEV == true ? 'col-lg-4': typeBusCoach == true ? 'col-lg-4': 'col-lg-4'">
-                                                <label for="fname">Value</label>
-                                                <div class="position-relative">
-                                                    <input required ngModel name="Value" #Value="ngModel"
-                                                        placeholder="Enter value" [(ngModel)]="VehicleDE.value" Value
+                                                <div *ngIf="typeBusCoach == true" class="col-lg-4">
+                                                    <label
+                                                        pTooltip="Average number of people travel in one vehicle per trip"
+                                                        tooltipPosition="top" for="AvgNoPeople">Avg No. of People</label>
+                                                    <input required ngModel name="AvgNoPeople" #AvgNoPeople="ngModel"
+                                                        placeholder="Enter avg no of people"
+                                                        [(ngModel)]="VehicleDE.avgPeoplePerTrip" AvgNoPeople
                                                         id="search-input" type="text"
-                                                        class="form-control Dashboard-tab text-white" />
-                                                    <div class="ct_quantity_text">
-                                                        <p>{{dataEntry.unit}}</p>
-                                                    </div>
-
+                                                        class="form-control Dashboard-tab text-white"/>
+    
                                                 </div>
-                                            </div>
+                                                <div
+                                                    [ngClass]="typeEV == true ? 'col-lg-4': typeBusCoach == true ? 'col-lg-4': 'col-lg-4'">
+                                                    <label pTooltip="Mode of Data Entry" tooltipPosition="top"
+                                                        for="fname">Mode
+                                                        of data entry</label>
+                                                    <p-dropdown class="ct_select_op_input ct_chev_icon_dark230 
+                                                " ngModel [options]="ModeType" optionLabel="modeName"
+                                                        optionValue="modeName" name="modeName" #DEMode="ngModel"
+                                                        [(ngModel)]="VehicleDE.modeOfDE"
+                                                        (onChange)="setUnit()"></p-dropdown>
+                                                </div>
+    
+    
+    
+                                                <div
+                                                    [ngClass]="typeEV == true ? 'col-lg-4': typeBusCoach == true ? 'col-lg-4': 'col-lg-4'">
+                                                    <label for="fname">Value</label>
+                                                    <div class="position-relative">
+                                                        <input required ngModel name="Value" #Value="ngModel"
+                                                            placeholder="Enter value" [(ngModel)]="VehicleDE.value" Value
+                                                            id="search-input" type="text"
+                                                            class="form-control Dashboard-tab text-white" />
+                                                        <div class="ct_quantity_text">
+                                                            <p>{{dataEntry.unit}}</p>
+                                                        </div>
+    
+                                                    </div>
+                                                </div>
+
+                                            </ng-container>
+                                            <ng-container *ngIf="!singleCompanyTab">
+                                                <div class="col-md-12 table-responsive" style="height: 53vh;">
+                                                    <table class="table ct_home_office_table">
+                                                        <thead class="thead-dark">
+                                                            <tr>
+                                                                <th scope="col">S.No.</th>
+                                                                <th scope="col">Product Description</th>
+                                                                <th scope="col">Product Type</th>
+                                                                <th scope="col">Product Code</th>
+                                                                <th scope="col">Purchase date</th>
+        
+                                                                <!-- <th *ngIf="annualMonths" scope="col">Month of purchase</th> -->
+                                                                <th scope="col" style="width : 6rem; white-space:normal">Value/
+                                                                    Quantity</th>
+                                                                <th scope="col">Unit</th>
+                                                                <th scope="col">Vendor</th>
+                                                                <th scope="col">Vendor Specific EF</th>
+                                                                <th scope="col">Status</th>
+                                                                <th scope="col" class="text-center">Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody #commuteTable>
+                                                            <!-- <tr>
+                                                                <td scope="row">1</td>
+        
+                                                                <td>Sports Teams and Clubs</td>
+                                                                <td>25-10-2025</td>
+                                                                <td>50</td>
+                                                                <td>INR</td>
+                                                                <td>Samsung</td>
+                                                                <td>2.00</td>
+                                                                <td>Matched</td>
+                                                              
+                                                                <td class="d-flex justify-content-center align-items-center">
+                                                                    <button class="btn btn-sm btn-primary mr-1">  <i class="fa-solid fa-edit"></i></button>
+                                                                    <button class="btn btn-sm btn-danger mr-1">  <i class="fa-solid fa-trash-can"></i></button>
+                                                                    <button class="btn  btn-sm btn-success"> Add Vendor</button>
+                                                                  
+                                                                   
+                                                                </td>
+        
+                                                            </tr> -->
+                                                            <tr *ngFor="let product of newExcelData; let i = index">
+                                                                <td>{{ i + 1 }}</td>
+                                                                <td>
+                                                                    <ng-container>
+                                                                        <textarea *ngIf="product.isEditing" type="text"
+                                                                            [(ngModel)]="product['Product Description']"
+                                                                            [ngModelOptions]="{standalone: true}"
+                                                                            class="form-control text-dark"></textarea>
+                                                                        <span *ngIf="!product.isEditing">{{ product['Product Description'] }}</span>
+                                                                    </ng-container>
+        
+                                                                </td>
+                                                                <td>
+                                                                    <ng-container>
+                                                                        <textarea *ngIf="product.isEditing" type="text"
+                                                                            [(ngModel)]="product.productResult.typesofpurchasename"
+                                                                            [ngModelOptions]="{standalone: true}"
+                                                                            class="form-control text-dark"></textarea>
+                                                                        <span *ngIf="!product.isEditing">{{
+                                                                            product.productResult.typesofpurchasename }}</span>
+                                                                    </ng-container>
+        
+                                                                </td>
+                                                                <td>
+                                                                    <ng-container>
+                                                                        <textarea *ngIf="product.isEditing" type="text"
+                                                                            [(ngModel)]="product.code"
+                                                                            [ngModelOptions]="{standalone: true}"
+                                                                            class="form-control text-dark"></textarea>
+                                                                        <span *ngIf="!product.isEditing">{{
+                                                                            product.productResult.product }} {{ product.code
+                                                                            }}</span>
+                                                                    </ng-container>
+        
+                                                                </td>
+                                                                <td>
+                                                                    <input *ngIf="product.isEditing" type="text"
+                                                                        [(ngModel)]="product['Purchase Date']"
+                                                                        [ngModelOptions]="{standalone: true}"
+                                                                        class="form-control" />
+                                                                    <span *ngIf="!product.isEditing">{{ product['Purchase Date']
+                                                                        }}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <input *ngIf="product.isEditing" type="text"
+                                                                        [(ngModel)]="product['Value / Quantity']"
+                                                                        [ngModelOptions]="{standalone: true}"
+                                                                        class="form-control" />
+                                                                    <span *ngIf="!product.isEditing">{{ product['Value / Quantity'] }}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <input *ngIf="product.isEditing" type="text"
+                                                                        [(ngModel)]="product['Unit']"
+                                                                        [ngModelOptions]="{standalone: true}"
+                                                                        class="form-control" />
+                                                                    <span *ngIf="!product.isEditing">{{ product['Unit']
+                                                                        }}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <input *ngIf="product.isEditing" type="text"
+                                                                        [(ngModel)]="product['Vendor']"
+                                                                        [ngModelOptions]="{standalone: true}"
+                                                                        class="form-control" />
+                                                                    <span *ngIf="!product.isEditing">{{ product['Vendor']
+                                                                        }}</span>
+                                                                </td>
+                                                                <td>
+        
+                                                                    <span *ngIf="product['Vendor Specific EF'] !==''">{{ product['Vendor Specific EF']}}&nbsp;
+                                                                        {{product['Vendor Specific Unit'] }}</span>
+                                                                        <span *ngIf="product['Vendor Specific EF'] ==''"></span>
+                                                                </td>
+                                                                <td>
+        
+                                                                    <span [ngClass]="{'redColor':!product.is_find}">{{
+                                                                        product.is_find ? 'Matched' : 'Unmatched' }}</span>
+                                                                </td>
+                                                          
+        
+                                                                <td class="d-flex justify-content-center align-items-center">
+                                                                    <button  type="button" class="btn btn-sm btn-primary mr-1"
+                                                                        (click)="toggleEdit(i, product['S. No.'])"   data-toggle="modal" data-target="#exampleModal">
+                                                                        <i class="fa-solid"
+                                                                            [ngClass]="{'fa-sync-alt': !product.isEditing, 'fa-save': product.isEditing}"></i>
+                                                                    </button>
+                                                                    <button *ngIf="!product.is_find" type="button" class="btn btn-sm btn-danger mr-1"
+                                                                        (click)="deletePSG(product['S. No.'])">
+                                                                        <i class="fa-solid fa-trash-can"></i>
+                                                                    </button>
+                                                                    <!-- <button class="btn btn-sm btn-success"> Add Vendor</button> -->
+                                                                </td>
+                                                            </tr>
+        
+        
+        
+                                                        </tbody>
+        
+                                                    </table>
+                                                </div>
+                                            </ng-container>
                                         </div>
 
 
@@ -2314,7 +2465,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row mt-3 mx-2">
+                                    <div class="row mt-3 mx-2" *ngIf="!singleCompanyTab">
                                         <div class="col">
                                             <label for="fname ">Note</label>
                                             <textarea class="ct_textarea_input" ngModel name="Textarea"
@@ -2523,7 +2674,7 @@
                                             <div
                                                 class="d-flex align-items-center justify-content-between ct_gap_10 flex-wrap py-4">
                                                 <div class="mb-4" style="gap: 10px;">
-                                                    <label class=" ct_text_wrape">Product Code Conv.</label>
+                                                    <label class="ct_text_wrape">Product Code Conv.</label>
                                                     <div class="position-relative">
                                                         <p-dropdown
                                                             class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"

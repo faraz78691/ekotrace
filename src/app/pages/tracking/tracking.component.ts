@@ -273,6 +273,7 @@ export class TrackingComponent {
     purchaseProductCategoryTypes: any[] = [];
     marketEElecID: any;
     templateLinks: string;
+    singleCompanyTab = true;
     processingUnit: string;
     haveBasicPackage: number = 0;
     carFuel_type: any[] = [];
@@ -5073,7 +5074,7 @@ export class TrackingComponent {
 
     onpurchaseActivityChange(event: any) {
         const energyMethod = event.value;
-        this.onActivitySelected = true
+        this.onActivitySelected = true;
         this.getActivitySubCategory(energyMethod);
 
     };
@@ -5091,6 +5092,10 @@ export class TrackingComponent {
             }
         })
     };
+
+    bulkUploadCompany(){
+        this.singleCompanyTab = !this.singleCompanyTab
+    }
 
     onCalculationPurchaseMethodChange(event: any) {
         const calMethod = event.value;

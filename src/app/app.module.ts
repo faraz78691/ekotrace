@@ -131,6 +131,7 @@ import { DataProgressComponent } from './pages/data-progress/data-progress.compo
 import { DisableScrollDirective } from './utils/disable-scroll.directive';
 import { VehicleFleetComponent } from './pages/vehicle-fleet/vehicle-fleet.component';
 
+
 defineCustomElements();
 registerLocaleData(localeEn, 'en-EN');
 
@@ -233,6 +234,7 @@ registerLocaleData(localeEn, 'en-EN');
         NgxCaptchaModule,
         FormsModule,
         DialogModule,
+
         ButtonModule,
         FileUploadModule,
         DropdownModule,
