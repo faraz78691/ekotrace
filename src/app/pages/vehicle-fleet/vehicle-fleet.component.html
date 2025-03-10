@@ -6,7 +6,7 @@
             <h3 class="pl-4 card-header card-headerL">Set Target</h3>
         </div>
     </div> -->
-  
+
     <div class="row pt-3">
         <div class="col-md-12  overflow-auto mb-5 ct_custom_flex_basisc"
             [ngClass]="this.updatedtheme === 'dark' ? 'User-tabD' : 'User-tabL'">
@@ -20,33 +20,39 @@
                         class="card-header card-headerL ct_header_grey_1202 d-flex align-items-center justify-content-between">
                         <h5 class=" ct_fw_600 m-0 my-0" style="flex: 1;">{{facilityName}}- Vehicle Fleet</h5>
                         <div class="flex items-center mr-3">
-                            <input type="radio" id="passenger" name="vehicleType" value="1" [(ngModel)]="vehicleType" (change)="onVehicleTypeChange($event)" />
+                            <input type="radio" id="passenger" name="vehicleType" value="1" [(ngModel)]="vehicleType"
+                                (change)="onVehicleTypeChange($event)" />
                             <label for="passenger" class="ml-2">Passenger Vehicle</label>
                         </div>
-                        
+
                         <div class="flex items-center">
-                            <input type="radio" id="delivery" name="vehicleType" value="2" [(ngModel)]="vehicleType" (change)="onVehicleTypeChange($event)" />
+                            <input type="radio" id="delivery" name="vehicleType" value="2" [(ngModel)]="vehicleType"
+                                (change)="onVehicleTypeChange($event)" />
                             <label for="delivery" class="ml-2">Delivery Vehicle</label>
                         </div>
-                        
+
                         <!-- <a href="assets/passenger_fleet.xlsx"  download
                         class="px-4 trackingsubmitb ct_h_40">Passenger Vehicle</a> -->
                     </div>
 
                     <div class="d-flex align-items-center ct_gap_10 flex-wrap my-3   justify-content-end  ">
-                           
-                        <div
-                            class="d-flex justify-content-end ct_h_40 rounded">
-                            <p-fileUpload class="ct_svg_icon_white" #fileUpload mode="basic" accept=".xlsx, .xls" (onSelect)="onPurchaseGoodsUpload($event.files,fileUpload)"
-                                chooseLabel="Please select a File"
-                        ></p-fileUpload>
-                        </div>
-                 
-                    <a href="assets/passenger_fleet.xlsx"  download
-                        class="px-4 trackingsubmitb ct_h_40"><i
-                            class="fa-solid fa-download mr-2"></i>Download File</a>
 
-                </div>  
+                        <div class="d-flex justify-content-end ct_h_40 rounded">
+                            <p-fileUpload class="ct_svg_icon_white" #fileUpload mode="basic" accept=".xlsx, .xls"
+                                (onSelect)="overideSheet($event.files,fileUpload)"
+                                chooseLabel="Upload here to overide"></p-fileUpload>
+                        </div>
+                        <div class="d-flex justify-content-end ct_h_40 rounded">
+                            <p-fileUpload class="ct_svg_icon_white" #fileUpload2 mode="basic" accept=".xlsx, .xls"
+                                (onSelect)="onPurchaseGoodsUpload($event.files,fileUpload2)"
+                                chooseLabel="Please select a File"></p-fileUpload>
+                        </div>
+
+                        <a [href]="vehicleType ==1 ? 'assets/passenger_fleet.xlsx' : 'assets/delivery_fleet.xlsx'"
+                            download class="px-4 trackingsubmitb ct_h_40"><i
+                                class="fa-solid fa-download mr-2"></i>Download File</a>
+
+                    </div>
                 </div>
 
             </div>
@@ -62,10 +68,7 @@
             </p-confirmDialog>
 
 
-
-
-
-            <div class="dataTable scrollit mt-4 ct_vender_scroll_320">
+            <div *ngIf="vehicleType == 1" class="dataTable scrollit mt-4 ct_vender_scroll_320">
                 <table class="table_loc ct_space_table_21 ct_billing_table_bg_120 ">
                     <thead>
                         <tr>
@@ -73,68 +76,173 @@
                             <th scope="col" style="font-size: 16px;">S.No.</th>
                             <th scope="col" style="font-size: 16px;">Vehicle Model </th>
                             <th scope="col" style="font-size: 16px;">Vehicle Type </th>
-                            <th scope="col" style="font-size: 16px;">Vehicle Sub-Type</th>
-                            <th scope="col" style="font-size: 16px;">Type of Engine</th>
+                            <th scope="col" style="font-size: 16px;">Fuel</th>
                             <th scope="col" style="font-size: 16px;">Charging % Outside</th>
                             <th scope="col" style="font-size: 16px;">Acquisition Date</th>
-                            <!-- <th scope="col" style="font-size: 16px;">Action</th> -->
+                            <th scope="col" style="font-size: 16px;">Vehicle Retire</th>
+                            <th scope="col" style="font-size: 16px;">Action</th>
 
                         </tr>
                     </thead>
                     <tbody>
-                        <tr clickable (click)="selectGroup(group,index)" *ngFor="
-                                let group of jsonData;let index = index
-                            " class="col-12 tableRow border-bottom rounded pointer"
-                           
-                         >
-                            <td class="td text-initial" style="font-size: 16px;">
-                                {{ index + 1 }}
-                            </td>
-                            <td class="td " style="font-size: 16px;">
-                                {{ group['Vehicle Model'] }}
+                        <ng-container *ngFor="let group of jsonData;let index = index">
+                            <tr *ngIf="group.category == 1" clickable (click)="selectGroup(group,index)"
+                                class="col-12 tableRow border-bottom rounded pointer">
+                                <td class="td text-initial" style="font-size: 16px;">
+                                    {{ index + 1 }}
+                                </td>
+                                <td class="td " style="font-size: 16px;">
+                                    {{ group.vehicle_model }}
 
-                            </td>
-                            <td class="td pb-1" style="font-size: 16px;">
-                                {{ group['Vehicle Type'] }}
+                                </td>
+                                <td class="td pb-1" style="font-size: 16px;">
+                                    {{group.vehicle_type }}
 
-                            </td>
-                            <td class="td  pb-1" style="font-size: 16px;">
-                                {{ group['Vehicle Sub-Type'] }}
+                                </td>
+                                <td class="td  pb-1" style="font-size: 16px;">
+                                    {{ group.fuel_type }}
 
-                            </td>
-                            <td class="td  pb-1" style="font-size: 16px;">
-                                {{ group['Type of Engine'] }}
+                                </td>
 
-                            </td>
-                            <td class="td  pb-1" style="font-size: 16px;">
-                                {{ group['Charging % Outside (If EV / Hybrid)'] }}
+                                <td class="td  pb-1" style="font-size: 16px;">
+                                    {{ group['Charging % Outside (If EV / Hybrid)'] || group.charging_outside }}
 
-                            </td>
-                            <td class="td  pb-1" style="font-size: 16px;">
-                                {{ group['Acquisition Date'] }}
+                                </td>
+                                <td class="td  pb-1" style="font-size: 16px;">
+                                    {{ group['Acquisition Date']
+                                    || group.acquisition_date}}
 
-                            </td>
-                            <!-- <td class="td pb-1" (click)="viewDetails(group)">
-                                <i class="fas fa-edit"></i>
-                            </td> -->
+                                </td>
+                                <td class="td  pb-1" style="font-size: 16px;">
+                                    <ng-container
+                                        *ngIf="editingId === group['S.No'] || editingId === group.id; else displayMode">
+                                        <select [(ngModel)]="group.retire_vehicle">
+                                            <option value=0>No</option>
+                                            <option value=1>Yes</option>
+                                        </select>
+                                    </ng-container>
+                                    <ng-template #displayMode>
+                                        {{ group.retire_vehicle == 0 ? 'No' : 'Yes' }}
+                                    </ng-template>
 
+                                </td>
+                               
+                                <td *ngIf="editingId !== group['S.No'] && editingId !== group.id" class="td pb-1" (click)="editRow(group)"   >
+                                    <i class="fas fa-edit"></i>
+                                </td>
+                                <td *ngIf="editingId== group['S.No'] && editingId == group.id" class="td pb-1" (click)="updateRow(group)"   >
+                                    <i class="fas fa-save"></i>
+                                </td>
+                            </tr>
 
-                        </tr>
+                        </ng-container>
                     </tbody>
                 </table>
-                <div class="col-12 mt-5">
-                    <button type="submit" class="px-4 trackingsubmitb" (click)="saveVehicleFleet()">
-                        Submit
-                    </button>
-                </div>
-               
+                <ng-container *ngIf="showSubmit1">
+                    <div *ngIf="!overRide" class="col-12 mt-5">
+                        <button type="submit" class="px-4 trackingsubmitb" (click)="saveVehicleFleet()">
+                            Submit
+                        </button>
+                    </div>
+                    <div *ngIf="overRide" class="col-12 mt-5">
+                        <button type="submit" class="px-4 trackingsubmitb" (click)="oversideVehicleFleet()">
+                            Submit
+                        </button>
+                    </div>
+
+                </ng-container>
+
+            </div>
+            <div *ngIf="vehicleType == 2" class="dataTable scrollit mt-4 ct_vender_scroll_320">
+                <table class="table_loc ct_space_table_21 ct_billing_table_bg_120 ">
+                    <thead>
+                        <tr>
+
+                            <th scope="col" style="font-size: 16px;">S.No.</th>
+                            <th scope="col" style="font-size: 16px;">Vehicle Model </th>
+                            <th scope="col" style="font-size: 16px;">Vehicle Type </th>
+                            <th scope="col" style="font-size: 16px;">Fuel </th>
+                            <!-- <th scope="col" style="font-size: 16px;">Vehicle Sub-Type</th>
+                         
+                            <th scope="col" style="font-size: 16px;">Quantity</th> -->
+
+                            <th scope="col" style="font-size: 16px;">Vehicle Retire</th>
+                            <th scope="col" style="font-size: 16px;">Action</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngFor="let group of jsonData;let index = index">
+
+                            <tr *ngIf="group.category == 2" clickable (click)="selectGroup(group,index)"
+                                class="col-12 tableRow border-bottom rounded pointer">
+                                <td class="td text-initial" style="font-size: 16px;">
+                                    {{ index + 1 }}
+                                </td>
+                                <td class="td " style="font-size: 16px;">
+                                    {{ group.vehicle_model }}
+
+                                </td>
+                                <td class="td pb-1" style="font-size: 16px;">
+                                    {{ group.vehicle_type }}
+
+                                </td>
+                                <td class="td pb-1" style="font-size: 16px;">
+                                    {{ group.fuel_type }}
+
+                                </td>
+
+                                <!-- <td class="td  pb-1" style="font-size: 16px;">
+        {{ group['Vehicle Sub-Type'] }}
+
+    </td>
+  
+    <td class="td  pb-1" style="font-size: 16px;">
+        {{ group['Quantity'] }}
+
+    </td> -->
+
+                                <td class="td  pb-1" style="font-size: 16px;">
+                                    <ng-container  *ngIf="editingId === group['S.No'] || editingId === group.id; else displayMode">
+                                        <select [(ngModel)]="group.retire_vehicle">
+                                            <option value=0>No</option>
+                                            <option value=1>Yes</option>
+                                        </select>
+                                    </ng-container>
+                                    <ng-template #displayMode>
+                                        {{ group.retire_vehicle == 0 ? 'No' : 'Yes' }}
+                                    </ng-template>
+
+                                </td>
+                                <td *ngIf="editingId !== group['S.No'] && editingId !== group.id" class="td pb-1" (click)="editRow(group)"   >
+                                    <i class="fas fa-edit"></i>
+                                </td>
+                                <td *ngIf="editingId === group['S.No'] || editingId === group.id" class="td pb-1" (click)="updateRow(group)"   >
+                                    <i class="fas fa-save"></i>
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+                <ng-container  *ngIf="showSubmit2">
+                    <div *ngIf="!overRide" class="col-12 mt-5">
+                        <button type="submit" class="px-4 trackingsubmitb" (click)="saveVehicleFleet()">
+                            Submit
+                        </button>
+                    </div>
+                    <div *ngIf="overRide" class="col-12 mt-5">
+                        <button type="submit" class="px-4 trackingsubmitb" (click)="oversideVehicleFleet()">
+                            Submit
+                        </button>
+                    </div>
+
+                </ng-container>
             </div>
         </div>
 
 
     </div>
 
-     
 
 
 
@@ -144,97 +252,10 @@
 
 
 
-        <!-- dhdfjhfjfgk -->
-        <!-- <p-tabPanel header="Cost Centre">
-            <div class="row pt-3">
-                <div class="col-md-12  overflow-auto mb-5 ct_custom_flex_basisc"
-                    [ngClass]="this.updatedtheme === 'dark' ? 'User-tabD' : 'User-tabL'">
-                    <div class="row">
-                        <div class="" [ngClass]="
-                                this.updatedtheme === 'dark'
-                                    ? 'User-headD'
-                                    : 'User-headL'
-                            ">
-                            <div
-                                class="card-header card-headerL ct_header_grey_1202 d-flex align-items-center justify-content-between">
-                                <h4 class=" ct_fw_600 m-0 my-0" style="flex: 1;">Cost Centre</h4>
-                                <button class="GroupButton ct_assign_package_btn129 ct_animation_btn_121 w-auto px-3"
-                                    (click)="showAddGroupDialog('2')">
-                                    + Add Cost Centre
-                                </button>
-                            </div>
-                        </div>
 
-                    </div>
-
-                    <p-toast></p-toast>
-                    <p-confirmDialog #cd [style]="{width: '60vw'}">
-                        <ng-template pTemplate="footer">
-                            <button pButton icon="pi pi-check" label="Yes" (click)="cd.accept()"
-                                class="span-color cancel-button"></button>
-                            <button pButton icon="pi pi-times" label="Cancel" (click)="cd.reject()"
-                                class="p-button-raised p-button-danger"></button>
-                        </ng-template>
-                    </p-confirmDialog>
+    <!-- dhdfjhfjfgk -->
 
 
 
-
-
-                    <div class="dataTable scrollit mt-4">
-                        <table class="table_loc ct_space_table_21 ct_billing_table_bg_120">
-                            <thead>
-                                <tr>
-
-                                    <th scope="col" style="width: 400px; font-size: 16px;">S.No.</th>
-                                    <th scope="col" style="width: 400px;font-size: 16px;"> Cost Centre Name </th>
-                                    <th scope="col" style="font-size: 16px;">Reference ID</th>
-
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr clickable (click)="selectGroup(group,index)" *ngFor="
-                                        let group of groupsCostList;let index = index
-                                    " class="col-12 tableRow border-bottom rounded pointer"
-                                    (click)="UnlockComplete(group.id)"
-                                    [ngClass]="{ 'tableRowclicked': index === selectedRowIndex }">
-                                    <td class="td text-initial" style="width: 300px; font-size: 16px;">
-                                        {{ index + 1 }}
-                                    </td>
-                                    <td class="td " style="width: 400px; font-size: 16px;">
-                                        {{ group.cost_center_name }}
-
-                                    </td>
-                                    <td class="td  pb-1" style="font-size: 16px;">
-                                        {{ group.cost_center_refer_id }}
-
-                                    </td>
-
-
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div class="text-light" *ngIf="groupdata === false">
-                            <div class="icon">
-                                <i class="fa fa-info-circle" style="font-size: 20px" aria-hidden="true"></i>
-                            </div>
-                            <label class="text-center label">No group available. Start by add a new group using the
-                                add group button.</label>
-                        </div>
-                    </div>
-                </div>
-
-
-            </div>
-        </p-tabPanel> -->
-
-
-   
 
 </div>
-
-
-
-
-
-

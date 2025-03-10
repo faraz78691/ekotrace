@@ -38,11 +38,15 @@ export class VehicleFleetComponent {
   RolesList: RoleModel[] = [];
   public groupsList: any[] = [];
   public jsonData: any[] = [];
+  public jsonData2: any[] = [];
   updatedtheme: string;
   superAdminId: any;
   facilityName: any;
   facilityId: any;
   vehicleType: any = '1'
+  overRide = false;
+  showSubmit1 = false;
+  showSubmit2 = false;
 
 
   constructor(
@@ -76,7 +80,7 @@ export class VehicleFleetComponent {
     // this.GetAllFacility();
     let tenantID = this.loginInfo.tenantID;
     this.superAdminId = this.loginInfo.super_admin_id;
-    this.GetVendors();
+    this.getVehicleFleet();
 
     this.updatedtheme = this.themeservice.getValue('theme');
   }
@@ -195,7 +199,7 @@ export class VehicleFleetComponent {
   };
 
 
-  onPurchaseGoodsUpload(event: any, fileUpload: any) {
+  onPurchaseGoodsUpload(event: any, fileUpload2: any) {
     console.log(event);
     const file = event[0];
     if (!file) return;
@@ -214,11 +218,93 @@ export class VehicleFleetComponent {
 
       // Convert array to key-value pairs
       const jsonReading = this.convertToKeyValue(this.jsonData);
-      this.jsonData = jsonReading.filter(items => items['Vehicle Type'] != '' || items['Vehicle Model'] != '');
+      this.jsonData = jsonReading.filter(items =>{return items['Vehicle Type'] !== '' && items['Vehicle Model'] !== '' });
+      console.log(this.jsonData);
+      this.jsonData = this.jsonData.map(item => {
+        return {
+          ...item,
+         retire_vehicle:0,
+         vehicle_model: item['Vehicle Model'],
+         vehicle_type: item['Vehicle Type'],
+         fuel_type: item['Fuel Type'],
+         vehicle_subtype: item['Vehicle Sub-Type'],
+         type_engine: item['Type of Engine'] ? item['Type of Engine'] : '',
+         charging_outside: item['Charging % Outside (If EV)'] ? item['Charging % Outside (If EV)'] : '',
+         acquisition_date: item['Acquisition Date']  ? item['Acquisition Date'] : '',
+         quantity: item['Quantity']  ? item['Quantity'] : '',
+         category: this.vehicleType
+      }}
+    )
+
+    // console.log(this.jsonData);
+    
+      
+      setTimeout(() => {
+     
+        fileUpload2.clear();
+      }, 1000);
+      if(this.vehicleType == 1){
+        this.showSubmit1 = true
+        
+      }else{
+        this.showSubmit2 = true
+      }
+
+    };
+    reader.readAsArrayBuffer(file);
+  };
+  overideSheet(event: any, fileUpload: any) {
+    console.log(event);
+    const file = event[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e: any) => {
+      const data = new Uint8Array(e.target.result);
+      const workbook = XLSX.read(data, { type: 'array' });
+
+      // Read first sheet
+      const sheetName = workbook.SheetNames[0];
+      const worksheet = workbook.Sheets[sheetName];
+
+      // Convert to JSON
+      this.jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+
+      // Convert array to key-value pairs
+      const jsonReading = this.convertToKeyValue(this.jsonData);
+      this.jsonData = jsonReading.filter(items => items['Vehicle Type'] != '' && items['Vehicle Model'] != '');
+      this.jsonData = this.jsonData.map(item => {
+        return {
+          ...item,
+         retire_vehicle:0,
+         vehicle_model: item['Vehicle Model'],
+         vehicle_type: item['Vehicle Type'],
+         fuel_type: item['Fuel Type'],
+         vehicle_subtype: item['Vehicle Sub-Type'],
+         type_engine: item['Type of Engine'] ? item['Type of Engine'] : '',
+         charging_outside: item['Charging % Outside (If EV)'] ? item['Charging % Outside (If EV)'] : '',
+         acquisition_date: item['Acquisition Date']  ? item['Acquisition Date'] : '',
+         quantity: item['Quantity']  ? item['Quantity'] : '',
+         category: this.vehicleType,
+      }}
+    )
+
+    console.log(this.jsonData);
+    
       
       setTimeout(() => {
         fileUpload.clear();
+     
       }, 1000);
+      this.overRide = true;
+
+      if(this.vehicleType == 1){
+        this.showSubmit1 = true;
+        
+      }else{
+        this.showSubmit2 = true;
+      }
+      this.editingId = null
 
 
     };
@@ -246,27 +332,20 @@ export class VehicleFleetComponent {
   };
 
   saveVehicleFleet(){
-    const payload = this.jsonData.map(row => ({
-      vehicle_model: row['Vehicle Model'],
-      vehicle_type: row['Vehicle Type'],
-      vehicle_subtype: row['Vehicle Sub-Type'],
-      type_engine: row['Type of Engine'],
-      charging_outside: row['Charging % Outside (If EV / Hybrid)'],
-      acquisition_date: row['Acquisition Date']
-  }));
-  const stringify = JSON.stringify(payload);
+ 
+  const stringify = JSON.stringify(this.jsonData);
 
   let formData = new URLSearchParams();
   // formData.set('month', monthString);
   formData.set('facility_id', this.facilityId);
   formData.set('category', this.vehicleType);
   formData.set('vehicleJson', stringify);
+  
   // formData.set('vehicle_type', this.facilityID);
   // formData.set('vehicle_subtype', purchaseTableStringfy);
   // formData.set('type_engine', monthString);
   // formData.set('charging_outside', monthString);
   // formData.set('acquisition_date', monthString);
-
 
   this.appService.postAPI('/add-vehicle-feet', formData.toString()).subscribe({
       next: (response:any) => {
@@ -276,17 +355,15 @@ export class VehicleFleetComponent {
                   response.message,
                   'Success'
               );
-          
-          
-          
-
           } else {
               this.notification.showError(
                   response.message,
                   'Error'
               );
-
           }
+          this.getVehicleFleet()
+          this.showSubmit1 = false;
+         this.editingId = null
       },
       error: (err) => {
           this.notification.showError(
@@ -297,5 +374,99 @@ export class VehicleFleetComponent {
       },
       complete: () => console.info('Data entry Added')
   });
-  }
+  };
+  oversideVehicleFleet(){
+ 
+  const stringify = JSON.stringify(this.jsonData);
+
+  let formData = new URLSearchParams();
+  // formData.set('month', monthString);
+  formData.set('facility_id', this.facilityId);
+  formData.set('category', this.vehicleType);
+  formData.set('vehicleJson', stringify);
+  
+  this.appService.postAPI('/update-vehicle-feet', formData.toString()).subscribe({
+      next: (response:any) => {
+
+          if (response.success == true) {
+              this.notification.showSuccess(
+                  response.message,
+                  'Success'
+              );
+              this.overRide = false;
+          } else {
+              this.notification.showError(
+                  response.message,
+                  'Error'
+              );
+          }
+          this.overRide = false;
+          this.showSubmit1 = false
+          this.showSubmit2 = false
+          this.getVehicleFleet()
+      },
+      error: (err) => {
+        this.overRide = false;
+          this.notification.showError(
+              'Data entry added failed.',
+              'Error'
+          );
+          console.error('errrrrrr>>>>>>', err);
+      },
+      complete: () => console.info('Data entry Added')
+  });
+  };
+
+
+  editingId: string | null = null;
+
+  editRow(group: any) {
+    console.log(group['S.No']);
+    if(group['S.No']){
+      this.editingId = group['S.No'];
+    }else{
+      this.editingId = group.id;
+    }
+  };
+  updateRow(group: any) {
+    console.log(group);
+    let formData = new URLSearchParams();
+
+    formData.set('facility_id', this.facilityId)
+    formData.set('vehicle_model', group.vehicle_model)
+    formData.set('vehicle_type', group.vehicle_type)
+    formData.set('fuel_type', group.fuel_type)
+    formData.set('charging_outside',group.charging_outside)
+    formData.set('quantity', group.quantity)
+    formData.set('category', this.vehicleType)
+    formData.set('acquisition_date', group.acquisition_date)
+    formData.set('retire_vehicle', group.retire_vehicle)
+    formData.set('id', group.id)
+    
+    this.appService.postAPI('/update-vehicle-feet-by-id',  formData).subscribe({
+        next: (response:any) => {
+
+            if (response.success == true) {
+              this.getVehicleFleet()
+              this.editingId = null
+            }
+        }
+    })
+  };
+
+  getVehicleFleet() {
+    let formData = new URLSearchParams();
+    formData.set('facility_id', this.facilityId)
+    
+    this.appService.postAPI('/get-vehicle-fleet-by-facility-id',  formData).subscribe({
+        next: (response:any) => {
+
+            if (response.success == true) {
+                this.jsonData = response.data;
+                this.jsonData = response.data;
+            }
+        }
+    })
+};
+
 }

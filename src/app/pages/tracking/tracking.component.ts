@@ -49,7 +49,7 @@ declare var $: any;
 })
 export class TrackingComponent {
     public Number = Number;
-    public countriesList: any = countries
+    public countriesList: any = countries;
     @ViewChild('dataEntryForm', { static: false }) dataEntryForm: NgForm;
     @ViewChild('tabView') dataentryTab: TabView;
     @ViewChild('commuteTable') commuteTable: ElementRef;
@@ -162,6 +162,7 @@ export class TrackingComponent {
     monthString: string;
     VehicleType: VehicleType[] = [];
     dataEntriesPending: any[] = [];
+    rowsCompany: any[] = [];
     SubCategoryType: SubCategoryTypes[] = [];
     isInputEdited: boolean;
     typeEV: boolean = false;
@@ -376,13 +377,23 @@ export class TrackingComponent {
                 multiLevelItems: [],
                 productService: null,
                 productType: null,
-                subVehicleCategory: [],  // Add any other nested dropdown arrays here if needed
+                subVehicleCategory: [],  
                 months: '',
                 quantity: '',
                 selectedUnit: '',
                 vendorName: '',
                 vendorspecificEF: '',
-                vendorspecificEFUnit: '' // Make sure to initialize this as well
+                vendorspecificEFUnit: '' 
+            });;
+        };
+        for (let i = 1; i <= 1; i++) {
+            this.rowsCompany.push({
+                id: i,
+                vehicleType:null,
+                noOfVehicles: null,
+                tripsPerVehicle: null,
+                modeOfEntry: '',
+                value: '' 
             });;
         }
 
@@ -3516,6 +3527,9 @@ export class TrackingComponent {
     addPurchaseRows() {
         this.rowsPurchased.push({ id: this.rowsPurchased.length + 1, multiLevelItems: [], productService: null, productType: null, months: '', quantity: '', selectedUnit: '', vendorName: '', vendorspecificEF: '' });
     };
+    addCompanyRows() {
+        this.rowsCompany.push({ id: this.rowsCompany.length + 1,vehicleType:null, noOfVehicles: null, tripsPerVehicle: null, modeOfEntry: '', chargingOutside: '' , value: '' });
+    };
 
     deletePSG(serialNo: number) {
         this.newExcelData = this.newExcelData.filter(item => item['S. No.'] !== serialNo);
@@ -4656,8 +4670,9 @@ export class TrackingComponent {
     }
 
     enableCharging(subcatName: any) {
+        console.log(this.VehicleDE.vehicleTypeID);
         if (subcatName == "Passenger Vehicle") {
-            if (this.VehicleDE.vehicleTypeID == 7 || this.VehicleDE.vehicleTypeID == 8 || this.VehicleDE.vehicleTypeID == 9 || this.VehicleDE.vehicleTypeID == 12 || this.VehicleDE.vehicleTypeID == 17) {
+            if (this.VehicleDE.vehicleTypeID == 7 || this.VehicleDE.vehicleTypeID == 8 || this.VehicleDE.vehicleTypeID == 9 || this.VehicleDE.vehicleTypeID == 12 || this.VehicleDE.vehicleTypeID == 17 || this.VehicleDE.vehicleTypeID == 10) {
 
                 this.typeEV = true;
                 this.typeBusCoach = false;
