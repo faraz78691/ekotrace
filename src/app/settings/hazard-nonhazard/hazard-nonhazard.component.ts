@@ -57,7 +57,7 @@ export class HazardNonhazardComponent {
           this.loginInfo = jsonObj as LoginInfo;
       }
       // this.getTenantsDetailById(Number(this.loginInfo.tenantID));
-     this.getEndWasteType();
+    //  this.getEndWasteType();
   };
 
 
@@ -81,16 +81,15 @@ export class HazardNonhazardComponent {
       });
   };
 
-  getEndWasteType() {
-    this.companyService.getWasteType().subscribe({
-        next: (response) => {
-            // console.log(response, "sdgs");
-            if (response.success == true) {
-                this.wasteGrid = response.categories;
-                // this.waterWasteProduct = this.wasteGrid[0].type
-                // this.franchiseCategoryValue = this.franchiseGrid[0].categories
-            }
-        }
-    })
-};
+//   getEndWasteType() {
+//     this.companyService.getWasteType().subscribe({
+//         next: (response) => {
+//             // console.log(response, "sdgs");
+//             if (response.success == true) {
+//                 this.wasteGrid = response.categories;
+            
+//             }
+//         }
+//     })
+// };
 }

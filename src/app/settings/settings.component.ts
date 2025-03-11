@@ -74,7 +74,7 @@ export class SettingsComponent {
     dialogOpen(num: string) {
         if (num == "1") {
             this.visible = true;
-            this.getEndWasteType();
+            // this.getEndWasteType();
             this.visible2 = false
 
         } else {
@@ -124,19 +124,18 @@ export class SettingsComponent {
     };
 
 
-    getEndWasteType() {
-        this.companyService.getWasteType().subscribe({
-            next: (response) => {
+    // getEndWasteType() {
+    //     this.companyService.getWasteType().subscribe({
+    //         next: (response) => {
 
-                if (response.success == true) {
-                    this.wasteGrid = response.categories;
+    //             if (response.success == true) {
+    //                 this.wasteGrid = response.categories;
 
-                    // this.waterWasteProduct = this.wasteGrid[0].type
-                    // this.franchiseCategoryValue = this.franchiseGrid[0].categories
-                }
-            }
-        })
-    };
+                   
+    //             }
+    //         }
+    //     })
+    // };
     getYEarType() {
         this.companyService.getYEarType().subscribe({
             next: (response) => {

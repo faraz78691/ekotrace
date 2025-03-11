@@ -515,9 +515,13 @@
 
                                     </div>
                                     <div *ngIf="categoryId ==6" class="ml-auto">
-                                        <button class="btn ct_scoope_1_tab ct_view_request_btn px-4 trackingsubmitb"
-                                            type="button" (click)="bulkUploadCompany()"> {{singleCompanyTab ? 'Bulk Upload' :
-                                            'Single Upload'}}</button>
+                                        <button class="btn ct_scoope_1_tab ct_view_request_btn px-3 trackingsubmitb mr-2"
+                                            type="button" (click)="bulkUploadCompany('1')">Single Upload</button>
+                                        <button class="btn ct_scoope_1_tab ct_view_request_btn px-3 trackingsubmitb mr-2"
+                                            type="button" (click)="bulkUploadCompany('2')">Multiple uplaod</button>
+                                        <button class="btn ct_scoope_1_tab ct_view_request_btn px-3 trackingsubmitb"
+                                            type="button" (click)="bulkUploadCompany('3')"> Bulk Upload</button>
+                                            
 
                                     </div>
                                     <div class="ct_how_use_tooltip_main">
@@ -2159,8 +2163,8 @@
                                                 </div>
 
                                             </ng-container>
-                                            <ng-container *ngIf="!singleCompanyTab">
-                                                <div class="col-md-12 table-responsive" style="height: 53vh;">
+                                            <ng-container *ngIf="multipleCompanyTab">
+                                                <div class="col-md-12 table-responsive" style="height: 40vh;">
                                                     <table class="table ct_home_office_table">
                                                         <thead class="thead-dark">
                                                             <tr>
@@ -2169,15 +2173,16 @@
                                                                 <th scope="col">No of vehicles</th>
                                                                 <th scope="col">Trips per vehicle</th>
                                                                 <th scope="col">Mode of data entry</th>
-                                                                <th scope="col">Charing outside %</th>
+                                                              
                                                                 <th scope="col">Value</th>
+                                                                <th scope="col">Unit</th>
                                                              
                                                             </tr>
                                                         </thead>
                                                         <tbody #commuteTable>
                                                     
-                                                            <tr *ngFor="let rows of rowsCompany">
-                                                                <td>{{rows.id}}</td>
+                                                            <tr *ngFor="let rows of rowsCompany; index as i">
+                                                                <td>{{i +1}}</td>
                                                                 <td>
                                                                     <p-dropdown
                                                                 class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
@@ -2211,21 +2216,22 @@
                                                                     [(ngModel)]="rows.modeOfEntry"
                                                                     [ngModelOptions]="{standalone: true}"
                                                                     [options]="ModeType"
-                                                                
+                                                                (ngModelChange)="modeOfEntryChange(rows.modeOfEntry ,rows)"
                                                                     optionLabel="modeName" optionValue="modeName"
                                                                     placeholder="Select type">
                                                                 </p-dropdown>
                                                                
                                                                 </td>
+                                                             
                                                                 <td>
-                                                                    <input [disabled]="rows.vehicleType!='10'" required ngModel name="NoOfVehicles" #NoOfVehicles="ngModel"
-                                                                        [(ngModel)]="rows.charingOutside"  id="search-input"
-                                                                        type="number" class="form-control Dashboard-tab text-white"
+                                                                    <input 
+                                                                        [(ngModel)]="rows.value"   [ngModelOptions]="{standalone: true}"
+                                                                        type="text" class="form-control Dashboard-tab text-white"
                                                                         placeholder="Enter value" />
                                                                 </td>
                                                                 <td>
-                                                                    <input required ngModel name="NoOfVehicles" #NoOfVehicles="ngModel"
-                                                                        [(ngModel)]="rows.value"  id="search-input"
+                                                                    <input disabled required ngModel name="NoOfVehicles" #NoOfVehicles="ngModel"
+                                                                        [(ngModel)]="rows.unit"  [ngModelOptions]="{standalone: true}"  id="search-input"
                                                                         type="text" class="form-control Dashboard-tab text-white"
                                                                         placeholder="Enter value" />
                                                                 </td>
@@ -2234,6 +2240,80 @@
     
                                                         </tbody>
                                                         <p class="ml-2 trackingsubmitb" (click)="addCompanyRows()">+</p>
+        
+                                                    </table>
+                                                </div>
+                                            </ng-container>
+                                            <ng-container *ngIf="bulkCompanyTab">
+
+                                                <div class="d-flex align-items-center ct_gap_10 flex-wrap mb-3">
+                                                    <div>
+                                                        <div
+                                                            class="d-flex justify-content-end border rounded ct_upload_btn1 ct_h_40 ct_svg_icon_white   ">
+                                                            <p-fileUpload #fileUpload mode="basic" accept=".xlsx, .xls" class=""
+                                                                chooseLabel="Please select a File" (onSelect)="onCompanyUpload($event.files,fileUpload)
+                                                        "></p-fileUpload>
+                                                        </div>
+                                                        <!-- <input type="file" class="form-control"  (change)="onPurchaseGoodsUpload($event)" accept=".xlsx, .xls"  id="ct_product_upload_file" > -->
+                                                    </div>
+                                                    <a [href]="downloadCompanyExcelUrl" download
+                                                        class="px-4 trackingsubmitb"><i
+                                                            class="fa-solid fa-download mr-2"></i>Download File</a>
+
+                                                </div>
+                                                <div class="col-md-12 table-responsive" style="height: 40vh;">
+                                                    <table class="table ct_home_office_table">
+                                                        <thead class="thead-dark">
+                                                            <tr>
+                                                                <th scope="col">S.No.</th>
+                                                                <th scope="col">Vehicle Modal</th>
+                                                                <th scope="col">No of vehicles</th>
+                                                                <th scope="col">Trips per vehicle</th>
+                                                                <th scope="col">Mode of data entry</th>
+                                                              
+                                                                <th scope="col">Value</th>
+                                                                <th scope="col">Unit</th>
+                                                             
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody #commuteTable>
+                                                    
+                                                            <tr *ngFor="let rows of jsonCompanyData; index as i">
+                                                                <td>{{i +1}}</td>
+                                                                <td>
+                                                                    {{rows.vehicleType}}
+                                                               
+        
+                                                                </td>
+                                                                <td>
+                                                                    {{rows.noOfVehicles}}
+                                                                   
+        
+                                                                </td>
+                                                                <td>
+                                                                    {{rows.tripsPerVehicle}}
+                                                                
+        
+                                                                </td>
+                                                                <td>
+                                                                    {{rows.modeOfEntry}}
+                                                                  
+                                                               
+                                                                </td>
+                                                             
+                                                                <td>
+                                                                    {{rows.value}}
+                                                                
+                                                                </td>
+                                                                <td>
+                                                                    {{rows.unit}}
+                                                                 
+                                                                </td>
+                                                         
+                                                            </tr>
+    
+                                                        </tbody>
+                                                        <!-- <p class="ml-2 trackingsubmitb" (click)="addCompanyRows()">+</p> -->
         
                                                     </table>
                                                 </div>
@@ -2402,7 +2482,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row mt-3 mx-2" *ngIf="!singleCompanyTab">
+                                    <div class="row mt-3 mx-2" *ngIf="!multipleCompanyTab && !bulkCompanyTab">
                                         <div class="col">
                                             <label for="fname ">Note</label>
                                             <textarea class="ct_textarea_input" ngModel name="Textarea"
@@ -2427,7 +2507,7 @@
                                                             download>Click here to download</a></button>
                                                 </div>
                                             </div>
-                                            <div class="col-8">
+                                            <div class="col-8" *ngIf="!multipleCompanyTab && !bulkCompanyTab">
                                                 <label for="fname ">Attachments</label>
                                                 <p-toast></p-toast>
                                                 <div class="d-flex justify-content-end border rounded ct_upload_btn1">
@@ -2640,7 +2720,7 @@
                                             </div>
 
                                         </div>
-                                        <div class="col-md-12 table-responsive" style="height: 53vh;">
+                                        <div class="col-md-12 table-responsive mt-2" style="height: 53vh;">
                                             <table class="table ct_home_office_table">
                                                 <thead class="thead-dark">
                                                     <tr>

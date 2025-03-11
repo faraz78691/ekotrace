@@ -48,8 +48,8 @@ export class CompanyService {
             environment.baseUrl +  '/getComapnySubCategory' , data
         );
     };
-    getWasteType(): Observable<any> {
-        return this.http.get(environment.baseUrl + '/getendoflife_waste_type')
+    getWasteType(facility_id): Observable<any> {
+        return this.http.get(environment.baseUrl + '/getendoflife_waste_type ?facility_id=' + facility_id)
     };
     getYEarType(): Observable<any> {
         return this.http.post(environment.baseUrl + '/getfinancial_year','')

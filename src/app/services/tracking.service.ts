@@ -783,8 +783,8 @@ export class TrackingService {
     getFranchiseType(): Observable<any> {
         return this.http.get(environment.baseUrl + '/franchiseCategories')
     };
-    getWasteType(): Observable<any> {
-        return this.http.get(environment.baseUrl + '/getendoflife_waste_type')
+    getWasteType(facility_id): Observable<any> {
+        return this.http.get(environment.baseUrl + '/getendoflife_waste_type?facility_id=' + facility_id)
     };
 
     getflight_types(): Observable<any> {

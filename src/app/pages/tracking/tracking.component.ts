@@ -37,6 +37,7 @@ import { countries } from '@/store/countrieslist';
 import { GroupService } from '@services/group.service';
 import { TreeviewItem, TreeviewEventParser, OrderDownlineTreeviewEventParser, TreeviewConfig } from '@treeview/ngx-treeview';
 import * as XLSX from 'xlsx';
+import { AppService } from '@services/app.service';
 declare var $: any;
 
 @Component({
@@ -73,6 +74,7 @@ export class TrackingComponent {
     hotelTypeGrid: any[] = [];
     yearOptions: any[] = [];
     jsonData: any[] = [];
+    jsonCompanyData: any[] = [];
     productID: any;
     checked: boolean = false;
     annualMonths: boolean = false;
@@ -92,9 +94,6 @@ export class TrackingComponent {
     ];
     //units: units[];
     // setlimit: setlimit[];
-
-
-
 
     emissiontable: EmissionFactorTable[];
     visible: boolean;
@@ -154,6 +153,7 @@ export class TrackingComponent {
     selectedFile: File;
     uploadedFileUrl: string;
     downloadExcelUrl: string;
+    downloadCompanyExcelUrl: string;
     rootUrl: string;
     fileSelect: File;
     categoryId: number;
@@ -260,7 +260,7 @@ export class TrackingComponent {
     flightDisplay2 = 'none'
     flightDisplay3 = 'none'
     carMode = false;
-    annaulEntry:any;
+    annaulEntry: any;
     autoMode = false;
     busMode = false;
     railMode = false;
@@ -275,6 +275,8 @@ export class TrackingComponent {
     marketEElecID: any;
     templateLinks: string;
     singleCompanyTab = true;
+    multipleCompanyTab = true;
+    bulkCompanyTab = true;
     processingUnit: string;
     haveBasicPackage: number = 0;
     carFuel_type: any[] = [];
@@ -358,6 +360,7 @@ export class TrackingComponent {
         private toastr: ToastrService,
         private confirmationService: ConfirmationService,
         private renderer: Renderer2,
+        private appService: AppService
     ) {
 
         effect(() => {
@@ -377,23 +380,24 @@ export class TrackingComponent {
                 multiLevelItems: [],
                 productService: null,
                 productType: null,
-                subVehicleCategory: [],  
+                subVehicleCategory: [],
                 months: '',
                 quantity: '',
                 selectedUnit: '',
                 vendorName: '',
                 vendorspecificEF: '',
-                vendorspecificEFUnit: '' 
+                vendorspecificEFUnit: ''
             });;
         };
         for (let i = 1; i <= 1; i++) {
             this.rowsCompany.push({
                 id: i,
-                vehicleType:null,
+                vehicleType: null,
                 noOfVehicles: null,
                 tripsPerVehicle: null,
-                modeOfEntry: '',
-                value: '' 
+                modeOfEntry: 'Average distance per trip',
+                value: null,
+                unit: 'Km'
             });;
         }
 
@@ -1067,6 +1071,9 @@ export class TrackingComponent {
         this.renewableSelected = false;
         this.supplierSelected = false;
         this.storageTransporationChecked = false;
+        this.singleCompanyTab = true;
+        this.multipleCompanyTab = false;
+        this.bulkCompanyTab = false;
 
         this.id_var = data.manageDataPointSubCategorySeedID;
 
@@ -1111,6 +1118,10 @@ export class TrackingComponent {
         }
 
         if (catID == 6) {
+            
+         
+            this.downloadCompanyExcelUrl = 'https://ekotrace.ekobon.com:4000/' + `download-excel-vehicle-fleet-by-facility-category-id?facility_id=${this.facilityID}&categoryID=${this.SubCatAllData
+                .manageDataPointSubCategorySeedID == 10 ? '1' : '2'} `;
             this.getPurchaseGoodsCurrency()
             if (data.manageDataPointSubCategorySeedID == 10) {
                 this.getPassengerVehicleType();
@@ -1217,7 +1228,7 @@ export class TrackingComponent {
     getsubCategoryType(subCatID: number) {
 
         this.dataEntry.typeID = null;
-        this.trackingService.newgetsubCatType(subCatID , this.facilityID).subscribe({
+        this.trackingService.newgetsubCatType(subCatID, this.facilityID).subscribe({
             next: (response) => {
                 this.SubCategoryType = response.categories;
                 this.dataEntry.typeID = this.SubCategoryType[0]?.subCatTypeID;
@@ -1697,70 +1708,160 @@ export class TrackingComponent {
             });
         }
         if (this.categoryId == 6) {
-
-
-            if (this.selectMonths.length == 0) {
-                this.notification.showInfo(
-                    'Select month',
-                    ''
-                );
-                return
-            }
-            if (this.VehicleDE.modeOfDE == 'Distance Travelled') {
-                this.VehicleDE.modeofDEID = 1;
-
-            }
-            else {
-                this.VehicleDE.modeofDEID = 2;
-            }
-
-            let formData = new URLSearchParams();
-            formData.set('NoOfVehicles', this.VehicleDE.noOfVehicles.toString());
-            formData.set('TotalnoOftripsPerVehicle', this.VehicleDE.totalnoOftripsPerVehicle.toString());
-            formData.set('ModeofDEID', form.value.modeName);
-            formData.set('Value', this.VehicleDE.value.toString());
-            formData.set('vehicleTypeID', this.VehicleDE.vehicleTypeID.toString());
-            formData.set('unit', this.dataEntry.unit);
-            formData.set('charging_outside', this.VehicleDE.chargingPerc);
-            formData.set('facilities', this.facilityID);
-            formData.set('months', monthString);
-            formData.set('year', this.dataEntry.year);
-            formData.set('SubCategorySeedID', this.SubCatAllData
-                .manageDataPointSubCategorySeedID.toString());
-
-            this.trackingService.newPostVehicleDataEntry(formData.toString()).subscribe({
-                next: (response) => {
-                    if (response.success == true) {
-                        this.ALLEntries();
-                        this.notification.showSuccess(
-                            'Data entry added successfully',
-                            'Success'
-                        );
-                        this.resetForm();
-                        this.getUnit(this.SubCatAllData
-                            .manageDataPointSubCategorySeedID);
-                        this.VehicleDE.modeOfDE = this.ModeType[0].modeName;
-
-                        if (this.SubCatAllData.manageDataPointSubCategorySeedID == 10) {
-
-                            this.getPassengerVehicleType();
-                        }
-                        else {
-
-                            this.getDeliveryVehicleType();
-                        }
-                        this.activeindex = 0;
-                    }
-                },
-                error: (err) => {
-                    this.notification.showError(
-                        'Data entry added failed.',
-                        'Error'
+            console.log(this.singleCompanyTab);
+            if (this.singleCompanyTab) {
+                console.log("sfdsf");
+                if (this.selectMonths.length == 0) {
+                    this.notification.showInfo(
+                        'Select month',
+                        ''
                     );
-                    console.error('errrrrrr>>>>>>', err);
-                },
-                complete: () => console.info('Data entry Added')
-            });
+                    return
+                }
+                if (this.VehicleDE.modeOfDE == 'Distance Travelled') {
+                    this.VehicleDE.modeofDEID = 1;
+
+                }
+                else {
+                    this.VehicleDE.modeofDEID = 2;
+                }
+
+                let formData = new URLSearchParams();
+                formData.set('NoOfVehicles', this.VehicleDE.noOfVehicles.toString());
+                formData.set('TotalnoOftripsPerVehicle', this.VehicleDE.totalnoOftripsPerVehicle.toString());
+                formData.set('ModeofDEID', form.value.modeName);
+                formData.set('Value', this.VehicleDE.value.toString());
+                formData.set('vehicleTypeID', this.VehicleDE.vehicleTypeID.toString());
+                formData.set('unit', this.dataEntry.unit);
+                formData.set('charging_outside', this.VehicleDE.chargingPerc);
+                formData.set('facilities', this.facilityID);
+                formData.set('months', monthString);
+                formData.set('year', this.dataEntry.year);
+                formData.set('SubCategorySeedID', this.SubCatAllData
+                    .manageDataPointSubCategorySeedID.toString());
+
+                this.appService.postAPI('/Addcompanyownedvehicles', formData.toString()).subscribe({
+                    next: (response: any) => {
+                        if (response.success == true) {
+                            this.ALLEntries();
+                            this.notification.showSuccess(
+                                'Data entry added successfully',
+                                'Success'
+                            );
+                            this.resetForm();
+                            this.getUnit(this.SubCatAllData
+                                .manageDataPointSubCategorySeedID);
+                            this.VehicleDE.modeOfDE = this.ModeType[0].modeName;
+
+                            if (this.SubCatAllData.manageDataPointSubCategorySeedID == 10) {
+
+                                this.getPassengerVehicleType();
+                            }
+                            else {
+
+                                this.getDeliveryVehicleType();
+                            }
+                            this.activeindex = 0;
+                        }
+                    },
+                    error: (err) => {
+                        this.notification.showError(
+                            'Data entry added failed.',
+                            'Error'
+                        );
+                        console.error('errrrrrr>>>>>>', err);
+                    },
+                    complete: () => console.info('Data entry Added')
+                });
+            } else {
+
+                if (this.multipleCompanyTab) {
+                    var payloads = this.rowsCompany.map(row => ({
+
+                        vehicle_type: row.vehicleType,
+                        no_of_vehicles: row.noOfVehicles,
+                        trip_per_vehicle: row.tripsPerVehicle,
+                        mode_of_data_entry: row.modeOfEntry,
+                        value: row.value,
+                        unit: row.unit,
+                        sub_category:this.SubCatAllData
+                        .manageDataPointSubCategorySeedID,
+                        is_excel :0
+
+                    }));
+
+                }
+                if (this.bulkCompanyTab) {
+                    var payloads = this.jsonCompanyData.map(row => ({
+                        vehicle_type: row.vehicleType,
+                        no_of_vehicles: row.noOfVehicles,
+                        trip_per_vehicle: row.tripsPerVehicle,
+                        mode_of_data_entry: row.modeOfEntry,
+                        value: row.value,
+                        unit: row.unit,
+                        sub_category:this.SubCatAllData
+                        .manageDataPointSubCategorySeedID,
+                        is_excel :1
+
+                    }));
+
+                }
+
+                var companyOwnedVehicles = JSON.stringify(payloads);
+                let formData = new URLSearchParams();
+                formData.set('facilityId', this.facilityID);
+                formData.set('month', monthString);
+                formData.set('year', this.dataEntry.year);
+                formData.set('jsonData', companyOwnedVehicles.toString());
+            
+
+                this.appService.postAPI('/add-multiple-company-owned-vehicles', formData.toString()).subscribe({
+                    next: (response: any) => {
+                        if (response.success == true) {
+                            this.ALLEntries();
+                            this.notification.showSuccess(
+                                'Data entry added successfully',
+                                'Success'
+                            );
+                            this.resetForm();
+                            this.getUnit(this.SubCatAllData
+                                .manageDataPointSubCategorySeedID);
+                            this.VehicleDE.modeOfDE = this.ModeType[0].modeName;
+
+                            if (this.SubCatAllData.manageDataPointSubCategorySeedID == 10) {
+
+                                this.getPassengerVehicleType();
+                            }
+                            else {
+
+                                this.getDeliveryVehicleType();
+                            }
+                            this.activeindex = 0;
+                           
+                                this.rowsCompany =[{
+                                    vehicleType: null,
+                                    noOfVehicles: null,
+                                    tripsPerVehicle: null,
+                                    modeOfEntry: 'Average distance per trip',
+                                    value: null,
+                                    unit: 'Km'
+                                }];;
+                            
+                            this.jsonCompanyData = [];
+                        }
+                    },
+                    error: (err) => {
+                        this.notification.showError(
+                            'Data entry added failed.',
+                            'Error'
+                        );
+                        console.error('errrrrrr>>>>>>', err);
+                    },
+                    complete: () => console.info('Data entry Added')
+                });
+            }
+
+
         }
         if (this.categoryId == 5) {
             if (this.selectMonths.length == 0) {
@@ -1925,7 +2026,7 @@ export class TrackingComponent {
         }
         if (this.categoryId == 8) {
             if (this.singlePGSTab) {
-              
+
                 const filledRows = this.rowsPurchased.filter(row =>
 
                     row.productType == null
@@ -1938,7 +2039,7 @@ export class TrackingComponent {
                     );
                     return;
                 }
-                if (this.isAnnual ==undefined || this.isAnnual ==null) {
+                if (this.isAnnual == undefined || this.isAnnual == null) {
                     this.notification.showInfo(
                         "Please select annual entry",
                         'Warning'
@@ -3528,7 +3629,7 @@ export class TrackingComponent {
         this.rowsPurchased.push({ id: this.rowsPurchased.length + 1, multiLevelItems: [], productService: null, productType: null, months: '', quantity: '', selectedUnit: '', vendorName: '', vendorspecificEF: '' });
     };
     addCompanyRows() {
-        this.rowsCompany.push({ id: this.rowsCompany.length + 1,vehicleType:null, noOfVehicles: null, tripsPerVehicle: null, modeOfEntry: '', chargingOutside: '' , value: '' });
+        this.rowsCompany.push({ id: this.rowsCompany.length + 1, vehicleType: null, noOfVehicles: null, tripsPerVehicle: null, modeOfEntry: 'Average distance per trip', chargingOutside: '', value: null, unit: 'Km' });
     };
 
     deletePSG(serialNo: number) {
@@ -4021,6 +4122,54 @@ export class TrackingComponent {
             setTimeout(() => {
                 fileUpload.clear();
             }, 1000);
+
+        };
+        reader.readAsArrayBuffer(file);
+    };
+    onCompanyUpload(event: any, fileUpload: any) {
+        const file = event[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+            const data = new Uint8Array(e.target.result);
+            const workbook = XLSX.read(data, { type: 'array' });
+
+            // Read first sheet
+            const sheetName = workbook.SheetNames[0];
+            const worksheet = workbook.Sheets[sheetName];
+
+            // Convert to JSON
+            this.jsonCompanyData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+
+            // Convert array to key-value pairs
+            const jsonReading = this.convertToKeyValue(this.jsonCompanyData);
+            console.log(jsonReading
+            );
+
+            this.jsonCompanyData = jsonReading.filter(items => { return items['Vehicle Modal'] !== '' });
+            console.log(this.jsonCompanyData);
+            this.jsonCompanyData = this.jsonCompanyData.map(item => {
+                return {
+                    vehicleType: item['Vehicle Modal'],
+                    noOfVehicles: item['No of Vehicles'],
+                    tripsPerVehicle: item['Trips per vehicle'],
+                    modeOfEntry: item['Mode of data entry'],
+                    value: item['Value'] ? item['Value'] : '',
+                    unit: item['Mode of data entry'] == 'Average distance per trip' ? 'Km' : item['Mode of data entry'] == 'Average qty of fuel per trip' ? 'Litre' : this.currency,
+
+                }
+            }
+            )
+
+            // console.log(this.jsonData);
+
+
+            setTimeout(() => {
+
+                fileUpload.clear();
+            }, 1000);
+
 
         };
         reader.readAsArrayBuffer(file);
@@ -5053,6 +5202,17 @@ export class TrackingComponent {
         }
     };
 
+    modeOfEntryChange(selectedMode: string, row: any) {
+
+        if (selectedMode === 'Average distance per trip') {
+            row.unit = 'Km';
+        } else if (selectedMode === 'Average qty of fuel per trip') {
+            row.unit = 'Litre';
+        } else {
+            row.unit = this.currency;
+        }
+    }
+
     onProductEnergyTypeChange(event: any) {
         const energyMethod = event.value;
         this.getProductsEnergyCategory(energyMethod);
@@ -5108,8 +5268,18 @@ export class TrackingComponent {
         })
     };
 
-    bulkUploadCompany(){
-        this.singleCompanyTab = !this.singleCompanyTab
+    bulkUploadCompany(tabNo: any) {
+        this.singleCompanyTab = false;
+        this.multipleCompanyTab = false;
+        this.bulkCompanyTab = false;
+        if (tabNo == 1) {
+            this.singleCompanyTab = true;
+        } else if (tabNo == 2) {
+            this.multipleCompanyTab = true;
+        } else {
+            this.bulkCompanyTab = true;
+        }
+
     }
 
     onCalculationPurchaseMethodChange(event: any) {
@@ -5294,7 +5464,7 @@ export class TrackingComponent {
     };
 
     getEndWasteType() {
-        this.trackingService.getWasteType().subscribe({
+        this.trackingService.getWasteType(this.facilityID).subscribe({
             next: (response) => {
                 // // console.log(response, "sdgs");
                 if (response.success == true) {
