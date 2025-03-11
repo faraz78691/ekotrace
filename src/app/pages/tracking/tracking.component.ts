@@ -1122,6 +1122,15 @@ export class TrackingComponent {
          
             this.downloadCompanyExcelUrl = 'https://ekotrace.ekobon.com:4000/' + `download-excel-vehicle-fleet-by-facility-category-id?facility_id=${this.facilityID}&categoryID=${this.SubCatAllData
                 .manageDataPointSubCategorySeedID == 10 ? '1' : '2'} `;
+                this.jsonCompanyData = [];
+                this.rowsCompany =[{
+                    vehicleType: null,
+                    noOfVehicles: null,
+                    tripsPerVehicle: null,
+                    modeOfEntry: 'Average distance per trip',
+                    value: null,
+                    unit: 'Km'
+                }];;
             this.getPurchaseGoodsCurrency()
             if (data.manageDataPointSubCategorySeedID == 10) {
                 this.getPassengerVehicleType();
@@ -1848,6 +1857,21 @@ export class TrackingComponent {
                                 }];;
                             
                             this.jsonCompanyData = [];
+                        }else{
+                            this.notification.showError(
+                                'Data entry added failed.',
+                                'Error'
+                            );
+                            this.rowsCompany =[{
+                                vehicleType: null,
+                                noOfVehicles: null,
+                                tripsPerVehicle: null,
+                                modeOfEntry: 'Average distance per trip',
+                                value: null,
+                                unit: 'Km'
+                            }];;
+                        
+                        this.jsonCompanyData = [];
                         }
                     },
                     error: (err) => {
