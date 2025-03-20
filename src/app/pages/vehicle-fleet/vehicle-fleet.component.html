@@ -18,7 +18,7 @@
                     ">
                     <div
                         class="card-header card-headerL ct_header_grey_1202 d-flex align-items-center justify-content-between">
-                        <h5 class=" ct_fw_600 m-0 my-0" style="flex: 1;">{{facilityName}}- Vehicle Fleet</h5>
+                        <h5 class=" ct_fw_600 m-0 my-0" style="flex: 1;">{{facilityName}}- Vehicle Fleets</h5>
                         <div class="flex items-center mr-3">
                             <input type="radio" id="passenger" name="vehicleType" value="1" [(ngModel)]="vehicleType"
                                 (change)="onVehicleTypeChange($event)" />
@@ -48,9 +48,9 @@
                                 chooseLabel="Please select a File"></p-fileUpload>
                         </div>
 
-                        <a [href]="vehicleType ==1 ? 'assets/passenger_fleet.xlsx' : 'assets/delivery_fleet.xlsx'"
+                        <a [href]="vehicleType ==1 ? 'assets/VehicleFleet-passengervehicle.xlsx' : 'assets/VehicleFleet-deliveryVehicle.xlsx'"
                             download class="px-4 trackingsubmitb ct_h_40"><i
-                                class="fa-solid fa-download mr-2"></i>Download File</a>
+                                class="fa-solid fa-download mr-2"></i>Download Files</a>
 
                     </div>
                 </div>
@@ -73,13 +73,13 @@
                     <thead>
                         <tr>
 
-                            <th scope="col" style="font-size: 16px;">S.No.</th>
+                         
                             <th scope="col" style="font-size: 16px;">Vehicle Model </th>
                             <th scope="col" style="font-size: 16px;">Vehicle Type </th>
                             <th scope="col" style="font-size: 16px;">Fuel</th>
-                            <th scope="col" style="font-size: 16px;">Charging % Outside</th>
+                            
                             <th scope="col" style="font-size: 16px;">Acquisition Date</th>
-                            <th scope="col" style="font-size: 16px;">Vehicle Retire</th>
+                            <th scope="col" style="font-size: 16px;">Status</th>
                             <th scope="col" style="font-size: 16px;">Action</th>
 
                         </tr>
@@ -88,9 +88,7 @@
                         <ng-container *ngFor="let group of jsonData;let index = index">
                             <tr *ngIf="group.category == 1" clickable (click)="selectGroup(group,index)"
                                 class="col-12 tableRow border-bottom rounded pointer">
-                                <td class="td text-initial" style="font-size: 16px;">
-                                    {{ index + 1 }}
-                                </td>
+                               
                                 <td class="td " style="font-size: 16px;">
                                     {{ group.vehicle_model }}
 
@@ -105,32 +103,28 @@
                                 </td>
 
                                 <td class="td  pb-1" style="font-size: 16px;">
-                                    {{ group['Charging % Outside (If EV / Hybrid)'] || group.charging_outside }}
-
-                                </td>
-                                <td class="td  pb-1" style="font-size: 16px;">
                                     {{ group['Acquisition Date']
                                     || group.acquisition_date}}
 
                                 </td>
                                 <td class="td  pb-1" style="font-size: 16px;">
                                     <ng-container
-                                        *ngIf="editingId === group['S.No'] || editingId === group.id; else displayMode">
+                                        *ngIf="editingId === group.id; else displayMode">
                                         <select [(ngModel)]="group.retire_vehicle">
-                                            <option value=0>No</option>
-                                            <option value=1>Yes</option>
+                                            <option value=0>Active</option>
+                                            <option value=1>Retire</option>
                                         </select>
                                     </ng-container>
                                     <ng-template #displayMode>
-                                        {{ group.retire_vehicle == 0 ? 'No' : 'Yes' }}
+                                        {{ group.retire_vehicle == 0 ? 'Active' : 'Retire' }}
                                     </ng-template>
 
                                 </td>
                                
-                                <td *ngIf="editingId !== group['S.No'] && editingId !== group.id" class="td pb-1" (click)="editRow(group)"   >
+                                <td *ngIf="editingId !== group.id" class="td pb-1" (click)="editRow(group)"   >
                                     <i class="fas fa-edit"></i>
                                 </td>
-                                <td *ngIf="editingId== group['S.No'] && editingId == group.id" class="td pb-1" (click)="updateRow(group)"   >
+                                <td *ngIf="editingId == group.id" class="td pb-1" (click)="updateRow(group)"   >
                                     <i class="fas fa-save"></i>
                                 </td>
                             </tr>
@@ -158,7 +152,7 @@
                     <thead>
                         <tr>
 
-                            <th scope="col" style="font-size: 16px;">S.No.</th>
+                           
                             <th scope="col" style="font-size: 16px;">Vehicle Model </th>
                             <th scope="col" style="font-size: 16px;">Vehicle Type </th>
                             <th scope="col" style="font-size: 16px;">Fuel </th>
@@ -176,9 +170,7 @@
 
                             <tr *ngIf="group.category == 2" clickable (click)="selectGroup(group,index)"
                                 class="col-12 tableRow border-bottom rounded pointer">
-                                <td class="td text-initial" style="font-size: 16px;">
-                                    {{ index + 1 }}
-                                </td>
+                               
                                 <td class="td " style="font-size: 16px;">
                                     {{ group.vehicle_model }}
 
@@ -205,12 +197,12 @@
                                 <td class="td  pb-1" style="font-size: 16px;">
                                     <ng-container  *ngIf="editingId === group['S.No'] || editingId === group.id; else displayMode">
                                         <select [(ngModel)]="group.retire_vehicle">
-                                            <option value=0>No</option>
-                                            <option value=1>Yes</option>
+                                            <option value=0>Active</option>
+                                            <option value=1>Retire</option>
                                         </select>
                                     </ng-container>
                                     <ng-template #displayMode>
-                                        {{ group.retire_vehicle == 0 ? 'No' : 'Yes' }}
+                                        {{ group.retire_vehicle == 0 ? 'Active' : 'Retire' }}
                                     </ng-template>
 
                                 </td>

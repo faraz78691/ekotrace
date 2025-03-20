@@ -76,7 +76,7 @@
                             accept=".jpg,.png" />
                     </div>
                    
-                    <div class="logodiv" style="    height: 200px;
+                    <div class="logodiv d-flex align-items-center justify-content-center" style="    height: 200px;
                     width: 100%;">
                         <p-image [src]="uploadedImageUrl" alt="Image" height="100" width="150"></p-image>
                     </div>
@@ -89,7 +89,7 @@
                         <label for="bio">Brief</label>
                     </div>
                     <div class="ct_company_profile_input">
-                        <textarea [(ngModel)]="companyDetails.companyBio" class="textarea" pInputTextarea
+                        <textarea [ngModel]="companyDetails.companyBio === 'null' ? '' : companyDetails.companyBio" class="textarea" pInputTextarea
                             [autoResize]="true" name="bio"></textarea>
                     </div>
                 </div>

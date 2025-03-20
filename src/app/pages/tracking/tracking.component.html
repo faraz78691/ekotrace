@@ -515,11 +515,11 @@
 
                                     </div>
                                     <div *ngIf="categoryId ==6" class="ml-auto">
-                                        <button class="btn ct_scoope_1_tab ct_view_request_btn px-3 trackingsubmitb mr-2"
-                                            type="button" (click)="bulkUploadCompany('1')">Single Upload</button>
-                                        <button class="btn ct_scoope_1_tab ct_view_request_btn px-3 trackingsubmitb mr-2"
-                                            type="button" (click)="bulkUploadCompany('2')">Multiple uplaod</button>
-                                        <button class="btn ct_scoope_1_tab ct_view_request_btn px-3 trackingsubmitb"
+                                        <button class=" mr-2 et_tab_btn" [ngClass]="{'active': singleCompanyTab}"
+                                            type="button" (click)="bulkUploadCompany('1')">By Vehicle Type</button>
+                                        <button class=" mr-2 et_tab_btn" [ngClass]="{'active': multipleCompanyTab}"
+                                            type="button" (click)="bulkUploadCompany('2')">By Vehicle Model</button>
+                                        <button class="et_tab_btn" [ngClass]="{'active': bulkCompanyTab}"
                                             type="button" (click)="bulkUploadCompany('3')"> Bulk Upload</button>
                                             
 
@@ -2060,110 +2060,6 @@
                                         </div>
                                         <div *ngIf="categoryId==6" class="row">
                                             <ng-container *ngIf="singleCompanyTab">
-                                                <div class="mb-3"
-                                                    [ngClass]="typeEV == true ? 'col-lg-4': typeBusCoach == true ? 'col-lg-4': 'col-lg-4'">
-                                                    <label for="fname">Vehicle Type</label>
-                                                    <p-dropdown class="ct_select_op_input ct_chev_icon_dark230 
-    
-                                                " [options]="VehicleType" optionLabel="VehicleType" optionValue="ID"
-                                                        name="VehicleType" #vehicletype="ngModel"
-                                                        [(ngModel)]="VehicleDE.vehicleTypeID"
-                                                        (onChange)="enableCharging(SubCatAllData.subCatName)"></p-dropdown>
-                                                </div>
-                                                <div class="col-lg-4 mb-3">
-                                                    <label for="fname">No. of Vehicles</label>
-                                                    <input required ngModel name="NoOfVehicles" #NoOfVehicles="ngModel"
-                                                        [(ngModel)]="VehicleDE.noOfVehicles" NoOfVehicles id="search-input"
-                                                        type="text" class="form-control Dashboard-tab text-white"
-                                                        placeholder="Enter no of vehicles" />
-                                                    <p class="validation" *ngIf="
-                                            VehicleDE.noOfVehicles < 0 &&
-                                                    dataEntryForm.submitted
-                                                ">
-                                                        No Of Vehicles should be greater than 0
-                                                    </p>
-    
-                                                    <p class="validation"
-                                                        *ngIf="NoOfVehicles.errors?.['required'] && dataEntryForm.submitted">
-                                                        No Of Vehicles value required.
-                                                    </p>
-                                                </div>
-    
-                                                <div class="col-lg-4 mb-3">
-                                                    <label pTooltip="Total number of trips per vehicle"
-                                                        tooltipPosition="top" for="TotalnoOftripsPerVehicle">Trips per
-                                                        vehicle</label>
-    
-    
-                                                    <input required ngModel name="TotalnoOftripsPerVehicle"
-                                                        #TotalnoOftripsPerVehicle="ngModel"
-                                                        [(ngModel)]="VehicleDE.totalnoOftripsPerVehicle"
-                                                        TotalnoOftripsPerVehicle id="search-input" type="text"
-                                                        class="form-control Dashboard-tab text-white"
-                                                        placeholder="Enter trips per vehicle" />
-    
-    
-                                                </div>
-                                                <div *ngIf="typeEV == true" class="col-lg-4">
-                                                    <label pTooltip="Charging done outside company campus (%)"
-                                                        tooltipPosition="top" for="fname">Charging outside %
-                                                    </label>
-                                                    <i class="fa fa-info-circle tooltip-icon mx-2" pTooltip="
-                                                    Charging done outside company campus (%).
-                                                    " tooltipPosition="top" style="color: #88ad47"></i>
-                                                    <div class="input-group">
-                                                        <input id="chargingInput"
-                                                            class="form-control Dashboard-tab text-white"
-                                                            placeholder="Enter value in %" required ngModel
-                                                            name="chargingPerc" #chargingPerc="ngModel"
-                                                            [(ngModel)]="VehicleDE.chargingPerc" />
-                                                        <div class="input-group-append">
-                                                            <span class="input-group-text">%</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div *ngIf="typeBusCoach == true" class="col-lg-4">
-                                                    <label
-                                                        pTooltip="Average number of people travel in one vehicle per trip"
-                                                        tooltipPosition="top" for="AvgNoPeople">Avg No. of People</label>
-                                                    <input required ngModel name="AvgNoPeople" #AvgNoPeople="ngModel"
-                                                        placeholder="Enter avg no of people"
-                                                        [(ngModel)]="VehicleDE.avgPeoplePerTrip" AvgNoPeople
-                                                        id="search-input" type="text"
-                                                        class="form-control Dashboard-tab text-white"/>
-    
-                                                </div>
-                                                <div
-                                                    [ngClass]="typeEV == true ? 'col-lg-4': typeBusCoach == true ? 'col-lg-4': 'col-lg-4'">
-                                                    <label pTooltip="Mode of Data Entry" tooltipPosition="top"
-                                                        for="fname">Mode
-                                                        of data entry</label>
-                                                    <p-dropdown class="ct_select_op_input ct_chev_icon_dark230 
-                                                " ngModel [options]="ModeType" optionLabel="modeName"
-                                                        optionValue="modeName" name="modeName" #DEMode="ngModel"
-                                                        [(ngModel)]="VehicleDE.modeOfDE"
-                                                        (onChange)="setUnit()"></p-dropdown>
-                                                </div>
-    
-    
-    
-                                                <div
-                                                    [ngClass]="typeEV == true ? 'col-lg-4': typeBusCoach == true ? 'col-lg-4': 'col-lg-4'">
-                                                    <label for="fname">Value</label>
-                                                    <div class="position-relative">
-                                                        <input required ngModel name="Value" #Value="ngModel"
-                                                            placeholder="Enter value" [(ngModel)]="VehicleDE.value" Value
-                                                            id="search-input" type="text"
-                                                            class="form-control Dashboard-tab text-white" />
-                                                        <div class="ct_quantity_text">
-                                                            <p>{{dataEntry.unit}}</p>
-                                                        </div>
-    
-                                                    </div>
-                                                </div>
-
-                                            </ng-container>
-                                            <ng-container *ngIf="multipleCompanyTab">
                                                 <div class="col-md-12 table-responsive" style="height: 40vh;">
                                                     <table class="table ct_home_office_table">
                                                         <thead class="thead-dark">
@@ -2172,6 +2068,7 @@
                                                                 <th scope="col">Vehicle Type</th>
                                                                 <th scope="col">No of vehicles</th>
                                                                 <th scope="col">Trips per vehicle</th>
+
                                                                 <th scope="col">Mode of data entry</th>
                                                               
                                                                 <th scope="col">Value</th>
@@ -2244,6 +2141,177 @@
                                                     </table>
                                                 </div>
                                             </ng-container>
+                                            <!-- <ng-container *ngIf="singleCompanyTab">
+                                                <div class="mb-3"
+                                                    [ngClass]="typeEV == true ? 'col-lg-4': typeBusCoach == true ? 'col-lg-4': 'col-lg-4'">
+                                                    <label for="fname">Vehicle Type</label>
+                                                    <p-dropdown class="ct_select_op_input ct_chev_icon_dark230 
+    
+                                                " [options]="VehicleType" optionLabel="VehicleType" optionValue="ID"
+                                                        name="VehicleType" #vehicletype="ngModel"
+                                                        [(ngModel)]="VehicleDE.vehicleTypeID"
+                                                        (onChange)="enableCharging(SubCatAllData.subCatName)"></p-dropdown>
+                                                </div>
+                                                <div class="col-lg-4 mb-3">
+                                                    <label for="fname">No. of Vehicles</label>
+                                                    <input required ngModel name="NoOfVehicles" #NoOfVehicles="ngModel"
+                                                        [(ngModel)]="VehicleDE.noOfVehicles" NoOfVehicles id="search-input"
+                                                        type="text" class="form-control Dashboard-tab text-white"
+                                                        placeholder="Enter no of vehicles" />
+                                                    <p class="validation" *ngIf="
+                                            VehicleDE.noOfVehicles < 0 &&
+                                                    dataEntryForm.submitted
+                                                ">
+                                                        No Of Vehicles should be greater than 0
+                                                    </p>
+    
+                                                    <p class="validation"
+                                                        *ngIf="NoOfVehicles.errors?.['required'] && dataEntryForm.submitted">
+                                                        No Of Vehicles value required.
+                                                    </p>
+                                                </div>
+    
+                                                <div class="col-lg-4 mb-3">
+                                                    <label pTooltip="Total number of trips per vehicle"
+                                                        tooltipPosition="top" for="TotalnoOftripsPerVehicle">Trips per
+                                                        vehicle</label>
+    
+    
+                                                    <input required ngModel name="TotalnoOftripsPerVehicle"
+                                                        #TotalnoOftripsPerVehicle="ngModel"
+                                                        [(ngModel)]="VehicleDE.totalnoOftripsPerVehicle"
+                                                        TotalnoOftripsPerVehicle id="search-input" type="text"
+                                                        class="form-control Dashboard-tab text-white"
+                                                        placeholder="Enter trips per vehicle" />
+    
+    
+                                                </div>
+                                                 <div *ngIf="typeEV == true" class="col-lg-4">
+                                                    <label pTooltip="Charging done outside company campus (%)"
+                                                        tooltipPosition="top" for="fname">Charging outside %
+                                                    </label>
+                                                    <i class="fa fa-info-circle tooltip-icon mx-2" pTooltip="
+                                                    Charging done outside company campus (%).
+                                                    " tooltipPosition="top" style="color: #88ad47"></i>
+                                                    <div class="input-group">
+                                                        <input id="chargingInput"
+                                                            class="form-control Dashboard-tab text-white"
+                                                            placeholder="Enter value in %" required ngModel
+                                                            name="chargingPerc" #chargingPerc="ngModel"
+                                                            [(ngModel)]="VehicleDE.chargingPerc" />
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text">%</span>
+                                                        </div>
+                                                    </div>
+                                                </div> 
+                                                <div *ngIf="typeBusCoach == true" class="col-lg-4">
+                                                    <label
+                                                        pTooltip="Average number of people travel in one vehicle per trip"
+                                                        tooltipPosition="top" for="AvgNoPeople">Avg No. of People</label>
+                                                    <input required ngModel name="AvgNoPeople" #AvgNoPeople="ngModel"
+                                                        placeholder="Enter avg no of people"
+                                                        [(ngModel)]="VehicleDE.avgPeoplePerTrip" AvgNoPeople
+                                                        id="search-input" type="text"
+                                                        class="form-control Dashboard-tab text-white"/>
+    
+                                                </div>
+                                                <div
+                                                    [ngClass]="typeEV == true ? 'col-lg-4': typeBusCoach == true ? 'col-lg-4': 'col-lg-4'">
+                                                    <label pTooltip="Mode of Data Entry" tooltipPosition="top"
+                                                        for="fname">Mode
+                                                        of data entry</label>
+                                                    <p-dropdown class="ct_select_op_input ct_chev_icon_dark230 
+                                                " ngModel [options]="ModeType" optionLabel="modeName"
+                                                        optionValue="modeName" name="modeName" #DEMode="ngModel"
+                                                        [(ngModel)]="VehicleDE.modeOfDE"
+                                                        (onChange)="setUnit()"></p-dropdown>
+                                                </div>
+    
+    
+    
+                                                <div
+                                                    [ngClass]="typeEV == true ? 'col-lg-4': typeBusCoach == true ? 'col-lg-4': 'col-lg-4'">
+                                                    <label for="fname">Value</label>
+                                                    <div class="position-relative">
+                                                        <input required ngModel name="Value" #Value="ngModel"
+                                                            placeholder="Enter value" [(ngModel)]="VehicleDE.value" Value
+                                                            id="search-input" type="text"
+                                                            class="form-control Dashboard-tab text-white" />
+                                                        <div class="ct_quantity_text">
+                                                            <p>{{dataEntry.unit}}</p>
+                                                        </div>
+    
+                                                    </div>
+                                                </div>
+
+                                            </ng-container> -->
+                                            <ng-container *ngIf="multipleCompanyTab">
+                                                <div class="col-md-12 table-responsive" style="height: 40vh;">
+                                                    <table class="table ct_home_office_table">
+                                                        <thead class="thead-dark">
+                                                            <tr>
+                                                                <th scope="col">S.No.</th>
+                                                                <th scope="col">Vehicle Modal</th>
+
+                                                                <th scope="col">Mode of data entry</th>
+                                                              
+                                                                <th scope="col">Value</th>
+                                                                <th scope="col">Unit</th>
+                                                             
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody #commuteTable>
+                                                    
+                                                            <tr *ngFor="let rows of rowsCompany; index as i">
+                                                                <td>{{i +1}}</td>
+                                                                <td>
+                                                                    <p-dropdown
+                                                                    class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                                    [(ngModel)]="rows.vehicleType"
+                                                                    [ngModelOptions]="{standalone: true}"
+                                                                    [options]="vehicleModalFleet"
+                                                                
+                                                                    optionLabel="vehicle_model" optionValue="vehicle_model"
+                                                                    placeholder="Select vehicle modal">
+                                                                </p-dropdown>
+        
+                                                                </td>
+                                                            
+                                                            
+                                                                <td>
+                                                                    <p-dropdown
+                                                                    class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                                    [(ngModel)]="rows.modeOfEntry"
+                                                                    [ngModelOptions]="{standalone: true}"
+                                                                    [options]="ModeType"
+                                                                (ngModelChange)="modeOfEntryChange(rows.modeOfEntry ,rows)"
+                                                                    optionLabel="modeName" optionValue="modeName"
+                                                                    placeholder="Select type">
+                                                                </p-dropdown>
+                                                               
+                                                                </td>
+                                                             
+                                                                <td>
+                                                                    <input 
+                                                                        [(ngModel)]="rows.value"   [ngModelOptions]="{standalone: true}"
+                                                                        type="text" class="form-control Dashboard-tab text-white"
+                                                                        placeholder="Enter value" />
+                                                                </td>
+                                                                <td>
+                                                                    <input disabled required ngModel name="NoOfVehicles" #NoOfVehicles="ngModel"
+                                                                        [(ngModel)]="rows.unit"  [ngModelOptions]="{standalone: true}"  id="search-input"
+                                                                        type="text" class="form-control Dashboard-tab text-white"
+                                                                        placeholder="Enter value" />
+                                                                </td>
+                                                         
+                                                            </tr>
+    
+                                                        </tbody>
+                                                        <p class="ml-2 trackingsubmitb" (click)="addCompanyRows()">+</p>
+        
+                                                    </table>
+                                                </div>
+                                            </ng-container>
                                             <ng-container *ngIf="bulkCompanyTab">
 
                                                 <div class="d-flex align-items-center ct_gap_10 flex-wrap mb-3">
@@ -2267,8 +2335,6 @@
                                                             <tr>
                                                                 <th scope="col">S.No.</th>
                                                                 <th scope="col">Vehicle Modal</th>
-                                                                <th scope="col">No of vehicles</th>
-                                                                <th scope="col">Trips per vehicle</th>
                                                                 <th scope="col">Mode of data entry</th>
                                                               
                                                                 <th scope="col">Value</th>
@@ -2285,7 +2351,7 @@
                                                                
         
                                                                 </td>
-                                                                <td>
+                                                                <!-- <td>
                                                                     {{rows.noOfVehicles}}
                                                                    
         
@@ -2294,7 +2360,7 @@
                                                                     {{rows.tripsPerVehicle}}
                                                                 
         
-                                                                </td>
+                                                                </td> -->
                                                                 <td>
                                                                     {{rows.modeOfEntry}}
                                                                   
@@ -2482,7 +2548,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row mt-3 mx-2" *ngIf="!multipleCompanyTab && !bulkCompanyTab">
+                                    <div class="row mt-3 mx-2" *ngIf="!multipleCompanyTab && !bulkCompanyTab && !singleCompanyTab">
                                         <div class="col">
                                             <label for="fname ">Note</label>
                                             <textarea class="ct_textarea_input" ngModel name="Textarea"
@@ -2507,7 +2573,7 @@
                                                             download>Click here to download</a></button>
                                                 </div>
                                             </div>
-                                            <div class="col-8" *ngIf="!multipleCompanyTab && !bulkCompanyTab">
+                                            <div class="col-8" *ngIf="!multipleCompanyTab && !bulkCompanyTab && !singleCompanyTab">
                                                 <label for="fname ">Attachments</label>
                                                 <p-toast></p-toast>
                                                 <div class="d-flex justify-content-end border rounded ct_upload_btn1">

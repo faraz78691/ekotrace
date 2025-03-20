@@ -273,21 +273,23 @@ export class VehicleFleetComponent {
       // Convert array to key-value pairs
       const jsonReading = this.convertToKeyValue(this.jsonData);
       this.jsonData = jsonReading.filter(items => items['Vehicle Type'] != '' && items['Vehicle Model'] != '');
-      this.jsonData = this.jsonData.map(item => {
+      this.jsonData = this.jsonData.map((item, index) => {
         return {
           ...item,
-         retire_vehicle:0,
-         vehicle_model: item['Vehicle Model'],
-         vehicle_type: item['Vehicle Type'],
-         fuel_type: item['Fuel Type'],
-         vehicle_subtype: item['Vehicle Sub-Type'],
-         type_engine: item['Type of Engine'] ? item['Type of Engine'] : '',
-         charging_outside: item['Charging % Outside (If EV)'] ? item['Charging % Outside (If EV)'] : '',
-         acquisition_date: item['Acquisition Date']  ? item['Acquisition Date'] : '',
-         quantity: item['Quantity']  ? item['Quantity'] : '',
-         category: this.vehicleType,
-      }}
-    )
+          retire_vehicle: 0,
+          id: index,  // Assigning index correctly
+          vehicle_model: item['Vehicle Model'],
+          vehicle_type: item['Vehicle Type'],
+          fuel_type: item['Fuel Type'],
+          vehicle_subtype: item['Vehicle Sub-Type'],
+          type_engine: item['Type of Engine'] ? item['Type of Engine'] : '',
+          charging_outside: item['Charging % Outside (If EV)'] ? item['Charging % Outside (If EV)'] : '',
+          acquisition_date: item['Acquisition Date'] ? item['Acquisition Date'] : '',
+          quantity: item['Quantity'] ? item['Quantity'] : '',
+          category: this.vehicleType,
+        };
+      });
+    
 
     console.log(this.jsonData);
     
@@ -447,6 +449,10 @@ export class VehicleFleetComponent {
         next: (response:any) => {
 
             if (response.success == true) {
+              this.notification.showSuccess(
+                'Vehicle Fleet Status Updated Successfully',
+                ''
+            );
               this.getVehicleFleet()
               this.editingId = null
             }

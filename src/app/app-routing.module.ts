@@ -68,6 +68,8 @@ import { CostCentreComponent } from '@pages/cost-centre/cost-centre.component';
 import { DataProgressComponent } from '@pages/data-progress/data-progress.component';
 import { VehicleComponent } from '@pages/vehicle/vehicle.component';
 import { VehicleFleetComponent } from '@pages/vehicle-fleet/vehicle-fleet.component';
+import { PdfReportingComponent } from '@pages/pdf-reporting/pdf-reporting.component';
+import { GhgReportingComponent } from '@pages/ghg-reporting/ghg-reporting.component';
 
 const routes: Routes = [
     { path: '', redirectTo: '/dashboard/ghgEmision', pathMatch: 'full' },
@@ -560,6 +562,32 @@ const routes: Routes = [
             {
                 path: 'brsrReport',
                 component: BrsrReportComponent,
+                canActivate: [RoleGuard],
+                data: {
+                    roles: [
+                        'Super Admin',
+                        'Admin', 'Manager',
+                        'Preparer',
+                        'Approver', 'Auditor'
+                    ]
+                }
+            },
+            {
+                path: 'pdfReport',
+                component: PdfReportingComponent,
+                canActivate: [RoleGuard],
+                data: {
+                    roles: [
+                        'Super Admin',
+                        'Admin', 'Manager',
+                        'Preparer',
+                        'Approver', 'Auditor'
+                    ]
+                }
+            },
+            {
+                path: 'ghgReport',
+                component: GhgReportingComponent,
                 canActivate: [RoleGuard],
                 data: {
                     roles: [

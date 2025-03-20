@@ -66,7 +66,7 @@ export class MenuSidebarComponent implements OnInit {
             if (this.loginInfo.role == 'Admin') {
                 this.GetAllSubGrups();
             }
-            this.getTenantsById(Number(this.loginInfo.tenantID));
+            // this.getTenantsById(Number(this.loginInfo.tenantID));
             this.getTenantsById(Number(this.loginInfo.tenantID)).then(() => {
 
 
@@ -131,13 +131,12 @@ export class MenuSidebarComponent implements OnInit {
                 .toPromise();
 
             this.companyDetails = response;
+           
             const currentDate = new Date();
             const licenseExpiredDate = new Date(
                 this.companyDetails.licenseExpired
             );
             this.isExpired = licenseExpiredDate < currentDate;
-
-
         } catch (error) {
             // Handle the error appropriately
         }
@@ -286,6 +285,12 @@ export const menu = [
                 iconClasses: 'fas fa-star',
                 iconSRC: 'assets/img/trees.png',
                 path: ['tracking']
+            },
+            {
+                name: 'GHG Emissions Report',
+                iconClasses: 'fas fa-table',
+                iconSRC: 'assets/img/BRSR.svg',
+                path: ['ghgReport']
             },
             {
                 name: 'Financed Emissions',

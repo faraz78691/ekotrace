@@ -72,7 +72,7 @@ export class CompanyProfileComponent {
       
             this.companyDetails = response.categories[0];
             this.selectedCountry = this.companyDetails.location
-            this.uploadedImageUrl = this.companyDetails.logoPath;
+            this.uploadedImageUrl = 'https://ekotrace.ekobon.com:4000/image/'+ this.companyDetails.logoName;
 
         
 
