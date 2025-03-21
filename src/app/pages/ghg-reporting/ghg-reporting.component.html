@@ -62,9 +62,9 @@
                     <ng-container >
                         <div
                             class="ct_box_shadow_none selectmonth card justify-content-center ct_month_select_clr ct_multi_input_38 ct_input_white_bg13 ct_select_2_drop_white ct_input_dark_text_145 ct_month_light_green">
-                            <p-multiSelect [options]="categoriesData" [(ngModel)]="selectedMultipleCategories"
-                                optionLabel="name" optionValue="id" styleClass="pcalender"
-                                name="multipleDataPoints"
+                            <p-multiSelect [options]="kpiList" [(ngModel)]="selectedMultipleKPIs"
+                                optionLabel="name" optionValue="name" styleClass="pcalender" placeholder="Select maximum three KPIs"
+                                name="multipleDataPoints" (onChange)="limitSelection()"
                                 >
                             </p-multiSelect>
                         </div>
@@ -446,19 +446,22 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr >
-                                <td  class="category"rowspan="3" >Fuels</td>
-                                <td>{{scope1Emissions?.CombustionEmissionData[0].TypeName}}</td>
-                                <td>{{scope1Emissions?.CombustionEmissionData[0].Total_GHGEmission}}</td>
-                            </tr>
-                            <tr>
-                                <td>{{scope1Emissions?.CombustionEmissionData[1].TypeName}}</td>
-                                <td>{{scope1Emissions?.CombustionEmissionData[1].Total_GHGEmission}}</td>
-                            </tr>
-                            <tr>
-                                <td>{{scope1Emissions?.CombustionEmissionData[2].TypeName}}</td>
-                                <td>{{scope1Emissions?.CombustionEmissionData[2].Total_GHGEmission}}</td>
-                            </tr>
+                            <ng-container *ngIf="scope1Emissions?.CombustionEmissionData">
+                                <tr >
+                                    <td  class="category"rowspan="3" >Fuels</td>
+                                    <td>{{scope1Emissions?.CombustionEmissionData[0].TypeName}}</td>
+                                    <td>{{scope1Emissions?.CombustionEmissionData[0].Total_GHGEmission}}</td>
+                                </tr>
+                                <tr>
+                                    <td>{{scope1Emissions?.CombustionEmissionData[1].TypeName}}</td>
+                                    <td>{{scope1Emissions?.CombustionEmissionData[1].Total_GHGEmission}}</td>
+                                </tr>
+                                <tr>
+                                    <td>{{scope1Emissions?.CombustionEmissionData[2].TypeName}}</td>
+                                    <td>{{scope1Emissions?.CombustionEmissionData[2].Total_GHGEmission}}</td>
+                                </tr>
+
+                            </ng-container>
                           
                             <tr>
                                 <td class="category">Refrigerants</td>

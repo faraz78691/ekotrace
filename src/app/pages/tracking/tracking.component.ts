@@ -1066,7 +1066,7 @@ export class TrackingComponent {
 
     // getting status, units, subCategory types where ever required
     SubCatData(data: any, catID: any, categoryName) {
-     
+
         this.categoryName = categoryName;
         this.recycle = false;
         this.isVisited = false;
@@ -1120,10 +1120,12 @@ export class TrackingComponent {
         }
 
         if (catID == 6) {
-this.getVehcileFleet(this.facilityID ,data.manageDataPointSubCategorySeedID)
+            this.getVehcileFleet(this.facilityID, data.manageDataPointSubCategorySeedID)
 
             this.downloadCompanyExcelUrl = 'https://ekotrace.ekobon.com:4000/' + `download-excel-vehicle-fleet-by-facility-category-id?facility_id=${this.facilityID}&categoryID=${this.SubCatAllData
                 .manageDataPointSubCategorySeedID == 10 ? '1' : '2'} `;
+            // this.downloadCompanyExcelUrl = 'http://192.168.29.45:4500/' + `download-excel-vehicle-fleet-by-facility-category-id?facility_id=${this.facilityID}&categoryID=${this.SubCatAllData
+            //     .manageDataPointSubCategorySeedID == 10 ? '1' : '2'} `;
             this.jsonCompanyData = [];
             this.rowsCompany = [{
                 vehicleType: '',
@@ -1719,14 +1721,14 @@ this.getVehcileFleet(this.facilityID ,data.manageDataPointSubCategorySeedID)
             });
         }
         if (this.categoryId == 6) {
-                     if (this.selectMonths.length == 0) {
-                    this.notification.showInfo(
-                        'Select month',
-                        ''
-                    );
-                    return
-                }
-            
+            if (this.selectMonths.length == 0) {
+                this.notification.showInfo(
+                    'Select month',
+                    ''
+                );
+                return
+            }
+
             // if (this.singleCompanyTab) {
             //     console.log("sfdsf");
             //     if (this.selectMonths.length == 0) {
@@ -1793,121 +1795,121 @@ this.getVehcileFleet(this.facilityID ,data.manageDataPointSubCategorySeedID)
             //     });
             // } else {
 
-                if (this.singleCompanyTab) {
-                    var payloads = this.rowsCompany.map(row => ({
+            if (this.singleCompanyTab) {
+                var payloads = this.rowsCompany.map(row => ({
 
-                        vehicle_type: row.vehicleType,
-                        no_of_vehicles: row.noOfVehicles,
-                        trip_per_vehicle: row.tripsPerVehicle,
-                        mode_of_data_entry: row.modeOfEntry,
-                        value: row.value,
-                        unit: row.unit,
-                        sub_category: this.SubCatAllData
-                            .manageDataPointSubCategorySeedID,
-                        is_excel: 0
+                    vehicle_type: row.vehicleType,
+                    no_of_vehicles: row.noOfVehicles,
+                    trip_per_vehicle: row.tripsPerVehicle,
+                    mode_of_data_entry: row.modeOfEntry,
+                    value: row.value,
+                    unit: row.unit,
+                    sub_category: this.SubCatAllData
+                        .manageDataPointSubCategorySeedID,
+                    is_excel: 0
 
-                    }));
+                }));
 
-                }
-                if (this.multipleCompanyTab) {
-                    var payloads = this.rowsCompany.map(row => ({
+            }
+            if (this.multipleCompanyTab) {
+                var payloads = this.rowsCompany.map(row => ({
 
-                        vehicle_type: row.vehicleType,
-                        no_of_vehicles: row.noOfVehicles,
-                        trip_per_vehicle: row.tripsPerVehicle,
-                        mode_of_data_entry: row.modeOfEntry,
-                        value: row.value,
-                        unit: row.unit,
-                        sub_category: this.SubCatAllData
-                            .manageDataPointSubCategorySeedID,
-                        is_excel: 1
+                    vehicle_type: row.vehicleType,
+                    no_of_vehicles: row.noOfVehicles,
+                    trip_per_vehicle: row.tripsPerVehicle,
+                    mode_of_data_entry: row.modeOfEntry,
+                    value: row.value,
+                    unit: row.unit,
+                    sub_category: this.SubCatAllData
+                        .manageDataPointSubCategorySeedID,
+                    is_excel: 1
 
-                    }));
+                }));
 
-                }
-                if (this.bulkCompanyTab) {
-                    var payloads = this.jsonCompanyData.map(row => ({
-                        vehicle_type: row.vehicleType,
-                        no_of_vehicles: row.noOfVehicles,
-                        trip_per_vehicle: row.tripsPerVehicle,
-                        mode_of_data_entry: row.modeOfEntry,
-                        value: row.value,
-                        unit: row.unit,
-                        sub_category: this.SubCatAllData
-                            .manageDataPointSubCategorySeedID,
-                        is_excel: 1
+            }
+            if (this.bulkCompanyTab) {
+                var payloads = this.jsonCompanyData.map(row => ({
+                    vehicle_type: row.vehicleType,
+                    no_of_vehicles: row.noOfVehicles,
+                    trip_per_vehicle: row.tripsPerVehicle,
+                    mode_of_data_entry: row.modeOfEntry,
+                    value: row.value,
+                    unit: row.unit,
+                    sub_category: this.SubCatAllData
+                        .manageDataPointSubCategorySeedID,
+                    is_excel: 1
 
-                    }));
+                }));
 
-                }
+            }
 
-                var companyOwnedVehicles = JSON.stringify(payloads);
-                let formData = new URLSearchParams();
-                formData.set('facilityId', this.facilityID);
-                formData.set('month', monthString);
-                formData.set('year', this.dataEntry.year);
-                formData.set('jsonData', companyOwnedVehicles.toString());
+            var companyOwnedVehicles = JSON.stringify(payloads);
+            let formData = new URLSearchParams();
+            formData.set('facilityId', this.facilityID);
+            formData.set('month', monthString);
+            formData.set('year', this.dataEntry.year);
+            formData.set('jsonData', companyOwnedVehicles.toString());
 
 
-                this.appService.postAPI('/add-multiple-company-owned-vehicles', formData.toString()).subscribe({
-                    next: (response: any) => {
-                        if (response.success == true) {
-                            this.ALLEntries();
-                            this.notification.showSuccess(
-                                'Data entry added successfully',
-                                'Success'
-                            );
-                            this.resetForm();
-                            this.getUnit(this.SubCatAllData
-                                .manageDataPointSubCategorySeedID);
-                            this.VehicleDE.modeOfDE = this.ModeType[0].modeName;
+            this.appService.postAPI('/add-multiple-company-owned-vehicles', formData.toString()).subscribe({
+                next: (response: any) => {
+                    if (response.success == true) {
+                        this.ALLEntries();
+                        this.notification.showSuccess(
+                            'Data entry added successfully',
+                            'Success'
+                        );
+                        this.resetForm();
+                        this.getUnit(this.SubCatAllData
+                            .manageDataPointSubCategorySeedID);
+                        this.VehicleDE.modeOfDE = this.ModeType[0].modeName;
 
-                            if (this.SubCatAllData.manageDataPointSubCategorySeedID == 10) {
+                        if (this.SubCatAllData.manageDataPointSubCategorySeedID == 10) {
 
-                                this.getPassengerVehicleType();
-                            }
-                            else {
-
-                                this.getDeliveryVehicleType();
-                            }
-                            this.activeindex = 0;
-
-                            this.rowsCompany = [{
-                                vehicleType: null,
-                                noOfVehicles: null,
-                                tripsPerVehicle: null,
-                                modeOfEntry: 'Average distance per trip',
-                                value: null,
-                                unit: 'Km'
-                            }];;
-
-                            this.jsonCompanyData = [];
-                        } else {
-                            this.notification.showError(
-                                'Data entry added failed.',
-                                'Error'
-                            );
-                            this.rowsCompany = [{
-                                vehicleType: null,
-                                noOfVehicles: null,
-                                tripsPerVehicle: null,
-                                modeOfEntry: 'Average distance per trip',
-                                value: null,
-                                unit: 'Km'
-                            }];;
-
-                            this.jsonCompanyData = [];
+                            this.getPassengerVehicleType();
                         }
-                    },
-                    error: (err) => {
+                        else {
+
+                            this.getDeliveryVehicleType();
+                        }
+                        this.activeindex = 0;
+
+                        this.rowsCompany = [{
+                            vehicleType: null,
+                            noOfVehicles: null,
+                            tripsPerVehicle: null,
+                            modeOfEntry: 'Average distance per trip',
+                            value: null,
+                            unit: 'Km'
+                        }];;
+
+                        this.jsonCompanyData = [];
+                    } else {
                         this.notification.showError(
                             'Data entry added failed.',
                             'Error'
                         );
-                        console.error('errrrrrr>>>>>>', err);
-                    },
-                    complete: () => console.info('Data entry Added')
-                });
+                        this.rowsCompany = [{
+                            vehicleType: null,
+                            noOfVehicles: null,
+                            tripsPerVehicle: null,
+                            modeOfEntry: 'Average distance per trip',
+                            value: null,
+                            unit: 'Km'
+                        }];;
+
+                        this.jsonCompanyData = [];
+                    }
+                },
+                error: (err) => {
+                    this.notification.showError(
+                        'Data entry added failed.',
+                        'Error'
+                    );
+                    console.error('errrrrrr>>>>>>', err);
+                },
+                complete: () => console.info('Data entry Added')
+            });
             // }
 
 
@@ -4448,8 +4450,8 @@ this.getVehcileFleet(this.facilityID ,data.manageDataPointSubCategorySeedID)
         this.isHowtoUse = !this.isHowtoUse;
     }
 
-    getVehcileFleet(facilityId: number ,type : number) {
-       
+    getVehcileFleet(facilityId: number, type: number) {
+
         const formData = new URLSearchParams();
         formData.append('facility_id', facilityId.toString());
         this.appService.postAPI('/get-vehicle-fleet-by-facility-id', formData).subscribe({
@@ -4463,12 +4465,12 @@ this.getVehcileFleet(this.facilityID ,data.manageDataPointSubCategorySeedID)
                     } else if (type == 11) {
                         this.vehicleModalFleet = fleet.filter((item) => item.category == 2 && item.retire_vehicle === 0);
                     }
-                
+
 
                 }
             },
             error: (err) => {
-                console.error('errrrrrr>>>>>>', err);
+
             },
             complete: () => console.info('Group Added')
         });

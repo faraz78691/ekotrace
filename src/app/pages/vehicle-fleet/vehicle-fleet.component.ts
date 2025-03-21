@@ -220,10 +220,11 @@ export class VehicleFleetComponent {
       const jsonReading = this.convertToKeyValue(this.jsonData);
       this.jsonData = jsonReading.filter(items =>{return items['Vehicle Type'] !== '' && items['Vehicle Model'] !== '' });
       console.log(this.jsonData);
-      this.jsonData = this.jsonData.map(item => {
+      this.jsonData = this.jsonData.map((item, index) => {
         return {
           ...item,
          retire_vehicle:0,
+         id:index,
          vehicle_model: item['Vehicle Model'],
          vehicle_type: item['Vehicle Type'],
          fuel_type: item['Fuel Type'],
@@ -365,6 +366,7 @@ export class VehicleFleetComponent {
           }
           this.getVehicleFleet()
           this.showSubmit1 = false;
+          this.showSubmit2 = false;
          this.editingId = null
       },
       error: (err) => {
@@ -423,12 +425,14 @@ export class VehicleFleetComponent {
   editingId: string | null = null;
 
   editRow(group: any) {
-    console.log(group['S.No']);
-    if(group['S.No']){
-      this.editingId = group['S.No'];
-    }else{
-      this.editingId = group.id;
-    }
+    this.editingId = group.id;
+    // console.log(group);
+    // console.log(group['S.No']);
+    // if(group['S.No']){
+    //   this.editingId = group['S.No'];
+    // }else{
+    //   this.editingId = group.id;
+    // }
   };
   updateRow(group: any) {
     console.log(group);
@@ -455,7 +459,12 @@ export class VehicleFleetComponent {
             );
               this.getVehicleFleet()
               this.editingId = null
+            }else{
+              this.editingId = null
             }
+        },
+        error :(err)=>{
+          this.editingId = null
         }
     })
   };
@@ -469,7 +478,7 @@ export class VehicleFleetComponent {
 
             if (response.success == true) {
                 this.jsonData = response.data;
-                this.jsonData = response.data;
+        
             }
         }
     })

@@ -80,7 +80,7 @@
                             
                             <th scope="col" style="font-size: 16px;">Acquisition Date</th>
                             <th scope="col" style="font-size: 16px;">Status</th>
-                            <th scope="col" style="font-size: 16px;">Action</th>
+                            <th scope="col" style="font-size: 16px;" *ngIf="!showSubmit1">Action</th>
 
                         </tr>
                     </thead>
@@ -107,7 +107,7 @@
                                     || group.acquisition_date}}
 
                                 </td>
-                                <td class="td  pb-1" style="font-size: 16px;">
+                                <td class="td  pb-1" style="font-size: 16px;" >
                                     <ng-container
                                         *ngIf="editingId === group.id; else displayMode">
                                         <select [(ngModel)]="group.retire_vehicle">
@@ -120,13 +120,14 @@
                                     </ng-template>
 
                                 </td>
-                               
-                                <td *ngIf="editingId !== group.id" class="td pb-1" (click)="editRow(group)"   >
-                                    <i class="fas fa-edit"></i>
-                                </td>
-                                <td *ngIf="editingId == group.id" class="td pb-1" (click)="updateRow(group)"   >
-                                    <i class="fas fa-save"></i>
-                                </td>
+                               <ng-container *ngIf="!showSubmit1">
+                                   <td *ngIf="editingId !== group.id" class="td pb-1" (click)="editRow(group)"   >
+                                       <i class="fas fa-edit"></i>
+                                   </td>
+                                   <td *ngIf="editingId == group.id" class="td pb-1" (click)="updateRow(group)"   >
+                                       <i class="fas fa-save"></i>
+                                   </td>
+                               </ng-container>
                             </tr>
 
                         </ng-container>
@@ -156,19 +157,16 @@
                             <th scope="col" style="font-size: 16px;">Vehicle Model </th>
                             <th scope="col" style="font-size: 16px;">Vehicle Type </th>
                             <th scope="col" style="font-size: 16px;">Fuel </th>
-                            <!-- <th scope="col" style="font-size: 16px;">Vehicle Sub-Type</th>
                          
-                            <th scope="col" style="font-size: 16px;">Quantity</th> -->
-
                             <th scope="col" style="font-size: 16px;">Vehicle Retire</th>
-                            <th scope="col" style="font-size: 16px;">Action</th>
+                            <th scope="col" style="font-size: 16px;" *ngIf="!showSubmit2">Action</th>
 
                         </tr>
                     </thead>
                     <tbody>
                         <ng-container *ngFor="let group of jsonData;let index = index">
 
-                            <tr *ngIf="group.category == 2" clickable (click)="selectGroup(group,index)"
+                            <tr *ngIf="group.category === '2'" clickable (click)="selectGroup(group,index)"
                                 class="col-12 tableRow border-bottom rounded pointer">
                                
                                 <td class="td " style="font-size: 16px;">
@@ -184,18 +182,8 @@
 
                                 </td>
 
-                                <!-- <td class="td  pb-1" style="font-size: 16px;">
-        {{ group['Vehicle Sub-Type'] }}
-
-    </td>
-  
-    <td class="td  pb-1" style="font-size: 16px;">
-        {{ group['Quantity'] }}
-
-    </td> -->
-
                                 <td class="td  pb-1" style="font-size: 16px;">
-                                    <ng-container  *ngIf="editingId === group['S.No'] || editingId === group.id; else displayMode">
+                                    <ng-container  *ngIf="editingId === group.id; else displayMode">
                                         <select [(ngModel)]="group.retire_vehicle">
                                             <option value=0>Active</option>
                                             <option value=1>Retire</option>
@@ -206,12 +194,15 @@
                                     </ng-template>
 
                                 </td>
-                                <td *ngIf="editingId !== group['S.No'] && editingId !== group.id" class="td pb-1" (click)="editRow(group)"   >
-                                    <i class="fas fa-edit"></i>
-                                </td>
-                                <td *ngIf="editingId === group['S.No'] || editingId === group.id" class="td pb-1" (click)="updateRow(group)"   >
-                                    <i class="fas fa-save"></i>
-                                </td>
+                                <ng-container *ngIf="!showSubmit2">
+                                    <td *ngIf="editingId !== group.id" class="td pb-1" (click)="editRow(group)"   >
+                                        <i class="fas fa-edit"></i>
+                                    </td>
+                                    <td *ngIf="editingId == group.id" class="td pb-1" (click)="updateRow(group)"   >
+                                        <i class="fas fa-save"></i>
+                                    </td>
+
+                                </ng-container>
                             </tr>
                         </ng-container>
                     </tbody>

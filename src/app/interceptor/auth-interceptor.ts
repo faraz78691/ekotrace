@@ -11,6 +11,7 @@ import {Router} from '@angular/router';
 import {AppService} from '@services/app.service';
 
 
+
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
     constructor(private router: Router, private appService: AppService) {}
@@ -31,7 +32,7 @@ export class AuthInterceptor implements HttpInterceptor {
         }
 
         if (request.body instanceof FormData) {
-            return next.handle(request);
+       
         }else if(request.body instanceof URLSearchParams){
             const modifiedHeaders = request.headers.set(
                 'Content-Type', 'application/x-www-form-urlencoded')
@@ -39,7 +40,7 @@ export class AuthInterceptor implements HttpInterceptor {
             request = request.clone({
                 headers:modifiedHeaders
             });
-            return next.handle(request);
+          
         }
         else if (typeof request.body === 'object' && request.body !== null) {
             
@@ -50,7 +51,7 @@ export class AuthInterceptor implements HttpInterceptor {
             request = request.clone({
                 headers: modifiedHeaders
             });
-            return next.handle(request);
+           
         }
          else {
   
@@ -59,9 +60,14 @@ export class AuthInterceptor implements HttpInterceptor {
                 'application/x-www-form-urlencoded'
             );
             request = request.clone({headers: modifiedHeaders});
-            return next.handle(request);
+         
         }
+        return next.handle(request).pipe(
+            catchError((error: HttpErrorResponse) => {
+                console.log('An error occurred:', error);
+                return throwError(() => new Error('Something went wrong; please try again later.'));
+            })
+        );
     }
 
-    // next.handle(request).pipe(catchError(x=> this.handleAuthError(x)));
 }

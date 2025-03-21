@@ -44,6 +44,7 @@ export class GhgReportingComponent {
   categoriesData: any[] = [];
   selectedMultipleFacility: any;
   selectedMultipleCategories: any;
+  selectedMultipleKPIs: any;
   reportData: any;
   currentYear: any;
   scopeEmissons: any;
@@ -60,6 +61,7 @@ export class GhgReportingComponent {
   capitalPieOptions: any;
   purchaseGoodsData: any;
   scope3Data: any;
+  kpiList: any;
   constructor(
 
     private _apiService: ApiService, private facilityService: FacilityService, private cdr: ChangeDetectorRef, private _appService: AppService,
@@ -72,6 +74,43 @@ export class GhgReportingComponent {
       { id: 5, name: 'Water supply' },
       { id: 6, name: 'Waste' }
     ]
+    this.kpiList = [
+      { id: 1, name: 'Scope1 Emissions' },
+      { id: 2, name: 'Scope2 Emissions' },
+      { id: 3, name: 'Scope3 Emissions' },
+      { id: 4, name: 'Total Emission per output' },
+      { id: 5, name: 'Total Emission per mn revenue' },
+      { id: 6, name: 'Total Emission per no. of employees' },
+      { id: 7, name: 'Emission per unit area' },
+      { id: 8, name: 'Emission per unit energy reference area' },
+      { id: 9, name: 'Emission per KWh energy consumed (mix)' },
+      { id: 10, name: 'Vehicle Emission per no. of vehicles (petrol)' },
+      { id: 11, name: 'Vehicle Emission per no. of vehicles (diesel)' },
+      { id: 12, name: 'Total Vehicle Emission per vehicle' },
+      { id: 13, name: 'Transporatation Emission' },
+      { id: 14, name: 'Transporatation Emission per tonne of freight' },
+      { id: 15, name: 'Total Emissions in business travel' },
+      { id: 16, name: 'Emissions in Flight travel' },
+      { id: 17, name: 'Total Emissions in business travel per employee' },
+      { id: 18, name: 'Emission per total working days' },
+      { id: 19, name: 'Total energy consumed' },
+      { id: 20, name: 'Renewable Electricity as % of total energy consumed' },
+      { id: 21, name: 'Renewable Electricity as % of Total Electricity' },
+      { id: 22, name: 'Total Fossil Fuel consumption' },
+      { id: 23, name: 'Fossil Fuel Consumption / output' },
+      { id: 24, name: 'Fossil Fuel Consumption / revenue (in mn)' },
+      { id: 25, name: 'Emissions in waste treatment' },
+      { id: 26, name: 'Waste generated per unit output' },
+      { id: 27, name: 'Fossil Fuel Consumption / revenue (in mn)' },
+      { id: 28, name: 'Waste diversion rate %' },
+      { id: 29, name: 'Total water usage' },
+      { id: 30, name: 'Water treated as % of total water discharged' },
+      { id: 31, name: 'Water usage per employee' },
+      { id: 32, name: 'Water usage per output' },
+      { id: 33, name: 'Emissions in water treatment' },
+  
+    ]
+
 
   }
   openCalendar(calendar: Calendar) {
@@ -150,10 +189,13 @@ export class GhgReportingComponent {
   scope1Categories() {
 
     const formData = new URLSearchParams();
-    formData.set('facilityIds', '30');
+    formData.set('facilityIds', '1');
     formData.set('year', this.currentYear.toString());
     this._appService.postAPI('/ghgScope1Emissions', formData).subscribe((response: any) => {
       this.scope1Emissions = response;
+
+      // this.scope1BarOptions = this.getHorizelBarChartOptions()
+
     });
   };
   scope2Categories() {
@@ -368,4 +410,12 @@ export class GhgReportingComponent {
       console.error('PDF generation failed:', error);
     }
   }
+
+  limitSelection() {
+    if (this.selectedMultipleKPIs.length > 3) {
+      this.selectedMultipleKPIs.pop(); // Remove the last selected item
+      alert("You can select a maximum of three KPIs only.");
+    }
+  }
+  
 }
