@@ -130,6 +130,7 @@ import { CostCentreComponent } from './pages/cost-centre/cost-centre.component';
 import { DataProgressComponent } from './pages/data-progress/data-progress.component';
 import { DisableScrollDirective } from './utils/disable-scroll.directive';
 import { VehicleFleetComponent } from './pages/vehicle-fleet/vehicle-fleet.component';
+import { KpiDashboardComponent } from './pages/kpi-dashboard/kpi-dashboard.component';
 
 
 defineCustomElements();
@@ -215,7 +216,8 @@ registerLocaleData(localeEn, 'en-EN');
         CostCentreComponent,
         DataProgressComponent,
         DisableScrollDirective,
-        VehicleFleetComponent
+        VehicleFleetComponent,
+        KpiDashboardComponent
     ],
     imports: [
         HeaderComponent,

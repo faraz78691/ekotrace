@@ -68,6 +68,7 @@ import { CostCentreComponent } from '@pages/cost-centre/cost-centre.component';
 import { DataProgressComponent } from '@pages/data-progress/data-progress.component';
 import { VehicleComponent } from '@pages/vehicle/vehicle.component';
 import { VehicleFleetComponent } from '@pages/vehicle-fleet/vehicle-fleet.component';
+import { KpiDashboardComponent } from '@pages/kpi-dashboard/kpi-dashboard.component';
 
 const routes: Routes = [
     { path: '', redirectTo: '/dashboard/ghgEmision', pathMatch: 'full' },
@@ -139,6 +140,13 @@ const routes: Routes = [
                 path: 'finance_emission',
                 canActivate: [RoleGuard],
                 component: FinanceEmissionsComponent,
+                data: { roles: ['Platform Admin','Super Admin',
+                'Admin', 'Auditor']}
+            },
+            {
+                path: 'kpi_dashboard',
+                canActivate: [RoleGuard],
+                component: KpiDashboardComponent,
                 data: { roles: ['Platform Admin','Super Admin',
                 'Admin', 'Auditor']}
             },
