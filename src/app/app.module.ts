@@ -132,6 +132,7 @@ import { DisableScrollDirective } from './utils/disable-scroll.directive';
 import { VehicleFleetComponent } from './pages/vehicle-fleet/vehicle-fleet.component';
 import { GhgReportingComponent } from './pages/ghg-reporting/ghg-reporting.component';
 import { PdfReportingComponent } from './pages/pdf-reporting/pdf-reporting.component';
+import { KpiDashboardComponent } from './pages/kpi-dashboard/kpi-dashboard.component';
 
 
 defineCustomElements();
@@ -219,7 +220,8 @@ registerLocaleData(localeEn, 'en-EN');
         DisableScrollDirective,
         VehicleFleetComponent,
         GhgReportingComponent,
-        PdfReportingComponent
+        PdfReportingComponent,
+        KpiDashboardComponent
     ],
     imports: [
         HeaderComponent,

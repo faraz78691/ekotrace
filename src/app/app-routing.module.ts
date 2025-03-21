@@ -70,6 +70,7 @@ import { VehicleComponent } from '@pages/vehicle/vehicle.component';
 import { VehicleFleetComponent } from '@pages/vehicle-fleet/vehicle-fleet.component';
 import { PdfReportingComponent } from '@pages/pdf-reporting/pdf-reporting.component';
 import { GhgReportingComponent } from '@pages/ghg-reporting/ghg-reporting.component';
+import { KpiDashboardComponent } from '@pages/kpi-dashboard/kpi-dashboard.component';
 
 const routes: Routes = [
     { path: '', redirectTo: '/dashboard/ghgEmision', pathMatch: 'full' },
@@ -141,6 +142,13 @@ const routes: Routes = [
                 path: 'finance_emission',
                 canActivate: [RoleGuard],
                 component: FinanceEmissionsComponent,
+                data: { roles: ['Platform Admin','Super Admin',
+                'Admin', 'Auditor']}
+            },
+            {
+                path: 'kpi',
+                canActivate: [RoleGuard],
+                component: KpiDashboardComponent,
                 data: { roles: ['Platform Admin','Super Admin',
                 'Admin', 'Auditor']}
             },

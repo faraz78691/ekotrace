@@ -1,0 +1,318 @@
+<section class="mt-2">
+    <div class="container-fluid px-0">
+        <div class="mb-5 d-flex align-items-center justify-content-between gap-3   mt-2 flex-wrap ct_gap_10">
+            <h4 class="ct_fs_24 ct_fw_600 mb-0">KPI Dashboard</h4>
+            <div class="d-flex align-items-center" style="gap: 20px;">
+                <div class="form-group d-flex align-items-center ct_gap_10   mb-0">
+                    <label for="" class="ct_white_space_nowrape mb-0">Format
+                    </label>
+
+                    <p-dropdown
+                        class="finput ct_input_white_bg13 ct_res_100_767 ct_w_150_select_345 ct_select_2_drop_white ct_input_dark_text_145"
+                        ngModel placeholder="Select" [options]="dateFormat" optionLabel="shortBy" optionValue="shortBy"
+                        [showClear]="true"  styleClass="facilitydropdown"
+                        #country="ngModel" required>
+                    </p-dropdown>
+                </div>
+                <!-- <div class="form-group  mb-0  et_light_green_4567" style="width: fit-content;">
+
+                    <p-dropdown
+                        class="finput ct_res_100_767 ct_input_white_bg13 ct_w_150_select_345 ct_select_2_drop_white ct_input_dark_text_145"
+                        ngModel placeholder="Select" [options]="dateFormat" optionLabel="Show" optionValue="Show"
+                        styleClass="facilitydropdown" #country="ngModel" required>
+                    </p-dropdown>
+                </div> -->
+            </div>
+        </div>
+
+        <div class="d-flex  justify-content-between gap-3 align-items-start   mt-2 ct_flex_column_767"
+            style="gap: 20px;">
+
+            <div class="d-flex align-items-center gap-3 et_flex_end_1400  ct_gap_10 flex-wrap ct_flex_column_767 w-100">
+                <div
+                    class="form-group d-flex align-items-center ct_gap_10 flex-wrap ct_res_100_767 mb-0 et_flex_wrap_1400">
+                    <label for="" class="ct_white_space_nowrape mb-0">Facility
+                    </label>
+
+                    <p-dropdown
+                        class="finput ct_res_100_767 ct_input_white_bg13 ct_w_150_select_345 ct_select_2_drop_white ct_input_dark_text_145"
+                        ngModel placeholder="Select" [options]="facilityData" optionLabel="AssestType" optionValue="AssestType"
+                        styleClass="facilitydropdown" #country="ngModel" required>
+                    </p-dropdown>
+                </div>
+                <div
+                    class="form-group d-flex align-items-center ct_gap_10 flex-wrap ct_res_100_767 mb-0 et_flex_wrap_1400">
+                    <label for="" class="ct_white_space_nowrape mb-0">KPI
+                    </label>
+                    <p-dropdown
+                        class="finput ct_res_100_767 ct_input_white_bg13 ct_w_150_select_345 ct_select_2_drop_white ct_input_dark_text_145"
+                        ngModel placeholder="Select" [options]="kpiList" optionLabel="name" optionValue="name"
+                        styleClass="facilitydropdown" #country="ngModel" required>
+                    </p-dropdown>
+                </div>
+                <!-- <div class=""><button
+                        class="GroupButton ct_assign_package_btn129 ct_animation_btn_121 w-auto px-3 mt-0"> Set Target
+                        button
+                    </button></div> -->
+
+
+
+            </div>
+
+            <div class="d-flex align-items-center ct_gap_10 ct_res_100_767">
+                <div class="form-group d-flex align-items-center ct_gap_10  ct_res_100_767 mb-0 et_flex_wrap_1400">
+                    <label for="" class="ct_white_space_nowrape mb-0">Start Date
+                    </label>
+
+                    <div class="selectyear ct_calander_input col ct_calender_38 ct_month_light_green ct_calender_font_size">
+                                                    <p-calendar class="w-100" ngModel name="year" year
+                                                        styleClass="pcalender" view="year"
+                                                        dateFormat="yy" inputId="yearpicker"
+                                                     
+                                                        [showIcon]="true"></p-calendar>
+                                                </div>
+                </div>
+                <div class="form-group d-flex align-items-center ct_gap_10  ct_res_100_767 mb-0 et_flex_wrap_1400">
+                    <label for="" class="ct_white_space_nowrape mb-0">End Date
+                    </label>
+                    <div
+                    class="selectyear ct_calander_input col ct_calender_38 ct_month_light_green ct_calender_font_size">
+                    <p-calendar class="w-100" ngModel name="year" year
+                        styleClass="pcalender" view="year"
+                        dateFormat="yy" inputId="yearpicker"
+                       
+                        [showIcon]="true"></p-calendar>
+                </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="mt-4">
+            <div class="mb-4"><button
+                class="GroupButton ct_assign_package_btn129 ct_animation_btn_121 w-auto px-3 mt-0">Generate
+            </button></div>
+            <div class="row ">
+                <div class="col-lg-6 mb-4">
+                    <div class="form-group mb-0">
+
+                        <p-dropdown
+                            class="finput ct_res_100_767 ct_input_white_bg13 ct_w_150_select_345 ct_select_2_drop_white ct_input_dark_text_145"
+                            ngModel placeholder="Select KPIs" [options]="kpiList" optionLabel="name" optionValue="name"
+                            styleClass="facilitydropdown" #country="ngModel" required>
+                        </p-dropdown>
+                      <div class="mt-4">
+                        <apx-chart
+                        [series]="graph1.series"
+                        [chart]="graph1.chart"
+                        [dataLabels]="graph1.dataLabels"
+                        [plotOptions]="graph1.plotOptions"
+                        [yaxis]="graph1.yaxis"
+                        [xaxis]="graph1.xaxis"
+                        [legend]="graph1.legend"
+                        [colors]="graph1.colors"
+                        [grid]="graph1.grid"
+                      ></apx-chart>
+                      </div>
+
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-4">
+                    <div class="form-group mb-0">
+
+                        <p-dropdown
+                            class="finput ct_res_100_767 ct_input_white_bg13 ct_w_150_select_345 ct_select_2_drop_white ct_input_dark_text_145"
+                            ngModel placeholder="Select KPIs" [options]="kpiList" optionLabel="name" optionValue="name"
+                            styleClass="facilitydropdown" #country="ngModel" required>
+                        </p-dropdown>
+                        <div class="mt-4">
+                            <apx-chart
+                            [series]="graph2.series"
+                            [chart]="graph2.chart"
+                            [dataLabels]="graph2.dataLabels"
+                            [plotOptions]="graph2.plotOptions"
+                            [yaxis]="graph2.yaxis"
+                            [xaxis]="graph2.xaxis"
+                            [legend]="graph2.legend"
+                            [colors]="graph2.colors"
+                            [grid]="graph2.grid"
+                          ></apx-chart>
+                          </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <div class=" mt-4">
+           
+            <div class="row">
+                <div class="col-lg-6 mb-4">
+                    <div class="form-group mb-0">
+
+                        <p-dropdown
+                            class="finput ct_res_100_767 ct_input_white_bg13 ct_w_150_select_345 ct_select_2_drop_white ct_input_dark_text_145"
+                            ngModel placeholder="Select KPIs" [options]="kpiList" optionLabel="name" optionValue="name"
+                            styleClass="facilitydropdown" #country="ngModel" required>
+                        </p-dropdown>
+                        <div class="mt-4">
+                            <apx-chart
+                            [series]="graph3.series"
+                            [chart]="graph3.chart"
+                            [dataLabels]="graph3.dataLabels"
+                            [plotOptions]="graph3.plotOptions"
+                            [yaxis]="graph3.yaxis"
+                            [xaxis]="graph3.xaxis"
+                            [legend]="graph3.legend"
+                            [colors]="graph3.colors"
+                            [grid]="graph3.grid"
+                          ></apx-chart>
+                          </div>
+
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-4">
+                    <div class="form-group mb-0">
+
+                        <p-dropdown
+                            class="finput ct_res_100_767 ct_input_white_bg13 ct_w_150_select_345 ct_select_2_drop_white ct_input_dark_text_145"
+                            ngModel placeholder="Select KPIs" [options]="kpiList" optionLabel="name" optionValue="name"
+                            styleClass="facilitydropdown" #country="ngModel" required>
+                        </p-dropdown>
+                        <div class="mt-4">
+                            <apx-chart
+                            [series]="graph4.series"
+                            [chart]="graph4.chart"
+                            [dataLabels]="graph4.dataLabels"
+                            [plotOptions]="graph4.plotOptions"
+                            [yaxis]="graph4.yaxis"
+                            [xaxis]="graph4.xaxis"
+                            [legend]="graph4.legend"
+                            [colors]="graph4.colors"
+                            [grid]="graph4.grid"
+                          ></apx-chart>
+                          </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <div class=" mt-4">
+            
+
+            <div class="row">
+                <div class="col-lg-6 mb-4">
+                    <div class="form-group mb-0">
+
+                        <p-dropdown
+                            class="finput ct_res_100_767 ct_input_white_bg13 ct_w_150_select_345 ct_select_2_drop_white ct_input_dark_text_145"
+                            ngModel placeholder="Select KPIs" [options]="kpiList" optionLabel="name" optionValue="name"
+                            styleClass="facilitydropdown" #country="ngModel" required>
+                        </p-dropdown>
+                        <div class="mt-4">
+                            <apx-chart
+                            [series]="graph5.series"
+                            [chart]="graph5.chart"
+                            [dataLabels]="graph5.dataLabels"
+                            [plotOptions]="graph5.plotOptions"
+                            [yaxis]="graph5.yaxis"
+                            [xaxis]="graph5.xaxis"
+                            [legend]="graph5.legend"
+                            [colors]="graph5.colors"
+                            [grid]="graph5.grid"
+                          ></apx-chart>
+                          </div>
+
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-4">
+                    <div class="form-group mb-0">
+
+                        <p-dropdown
+                        class="finput ct_res_100_767 ct_input_white_bg13 ct_w_150_select_345 ct_select_2_drop_white ct_input_dark_text_145"
+                        ngModel placeholder="Select KPIs" [options]="kpiList" optionLabel="name" optionValue="name"
+                        styleClass="facilitydropdown" #country="ngModel" required>
+                    </p-dropdown>
+                        <div class="mt-4">
+                            <apx-chart
+                            [series]="graph6.series"
+                            [chart]="graph6.chart"
+                            [dataLabels]="graph6.dataLabels"
+                            [plotOptions]="graph6.plotOptions"
+                            [yaxis]="graph6.yaxis"
+                            [xaxis]="graph6.xaxis"
+                            [legend]="graph6.legend"
+                            [colors]="graph6.colors"
+                            [grid]="graph6.grid"
+                          ></apx-chart>
+                          </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <div class=" mt-4">
+           
+
+            <div class="row">
+                <div class="col-lg-6 mb-4">
+                    <div class="form-group mb-0">
+
+                        <p-dropdown
+                        class="finput ct_res_100_767 ct_input_white_bg13 ct_w_150_select_345 ct_select_2_drop_white ct_input_dark_text_145"
+                        ngModel placeholder="Select KPIs" [options]="kpiList" optionLabel="name" optionValue="name"
+                        styleClass="facilitydropdown" #country="ngModel" required>
+                    </p-dropdown>
+                        <div class="mt-4">
+                            <apx-chart
+                            [series]="graph7.series"
+                            [chart]="graph7.chart"
+                            [dataLabels]="graph7.dataLabels"
+                            [plotOptions]="graph7.plotOptions"
+                            [yaxis]="graph7.yaxis"
+                            [xaxis]="graph7.xaxis"
+                            [legend]="graph7.legend"
+                            [colors]="graph7.colors"
+                            [grid]="graph7.grid"
+                          ></apx-chart>
+                          </div>
+
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-4">
+                    <div class="form-group mb-0">
+
+                        <p-dropdown
+                            class="finput ct_res_100_767 ct_input_white_bg13 ct_w_150_select_345 ct_select_2_drop_white ct_input_dark_text_145"
+                            ngModel placeholder="Select KPIs" [options]="kpiList" optionLabel="name" optionValue="name"
+                            styleClass="facilitydropdown" #country="ngModel" required>
+                        </p-dropdown>
+                        <div class="mt-4">
+                            <apx-chart
+                            [series]="graph8.series"
+                            [chart]="graph8.chart"
+                            [dataLabels]="graph8.dataLabels"
+                            [plotOptions]="graph8.plotOptions"
+                            [yaxis]="graph8.yaxis"
+                            [xaxis]="graph8.xaxis"
+                            [legend]="graph8.legend"
+                            [colors]="graph8.colors"
+                            [grid]="graph8.grid"
+                          ></apx-chart>
+                          </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+</section>

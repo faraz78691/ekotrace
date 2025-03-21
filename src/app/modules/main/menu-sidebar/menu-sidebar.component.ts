@@ -274,9 +274,15 @@ export const menu = [
                 path: ['dashboard']
             },
             {
+                name: 'KPI Dashboard',
+                iconClasses: 'fas fa-table',
+                iconSRC: 'assets/img/dashboard.svg',
+                path: ['kpi']
+            },
+            {
                 name: 'Financed E. Dashboard',
                 iconClasses: 'fas fa-table',
-                iconSRC: 'assets/img/BRSR.svg',
+                iconSRC: 'assets/img/dashboard.svg',
                 path: ['financeDash']
             },
             {
