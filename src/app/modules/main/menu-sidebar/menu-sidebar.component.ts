@@ -292,12 +292,12 @@ export const menu = [
                 iconSRC: 'assets/img/trees.png',
                 path: ['tracking']
             },
-            {
-                name: 'GHG Emissions Report',
-                iconClasses: 'fas fa-table',
-                iconSRC: 'assets/img/BRSR.svg',
-                path: ['ghgReport']
-            },
+            // {
+            //     name: 'GHG Emissions Report',
+            //     iconClasses: 'fas fa-table',
+            //     iconSRC: 'assets/img/BRSR.svg',
+            //     path: ['ghgReport']
+            // },
             {
                 name: 'Financed Emissions',
                 iconClasses: 'fas fa-table',

@@ -10436,6 +10436,14 @@ h1.bft-edit-form-title {
 .ct_svg_icon_white svg path {
   fill: #fff;
 }
+
+.et_light_green_4567 .facilitydropdown.p-dropdown.p-component {
+  background-color: #d3dfcd !important;
+}
+
+.et_light_green_4567 .p-dropdown .p-dropdown-label.p-placeholder {
+  color: #000 !important;
+}
 /*!******************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[5].rules[0].oneOf[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[5].rules[0].oneOf[0].use[2]!./node_modules/ngx-toastr/toastr.css?ngGlobalStyle ***!
   \******************************************************************************************************************************************************************************************************************************************/

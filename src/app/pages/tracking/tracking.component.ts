@@ -1158,7 +1158,7 @@ export class TrackingComponent {
         if (catID == 8) {
             this.downloadExcelUrl = 'https://ekotrace.ekobon.com:4000' + `/get-excelsheet?facility_id=${this.facilityID}`;
             this.getALlProducts()
-            console.log(this.downloadExcelUrl);
+           
             // this.generateExcel();
             this.months = [
                 { name: 'Jan', value: 'Jan' },
