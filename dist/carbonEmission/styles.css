@@ -9750,6 +9750,10 @@ nav {
   margin-bottom: 30px;
 }
 
+.ct_graph_center .apexcharts-canvas {
+  margin-inline: auto;
+}
+
 .nav {
   display: block !important;
 }
@@ -10443,6 +10447,20 @@ h1.bft-edit-form-title {
 
 .et_light_green_4567 .p-dropdown .p-dropdown-label.p-placeholder {
   color: #000 !important;
+}
+
+.trackingsubmitb {
+  padding: 8px 20px !important;
+  border: 1px solid rgba(136, 173, 71, 0.75) !important;
+  border-radius: 5px !important;
+  transition: 0.4s ease all !important;
+  background-color: rgba(136, 173, 71, 0.75) !important;
+  color: #fff !important;
+}
+
+.trackingsubmitb:hover {
+  background-color: #80a745 !important;
+  color: #fff !important;
 }
 /*!******************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[5].rules[0].oneOf[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[5].rules[0].oneOf[0].use[2]!./node_modules/ngx-toastr/toastr.css?ngGlobalStyle ***!

@@ -4186,28 +4186,28 @@ export class TrackingComponent {
             const data = new Uint8Array(e.target.result);
             const workbook = XLSX.read(data, { type: 'array' });
 
-            // Read first sheet
+         
             const sheetName = workbook.SheetNames[0];
             const worksheet = workbook.Sheets[sheetName];
 
-            // Convert to JSON
+           
             this.jsonCompanyData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
 
-            // Convert array to key-value pairs
+           
             const jsonReading = this.convertToKeyValue(this.jsonCompanyData);
             console.log(jsonReading
             );
 
-            this.jsonCompanyData = jsonReading.filter(items => { return items['Vehicle Modal'] !== '' });
+            this.jsonCompanyData = jsonReading.filter(items => { return items['Vehicle Model'] !== '' });
             console.log(this.jsonCompanyData);
             this.jsonCompanyData = this.jsonCompanyData.map(item => {
                 return {
-                    vehicleType: item['Vehicle Modal'],
+                    vehicleType: item['Vehicle Model'],
                     noOfVehicles: item['No of Vehicles'],
                     tripsPerVehicle: item['Trips per vehicle'],
                     modeOfEntry: item['Mode of data entry'],
                     value: item['Value'] ? item['Value'] : '',
-                    unit: item['Mode of data entry'] == 'Average distance per trip' ? 'Km' : item['Mode of data entry'] == 'Average qty of fuel per trip' ? 'Litre' : this.currency,
+                    unit: item['Unit'] ? item['Unit'] : '',
 
                 }
             }
@@ -4227,7 +4227,7 @@ export class TrackingComponent {
     };
 
     convertToKeyValue(data: any[]): any[] {
-        if (data.length < 2) return []; // Ensure at least headers and one row exist
+        if (data.length < 2) return []; 
 
         const headers = data[0]; // Extract headers
         return data.slice(1).map((row) => {

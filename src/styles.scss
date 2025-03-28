@@ -1823,7 +1823,9 @@ nav {
 
 }
 
-
+.ct_graph_center .apexcharts-canvas {
+    margin-inline: auto;
+}
 
 .nav {
     display: block !important;
@@ -2619,3 +2621,17 @@ h1.bft-edit-form-title {
 .et_light_green_4567 .p-dropdown .p-dropdown-label.p-placeholder {
     color: #000 !important;
 }
+
+
+.trackingsubmitb {
+    padding: 8px 20px !important;
+    border: 1px solid rgba(136, 173, 71, 0.75) !important;
+    border-radius: 5px !important;
+    transition: 0.4s ease all !important;
+    background-color: rgba(136, 173, 71, 0.75) !important;
+    color: #fff !important;
+  }
+  .trackingsubmitb:hover{
+    background-color: #80a745 !important;
+    color: #fff !important;
+  }

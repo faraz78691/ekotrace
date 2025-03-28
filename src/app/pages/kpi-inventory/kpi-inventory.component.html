@@ -1,0 +1,506 @@
+<div class="container-fluid p-5">
+
+
+
+
+    <div class="row pt-3">
+        <div class="col-md-12  overflow-auto mb-5 ct_custom_flex_basisc User-tabL">
+            <div class="row">
+                <div class="User-headL">
+                    <div
+                        class="card-header card-headerL ct_header_grey_1202 d-flex align-items-center justify-content-between">
+                        <h4 class=" ct_fw_600 m-0 my-0" style="flex: 1;">KPI Inventory</h4>
+                        <p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230" ngModel
+                            [options]="facilityData" [(ngModel)]="selectedFacility" placeholder="Select type of invesment"
+                            optionLabel="AssestType" optionValue="AssestType" (onChange)="onFacilitySelect($event)">
+                        </p-dropdown>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <p-toast></p-toast>
+            <p-confirmDialog #cd [style]="{width: '60vw'}">
+                <ng-template pTemplate="footer">
+                    <button pButton icon="pi pi-check" label="Yes" (click)="cd.accept()"
+                        class="span-color cancel-button"></button>
+                    <button pButton icon="pi pi-times" label="Cancel" (click)="cd.reject()"
+                        class="p-button-raised p-button-danger"></button>
+                </ng-template>
+            </p-confirmDialog>
+
+
+
+
+            <ng-container>
+                <div class="dataTable scrollit mt-4 ct_vender_scroll_320">
+                    <!-- <h3>{{ facility.facilityName }} ({{ facility.assetName || 'Unknown' }})</h3> -->
+                    <table class="table_loc ct_space_table_21 ct_billing_table_bg_120 ">
+                        <thead style="position: sticky;top:0px;">
+                            <tr>
+                                <th scope="col" style="font-size: 16px;">KPI`s</th>
+                                <th scope="col" style="font-size: 16px;">Unit</th>
+                                <th scope="col" style="font-size: 16px;">Annual</th>
+                                <th scope="col" style="font-size: 16px;">Jan</th>
+                                <th scope="col" style="font-size: 16px;">Feb</th>
+                                <th scope="col" style="font-size: 16px;">Mar</th>
+                                <th scope="col" style="font-size: 16px;">Apr</th>
+                                <th scope="col" style="font-size: 16px;">May</th>
+                                <th scope="col" style="font-size: 16px;">June</th>
+                                <th scope="col" style="font-size: 16px;">July</th>
+                                <th scope="col" style="font-size: 16px;">Aug</th>
+                                <th scope="col" style="font-size: 16px;">Sep</th>
+                                <th scope="col" style="font-size: 16px;">Oct</th>
+                                <th scope="col" style="font-size: 16px;">Nov</th>
+                                <th scope="col" style="font-size: 16px;">Dec</th>
+                             
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Iterate over each scope (scope_1, scope_2, scope_3) -->
+                            <tr>
+                                <td>Absolute Emissions</td>
+               
+                            </tr>
+                            <tr>
+                                <td>Scope 1</td>
+                                <td>tCO2e</td>
+                                <td >{{scope1Total | number:'1.2-2'}}</td>
+                                <ng-container *ngFor="let item of months; let i = index">
+
+                                    <td><input type="text" class="form-control bg-white" style="font-size: 13px;" [(ngModel)]="scope1[i]" (input)="onInput(i)"></td>
+                                </ng-container>
+                              
+                           
+                            </tr>
+                            <tr>
+                                <td>Scope 2</td>
+                                <td>tCO2e</td>
+                                <td>{{scope2Total | number:'1.2-2'}}</td>
+                                <ng-container *ngFor="let item of months; let i = index">
+
+                                    <td><input type="text" class="form-control bg-white" style="font-size: 13px;" [(ngModel)]="scope2[i]" (input)="onInput(i)"></td>
+                                </ng-container>
+                            </tr>
+                            <tr>
+                                <td>Scope 3</td>
+                                <td>tCO2e</td>
+                                <td>{{scope3Total | number:'1.2-2'}}</td>
+                                <ng-container *ngFor="let item of months; let i = index">
+
+                                    <td><input type="text" class="form-control bg-white" style="font-size: 13px;" [(ngModel)]="scope3[i]" (input)="onInput(i)"></td>
+                                </ng-container>
+                            </tr>
+                            <tr>
+                                <td>Total emissions</td>
+                                <td>tCO2e</td>
+                                <td>{{totalAnually | number:'1.2-2'}}</td>
+                                <ng-container *ngFor="let item of months; let i = index">
+
+                                    <td><input type="text" class="form-control bg-white" style="font-size: 13px;" [value]="totalEmissions[i]" readonly></td>
+                                </ng-container>
+                            </tr>
+                            <tr>
+                                <td>Fuel Consumption</td>
+                                <td>GJ</td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                            </tr>
+                            <tr>
+                                <td><p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230" ngModel
+                                    [options]="fuelsTypes" [(ngModel)]="selectedFuel1" placeholder="Select fuel"
+                                    optionLabel="Item" optionValue="ID" (onChange)="getFuelEmissions1($event.value)">
+                                </p-dropdown></td>
+                                <td>tCO2e</td>
+                                <td></td>
+                                <ng-container *ngFor="let item of fuelData1; let i = index">
+                                    <td><input type="text" class="form-control bg-white" [(ngModel)]="fuelData1[i]"></td>
+                                </ng-container>
+                            
+                            </tr>
+                            <tr>
+                                <td><p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230" ngModel
+                                    [options]="fuelsTypes"  placeholder="Select fuel" [(ngModel)]="selectedFuel2"
+                                    optionLabel="Item" optionValue="ID" (onChange)="getFuelEmissions2($event.value)">
+                                </p-dropdown></td>
+                                <td>tCO2e</td>
+                             
+                                <td></td>
+                                <ng-container *ngFor="let item of fuelData2; let i = index">
+                                    <td><input type="text" class="form-control bg-white" [(ngModel)]="fuelData2[i]"></td>
+                                </ng-container>
+                            </tr>
+                            <tr>
+                                <td><p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230" ngModel
+                                    [options]="fuelsTypes"  placeholder="Select fuel" [(ngModel)]="selectedFuel3"
+                                    optionLabel="Item" optionValue="ID" (onChange)="getFuelEmissions3($event.value)">
+                                </p-dropdown></td>
+                                <td>tCO2e</td>
+                                <td></td>
+                                <ng-container *ngFor="let item of fuelData3; let i = index">
+                                    <td><input type="text" class="form-control bg-white" [(ngModel)]="fuelData3[i]"></td>
+                                </ng-container>
+                            </tr>
+                            <tr>
+                                <td>Total Fuel Consumption</td>
+                                <td>GJ</td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                            </tr>
+                            <tr>
+                                <td>Energy Use</td>
+                                <td></td>
+                             
+
+                               
+                            </tr>
+                            <tr>
+                                <td>Fuel in stationary combusiton</td>
+                                <td>KWh</td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                            </tr>
+                            <tr>
+                                <td>Heating + Cooling</td>
+                                <td>KWh</td>
+                                <td></td>
+                           
+                                    <ng-container *ngFor="let item of energyDataHeating; let i = index">
+                                        <td><input type="text" class="form-control bg-white" [(ngModel)]="energyDataHeating[i]"></td>
+                                    </ng-container>
+                            </tr>
+                            <tr>
+                                <td>Electricity</td>
+                                <td>KWh</td>
+                                <td></td>
+                           
+                                    <ng-container *ngFor="let item of electricityData; let i = index">
+                                        <td><input type="text" class="form-control bg-white" [(ngModel)]="electricityData[i]"></td>
+                                    </ng-container>
+                            </tr>
+                            <tr>
+                                <td>Total Energy Consumption </td>
+                                <td>KWh</td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                            </tr>
+                            <tr>
+                                <td>Renewable Electircity</td>
+                                <td>KWh</td>
+                                
+                                <td></td>
+                           
+                                <ng-container *ngFor="let item of renewElectricityData; let i = index">
+                                    <td><input type="text" class="form-control bg-white" [(ngModel)]="renewElectricityData[i]"></td>
+                                </ng-container>
+                            </tr>
+                            <tr>
+                                <td>Passenger Vehicle Emission</td>
+                             
+                            </tr>
+                      
+                            <tr>
+                                <td>Owned Passenger Vehicle Emiss. - Diesel</td>
+                                <td>tCO2e</td>
+                                <td></td>
+                           
+                                <ng-container *ngFor="let item of passenderDiesel; let i = index">
+                                    <td><input type="text" class="form-control bg-white" [(ngModel)]="passenderDiesel[i]"></td>
+                                </ng-container>
+                            <tr>
+                                <td>Owned Passenger Vehicle Emiss. - Petrol</td>
+                                <td>tCO2e</td>
+                                <td></td>
+                           
+                                <ng-container *ngFor="let item of passengerPetrol; let i = index">
+                                    <td><input type="text" class="form-control bg-white" [(ngModel)]="passengerPetrol[i]"></td>
+                                </ng-container>
+                            </tr>
+                            <tr>
+                                <td>Total Owned Passenger Vehicle Emiss.</td>
+                                <td>tCO2e</td>
+                                <td></td>
+                           
+                                <!-- <ng-container *ngFor="let item of passenderDiesel; let i = index">
+                                    <td><input type="text" class="form-control bg-white" [(ngModel)]="renewElectricityData[i]"></td>
+                                </ng-container> -->
+                            <tr>
+                            </tr>
+                            <tr>
+                                <td>Transportation vehicle</td>
+                            </tr>
+                            <tr>
+                                <td>Owned Transport Vehicle Emiss.</td>
+                                <td>tCO2e</td>
+                                <td></td>
+                           
+                                <ng-container *ngFor="let item of vehiclesOwnedEmission; let i = index">
+                                    <td><input type="text" class="form-control bg-white" [(ngModel)]="vehiclesOwnedEmission[i]"></td>
+                                </ng-container>
+                            </tr>
+                            <tr>
+                                <td>Freight transported</td>
+                                <td>tonnes</td>
+                                <td></td>
+                           
+                                <ng-container *ngFor="let item of vehiclesFreightEmission; let i = index">
+                                    <td><input type="text" class="form-control bg-white" [(ngModel)]="vehiclesFreightEmission[i]"></td>
+                                </ng-container>
+                            </tr>
+                            <tr>
+                                <td>Business Travel </td>
+                             
+                            </tr>
+                            <tr>
+                                <td>Emssions in Flight travel</td>
+                                <td>tCO2e</td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                            </tr>
+                            <tr>
+                                <td>Emissions in Other mode of travel</td>
+                                <td>tCO2e</td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                            </tr>
+                            <tr>
+                                <td>Emissions in Hotel stay</td>
+                                <td>tCO2e</td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                            </tr>
+                            <tr>
+                                <td>Employee Commute</td>
+                              
+                            <tr>
+                                <td>Total no. of working days</td>
+                                <td>Days</td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                            </tr>
+                            <tr>
+                                <td>Waste Generated </td>
+                            </tr>
+                            <tr>
+                                <td>Waste Generated </td>
+                                <td>tonnes</td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                            </tr>
+                            <tr>
+                                <td>Waste Diversion</td>
+                                <td>tonnes</td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                            </tr>
+                            <tr>
+                                <td>Emisisons in waste treatment</td>
+                                <td>tCO2e</td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                            </tr>
+                        
+                            <tr>
+                                <td>Waster Usage</td>
+                                <td>KL</td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                            </tr>
+                            <tr>
+                                <td>Water Treated</td>
+                                <td>KL</td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                            </tr>
+                            <tr>
+                                <td>Emissions in water treatment</td>
+                                <td>tCO2e</td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                                <td><input type="text" class="form-control bg-white"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </ng-container>
+
+
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>

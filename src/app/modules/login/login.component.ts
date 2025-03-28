@@ -123,9 +123,6 @@ export class LoginComponent implements OnInit {
 
                     if (res.success == true) {
 
-console.log(res);
-
-                        
                         this.loginInfo = res.userinfo[0];
                         if (this.loginInfo.role != 'Platform Admin') {
                             if (this.loginInfo.package_id == null || this.loginInfo.package_id == undefined) {
@@ -138,15 +135,8 @@ console.log(res);
                             }
                         }
                    
-                  
-
                         this.invalidLogin = false;
-                        // const currentDate = new Date();
-                        // const licenseExpiredDate = new Date(
-                        //     this.loginInfo.licenseExpired
-                        // );
-
-
+                    
                         const currentDate = new Date();
                         const licenseExpiredDate = new Date(this.loginInfo.licenseExpired);
 
@@ -161,7 +151,7 @@ console.log(res);
                         this.isExpired = differenceInDays < 0;
                      
                   
-                        this.GetSubGroupList(this.loginInfo.tenantID);
+                   
 
                         if (this.loginInfo.role === 'Platform Admin') {
                     
@@ -222,6 +212,7 @@ console.log(res);
                             this.loginInfo = jsonObj as LoginInfo;
                             this.router.navigate(['/dashboard']);
                         }
+                        this.GetSubGroupList(this.loginInfo.tenantID);
                         this.showLoader = false;
                         this.isAuthLoading = false;
                         this.isLoading = false;

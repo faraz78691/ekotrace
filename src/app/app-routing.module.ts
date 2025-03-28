@@ -69,8 +69,9 @@ import { DataProgressComponent } from '@pages/data-progress/data-progress.compon
 import { VehicleComponent } from '@pages/vehicle/vehicle.component';
 import { VehicleFleetComponent } from '@pages/vehicle-fleet/vehicle-fleet.component';
 import { PdfReportingComponent } from '@pages/pdf-reporting/pdf-reporting.component';
-import { GhgReportingComponent } from '@pages/ghg-reporting/ghg-reporting.component';
+import { GhgReportingComponent } from '@pages/reporting/ghg-reporting/ghg-reporting.component';
 import { KpiDashboardComponent } from '@pages/kpi-dashboard/kpi-dashboard.component';
+import { KpiInventoryComponent } from '@pages/kpi-inventory/kpi-inventory.component';
 
 const routes: Routes = [
     { path: '', redirectTo: '/dashboard/ghgEmision', pathMatch: 'full' },
@@ -314,6 +315,15 @@ const routes: Routes = [
                     'Approver', 'Auditor'
                 ]
             }, loadChildren: () => import('./pages/tracking/tracking.module').then(m => m.TrackingModule) },
+            { path: 'GhgReporting',   canActivate: [RoleGuard],data: {
+                roles: [
+                    'Super Admin',
+                    'Admin',
+                    'Manager',
+                    'Preparer',
+                    'Approver', 'Auditor'
+                ]
+            }, loadChildren: () => import('./pages/reporting/reporting.module').then(m => m.ReportingModule) },
             { path: 'platformAdmin',canActivate: [RoleGuard],data: {
                 roles: [
                     'Platform Admin'
@@ -403,6 +413,20 @@ const routes: Routes = [
                 path: 'targetSetting',
                 canActivate: [RoleGuard],
                 component: TargetSettingComponent,
+                data: {
+                    roles: [
+                        'Super Admin',
+                        'Admin',
+                        'Manager',
+                        'Preparer',
+                        'Approver', 'Auditor'
+                    ]
+                }
+            },
+            {
+                path: 'kpi_inventory',
+                canActivate: [RoleGuard],
+                component: KpiInventoryComponent,
                 data: {
                     roles: [
                         'Super Admin',

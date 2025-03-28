@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
     HttpInterceptor,
     HttpHandler,
@@ -6,15 +6,15 @@ import {
     HttpErrorResponse,
     HttpEvent
 } from '@angular/common/http';
-import {Observable, catchError, of, throwError} from 'rxjs';
-import {Router} from '@angular/router';
-import {AppService} from '@services/app.service';
+import { Observable, catchError, of, throwError } from 'rxjs';
+import { Router } from '@angular/router';
+import { AppService } from '@services/app.service';
 
 
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-    constructor(private router: Router, private appService: AppService) {}
+    constructor(private router: Router, private appService: AppService) { }
 
     intercept(
         request: HttpRequest<any>,
@@ -26,24 +26,24 @@ export class AuthInterceptor implements HttpInterceptor {
                 setHeaders: {
                     authorization: `Bearer ${token}`,
                     // auth:`Bearer ${'eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6Ijc1ZGZjYWViMmY4ZGRlZTAyZjU2MTRmYThhMjRkMmMyIn0.eyJ1c2VyX2lkIjoidXVpZGQxMjQzMiJ9.lkY3ctvaxcV2Jx0d88b4gn5TJmka09BC3slDZpALe1IqoIWi4wWVkJzSTuIIM2dX1WZjLgcmZJguO-Neaz4sBQ'}`
-                    auth:`Bearer ${token}`
+                    auth: `Bearer ${token}`
                 }
             });
         }
 
         if (request.body instanceof FormData) {
-       
-        }else if(request.body instanceof URLSearchParams){
+
+        } else if (request.body instanceof URLSearchParams) {
             const modifiedHeaders = request.headers.set(
                 'Content-Type', 'application/x-www-form-urlencoded')
                 .set('Access-Control-Allow-Origin', '*');
             request = request.clone({
-                headers:modifiedHeaders
+                headers: modifiedHeaders
             });
-          
+
         }
         else if (typeof request.body === 'object' && request.body !== null) {
-            
+
             // Assuming here that request.body is a JSON object
             const modifiedHeaders = request.headers.set(
                 'Content-Type', 'application/json'
@@ -51,20 +51,27 @@ export class AuthInterceptor implements HttpInterceptor {
             request = request.clone({
                 headers: modifiedHeaders
             });
-           
+
         }
-         else {
-  
+        else {
+
             const modifiedHeaders = request.headers.set(
                 'Content-Type',
                 'application/x-www-form-urlencoded'
             );
-            request = request.clone({headers: modifiedHeaders});
-         
+            request = request.clone({ headers: modifiedHeaders });
+
         }
         return next.handle(request).pipe(
             catchError((error: HttpErrorResponse) => {
                 console.log('An error occurred:', error);
+                if (error.status === 408) {
+                    // Handle 408 (Request Timeout) by logging out the user
+                    console.warn('Session expired. Logging out...');
+                    localStorage.clear();
+                    this.router.navigate(['/login']); // Ensure this method clears the user session
+             // Redirect to login page
+                }
                 return throwError(() => new Error('Something went wrong; please try again later.'));
             })
         );

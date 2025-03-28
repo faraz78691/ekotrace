@@ -38,6 +38,7 @@
     "core-js": "3.25.0",
     "font-awesome": "^4.7.0",
     "html2canvas": "^1.4.1",
+    "html2pdf.js": "^0.10.3",
     "jspdf": "^2.5.2",
     "jspdf-autotable": "^3.5.31",
     "luxon": "3.0.3",

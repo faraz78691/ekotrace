@@ -14,14 +14,7 @@
                         #country="ngModel" required>
                     </p-dropdown>
                 </div>
-                <!-- <div class="form-group  mb-0  et_light_green_4567" style="width: fit-content;">
-
-                    <p-dropdown
-                        class="finput ct_res_100_767 ct_input_white_bg13 ct_w_150_select_345 ct_select_2_drop_white ct_input_dark_text_145"
-                        ngModel placeholder="Select" [options]="dateFormat" optionLabel="Show" optionValue="Show"
-                        styleClass="facilitydropdown" #country="ngModel" required>
-                    </p-dropdown>
-                </div> -->
+             
             </div>
         </div>
 
@@ -50,10 +43,10 @@
                         styleClass="facilitydropdown" #country="ngModel" required>
                     </p-dropdown>
                 </div>
-                <!-- <div class=""><button
-                        class="GroupButton ct_assign_package_btn129 ct_animation_btn_121 w-auto px-3 mt-0"> Set Target
-                        button
-                    </button></div> -->
+                <div class=""><button
+                        class="GroupButton ct_assign_package_btn129 ct_animation_btn_121 w-auto px-3 mt-0" (click)="visible2 = true"> Set Target
+                        
+                    </button></div>
 
 
 
@@ -316,3 +309,71 @@
 
     </div>
 </section>
+
+
+<p-dialog  [(visible)]="visible2" [breakpoints]="{'960px': '75vw'}" [style]="{width: '60vw'}">
+    <p-header *ngIf="FormEdit === false"> Set Target </p-header>
+    <p-header *ngIf="FormEdit === true"> Edit Target </p-header>
+
+    <div class="modal-body text-white text-style Dashboard-tab ct_vertically_scroll" style="max-height: 680px;">
+        <div class="col-md-12 table-responsive">
+            <table class="table ct_home_office_table">
+                <thead class="thead-dark">
+                    <tr>
+                      
+                        <th scope="col">KPI</th>
+                        <th scope="col">Target</th>
+                        <th scope="col">Unit</th>
+                      
+                        <th scope="col">Target Type</th>
+                     
+                    </tr>
+                </thead>
+                <tbody #commuteTable>
+            
+                    <tr *ngFor="let rows of targerKpisData; index as i">
+
+                        <td>
+                            <p-dropdown
+                                class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                [(ngModel)]="rows.kpiId"
+                                [ngModelOptions]="{standalone: true}"
+                                [options]="kpiList"
+                                (onChange)="onKpiChange(rows.kpiId , i)"
+                                optionLabel="kpi_name" optionValue="id"
+                                placeholder="Select kpi">
+                            </p-dropdown>
+                        </td>
+                        <td>
+                            <input type="text" class="form-control"
+                                style="width:150px;height:38px"
+                                placeholder="Enter value" 
+                                [(ngModel)]="rows.target"   [ngModelOptions]="{standalone: true}">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control"
+                                style="width:150px;height:38px"
+                                placeholder="Select kpi" disabled
+                                [(ngModel)]="rows.unit"   [ngModelOptions]="{standalone: true}">
+                        </td>
+                        <td>
+                            <p-dropdown
+                            class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                            [(ngModel)]="rows.target_type"
+                            [ngModelOptions]="{standalone: true}"
+                            [options]="dateFormat"
+                            
+                            optionLabel="shortBy" optionValue="shortBy"
+                            placeholder="Select type">
+                        </p-dropdown>
+                        </td>
+                 
+                    </tr>
+                    <p class=" ml-2 mt-5 trackingsubmitb" (click)="pushTargetKpis()">+ Add KPIs</p>
+                </tbody>
+                
+                <p class=" ml-2 mt-5 trackingsubmitb" (click)="submitTarget()">Submit</p>
+            </table>
+        </div>
+    </div>
+</p-dialog>

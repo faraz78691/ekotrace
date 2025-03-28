@@ -130,9 +130,10 @@ import { CostCentreComponent } from './pages/cost-centre/cost-centre.component';
 import { DataProgressComponent } from './pages/data-progress/data-progress.component';
 import { DisableScrollDirective } from './utils/disable-scroll.directive';
 import { VehicleFleetComponent } from './pages/vehicle-fleet/vehicle-fleet.component';
-import { GhgReportingComponent } from './pages/ghg-reporting/ghg-reporting.component';
+import { GhgReportingComponent } from './pages/reporting/ghg-reporting/ghg-reporting.component';
 import { PdfReportingComponent } from './pages/pdf-reporting/pdf-reporting.component';
 import { KpiDashboardComponent } from './pages/kpi-dashboard/kpi-dashboard.component';
+import { KpiInventoryComponent } from './pages/kpi-inventory/kpi-inventory.component';
 
 
 defineCustomElements();
@@ -221,7 +222,8 @@ registerLocaleData(localeEn, 'en-EN');
         VehicleFleetComponent,
         GhgReportingComponent,
         PdfReportingComponent,
-        KpiDashboardComponent
+        KpiDashboardComponent,
+        KpiInventoryComponent
     ],
     imports: [
         HeaderComponent,

@@ -1,5 +1,6 @@
 import { LoginInfo } from '@/models/loginInfo';
 import { Component } from '@angular/core';
+import { AppService } from '@services/app.service';
 
 import { DashboardService } from '@services/dashboard.service';
 import { FacilityService } from '@services/facility.service';
@@ -43,6 +44,7 @@ export class KpiDashboardComponent {
   public pieChart: Partial<ChartOptions2>;
   public pieChart2: Partial<ChartOptions2>;
   facilityData: any[] = [];
+  targerKpisData: any[] = [];
 graph1:any;
 graph2:any;
 graph3:any;
@@ -52,63 +54,27 @@ graph6:any;
 graph7:any;
 graph8:any;
 
+kpiList:any[]=[]
 
 
 
 
 
-
-  kpiList = [
-    { id: 1, name: 'Scope1 Emissions' },
-    { id: 2, name: 'Scope2 Emissions' },
-    { id: 3, name: 'Scope3 Emissions' },
-    { id: 4, name: 'Total Emission per output' },
-    { id: 5, name: 'Total Emission per mn revenue' },
-    { id: 6, name: 'Total Emission per no. of employees' },
-    { id: 7, name: 'Emission per unit area' },
-    { id: 8, name: 'Emission per unit energy reference area' },
-    { id: 9, name: 'Emission per KWh energy consumed (mix)' },
-    { id: 10, name: 'Vehicle Emission per no. of vehicles (petrol)' },
-    { id: 11, name: 'Vehicle Emission per no. of vehicles (diesel)' },
-    { id: 12, name: 'Total Vehicle Emission per vehicle' },
-    { id: 13, name: 'Transporatation Emission' },
-    { id: 14, name: 'Transporatation Emission per tonne of freight' },
-    { id: 15, name: 'Total Emissions in business travel' },
-    { id: 16, name: 'Emissions in Flight travel' },
-    { id: 17, name: 'Total Emissions in business travel per employee' },
-    { id: 18, name: 'Emission per total working days' },
-    { id: 19, name: 'Total energy consumed' },
-    { id: 20, name: 'Renewable Electricity as % of total energy consumed' },
-    { id: 21, name: 'Renewable Electricity as % of Total Electricity' },
-    { id: 22, name: 'Total Fossil Fuel consumption' },
-    { id: 23, name: 'Fossil Fuel Consumption / output' },
-    { id: 24, name: 'Fossil Fuel Consumption / revenue (in mn)' },
-    { id: 25, name: 'Emissions in waste treatment' },
-    { id: 26, name: 'Waste generated per unit output' },
-    { id: 27, name: 'Fossil Fuel Consumption / revenue (in mn)' },
-    { id: 28, name: 'Waste diversion rate %' },
-    { id: 29, name: 'Total water usage' },
-    { id: 30, name: 'Water treated as % of total water discharged' },
-    { id: 31, name: 'Water usage per employee' },
-    { id: 32, name: 'Water usage per output' },
-    { id: 33, name: 'Emissions in water treatment' },
-
-  ]
 
   dateFormat =
     [
 
       {
-        "id": 1,
-        "shortBy": "Annually"
+        id: 1,
+        shortBy: "Annually"
       },
       {
-        "id": 2,
-        "shortBy": "Quaterly"
+        id: 2,
+        shortBy: "Quaterly"
       },
       {
-        "id": 3,
-        "shortBy": "Monthly"
+        id: 3,
+        shortBy: "Monthly"
       }
     ];
 
@@ -142,20 +108,25 @@ graph8:any;
       }
 
     ];
+visible2: boolean = false;
+  visible: boolean = false;
+  FormEdit: boolean = false;
 
   constructor(
     private themeservice: ThemeService,
     private facilityService: FacilityService,
-    private dashboardService: DashboardService
+    private dashboardService: DashboardService,
+    private appService: AppService
   ) { }
 
   ngOnInit() {
     this.loginInfo = new LoginInfo();
     if (localStorage.getItem('LoginInfo') != null) {
       let userInfo = localStorage.getItem('LoginInfo');
-      let jsonObj = JSON.parse(userInfo); // string to "any" object first
+      let jsonObj = JSON.parse(userInfo);
       this.loginInfo = jsonObj as LoginInfo;
       this.GetAllFacility();
+      this.getKPIList();
       this.graph1 = this.getBarGraphOptions([104, 179, 65, 21, 89,2.5, 74, 27, 1, 129,123,20], ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'] , '#FFEBB2');
       this.graph2 = this.getBarGraphOptions([167, 39, 97, 57, 123,20, 5, 2, 6.2, 3,45,77], ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], '#D4E157');
       this.graph3 = this.getBarGraphOptions([130, 159, 69, 193, 89 ,129, 43, 153, 67,54,199], ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'],  '#B2EBF2');
@@ -165,7 +136,16 @@ graph8:any;
       this.graph7 = this.getBarGraphOptions([6.2, 7, 21, 15, 32,2.5, 74, 27, 1, 129, 97, 257], ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], '#CE93D8' );
       this.graph8 = this.getBarGraphOptions([167, 239, 97, 257,32 ,97, 129, 43, 153, 67,54,19 ], ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'],  '#FFDDC1');
     
-
+      for (let i = 1; i <= 8; i++) {
+        this.targerKpisData.push({
+            id: i,
+            kpiId: null,
+            target:null ,
+            unit: null,
+            target_type: null,
+          
+        });;
+    };
     }
   };
 
@@ -180,6 +160,32 @@ graph8:any;
       // this.GetAssignedDataPoint(this.facilityData[0].id)
 
     });
+  };
+
+  getKPIList() {
+    let tenantId = this.loginInfo.tenantID;
+    this.appService.getApi('/kpiItemsList').subscribe((response:any) => {
+      this.kpiList = response.data;
+     
+
+    });
+  };
+
+  onKpiChange(kpiId: any, row: any) {
+    const unit = this.kpiList.find((item) => item.id == kpiId).unit;
+    this.targerKpisData[row].unit = unit;
+  };
+
+
+  pushTargetKpis() {
+    this.targerKpisData.push({
+        id: this.targerKpisData.length + 1,
+        kpiId: null,
+        target:null ,
+        unit: null,
+        target_type: null,
+      
+    });;
   };
 
 
@@ -247,6 +253,11 @@ graph8:any;
         
       
     }
+  };
+
+
+  submitTarget() {
+
   }
 
 
