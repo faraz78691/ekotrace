@@ -12,27 +12,104 @@
                         <h4 class=" ct_fw_600 m-0 my-0" style="flex: 1;">KPI Inventory</h4>
                         <div class="d-flex align-items-center" style="gap: 20px;">
                             <div
-                            class="selectyear ct_calander_input  ct_calender_38  ct_month_light_green ct_calender_font_size">
-                            <p-calendar class="w-100" ngModel name="year" year  styleClass="pcalender" [(ngModel)]="selectedYear"
-                                view="year" dateFormat="yy" inputId="yearpicker" placeholder="Select year" (ngModelChange)="onYearChange($event)"
-                                [showIcon]="true"></p-calendar>
-                        </div>
-                        <p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230 ct_calender_38" ngModel
-                            [options]="facilityData" [(ngModel)]="selectedFacility" placeholder="Select facility" (onChange)="getFacilityUnit(selectedFacility)"
-                            optionLabel="AssestType" optionValue="id">
-                        </p-dropdown>
-                        <button class="px-4 trackingsubmitb ct_calender_38" (click)="retrieveSavedData()">Retrieve Saved Data</button>
-                        <button class="px-4 trackingsubmitb ct_calender_38" (click)="retrieveFreshData()">Retrieve Data</button>
-                        
-                        <div class="d-block align-items-center">
-                         <div>
-                            <span class="  py-2" *ngIf="user_name != ''">{{user_name}} </span>
-                            <span class="" *ngIf="user_name != ''">{{updated_at |date}} </span>
-                         </div>
-                        <span class="" *ngIf="user_name != ''">Last Updated by</span>
-                        </div>
+                                class="selectyear ct_calander_input  ct_calender_38  ct_month_light_green ct_calender_font_size">
+                                <p-calendar class="w-100" ngModel name="year" year styleClass="pcalender"
+                                    [(ngModel)]="selectedYear" view="year" dateFormat="yy" inputId="yearpicker"
+                                    placeholder="Select year" (ngModelChange)="onYearChange($event)"
+                                    [showIcon]="true"></p-calendar>
+                            </div>
+                            <p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230 ct_calender_38" ngModel
+                                [options]="facilityData" [(ngModel)]="selectedFacility" placeholder="Select facility"
+                                (onChange)="getFacilityUnit(selectedFacility)" optionLabel="AssestType"
+                                optionValue="id">
+                            </p-dropdown>
+                            <button class="px-4 trackingsubmitb ct_calender_38" (click)="retrieveSavedData()">Retrieve
+                                Saved Data</button>
+                            <button class="px-4 trackingsubmitb ct_calender_38" (click)="retrieveFreshData()">Retrieve
+                                Data</button>
+
+                            <div class="d-block align-items-center">
+                                <div>
+                                    <span class="  py-2" *ngIf="user_name != ''">{{user_name}} </span>
+                                    <span class="" *ngIf="user_name != ''">{{updated_at |date}} </span>
+                                </div>
+                                <span class="" *ngIf="user_name != ''">Last Updated by</span>
+                            </div>
                         </div>
 
+                    </div>
+                    <div class="ct_how_use_tooltip_main ml-auto py-3">
+                        <i class="fa fa-question-circle" (click)="isHowtoUse = !isHowtoUse"></i>
+                        <div class="ct_how_use_tooltip_cnt" [ngClass]="isHowtoUse ? 'ct_active' : ''">
+                            <div>
+                                <p class="mb-1 ">The <strong>KPI / Emission Inventory</strong> section allows users to
+                                    enter and maintain historical emission data and key performance indicators (KPIs)
+                                    for each facility. Key Features:
+
+                                </p>
+
+                                <ul style="list-style: disc;" class="mb-0 pl-4">
+                                    <li>Capture historical emission data and KPI metrics across Scope 1, 2, and 3
+                                        emissions.
+
+                                    </li>
+                                    <li>Enter data in monthly, annual, or both formats, based on availability and
+                                        reporting preferences.
+
+                                    </li>
+                                    <li>All saved data can be retrieved anytime for reference or updates.
+
+                                    </li>
+                                    <li>
+                                        Enables better data visualization, target setting, and emission tracking across
+                                        facilities.
+
+                                    </li>
+
+                                </ul>
+
+                                <h5 class="ct_fs_16 mb-0 mt-3 mb-2">Steps to Use:
+
+                                </h5>
+                                <h6 style="font-size: 14px;">(Note: Current-year data is largely auto-generated by the
+                                    tool, certain KPI
+                                    parameters need to be entered manually to ensure accuracy and completeness.)
+                                </h6>
+                                <ol style="list-style: numric;" class="mb-2 pl-4">
+                                    <li>Select the facility for which you want to enter data.
+                                    </li>
+                                    <li>Choose the year of data entry (past or current).
+                                    </li>
+                                    <li>Enter emission and KPI data (monthly or annually).
+                                    </li>
+                                    <li>Click Save to store the data in the system.
+                                    </li>
+                                </ol>
+                                <h5 class="ct_fs_16 mb-0 mt-3 mb-2">How This Section Supports You:
+
+                                </h5>
+                                <ul style="list-style: disc;" class="mb-2 pl-4">
+                                    <li>Feeds data into the KPI Dashboard to track performance over time.
+
+                                    </li>
+                                    <li>Allows you to set targets for specific KPIs and monitor progress.
+
+                                    </li>
+                                    <li>Automatically integrates into the GHG Emission Report generated in the Reporting
+                                        section.
+                                    </li>
+
+                                </ul>
+
+
+                            </div>
+
+
+
+
+
+
+                        </div>
                     </div>
                 </div>
 
@@ -84,10 +161,12 @@
                             <tr>
                                 <td>Scope 1</td>
                                 <td>tCO2e</td>
-                                <td><input type="text" class="form-control bg-white td_width" [(ngModel)]="scope1Total" disabled="true" [class.td_bg_color]="inputDisabled"></td>
+                                <td><input type="text" class="form-control bg-white td_width" [(ngModel)]="scope1Total"
+                                        disabled="true" [class.td_bg_color]="inputDisabled"></td>
                                 <ng-container *ngFor="let item of months; let i = index">
 
-                                    <td><input type="text" class="form-control bg-white td_width"  [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
+                                    <td><input type="text" class="form-control bg-white td_width"
+                                            [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
                                             style="font-size: 13px;" [(ngModel)]="scope1[i]" (input)="onInput(i)"></td>
                                 </ng-container>
 
@@ -96,10 +175,12 @@
                             <tr>
                                 <td>Scope 2</td>
                                 <td>tCO2e</td>
-                                <td><input type="text" class="form-control bg-white td_width" [(ngModel)]="scope2Total" disabled="true" [class.td_bg_color]="inputDisabled"></td>
+                                <td><input type="text" class="form-control bg-white td_width" [(ngModel)]="scope2Total"
+                                        disabled="true" [class.td_bg_color]="inputDisabled"></td>
                                 <ng-container *ngFor="let item of months; let i = index; trackBy: trackByIndex">
 
-                                    <td><input type="text" class="form-control bg-white td_width"  [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
+                                    <td><input type="text" class="form-control bg-white td_width"
+                                            [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
                                             style="font-size: 13px;" [(ngModel)]="scope2[i]" (input)="onInput(i)"></td>
                                 </ng-container>
                             </tr>
@@ -107,20 +188,24 @@
                                 <td>Scope 3</td>
                                 <td>tCO2e</td>
 
-                                <td><input type="text" class="form-control bg-white td_width" [(ngModel)]="scope3Total" disabled="true" [class.td_bg_color]="inputDisabled"></td>
+                                <td><input type="text" class="form-control bg-white td_width" [(ngModel)]="scope3Total"
+                                        disabled="true" [class.td_bg_color]="inputDisabled"></td>
                                 <ng-container *ngFor="let item of months; let i = index ; trackBy: trackByIndex">
 
-                                    <td><input type="text" class="form-control bg-white td_width"  [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
+                                    <td><input type="text" class="form-control bg-white td_width"
+                                            [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
                                             style="font-size: 13px;" [(ngModel)]="scope3[i]" (input)="onInput(i)"></td>
                                 </ng-container>
                             </tr>
                             <tr>
                                 <td>Total emissions</td>
                                 <td>tCO2e</td>
-                                <td><input type="text" class="form-control bg-white td_width" [(ngModel)]="totalAnually" disabled [class.td_bg_color]="inputDisabled"></td>
+                                <td><input type="text" class="form-control bg-white td_width" [(ngModel)]="totalAnually"
+                                        disabled [class.td_bg_color]="inputDisabled"></td>
                                 <ng-container *ngFor="let item of months; let i = index ; trackBy: trackByIndex">
 
-                                    <td><input type="text" class="form-control bg-white td_width"  [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
+                                    <td><input type="text" class="form-control bg-white td_width"
+                                            [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
                                             style="font-size: 13px;" [value]="totalEmissions[i]"></td>
                                 </ng-container>
                             </tr>
@@ -136,60 +221,62 @@
                                     </p-dropdown></td>
                                 <td><p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230" ngModel
                                         [options]="unitDropdown" [(ngModel)]="unitDropdown1" placeholder="Select unit"
-                                        optionLabel="label" optionValue="value" [disabled]="inputDisabled"
-                                        >
+                                        optionLabel="label" optionValue="value" [disabled]="inputDisabled">
                                     </p-dropdown></td>
-                          
-                              
+
+
                                 <ng-container *ngFor="let item of fuelData1; let i = index ; trackBy: trackByIndex">
-                                    <td><input type="text" class="form-control bg-white td_width"  [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
+                                    <td><input type="text" class="form-control bg-white td_width"
+                                            [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
                                             style="font-size: 13px;" [(ngModel)]="fuelData1[i]"></td>
                                 </ng-container>
 
                             </tr>
                             <tr>
                                 <td><p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230" ngModel
-                                        [options]="fuelsTypes" placeholder="Select fuel" [(ngModel)]="selectedFuel2" 
+                                        [options]="fuelsTypes" placeholder="Select fuel" [(ngModel)]="selectedFuel2"
                                         optionLabel="TypeName" optionValue="ID"
                                         (onChange)="onChangeFuelEmissions2($event.value)">
                                     </p-dropdown></td>
                                 <td><p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230" ngModel
-                                        [options]="unitDropdown" placeholder="Select unit" [(ngModel)]="unitDropdown2" 
-                                        optionLabel="label" optionValue="value" [disabled]="inputDisabled"
-                                       >
+                                        [options]="unitDropdown" placeholder="Select unit" [(ngModel)]="unitDropdown2"
+                                        optionLabel="label" optionValue="value" [disabled]="inputDisabled">
                                     </p-dropdown></td>
-                              
+
 
                                 <ng-container *ngFor="let item of fuelData2; let i = index ; trackBy: trackByIndex">
-                                    <td><input type="text" class="form-control bg-white td_width"  [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
+                                    <td><input type="text" class="form-control bg-white td_width"
+                                            [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
                                             style="font-size: 13px;" [(ngModel)]="fuelData2[i]"></td>
                                 </ng-container>
                             </tr>
                             <tr>
                                 <td><p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230" ngModel
-                                        [options]="fuelsTypes" placeholder="Select fuel" [(ngModel)]="selectedFuel3" 
+                                        [options]="fuelsTypes" placeholder="Select fuel" [(ngModel)]="selectedFuel3"
                                         optionLabel="TypeName" optionValue="ID"
                                         (onChange)="onChangeFuelEmissions3($event.value)">
                                     </p-dropdown></td>
                                 <td><p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230" ngModel
-                                        [options]="unitDropdown" placeholder="Select unit" [(ngModel)]="unitDropdown3" 
-                                        optionLabel="label" optionValue="value" [disabled]="inputDisabled"
-                                      >
+                                        [options]="unitDropdown" placeholder="Select unit" [(ngModel)]="unitDropdown3"
+                                        optionLabel="label" optionValue="value" [disabled]="inputDisabled">
                                     </p-dropdown></td>
-                               
-                               
+
+
                                 <ng-container *ngFor="let item of fuelData3; let i = index ; trackBy: trackByIndex">
-                                    <td><input type="text" class="form-control bg-white td_width"  [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
+                                    <td><input type="text" class="form-control bg-white td_width"
+                                            [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
                                             style="font-size: 13px;" [(ngModel)]="fuelData3[i]"></td>
                                 </ng-container>
                             </tr>
                             <tr>
                                 <td>Total Fuel Consumption</td>
                                 <td>GJ</td>
-                                <ng-container *ngFor="let item of totalFuelConsumed; let i = index ; trackBy: trackByIndex">
+                                <ng-container
+                                    *ngFor="let item of totalFuelConsumed; let i = index ; trackBy: trackByIndex">
 
-                                    <td><input type="text" class="form-control bg-white td_width"  [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
-                                            style="font-size: 13px;" [value]="totalFuelConsumed[i]" ></td>
+                                    <td><input type="text" class="form-control bg-white td_width"
+                                            [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
+                                            style="font-size: 13px;" [value]="totalFuelConsumed[i]"></td>
                                 </ng-container>
                             </tr>
                             <tr>
@@ -199,49 +286,59 @@
                             <tr>
                                 <td>Fuel in stationary combusiton</td>
                                 <td>KWh</td>
-                                <ng-container *ngFor="let item of fuelStationary; let i = index ; trackBy: trackByIndex">
+                                <ng-container
+                                    *ngFor="let item of fuelStationary; let i = index ; trackBy: trackByIndex">
 
-                                    <td><input type="text" class="form-control bg-white td_width"  [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
+                                    <td><input type="text" class="form-control bg-white td_width"
+                                            [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
                                             style="font-size: 13px;" [value]="fuelStationary[i]"></td>
                                 </ng-container>
                             </tr>
                             <tr>
                                 <td>Heating + Cooling</td>
                                 <td>KWh</td>
-                               
 
-                                <ng-container *ngFor="let item of energyDataHeating; let i = index ;trackBy: trackByIndex">
-                                    <td><input type="text" class="form-control bg-white td_width"  [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
+
+                                <ng-container
+                                    *ngFor="let item of energyDataHeating; let i = index ;trackBy: trackByIndex">
+                                    <td><input type="text" class="form-control bg-white td_width"
+                                            [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
                                             style="font-size: 13px;" [(ngModel)]="energyDataHeating[i]"></td>
                                 </ng-container>
                             </tr>
                             <tr>
                                 <td>Electricity</td>
                                 <td>KWh</td>
-                             
 
-                                <ng-container *ngFor="let item of electricityData; let i = index ; trackBy: trackByIndex">
-                                    <td><input type="text" class="form-control bg-white td_width"  [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
+
+                                <ng-container
+                                    *ngFor="let item of electricityData; let i = index ; trackBy: trackByIndex">
+                                    <td><input type="text" class="form-control bg-white td_width"
+                                            [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
                                             style="font-size: 13px;" [(ngModel)]="electricityData[i]"></td>
                                 </ng-container>
                             </tr>
                             <tr>
                                 <td>Total Energy Consumption </td>
                                 <td>KWh</td>
-                                <ng-container *ngFor="let item of totalEnergyConsumed; let i = index ; trackBy: trackByIndex">
-                                    <td><input type="text" class="form-control bg-white td_width"  [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
+                                <ng-container
+                                    *ngFor="let item of totalEnergyConsumed; let i = index ; trackBy: trackByIndex">
+                                    <td><input type="text" class="form-control bg-white td_width"
+                                            [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
                                             style="font-size: 13px;" [(ngModel)]="totalEnergyConsumed[i]"></td>
                                 </ng-container>
                             </tr>
-                            
+
                             <tr>
                                 <td>Renewable Electricity</td>
                                 <td>KWh</td>
 
-                               
 
-                                <ng-container *ngFor="let item of renewElectricityData; let i = index; trackBy: trackByIndex">
-                                    <td><input type="text" class="form-control bg-white td_width"  [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
+
+                                <ng-container
+                                    *ngFor="let item of renewElectricityData; let i = index; trackBy: trackByIndex">
+                                    <td><input type="text" class="form-control bg-white td_width"
+                                            [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
                                             style="font-size: 13px;" [(ngModel)]="renewElectricityData[i]"></td>
                                 </ng-container>
                             </tr>
@@ -254,8 +351,10 @@
                                 <td>Owned Passenger Vehicle Emiss. - Diesel</td>
                                 <td>tCO2e</td>
 
-                                <ng-container *ngFor="let item of passenderDiesel; let i = index ;trackBy: trackByIndex">
-                                    <td><input type="text" class="form-control bg-white"  [class.td_bg_color]="inputDisabled" style="font-size: 13px;"
+                                <ng-container
+                                    *ngFor="let item of passenderDiesel; let i = index ;trackBy: trackByIndex">
+                                    <td><input type="text" class="form-control bg-white"
+                                            [class.td_bg_color]="inputDisabled" style="font-size: 13px;"
                                             [(ngModel)]="passenderDiesel[i]" [disabled]="inputDisabled"></td>
                                 </ng-container>
                             <tr>
@@ -263,17 +362,22 @@
                                 <td>tCO2e</td>
 
 
-                                <ng-container *ngFor="let item of passengerPetrol; let i = index ; trackBy: trackByIndex">
-                                    <td><input type="text" class="form-control bg-white"  [class.td_bg_color]="inputDisabled" style="font-size: 13px;" [disabled]="inputDisabled"
-                                            [(ngModel)]="passengerPetrol[i]"></td>
+                                <ng-container
+                                    *ngFor="let item of passengerPetrol; let i = index ; trackBy: trackByIndex">
+                                    <td><input type="text" class="form-control bg-white"
+                                            [class.td_bg_color]="inputDisabled" style="font-size: 13px;"
+                                            [disabled]="inputDisabled" [(ngModel)]="passengerPetrol[i]"></td>
                                 </ng-container>
                             </tr>
                             <tr>
                                 <td>Total Owned Passenger Vehicle Emiss.</td>
                                 <td>tCO2e</td>
 
-                                <ng-container *ngFor="let item of total_vehicle_passenger; let i = index; trackBy: trackByIndex">
-                                    <td><input type="text" class="form-control bg-white"  [class.td_bg_color]="inputDisabled" [(ngModel)]="total_vehicle_passenger[i]" [disabled]="inputDisabled"></td>
+                                <ng-container
+                                    *ngFor="let item of total_vehicle_passenger; let i = index; trackBy: trackByIndex">
+                                    <td><input type="text" class="form-control bg-white"
+                                            [class.td_bg_color]="inputDisabled" [(ngModel)]="total_vehicle_passenger[i]"
+                                            [disabled]="inputDisabled"></td>
                                 </ng-container>
                             <tr>
                             </tr>
@@ -285,8 +389,10 @@
                                 <td>tCO2e</td>
 
 
-                                <ng-container *ngFor="let item of vehiclesOwnedEmission; let i = index; trackBy: trackByIndex">
-                                    <td><input type="text" class="form-control bg-white" style="font-size: 13px;"  [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
+                                <ng-container
+                                    *ngFor="let item of vehiclesOwnedEmission; let i = index; trackBy: trackByIndex">
+                                    <td><input type="text" class="form-control bg-white" style="font-size: 13px;"
+                                            [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
                                             [(ngModel)]="vehiclesOwnedEmission[i]"></td>
                                 </ng-container>
                             </tr>
@@ -295,8 +401,10 @@
                                 <td>tonnes</td>
 
 
-                                <ng-container *ngFor="let item of vehiclesFreightEmission; let i = index ; trackBy: trackByIndex">
-                                    <td><input type="text" class="form-control bg-white" style="font-size: 13px;"  [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
+                                <ng-container
+                                    *ngFor="let item of vehiclesFreightEmission; let i = index ; trackBy: trackByIndex">
+                                    <td><input type="text" class="form-control bg-white" style="font-size: 13px;"
+                                            [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
                                             [(ngModel)]="vehiclesFreightEmission[i]"></td>
                                 </ng-container>
                             </tr>
@@ -310,7 +418,8 @@
 
                                 <ng-container
                                     *ngFor="let item of businessTravelData?.flightTravelDetails; let i = index ; trackBy: trackByIndex">
-                                    <td><input type="text" class="form-control bg-white" style="font-size: 13px;"  [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
+                                    <td><input type="text" class="form-control bg-white" style="font-size: 13px;"
+                                            [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
                                             [(ngModel)]="businessTravelData.flightTravelDetails[i]"></td>
                                 </ng-container>
                             </tr>
@@ -320,7 +429,8 @@
 
                                 <ng-container
                                     *ngFor="let item of businessTravelData?.othermodesOfTransportDetails; let i = index ;trackBy: trackByIndex">
-                                    <td><input type="text" class="form-control bg-white" style="font-size: 13px;"  [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
+                                    <td><input type="text" class="form-control bg-white" style="font-size: 13px;"
+                                            [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
                                             [(ngModel)]="businessTravelData.othermodesOfTransportDetails[i]"></td>
                                 </ng-container>
                             </tr>
@@ -328,8 +438,10 @@
                                 <td>Emissions in Hotel stay</td>
                                 <td>tCO2e</td>
 
-                                <ng-container *ngFor="let item of businessTravelData?.hotelstayDetails; let i = index ; trackBy: trackByIndex">
-                                    <td><input type="text" class="form-control bg-white" style="font-size: 13px;"  [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
+                                <ng-container
+                                    *ngFor="let item of businessTravelData?.hotelstayDetails; let i = index ; trackBy: trackByIndex">
+                                    <td><input type="text" class="form-control bg-white" style="font-size: 13px;"
+                                            [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
                                             [(ngModel)]="businessTravelData.hotelstayDetails[i]"></td>
                                 </ng-container>
                             </tr>
@@ -342,7 +454,8 @@
 
                                 <ng-container
                                     *ngFor="let item of employeeData?.employeeCommutingEmission; let i = index ; trackBy: trackByIndex">
-                                    <td><input type="text" class="form-control bg-white" style="font-size: 13px;"  [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
+                                    <td><input type="text" class="form-control bg-white" style="font-size: 13px;"
+                                            [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
                                             [(ngModel)]="employeeData?.employeeCommutingEmission[i]"></td>
                                 </ng-container>
                             </tr>
@@ -352,7 +465,8 @@
 
                                 <ng-container
                                     *ngFor="let item of employeeData?.employeeCommutingWorkingDays; let i = index ; trackBy: trackByIndex">
-                                    <td><input type="text" class="form-control bg-white" style="font-size: 13px;"  [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
+                                    <td><input type="text" class="form-control bg-white" style="font-size: 13px;"
+                                            [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
                                             [(ngModel)]="employeeData?.employeeCommutingWorkingDays[i]"></td>
                                 </ng-container>
                             </tr>
@@ -364,7 +478,9 @@
                                 <td>tonnes</td>
 
                                 <ng-container *ngFor="let item of wasteDisposed; let i = index; trackBy: trackByIndex">
-                                    <td><input type="text" class="form-control bg-white" style="font-size: 13px;"  [class.td_bg_color]="inputDisabled" [(ngModel)]="wasteDisposed[i]" [disabled]="inputDisabled">
+                                    <td><input type="text" class="form-control bg-white" style="font-size: 13px;"
+                                            [class.td_bg_color]="inputDisabled" [(ngModel)]="wasteDisposed[i]"
+                                            [disabled]="inputDisabled">
                                     </td>
                                 </ng-container>
                             </tr>
@@ -372,8 +488,10 @@
                                 <td>Waste Diversion</td>
                                 <td>tonnes</td>
 
-                                <ng-container *ngFor="let item of diverted_emssion; let i = index ; trackBy: trackByIndex">
-                                    <td><input type="text" class="form-control bg-white" style="font-size: 13px;"  [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
+                                <ng-container
+                                    *ngFor="let item of diverted_emssion; let i = index ; trackBy: trackByIndex">
+                                    <td><input type="text" class="form-control bg-white" style="font-size: 13px;"
+                                            [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
                                             [(ngModel)]="diverted_emssion[i]"></td>
                                 </ng-container>
                             </tr>
@@ -381,8 +499,10 @@
                                 <td>Emissions in waste treatment</td>
                                 <td>tCO2e</td>
 
-                                <ng-container *ngFor="let item of waste_emissions; let i = index ; trackBy: trackByIndex">
-                                    <td><input type="text" class="form-control bg-white" style="font-size: 13px;"  [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
+                                <ng-container
+                                    *ngFor="let item of waste_emissions; let i = index ; trackBy: trackByIndex">
+                                    <td><input type="text" class="form-control bg-white" style="font-size: 13px;"
+                                            [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
                                             [(ngModel)]="waste_emissions[i]"></td>
                                 </ng-container>
                             </tr>
@@ -394,36 +514,44 @@
                             <tr>
                                 <td>Water Discharged</td>
                                 <td>KL</td>
-                            
-                                <ng-container *ngFor="let item of waterData?.waterDischarge; let i = index ; trackBy: trackByIndex">
-                                    <td><input type="text" class="form-control bg-white" style="font-size: 13px;"  [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
+
+                                <ng-container
+                                    *ngFor="let item of waterData?.waterDischarge; let i = index ; trackBy: trackByIndex">
+                                    <td><input type="text" class="form-control bg-white" style="font-size: 13px;"
+                                            [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
                                             [(ngModel)]="waterData?.waterDischarge[i]"></td>
                                 </ng-container>
                             </tr>
                             <tr>
                                 <td>Water Usage</td>
                                 <td>KL</td>
-                            
-                                <ng-container *ngFor="let item of waterData?.waterWithdrawal; let i = index; trackBy: trackByIndex">
-                                    <td><input type="text" class="form-control bg-white" style="font-size: 13px;"  [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
+
+                                <ng-container
+                                    *ngFor="let item of waterData?.waterWithdrawal; let i = index; trackBy: trackByIndex">
+                                    <td><input type="text" class="form-control bg-white" style="font-size: 13px;"
+                                            [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
                                             [(ngModel)]="waterData?.waterWithdrawal[i]"></td>
                                 </ng-container>
                             </tr>
                             <tr>
                                 <td>Water Treated</td>
                                 <td>KL</td>
-                              
-                                <ng-container *ngFor="let item of waterData?.waterTreatment; let i = index; trackBy: trackByIndex">
-                                    <td><input type="text" class="form-control bg-white" style="font-size: 13px;"  [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
+
+                                <ng-container
+                                    *ngFor="let item of waterData?.waterTreatment; let i = index; trackBy: trackByIndex">
+                                    <td><input type="text" class="form-control bg-white" style="font-size: 13px;"
+                                            [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
                                             [(ngModel)]="waterData?.waterTreatment[i]"></td>
                                 </ng-container>
                             </tr>
                             <tr>
                                 <td>Emissions in water treatment</td>
                                 <td>tCO2e</td>
-                               
-                                <ng-container *ngFor="let item of waterData?.waterEmission; let i = index; trackBy: trackByIndex">
-                                    <td><input type="text" class="form-control bg-white" style="font-size: 13px;"  [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
+
+                                <ng-container
+                                    *ngFor="let item of waterData?.waterEmission; let i = index; trackBy: trackByIndex">
+                                    <td><input type="text" class="form-control bg-white" style="font-size: 13px;"
+                                            [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
                                             [(ngModel)]="waterData?.waterEmission[i]"></td>
                                 </ng-container>
                             </tr>
@@ -433,18 +561,22 @@
                             <tr>
                                 <td>Emissions from Purchased Goods & Services</td>
                                 <td></td>
-                              
-                                <ng-container *ngFor="let item of generalData?.purchaseGoodsAndServices; let i = index; trackBy: trackByIndex">
-                                    <td><input type="text" class="form-control bg-white" style="font-size: 13px;"  [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
+
+                                <ng-container
+                                    *ngFor="let item of generalData?.purchaseGoodsAndServices; let i = index; trackBy: trackByIndex">
+                                    <td><input type="text" class="form-control bg-white" style="font-size: 13px;"
+                                            [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
                                             [(ngModel)]="generalData?.purchaseGoodsAndServices[i]"></td>
                                 </ng-container>
                             </tr>
                             <tr>
-                                <td>Amount spent in procurement  (in Mn)</td>
+                                <td>Amount spent in procurement (in Mn)</td>
                                 <td>{{facilityUnit}}</td>
-                              
-                                <ng-container *ngFor="let item of generalData?.purchaseGoodsAndServicesValueQuantity; let i = index; trackBy: trackByIndex">
-                                    <td><input type="text" class="form-control bg-white" style="font-size: 13px;"  [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
+
+                                <ng-container
+                                    *ngFor="let item of generalData?.purchaseGoodsAndServicesValueQuantity; let i = index; trackBy: trackByIndex">
+                                    <td><input type="text" class="form-control bg-white" style="font-size: 13px;"
+                                            [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
                                             [(ngModel)]="generalData?.purchaseGoodsAndServicesValueQuantity[i]"></td>
                                 </ng-container>
                             </tr>
@@ -456,20 +588,24 @@
                             <tr>
                                 <td>Total OutPut</td>
                                 <td></td>
-                              <td><input type="text" class="form-control bg-white" [(ngModel)]="grandOutput" disabled="true"></td>
+                                <td><input type="text" class="form-control bg-white" [(ngModel)]="grandOutput"
+                                        disabled="true"></td>
                                 <ng-container *ngFor="let item of totalOutput; let i = index;  trackBy: trackByIndex">
                                     <td>
-                                        <input type="text" class="form-control bg-white" style="font-size: 13px;" [(ngModel)]="totalOutput[i]"  (input)="onInputOutPut(i)">
+                                        <input type="text" class="form-control bg-white" style="font-size: 13px;"
+                                            [(ngModel)]="totalOutput[i]" (input)="onInputOutPut(i)">
                                     </td>
                                 </ng-container>
                             </tr>
                             <tr>
                                 <td>Total Revenue (in Mn)</td>
                                 <td>{{facilityUnit}}</td>
-                                <td><input type="text" class="form-control bg-white" [(ngModel)]="grandRevenue" disabled="true"></td>
+                                <td><input type="text" class="form-control bg-white" [(ngModel)]="grandRevenue"
+                                        disabled="true"></td>
                                 <ng-container *ngFor="let item of totalRevenue; let i = index;  trackBy: trackByIndex">
                                     <td>
-                                        <input type="text" class="form-control bg-white" style="font-size: 13px;" [(ngModel)]="totalRevenue[i]" (input)="onInputOutPut(i)">
+                                        <input type="text" class="form-control bg-white" style="font-size: 13px;"
+                                            [(ngModel)]="totalRevenue[i]" (input)="onInputOutPut(i)">
                                     </td>
                                 </ng-container>
                             </tr>
@@ -480,55 +616,67 @@
                             <tr>
                                 <td>No. of employee</td>
                                 <td></td>
-                              
-                                <ng-container *ngFor="let item of generalData?.noOfEmployee; let i = index; trackBy: trackByIndex">
-                                    <td><input type="text" class="form-control bg-white" style="font-size: 13px;"  [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
+
+                                <ng-container
+                                    *ngFor="let item of generalData?.noOfEmployee; let i = index; trackBy: trackByIndex">
+                                    <td><input type="text" class="form-control bg-white" style="font-size: 13px;"
+                                            [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
                                             [(ngModel)]="generalData?.noOfEmployee[i]"></td>
                                 </ng-container>
                             </tr>
                             <tr>
                                 <td>No. of vehicles (Diesel)</td>
                                 <td></td>
-                              
-                                <ng-container *ngFor="let item of generalData?.noOfDieselVehicles; let i = index; trackBy: trackByIndex">
-                                    <td><input type="text" class="form-control bg-white" style="font-size: 13px;"  [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
+
+                                <ng-container
+                                    *ngFor="let item of generalData?.noOfDieselVehicles; let i = index; trackBy: trackByIndex">
+                                    <td><input type="text" class="form-control bg-white" style="font-size: 13px;"
+                                            [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
                                             [(ngModel)]="generalData?.noOfDieselVehicles[i]"></td>
                                 </ng-container>
                             </tr>
                             <tr>
                                 <td>No. of vehicles (Petrol)</td>
                                 <td></td>
-                              
-                                <ng-container *ngFor="let item of generalData?.noOfPetrolVehicles; let i = index; trackBy: trackByIndex">
-                                    <td><input type="text" class="form-control bg-white" style="font-size: 13px;"  [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
+
+                                <ng-container
+                                    *ngFor="let item of generalData?.noOfPetrolVehicles; let i = index; trackBy: trackByIndex">
+                                    <td><input type="text" class="form-control bg-white" style="font-size: 13px;"
+                                            [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
                                             [(ngModel)]="generalData?.noOfPetrolVehicles[i]"></td>
                                 </ng-container>
                             </tr>
                             <tr>
                                 <td>Total vehicles</td>
                                 <td></td>
-                             
-                                <ng-container *ngFor="let item of generalData?.totalVehicles; let i = index; trackBy: trackByIndex">
-                                    <td><input type="text" class="form-control bg-white" style="font-size: 13px;"  [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
+
+                                <ng-container
+                                    *ngFor="let item of generalData?.totalVehicles; let i = index; trackBy: trackByIndex">
+                                    <td><input type="text" class="form-control bg-white" style="font-size: 13px;"
+                                            [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
                                             [(ngModel)]="generalData?.totalVehicles[i]"></td>
                                 </ng-container>
                             </tr>
                             <tr>
                                 <td>Total Area</td>
                                 <td>Sqr Ft</td>
-                               
+
                                 <ng-container *ngFor="let item of generalData?.total_area; let i = index; trackByIndex">
-                                    <td><input type="text" class="form-control bg-white" style="font-size: 13px;"  [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
+                                    <td><input type="text" class="form-control bg-white" style="font-size: 13px;"
+                                            [class.td_bg_color]="inputDisabled" [disabled]="inputDisabled"
                                             [(ngModel)]="generalData?.total_area[i]"></td>
                                 </ng-container>
                             </tr>
                             <tr>
                                 <td>Energy Ref Area</td>
                                 <td>Sqr Ft</td>
-                               
-                                <ng-container *ngFor="let item of generalData.energy_ref_area; let i = index; trackBy: trackByIndex">
-                                    <td><input type="text" class="form-control bg-white" [class.td_bg_color]="inputDisabled" style="font-size: 13px;" [disabled]="inputDisabled"
-                                            [(ngModel)]="generalData.energy_ref_area[i]"></td>
+
+                                <ng-container
+                                    *ngFor="let item of generalData.energy_ref_area; let i = index; trackBy: trackByIndex">
+                                    <td><input type="text" class="form-control bg-white"
+                                            [class.td_bg_color]="inputDisabled" style="font-size: 13px;"
+                                            [disabled]="inputDisabled" [(ngModel)]="generalData.energy_ref_area[i]">
+                                    </td>
                                 </ng-container>
                             </tr>
                         </tbody>
@@ -537,7 +685,7 @@
 
             </ng-container>
 
-           
+
 
 
 
@@ -569,4 +717,6 @@
 
 
 </div>
-<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-clip-rotate-pulse" [fullScreen] = "true"><p style="color: white" > Fetching Data... </p></ngx-spinner>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-clip-rotate-pulse" [fullScreen]="true">
+    <p style="color: white"> Fetching Data... </p>
+</ngx-spinner>

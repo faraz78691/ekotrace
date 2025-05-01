@@ -1,104 +1,64 @@
 <div class="container-fluid">
-    <div class="d-flex  justify-content-between pt-3">
-        <div class="d-flex mt-2 align-items-center">
+    <div class=" pt-3">
+        <div class="d-flex align-items-center">
 
-            <h3>GHG Emissions Report</h3>
+            <h3 class="mb-0">GHG Emissions Report</h3>
             <div class="ct_how_use_tooltip_main ml-auto">
-                        <i class="fa-solid fa-circle-question" (click)="isHowtoUse = !isHowtoUse"></i>
-                        <div class="ct_how_use_tooltip_cnt" [ngClass]="isHowtoUse ? 'ct_active' : ''">
-                            <div>
-                                <p class="mb-1 ">There are four types of users with different access rights in the tool. This access control system ensures that users have appropriate permissions to view and edit data based on their role and responsibilities within the organization.
-                                </p>
-                                <h5 class="ct_fs_16 mt-2 mb-0">1. Super-Admin:
+                <i class="fa fa-question-circle" (click)="isHowtoUse = !isHowtoUse"></i>
+                <div class="ct_how_use_tooltip_cnt" [ngClass]="isHowtoUse ? 'ct_active' : ''">
+                    <div>
+                        <p class="mb-1 ">This section allows you to generate a custom, presentation-ready GHG emission
+                            report in PDF format. The report helps you visualize emissions across selected facilities,
+                            years, and KPIs.
+                        </p>
+                        <h5 class="ct_fs_16 mt-3 mb-2">Key Features:
+                        </h5>
 
-                                </h5>
-                    
-                                <ol style="list-style: none;"class="mb-0">
-                                    <li>- Has read and edit rights to all sections of the tool, which can be accessed as a part of the package taken by the company
-                    
-                                    </li>
-                                    <li>- Only Super-Admin has access to the 'Tree' and 'set GHG template' section
-                                    </li>
-                                    <li>- Can add users as Admins, Managers, and Data Preparers
-                                    </li>
-                                    <li>- Works with Ekobon team to set up organization tree and save GHG templates of Scope1, 2 &3 sub-categories relevant for different facilities.
-                                    </li>
-                                </ol>
-                    
-                                <h5 class="ct_fs_16 mb-0 mt-2">2. Admin:
+                        <ul style="list-style: disc;" class="mb-0 pl-4">
+                            <li>Ready-to-present PDF report aligned with GHG Protocol, ISO 14064, and SBTi frameworks.
+                            </li>
+                            <li>Covers multiple facilities and custom timeframes (current year and base year).
+                            </li>
+                            <li>Includes interactive graphs and diagrams for easy data visualization.
+                            </li>
+                            <li>
+                                Add up to 3 KPIs for detailed review and performance tracking.
+                            </li>
+                            <li>Select only the relevant GHG categories (Scope 1, 2, and 3) for a focused report.
+                            </li>
+                            <li>Ideal for stakeholder reporting, audits, and internal performance reviews.
+                            </li>
+                        </ul>
 
-                                </h5>
-                                <ol style="list-style: none;" class="mb-2">
-                                    <li>- Has read and edit rights to associated sub-group and facilities
-                                    </li>
-                                    <li>- Admin of main group has access to all sub-groups and facilities
-                    
-                                    </li>
-                                    <li>- Can add users as Admins, Managers, and Data Preparers for sub-groups/facilities they have access to
-                                    </li>
-                                </ol>
-                                <h5 class="ct_fs_16  mb-0">3. Manager:
+                        <h5 class="ct_fs_16 mb-0 mt-3 mb-2">Steps to Generate Report:
+                        </h5>
+                        <ul style="list-style: numric;" class="mb-2 pl-4">
+                            <li>Select facilities – Single or multiple.
 
-                    
-                                </h5>
-                                <ol style="list-style: none;" class="mb-2">
-                                    <li>    - Has read and edit rights only to associated facility
+                            </li>
+                            <li>Choose base year and current year
+                                (Note: If there’s no previous data, select the current year as base year)
+                            </li>
+                            <li>Select up to 3 KPIs – Shown as graphs in the report.
+                            </li>
+                            <li>Select emission categories – Relevant Scope 1, 2, and 3 data points.
+                            </li>
+                            <li>Tap on ‘Download’ to generate and save your report.
+                            </li>
+                        </ul>
 
-                                    </li>
-                                    <li>- Can add other Managers and Data Preparers for specific facility
 
-                                    </li>
-                                  
-                                </ol>
-                    
-                                <h5 class="ct_fs_16 mb-2 ">4. Data Preparer:</h5>
-                                <ol class="mb-2">
-                                    <li>    - Has read and edit rights only to associated facility
+                    </div>
 
-                                    </li>
-                                    <li>    - Cannot add any users
 
-                                    </li>
-                                   
-                                </ol>
-                                <h5 class="ct_fs_16 ">Additionally, there are specific access rights for GHG Emissions and Financed Emissions:
 
-                                </h5>
-                                <ol class="mb-2">
-                                    <li> GHG Emissions:
 
-                                        <ul style="list-style: none;">
-                                            <li>- Reported at facility level
 
-                                            </li>
-                                            <li> - Can be entered by Super-Admin, Admin, Manager, or Data Preparer
-                                            </li>
-                                           
-                                        </ul>
-                                    </li>
-                                    <li>- Financed Emissions:
- 
-                                        <ul style="list-style: none;">
-                                            <li>    - Reported at sub-group level
-                                            </li>
-                                            <li>    - Only Admins can input data for financed emissions of associated sub-group
-                                            </li>
-                                           
-                                        </ul>
-                                    </li>
-                                   
-                                </ol>
-                            </div>
-                           
-                    
-                    
-                    
-                    
-                    
-                        </div>
+
+                </div>
             </div>
         </div>
-    
+
     </div>
 
     <div class="row firstbox">
@@ -170,8 +130,8 @@
                 <div class="pt-2">
                     <button class="generateReportButton ct_report_button_12 ct_animation_btn_121 ml-3"
                         (click)="onGenerateReport()">
-                        <span >Submit</span>
-                        
+                        <span>Submit</span>
+
                     </button>
                 </div>
             </div>
@@ -184,12 +144,11 @@
 <ng-container *ngIf="showContent">
     <div class="col d-flex justify-content-end mt-3">
 
-        <button class="generateReportButton ct_report_button_12 ct_animation_btn_121 ml-3"
-            (click)="handleDownload()">
+        <button class="generateReportButton ct_report_button_12 ct_animation_btn_121 ml-3" (click)="handleDownload()">
             <span *ngIf="!isGenerating">Download Report</span>
             <div *ngIf="isGenerating" class="pdf-timer">
                 ⏳ Generating PDF... {{ remainingTime }}sec remaining
-              </div>
+            </div>
         </button>
     </div>
 
@@ -330,7 +289,7 @@
 
                         <div class="ct_grey_border_1 d-flex align-items-center justify-content-center">
 
-                            <div  *ngIf="pieChart">
+                            <div *ngIf="pieChart">
                                 <apx-chart [series]="pieChart.series" [chart]="pieChart.chart"
                                     [labels]="pieChart.labels" [legend]="pieChart.legend"
                                     [responsive]="pieChart.responsive" [colors]="pieChart.colors"></apx-chart>
@@ -500,11 +459,11 @@
                                     </tr>
                                     <tr>
                                         <th></th>
-                                     
+
                                         <th colspan="3">KPI₁</th>
-                                     
+
                                         <th colspan="3">KPI₂</th>
-                                    
+
                                         <th colspan="3">KPI₃</th>
                                     </tr>
                                 </thead>
@@ -513,15 +472,15 @@
                                         <tr>
                                             <td class=" et_fw_700" style="background-color:#b6d7a8 ;">
                                                 {{item[0].facility_name}}</td>
-                                          
+
                                             <td colspan="3" class="text-center">{{item[0].current_year_annual}}</td>
-                                        
-                                         
+
+
                                             <td colspan="3" class="text-center">{{item[1]?.current_year_annual}}</td>
-                               
-                                        
-                                            <td  colspan="3"class="text-center">{{item[2]?.current_year_annual}}</td>
-                                          
+
+
+                                            <td colspan="3" class="text-center">{{item[2]?.current_year_annual}}</td>
+
                                         </tr>
 
                                     </ng-container>
@@ -529,7 +488,8 @@
                                 </tbody>
                             </table>
 
-                            <p *ngIf="baseYear" class="ct_fs_14 mt-3 text-end et_fw_700">Base year: {{baseYear}}<br>Current
+                            <p *ngIf="baseYear" class="ct_fs_14 mt-3 text-end et_fw_700">Base year:
+                                {{baseYear}}<br>Current
                                 year:
                                 {{currentYear}}</p>
 
@@ -648,7 +608,7 @@
                 <div class="col-sm-6">
 
                     <div class="mt-0 ct_graph_center">
-                        <div  *ngIf="scope1PieOptions" style="width: 470px; height: 370px; overflow: hidden;">
+                        <div *ngIf="scope1PieOptions" style="width: 470px; height: 370px; overflow: hidden;">
                             <apx-chart [series]="scope1PieOptions.series" [chart]="scope1PieOptions.chart"
                                 [labels]="scope1PieOptions.labels" [legend]="scope1PieOptions.legend"
                                 [responsive]="scope1PieOptions.responsive"
@@ -657,13 +617,13 @@
                     </div>
                 </div>
                 <div class="col-sm-12">
-                  
-                        <div class="" *ngIf="scope1BarOptions" style="width: 470px; height: 370px; overflow: hidden;">
-                            <apx-chart [series]="scope1BarOptions.series" [chart]="scope1BarOptions.chart"
-                                [dataLabels]="scope1BarOptions.dataLabels" [plotOptions]="scope1BarOptions.plotOptions"
-                                [xaxis]="scope1BarOptions.xaxis"></apx-chart>
-                        </div>
-                 
+
+                    <div class="" *ngIf="scope1BarOptions" style="width: 470px; height: 370px; overflow: hidden;">
+                        <apx-chart [series]="scope1BarOptions.series" [chart]="scope1BarOptions.chart"
+                            [dataLabels]="scope1BarOptions.dataLabels" [plotOptions]="scope1BarOptions.plotOptions"
+                            [xaxis]="scope1BarOptions.xaxis"></apx-chart>
+                    </div>
+
                 </div>
 
             </div>
@@ -756,7 +716,7 @@
                 </div>
                 <div class="col-sm-12">
                     <div class="ct_graph_center">
-                        <div  *ngIf="scope3PieOptions">
+                        <div *ngIf="scope3PieOptions">
                             <apx-chart [series]="scope3PieOptions.series" [chart]="scope3PieOptions.chart"
                                 [labels]="scope3PieOptions.labels" [legend]="scope3PieOptions.legend"
                                 [responsive]="scope3PieOptions.responsive"
@@ -867,7 +827,7 @@
                     </small>
                     <ng-container *ngIf="servicesPieOptions">
                         <div class="text-center">
-                            <div  *ngIf="servicesPieOptions">
+                            <div *ngIf="servicesPieOptions">
                                 <apx-chart [series]="servicesPieOptions.series" [chart]="servicesPieOptions.chart"
                                     [labels]="servicesPieOptions.labels" [legend]="servicesPieOptions.legend"
                                     [responsive]="servicesPieOptions.responsive"
@@ -905,7 +865,7 @@
                     </small>
                     <ng-container *ngIf="capitalPieOptions">
                         <div class="text-center">
-                            <div  *ngIf="capitalPieOptions">
+                            <div *ngIf="capitalPieOptions">
                                 <apx-chart [series]="capitalPieOptions.series" [chart]="capitalPieOptions.chart"
                                     [labels]="capitalPieOptions.labels" [legend]="capitalPieOptions.legend"
                                     [responsive]="capitalPieOptions.responsive"
@@ -952,7 +912,7 @@
                     <ng-container *ngIf="businesTravelData?.modeOfTransportRespose.length > 0">
                         <div class="text-center">
 
-                            <div  *ngIf="otherModesOfTransportPieOptions">
+                            <div *ngIf="otherModesOfTransportPieOptions">
                                 <apx-chart [series]="otherModesOfTransportPieOptions.series"
                                     [chart]="otherModesOfTransportPieOptions.chart"
                                     [labels]="otherModesOfTransportPieOptions.labels"
@@ -989,7 +949,7 @@
                     <small class="d-block text-center et_fw_600 mb-2">Emissions due to different types of flights
                     </small>
                     <div class="text-center">
-                        <div  *ngIf="transportationPieOptions">
+                        <div *ngIf="transportationPieOptions">
                             <apx-chart [series]="transportationPieOptions.series"
                                 [chart]="transportationPieOptions.chart" [labels]="transportationPieOptions.labels"
                                 [legend]="transportationPieOptions.legend"
@@ -1022,7 +982,7 @@
                     <small class="d-block text-center et_fw_600 mb-2">Emissions due to different modes of hotel stays
                     </small>
                     <div class="text-center">
-                        <div  *ngIf="hotelPieOptions">
+                        <div *ngIf="hotelPieOptions">
                             <apx-chart [series]="hotelPieOptions.series" [chart]="hotelPieOptions.chart"
                                 [labels]="hotelPieOptions.labels" [legend]="hotelPieOptions.legend"
                                 [responsive]="hotelPieOptions.responsive" [colors]="hotelPieOptions.colors"></apx-chart>
@@ -1096,7 +1056,7 @@
                     <small class="et_fw_700 d-block mb-2 text-center">Emissions due to employee commute
                     </small>
                     <div class="ct_graph_center">
-                        <div  *ngIf="employeePieOptions">
+                        <div *ngIf="employeePieOptions">
                             <apx-chart [series]="employeePieOptions.series" [chart]="employeePieOptions.chart"
                                 [labels]="employeePieOptions.labels" [legend]="employeePieOptions.legend"
                                 [responsive]="employeePieOptions.responsive"
@@ -1124,7 +1084,7 @@
                     </small>
                     <div class="text-center">
                         <div class="text-center ct_graph_center">
-                            <div  *ngIf="ghgEnergyPieOptions">
+                            <div *ngIf="ghgEnergyPieOptions">
                                 <apx-chart [series]="ghgEnergyPieOptions.series" [chart]="ghgEnergyPieOptions.chart"
                                     [labels]="ghgEnergyPieOptions.labels" [legend]="ghgEnergyPieOptions.legend"
                                     [responsive]="ghgEnergyPieOptions.responsive"
@@ -1139,7 +1099,7 @@
 
                     </small>
                     <div class="text-center ct_graph_center">
-                        <div  *ngIf="welltankpieOptions">
+                        <div *ngIf="welltankpieOptions">
                             <apx-chart [series]="welltankpieOptions.series" [chart]="welltankpieOptions.chart"
                                 [labels]="welltankpieOptions.labels" [legend]="welltankpieOptions.legend"
                                 [responsive]="welltankpieOptions.responsive"
@@ -1180,7 +1140,7 @@
                 <div class="col-sm-6">
 
                     <div class="text-center position-relative ct_graph_center">
-                        <div  *ngIf="pieChart">
+                        <div *ngIf="pieChart">
                             <apx-chart [series]="pieChart.series" [chart]="pieChart.chart" [labels]="pieChart.labels"
                                 [legend]="pieChart.legend" [responsive]="pieChart.responsive"
                                 [colors]="pieChart.colors"></apx-chart>
@@ -1192,7 +1152,7 @@
                 <div class="col-sm-6">
 
                     <div class="text-center ct_graph_center">
-                        <div  *ngIf="ghgTopEmissionsGen">
+                        <div *ngIf="ghgTopEmissionsGen">
                             <apx-chart [series]="ghgTopEmissionsGen.series" [chart]="ghgTopEmissionsGen.chart"
                                 [labels]="ghgTopEmissionsGen.labels" [legend]="ghgTopEmissionsGen.legend"
                                 [responsive]="ghgTopEmissionsGen.responsive"
@@ -1330,11 +1290,12 @@
                                         <td class="text-center">{{items.category}}</td>
                                         <td class="text-center">{{items.emission}}</td>
                                         <td class="text-center">{{ghgRevenue[i].emission}}</td>
-                                        <td class="text-center" >{{ghgRevenue[i].emission  ?   (items.emission / ghgRevenue[i].emission | number :'1.2-2') : '-'}}
+                                        <td class="text-center">{{ghgRevenue[i].emission ? (items.emission /
+                                            ghgRevenue[i].emission | number :'1.2-2') : '-'}}
                                         </td>
                                     </tr>
                                 </ng-container>
-                            
+
 
 
                             </tbody>
@@ -1344,10 +1305,10 @@
                 <div class="col-sm-6">
                     <div class="text-center">
                         <div id="chart" *ngIf="ghgIntensityLineOptions">
-                            <apx-chart [series]="ghgIntensityLineOptions.series"
-                                [chart]="ghgIntensityLineOptions.chart" [xaxis]="ghgIntensityLineOptions.xaxis"
-                                [dataLabels]="ghgIntensityLineOptions.dataLabels"
-                                [grid]="ghgIntensityLineOptions.grid" [stroke]="ghgIntensityLineOptions.stroke"
+                            <apx-chart [series]="ghgIntensityLineOptions.series" [chart]="ghgIntensityLineOptions.chart"
+                                [xaxis]="ghgIntensityLineOptions.xaxis"
+                                [dataLabels]="ghgIntensityLineOptions.dataLabels" [grid]="ghgIntensityLineOptions.grid"
+                                [stroke]="ghgIntensityLineOptions.stroke"
                                 [title]="ghgIntensityLineOptions.title"></apx-chart>
                         </div>
                     </div>
@@ -1357,8 +1318,14 @@
 
             </div>
             <ng-container *ngIf="intensitySeries.length > 0">
-                <p class="mt-4" ><strong>Remark:</strong> The {{intensitySeries[0] > intensitySeries[intensitySeries.length - 1 ] ? 'steady decline' : intensitySeries[0] == intensitySeries[intensitySeries.length - 1 ] ? 'stable trend' : 'increase'}}   in emission intensity from {{baseYear}} to {{currentYear}} indicates {{intensitySeries[0] > intensitySeries[intensitySeries.length - 1 ] ? 'significant efficiency gains' : intensitySeries[0] == intensitySeries[intensitySeries.length - 1 ] ? 'steady emissions levels ' : 'rising environmental impact'}}
-    
+                <p class="mt-4"><strong>Remark:</strong> The {{intensitySeries[0] >
+                    intensitySeries[intensitySeries.length - 1 ] ? 'steady decline' : intensitySeries[0] ==
+                    intensitySeries[intensitySeries.length - 1 ] ? 'stable trend' : 'increase'}} in emission intensity
+                    from {{baseYear}} to {{currentYear}} indicates {{intensitySeries[0] >
+                    intensitySeries[intensitySeries.length - 1 ] ? 'significant efficiency gains' : intensitySeries[0]
+                    == intensitySeries[intensitySeries.length - 1 ] ? 'steady emissions levels ' : 'rising environmental
+                    impact'}}
+
                 </p>
 
             </ng-container>
@@ -1471,7 +1438,7 @@
                 <div class="col-sm-6">
                     <div class="text-center ct_graph_center">
                         <small class="et_fw_700 d-block text-center mb-2">Waste Disposal Method Distribution</small>
-                        <div  *ngIf="wastePieOptions">
+                        <div *ngIf="wastePieOptions">
                             <apx-chart [series]="wastePieOptions.series" [chart]="wastePieOptions.chart"
                                 [labels]="wastePieOptions.labels" [legend]="wastePieOptions.legend"
                                 [responsive]="wastePieOptions.responsive" [colors]="wastePieOptions.colors"></apx-chart>
@@ -1564,7 +1531,7 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="text-center ct_graph_center">
-                        <div  *ngIf="wasteMixChartOptions">
+                        <div *ngIf="wasteMixChartOptions">
                             <apx-chart [series]="wasteMixChartOptions.series" [chart]="wasteMixChartOptions.chart"
                                 [labels]="wasteMixChartOptions.labels" [legend]="wasteMixChartOptions.legend"
                                 [responsive]="wasteMixChartOptions.responsive"

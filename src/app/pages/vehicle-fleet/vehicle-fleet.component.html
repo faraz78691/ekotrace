@@ -30,6 +30,69 @@
                                 (change)="onVehicleTypeChange($event)" />
                             <label for="delivery" class="ml-2">Delivery Vehicle</label>
                         </div>
+                        <div class="ct_how_use_tooltip_main ml-auto">
+                            <i class="fa-solid fa-circle-question" (click)="isHowtoUse = !isHowtoUse"></i>
+                            <div class="ct_how_use_tooltip_cnt" [ngClass]="isHowtoUse ? 'ct_active' : ''">
+                                <div>
+                                    <p class="mb-1 ">The Vehicle Fleet section enables users to input and manage the
+                                        list of company-owned passenger and delivery vehicles associated with a specific
+                                        facility. These vehicles are directly linked to the “Company-Owned Vehicles”
+                                        category under Corporate Emissions, contributing to Scope 1 emissions
+                                    </p>
+                                    <h5 class="ct_fs_16 mt-3">Key Features:
+                                    </h5>
+
+                                    <ol style="list-style: disc;" class="mb-0 pl-4">
+                                        <li>Allows entry of facility-level passenger and delivery vehicles.
+                                        </li>
+                                        <li>Vehicles added here will be automatically reflected in the Corporate
+                                            Emission section.
+
+                                        </li>
+                                        <li>Vehicle status can be managed as Active or Retired.
+                                        </li>
+                                        <li>Retired vehicles will no longer appear in the Company-Owned Vehicles
+                                            category for emission calculations but will remain in records for historical
+                                            reference.
+
+                                        </li>
+                                    </ol>
+
+                                    <h5 class="ct_fs_16  mt-3">Steps to Add Vehicle Fleet:
+
+
+                                    </h5>
+                                    <ol style="list-style: disc;" class="mb-2 pl-4">
+                                        <li>Download the appropriate template (Passenger/Delivery).
+
+                                        </li>
+                                        <li>Fill in the required fleet details in the template (such as model number,
+                                            vehicle type, fuel type, etc.).
+
+
+                                        </li>
+                                        <li>Upload the completed template into the tool.
+
+                                        </li>
+                                    </ol>
+                                    <h5 class="ct_fs_16  mb-0 mt-3">Access Rights:
+                                    </h5>
+                                    <ol style="list-style: disc;" class="mb-2 pl-4">
+                                        <li>Super-Admin, Admin, Manager as well as Data Preparer roles can upload, edit,
+                                            or retire vehicles for their respective facilities.
+
+                                        </li>
+                                    </ol>
+
+                                </div>
+
+
+
+
+
+
+                            </div>
+                        </div>
 
                         <!-- <a href="assets/passenger_fleet.xlsx"  download
                         class="px-4 trackingsubmitb ct_h_40">Passenger Vehicle</a> -->
