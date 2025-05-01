@@ -1,0 +1,177 @@
+<div class="container-fluid px-4">
+    <!-- <div class="row pt-4">
+        <div class="col-sm-6" [ngClass]="
+                this.updatedtheme === 'dark' ? 'headlinetextD' : 'headlinetextL'
+            ">
+            <h3 class="pl-4">Set Emission Inventory</h3>
+        </div>
+    </div> -->
+
+    <div class="row pt-3">
+        <div class="col-md-12  overflow-auto mb-5 ct_custom_flex_basisc"
+            [ngClass]="this.updatedtheme === 'dark' ? 'User-tabD' : 'User-tabL'">
+            <div class="row">
+                <div class="" [ngClass]="
+                        this.updatedtheme === 'dark'
+                            ? 'User-headD'
+                            : 'User-headL'
+                    ">
+                    <div
+                        class="card-header card-headerL ct_header_grey_1202 d-flex align-items-center justify-content-between">
+
+
+                        <h4 class=" ct_fw_600 m-0 m-0" style="flex: 1;">Set Emission Inventory</h4>
+                        <div class="ct_how_use_tooltip_main ml-auto">
+                            <i class="fa-solid fa-circle-question" (click)="isHowtoUse = !isHowtoUse"></i>
+                            <div class="ct_how_use_tooltip_cnt" [ngClass]="isHowtoUse ? 'ct_active' : ''">
+                                <div>
+                                    <p class="mb-1">EKO Trace aligns with science-based target initiative (SBTi) to set the targets for emission reductions.  SBTs are in line with the scale of reductions that the latest climate science deems necessary to keep global warming below 1.5°C.  The goal is to reduce global GHG emissions by 50% by 2030 and reach net zero emissions by no later than 2050. 
+                                        Setting SBTs in EKO Trace is a three-step process:
+                                        
+                                    </p>
+                                    <p class="ct_fs_16 mt-2 mb-0"><span class="ct_fw_600">Set Emissions Inventory:</span> An annual emissions inventory is a prerequisite for emissions forecasting and setting targets. The target setting can only be done for the parent company. 	
+
+    
+                                    </p>
+                        
+                                    <ol class="mb-0">
+                                        <li>Entering the inventory data 
+                                            <ul style="list-style: lower-roman;" class="mb-0">
+                                                <li>Inputting scope1, scope2 and scope3 data for the corresponding year is mandatory. Subcategory emissions data is optional and is required only when you are selecting other target KPIs. 
+                                                </li>
+                                                <li>Product output is required for target type ‘physical intensity convergence.’ This target type is useful in the case of single product manufacturing.  The unit of product output can be no. of items / tonnes / kg etc. 
+                                                </li>
+                                                <li>Economic output is required for ‘economic intensity convergence’ and is useful when the company generates revenue from multiple products. The unit of economic output is the local ccy of revenue output
+                                                </li>
+                                            </ul>
+                        
+                                        </li>
+                                        <li>Emissions growth, revenue and output growth projections are required for emissions forecasting. To do the forecasting, you at-least need the base year data (the year when target setting was done), current year (which has latest emissions data) and the target year (by when you want to achieve the target reduction in emissions).
+
+                                        </li>
+                                      
+                                    </ol>
+                                  
+                                  
+                                </div>
+                               
+                        
+                        
+                        
+                        
+                        
+                            </div>
+                        </div>
+                        <button class="GroupButton ct_assign_package_btn129 ct_animation_btn_121 w-auto px-2 mr-3"
+                            >
+                            Set Revenue Projections
+                        </button>
+                        <button class="GroupButton ct_assign_package_btn129 ct_animation_btn_121 w-auto px-4"
+                            >
+                            + Add Inventory
+                        </button>
+                     
+                    </div>
+                </div>
+                <!-- <div class="d-flex justify-content-between text-style text-light scope-Div">
+                    <div class="form-group has-search">
+                        <span class="fa fa-search form-control-feedback" [ngClass]="
+                                this.updatedtheme === 'dark'
+                                    ? 'form-control-feedbackD'
+                                    : 'form-control-feedbackL'
+                            ">
+                        </span>
+                        <input type="text" name="search" [ngClass]="
+                                this.updatedtheme === 'dark'
+                                    ? 'form-controlD'
+                                    : 'form-controlL'
+                            " class="form-control" placeholder="Search" [(ngModel)]="searchData" />
+                    </div>
+                    <div class="form-group has-search text-light">
+                        <button class="GroupButton ct_assign_package_btn129 ct_animation_btn_121" (click)="showAddGroupDialog()">
+                            + Add Offset
+                        </button>
+                    </div>
+                </div> -->
+            </div>
+
+            <p-toast></p-toast>
+            <p-confirmDialog #cd [style]="{width: '60vw'}">
+                <ng-template pTemplate="footer">
+                    <button pButton icon="pi pi-check" label="Yes" (click)="cd.accept()"
+                        class="span-color cancel-button"></button>
+                    <button pButton icon="pi pi-times" label="Cancel" (click)="cd.reject()"
+                        class="p-button-raised p-button-danger"></button>
+                </ng-template>
+            </p-confirmDialog>
+
+
+
+
+
+            <div class="dataTable scrollit mt-4">
+                <table class="table_loc ct_space_table_21 ct_billing_table_bg_120">
+                    <thead>
+                        <tr>
+
+                            
+                            <th scope="col mx-3">Year</th>
+                            <th scope="col">Total Scope1 (tC02e)</th>
+                            <th scope="col">Total Scope2 (tC02e)</th>
+                            <th scope="col">Total Scope3 (tC02e)</th>
+                            <th scope="col">Total Emissions (tC02e) </th>
+                            <th scope="col">User </th>
+                            <th scope="col"> </th>
+                        </tr>
+                    </thead>
+                    <!-- <tbody>
+                        <tr clickable (click)="selectGroup(group,index)" *ngFor="
+                                let group of groupsList;let index = index
+                            " class="col-12 tableRow border-bottom rounded pointer" (click)="UnlockComplete(group.id)"
+                            [ngClass]="{ 'tableRowclicked': index === selectedRowIndex }">
+                          
+                            <td class="td ">
+                                {{ group.year_added }}
+
+                            </td>
+                            <td class="td pb-1">
+                                {{ group.total_scope1 }}
+
+                            </td>
+                            <td class="td pb-1">
+                                {{ group.total_scope2 }}
+
+                            </td>
+                            <td class="td pb-1">
+                                {{ group.total_scope3}}
+
+                            </td>
+                            <td class="td pb-1">
+                                {{ group.total_emission }}
+                            </td>
+                            <td class="td pb-1">
+                                {{ group.user_name }}
+                            </td>
+                            <td class="td pb-1" (click)="viewDetails(group.relation_id)">
+                                <i class="fas fa-edit"></i>
+                            </td>
+                          
+                        </tr>
+                    </tbody> -->
+                </table>
+                <div class="text-light" >
+                    <div class="icon">
+                        <i class="fa fa-info-circle" style="font-size: 20px" aria-hidden="true"></i>
+                    </div>
+                    <label class="text-center label">No group available. Start by add a new group using the
+                        add group button.</label>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+

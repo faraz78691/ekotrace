@@ -13,7 +13,6 @@ export const environment = {
     // baseUrl: 'http://192.168.29.44:4500',
     // baseUrl: 'http://192.168.1.5:4500',
     // http://192.168.29.101:4500/fetchScope2Comission
-  
     NoData: 'No Data Point',
     none: 'none',
     flex: 'flex',

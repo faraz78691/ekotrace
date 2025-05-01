@@ -35,22 +35,27 @@
                         class="px-4 trackingsubmitb ct_h_40">Passenger Vehicle</a> -->
                     </div>
 
-                    <div class="d-flex align-items-center ct_gap_10 flex-wrap my-3   justify-content-end  ">
-
-                        <div class="d-flex justify-content-end ct_h_40 rounded">
-                            <p-fileUpload class="ct_svg_icon_white" #fileUpload mode="basic" accept=".xlsx, .xls"
-                                (onSelect)="overideSheet($event.files,fileUpload)"
-                                chooseLabel="Upload here to overide"></p-fileUpload>
+                    <div class="d-flex align-items-center ct_gap_10 flex-wrap my-3 justify-content-between  ">
+                        <div>
+                            <a [href]="vehicleType ==1 ? 'assets/VehicleFleet-passengervehicle.xlsx' : 'assets/VehicleFleet-deliveryVehicle.xlsx'"
+                                download class="px-4 trackingsubmitb ct_h_40"><i
+                                    class="fa-solid fa-download mr-2"></i>Vehicle upload template</a>
                         </div>
-                        <div class="d-flex justify-content-end ct_h_40 rounded">
-                            <p-fileUpload class="ct_svg_icon_white" #fileUpload2 mode="basic" accept=".xlsx, .xls"
-                                (onSelect)="onPurchaseGoodsUpload($event.files,fileUpload2)"
-                                chooseLabel="Please select a File"></p-fileUpload>
+                        <div class="d-flex ct_gap_10">
+                            <div class=" ct_h_40 rounded">
+                                <p-fileUpload class="ct_svg_icon_white" #fileUpload mode="basic" accept=".xlsx, .xls"
+                                    (onSelect)="overideSheet($event.files,fileUpload)"
+                                    chooseLabel="Override vehicle list"></p-fileUpload>
+                            </div>
+                            <div class=" ct_h_40 rounded">
+                                <p-fileUpload class="ct_svg_icon_white" #fileUpload2 mode="basic" accept=".xlsx, .xls"
+                                    (onSelect)="onPurchaseGoodsUpload($event.files,fileUpload2)"
+                                    chooseLabel="Add to vehicle list"></p-fileUpload>
+                            </div>
+
                         </div>
 
-                        <a [href]="vehicleType ==1 ? 'assets/VehicleFleet-passengervehicle.xlsx' : 'assets/VehicleFleet-deliveryVehicle.xlsx'"
-                            download class="px-4 trackingsubmitb ct_h_40"><i
-                                class="fa-solid fa-download mr-2"></i>Download Files</a>
+
 
                     </div>
                 </div>
@@ -73,11 +78,11 @@
                     <thead>
                         <tr>
 
-                         
+
                             <th scope="col" style="font-size: 16px;">Vehicle Model </th>
                             <th scope="col" style="font-size: 16px;">Vehicle Type </th>
                             <th scope="col" style="font-size: 16px;">Fuel</th>
-                            
+
                             <th scope="col" style="font-size: 16px;">Acquisition Date</th>
                             <th scope="col" style="font-size: 16px;">Status</th>
                             <th scope="col" style="font-size: 16px;" *ngIf="!showSubmit1">Action</th>
@@ -88,7 +93,7 @@
                         <ng-container *ngFor="let group of jsonData;let index = index">
                             <tr *ngIf="group.category == 1" clickable (click)="selectGroup(group,index)"
                                 class="col-12 tableRow border-bottom rounded pointer">
-                               
+
                                 <td class="td " style="font-size: 16px;">
                                     {{ group.vehicle_model }}
 
@@ -107,9 +112,8 @@
                                     || group.acquisition_date}}
 
                                 </td>
-                                <td class="td  pb-1" style="font-size: 16px;" >
-                                    <ng-container
-                                        *ngIf="editingId === group.id; else displayMode">
+                                <td class="td  pb-1" style="font-size: 16px;">
+                                    <ng-container *ngIf="editingId === group.id; else displayMode">
                                         <select [(ngModel)]="group.retire_vehicle">
                                             <option value=0>Active</option>
                                             <option value=1>Retire</option>
@@ -120,14 +124,14 @@
                                     </ng-template>
 
                                 </td>
-                               <ng-container *ngIf="!showSubmit1">
-                                   <td *ngIf="editingId !== group.id" class="td pb-1" (click)="editRow(group)"   >
-                                       <i class="fas fa-edit"></i>
-                                   </td>
-                                   <td *ngIf="editingId == group.id" class="td pb-1" (click)="updateRow(group)"   >
-                                       <i class="fas fa-save"></i>
-                                   </td>
-                               </ng-container>
+                                <ng-container *ngIf="!showSubmit1">
+                                    <td *ngIf="editingId !== group.id" class="td pb-1" (click)="editRow(group)">
+                                        <i class="fas fa-edit"></i>
+                                    </td>
+                                    <td *ngIf="editingId == group.id" class="td pb-1" (click)="updateRow(group)">
+                                        <i class="fas fa-save"></i>
+                                    </td>
+                                </ng-container>
                             </tr>
 
                         </ng-container>
@@ -153,7 +157,7 @@
                     <thead>
                         <tr>
 
-                           
+
                             <th scope="col" style="font-size: 16px;">Vehicle Model </th>
                             <th scope="col" style="font-size: 16px;">Vehicle Type </th>
                             <th scope="col" style="font-size: 16px;">Fuel </th>
@@ -168,7 +172,7 @@
 
                             <tr *ngIf="group.category === '2'" clickable (click)="selectGroup(group,index)"
                                 class="col-12 tableRow border-bottom rounded pointer">
-                               
+
                                 <td class="td " style="font-size: 16px;">
                                     {{ group.vehicle_model }}
 
@@ -182,12 +186,12 @@
 
                                 </td>
                                 <td class="td  pb-1" style="font-size: 16px;">
-                                    {{  group.acquisition_date}}
+                                    {{ group.acquisition_date}}
 
                                 </td>
 
                                 <td class="td  pb-1" style="font-size: 16px;">
-                                    <ng-container  *ngIf="editingId === group.id; else displayMode">
+                                    <ng-container *ngIf="editingId === group.id; else displayMode">
                                         <select [(ngModel)]="group.retire_vehicle">
                                             <option value=0>Active</option>
                                             <option value=1>Retire</option>
@@ -199,10 +203,10 @@
 
                                 </td>
                                 <ng-container *ngIf="!showSubmit2">
-                                    <td *ngIf="editingId !== group.id" class="td pb-1" (click)="editRow(group)"   >
+                                    <td *ngIf="editingId !== group.id" class="td pb-1" (click)="editRow(group)">
                                         <i class="fas fa-edit"></i>
                                     </td>
-                                    <td *ngIf="editingId == group.id" class="td pb-1" (click)="updateRow(group)"   >
+                                    <td *ngIf="editingId == group.id" class="td pb-1" (click)="updateRow(group)">
                                         <i class="fas fa-save"></i>
                                     </td>
 
@@ -211,7 +215,7 @@
                         </ng-container>
                     </tbody>
                 </table>
-                <ng-container  *ngIf="showSubmit2">
+                <ng-container *ngIf="showSubmit2">
                     <div *ngIf="!overRide" class="col-12 mt-5">
                         <button type="submit" class="px-4 trackingsubmitb" (click)="saveVehicleFleet()">
                             Submit

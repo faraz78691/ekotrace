@@ -41,6 +41,7 @@
                             <th scope="col">S.No</th>
                             <th scope="col">Company name</th>
                             <th scope="col">Email</th>
+                            <th scope="col">Username</th>
                             <th scope="col">Package Assigned</th>
                             <th scope="col">License expired</th>
                          
@@ -60,6 +61,9 @@
                             </td>
                             <td class="td ">
                                 {{ group.companyEmail }}
+                            </td>
+                            <td class="td ">
+                                {{ group.userName }}
 
                             </td>
                             <td class="td pb-1">
@@ -68,7 +72,6 @@
                             </td>
                             <td class="td pb-1">
                                 {{ group.licenseExpired }}
-
                             </td>
                            
                             <td class="td pb-1" (click)="viewDetails(group)">
@@ -176,6 +179,33 @@
                 </div>
                 <div class="col-md-12">
                     <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="firstname">First name</label>
+                            <input name="firstname" id="" type="text" class="form-control Dashboard-tab text-white"
+                                placeholder="Enter first name" [(ngModel)]="superAdmin.firstname" required 
+                                #firstname="ngModel" />
+                            <div *ngIf="firstname.invalid && firstname.touched" class="text-danger">
+                               Username is required
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="lastname">Last name</label>
+                            <input name="lastname" id="" type="text" class="form-control Dashboard-tab text-white"
+                                placeholder="Enter last name" [(ngModel)]="superAdmin.lastname" required 
+                                #lastname="ngModel" />
+                            <div *ngIf="lastname.invalid && lastname.touched" class="text-danger">
+                               Last name is required
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="username">Username</label>
+                            <input name="username" id="" type="text" class="form-control Dashboard-tab text-white"
+                                placeholder="Enter username" [(ngModel)]="superAdmin.username" required 
+                                #username="ngModel" />
+                            <div *ngIf="username.invalid && username.touched" class="text-danger">
+                               Username is required
+                            </div>
+                        </div>
                         <div class="col-md-6 mb-3">
                             <label for="password">Password</label>
                             <input name="password" id="password" type="password" class="form-control Dashboard-tab text-white"

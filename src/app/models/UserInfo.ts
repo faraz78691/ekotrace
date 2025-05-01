@@ -11,14 +11,15 @@ export class UserInfo {
     facilityID: number = 0;
     facilityName = '';
     role = '';
-    userID = '';
-    user_id = '';
+    userID :number ;
+    user_id :number ;
     isDisabledDelete = false;
     isDisabledEdit = false;
     success:boolean;
     group_name: string | null;
-    group_id:string | null;
-    is_main_group:number
+    group_id:any;
+    is_main_group:number;
+    tenant_id:number
 
 }
 export class newUserInfo {

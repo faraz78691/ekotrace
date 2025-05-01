@@ -66,7 +66,9 @@ export class AppService {
       };
 
     public logout() {
-        localStorage.clear();
+        localStorage.removeItem('LoginInfo');
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('SelectedfacilityID');
         this.user = null;
         this.router.navigate(['/login']);
     }

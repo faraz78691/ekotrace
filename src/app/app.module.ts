@@ -134,7 +134,8 @@ import { GhgReportingComponent } from './pages/reporting/ghg-reporting/ghg-repor
 import { PdfReportingComponent } from './pages/pdf-reporting/pdf-reporting.component';
 import { KpiDashboardComponent } from './pages/kpi-dashboard/kpi-dashboard.component';
 import { KpiInventoryComponent } from './pages/kpi-inventory/kpi-inventory.component';
-
+import { NgxSpinnerModule } from "ngx-spinner";
+import { AttachmentsComponent } from './pages/attachments/attachments.component';
 
 defineCustomElements();
 registerLocaleData(localeEn, 'en-EN');
@@ -223,7 +224,8 @@ registerLocaleData(localeEn, 'en-EN');
         GhgReportingComponent,
         PdfReportingComponent,
         KpiDashboardComponent,
-        KpiInventoryComponent
+        KpiInventoryComponent,
+        AttachmentsComponent
     ],
     imports: [
         HeaderComponent,
@@ -232,6 +234,7 @@ registerLocaleData(localeEn, 'en-EN');
         ValidateEqualModule,
         BrowserModule,
         FormsModule,
+        NgxSpinnerModule.forRoot({ type: 'ball-clip-rotate-pulse' }),
         MessagesModule,
         NgxChartsModule,
         NgApexchartsModule,

@@ -257,6 +257,9 @@ export class FacilityComponent {
         formdata.set('CountryId', this.facilityDetails?.CountryId.toString());
         formdata.set('StateId', (this.facilityDetails?.StateId)?.toString());
         formdata.set('ID', this.id_var);
+        formdata.set('total_area', this.facilityDetails?.total_area?.toString() || '');
+        formdata.set('no_of_employee', this.facilityDetails?.no_of_employee?.toString() || '');
+        formdata.set('energy_ref_area', this.facilityDetails?.energy_ref_area?.toString() || '');
         this.facilityService
             .FacilityDataUpdate(formdata.toString())
             .subscribe({
@@ -380,9 +383,6 @@ export class FacilityComponent {
             this.selectedScope3 = result[0].scope3;
             this.facilityDetails = result[0];
           
-            // this.selectedCountry = this.facilityDetails.CountryId;
-            // this.facilityDetails.CountryId = 5
-          
             const facilityUsers = result[0].userInfoModels;
         
             this.managerList1 = [];
@@ -498,79 +498,6 @@ export class FacilityComponent {
 
                 this.scope1Category = response.scope1;
 
-                // this.scope1Category = [
-                //     {
-                //         "label": "Stationary Combustion",
-                //         "value": 1,
-                //         "scopeid": 1,
-                //         "items": [
-                //             {
-                //                 "label": "Liquid Fuels",
-                //                 "value":1
-                //             },
-                //             {
-                //                 "label": "Solid Fuels",
-                //                 "value": 2
-                //             },
-                //             {
-                //                 "label": "Gaseous Fuels",
-                //                 "value": 3
-                //             },
-                //             {
-                //                 "label": "Biofuel",
-                //                 "value": 4
-                //             },
-                //             {
-                //                 "label": "Biomass",
-                //                 "value": 5
-                //             },
-                //             {
-                //                 "label": "Biogas",
-                //                 "value": 6
-                //             }
-                //         ]
-                //     },
-                //     {
-                //         "label": "Refrigerants",
-                //         "value": 2,
-                //         "scopeid": 1,
-                //         "items": [
-                //             {
-                //                 "label": "Refrigerants",
-                //                 "value": 7
-                //             }
-                //         ]
-                //     },
-                //     {
-                //         "label": "Fire Extinguisher",
-                //         "value": 3,
-                //         "scopeid": 1,
-                //         "items": [
-                //             {
-                //                 "label": "Fire Extinguisher (CO2 Type)",
-                //                 "value": 8
-                //             }
-                //         ]
-                //     },
-                //     {
-                //         "label": "Company Owned Vehicles",
-                //         "value": 6,
-                //         "scopeid": 1,
-                //         "items": [
-                //             {
-                //                 "label": "Passenger Vehicle",
-                //                 "value": 10
-                //             },
-                //             {
-                //                 "label": "Delivery Vehicle",
-                //                 "value": 11
-                //             }
-                //         ]
-                //     }
-                // ],
-
-
-             
                 this.scope2Category = response.scope2;
                 this.scope3Category = response.scope3;
              
@@ -580,13 +507,8 @@ export class FacilityComponent {
     };
 
     onMultiSelectChange(event: { originalEvent: Event, value: any }) {
-
-      
         this.selectedScope1
-        // this.selectedScope1 = event.value.map((item: any) => {
-
-        //   return { groupId: item.scopeid, itemId: item.value };
-        // });
+      
     }
     getAllSeedData2(newfacilityid) {
         this.facilityService.getSeedData().subscribe({
@@ -787,114 +709,6 @@ export class FacilityComponent {
         }
 
 
-        // // console.log(this.selectedScope3);
-
-        // this.manageDataPoint1 = []
-        // if (
-        //     this.savedData.length > 0
-
-        // ) {
-        //     if (this.savedData[0].facilityId == this.facilityDetails.ID) {
-        //         this.updateDataPoint();
-
-        //     }
-        // } else {
-        //     this.seedData.forEach(scope => {
-        //         const mdp = new ManageDataPoint1();
-        //         mdp.scopeID = scope.id;
-        //         mdp.facilityId = this.facilityDetails.ID;
-        //         mdp.fiscalYear = this.trackingService.getYear(this.year);
-        //         mdp.categorySeedData =
-        //             scope.categorySeedData.map((element) => {
-        //                 return {
-        //                     ...element,
-        //                     subCategorySeedDatas:
-        //                         element.subCategorySeedDatas.filter(
-        //                             (subElement) => subElement.active === true
-        //                         )
-        //                 };
-        //             });
-
-        //         this.manageDataPoint1.push(mdp);
-        //     })
-
-        //     // from here
-
-        //     this.savedDataPoint = [];
-        //     this.manageDataPoint1.forEach(scopewise => {
-        //         const scopedataforsave = new savedDataPoint();
-        //         scopedataforsave.TenantID = this.loginInfo.tenantID;
-        //         scopedataforsave.facilityId = scopewise.facilityId;
-        //         scopedataforsave.fiscalYear = this.trackingService.getYear(this.year);
-        //         scopedataforsave.scopeID = scopewise.scopeID;
-        //         scopedataforsave.categorySeedData = [];
-        //         scopewise.categorySeedData.forEach((seed) => {
-        //             this.savedDataPointCat = new SavedDataPointCategory();
-        //             this.savedDataPointCat.manageDataPointCategorySeedID = seed.id;
-        //             this.savedDataPointCat.manageDataPointId = seed.manageScopeId;
-        //             this.savedDataPointCat.TenantID = this.loginInfo.tenantID;
-        //             this.savedDataPointCat.subCategorySeedDatas = [];
-
-        //             scopedataforsave.categorySeedData.push(
-        //                 this.savedDataPointCat
-        //             );
-
-        //             seed.subCategorySeedDatas.forEach((cat) => {
-        //                 this.savedDataPointSubCat = new SavedDataPointSubCategory();
-        //                 this.savedDataPointSubCat.manageDataPointSubCategorySeedID =
-        //                     cat.id;
-        //                 this.savedDataPointSubCat.manageDataPointCategoriesId =
-        //                     cat.categorySeedDataId;
-        //                 this.savedDataPointSubCat.isMandatory = cat.isMandatory;
-        //                 this.savedDataPointSubCat.active = cat.active;
-        //                 this.savedDataPointSubCat.item = cat.item;
-        //                 this.savedDataPointSubCat.TenantID =
-        //                     this.loginInfo.tenantID;
-        //                 this.savedDataPointCat.subCategorySeedDatas.push(
-        //                     this.savedDataPointSubCat
-        //                 );
-        //             });
-        //         });
-        //         this.savedDataPoint.push(scopedataforsave)
-        //     })
-        // this.savedDataPoint.id = this.manageDataPoint1.id;
-        // this.savedDataPoint.scopeID = this.manageDataPoint1.scopeID;
-        // this.savedDataPoint.facilityId = this.manageDataPoint1.facilityId;
-        // this.savedDataPoint.fiscalYear = this.manageDataPoint1.fiscalYear;
-        // this.savedDataPoint.TenantID = this.loginInfo.tenantID;
-        // this.savedDataPoint.categorySeedData = [];
-
-        // this.manageDataPoint1.categorySeedData.forEach((seed) => {
-        //     this.savedDataPointCat = new SavedDataPointCategory();
-        //     this.savedDataPointCat.manageDataPointCategorySeedID = seed.id;
-        //     this.savedDataPointCat.manageDataPointId = seed.manageScopeId;
-        //     this.savedDataPointCat.TenantID = this.loginInfo.tenantID;
-        //     this.savedDataPointCat.subCategorySeedDatas = [];
-
-        //     this.savedDataPoint.categorySeedData.push(
-        //         this.savedDataPointCat
-        //     );
-
-        //     seed.subCategorySeedDatas.forEach((cat) => {
-        //         this.savedDataPointSubCat = new SavedDataPointSubCategory();
-        //         this.savedDataPointSubCat.manageDataPointSubCategorySeedID =
-        //             cat.id;
-        //         this.savedDataPointSubCat.manageDataPointCategoriesId =
-        //             cat.categorySeedDataId;
-        //         this.savedDataPointSubCat.isMandatory = cat.isMandatory;
-        //         this.savedDataPointSubCat.active = cat.active;
-        //         this.savedDataPointSubCat.item = cat.item;
-        //         this.savedDataPointSubCat.TenantID =
-        //             this.loginInfo.tenantID;
-        //         this.savedDataPointCat.subCategorySeedDatas.push(
-        //             this.savedDataPointSubCat
-        //         );
-        //     });
-        // });
-        // }
-
-
-
         const isSubcategoryEmptyForAllCategories = this.selectedScope1.length == 0 && this.selectedScope2.length == 0 && this.selectedScope3.length == 0
         if (isSubcategoryEmptyForAllCategories == true) {
             this.notification.showInfo(
@@ -982,172 +796,7 @@ export class FacilityComponent {
     //method for update datapoint
     updateDataPoint() {
         this.savedDataPoint = [];
-        // this.savedDataPoint.id = this.savedData.id;
-        // this.savedDataPoint.scopeID = this.seedData[0].id;
-        // this.savedDataPoint.facilityId = this.facilityDetails.id;
-        // this.savedDataPoint.fiscalYear = '2023';
-        // this.savedDataPoint.TenantID = this.loginInfo.tenantID;
-        // this.savedDataPoint.categorySeedData = [];
-
-        // this.savedDataPoint.categorySeedData =
-        //     this.seedData[0].categorySeedData.map((saved) => {
-        //         const savedDataPointCat = new SavedDataPointCategory();
-        //         savedDataPointCat.id = saved.id;
-        //         if (saved.manageDataPointCategorySeedID != null) {
-        //             savedDataPointCat.manageDataPointCategorySeedID =
-        //                 saved.manageDataPointCategorySeedID;
-        //         } else {
-        //             savedDataPointCat.manageDataPointCategorySeedID = saved.id;
-        //         }
-        //         savedDataPointCat.manageDataPointId = saved.manageScopeId;
-        //         savedDataPointCat.TenantID = this.loginInfo.tenantID;
-        //         savedDataPointCat.subCategorySeedDatas =
-        //             saved.subCategorySeedDatas
-        //                 .filter(
-        //                     (cat) =>
-        //                         cat.active === true ||
-        //                         (cat.active == false &&
-        //                             cat.SubCategorySeedID != null)
-        //                 )
-        //                 .map((cat) => {
-        //                     const savedDataPointSubCat =
-        //                         new SavedDataPointSubCategory();
-
-        //                     if (cat.SubCategorySeedID != null) {
-        //                         savedDataPointSubCat.id = cat.subCatsavedID;
-        //                         savedDataPointSubCat.manageDataPointSubCategorySeedID =
-        //                             cat.SubCategorySeedID;
-        //                     } else {
-        //                         savedDataPointSubCat.manageDataPointSubCategorySeedID =
-        //                             cat.id;
-        //                         savedDataPointSubCat.id = 0;
-        //                     }
-        //                     savedDataPointSubCat.manageDataPointCategoriesId =
-        //                         cat.categorySeedDataId;
-        //                     if (cat.active == false) {
-        //                         savedDataPointSubCat.isMandatory = false;
-        //                     } else {
-        //                         savedDataPointSubCat.isMandatory =
-        //                             cat.isMandatory;
-        //                     }
-        //                     savedDataPointSubCat.active = cat.active;
-        //                     savedDataPointSubCat.item = cat.item;
-        //                     savedDataPointSubCat.TenantID =
-        //                         this.loginInfo.tenantID;
-        //                     return savedDataPointSubCat;
-        //                 });
-        //         return savedDataPointCat;
-        //     });
-        // this.seedData.forEach(scope => {
-        //     this.savedData.forEach(saved => {
-        //         const savedatawithScope = new savedDataPoint();
-        //         savedatawithScope.TenantID = this.loginInfo.tenantID;
-        //         savedatawithScope.facilityId = this.facilityDetails.id;
-        //         savedatawithScope.fiscalYear = '2023';
-        //         savedatawithScope.id = saved.id;
-        //         savedatawithScope.scopeID = scope.id;
-        //         savedatawithScope.categorySeedData = scope.categorySeedData.map((saved) => {
-        //             const savedDataPointCat = new SavedDataPointCategory();
-        //             savedDataPointCat.id = saved.id;
-        //             if (saved.manageDataPointCategorySeedID != null) {
-        //                 savedDataPointCat.manageDataPointCategorySeedID =
-        //                     saved.manageDataPointCategorySeedID;
-        //             } else {
-        //                 savedDataPointCat.manageDataPointCategorySeedID = saved.id;
-        //             }
-        //             savedDataPointCat.manageDataPointId = saved.manageScopeId;
-        //             savedDataPointCat.TenantID = this.loginInfo.tenantID;
-        //             savedDataPointCat.subCategorySeedDatas =
-        //                 saved.subCategorySeedDatas
-        //                     .filter(
-        //                         (cat) =>
-        //                             cat.active === true ||
-        //                             (cat.active == false &&
-        //                                 cat.SubCategorySeedID != null)
-        //                     )
-        //                     .map((cat) => {
-        //                         const savedDataPointSubCat =
-        //                             new SavedDataPointSubCategory();
-
-        //                         if (cat.SubCategorySeedID != null) {
-        //                             savedDataPointSubCat.id = cat.subCatsavedID;
-        //                             savedDataPointSubCat.manageDataPointSubCategorySeedID =
-        //                                 cat.SubCategorySeedID;
-        //                         } else {
-        //                             savedDataPointSubCat.manageDataPointSubCategorySeedID =
-        //                                 cat.id;
-        //                             savedDataPointSubCat.id = 0;
-        //                         }
-        //                         savedDataPointSubCat.manageDataPointCategoriesId =
-        //                             cat.categorySeedDataId;
-        //                         if (cat.active == false) {
-        //                             savedDataPointSubCat.isMandatory = false;
-        //                         } else {
-        //                             savedDataPointSubCat.isMandatory =
-        //                                 cat.isMandatory;
-        //                         }
-        //                         savedDataPointSubCat.active = cat.active;
-        //                         savedDataPointSubCat.item = cat.item;
-        //                         savedDataPointSubCat.TenantID =
-        //                             this.loginInfo.tenantID;
-        //                         return savedDataPointSubCat;
-        //                     });
-        //             return savedDataPointCat;
-        //         });
-
-        //         this.savedDataPoint.push(savedatawithScope);
-        //     })
-
-
-        // })
-        // this.seedData.forEach(scope => {
-        //     this.savedData.forEach(saved => {
-        //         const savedatawithScope = new savedDataPoint();
-        //         savedatawithScope.TenantID = this.loginInfo.tenantID;
-        //         savedatawithScope.facilityId = this.facilityDetails.id;
-        //         savedatawithScope.fiscalYear = '2023';
-        //         savedatawithScope.id = saved.id;
-        //         savedatawithScope.scopeID = scope.id;
-        //         savedatawithScope.categorySeedData = [];
-        //         scope.categorySeedData.forEach(cat => {
-        //             const savedDataPointCat = new SavedDataPointCategory();
-        //             savedDataPointCat.id = cat.id;
-        //             if (cat.manageDataPointCategorySeedID !== null) {
-        //                 savedDataPointCat.manageDataPointCategorySeedID = cat.manageDataPointCategorySeedID;
-        //             } else {
-        //                 savedDataPointCat.manageDataPointCategorySeedID = cat.id;
-        //             }
-        //             savedDataPointCat.manageDataPointId = cat.manageScopeId;
-        //             savedDataPointCat.TenantID = this.loginInfo.tenantID;
-        //             savedDataPointCat.subCategorySeedDatas = [];
-        //             cat.subCategorySeedDatas
-        //                 .filter(subCat => subCat.active === true || (subCat.active === false && subCat.SubCategorySeedID !== null))
-        //                 .forEach(subCat => {
-        //                     const savedDataPointSubCat = new SavedDataPointSubCategory();
-        //                     if (subCat.SubCategorySeedID !== null) {
-        //                         savedDataPointSubCat.id = subCat.subCatsavedID;
-        //                         savedDataPointSubCat.manageDataPointSubCategorySeedID = subCat.SubCategorySeedID;
-        //                     } else {
-        //                         savedDataPointSubCat.manageDataPointSubCategorySeedID = subCat.id;
-        //                         savedDataPointSubCat.id = 0;
-        //                     }
-        //                     savedDataPointSubCat.manageDataPointCategoriesId = subCat.id;
-        //                     if (subCat.active === false) {
-        //                         savedDataPointSubCat.isMandatory = false;
-        //                     } else {
-        //                         savedDataPointSubCat.isMandatory = subCat.isMandatory;
-        //                     }
-        //                     savedDataPointSubCat.active = subCat.active;
-        //                     savedDataPointSubCat.item = subCat.item;
-        //                     savedDataPointSubCat.TenantID = this.loginInfo.tenantID;
-        //                     savedDataPointCat.subCategorySeedDatas.push(savedDataPointSubCat);
-        //                 });
-        //             savedatawithScope.categorySeedData.push(savedDataPointCat);
-        //         });
-        //         this.savedDataPoint.push(savedatawithScope);
-        //     });
-        // });
-
+       
         this.seedData.forEach((scope, index) => {
             const saved = this.savedData[index];
 

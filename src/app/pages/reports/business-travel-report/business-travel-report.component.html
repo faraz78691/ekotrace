@@ -75,14 +75,14 @@
                         </div>
                     </ng-container>
                 </div>
-                <div class="col-md-6 mb-3">
+                <!-- <div class="col-md-6 mb-3">
                     <label for="fname" class="text-dark">Select Modes</label>
                     <p-dropdown class=" finput ct_input_white_bg13 ct_select_2_drop_white ct_input_dark_text_145"
                         [options]="modesType" placeholder="Select mode" optionLabel="value" optionValue="id"
                         styleClass="facilitydropdown" [(ngModel)]="selectedMode" name="modes"
                        >
                     </p-dropdown>
-                </div>
+                </div> -->
 
 
 
@@ -167,7 +167,7 @@
                                     <td> {{de.DataPoint1}}</td>
                                     <td> {{de.DataPoint2}}</td>
                                     <td> {{de.facility}}</td>
-                                    <td> {{de.Emission}}</td>
+                                    <td> {{de.Emission / 1000 | number : '1.4-4'}}</td>
                                     <td *ngIf="(this.isMultiple && this.selectReportType == 'Monthly')"> {{de.Months}}</td>
                                     <td *ngIf="(this.isMultiple && this.selectReportType == 'Monthly')"> {{de.Years}}</td>
                                     <td *ngIf="(this.isMultiple && this.selectReportType == 'Consolidated')"> {{startMonth.value + ' '+ startYear.getFullYear().toString() + '-'+ endMonth.value + ' '+ endYear.getFullYear().toString()}}</td>

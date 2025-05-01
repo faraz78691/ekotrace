@@ -119,6 +119,10 @@ GetCostCetnre() {
 
   //method to add new group
   saveCostCentre(data: NgForm) {
+
+
+    console.log(data.value);
+
     if(this.loginInfo.role == 'Auditor'){
       this.notification.showInfo('You are not Authorized', '');
       return
@@ -138,7 +142,7 @@ GetCostCetnre() {
             'Success'
           );
           this.GetCostCetnre();
-          this.GroupForm.reset();
+        
         }
         // return
         //   this.getOffset(this.loginInfo.tenantID);

@@ -277,7 +277,7 @@ export const menu = [
                 name: 'KPI Dashboard',
                 iconClasses: 'fas fa-table',
                 iconSRC: 'assets/img/dashboard.svg',
-                path: ['kpi']
+                path: ['kpiDashboard']
             },
             {
                 name: 'Financed E. Dashboard',
@@ -292,12 +292,7 @@ export const menu = [
                 iconSRC: 'assets/img/trees.png',
                 path: ['tracking']
             },
-            {
-                name: 'KPI Inventory',
-                iconClasses: 'fas fa-table',
-                iconSRC: 'assets/img/BRSR.svg',
-                path: ['kpi_inventory']
-            },
+          
             {
                 name: 'Financed Emissions',
                 iconClasses: 'fas fa-table',
@@ -309,6 +304,12 @@ export const menu = [
                 iconClasses: 'fas fa-table',
                 iconSRC: 'assets/img/BRSR.svg',
                 path: ['dataProgress']
+            },
+            {
+                name: 'Emissions Inventory',
+                iconClasses: 'fas fa-table',
+                iconSRC: 'assets/img/BRSR.svg',
+                path: ['kpi_inventory']
             },
             {
                 name: 'Cost Centre',
@@ -337,16 +338,16 @@ export const menu = [
                 path: ['report']
             },
             {
-                name: 'BRSR',
-                iconClasses: 'fas fa-table',
-                iconSRC: 'assets/img/BRSR.svg',
-                path: ['brsrReport']
-            },
-            {
                 name: 'GHG Emissions Report',
                 iconClasses: 'fas fa-table',
                 iconSRC: 'assets/img/BRSR.svg',
                 path: ['GhgReporting']
+            },
+            {
+                name: 'BRSR',
+                iconClasses: 'fas fa-table',
+                iconSRC: 'assets/img/BRSR.svg',
+                path: ['brsrReport']
             },
             {
                 head: 'Target Setting',
@@ -428,6 +429,12 @@ export const menu = [
                 iconSRC: 'assets/img/dashboard.svg',
                 path: ['dashboard']
             },
+            // {
+            //     name: 'KPI Dashboard',
+            //     iconClasses: 'fas fa-table',
+            //     iconSRC: 'assets/img/dashboard.svg',
+            //     path: ['kpiDashboard']
+            // },
             // {
             //     name: 'Financed E. Dashboard',
             //     iconClasses: 'fas fa-table',
@@ -627,6 +634,12 @@ export const menu = [
                 path: ['dashboard']
             },
             {
+                name: 'KPI Dashboard',
+                iconClasses: 'fas fa-table',
+                iconSRC: 'assets/img/dashboard.svg',
+                path: ['kpiDashboard']
+            },
+            {
                 name: 'Financed E. Dashboard',
                 iconClasses: 'fas fa-table',
                 iconSRC: 'assets/img/BRSR.svg',
@@ -650,6 +663,12 @@ export const menu = [
                 iconClasses: 'fas fa-table',
                 iconSRC: 'assets/img/BRSR.svg',
                 path: ['dataProgress']
+            },
+            {
+                name: 'Emissions Inventory',
+                iconClasses: 'fas fa-table',
+                iconSRC: 'assets/img/BRSR.svg',
+                path: ['kpi_inventory']
             },
             {
                 name: 'Cost Centre',
@@ -676,6 +695,12 @@ export const menu = [
                 iconClasses: 'fas fa-folder',
                 iconSRC: 'assets/img/report_icon.svg',
                 path: ['report']
+            },
+            {
+                name: 'GHG Emissions Report',
+                iconClasses: 'fas fa-table',
+                iconSRC: 'assets/img/BRSR.svg',
+                path: ['GhgReporting']
             },
             {
                 name: 'BRSR',
@@ -763,6 +788,7 @@ export const menu = [
                 iconSRC: 'assets/img/dashboard.svg',
                 path: ['dashboard']
             },
+            
             // {
             //     name: 'Financed E. Dashboard',
             //     iconClasses: 'fas fa-table',
@@ -962,6 +988,12 @@ export const menu = [
                 path: ['dashboard']
             },
             {
+                name: 'KPI Dashboard',
+                iconClasses: 'fas fa-table',
+                iconSRC: 'assets/img/dashboard.svg',
+                path: ['kpiDashboard']
+            },
+            {
                 name: 'Financed E. Dashboard',
                 iconClasses: 'fas fa-table',
                 iconSRC: 'assets/img/BRSR.svg',
@@ -988,6 +1020,12 @@ export const menu = [
                 path: ['dataProgress']
             },
             {
+                name: 'Emissions Inventory',
+                iconClasses: 'fas fa-table',
+                iconSRC: 'assets/img/BRSR.svg',
+                path: ['kpi_inventory']
+            },
+            {
                 name: 'Cost Centre',
                 iconClasses: 'fas fa-table',
                 iconSRC: 'assets/img/BRSR.svg',
@@ -1012,6 +1050,12 @@ export const menu = [
                 iconClasses: 'fas fa-folder',
                 iconSRC: 'assets/img/report_icon.svg',
                 path: ['report']
+            },
+            {
+                name: 'GHG Emissions Report',
+                iconClasses: 'fas fa-table',
+                iconSRC: 'assets/img/BRSR.svg',
+                path: ['GhgReporting']
             },
             {
                 name: 'BRSR',
@@ -1123,6 +1167,12 @@ export const menu = [
                 iconClasses: 'fas fa-table',
                 iconSRC: 'assets/img/BRSR.svg',
                 path: ['dataProgress']
+            },
+            {
+                name: 'Emissions Inventory',
+                iconClasses: 'fas fa-table',
+                iconSRC: 'assets/img/BRSR.svg',
+                path: ['kpi_inventory']
             },
             {
                 name: 'Cost Centre',
@@ -1554,6 +1604,12 @@ export const menu = [
                 iconSRC: 'assets/img/dashboard.svg',
                 path: ['dashboard']
             },
+            {
+                name: 'KPI Dashboard',
+                iconClasses: 'fas fa-table',
+                iconSRC: 'assets/img/dashboard.svg',
+                path: ['kpiDashboard']
+            },
             // {
             //     name: 'Financed E. Dashboard',
             //     iconClasses: 'fas fa-table',
@@ -1572,6 +1628,12 @@ export const menu = [
                 iconClasses: 'fas fa-table',
                 iconSRC: 'assets/img/BRSR.svg',
                 path: ['dataProgress']
+            },
+            {
+                name: 'Emissions Inventory',
+                iconClasses: 'fas fa-table',
+                iconSRC: 'assets/img/BRSR.svg',
+                path: ['kpi_inventory']
             },
             // {
             //     name: 'Financed Emissions',
@@ -1871,6 +1933,12 @@ export const menu = [
                 iconSRC: 'assets/img/dashboard.svg',
                 path: ['dashboard']
             },
+            {
+                name: 'KPI Dashboard',
+                iconClasses: 'fas fa-table',
+                iconSRC: 'assets/img/dashboard.svg',
+                path: ['kpiDashboard']
+            },
             // {
             //     name: 'Financed E. Dashboard',
             //     iconClasses: 'fas fa-table',
@@ -1889,6 +1957,12 @@ export const menu = [
                 iconClasses: 'fas fa-table',
                 iconSRC: 'assets/img/BRSR.svg',
                 path: ['dataProgress']
+            },
+            {
+                name: 'Emissions Inventory',
+                iconClasses: 'fas fa-table',
+                iconSRC: 'assets/img/BRSR.svg',
+                path: ['kpi_inventory']
             },
             // {
             //     name: 'Financed Emissions',

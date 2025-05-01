@@ -32,8 +32,8 @@
                     <p  class="mr-2 pt-1 pointer ct_filter_dropdown" >
                         <ng-container *ngIf="facilitygrouplist.length > 0">
                             <p-dropdown name="facility" *ngIf="loginInfo.role !== 'Platform Admin'" #facility="ngModel"
-                            [options]="facilitygrouplist" optionLabel="AssestType" itemValue="id" styleClass="headerFacility"
-                            [(ngModel)]="selectedFacilityID" (ngModelChange)="checkFacilityID()">
+                            [options]="facilitygrouplist" optionLabel="AssestType" optionValue="id" styleClass="headerFacility"
+                            [(ngModel)]="selectedFacilityID" (onChange)="onFacilityChange()">
                             <ng-template let-option pTemplate="item" >
                                 <div  class="d-flex justify-content-between">
                                     <div>{{ option.AssestType }}</div>
@@ -48,8 +48,8 @@
                        
                         <ng-container *ngIf="facilitysubgrouplist.length > 0">
                             <p-dropdown name="facility" *ngIf="loginInfo.role !== 'Platform Admin'" #facility="ngModel"
-                                [options]="facilitysubgrouplist" optionLabel="name" itemValue="id" styleClass="headerFacility"
-                                [(ngModel)]="selectedFacilityID" (ngModelChange)="checkFacilityID()">
+                                [options]="facilitysubgrouplist" optionLabel="name" optionValue="id" styleClass="headerFacility"
+                                [(ngModel)]="selectedGroupID" (ngModelChange)="onGroupChnage()">
                                 <ng-template let-option pTemplate="item" >
                                     <div  class="d-flex justify-content-between">
                                         <div>{{ option.name }}</div>

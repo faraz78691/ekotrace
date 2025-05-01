@@ -506,7 +506,7 @@
                                         Hotel Stay
                                     </p>
                                     <p *ngIf="categoryId ==26" class="mb-2 mt-3 ml-4 text-dark">
-                                        Other modes
+                                        Other modes of transport
                                     </p>
                                     <div *ngIf="categoryId ==8" class="ml-auto">
                                         <button class="btn ct_scoope_1_tab ct_view_request_btn px-4 trackingsubmitb"
@@ -1942,13 +1942,13 @@
                                     *ngIf="categoryId ==1 || categoryId == 2 ||   categoryId == 3  || categoryId == 4 || categoryId == 5 || categoryId == 6 || categoryId == 6 || categoryId == 7">
                                     <div class="row mt-4 mx-2">
                                         <div class="col-lg-4"
-                                            *ngIf="categoryId==1 ||categoryId==2 || SubCatAllData.manageDataPointSubCategorySeedID == 1002 || categoryId == 7 ">
+                                            *ngIf="categoryId==2 || SubCatAllData.manageDataPointSubCategorySeedID == 1002 || categoryId == 7 ">
                                             <label for="fname">Type</label>
                                             <p-dropdown *ngIf="SubCatAllData.manageDataPointSubCategorySeedID != 1002"
                                                 class="ct_select_op_input ct_chev_icon_dark230 
 
                                             " ngModel [options]="SubCategoryType" optionLabel="Item"
-                                                optionValue="subCatTypeID" name="subCatType" #subCatType="ngModel"
+                                                optionValue="ID" name="subCatType" #subCatType="ngModel"
                                                 [(ngModel)]="dataEntry.typeID"></p-dropdown>
 
                                             <p-dropdown *ngIf="SubCatAllData.manageDataPointSubCategorySeedID == 1002"
@@ -1958,6 +1958,16 @@
                                                 [(ngModel)]="marketEElecID"
                                                 (onChange)="marktetTypeChange($event)"></p-dropdown>
 
+                                        </div>
+                                        <div class="col-lg-4"
+                                            *ngIf="categoryId==1 ">
+                                            <label for="fname">Type</label>
+                                            <p-dropdown 
+                                                class="ct_select_op_input ct_chev_icon_dark230 
+
+                                            " ngModel [options]="SubCategoryType" optionLabel="TypeName"
+                                                optionValue="ID" name="subCatType" #subCatType="ngModel"
+                                                [(ngModel)]="dataEntry.typeID"></p-dropdown>
                                         </div>
                                         <div class="col-lg-4"
                                             *ngIf="categoryId==1  || categoryId == 7 || (categoryId == 5 && SubCatAllData.manageDataPointSubCategorySeedID != 1002)">
@@ -1996,7 +2006,7 @@
                                         </div>
 
                                         <div class="col-lg-5" *ngIf="categoryId==2">
-                                            <label for="fname">Amount of refrigent used</label>
+                                            <label for="fname">Amount of refrigerant used</label>
                                             <div class=" position-relative">
                                                 <input required ngModel name="refAmount" #refAmount="ngModel"
                                                     placeholder="Enter value" [(ngModel)]="RefrigerantDE.refAmount"
@@ -2039,13 +2049,12 @@
                                             </p>
                                         </div>
                                         <div class="col-lg-4" *ngIf="categoryId==3">
-                                            <label pTooltip="Quantity of CO2 Makeup" tooltipPosition="top"
-                                                for="fname">CO2
-                                                MakeUp</label>
+                                            <label pTooltip="Quantity of CO2 Makeup" tooltipPosition="top" 
+                                                for="fname">Amount of C02 used</label>
                                             <div class="position-relative">
-                                                <input required ngModel name="CO2MU" #CO2MU="ngModel"
+                                                <input required ngModel name="CO2MU" #CO2MU="ngModel" placeholder="Enter value"
                                                     [(ngModel)]="FireExtinguisherDE.quantityOfCO2makeup" CO2MU
-                                                    id="search-input" type="text"
+                                                    id="search-input" type="number"
                                                     class="form-control Dashboard-tab text-white" />
                                                 <p-dropdown
                                                     class="ct_select_op_input ct_select_op_input ct_position_small_quantity"
@@ -2094,15 +2103,15 @@
                                                                 </td>
                                                                 <td>
                                                                  
-                                                                    <input required ngModel name="NoOfVehicles" [(ngModel)]="rows.noOfVehicles" #NoOfVehicles="ngModel"
-                                                                        NoOfVehicles id="search-input"
+                                                                    <input required [(ngModel)]="rows.noOfVehicles"  [ngModelOptions]="{standalone: true}"
+                                                                         id="search-input"
                                                                         type="number" class="form-control Dashboard-tab text-white"
                                                                         placeholder="Enter value" />
         
                                                                 </td>
                                                                 <td>
-                                                                    <input required ngModel name="NoOfVehicles" #NoOfVehicles="ngModel"
-                                                                        [(ngModel)]="rows.tripsPerVehicle"  id="search-input"
+                                                                    <input required 
+                                                                        [(ngModel)]="rows.tripsPerVehicle"  [ngModelOptions]="{standalone: true}"  id="search-input"
                                                                         type="number" class="form-control Dashboard-tab text-white"
                                                                         placeholder="Enter value" />
         
@@ -2251,7 +2260,7 @@
                                                         <thead class="thead-dark">
                                                             <tr>
                                                                 <th scope="col">S.No.</th>
-                                                                <th scope="col">Vehicle Modal</th>
+                                                                <th scope="col">Vehicle Model</th>
 
                                                                 <th scope="col">Mode of data entry</th>
                                                               
@@ -2272,7 +2281,7 @@
                                                                     [options]="vehicleModalFleet"
                                                                 
                                                                     optionLabel="vehicle_model" optionValue="vehicle_model"
-                                                                    placeholder="Select vehicle modal">
+                                                                    placeholder="Select Vehicle model">
                                                                 </p-dropdown>
         
                                                                 </td>
@@ -2326,7 +2335,7 @@
                                                     </div>
                                                     <a [href]="downloadCompanyExcelUrl" download
                                                         class="px-4 trackingsubmitb"><i
-                                                            class="fa-solid fa-download mr-2"></i>Download File</a>
+                                                            class="fa-solid fa-download mr-2"></i>Download Vehicle Data Template</a>
 
                                                 </div>
                                                 <div class="col-md-12 table-responsive" style="height: 40vh;">
@@ -2334,7 +2343,7 @@
                                                         <thead class="thead-dark">
                                                             <tr>
                                                                 <th scope="col">S.No.</th>
-                                                                <th scope="col">Vehicle Modal</th>
+                                                                <th scope="col">Vehicle Model</th>
                                                                 <th scope="col">Mode of data entry</th>
                                                               
                                                                 <th scope="col">Value</th>
@@ -2415,7 +2424,7 @@
                                     </div> -->
                                     </div>
 
-                                    <div class="row mt-4 mx-2" *ngIf="categoryId==3">
+                                    <!-- <div class="row mt-4 mx-2" *ngIf="categoryId==3">
                                         <div class="col-lg-4 mb-3">
                                             <label for="fname">Identity of Fire Extinguisher(Optional)</label>
                                             <input required ngModel name="ExtinguisherID" #ExtinguisherID="ngModel"
@@ -2423,14 +2432,8 @@
                                                 id="search-input" type="text" placeholder="Enter value"
                                                 class="form-control Dashboard-tab text-white" />
                                         </div>
-                                        <!-- <div class="col-lg-4 downloadFile">
-                                        <label clickable (click)="downloadFireExtTemplate()"
-                                            pTooltip="Download Fire Extinguisher Template"
-                                            tooltipPosition="top">Download</label>
-                                        <a (click)="downloadFireExtTemplate()">
-                                            <i class="pi pi-download text-white pl-2" title="download"></i></a>
+                                      
                                     </div> -->
-                                    </div>
                                     <div *ngIf="renewableSelected">
                                         <div class="row mt-4 mx-2" *ngIf="categoryId==5">
                                             <div class="col-lg-4" *ngIf="categoryId==5">
@@ -2461,9 +2464,9 @@
 
                                             <div *ngIf="SubCatAllData.manageDataPointSubCategorySeedID == 1002"
                                                 class="col-lg-4">
-                                                <label for="fname">Source(Optional)</label>
+                                                <label for="fname">Source</label>
                                                 <p-dropdown class="ct_select_op_input ct_chev_icon_dark230"
-                                                    placeholder="Select source" ngModel [options]="ElectricitySource"
+                                                    ngModel [options]="ElectricitySource"
                                                     optionLabel="sourceName" optionValue="sourceName" name="Source"
                                                     #Source="ngModel"></p-dropdown>
                                             </div>
@@ -2482,7 +2485,7 @@
                                                 <div class=" position-relative">
                                                     <input required ngModel name="emission_factorS"
                                                         #emission_factorS="ngModel" placeholder="Enter value"
-                                                        readingvalue id="search-input" type="text"
+                                                        readingvalue id="search-input" type="number"
                                                         class="form-control Dashboard-tab text-white" />
                                                     <div class="ct_quantity_text">
                                                         <p>kg CO2e/{{dataEntry.unit}}</p>
@@ -2495,7 +2498,7 @@
                                                 <div class=" position-relative">
                                                     <input required ngModel name="sourcevalue" #readingvalue="ngModel"
                                                         placeholder="Enter value" [(ngModel)]="dataEntry.readingValue"
-                                                        readingvalue id="search-input" type="text"
+                                                        readingvalue id="search-input" type="number"
                                                         class="form-control Dashboard-tab text-white" />
                                                     <p-dropdown
                                                         class="ct_select_op_input ct_select_op_input ct_position_small_quantity"
@@ -2583,6 +2586,16 @@
                                                 "></p-fileUpload>
                                                 </div>
                                             </div>
+                                            <div class="col-8" *ngIf="categoryId >= 1 && categoryId <= 7">
+                                                <label for="fname ">Attachments</label>
+                                                <p-toast></p-toast>
+                                                <div class="d-flex justify-content-end border rounded ct_upload_btn1">
+                                                    <p-fileUpload #fileUpload mode="basic" accept=".jpg,.png,.pdf"
+                                                        chooseLabel="Please select a File" (onSelect)="
+                                                    onFileSelected($event.files)
+                                                "></p-fileUpload>
+                                                </div>
+                                            </div>
                                             <div class="col-12 mt-5 pt-3 ml-3 text-center">
                                                 <button type="submit" class="px-4 trackingsubmitb">
                                                     Submit
@@ -2650,7 +2663,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-12 table-responsive" style="height: 53vh;">
+                                        <div class="col-md-12 table-responsive" style="height: 50vh;">
                                             <table class="table ct_home_office_table" style="height:357px">
                                                 <thead class="thead-dark">
                                                     <tr>
@@ -2707,7 +2720,7 @@
 
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="form-control"
+                                                            <input type="number" class="form-control"
                                                                 style="width:200px;height:38px"
                                                                 placeholder="Enter quantity" name="quantity_{{row.id}}"
                                                                 [(ngModel)]="row.quantity">
@@ -2738,7 +2751,7 @@
                                                                 placeholder="Enter specific EF">
                                                         </td>
                                                         <td>
-                                                            <input disabled type="text" class="form-control"
+                                                            <input disabled type="number" class="form-control"
                                                                 style="width:200px;height:38px"
                                                                 name="vendorspecificEF_{{row.id}}"
                                                                 [(ngModel)]="row.vendorspecificEFUnit"
@@ -2791,9 +2804,10 @@
                                                 <thead class="thead-dark">
                                                     <tr>
                                                         <th scope="col">S.No.</th>
+                                                        <th scope="col">Product Category</th>
                                                         <th scope="col">Product Description</th>
                                                         <th scope="col">Product Type</th>
-                                                        <th scope="col">Product Code</th>
+                                                        <th scope="col">Product Name</th>
                                                         <th scope="col">Purchase date</th>
 
                                                         <!-- <th *ngIf="annualMonths" scope="col">Month of purchase</th> -->
@@ -2829,6 +2843,16 @@
                                                     </tr> -->
                                                     <tr *ngFor="let product of newExcelData; let i = index">
                                                         <td>{{ i + 1 }}</td>
+                                                        <td>
+                                                            <ng-container>
+                                                                <textarea *ngIf="product.isEditing" type="text"
+                                                                    [(ngModel)]="product['Product Category']"
+                                                                    [ngModelOptions]="{standalone: true}"
+                                                                    class="form-control text-dark"></textarea>
+                                                                <span *ngIf="!product.isEditing">{{ product['Product Category'] }}</span>
+                                                            </ng-container>
+
+                                                        </td>
                                                         <td>
                                                             <ng-container>
                                                                 <textarea *ngIf="product.isEditing" type="text"
@@ -2927,117 +2951,22 @@
                                             </table>
                                         </div>
                                     </div>
-                                    <!-- <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="mb-4  " style="gap: 10px;">
-                                                <label class=" ct_text_wrape">Product category</label>
-                                                <p-dropdown
-                                                class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
-                                                ngModel [options]="purchaseProductCategoryTypes"
-                                                optionLabel="product" optionValue="product"
-                                                name="productCateggory"
-                                                >
-                                            </p-dropdown>
-                                              
-                                            </div>
+                                   
+                                    <div class="col-8" >
+                                        <label for="fname ">Attachments</label>
+                                        <p-toast></p-toast>
+                                        <div class="d-flex justify-content-end border rounded ct_upload_btn1">
+                                            <p-fileUpload #fileUpload mode="basic" accept=".jpg,.png,.pdf"
+                                                chooseLabel="Please select a File"></p-fileUpload>
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="mb-4 " style="gap: 10px;">
-                                                <label class="ct_text_wrape">Product Sub Category</label>
-                                                <p-dropdown 
-                                                    class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
-                                                    ngModel [options]="purchaseProductCategoryTypes"
-                                                    optionLabel="product" optionValue="product"
-                                                    name="productSubCateggory"
-                                                   >
-                                                </p-dropdown>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="mb-4 " style="gap: 10px;">
-                                                <label class="ct_text_wrape">HSN</label>
-                                                <p-dropdown
-                                                    class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
-                                                    ngModel [options]="HSNCode"
-                                                    optionLabel="code" optionValue="code"
-                                                    name="HSNcode"
-                                                   >
-                                                </p-dropdown>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="mb-4" style="gap: 10px;">
-                                                <label class=" ct_text_wrape">Value / Quantity</label>
-
-                                                <div class="position-relative">
-
-                                                    <input type="number"
-                                                        class="form-control Dashboard-tab text-white"
-                                                        placeholder="Enter Value" name="valueQuantity"
-                                                        required ngModel />
-                                                    <p-dropdown
-                                                        class="ct_select_op_input ct_position_small_quantity"
-                                                        ngModel [options]="purchaseUnits"
-                                                        optionLabel="units" optionValue="units"
-                                                        name="distance_unit" >
-                                                    </p-dropdown>
-                                                  
-
-                                                </div>
-
-
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <h6 class="ct_fw_600 mb-3">Vendor Details</h6>
-                                            <div class="row">
-                                                <div class="mb-4 col-md-6" >
-                                                    <label class=" ct_text_wrape">Vendor</label>
-                                                    <div class="position-relative">
-                                                        <p-dropdown
-                                                        class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
-                                                        ngModel [options]="vendorList"
-                                                        optionLabel="name" optionValue="name"
-                                                        name="vendorName"
-                                                       >
-                                                    </p-dropdown>
-                                                    
-                                                    </div>
-    
-    
-                                                </div>
-                                                <div class="mb-4 col-md-6" >
-                                                    <label class=" ct_text_wrape">Vendor specific EF</label>
-                                                  
-                                                     
-                                                            <div class="position-relative">
-                                                                <input type="number"
-                                                                    placeholder="Enter specific EF"
-                                                                    class="form-control Dashboard-tab text-white"
-                                                                    name="vendotEf" required ngModel
-                                                                   />
-                                                                <p-dropdown
-                                                                    class="ct_select_op_input ct_position_small_quantity"
-                                                                    ngModel [options]="vendorUnits"
-                                                                    optionLabel="units" optionValue="units"
-                                                                    name="vendor_unit" >
-                                                                </p-dropdown>
-                                                             
-                                                            </div>
-                                                   
-    
-    
-                                                </div>
-                                            </div>
-                                        </div>
-                                      
-
-                                    </div> -->
-
+                                    </div>
 
                                     <div class="col-12 mt-5">
-                                        <button type="submit" class="px-4 trackingsubmitb">
+                                        <button type="submit" class="px-4 trackingsubmitb" >
                                             Submit
+                                        </button>
+                                        <button type="button" class="px-4 trackingsubmitb ml-2" (click)="submitUnmatchWithAI()">
+                                            Submit Unmatch with AI
                                         </button>
                                     </div>
                                 </div>
@@ -3174,7 +3103,7 @@
                                                         <div class="mb-4  " style="gap: 10px;">
                                                             <label class=" ct_text_wrape">Area Occupied</label>
                                                             <div class="position-relative">
-                                                                <input type="text"
+                                                                <input type="number"
                                                                     class="form-control Dashboard-tab text-white"
                                                                     placeholder="Enter Area Occupied"
                                                                     name="area_occupied" ngModel />
@@ -3275,34 +3204,34 @@
                                                                 <tr>
 
                                                                     <td>Surface water</td>
-                                                                    <td><input type="text" class="form-control w-auto"
+                                                                    <td><input type="number" class="form-control w-auto"
                                                                             name="surface_water" ngModel
                                                                             placeholder="Enter required value"></td>
 
                                                                 <tr>
 
                                                                     <td>Groundwater</td>
-                                                                    <td><input type="text" class="form-control w-auto"
+                                                                    <td><input type="number" class="form-control w-auto"
                                                                             name="groundwater" ngModel
                                                                             placeholder="Enter required value"></td>
 
                                                                 </tr>
                                                                 <tr>
                                                                     <td>Third party water</td>
-                                                                    <td><input type="text" class="form-control w-auto"
+                                                                    <td><input type="number" class="form-control w-auto"
                                                                             name="thirdParty" ngModel
                                                                             placeholder="Enter required value"></td>
 
                                                                 </tr>
                                                                 <tr>
                                                                     <td>Sea water/ desalinated water</td>
-                                                                    <td><input type="text" class="form-control w-auto"
+                                                                    <td><input type="number" class="form-control w-auto"
                                                                             name="seaWater" ngModel
                                                                             placeholder="Enter required value"></td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td>Others</td>
-                                                                    <td><input type="text" class="form-control w-auto"
+                                                                    <td><input type="number" class="form-control w-auto"
                                                                             name="others" ngModel
                                                                             placeholder="Enter required value"></td>
 
@@ -3333,27 +3262,27 @@
                                                                 <tr>
 
                                                                     <td>Into Surface water</td>
-                                                                    <td><input type="text" class="form-control w-auto"
+                                                                    <td><input type="number" class="form-control w-auto"
                                                                             name="surface_water_dest" ngModel
                                                                             placeholder="Enter required value"></td>
 
                                                                 <tr>
 
                                                                     <td>Into Ground water</td>
-                                                                    <td><input type="text" class="form-control w-auto"
+                                                                    <td><input type="number" class="form-control w-auto"
                                                                             name="groundwater_dest" ngModel
                                                                             placeholder="Enter required value"></td>
 
                                                                 </tr>
                                                                 <tr>
                                                                     <td>Send to third-parties</td>
-                                                                    <td><input type="text" class="form-control w-auto"
+                                                                    <td><input type="number" class="form-control w-auto"
                                                                             name="thirdParty_dest" ngModel
                                                                             placeholder="Enter required value"></td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td>Into Seawater</td>
-                                                                    <td><input type="text" class="form-control w-auto"
+                                                                    <td><input type="number" class="form-control w-auto"
                                                                             name="seaWater_dest" ngModel
                                                                             placeholder="Enter required value"></td>
 
@@ -3361,7 +3290,7 @@
 
                                                                 <tr>
                                                                     <td>Others</td>
-                                                                    <td><input type="text" class="form-control w-auto"
+                                                                    <td><input type="number" class="form-control w-auto"
                                                                             name="others_dest" ngModel
                                                                             placeholder="Enter required value"></td>
 
@@ -3574,7 +3503,7 @@
                                                         <div class="mb-4" style="gap: 10px;">
                                                             <label class=" ct_text_wrape">Waste Quantity</label>
                                                             <div class="position-relative">
-                                                                <input type="text" placeholder="Enter Waste Quantity"
+                                                                <input type="number" placeholder="Enter Waste Quantity"
                                                                     name="waste_quantity" ngModel
                                                                     class="form-control Dashboard-tab text-white" />
                                                                 <p-dropdown
@@ -3610,7 +3539,7 @@
                                                             <label class=" ct_text_wrape">Total no of
                                                                 employees</label>
                                                             <div class="position-relative">
-                                                                <input type="text" name="noofemployees" ngModel
+                                                                <input type="number" name="noofemployees" ngModel
                                                                     placeholder="Enter no of employees"
                                                                     class="form-control Dashboard-tab text-white" />
 
@@ -3622,7 +3551,7 @@
                                                             <label class=" ct_text_wrape">Total working days in
                                                                 month</label>
                                                             <div class="position-relative">
-                                                                <input type="text" placeholder="Enter days"
+                                                                <input type="number" placeholder="Enter days"
                                                                     name="workingdays" ngModel
                                                                     class="form-control Dashboard-tab text-white" />
 
@@ -3671,12 +3600,12 @@
                                                                         </p-dropdown>
                                                                     </td>
                                                                     <td>
-                                                                        <input type="text" class="form-control"
+                                                                        <input type="number" class="form-control"
                                                                             name="employeescommute_{{row.id}}"
                                                                             [(ngModel)]="row.employeesCommute">
                                                                     </td>
                                                                     <td>
-                                                                        <input type="text" class="form-control"
+                                                                        <input type="number" class="form-control"
                                                                             name="avgcommute_{{row.id}}"
                                                                             [(ngModel)]="row.avgCommute">
                                                                     </td>
@@ -3725,7 +3654,7 @@
                                                             <tr>
 
                                                                 <td>With cooling</td>
-                                                                <td><input type="text" class="form-control"
+                                                                <td><input type="number" class="form-control"
                                                                         [(ngModel)]="noofemployees_1"
                                                                         name="noofemployees_1"
                                                                         placeholder="Enter no of employee"></td>
@@ -3740,7 +3669,7 @@
                                                             <tr>
 
                                                                 <td>With heating</td>
-                                                                <td><input type="text" class="form-control"
+                                                                <td><input type="number" class="form-control"
                                                                         [(ngModel)]="noofemployees_2"
                                                                         name="noofemployees_2"
                                                                         placeholder="Enter no of employee"></td>
@@ -3755,7 +3684,7 @@
                                                             <tr>
 
                                                                 <td>No cooling / no heating</td>
-                                                                <td><input type="text" class="form-control"
+                                                                <td><input type="number" class="form-control"
                                                                         [(ngModel)]="noofemployees_3"
                                                                         name="noofemployees_3"
                                                                         placeholder="Enter no of employee"></td>
@@ -3848,7 +3777,7 @@
                                                         <div class="mb-4" style="gap: 10px;">
                                                             <label class=" ct_text_wrape">Franchise Space</label>
                                                             <div class="position-relative">
-                                                                <input type="text"
+                                                                <input type="number"
                                                                     class="form-control Dashboard-tab text-white"
                                                                     placeholder="Enter Franchise Space"
                                                                     name="upLeasefranchise_space" ngModel />
@@ -3885,7 +3814,7 @@
                                                                 <label class=" ct_text_wrape">Scope1
                                                                     Emissions</label>
                                                                 <div class="position-relative">
-                                                                    <input type="text"
+                                                                    <input type="number"
                                                                         class="form-control Dashboard-tab text-white"
                                                                         placeholder="Enter Scope1 Emissions"
                                                                         name="scope1_emission" ngModel />
@@ -3901,7 +3830,7 @@
                                                                 <label class=" ct_text_wrape">Scope2
                                                                     Emissions</label>
                                                                 <div class="position-relative">
-                                                                    <input type="text"
+                                                                    <input type="number"
                                                                         class="form-control Dashboard-tab text-white"
                                                                         placeholder="Enter Scope2 Emissions"
                                                                         name="scope2_emission" ngModel />
@@ -4033,7 +3962,7 @@
                                                             <label class=" ct_text_wrape">Mass of Products
                                                                 Transported</label>
                                                             <div class="position-relative">
-                                                                <input type="text" placeholder="Enter Mass of Products"
+                                                                <input type="number" placeholder="Enter Mass of Products"
                                                                     class="form-control Dashboard-tab text-white"
                                                                     name="mass_of_products" required ngModel
                                                                     #mass_of_products="ngModel" />
@@ -4070,7 +3999,7 @@
                                                             <label class=" ct_text_wrape">Distance Travelled by
                                                                 Product</label>
                                                             <div class="position-relative">
-                                                                <input type="text"
+                                                                <input type="number"
                                                                     class="form-control Dashboard-tab text-white"
                                                                     placeholder="Enter Distance" name="distanceInKms"
                                                                     required ngModel #distanceInKms="ngModel" />
@@ -4134,7 +4063,7 @@
                                                         <div class="mb-4  " style="gap: 10px;">
                                                             <label class=" ct_text_wrape">Area Occupied</label>
                                                             <div class="position-relative">
-                                                                <input type="text"
+                                                                <input type="number"
                                                                     class="form-control Dashboard-tab text-white"
                                                                     placeholder="Enter Area Occupied"
                                                                     name="area_occupied" ngModel />
@@ -4149,7 +4078,7 @@
                                                             <label class=" ct_text_wrape">No. of Days of
                                                                 Storage</label>
                                                             <div class="position-relative">
-                                                                <input type="text"
+                                                                <input type="number"
                                                                     placeholder="Enter No. of Days of Storage"
                                                                     class="form-control Dashboard-tab text-white"
                                                                     name="averageNoOfDays" ngModel />
@@ -5080,790 +5009,429 @@
                                     </div>
                                 </div>
 
-                                <!-- <div class="trackingFooter" *ngIf="categoryId ==23">
-                                    <div class="row mt-4 mb-3 mb-5 pb-5 mx-2">
-
-                                        <div class="col-12">
-                                            <div class=" mt-4">
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <div class="mb-4" style="gap: 10px;">
-                                                            <label class=" ct_text_wrape">Type of investment</label>
-                                                            <p-dropdown
-                                                                class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
-                                                                ngModel [options]="investmentTypeGrid"
-                                                                placeholder="Select type of invesment"
-                                                                optionLabel="type" optionValue="type"
-                                                                name="investment_type" #investment_type="ngModel"
-                                                                (onChange)="onInvestmentTypeChange($event)">
-                                                            </p-dropdown>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-
-                                                    <div class="col-md-6">
-                                                        <div class="mb-4  " style="gap: 10px;">
-                                                            <label class=" ct_text_wrape">Industry Sector</label>
-                                                            <p-dropdown
-                                                                class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
-                                                                ngModel [options]="wasteGrid"
-                                                                optionLabel="investment_type"
-                                                                optionValue="investment_type" name="investment_sector"
-                                                                #investment_sector="ngModel"
-                                                                (onChange)="onInvestmentSectorChange($event)">
-                                                            </p-dropdown>
-                                                        </div>
-                                                    </div>
-
-
-                                                    <div class="col-md-6">
-                                                        <div class="mb-4 " style="gap: 10px">
-                                                            <label class="ct_text_wrape">Sub Category</label>
-                                                            <p-dropdown
-                                                                class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
-                                                                ngModel [options]="subFranchiseCategory"
-                                                                optionLabel="broad_categories"
-                                                                optionValue="broad_categoriesId"
-                                                                name="broad_categoriesId" #broad_categoriesId="ngModel">
-                                                            </p-dropdown>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row" *ngIf="calculationRow">
-                                                    <div class="col-md-6">
-                                                        <div class="mb-4" style="gap: 10px;">
-                                                            <label class=" ct_text_wrape">Calculation method</label>
-                                                            <p-dropdown
-                                                                class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
-                                                                ngModel [options]="calculationGrid"
-                                                                placeholder="Select a method"
-                                                                optionLabel="calculationmethod"
-                                                                optionValue="calculationmethod" name="calculationmethod"
-                                                                #calculationmethod="ngModel"
-                                                                (onChange)="onInvestmentCalculationMethodChange($event)">
-                                                            </p-dropdown>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div *ngIf="equityInvestmentRow">
-                                                    <h6 class="mb-3">Equity investments</h6>
-                                                    <div class="row" *ngIf="franchiseMethod">
-                                                        <div class="col-md-4">
-                                                            <div class="mb-4" style="gap: 10px;">
-
-                                                                <label class=" ct_text_wrape">Scope1
-                                                                    Emissions</label>
-                                                                <div class="position-relative">
-                                                                    <input type="text"
-                                                                        class="form-control Dashboard-tab text-white"
-                                                                        placeholder="Enter Scope1 Emissions"
-                                                                        name="scope1_emission" ngModel />
-                                                                    <div class="ct_quantity_text">
-                                                                        <p>(tonnes C02e)</p>
-                                                                    </div>
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="mb-4" style="gap: 10px;">
-                                                                <label class=" ct_text_wrape">Scope2
-                                                                    Emissions</label>
-                                                                <div class="position-relative">
-                                                                    <input type="text"
-                                                                        class="form-control Dashboard-tab text-white"
-                                                                        placeholder="Enter Scope2 Emissions"
-                                                                        name="scope2_emission" ngModel />
-                                                                    <div class="ct_quantity_text">
-                                                                        <p>(tonnes C02e)</p>
-                                                                    </div>
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="mb-4" style="gap: 10px;">
-                                                                <label class=" ct_text_wrape">Share of equity
-                                                                    (%)</label>
-                                                                <div class="position-relative">
-                                                                    <input type="text"
-                                                                        class="form-control Dashboard-tab text-white"
-                                                                        placeholder="Enter Share of equity"
-                                                                        name="share_Equity" ngModel />
-
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row" *ngIf="averageMethod">
-                                                        <div class="col-md-6">
-                                                            <div class="mb-4" style="gap: 10px;">
-                                                                <label class=" ct_text_wrape">Investe company total
-                                                                    revenue</label>
-                                                                <div class="position-relative">
-                                                                    <input type="text"
-                                                                        class="form-control Dashboard-tab text-white"
-                                                                        placeholder="Enter total revenue"
-                                                                        name="investe_company_revenue" ngModel />
-                                                                    <div class="ct_quantity_text">
-                                                                        <p>INR</p>
-                                                                    </div>
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="mb-4" style="gap: 10px;">
-                                                                <label class=" ct_text_wrape">Share of equity
-                                                                    (%)</label>
-                                                                <div class="position-relative">
-                                                                    <input type="text"
-                                                                        class="form-control Dashboard-tab text-white"
-                                                                        placeholder="Enter share of equity"
-                                                                        name="share_Equity" ngModel />
-
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div *ngIf="debtInvesmentRow">
-                                                    <h5 class="mt-2">{{InvestmentHeading}}</h5>
-                                                    <div class="row" *ngIf="franchiseMethod">
-                                                        <div class="col-md-4">
-                                                            <div class="mb-4" style="gap: 10px;">
-                                                                <label class=" ct_text_wrape">Scope1 (in reporting
-                                                                    year)</label>
-                                                                <div class="position-relative">
-                                                                    <input type="text"
-                                                                        class="form-control Dashboard-tab text-white"
-                                                                        placeholder="Enter Scope1 Emissions"
-                                                                        name="scope1_emission" ngModel />
-                                                                    <div class="ct_quantity_text">
-                                                                        <p>(tonnes C02e)</p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="mb-4" style="gap: 10px;">
-                                                                <label class=" ct_text_wrape">Scope2 (in reporting
-                                                                    year)</label>
-                                                                <div class="position-relative">
-                                                                    <input type="text"
-                                                                        class="form-control Dashboard-tab text-white"
-                                                                        placeholder="Enter Scope2 Emissions"
-                                                                        name="scope2_emission" ngModel />
-                                                                    <div class="ct_quantity_text">
-                                                                        <p>(tonnes C02e)</p>
-                                                                    </div>
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="mb-4" style="gap: 10px;">
-                                                                <label class=" ct_text_wrape">Share of total project
-                                                                    cost (%)</label>
-                                                                <div class="position-relative">
-                                                                    <input type="text"
-                                                                        class="form-control Dashboard-tab text-white"
-                                                                        placeholder="Enter share of total project cost"
-                                                                        name="project_cost" ngModel />
-                                                                    <div class="">
-                                                                        <small>*Value of debt investment / total
-                                                                            project cost (debt + equity)</small>
-                                                                    </div>
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                    <div *ngIf="averageMethod">
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <div class="mb-4" style="gap: 10px;">
-
-                                                                    <label class=" ct_text_wrape">Project
-                                                                        phase</label>
-                                                                    <p-dropdown
-                                                                        class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
-                                                                        ngModel [options]="projectPhaseTypes"
-                                                                        optionLabel="projectPhase"
-                                                                        optionValue="projectPhase" name="projectPhase"
-                                                                        #projectPhase="ngModel"
-                                                                        (onChange)="onProjectPhaseChnage($event)">
-                                                                    </p-dropdown>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <div class="mb-4" style="gap: 10px;">
-                                                                    <label *ngIf="!RevenueRow"
-                                                                        class=" ct_text_wrape">Project revenue in
-                                                                        the
-                                                                        reporting year</label>
-                                                                    <label *ngIf="RevenueRow"
-                                                                        class=" ct_text_wrape">Project
-                                                                        Construction
-                                                                        Cost</label>
-                                                                    <div class="position-relative">
-                                                                        <input type="text"
-                                                                            class="form-control Dashboard-tab text-white"
-                                                                            placeholder="Enter value"
-                                                                            name="project_construction_cost" ngModel />
-                                                                        <div class="ct_quantity_text">
-                                                                            <p>INR</p>
-                                                                        </div>
-
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <div class="mb-4" style="gap: 10px;">
-                                                                    <label class=" ct_text_wrape">Share of total
-                                                                        project
-                                                                        cost
-                                                                        (%)</label>
-                                                                    <div class="position-relative">
-                                                                        <input type="text"
-                                                                            class="form-control Dashboard-tab text-white"
-                                                                            placeholder="Enter share of project cost"
-                                                                            name="equity_project_cost" ngModel />
-                                                                        <div class="">
-                                                                            <small>*Value of debt investment / total
-                                                                                project
-                                                                                cost (debt + equity)</small>
-                                                                        </div>
-
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-
-
-
-
+                               
+                                <div class="trackingFooter" *ngIf="categoryId ==24">
+                                  
+                                    <div class="row my-3">
+                                        <div class="col-md-4">
+                                            <div class="mb-4" style="gap: 10px;">
+                                                <label class=" ct_text_wrape">Flight calc mode</label>
+                                                <p-dropdown
+                                                    class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                    ngModel [options]="flightsTravelTypes"
+                                                    optionLabel="flightType" optionValue="flightType"
+                                                    name="flightMode" #flightMode="ngModel"
+                                                    (onChange)="onFlightModeChange($event)">
+                                                </p-dropdown>
                                             </div>
-
-                                        </div>
-                                        <div class="col-12 mt-4 pt-3 ml-3 text-center">
-                                            <button type="submit" class="px-4 trackingsubmitb">
-                                                Submit
-                                            </button>
                                         </div>
                                     </div>
-                                </div> -->
-                                <div class="trackingFooter" *ngIf="categoryId ==24">
-                                    <div class="row mt-4 mb-3 mb-5 pb-5 mx-2">
+                                    <div class="col-md-12 mt-3" style="height: 53vh;">
+                                       <div class=" table-responsive" [ngStyle]="{'display': flightDisplay1}">
+                                        <table class="table ct_home_office_table ett_verticle_align_top" style="height:357px"  >
+                                            <thead class="thead-dark">
+                                                <tr>
+                                                    <th scope="col">S.No.</th>
+                                                    <th scope="col">Flight Type</th>
+                                                    <th scope="col">Flight Class</th>
+                                                    <th scope="col">Return Flight</th>
+                                                    <th scope="col">No. of Trips</th>
+                                                    <th scope="col">Month</th>
+                                                    <th scope="col">Cost Centre</th>
+                                                 
+                                                </tr>
+                                            </thead>
+                                            <tbody #commuteTable>
+                                                <tr *ngFor="let row of rowsFlightTravel">
+                                                    <td scope="row">{{ row.id }}</td>
 
-                                        <div class="col-12">
-                                            <div class=" mt-0">
+                                              
+                                                    <td>
+                                                        <p-dropdown
+                                                            class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                            [(ngModel)]="row.flightType"
+                                                            [ngModelOptions]="{standalone: true}"
+                                                            [options]="wasteGrid"
+                                                      
+                                                            optionLabel="flight_type" optionValue="flight_type"
+                                                            placeholder="Select type">
+                                                        </p-dropdown>
+                                                    </td>
+                                                    <td>
+                                                        <p-dropdown
+                                                            class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                            [(ngModel)]="row.flightClass"
+                                                            [ngModelOptions]="{standalone: true}"
+                                                            [options]="flightClassGrid"
+                                                          
+                                                            optionLabel="classs" optionValue="classs"
+                                                            placeholder="Select class">
+                                                        </p-dropdown>
+                                                    </td>
+                                                    <td>
+                                                        <p-dropdown
+                                                            class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                            [(ngModel)]="row.return_flight"
+                                                            [ngModelOptions]="{standalone: true}"
+                                                            [options]="annualEntry"
+                                                            (onChange)="onProductStandardChange($event , row)"
+                                                            optionLabel="name" optionValue="name"
+                                                            placeholder="Select return">
+                                                        </p-dropdown>
+                                                    </td>
+                                            
+                                                    <td>
+                                                        <input type="number" class="form-control"
+                                                            style="height:38px"
+                                                            placeholder="Enter no of trips"
+                                                            [(ngModel)]="row.noOfTrips"    [ngModelOptions]="{standalone: true}">
+                                                    </td>
+                                                    <td>
+                                                        <p-dropdown
+                                                            class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                            [options]="row.month" optionLabel="name"
+                                                            [(ngModel)]="row.selectedMonths"  [ngModelOptions]="{standalone: true}" 
+                                                            optionValue="value"
+                                                           >
+                                                        </p-dropdown>
+    
+                                                    </td>
+                                                    <td>
+                                                        <p-dropdown
+                                                            class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                            [options]="busineessGrid" optionLabel="cost_center_name"
+                                                            [(ngModel)]="row.costCentre"  [ngModelOptions]="{standalone: true}" 
+                                                            optionValue="cost_centre_name"
+                                                           >
+                                                        </p-dropdown>
 
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <div class="mb-4" style="gap: 10px;">
-                                                            <label class=" ct_text_wrape">Flight calc mode</label>
-                                                            <p-dropdown
-                                                                class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
-                                                                ngModel [options]="flightsTravelTypes"
-                                                                optionLabel="flightType" optionValue="flightType"
-                                                                name="flightMode" #flightMode="ngModel"
-                                                                (onChange)="onCityChange($event)">
-                                                            </p-dropdown>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div [ngStyle]="{'display': flightDisplay1}">
-                                                    <h4 class="ct_fs_24 mb-3">Generic</h4>
-                                                    <div class="row">
-
-                                                        <div class="col-md-4">
-                                                            <div class="mb-4" style="gap: 10px;">
-                                                                <label class=" ct_text_wrape">Flight Type</label>
-                                                                <p-dropdown
-                                                                    class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
-                                                                    ngModel [options]="wasteGrid"
-                                                                    optionLabel="flight_type" optionValue="flight_type"
-                                                                    name="flight_type" #flight_type="ngModel">
-                                                                </p-dropdown>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="mb-4" style="gap: 10px;">
-                                                                <label class=" ct_text_wrape">Flight Class</label>
-                                                                <p-dropdown
-                                                                    class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
-                                                                    ngModel [options]="flightClassGrid"
-                                                                    optionLabel="classs" optionValue="classs"
-                                                                    name="classs" #classs="ngModel">
-                                                                </p-dropdown>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="mb-4" style="gap: 10px;">
-                                                                <label class=" ct_text_wrape">Return Flight</label>
-                                                                <div> <p-inputSwitch class="ct_flex_1"
-                                                                        [(ngModel)]="storageTransporationChecked"
-                                                                        name="return"
-                                                                        [ngModelOptions]="{standalone: true}"></p-inputSwitch>
-                                                                </div>
-
-                                                                <!-- <p-dropdown
-                                                                class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
-                                                                ngModel [options]="returnGrid" optionLabel="return"
-                                                                optionValue="return" name="return" #return="ngModel">
-                                                            </p-dropdown> -->
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="mb-4  " style="gap: 10px;">
-                                                                <label class=" ct_text_wrape">No. of Trips</label>
-                                                                <div class="position-relative">
-                                                                    <input type="text" placeholder="Enter no of trips"
-                                                                        name="no_of_trips" ngModel
-                                                                        class="form-control Dashboard-tab text-white" />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!-- <div class="col-md-4">
-                                                            <div class="mb-4  " style="gap: 10px;">
-                                                                <label class=" ct_text_wrape">Distance
-                                                                    Travelled</label>
-                                                                <div class="position-relative">
-                                                                    <input type="text" placeholder="Enter distance"
-                                                                        name="distance" ngModel
-                                                                        class="form-control Dashboard-tab text-white" />
-                                                                    <p-dropdown
-                                                                        class="ct_select_op_input ct_position_small_quantity"
-                                                                        ngModel [options]="distanceTravelled"
-                                                                        optionLabel="unit" optionValue="unit"
-                                                                        name="unitDistance" #unitDistance="ngModel">
-                                                                    </p-dropdown>
-                                                                </div>
-                                                            </div>
-                                                        </div> -->
-                                                        <div class="col-md-4">
-                                                            <div class="mb-4" style="gap: 10px;">
-                                                                <label class=" ct_text_wrape">Cost Centre</label>
-                                                                <p-dropdown
-                                                                    class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
-                                                                    ngModel [options]="busineessGrid"
-                                                                    optionLabel="cost_center_name"
-                                                                    optionValue="cost_center_name" name="businessunits"
-                                                                    #return="ngModel">
-                                                                </p-dropdown>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div [ngStyle]="{'display': flightDisplay2}">
-                                                    <h4 class="ct_fs_24 mb-3">To/From</h4>
-                                                    <div class="row">
-
-                                                        <div class="col-md-4">
-                                                            <div class="mb-4" style="gap: 10px;">
-                                                                <label class=" ct_text_wrape">From</label>
-                                                                <p-dropdown
-                                                                    class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
-                                                                    ngModel [options]="airportGrid"
-                                                                    optionLabel="airport_desc" [filter]="true"
-                                                                    filterBy="airport_desc" [showClear]="true"
-                                                                    [(ngModel)]="selectedAirport"
-                                                                    optionValue="airport_code" name="airport_codefrom"
-                                                                    #airport_code="ngModel"
-                                                                    placeholder="Select airport">
-                                                                    <ng-template pTemplate="selectedItem">
-                                                                        <div class="country-item country-item-value"
-                                                                            *ngIf="selectedAirport">
-                                                                            <div>{{selectedAirport}}</div>
-                                                                        </div>
-                                                                    </ng-template>
-                                                                    <ng-template let-country pTemplate="item">
-                                                                        <div class="country-item">
-                                                                            <div>{{country.airport_desc}}</div>
-                                                                        </div>
-                                                                    </ng-template>
-                                                                </p-dropdown>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="mb-4" style="gap: 10px;">
-                                                                <label class=" ct_text_wrape">To</label>
-                                                                <p-dropdown
-                                                                    class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
-                                                                    ngModel [options]="airportGrid"
-                                                                    optionLabel="airport_desc"
-                                                                    optionValue="airport_code" name="airport_codeto"
-                                                                    #airport_code="ngModel" [filter]="true"
-                                                                    filterBy="airport_desc" [showClear]="true"
-                                                                    [(ngModel)]="selectedAirport2"
-                                                                    placeholder="Select airport">
-                                                                    <ng-template pTemplate="selectedItem">
-                                                                        <div class="country-item country-item-value"
-                                                                            *ngIf="selectedAirport2">
-                                                                            <div>{{selectedAirport2}}</div>
-                                                                        </div>
-                                                                    </ng-template>
-                                                                    <ng-template let-country pTemplate="item">
-                                                                        <div class="country-item">
-                                                                            <div>{{country.airport_desc}}</div>
-                                                                        </div>
-                                                                    </ng-template>
-                                                                </p-dropdown>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="mb-4" style="gap: 10px;">
-                                                                <label class=" ct_text_wrape">Via (optional)</label>
-                                                                <p-dropdown
-                                                                    class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
-                                                                    ngModel [options]="airportGrid"
-                                                                    placeholder="Select via" optionLabel="airport_desc"
-                                                                    optionValue="airport_code" name="airport_codevia"
-                                                                    #airport_code="ngModel" [filter]="true"
-                                                                    filterBy="airport_desc" [showClear]="true"
-                                                                    [(ngModel)]="selectedAirport3"
-                                                                    placeholder="Select airport">
-                                                                    <ng-template pTemplate="selectedItem">
-                                                                        <div class="country-item country-item-value"
-                                                                            *ngIf="selectedAirport3">
-                                                                            <div>{{selectedAirport3}}</div>
-                                                                        </div>
-                                                                    </ng-template>
-                                                                    <ng-template let-country pTemplate="item">
-                                                                        <div class="country-item">
-                                                                            <div>{{country.airport_desc}}</div>
-                                                                        </div>
-                                                                    </ng-template>
-                                                                </p-dropdown>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="mb-4" style="gap: 10px;">
-                                                                <label class=" ct_text_wrape">Flight Class</label>
-                                                                <p-dropdown
-                                                                    class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
-                                                                    ngModel [options]="flightClassGrid"
-                                                                    optionLabel="classs" optionValue="classs"
-                                                                    name="classs" #classs="ngModel">
-                                                                </p-dropdown>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="mb-4" style="gap: 10px;">
-                                                                <label class=" ct_text_wrape">No of
-                                                                    passengers</label>
-                                                                <input type="number"
-                                                                    placeholder="Enter No of Passengers"
-                                                                    name="no_of_passengers" ngModel
-                                                                    class="form-control Dashboard-tab text-white" />
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-4">
-                                                            <div class="mb-4" style="gap: 10px;">
-                                                                <label class=" ct_text_wrape">Return Flight</label>
-                                                                <div> <p-inputSwitch class="ct_flex_1"
-                                                                        [(ngModel)]="storageTransporationChecked"
-                                                                        name="return"
-                                                                        [ngModelOptions]="{standalone: true}"></p-inputSwitch>
-                                                                </div>
-
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="mb-4  " style="gap: 10px;">
-                                                                <label class=" ct_text_wrape">Reference id
-                                                                    (optional)</label>
-                                                                <div class="position-relative">
-                                                                    <input type="number"
-                                                                        placeholder="Enter Reference Id"
-                                                                        name="reference_id" ngModel
-                                                                        class="form-control Dashboard-tab text-white" />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="mb-4" style="gap: 10px;">
-                                                                <label class=" ct_text_wrape">Cost Centre</label>
-                                                                <p-dropdown
-                                                                    class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
-                                                                    ngModel [options]="busineessGrid"
-                                                                    optionLabel="cost_center_name"
-                                                                    optionValue="cost_center_name" name="businessunits"
-                                                                    #return="ngModel">
-                                                                </p-dropdown>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                    </td>
+                                                 
+                                                
+                                        
+                                                </tr>
 
 
-                                                <div [ngStyle]="{'display': flightDisplay3}">
-                                                    <h4 class="ct_fs_24 mb-3">Distance</h4>
-                                                    <div class="row">
+                                            </tbody>
+                                            <span class="ml-2 trackingsubmitb d-inline-block mt-3 et_plusadd_455" (click)="addrowsFlightTravel()">+</span>
+                                        </table>
+                                       </div>
+                                       <div class=" table-responsive" [ngStyle]="{'display': flightDisplay2}">
+                                        <table class="table ct_home_office_table ett_verticle_align_top" style="height:300px"   >
+                                            <thead class="thead-dark">
+                                                <tr>
+                                                    <th scope="col">S.No.</th>
+                                                    <th scope="col">From</th>
 
-                                                        <div class="col-md-4">
-                                                            <div class="mb-4" style="gap: 10px;">
-                                                                <label class=" ct_text_wrape">Flight Time</label>
-                                                                <p-dropdown
-                                                                    class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
-                                                                    ngModel [options]="flightTime"
-                                                                    optionLabel="flight_type" optionValue="flight_type"
-                                                                    name="flight_type" #flight_type="ngModel">
-                                                                </p-dropdown>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="mb-4" style="gap: 10px;">
-                                                                <label class=" ct_text_wrape">Distance (one
-                                                                    way)</label>
-                                                                <input type="text" placeholder="Enter Distance"
-                                                                    class="form-control Dashboard-tab text-white"
-                                                                    name="distance" ngModel />
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="mb-4" style="gap: 10px;">
-                                                                <label class=" ct_text_wrape">Flight Class</label>
-                                                                <p-dropdown
-                                                                    class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
-                                                                    ngModel [options]="flightClassGrid"
-                                                                    optionLabel="classs" optionValue="classs"
-                                                                    name="classs" #classs="ngModel">
-                                                                </p-dropdown>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="mb-4" style="gap: 10px;">
-                                                                <label class=" ct_text_wrape">No of
-                                                                    passengers</label>
-                                                                <input type="number"
-                                                                    placeholder="Enter No of Passengers"
-                                                                    class="form-control Dashboard-tab text-white"
-                                                                    name="no_of_passengers" ngModel />
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="mb-4" style="gap: 10px;">
-                                                                <label class=" ct_text_wrape">Return Flight</label>
-                                                                <div> <p-inputSwitch class="ct_flex_1"
-                                                                        [(ngModel)]="storageTransporationChecked"
-                                                                        name="return"
-                                                                        [ngModelOptions]="{standalone: true}"></p-inputSwitch>
-                                                                </div>
+                                                
+                                                    <th scope="col">To</th>
+                                                    <th scope="col">Via(optional)</th>
+                                                    <th scope="col">Flight Class</th>
+                                                
+                                                    <th scope="col">No of passengers</th>
+                                                    <th scope="col">Return Flight</th>
+                                                    <!-- <th scope="col">Reference Id</th> -->
+                                                    <th scope="col">Month</th>
+                                                    <th scope="col">Cost Centre</th>
+                                                 
+                                                </tr>
+                                            </thead>
+                                            <tbody #commuteTable>
+                                                <tr *ngFor="let row of rowsFlightTravel">
+                                                    <td scope="row">{{ row.id }}</td>
 
-                                                            </div>
-                                                        </div>
+                                              
+                                                    <td>
+                                                        <p-dropdown
+                                                        class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                        ngModel [options]="airportGrid"   [(ngModel)]="row.from" [ngModelOptions]="{standalone: true}"
+                                                        optionLabel="airport_desc" optionValue="airport_code" placeholder="Select from" [filter]="true"
+                                                        name="classs" #classs="ngModel">
+                                                    </p-dropdown>
+                                                       
+                                                    </td>
+                                                    <td>
+                                                        <p-dropdown
+                                                        class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                        ngModel [options]="airportGrid"   [(ngModel)]="row.to" [ngModelOptions]="{standalone: true}"
+                                                        optionLabel="airport_desc" optionValue="airport_code"  placeholder="Select to"  [filter]="true"
+                                                        name="classs" #classs="ngModel">
+                                                    </p-dropdown>
+                                                    </td>
+                                                    <td>
+                                                        <p-dropdown
+                                                        class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                        ngModel [options]="airportGrid"   [(ngModel)]="row.via" [ngModelOptions]="{standalone: true}"
+                                                        optionLabel="airport_desc" optionValue="airport_code" placeholder="Select via"  [filter]="true"
+                                                        name="classs" #classs="ngModel">
+                                                    </p-dropdown>
+                                                    </td>
+                                                    <td>
+                                                        <p-dropdown
+                                                        class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                        ngModel [options]="flightClassGrid"   [(ngModel)]="row.flight_class" [ngModelOptions]="{standalone: true}"
+                                                        optionLabel="classs" optionValue="classs"
+                                                        name="classs" #classs="ngModel">
+                                                    </p-dropdown>
 
-                                                        <div class="col-md-4">
-                                                            <div class="mb-4" style="gap: 10px;">
-                                                                <label class=" ct_text_wrape">Reference id</label>
-                                                                <input type="number" placeholder="Enter Reference id"
-                                                                    class="form-control Dashboard-tab text-white"
-                                                                    name="reference_id" ngModel />
-                                                            </div>
-                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="form-control"
+                                                            style="width:200px;height:38px"
+                                                            placeholder="Enter no of passengers"
+                                                            [(ngModel)]="row.no_of_passengers" [ngModelOptions]="{standalone: true}">
+                                                    </td>
+                                                    <td>
+                                                        <p-dropdown
+                                                            class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                            [(ngModel)]="row.return_flight" name="annualEntry"
+                                                            [ngModelOptions]="{standalone: true}"
+                                                            [options]="annualEntry"
+                                                            (onChange)="onProductStandardChange($event , row)"
+                                                            optionLabel="name" optionValue="name"
+                                                            placeholder="Select return">
+                                                        </p-dropdown>
+                                                    </td>
+                                                    <!-- <td>
+                                                        <input type="text" class="form-control"
+                                                            style="width:200px;height:38px"
+                                                            placeholder="Enter Reference id"
+                                                            [(ngModel)]="row.reference_id">
+                                                    </td> -->
 
-                                                        <div class="col-md-4">
-                                                            <div class="mb-4" style="gap: 10px;">
-                                                                <label class=" ct_text_wrape">Cost Centre</label>
-                                                                <p-dropdown
-                                                                    class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
-                                                                    ngModel [options]="busineessGrid"
-                                                                    optionLabel="cost_center_name"
-                                                                    optionValue="cost_center_name" name="businessunits"
-                                                                    #return="ngModel">
-                                                                </p-dropdown>
-                                                            </div>
-                                                        </div>
+                                             
+                                                   
+                                                    <td>
+                                                        <p-dropdown
+                                                            class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                            [options]="row.month" optionLabel="name" optionValue="value"
+                                                            [(ngModel)]="row.selectedMonths"  [ngModelOptions]="{standalone: true}"
+                                                            
+                                                           >
+                                                        </p-dropdown>
+    
+                                                    </td>
+                                                    <td>
+                                                        <p-dropdown
+                                                        class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                        [options]="busineessGrid" optionLabel="cost_center_name"
+                                                        [(ngModel)]="row.costCentre"  [ngModelOptions]="{standalone: true}" 
+                                                        optionValue="cost_centre_name"
+                                                       >
+                                                    </p-dropdown>
 
-                                                    </div>
-                                                </div>
+                                                    </td>
 
-                                            </div>
+                                                 
+                                                
+                                        
+                                                </tr>
 
+
+                                            </tbody>
+                                            <span class="ml-2 trackingsubmitb et_plusadd_455" (click)="addrowsFlightTravel()">+</span>
+                                        </table>
+                                       </div>
+                                    </div>
+                                    <div class="col-8" >
+                                        <label for="fname ">Attachments</label>
+                                        <p-toast></p-toast>
+                                        <div class="d-flex justify-content-end border rounded ct_upload_btn1">
+                                            <p-fileUpload #fileUpload mode="basic" accept=".jpg,.png,.pdf"
+                                                chooseLabel="Please select a File"></p-fileUpload>
                                         </div>
-                                        <div class="col-12 mt-4 pt-3 ml-3 text-center">
-                                            <button type="submit" class="px-4 trackingsubmitb">
-                                                Submit
-                                            </button>
-                                        </div>
+                                    </div>
+                                    <div class="col-12 mt-4 pt-3 ml-3 text-center">
+                                        <button type="submit" class="px-4 trackingsubmitb">
+                                            Submit
+                                        </button>
                                     </div>
                                 </div>
                                 <div class="trackingFooter" *ngIf="categoryId ==25">
-                                    <div class="row mt-4 mb-3 mb-5 pb-5 mx-2">
+                                    <!-- rowsHotelStay -->
+                                    <div class="col-md-12 table-responsive mt-3" style="height: 45vh;">
+                                    <table class="table ct_home_office_table ett_verticle_align_top" style="height:357px">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th scope="col">S.No.</th>
+                                                <th scope="col">Country Stay</th>
+                                                <th scope="col">Type of hotel</th>
+                                                <th scope="col">No of occupied rooms</th>
+                                                <th scope="col">No. of nights per room</th>
+                                                <th scope="col">Month</th>
+                                            
+                                             
+                                            </tr>
+                                        </thead>
+                                        <tbody #commuteTable>
+                                            <tr *ngFor="let row of rowsHotelStay">
+                                                <td scope="row">{{ row.id }}</td>
 
-                                        <div class="col-12">
-                                            <div class=" mt-0">
-
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <div class="mb-4" style="gap: 10px;">
-                                                            <label class=" ct_text_wrape">Country Stay</label>
-                                                            <p-dropdown class="ct_select_op_input ct_chev_icon_dark230"
-                                                                ngModel [options]="countriesList" optionLabel="name"
-                                                                optionValue="name" name="countryname"
-                                                                #countryname="ngModel">
-                                                            </p-dropdown>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="mb-4" style="gap: 10px;">
-                                                            <label class=" ct_text_wrape">Type of hotel</label>
-                                                            <p-dropdown class="ct_select_op_input ct_chev_icon_dark230"
-                                                                ngModel [options]="hotelTypeGrid"
+                                          
+                                                <td>
+                                                    <p-dropdown
+                                                        class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                        [(ngModel)]="row.selectedCountry"
+                                                        [ngModelOptions]="{standalone: true}"
+                                                        [options]="countriesList"  [filter]="true"
+                                                      
+                                                        optionLabel="name" optionValue="name"
+                                                        placeholder="Select country">
+                                                    </p-dropdown>
+                                                </td>
+                                                <td>
+                                                    <p-dropdown class="ct_select_op_input ct_chev_icon_dark230"
+                                                                ngModel [options]="hotelTypeGrid"   [(ngModel)]="row.type_of_hotel"
                                                                 optionLabel="hoteltype" optionValue="id"
                                                                 name="hoteltype" #hoteltype="ngModel">
                                                             </p-dropdown>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="mb-4" style="gap: 10px;">
-                                                            <label class=" ct_text_wrape">No of occupied
-                                                                rooms</label>
-                                                            <div class="position-relative">
-                                                                <input type="text" placeholder="Enter no occupied rooms"
-                                                                    class="form-control Dashboard-tab text-white"
-                                                                    name="noOfOccoupied" ngModel />
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control"
+                                                        style="height:38px"
+                                                        placeholder="Enter no of occupied rooms"
+                                                        [(ngModel)]="row.no_of_occupied_rooms"    [ngModelOptions]="{standalone: true}">
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control"
+                                                        style="height:38px"
+                                                        placeholder="Enter no of nights"
+                                                        [(ngModel)]="row.no_of_nights"  [ngModelOptions]="{standalone: true}">
+                                                </td>
+                                                <td>
+                                                    <p-dropdown
+                                                        class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                        [options]="row.month" optionLabel="name" optionValue="value"
+                                                        [(ngModel)]="row.selectedMonths"  [ngModelOptions]="{standalone: true}"
+                                                        
+                                                       >
+                                                    </p-dropdown>
 
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="mb-4" style="gap: 10px;">
-                                                            <label class=" ct_text_wrape">No of nights per
-                                                                room</label>
-                                                            <div class="position-relative">
-                                                                <input type="text" placeholder="Enter no of nights"
-                                                                    class="form-control Dashboard-tab text-white"
-                                                                    name="noOfNights" ngModel />
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                </td>
+                                    
+                                            </tr>
 
 
-
-                                            </div>
-
+                                        </tbody>
+                                        <span class="ml-2 trackingsubmitb et_plusadd_455" (click)="addrowsHotelStay()">+</span>
+                                    </table>
+                                    </div>
+                                    <div class="col-8" >
+                                        <label for="fname ">Attachments</label>
+                                        <p-toast></p-toast>
+                                        <div class="d-flex justify-content-end border rounded ct_upload_btn1">
+                                            <p-fileUpload #fileUpload mode="basic" accept=".jpg,.png,.pdf"
+                                                chooseLabel="Please select a File"></p-fileUpload>
                                         </div>
-                                        <div class="col-12 mt-4 pt-3 ml-3 text-center">
-                                            <button type="submit" class="px-4 trackingsubmitb">
-                                                Submit
-                                            </button>
-                                        </div>
+                                    </div>
+                                    <div class="col-12 mt-4 pt-3 ml-3 text-center">
+                                        <button type="submit" class="px-4 trackingsubmitb">
+                                            Submit
+                                        </button>
                                     </div>
                                 </div>
                                 <div class="trackingFooter" *ngIf="categoryId ==26">
-                                    <div class="row mt-4 mb-3 mb-5 pb-5 mx-2">
+                                    <div class="col-md-12 table-responsive p-4" style="height: 53vh;">
+                                    <table class="table ct_home_office_table ett_verticle_align_top" style="height:357px"  >
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th scope="col">S.No.</th>
+                                                <th scope="col">Mode of transport</th>
+                                                <th scope="col">Type</th>
+                                                <th scope="col">Fuel Type</th>
+                                                <th scope="col">No of passengers</th>
+                                                <th scope="col">Distance travelled per trip</th>
+                                                <th scope="col">No of trips</th>
+                                                <th scope="col">Month</th>
+                                             
+                                            </tr>
+                                        </thead>
+                                        <tbody #commuteTable>
+                                            <tr *ngFor="let row of rowsOtherTransport">
+                                                <td scope="row">{{ row.id }}</td>
 
-                                        <div class="col-12">
-                                            <div class=" mt-0">
-
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <div class="mb-4" style="gap: 10px;">
-                                                            <label class=" ct_text_wrape">Mode of trasport</label>
-                                                            <p-dropdown class="ct_select_op_input ct_chev_icon_dark230"
-                                                                ngModel [options]="ModesTravelGrid"
-                                                                placeholder="Select mode of travel" optionLabel="modes"
-                                                                optionValue="modes" name="modes" #modes="ngModel"
-                                                                (onChange)="onModesChange($event)">
-                                                            </p-dropdown>
-                                                        </div>
-                                                    </div>
-
-
-                                                </div>
-
-                                                <div *ngIf="ModeSelected">
-                                                    <h4 class="ct_fs_24 mb-3">{{mode_name}}</h4>
-                                                    <div class="row">
-                                                        <div class="col-md-6">
-                                                            <div class="mb-4" style="gap: 10px;">
-                                                                <label class=" ct_text_wrape">Type</label>
-                                                                <p-dropdown
+                                          
+                                                <td>
+                                                    <p-dropdown
+                                                        class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                        [(ngModel)]="row.trasnportMode"
+                                                        [ngModelOptions]="{standalone: true}"
+                                                        [options]="ModesTravelGrid"
+                                                        (onChange)="onModesChangeM($event , row)"
+                                                     
+                                                        optionLabel="modes" optionValue="modes"
+                                                        placeholder="Select mode">
+                                                    </p-dropdown>
+                                                </td>
+                                                <td>
+                                                    <p-dropdown
+                                                    class="ct_select_op_input ct_chev_icon_dark230"
+                                                    ngModel [options]="row.mode_type" optionLabel="type"
+                                                    optionValue="type"   [(ngModel)]="row.selectedMode" [ngModelOptions]="{standalone: true}"
+                                                    #cartype="ngModel">
+                                                </p-dropdown>
+                                                </td>
+                                                <td>
+                                                    <p-dropdown
                                                                     class="ct_select_op_input ct_chev_icon_dark230"
-                                                                    ngModel [options]="mode_type" optionLabel="type"
-                                                                    optionValue="type" name="cartype"
-                                                                    #cartype="ngModel">
-                                                                </p-dropdown>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6" *ngIf="carMode && !autoMode">
-                                                            <div class="mb-4" style="gap: 10px;">
-                                                                <label class=" ct_text_wrape">Fuel type</label>
-                                                                <p-dropdown
-                                                                    class="ct_select_op_input ct_chev_icon_dark230"
-                                                                    ngModel [options]="carFuel_type"
+                                                                    ngModel [options]="row.carFuel_type"   [(ngModel)]="row.selectedFuelType"
+                                                                    [ngModelOptions]="{standalone: true}"
                                                                     optionLabel="mode_type" optionValue="mode_type"
                                                                     name="fuelCar_type" #fuelCar_type="ngModel">
                                                                 </p-dropdown>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6" *ngIf="!carMode">
-                                                            <div class="mb-4" style="gap: 10px">
-                                                                <label class=" ct_text_wrape">No of
-                                                                    passengerss</label>
-                                                                <div class="position-relative">
-                                                                    <input type="number"
-                                                                        placeholder="Enter No. of passengers" ngModel
-                                                                        class="form-control Dashboard-tab text-white"
-                                                                        name="no_of_passengers" />
+                                                </td>
+                                              
+                                              
+                                                <td>
+                                                    <input type="text" class="form-control" 
+                                                        style="width:200px;height:38px"
+                                                        placeholder="Enter no of passengers" [disabled]="row.isDisabled"
+                                                        [(ngModel)]="row.no_of_passengers"  [ngModelOptions]="{standalone: true}">
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control"
+                                                        style="height:38px"
+                                                        placeholder="Enter distance travelled"
+                                                        [(ngModel)]="row.distance_travel_per_trip"  [ngModelOptions]="{standalone: true}" name="distance_{{row.id}}">
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control"
+                                                        style="width:200px;height:38px"
+                                                        placeholder="Enter no of trips"
+                                                        [(ngModel)]="row.noOfTrips"    [ngModelOptions]="{standalone: true}">
+                                                </td>
+                                                <td>
+                                                    <p-dropdown
+                                                        class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                        [options]="row.month" optionLabel="name"
+                                                        [(ngModel)]="row.selectedMonths"  [ngModelOptions]="{standalone: true}" name="months" ngModel
+                                                        optionValue="value"
+                                                       >
+                                                    </p-dropdown>
 
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="mb-4" style="gap: 10px;">
-                                                                <label class=" ct_text_wrape">Distance
-                                                                    travelled per trip</label>
-                                                                <div class="position-relative">
-                                                                    <input type="number"
-                                                                        placeholder="Enter distance travelled per trip"
-                                                                        class="form-control Dashboard-tab text-white"
-                                                                        name="distance" ngModel />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="mb-4" style="gap: 10px;">
-                                                                <label class=" ct_text_wrape">No. of trips</label>
-                                                                <div class="position-relative">
-                                                                    <input type="number"
-                                                                        placeholder="Enter No. of trips"
-                                                                        class="form-control Dashboard-tab text-white"
-                                                                        name="no_ofTrips" ngModel />
+                                                </td>
+                                             
+                                            
+                                    
+                                            </tr>
 
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
 
-                                                </div>
-
-                                            </div>
-
+                                        </tbody>
+                                        <span class="ml-2 trackingsubmitb et_plusadd_455" (click)="addrowsOtherModes()">+</span>
+                                    </table>
+                                    </div>
+                                    <div class="col-8" >
+                                        <label for="fname ">Attachments</label>
+                                        <p-toast></p-toast>
+                                        <div class="d-flex justify-content-end border rounded ct_upload_btn1">
+                                            <p-fileUpload #fileUpload mode="basic" accept=".jpg,.png,.pdf"
+                                                chooseLabel="Please select a File"></p-fileUpload>
                                         </div>
-                                        <div class="col-12 mt-4 pt-3 ml-3 text-center">
-                                            <button type="submit" class="px-4 trackingsubmitb">
-                                                Submit
-                                            </button>
-                                        </div>
+                                    </div>
+                                    <div class="col-12 mt-4 pt-3 ml-3 text-center">
+                                        <button type="submit" class="px-4 trackingsubmitb">
+                                            Submit
+                                        </button>
                                     </div>
                                 </div>
 
@@ -5910,6 +5478,12 @@
                                                 *ngIf="categoryId != 3 && categoryId != 8 && categoryId != 10 && categoryId != 11 && categoryId != 17 && categoryId != 19 && categoryId != 10 && categoryId != 12 && categoryId != 14 && categoryId != 16 && categoryId !=18 && categoryId != 21  && categoryId != 15 && categoryId != 24 && categoryId != 20 && categoryId !=25 && categoryId !=26">
 
                                                 Type
+                                                <!-- <p-sortIcon field="catName"></p-sortIcon> -->
+                                            </th>
+                                            <th pSortableColumn="type"
+                                                *ngIf="categoryId == 6">
+
+                                                Vehicle Model
                                                 <!-- <p-sortIcon field="catName"></p-sortIcon> -->
                                             </th>
                                             <th pSortableColumn="type" *ngIf="categoryId ==20">
@@ -6274,7 +5848,7 @@
                                                 <!-- <p-sortIcon field="Class"></p-sortIcon> -->
                                             </th>
                                             <th pSortableColumn="Nooftrips" *ngIf="categoryId == 24">
-                                                No of Trips
+                                                No of Trips/Passengers
                                                 <!-- <p-sortIcon field="Nooftrips"></p-sortIcon> -->
                                             </th>
                                             <th pSortableColumn="Distance" *ngIf="categoryId == 24">
@@ -6429,9 +6003,12 @@
                                             <td
                                                 *ngIf="categoryId != 8 && categoryId != 7 && categoryId != 10 && categoryId != 12 && categoryId != 14 && categoryId != 15 && categoryId != 16 && categoryId != 17 && categoryId != 18 && categoryId != 19 && categoryId != 20 && categoryId !=21 && categoryId !=22 && categoryId !=11 && categoryId !=23 && categoryId !=24 && categoryId != 25 && categoryId != 26">
                                                 {{ de.subcatName }}</td>
+                                                <td
+                                                    *ngIf="categoryId != 3 && categoryId != 8  && categoryId != 10 && categoryId != 17 && categoryId != 11 && categoryId != 12 && categoryId != 14 && categoryId != 15  &&  categoryId != 24 && categoryId != 16 && categoryId !=18 && categoryId !=19 && categoryId !=20 && categoryId !=21   && categoryId !=22 && categoryId !=23 && categoryId != 25 && categoryId != 26">
+                                                    {{ de.TypeName || '-' }}</td>
                                             <td
-                                                *ngIf="categoryId != 3 && categoryId != 8  && categoryId != 10 && categoryId != 17 && categoryId != 11 && categoryId != 12 && categoryId != 14 && categoryId != 15  &&  categoryId != 24 && categoryId != 16 && categoryId !=18 && categoryId !=19 && categoryId !=20 && categoryId !=21   && categoryId !=22 && categoryId !=23 && categoryId != 25 && categoryId != 26">
-                                                {{ de.TypeName || '-' }}</td>
+                                                *ngIf="categoryId == 6">
+                                                {{ de.vehicle_model }}</td>
 
                                             <td *ngIf="categoryId == 11 ">
                                                 {{de.water_withdrawl_by_source[0]?.totalwaterwithdrawl +
@@ -6588,11 +6165,11 @@
                                             </td>
                                             <td *ngIf="categoryId == 24">{{ de.flight_Class }}
                                             </td>
-                                            <td *ngIf="categoryId == 24">{{ de.no_of_trips }}
+                                            <td *ngIf="categoryId == 24">{{ de.no_of_trips ? de.no_of_trips:de.no_of_passengers }}
                                             </td>
-                                            <td *ngIf="categoryId == 24">{{ de.distance == 0 ? 'NA':de.distance }}
+                                            <td *ngIf="categoryId == 24">{{ de.avg_distance == 0 ? 'NA':de.avg_distance }}
                                             </td>
-                                            <td *ngIf="categoryId == 24">{{ de.return_Flight == "true" ? 'Yes' :'No'}}
+                                            <td *ngIf="categoryId == 24">{{ de.return_Flight == "Yes" ? 'Yes' :'No'}}
                                             </td>
                                             <td *ngIf="categoryId == 25">{{ de.country_of_stay }}
                                             </td>
@@ -6867,7 +6444,7 @@
                                             <td
                                                 *ngIf=" categoryId !=25  && categoryId !=26 && categoryId !=10 && categoryId !=17 && categoryId !=19">
                                                 kg
-                                                CO2e/{{
+                                                CO2e/passenger.{{
                                                 de.unit }}
                                             </td>
                                             <td *ngIf=" categoryId ==10 || categoryId ==17">kg

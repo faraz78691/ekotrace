@@ -147,11 +147,11 @@ const routes: Routes = [
                 'Admin', 'Auditor']}
             },
             {
-                path: 'kpi',
+                path: 'kpiDashboard',
                 canActivate: [RoleGuard],
                 component: KpiDashboardComponent,
                 data: { roles: ['Platform Admin','Super Admin',
-                'Admin', 'Auditor']}
+                'Admin', 'Auditor','Preparer'] }
             },
             {
                 path: 'company-register',

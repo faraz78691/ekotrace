@@ -88,27 +88,7 @@ export class LoginComponent implements OnInit {
             this.companyDetails = response;
         });
     }
-    //logs a message to the console indicating that the reCAPTCHA verification has succeeded.
-    handleSuccess(data: Event) {
-        // console.log('reCAPTCHA verification succeeded');
-    }
-    //logs a message to the console indicating that the reCAPTCHA loaded has successfully.
-    handleLoad() {
-        // console.log('reCAPTCHA loaded successfully');
-    }
 
-    //logs a message to the console indicating that the reCAPTCHA token has expired.
-    handleExpire() {
-        // console.log('reCAPTCHA token expired');
-    }
-    //logs a message to the console indicating that the reCAPTCHA has been reset.
-    handleReset() {
-        // console.log('reCAPTCHA reset');
-    }
-
-    /* This function handles the login authentication process.
-  It sends a POST request to the login endpoint with the provided username and password.
-*/
     loginByAuth() {
         if (this.loginForm.valid) {
             // this.submitted = true;

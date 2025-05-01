@@ -20,7 +20,7 @@ import { VehicleDE } from '@/models/VehicleDE';
 import { VehicleDEmode } from '@/models/VehicleDEmode';
 import { VehicleType } from '@/models/VehicleType';
 import { LoginInfo } from '@/models/loginInfo';
-import { ChangeDetectionStrategy, Component, computed, effect, ElementRef, Renderer2, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, computed, effect, ElementRef, Renderer2, ViewChild } from '@angular/core';
 import { NgForm, FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FacilityService } from '@services/facility.service';
@@ -292,6 +292,9 @@ export class TrackingComponent {
     rows: any[] = [];
     items: any[] = [];
     rowsPurchased: any[] = [];
+    rowsFlightTravel: any[] = [];
+    rowsHotelStay: any[] = [];
+    rowsOtherTransport: any[] = [];
     vendorUnits: any[] = [];
     config: any;
     values: number[];
@@ -362,12 +365,14 @@ export class TrackingComponent {
         private toastr: ToastrService,
         private confirmationService: ConfirmationService,
         private renderer: Renderer2,
-        private appService: AppService
+        private appService: AppService,
+        private cdRef: ChangeDetectorRef
     ) {
 
         effect(() => {
-            console.log(this.computedFacilities());
+
             if (this.computedFacilities() != 0) {
+                console.log("calling on facility change effect");
                 this.GetAssignedDataPoint(this.computedFacilities())
                 this.facilityID = this.computedFacilities()
             }
@@ -389,6 +394,58 @@ export class TrackingComponent {
                 vendorName: '',
                 vendorspecificEF: '',
                 vendorspecificEFUnit: ''
+            });;
+        };
+        for (let i = 1; i <= 1; i++) {
+            this.rowsHotelStay.push({
+                id: i,
+                country_stay: [],
+                type_of_hotel: null,
+                no_of_occupied_rooms: null,
+                no_of_nights: null,
+                selectedCountry: null,
+                month: this.months,
+                selectedMonths: null,
+
+            });;
+        };
+        for (let i = 1; i <= 1; i++) {
+            this.rowsFlightTravel.push({
+                id: i,
+                flightMode: '',
+                flightType: null,
+                flightClass: null,
+                returnFlight: null,
+                noOfTrips: null,
+                costCentre: '',
+                to: null,
+                from: null,
+                via: null,
+                flight_class: null,
+                no_of_passengers: null,
+                return_flight: null,
+                reference_id: null,
+                cost_centre: null,
+                batch: 1,
+                month: this.months,
+                selectedMonths: null
+            });;
+        };
+
+        for (let i = 1; i <= 1; i++) {
+            this.rowsOtherTransport.push({
+                id: i,
+                trasnportMode: null,
+                modeType: [],
+                selectedMode: null,
+                carFuel_type: [],
+                selectedFuelType: null,
+                no_of_passengers: null,
+                distance_travel_per_trip: null,
+                isDisabled: false,
+                noOfTrips: null,
+                month: this.months,
+                selectedMonths: null,
             });;
         };
         for (let i = 1; i <= 1; i++) {
@@ -487,10 +544,10 @@ export class TrackingComponent {
                     "id": 2,
                     "flightType": "To/From"
                 },
-                {
-                    "id": 3,
-                    "flightType": "Distance"
-                }
+                // {
+                //     "id": 3,
+                //     "flightType": "Distance"
+                // }
 
             ];
         this.projectPhaseTypes =
@@ -984,19 +1041,6 @@ export class TrackingComponent {
         this.flag = localStorage.getItem('Flag');
         const dataEntry = this.trackingService.dataEntry;
 
-        if (this.flag === 'F') {
-            this.GetAssignedDataPoint(this.facilityID);
-        } else {
-            if (this.facilityID == 0 || this.facilityID == '' || !this.facilityID) {
-
-                this.facilityhavedp = 'none';
-                this.facilitynothavedp = 'none';
-                this.forGroup = 'flex';
-            } else {
-
-                this.GetAssignedDataPoint(this.facilityID);
-            }
-        }
 
         this.getBatch();
         this.setDefaultMonth();
@@ -1011,37 +1055,7 @@ export class TrackingComponent {
             detail: 'File Uploaded with Basic Mode'
         });
     };
-    // triggered whenever a change detection cycle runs
-    // ngDoCheck() {
-    //     this.updatedtheme = this.themeservice.getValue('theme');
-    //     let fId = localStorage.getItem('SelectedfacilityID');
-    //     this.flag = localStorage.getItem('Flag');
-    //     console.log(fId);
-    //     console.log(this.flag);
-    //     if (this.facilityID == 0) {
-    //         this.forGroup = environment.flex;
-    //         this.facilityhavedp = environment.none;
-    //         this.facilitynothavedp = environment.none;
 
-
-    //     }
-    //     else if (this.flag === undefined || this.flag === null || this.flag == "") {
-
-    //     }
-    //     else {
-    //         this.GetAssignedDataPoint(Number(fId));
-    //         this.facilityID = fId;
-
-    //     }
-    // };
-    // getBooks(): TreeviewItem[] {
-    //     const childrenCategory = new TreeviewItem({
-    //         text: 'Choose Product Service', value: 0, collapsed: false, children: [
-    //         ]
-    //     });
-
-    //     return [childrenCategory];
-    // }
 
     //display a dialog
     showDialog() {
@@ -1088,7 +1102,7 @@ export class TrackingComponent {
         this.ALLEntries()
         if (catID == 1) {
 
-            this.getsubCategoryType(this.SubCatAllData
+            this.getStationaryFuelType(this.SubCatAllData
                 .manageDataPointSubCategorySeedID);
             this.getUnit(this.SubCatAllData
                 .manageDataPointSubCategorySeedID);
@@ -1158,7 +1172,7 @@ export class TrackingComponent {
         if (catID == 8) {
             this.downloadExcelUrl = 'https://ekotrace.ekobon.com:4000' + `/get-excelsheet?facility_id=${this.facilityID}`;
             this.getALlProducts()
-           
+
             // this.generateExcel();
             this.months = [
                 { name: 'Jan', value: 'Jan' },
@@ -1245,6 +1259,20 @@ export class TrackingComponent {
             next: (response) => {
                 this.SubCategoryType = response.categories;
                 this.dataEntry.typeID = this.SubCategoryType[0]?.subCatTypeID;
+
+            },
+            error: (err) => {
+                console.error('errrrrrr>>>>>>', err);
+            }
+        })
+    };
+    getStationaryFuelType(subCatID: number) {
+
+        this.dataEntry.typeID = null;
+        this.trackingService.stationaryFuels(subCatID).subscribe({
+            next: (response) => {
+                this.SubCategoryType = response.data;
+                this.dataEntry.typeID = this.SubCategoryType[0]?.ID;
 
             },
             error: (err) => {
@@ -1394,8 +1422,7 @@ export class TrackingComponent {
             this.notification.showError('You are not Authorized', 'Warning');
             return false
         }
-        this.dataEntry.month = this.selectMonths
-            .map((month) => month.value)
+        this.dataEntry.month = this.selectMonths.map((month) => month.value)
             .join(','); //this.getMonthName();
         this.dataEntry.year = this.year.getFullYear().toString(); //this.getYear();
         var spliteedMonth = this.dataEntry.month.split(",");
@@ -1410,7 +1437,7 @@ export class TrackingComponent {
             );
             return
         }
-        if (this.selectMonths.length == 0 && this.categoryId != 8 && this.categoryId != 14) {
+        if (this.selectMonths.length == 0 && this.categoryId != 8 && this.categoryId != 14 && this.categoryId != 24 && this.categoryId != 25 && this.categoryId != 26) {
             this.notification.showInfo(
                 'Select month',
                 ''
@@ -1432,7 +1459,7 @@ export class TrackingComponent {
                 );
                 return
             }
-            let formData = new URLSearchParams();
+            let formData = new FormData();
             if (this.dataEntryForm.value.calorificValue != '') {
                 formData.set('calorificValue', this.dataEntryForm.value.calorificValue);
             }
@@ -1444,18 +1471,14 @@ export class TrackingComponent {
                     }
                     if (this.SCdataEntry.blendType == 'Average Blend') {
                         this.SCdataEntry.blendID = 2;
-
                     }
                     if (this.SCdataEntry.blendType == 'Perc. Blend') {
                         formData.set('blendPercent', this.SCdataEntry.blendPercent.toString());
-
                     }
                 }
                 else if (this.dataEntry.typeID == 2) {
                     if (this.SCdataEntry.blendType == 'No Blend') {
                         this.SCdataEntry.blendID = 1;
-
-
                     }
                     if (this.SCdataEntry.blendType == 'Average Blend') {
                         this.SCdataEntry.blendID = 2;
@@ -1564,6 +1587,10 @@ export class TrackingComponent {
             formData.set('months', monthString);
             formData.set('year', this.dataEntry.year);
             formData.set('facility_id', this.facilityID);
+            if (this.selectedFile) {
+
+                formData.set('file', this.selectedFile, this.selectedFile.name);
+            }
 
 
             this.trackingService.newPostSCDataEntry(formData).subscribe({
@@ -1575,7 +1602,7 @@ export class TrackingComponent {
                             'Success'
                         );
                         this.resetForm();
-                        this.getsubCategoryType(this.SubCatAllData
+                        this.getStationaryFuelType(this.SubCatAllData
                             .manageDataPointSubCategorySeedID);
                         this.ALLEntries();
                         this.getUnit(this.SubCatAllData
@@ -1613,7 +1640,7 @@ export class TrackingComponent {
                 );
                 return
             }
-            let formData = new URLSearchParams();
+            let formData = new FormData();
             this.RefrigerantDE.typeID = this.dataEntry.typeID;
 
             formData.set('subCategoryTypeId', (this.dataEntry.typeID).toString());
@@ -1626,8 +1653,10 @@ export class TrackingComponent {
 
             formData.set('months', monthString);
             formData.set('year', this.dataEntry.year);
-
-            this.trackingService.newPostRegrigerantDataEntry(formData.toString()).subscribe({
+            if (this.selectedFile) {
+                formData.set('file', this.selectedFile, this.selectedFile.name);
+            }
+            this.trackingService.newPostRegrigerantDataEntry(formData).subscribe({
                 next: (response) => {
                     if (response.success == true) {
                         this.notification.showSuccess(
@@ -1673,7 +1702,7 @@ export class TrackingComponent {
                 );
                 return
             }
-            let formData = new URLSearchParams();
+            let formData = new FormData();
             formData.set('NumberOfExtinguisher', this.FireExtinguisherDE.numberOfExtinguisher.toString());
             formData.set('unit', this.dataEntry.unit);
             formData.set('quantityOfCO2makeup', this.FireExtinguisherDE.quantityOfCO2makeup.toString());
@@ -1681,10 +1710,11 @@ export class TrackingComponent {
             formData.set('facilities', this.facilityID);
             formData.set('months', monthString);
             formData.set('year', this.dataEntry.year);
-            formData.set('SubCategorySeedID', this.SubCatAllData
-                .manageDataPointSubCategorySeedID.toString());
-
-            this.trackingService.newPostFireExtinguisherDataEntry(formData.toString()).subscribe({
+            formData.set('SubCategorySeedID', this.SubCatAllData.manageDataPointSubCategorySeedID.toString());
+            if (this.selectedFile) {
+                formData.set('file', this.selectedFile, this.selectedFile.name);
+            }
+            this.trackingService.newPostFireExtinguisherDataEntry(formData).subscribe({
                 next: (response) => {
                     if (response.success == true) {
                         this.notification.showSuccess(
@@ -1695,12 +1725,7 @@ export class TrackingComponent {
                         this.ALLEntries();
                         this.getUnit(this.SubCatAllData
                             .manageDataPointSubCategorySeedID);
-                        //this.GetAssignedDataPoint(this.facilityID);
-                        // this.trackingService.getrefdataentry(this.SubCatAllData.id, this.loginInfo.tenantID).subscribe({
-                        //     next: (response) => {
-                        //         this.commonDE = response;
-                        //     }
-                        // });
+
 
                         this.activeindex = 0;
                     } else {
@@ -1728,72 +1753,6 @@ export class TrackingComponent {
                 );
                 return
             }
-
-            // if (this.singleCompanyTab) {
-            //     console.log("sfdsf");
-            //     if (this.selectMonths.length == 0) {
-            //         this.notification.showInfo(
-            //             'Select month',
-            //             ''
-            //         );
-            //         return
-            //     }
-            //     if (this.VehicleDE.modeOfDE == 'Distance Travelled') {
-            //         this.VehicleDE.modeofDEID = 1;
-
-            //     }
-            //     else {
-            //         this.VehicleDE.modeofDEID = 2;
-            //     }
-
-            //     let formData = new URLSearchParams();
-            //     formData.set('NoOfVehicles', this.VehicleDE.noOfVehicles.toString());
-            //     formData.set('TotalnoOftripsPerVehicle', this.VehicleDE.totalnoOftripsPerVehicle.toString());
-            //     formData.set('ModeofDEID', form.value.modeName);
-            //     formData.set('Value', this.VehicleDE.value.toString());
-            //     formData.set('vehicleTypeID', this.VehicleDE.vehicleTypeID.toString());
-            //     formData.set('unit', this.dataEntry.unit);
-            //     formData.set('charging_outside', this.VehicleDE.chargingPerc);
-            //     formData.set('facilities', this.facilityID);
-            //     formData.set('months', monthString);
-            //     formData.set('year', this.dataEntry.year);
-            //     formData.set('SubCategorySeedID', this.SubCatAllData
-            //         .manageDataPointSubCategorySeedID.toString());
-
-            //     this.appService.postAPI('/Addcompanyownedvehicles', formData.toString()).subscribe({
-            //         next: (response: any) => {
-            //             if (response.success == true) {
-            //                 this.ALLEntries();
-            //                 this.notification.showSuccess(
-            //                     'Data entry added successfully',
-            //                     'Success'
-            //                 );
-            //                 this.resetForm();
-            //                 this.getUnit(this.SubCatAllData
-            //                     .manageDataPointSubCategorySeedID);
-            //                 this.VehicleDE.modeOfDE = this.ModeType[0].modeName;
-
-            //                 if (this.SubCatAllData.manageDataPointSubCategorySeedID == 10) {
-
-            //                     this.getPassengerVehicleType();
-            //                 }
-            //                 else {
-
-            //                     this.getDeliveryVehicleType();
-            //                 }
-            //                 this.activeindex = 0;
-            //             }
-            //         },
-            //         error: (err) => {
-            //             this.notification.showError(
-            //                 'Data entry added failed.',
-            //                 'Error'
-            //             );
-            //             console.error('errrrrrr>>>>>>', err);
-            //         },
-            //         complete: () => console.info('Data entry Added')
-            //     });
-            // } else {
 
             if (this.singleCompanyTab) {
                 var payloads = this.rowsCompany.map(row => ({
@@ -1844,14 +1803,24 @@ export class TrackingComponent {
             }
 
             var companyOwnedVehicles = JSON.stringify(payloads);
-            let formData = new URLSearchParams();
-            formData.set('facilityId', this.facilityID);
-            formData.set('month', monthString);
-            formData.set('year', this.dataEntry.year);
-            formData.set('jsonData', companyOwnedVehicles.toString());
+            if (this.selectedFile) {
+                var formData = new FormData();
+                formData.set('file', this.selectedFile, this.selectedFile.name);
+                formData.set('facilityId', this.facilityID);
+                formData.set('month', monthString);
+                formData.set('year', this.dataEntry.year);
+                formData.set('jsonData', companyOwnedVehicles.toString());
+            } else {
+                console.log("tgf");
+                var formData2 = new URLSearchParams();
+                formData2.set('facilityId', this.facilityID);
+                formData2.set('month', monthString);
+                formData2.set('year', this.dataEntry.year);
+                formData2.set('jsonData', companyOwnedVehicles.toString());
+            }
 
 
-            this.appService.postAPI('/add-multiple-company-owned-vehicles', formData.toString()).subscribe({
+            this.appService.postAPI('/add-multiple-company-owned-vehicles', this.selectedFile ? formData : formData2).subscribe({
                 next: (response: any) => {
                     if (response.success == true) {
                         this.ALLEntries();
@@ -1923,7 +1892,7 @@ export class TrackingComponent {
                 return
             }
             if (this.SubCatAllData.manageDataPointSubCategorySeedID == 9) {
-                var formData = new URLSearchParams();
+                var formData = new FormData();
                 formData.set('RegionID', this.RenewableElectricity.electricityRegionID.toString());
                 formData.set('readingValue', this.dataEntry.readingValue.toString());
                 formData.set('unit', this.dataEntry.unit);
@@ -1932,8 +1901,10 @@ export class TrackingComponent {
                 formData.set('year', this.dataEntry.year);
                 formData.set('SubCategorySeedID', this.SubCatAllData
                     .manageDataPointSubCategorySeedID.toString());
-
-                this.trackingService.newPostElectricityDataEntry(formData.toString()).subscribe({
+                if (this.selectedFile) {
+                    formData.set('file', this.selectedFile, this.selectedFile.name);
+                }
+                this.trackingService.newPostElectricityDataEntry(formData).subscribe({
                     next: (response) => {
                         if (response.success == true) {
                             this.resetForm();
@@ -1970,10 +1941,10 @@ export class TrackingComponent {
 
             }
             else {
-                var formData = new URLSearchParams();
+                var formData = new FormData();
                 formData.set('typeID', form.value.Type);
                 formData.set('readingValue', this.dataEntry.readingValue.toString());
-                formData.set('sourceName', this.RenewableElectricity.sourceName);
+                formData.set('sourceName', form.value.Source);
                 formData.set('unit', this.dataEntry.unit);
                 formData.set('facilities', this.facilityID);
                 formData.set('months', monthString);
@@ -1981,8 +1952,10 @@ export class TrackingComponent {
                 formData.set('emission_factor', form.value.emission_factorS);
                 formData.set('SubCategorySeedID', this.SubCatAllData
                     .manageDataPointSubCategorySeedID.toString());
-
-                this.trackingService.newPostElectricityMarket(formData.toString()).subscribe({
+                if (this.selectedFile) {
+                    formData.set('file', this.selectedFile, this.selectedFile.name);
+                }
+                this.trackingService.newPostElectricityMarket(formData).subscribe({
                     next: (response) => {
 
                         if (response.success == true) {
@@ -2027,7 +2000,7 @@ export class TrackingComponent {
 
         }
         if (this.categoryId == 7) {
-            var formData = new URLSearchParams();
+            var formData = new FormData();
             formData.set('typeID', this.dataEntry.typeID.toString());
             formData.set('readingValue', this.dataEntry.readingValue.toString());
             formData.set('unit', this.dataEntry.unit);
@@ -2036,8 +2009,11 @@ export class TrackingComponent {
             formData.set('year', this.dataEntry.year);
             formData.set('SubCategorySeedID', this.SubCatAllData
                 .manageDataPointSubCategorySeedID.toString());
+            if (this.selectedFile) {
+                formData.set('file', this.selectedFile, this.selectedFile.name);
+            }
 
-            this.trackingService.newPostHeatandSteamDataEntry(formData.toString()).subscribe({
+            this.trackingService.newPostHeatandSteamDataEntry(formData).subscribe({
                 next: (response) => {
                     if (response.success == true) {
                         this.resetForm();
@@ -2046,12 +2022,7 @@ export class TrackingComponent {
                         this.ALLEntries();
                         this.getUnit(this.SubCatAllData
                             .manageDataPointSubCategorySeedID);
-                        //this.GetAssignedDataPoint(this.facilityID);'
-                        // this.trackingService.getHeatandSteamdataentry(this.SubCatAllData.id, this.loginInfo.tenantID).subscribe({
-                        //     next: (response) => {
-                        //         this.commonDE = response;
-                        //     }
-                        // });
+
                         this.activeindex = 0;
                         this.notification.showSuccess(
                             'Data entry added successfully',
@@ -2175,7 +2146,7 @@ export class TrackingComponent {
                     error: (err) => {
                         this.notification.showError(
                             'Data entry added failed.',
-                            'Error'
+                            'Warning'
                         );
                         console.error('errrrrrr>>>>>>', err);
                     },
@@ -2508,7 +2479,7 @@ export class TrackingComponent {
             // Filter out rows where no field is filled
             const filledRows = this.rows.filter(row =>
 
-                row.vehicleType1 !== null && row.employeesCommute?.trim() !== ''
+                row.vehicleType1 !== null && row.employeesCommute !== ''
             );
 
             if (filledRows.length === 0) {
@@ -3413,13 +3384,15 @@ export class TrackingComponent {
             })
         }
         if (this.categoryId == 24) {
-            if (this.selectMonths.length == 0) {
-                this.notification.showInfo(
-                    'Select month',
-                    ''
-                );
-                return
-            }
+            // if (this.selectMonths.length == 0) {
+            //     this.notification.showInfo(
+            //         'Select month',
+            //         ''
+            //     );
+            //     return
+            // }
+
+
             if (form.value.flightMode == 'Generic') {
                 if (form.value.no_of_trips === '' || form.value.no_of_trips === null) {
                     this.notification.showInfo(
@@ -3434,31 +3407,54 @@ export class TrackingComponent {
             let formData = new URLSearchParams();
 
             if (form.value.flightMode == 'Generic') {
+                const payloadsFlight = this.rowsFlightTravel.map(row => ({
+
+                    flight_type: row.flightType,
+                    flight_class: row.flightClass,
+                    no_of_trips: row.noOfTrips,
+                    return_flight: row.return_flight,
+                    cost_centre: row.costCentre,
+                    batch: 1,
+                    month: row.selectedMonths
+
+                }));
                 formData.set('flight_calc_mode', form.value.flightMode);
-                formData.set('flight_type', form.value.flight_type);
-                formData.set('flight_class', form.value.classs);
-                formData.set('no_of_trips', form.value.no_of_trips);
-                formData.set('return_flight', this.storageTransporationChecked.toString());
-                formData.set('cost_centre', form.value.businessunits);
-                formData.set('batch', '1');
-                formData.set('month', monthString);
+                formData.set('jsonData', JSON.stringify(payloadsFlight));
+                // formData.set('month', monthString);
                 formData.set('year', this.dataEntry.year);
                 formData.set('facilities', this.facilityID);
             } else if (form.value.flightMode == 'To/From') {
+                const payloadsFlight = this.rowsFlightTravel.map(row => ({
+
+                    to: row.to,
+                    from: row.from,
+                    via: row.via,
+                    flight_class: row.flight_class,
+                    no_of_passengers: row.no_of_passengers,
+                    return_flight: row.return_flight,
+                    reference_id: row.reference_id,
+                    cost_centre: row.cost_centre,
+                    batch: 1,
+                    month: row.selectedMonths
+
+                }));
                 formData.set('flight_calc_mode', form.value.flightMode);
-                formData.set('to', form.value.airport_codeto);
-                formData.set('from', form.value.airport_codefrom);
-                formData.set('via', form.value.airport_codevia);
-                formData.set('flight_class', form.value.classs);
-                formData.set('no_of_passengers', form.value.no_of_passengers);
-                formData.set('return_flight', this.storageTransporationChecked.toString());
-                formData.set('reference_id', form.value.reference_id);
-                formData.set('cost_centre', form.value.businessunits);
-                formData.set('batch', '1');
-                formData.set('month', monthString);
+                formData.set('jsonData', JSON.stringify(payloadsFlight));
+                // formData.set('month', monthString);
                 formData.set('year', this.dataEntry.year);
                 formData.set('facilities', this.facilityID);
             } else if (form.value.flightMode == 'Distance') {
+                const payloadsFlight = this.rowsFlightTravel.map(row => ({
+
+                    flight_type: row.flightType,
+                    flight_class: row.flightClass,
+                    no_of_trips: row.noOfTrips,
+                    return_flight: row.returnFlight,
+                    cost_centre: row.costCentre,
+                    batch: 1,
+                    month: row.selectedMonths
+
+                }));
                 formData.set('flight_calc_mode', form.value.flightMode);
                 formData.set('flight_type', form.value.flight_type);
                 formData.set('flight_class', form.value.classs);
@@ -3488,6 +3484,27 @@ export class TrackingComponent {
                         this.flightDisplay1 = 'block';
                         this.flightDisplay2 = 'none';
                         this.flightDisplay3 = 'none';
+                        this.rowsFlightTravel = [{
+                            id: 1,
+                            flightMode: '',
+                            flightType: null,
+                            flightClass: null,
+                            returnFlight: null,
+                            noOfTrips: null,
+                            costCentre: '',
+                            to: null,
+                            from: null,
+                            via: null,
+                            flight_class: null,
+                            no_of_passengers: null,
+                            return_flight: null,
+                            reference_id: null,
+                            cost_centre: null,
+                            batch: 1,
+                            month: this.months,
+                            selectedMonths: null
+
+                        }];
 
                     } else {
                         this.notification.showError(
@@ -3501,8 +3518,8 @@ export class TrackingComponent {
                 },
                 error: (err) => {
                     this.notification.showError(
-                        'Data entry added failed.',
-                        'Error'
+                        "EF not found for this facility",
+                        ''
                     );
                     this.dataEntryForm.reset();
 
@@ -3513,25 +3530,28 @@ export class TrackingComponent {
             })
         }
         if (this.categoryId == 25) {
-            if (this.selectMonths.length == 0) {
-                this.notification.showInfo(
-                    'Select month',
-                    ''
-                );
-                return
-            }
+
             var spliteedMonth = this.dataEntry.month.split(",");
             var monthString = JSON.stringify(spliteedMonth)
             let formData = new URLSearchParams();
+            const payloadsHotelStay = this.rowsHotelStay.map(row => ({
 
-            formData.set('country_of_stay', form.value.countryname);
-            formData.set('type_of_hotel', form.value.hoteltype);
-            formData.set('no_of_occupied_rooms', form.value.noOfOccoupied);
-            formData.set('no_of_nights_per_room', form.value.noOfNights);
-            formData.set('batch', '1');
-            formData.set('month', monthString);
+                country_of_stay: row.selectedCountry,
+                type_of_hotel: row.type_of_hotel,
+                no_of_occupied_rooms: row.no_of_occupied_rooms,
+                no_of_nights_per_room: row.no_of_nights,
+                batch: 1,
+                month: row.selectedMonths
+
+            }));
+            // formData.set('country_of_stay', form.value.countryname);
+            // formData.set('type_of_hotel', form.value.hoteltype);
+            // formData.set('no_of_occupied_rooms', form.value.noOfOccoupied);
+            // formData.set('no_of_nights_per_room', form.value.noOfNights);
+
             formData.set('year', this.dataEntry.year);
             formData.set('facilities', this.facilityID);
+            formData.set('jsonData', JSON.stringify(payloadsHotelStay));
 
 
             this.trackingService.uploadHotelStay(formData.toString()).subscribe({
@@ -3544,6 +3564,16 @@ export class TrackingComponent {
                         );
                         this.dataEntryForm.reset();
                         this.ALLEntries();
+                        this.rowsHotelStay = [{
+                            id: 1,
+                            country_stay: null,
+                            type_of_hotel: null,
+                            no_of_occupied_rooms: null,
+                            no_of_nights: null,
+                            selectedCountry: null,
+                            month: this.months,
+                            selectedMonths: null
+                        }];
 
                         // this.getStatusData(this.activeCategoryIndex)
                     } else {
@@ -3559,7 +3589,7 @@ export class TrackingComponent {
                 error: (err) => {
                     this.notification.showError(
                         'Data entry added failed.',
-                        'Error'
+                        ''
                     );
                     this.dataEntryForm.reset();
 
@@ -3570,39 +3600,49 @@ export class TrackingComponent {
             })
         }
         if (this.categoryId == 26) {
-            if (this.selectMonths.length == 0) {
-                this.notification.showInfo(
-                    'Select month',
-                    ''
-                );
-                return
-            }
+
             var spliteedMonth = this.dataEntry.month.split(",");
             var monthString = JSON.stringify(spliteedMonth)
             let formData = new URLSearchParams();
-            if (this.carMode == true) {
-                formData.set('mode_of_trasport', form.value.modes);
-                formData.set('type', form.value.cartype);
-                formData.set('fuel_type', form.value.fuelCar_type);
-                formData.set('distance_travelled', form.value.distance);
-                formData.set('no_of_trips', form.value.no_ofTrips);
-                formData.set('batch', '1');
-                formData.set('month', monthString);
-                formData.set('year', this.dataEntry.year);
-                formData.set('facilities', this.facilityID);
-            } else {
+            // if (this.carMode == true) {
+            //     formData.set('mode_of_trasport', form.value.modes);
+            //     formData.set('type', form.value.cartype);
+            //     formData.set('fuel_type', form.value.fuelCar_type);
+            //     formData.set('distance_travelled', form.value.distance);
+            //     formData.set('no_of_trips', form.value.no_ofTrips);
+            //     formData.set('batch', '1');
+            //     formData.set('month', monthString);
+            //     formData.set('year', this.dataEntry.year);
+            //     formData.set('facilities', this.facilityID);
+            // } else {
 
-                formData.set('mode_of_trasport', form.value.modes);
-                formData.set('type', form.value.cartype);
-                formData.set('no_of_passengers', form.value.no_of_passengers);
-                formData.set('distance_travelled', form.value.distance);
-                formData.set('no_of_trips', form.value.no_ofTrips);
-                formData.set('batch', '1');
-                formData.set('month', monthString);
-                formData.set('year', this.dataEntry.year);
-                formData.set('facilities', this.facilityID);
-            }
+            //     formData.set('mode_of_trasport', form.value.modes);
+            //     formData.set('type', form.value.cartype);
+            //     formData.set('no_of_passengers', form.value.no_of_passengers);
+            //     formData.set('distance_travelled', form.value.distance);
+            //     formData.set('no_of_trips', form.value.no_ofTrips);
+            //     formData.set('batch', '1');
+            //     formData.set('month', monthString);
+            //     formData.set('year', this.dataEntry.year);
+            //     formData.set('facilities', this.facilityID);
+            // }
 
+            const payloadsOtherModes = this.rowsOtherTransport.map(row => ({
+
+                mode_of_trasport: row.trasnportMode,
+                type: row.selectedMode,
+                fuel_type: row.selectedFuelType,
+                no_of_passengers: row.no_of_passengers,
+                distance_travelled: row.distance_travel_per_trip,
+                no_of_trips: row.noOfTrips,
+                batch: 1,
+                month: row.selectedMonths
+
+            }));
+            formData.set('jsonData', JSON.stringify(payloadsOtherModes));
+
+            formData.set('year', this.dataEntry.year);
+            formData.set('facilities', this.facilityID);
 
 
             this.trackingService.uploadOtherModes(formData.toString()).subscribe({
@@ -3616,6 +3656,21 @@ export class TrackingComponent {
                         this.dataEntryForm.reset();
                         this.ModeSelected = false;
                         this.ALLEntries();
+
+                        this.rowsOtherTransport = [{
+                            id: 1,
+                            trasnportMode: null,
+                            modeType: [],
+                            selectedMode: null,
+                            carFuel_type: [],
+                            selectedFuelType: null,
+                            no_of_passengers: null,
+                            distance_travel_per_trip: null,
+                            isDisabled: false,
+                            noOfTrips: null,
+                            month: this.months,
+                            selectedMonths: null,
+                        }];;
 
                         // this.getStatusData(this.activeCategoryIndex)
                     } else {
@@ -3644,6 +3699,71 @@ export class TrackingComponent {
         }
 
     };
+
+    submitUnmatchWithAI(){
+       
+        const payload = this.newExcelData.filter(item => item.is_find == false).map(row => ({
+            month: '',
+            typeofpurchase: row.productResult.typeofpurchase,
+            product_desc: row['Product Description'],
+            category_desc: row['Product Category'],
+            valuequantity: row['Value / Quantity'],
+            unit: row['Unit'],
+            vendorId: '',
+            vendor: row['Vendor'],
+            vendorunit: row['Vendor Specific Unit'],
+            vendorspecificEF: row['Vendor Specific EF'],
+            product_category: row.productResult.id,
+            product_description: row['Product / Service Description'],
+            purchase_date: row['Purchase Date'],
+            productcode: row.code,
+            is_find: row.is_find
+        }));
+        var purchaseTableStringfy = JSON.stringify(payload);
+
+        let formData = new URLSearchParams();
+
+        // formData.set('productcodestandard', this.productHSNSelect);
+        formData.set('facilities', this.facilityID);
+        formData.set('jsonData', purchaseTableStringfy);
+        formData.set('is_annual', '0');
+        formData.set('tenant_id', this.superAdminID.toString());
+        formData.set('user_id',    this.loginInfo.Id.toString());
+        this.trackingService.submitPurchaseGoodsAI(formData.toString()).subscribe({
+            next: (response) => {
+
+                if (response.success == true) {
+                    this.notification.showSuccess(
+                        response.message,
+                        'Success'
+                    );
+                    this.newExcelData = this.newExcelData.filter(item => item.is_find == true);
+
+
+                    this.GetHSN();
+                    // this.deselectAllItems(this.rowsPurchased)
+
+                    this.resetForm();
+                    this.ALLEntries();
+
+                } else {
+                    this.notification.showError(
+                        response.message,
+                        'Error'
+                    );
+
+                }
+            },
+            error: (err) => {
+                this.notification.showError(
+                    'Data entry added failed.',
+                    'Error'
+                );
+                console.error('errrrrrr>>>>>>', err);
+            },
+            complete: () => console.info('Data entry Added')
+        });
+    }
     // getting units for category 1 and 2
     getUnit(subcatId) {
         this.trackingService.newgetUnits(subcatId).subscribe({
@@ -3671,6 +3791,44 @@ export class TrackingComponent {
             }
         })
     };
+
+    onFlightModeChange(event: any) {
+        this.rowsFlightTravel = [{
+            id: 1,
+            flightMode: '',
+            flightType: null,
+            flightClass: null,
+            returnFlight: null,
+            noOfTrips: null,
+            costCentre: '',
+            to: null,
+            from: null,
+            via: null,
+            flight_class: null,
+            no_of_passengers: null,
+            return_flight: null,
+            reference_id: null,
+            cost_centre: null,
+            batch: 1,
+            month: this.months,
+            selectedMonths: null
+
+        }];
+        if (event.value == 'Generic') {
+            this.flightDisplay1 = 'block';
+            this.flightDisplay2 = 'none';
+            this.flightDisplay3 = 'none';
+        } else if (event.value == 'To/From') {
+            this.getAirportCodes()
+            this.flightDisplay1 = 'none';
+            this.flightDisplay2 = 'block';
+            this.flightDisplay3 = 'none';
+        } else if (event.value == 3) {
+
+        } else {
+
+        }
+    }
 
 
     addCommutes() {
@@ -3808,7 +3966,7 @@ export class TrackingComponent {
 
                                             this.categoryId = 1;
                                             this.ALLEntries()
-                                            this.getsubCategoryType(this.SubCatAllData
+                                            this.getStationaryFuelType(this.SubCatAllData
                                                 .manageDataPointSubCategorySeedID);
                                             this.getUnit(this.SubCatAllData
                                                 .manageDataPointSubCategorySeedID);
@@ -4186,14 +4344,14 @@ export class TrackingComponent {
             const data = new Uint8Array(e.target.result);
             const workbook = XLSX.read(data, { type: 'array' });
 
-         
+
             const sheetName = workbook.SheetNames[0];
             const worksheet = workbook.Sheets[sheetName];
 
-           
+
             this.jsonCompanyData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
 
-           
+
             const jsonReading = this.convertToKeyValue(this.jsonCompanyData);
             console.log(jsonReading
             );
@@ -4227,7 +4385,7 @@ export class TrackingComponent {
     };
 
     convertToKeyValue(data: any[]): any[] {
-        if (data.length < 2) return []; 
+        if (data.length < 2) return [];
 
         const headers = data[0]; // Extract headers
         return data.slice(1).map((row) => {
@@ -4276,7 +4434,7 @@ export class TrackingComponent {
     };
     sendJSON(jsonData: any) {
         const json = jsonData.filter((item: any) => item['Product Description'] !== '');
-
+        console.log(json);
         const jsonDataString = JSON.stringify(json);
         const formData = new URLSearchParams();
         formData.append('product', jsonDataString);
@@ -4304,8 +4462,6 @@ export class TrackingComponent {
                         }));
                     }
 
-
-                    console.log("geeting json from server", this.newExcelData);
                 }
             },
             error: (err) => {
@@ -4477,11 +4633,13 @@ export class TrackingComponent {
     };
 
     onFileSelected(event: any) {
-        const selectedFile = event.target.files[0];
+        console.log(event[0].file);
+        console.log(event[0]);
+        const selectedFile = event[0];
 
         if (selectedFile) {
             //   this.uploadFiles(files); previous one 
-            this.selectedFile = event.target.files[0];
+            this.selectedFile = event[0];
             $(".browse-button input:file").change(function () {
                 $("input[name='attachment']").each(function () {
                     var fileName = $(this).val().split('/').pop().split('\\').pop();
@@ -4585,7 +4743,58 @@ export class TrackingComponent {
                 }
             }
         );
-    }
+    };
+
+    addrowsFlightTravel() {
+        this.rowsFlightTravel.push({
+            id: this.rowsFlightTravel.length + 1,
+            flightMode: '',
+            flightType: null,
+            flightClass: null,
+            returnFlight: null,
+            noOfTrips: null,
+            costCentre: '',
+            to: null,
+            from: null,
+            via: null,
+            flight_class: null,
+            no_of_passengers: null,
+            return_flight: null,
+            reference_id: null,
+            cost_centre: null,
+            batch: 1,
+            month: this.months,
+            selectedMonths: null,
+        });
+    };
+    addrowsOtherModes() {
+        this.rowsOtherTransport.push({
+            id: this.rowsOtherTransport.length + 1,
+            trasnportMode: null,
+            modeType: [],
+            carFuel_type: [],
+            selectedMode: null,
+            selectedFuelType: null,
+            no_of_passengers: null,
+            distance_travel_per_trip: null,
+            isDisabled: false,
+            noOfTrips: '',
+            month: this.months,
+            selectedMonths: null,
+            batch: 1,
+        });
+    };
+    addrowsHotelStay() {
+        this.rowsHotelStay.push({
+            id: this.rowsHotelStay.length + 1,
+            country_stay: null,
+            type_of_hotel: null,
+            no_of_occupied_rooms: null,
+            no_of_nights: null,
+            month: this.months,
+            selectedMonths: null,
+        });
+    };
 
     //The getFileUrl function is used to generate the URL for downloading a file based on the provided filePath.
     private getFileUrl(filePath: string): string {
@@ -4606,19 +4815,14 @@ export class TrackingComponent {
     //resetForm method for resetting the form and clearing any selected values or input fields.
     resetForm() {
         this.dataEntryForm.resetForm();
-        // this.fileUpload.clear();
+        this.fileUpload.clear();
+        this.selectedFile = null;
     }
 
     EditDataEntry(dataEntry: any) {
         this.activeindex = 0;
     }
-    // getBlendType() {
-    //     this.trackingService.getBlend().subscribe({
-    //         next: (response) => {
-    //             this.blendType = response;
-    //         }
-    //     })
-    // }
+
     getVehicleDEMode() {
         this.trackingService.getVehicleDEMode().subscribe({
             next: (response) => {
@@ -4723,7 +4927,7 @@ export class TrackingComponent {
     getPassengerVehicleType() {
         try {
             this.VehicleDE.vehicleTypeID = null;
-            this.trackingService.newGetPassengerVehicleType().subscribe({
+            this.trackingService.newGetPassengerVehicleType(this.facilityID).subscribe({
                 next: (response) => {
                     if (response) {
                         this.VehicleType = response.categories;
@@ -4743,7 +4947,7 @@ export class TrackingComponent {
     getDeliveryVehicleType() {
         try {
             this.VehicleDE.vehicleTypeID = null;
-            this.trackingService.newGetDeliveryVehicleType().subscribe({
+            this.trackingService.newGetDeliveryVehicleType(this.facilityID).subscribe({
                 next: (response) => {
                     if (response) {
                         this.VehicleType = response.categories;
@@ -4888,6 +5092,137 @@ export class TrackingComponent {
                 ]
             this.mode_name = selectedMode;
             this.mode_type = optionvalue;
+        }
+    };
+
+    onModesChangeM(event: any, row) {
+        const selectedMode = event.value;
+        this.carMode = true;
+        this.autoMode = false;
+        this.ModeSelected = true;
+        if (selectedMode == 'Car') {
+            this.carMode = true;
+            this.autoMode = false;
+            const optionvalue =
+                [{
+                    "id": 1,
+                    "type": "Small"
+                },
+                {
+                    "id": 2,
+                    "type": "Medium"
+                },
+                {
+                    "id": 3,
+                    "type": "Large"
+                }
+                ]
+            const optionvalue2 =
+                [{
+                    "id": 1,
+                    "mode_type": "Petrol"
+                },
+                {
+                    "id": 2,
+                    "mode_type": "Diesel"
+                },
+                {
+                    "id": 3,
+                    "mode_type": "LPG"
+                },
+                {
+                    "id": 4,
+                    "mode_type": "CNG"
+                },
+                {
+                    "id": 5,
+                    "mode_type": "Hybrid"
+                },
+                {
+                    "id": 6,
+                    "mode_type": "Electric"
+                }
+                ]
+            this.mode_name = selectedMode;
+
+            row.mode_type = optionvalue;
+            row.carFuel_type = optionvalue2;
+            row.isDisabled = true;
+            this.cdRef.detectChanges();
+        } else if (selectedMode == 'Auto') {
+            this.autoMode = true;
+            this.carMode = true;
+            const optionvalue =
+                [{
+                    "id": 1,
+                    "type": "Petrol"
+                },
+                {
+                    "id": 2,
+                    "type": "CNG"
+                },
+                {
+                    "id": 3,
+                    "type": "LPG"
+                }
+                ]
+            this.mode_name = selectedMode;
+            row.mode_type = optionvalue;
+            row.carFuel_type = [];
+            row.isDisabled = true;
+        } else if (selectedMode == 'Bus') {
+            this.carMode = false;
+            this.autoMode = true;
+            const optionvalue =
+                [{
+                    "id": 1,
+                    "type": "Local Bus"
+                },
+                {
+                    "id": 2,
+                    "type": "Coach"
+                }
+                ]
+            this.mode_name = selectedMode;
+            row.mode_type = optionvalue;
+            row.carFuel_type = [];
+            row.isDisabled = false;
+        }
+        else if (selectedMode == 'Rail') {
+            this.carMode = false;
+            const optionvalue =
+                [{
+                    "id": 1,
+                    "type": "National"
+                },
+                {
+                    "id": 2,
+                    "type": "International"
+                }
+
+                ]
+            this.mode_name = selectedMode;
+            row.mode_type = optionvalue;
+            row.carFuel_type = [];
+            row.isDisabled = false
+        }
+        else if (selectedMode == 'Ferry') {
+            this.carMode = false;
+            this.autoMode = true;
+            const optionvalue =
+                [{
+                    "id": 1,
+                    "type": "Foot passenger"
+                },
+                {
+                    "id": 2,
+                    "type": "Car passenger"
+                }
+                ]
+            this.mode_name = selectedMode;
+            row.mode_type = optionvalue;
+            row.carFuel_type = [];
+            row.isDisabled = false
         }
     };
 
@@ -5667,13 +6002,6 @@ export class TrackingComponent {
     }
 
 
-    //retrieves the emission factor for a given subcategory seed ID and category ID.
 
-    ngOnDestroy() {
-        localStorage.removeItem('SelectedfacilityID');
-        this.facilityService.facilitySelected(0)
-
-
-    }
 
 }

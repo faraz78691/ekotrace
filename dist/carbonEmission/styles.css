@@ -10462,6 +10462,10 @@ h1.bft-edit-form-title {
   background-color: #80a745 !important;
   color: #fff !important;
 }
+
+.et_select__38_678 .p-multiselect .p-multiselect-label {
+  padding-block: 7.02px;
+}
 /*!******************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[5].rules[0].oneOf[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[5].rules[0].oneOf[0].use[2]!./node_modules/ngx-toastr/toastr.css?ngGlobalStyle ***!
   \******************************************************************************************************************************************************************************************************************************************/
@@ -10656,6 +10660,244 @@ button.toast-close-button {
     padding: 15px 15px 15px 50px;
     width: 25em;
   }
+}
+
+/*!*******************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[5].rules[0].oneOf[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[5].rules[0].oneOf[0].use[2]!./node_modules/ngx-spinner/animations/ball-scale-multiple.css?ngGlobalStyle ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************/
+/*!
+ * Load Awesome v1.1.0 (http://github.danielcardoso.net/load-awesome/)
+ * Copyright 2015 Daniel Cardoso <@DanielCardoso>
+ * Licensed under MIT
+ */
+.la-ball-scale-multiple,
+.la-ball-scale-multiple > div {
+    position: relative;
+    box-sizing: border-box;
+}
+
+.la-ball-scale-multiple {
+    display: block;
+    font-size: 0;
+    color: #fff;
+}
+
+.la-ball-scale-multiple.la-dark {
+    color: #333;
+}
+
+.la-ball-scale-multiple > div {
+    display: inline-block;
+    float: none;
+    background-color: currentColor;
+    border: 0 solid currentColor;
+}
+
+.la-ball-scale-multiple {
+    width: 32px;
+    height: 32px;
+}
+
+.la-ball-scale-multiple > div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 100%;
+    opacity: 0;
+    animation: ball-scale-multiple 1s 0s linear infinite;
+}
+
+.la-ball-scale-multiple > div:nth-child(2) {
+    animation-delay: .2s;
+}
+
+.la-ball-scale-multiple > div:nth-child(3) {
+    animation-delay: .4s;
+}
+
+.la-ball-scale-multiple.la-sm {
+    width: 16px;
+    height: 16px;
+}
+
+.la-ball-scale-multiple.la-sm > div {
+    width: 16px;
+    height: 16px;
+}
+
+.la-ball-scale-multiple.la-2x {
+    width: 64px;
+    height: 64px;
+}
+
+.la-ball-scale-multiple.la-2x > div {
+    width: 64px;
+    height: 64px;
+}
+
+.la-ball-scale-multiple.la-3x {
+    width: 96px;
+    height: 96px;
+}
+
+.la-ball-scale-multiple.la-3x > div {
+    width: 96px;
+    height: 96px;
+}
+
+/*
+ * Animation
+ */
+@keyframes ball-scale-multiple {
+    0% {
+        opacity: 0;
+        transform: scale(0);
+    }
+    5% {
+        opacity: .75;
+    }
+    100% {
+        opacity: 0;
+        transform: scale(1);
+    }
+}
+
+/*!**********************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[5].rules[0].oneOf[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[5].rules[0].oneOf[0].use[2]!./node_modules/ngx-spinner/animations/ball-clip-rotate-pulse.css?ngGlobalStyle ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************/
+/*!
+ * Load Awesome v1.1.0 (http://github.danielcardoso.net/load-awesome/)
+ * Copyright 2015 Daniel Cardoso <@DanielCardoso>
+ * Licensed under MIT
+ */
+.la-ball-clip-rotate-pulse,
+.la-ball-clip-rotate-pulse > div {
+    position: relative;
+    box-sizing: border-box;
+}
+
+.la-ball-clip-rotate-pulse {
+    display: block;
+    font-size: 0;
+    color: #fff;
+}
+
+.la-ball-clip-rotate-pulse.la-dark {
+    color: #333;
+}
+
+.la-ball-clip-rotate-pulse > div {
+    display: inline-block;
+    float: none;
+    background-color: currentColor;
+    border: 0 solid currentColor;
+}
+
+.la-ball-clip-rotate-pulse {
+    width: 32px;
+    height: 32px;
+}
+
+.la-ball-clip-rotate-pulse > div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-radius: 100%;
+}
+
+.la-ball-clip-rotate-pulse > div:first-child {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    background: transparent;
+    border-style: solid;
+    border-width: 2px;
+    border-right-color: transparent;
+    border-left-color: transparent;
+    animation: ball-clip-rotate-pulse-rotate 1s cubic-bezier(.09, .57, .49, .9) infinite;
+}
+
+.la-ball-clip-rotate-pulse > div:last-child {
+    width: 16px;
+    height: 16px;
+    animation: ball-clip-rotate-pulse-scale 1s cubic-bezier(.09, .57, .49, .9) infinite;
+}
+
+.la-ball-clip-rotate-pulse.la-sm {
+    width: 16px;
+    height: 16px;
+}
+
+.la-ball-clip-rotate-pulse.la-sm > div:first-child {
+    width: 16px;
+    height: 16px;
+    border-width: 1px;
+}
+
+.la-ball-clip-rotate-pulse.la-sm > div:last-child {
+    width: 8px;
+    height: 8px;
+}
+
+.la-ball-clip-rotate-pulse.la-2x {
+    width: 64px;
+    height: 64px;
+}
+
+.la-ball-clip-rotate-pulse.la-2x > div:first-child {
+    width: 64px;
+    height: 64px;
+    border-width: 4px;
+}
+
+.la-ball-clip-rotate-pulse.la-2x > div:last-child {
+    width: 32px;
+    height: 32px;
+}
+
+.la-ball-clip-rotate-pulse.la-3x {
+    width: 96px;
+    height: 96px;
+}
+
+.la-ball-clip-rotate-pulse.la-3x > div:first-child {
+    width: 96px;
+    height: 96px;
+    border-width: 6px;
+}
+
+.la-ball-clip-rotate-pulse.la-3x > div:last-child {
+    width: 48px;
+    height: 48px;
+}
+
+/*
+ * Animations
+ */
+@keyframes ball-clip-rotate-pulse-rotate {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    50% {
+        transform: translate(-50%, -50%) rotate(180deg);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+@keyframes ball-clip-rotate-pulse-scale {
+    0%,
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    30% {
+        opacity: .3;
+        transform: translate(-50%, -50%) scale(.15);
+    }
 }
 
 

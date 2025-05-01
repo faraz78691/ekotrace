@@ -201,6 +201,7 @@ export class BusinessTravelReportComponent {
     reportFormData.set('investment_emission', "0")
     reportFormData.set('flight_travel', this.selectedMode === 1 ? '1' : '0')
     reportFormData.set('hotel_stays', this.selectedMode === 3 ? '1' : '0')
+    reportFormData.set('business_travel', '1')
     // reportFormData.set('hotel_stays', '1')
     reportFormData.set('other_transport', this.selectedMode === 2 ? '1' : '0')
     reportFormData.set('facility', selectedFacilities)

@@ -446,7 +446,7 @@ export class GhgEmmissionsComponent implements OnDestroy {
 
   // Handle the scopeWiseResult
   handleScopeWiseResult(scopeWiseResult: any) {
-  
+  console.log("scopeWiseResult",scopeWiseResult);
     this.scopeMonths = scopeWiseResult.month;
     this.scopeWiseSeries = scopeWiseResult.series;
     this.series_graph = scopeWiseResult.series_graph;

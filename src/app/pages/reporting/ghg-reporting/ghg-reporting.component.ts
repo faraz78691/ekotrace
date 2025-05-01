@@ -9,6 +9,7 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { forkJoin, tap } from 'rxjs';
 import { NotificationService } from '@services/notification.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 export type ChartOptions2 = {
   series: ApexNonAxisChartSeries;
   chart: ApexChart;
@@ -42,13 +43,14 @@ export type ChartOptions = {
   styleUrls: ['./ghg-reporting.component.scss']
 })
 export class GhgReportingComponent {
+  isHowtoUse = false;
   baseYear: any;
   loginInfo: any;
   facilityData: any[] = [];
   categoriesData: any[] = [];
-  selectedMultipleFacility: any[]=[];
-  selectedMultipleCategories: any;
-  selectedMultipleKPIs: any[]=[];
+  selectedMultipleFacility: any[] = [];
+  selectedMultipleCategories: any[]=[];
+  selectedMultipleKPIs: any[] = [1, 4, 9];
   reportData: any;
   currentYear: any;
   scopeEmissons: any;
@@ -89,16 +91,26 @@ export class GhgReportingComponent {
   wasteMixChartOptions: any;
   rangeScopeBarOptions: any;
   rangeScopeLineOptions: any;
+  ghgIntensityLineOptions: any;
   sustainableWaste: any
   nonsustainableWaste: any;
   yearWiseLineOptions: any;
   baseYearGhg: any;
   currentYearGhg: any;
   percentageIncDec: any;
-  isGenerating = false; 
+  isGenerating = false;
+  kpiData: any[] = [];
+  showContent = false;
+  ghgIntensity: any[] = [];
+  ghgRevenue: any[] = [];
+  remarkIntensityCurrent: number[];
+  remarkIntensityBase: number[];
+  intensitySeries: any[] = [];
+  remainingTime: number = 50;  // total countdown time
+  timerInterval: any;
   constructor(
 
-    private _apiService: ApiService, private facilityService: FacilityService, private cdr: ChangeDetectorRef, private _appService: AppService,private notificationService:NotificationService
+    private _apiService: ApiService, private spinner: NgxSpinnerService, private facilityService: FacilityService, private cdr: ChangeDetectorRef, private _appService: AppService, private notificationService: NotificationService
   ) {
     this.categoriesData = [
       { id: 1, name: 'Purchased goods and services' },
@@ -108,41 +120,7 @@ export class GhgReportingComponent {
       { id: 5, name: 'Water supply' },
       { id: 6, name: 'Waste' }
     ]
-    this.kpiList = [
-      { id: 1, name: 'Scope1 Emissions' },
-      { id: 2, name: 'Scope2 Emissions' },
-      { id: 3, name: 'Scope3 Emissions' },
-      { id: 4, name: 'Total Emission per output' },
-      { id: 5, name: 'Total Emission per mn revenue' },
-      { id: 6, name: 'Total Emission per no. of employees' },
-      { id: 7, name: 'Emission per unit area' },
-      { id: 8, name: 'Emission per unit energy reference area' },
-      { id: 9, name: 'Emission per KWh energy consumed (mix)' },
-      { id: 10, name: 'Vehicle Emission per no. of vehicles (petrol)' },
-      { id: 11, name: 'Vehicle Emission per no. of vehicles (diesel)' },
-      { id: 12, name: 'Total Vehicle Emission per vehicle' },
-      { id: 13, name: 'Transporatation Emission' },
-      { id: 14, name: 'Transporatation Emission per tonne of freight' },
-      { id: 15, name: 'Total Emissions in business travel' },
-      { id: 16, name: 'Emissions in Flight travel' },
-      { id: 17, name: 'Total Emissions in business travel per employee' },
-      { id: 18, name: 'Emission per total working days' },
-      { id: 19, name: 'Total energy consumed' },
-      { id: 20, name: 'Renewable Electricity as % of total energy consumed' },
-      { id: 21, name: 'Renewable Electricity as % of Total Electricity' },
-      { id: 22, name: 'Total Fossil Fuel consumption' },
-      { id: 23, name: 'Fossil Fuel Consumption / output' },
-      { id: 24, name: 'Fossil Fuel Consumption / revenue (in mn)' },
-      { id: 25, name: 'Emissions in waste treatment' },
-      { id: 26, name: 'Waste generated per unit output' },
-      { id: 27, name: 'Fossil Fuel Consumption / revenue (in mn)' },
-      { id: 28, name: 'Waste diversion rate %' },
-      { id: 29, name: 'Total water usage' },
-      { id: 30, name: 'Water treated as % of total water discharged' },
-      { id: 31, name: 'Water usage per employee' },
-      { id: 32, name: 'Water usage per output' },
-      { id: 33, name: 'Emissions in water treatment' }
-    ]
+
 
 
   }
@@ -156,8 +134,9 @@ export class GhgReportingComponent {
       let jsonObj = JSON.parse(userInfo);
       this.loginInfo = jsonObj as any;
       this.currentYear = new Date().getFullYear();
-    
+
       this.GetAllFacility();
+      this.getKPIList();
     }
 
   }
@@ -172,12 +151,18 @@ export class GhgReportingComponent {
   };
 
   onGenerateReport() {
-    if( this.selectedMultipleFacility.length == 0){
+    if (this.selectedMultipleFacility.length == 0) {
       console.log(this.selectedMultipleFacility);
-      this.notificationService.showInfo('Please select at least one facility','')
+      this.notificationService.showInfo('Please select at least one facility', '')
       return
     }
-    this.isGenerating = true;
+    if (this.selectedMultipleKPIs.length != 3) {
+      console.log(this.selectedMultipleFacility);
+      this.notificationService.showInfo('Please select any 3 KPIs', '')
+      return
+    }
+    this.spinner.show();
+    // this.isGenerating = true;
     const apiCalls = [
       this.getScopeWiseEmission(),
       this.scope1Categories(),
@@ -191,7 +176,9 @@ export class GhgReportingComponent {
       this.ghgEnergyMonth(),
       this.getWaste(),
       this.getTopEmissions(),
-      this.getGhgNoofEmployee()
+      this.getGhgNoofEmployee(),
+      this.getKPIEmisions()
+
     ];
 
     // Only add these API calls if `this.baseYear` exists
@@ -199,21 +186,38 @@ export class GhgReportingComponent {
 
       apiCalls.push(this.getRangeWiseScopeEmisions());
       apiCalls.push(this.getRangeWiseYearEmisions());
+
+      apiCalls.push(this.getEmissionsIntesity());
+
     }
     forkJoin(apiCalls).subscribe({
       next: () => {
+        this.showContent = true;
+        this.spinner.hide();
+
         console.log('All API calls completed');
         setTimeout(() => {
-          this.downloadPDF(); 
+          // this.downloadPDF(); 
         }, 2500);
       },
       error: (err) => {
+        this.spinner.hide();
         this.notificationService.showWarning('Internal Server Error', '');
         this.isGenerating = false;
         console.error('Error in API calls:', err);
       }
     });
-  }
+  };
+
+
+  getKPIList() {
+    let tenantId = this.loginInfo.tenantID;
+    this._appService.getApi('/kpiItemsList').subscribe((response: any) => {
+      this.kpiList = response.data;
+
+
+    });
+  };
 
   getScopeWiseEmission() {
     const formData = new URLSearchParams();
@@ -231,7 +235,7 @@ export class GhgReportingComponent {
           dataLabels: { enabled: false },
           series: pieEmissions,
           chart: { width: '380', type: 'pie' },
-          legend: { show: true, position: 'bottom', offsetY: 0 },
+          legend: { show: true, position: 'bottom', offsetY: 0, fontSize: "10px" },
           colors: ['#11235aa8', '#46A5CD', '#FFD914'],
           labels: ['Scope 1', 'Scope 2', 'Scope 3'],
           responsive: [{ breakpoint: 480, options: { chart: { width: 200 } } }]
@@ -329,18 +333,18 @@ export class GhgReportingComponent {
         this.scope3PieOptions = {
           dataLabels: { enabled: false },
           series: scope3Data.seriesScope3,
-          chart: { width: '700',height:'700', type: 'pie' },
+          chart: { width: '600', height: '600', type: 'pie' },
           legend: {
             show: true,
-            position: "right", 
+            position: "right",
             floating: false,
-            fontSize: "14px",
+            fontSize: "10px",
             labels: {
               colors: "#333",
               useSeriesColors: false
             }
           },
-          colors: [  "#AED6F1", // Light Blue  
+          colors: ["#AED6F1", // Light Blue  
             "#A3E4D7", // Soft Teal  
             "#F9E79F", // Light Yellow  
             "#F5B7B1", // Light Pink  
@@ -351,9 +355,9 @@ export class GhgReportingComponent {
             "#D5F5E3", // Pastel Green  
             "#FDEBD0", // Peach  
             "#C5E1A5", // Light Green  
-            "#FFCCBC"    ],
+            "#FFCCBC"],
           labels: label
-         
+
         };
         this.scope3Data = scope3Data.Scope3;
         this.businessTravelTotal = scope3Data.Scope3.find(items => items.category === 'Business Travel') || {};
@@ -422,7 +426,7 @@ export class GhgReportingComponent {
 
         this.otherModesOfTransportPieOptions = this.businesTravelData.modeOfTransportRespose?.length > 0
           ? this.getPieCharOptions(
-            this.businesTravelData.modeOfTransportRespose.map(items => Number(items.emission)),
+            this.businesTravelData.modeOfTransportRespose.map(items => Number(items.total_emission)),
             this.businesTravelData.modeOfTransportRespose.map(items => items.mode_of_trasport)
           )
           : undefined;
@@ -471,6 +475,28 @@ export class GhgReportingComponent {
       })
     );
   }
+  getEmissionsIntesity() {
+    const formData = new URLSearchParams();
+    formData.set('facilities', this.selectedMultipleFacility.toString());
+    formData.set('current_year', this.currentYear.toString());
+    formData.set('base_year', this.baseYear.toString());
+
+    return this._appService.postAPI('/getKpiInventoryEmissionIntensity', formData).pipe(
+      tap((response: any) => {
+        this.ghgIntensity = response.ghg_emission;
+        this.ghgRevenue = response.revenue;
+
+        const intensityLabel = this.ghgIntensity.map(items => items.category);
+        this.intensitySeries = this.ghgIntensity.map((item, index) => {
+          const result = item.emission / this.ghgRevenue[index].emission;
+          return (!isFinite(result) || isNaN(result)) ? 0 : Number(result.toFixed(2));
+        });
+
+        console.log(this.intensitySeries);
+        this.ghgIntensityLineOptions = this.getLineChartOptions(this.intensitySeries, intensityLabel);
+      })
+    );
+  }
   getWaste() {
     const formData = new URLSearchParams();
     formData.set('facilities', this.selectedMultipleFacility.toString());
@@ -488,8 +514,7 @@ export class GhgReportingComponent {
           .filter((item: any) => ['incineration', 'landfill'].includes(item.method))
           .reduce((sum: number, item: any) => sum + Number(item.total_emission), 0);
 
-        console.log(this.sustainableWaste);
-        console.log(this.nonsustainableWaste);
+
         let series = this.wasteDate?.method_type.map((item: any) => {
           if (item.method === 'reuse' || item.method === 'composting') return Number(item.total_emission);
           return 0;
@@ -679,7 +704,7 @@ export class GhgReportingComponent {
 
     return this._appService.postAPI('/GhgScopewiseEmssionYearRangeWise', formData).pipe(
       tap((response: any) => {
-        console.log(response);
+
         // this.rangeScopeLineOptions = this.getLineChartOptions(response.emission, response.year);
         this.rangeScopeBarOptions = {
           series: [
@@ -747,20 +772,39 @@ export class GhgReportingComponent {
 
     return this._appService.postAPI('/GhgEmssionYearRangeWise', formData).pipe(
       tap((response: any) => {
-        console.log(response);
+
         this.baseYearGhg = response.data.find((item: any) => item.category == base_year).emission;
         this.currentYearGhg = response.data.find((item: any) => item.category == this.currentYear.toString()).emission;
-        console.log(this.baseYearGhg);
-        if(this.baseYearGhg){
-          if(this.baseYearGhg > this.currentYearGhg){
-            this.percentageIncDec =  Number(((this.baseYearGhg - this.currentYearGhg) / this.currentYear) * 100).toFixed(2);
-          }else{
-            this.percentageIncDec =  Number(((this.currentYearGhg - this.baseYearGhg) / this.baseYear) * 100).toFixed(2);
+        if (this.baseYearGhg) {
+          if (this.baseYearGhg > this.currentYearGhg) {
+            this.percentageIncDec = Number(((this.baseYearGhg - this.currentYearGhg) / this.currentYear) * 100).toFixed(2);
+          } else {
+            this.percentageIncDec = Number(((this.currentYearGhg - this.baseYearGhg) / this.baseYear) * 100).toFixed(2);
 
           }
         }
         // this.rangeScopeLineOptions = this.getLineChartOptions(response.emission, response.year);
         this.yearWiseLineOptions = this.getLineChartOptions(response.data.map((item: any) => item.emission), response.data.map((item: any) => item.category));
+      })
+    );
+  }
+  getKPIEmisions() {
+    if (this.baseYear) {
+      this.baseYear = new Date(this.baseYear).getFullYear().toString();
+      var formatBaseyear = Number(this.baseYear)
+    }
+
+
+    const formData = new URLSearchParams();
+    formData.set('facility_id', this.selectedMultipleFacility.toString());
+    formData.set('current_year', this.currentYear.toString());
+    formData.set('base_year', this.baseYear ? this.baseYear.toString() : this.currentYear.toString());
+    formData.set('kpi_id', this.selectedMultipleKPIs.toString());
+
+    return this._appService.postAPI('/getKpiInventoryByFacilityIdAndYearAndKpiId', formData).pipe(
+      tap((response: any) => {
+        this.kpiData = response.data.facility;
+
       })
     );
   }
@@ -819,14 +863,15 @@ export class GhgReportingComponent {
       series: seriesValues,
       chart: {
         // width: 380,
-        width: '450',
-        height:'350',
+        width: '470',
+        height: '370',
         type: 'pie',
       },
       legend: {
         show: true,
         position: 'bottom',
-        offsetY: 0
+        offsetY: 0,
+        fontSize: "10px"
       },
       colors: [
         "#AED6F1", // Light Blue  
@@ -843,14 +888,14 @@ export class GhgReportingComponent {
         "#FFCCBC"  // Light Coral  
       ],
       labels: categories,
-      responsive: [{
-        breakpoint: 480,
-        options: {
-          chart: {
-            width: 200
-          },
-        }
-      }]
+      // responsive: [{
+      //   breakpoint: 480,
+      //   options: {
+      //     chart: {
+      //       width: 200
+      //     },
+      //   }
+      // }]
     };
   }
 
@@ -884,7 +929,7 @@ export class GhgReportingComponent {
       xaxis: {
         categories: categories,
         title: {
-         
+
           style: {
             fontSize: '14px',
             fontWeight: 'bold',
@@ -904,17 +949,17 @@ export class GhgReportingComponent {
       }
     };
   }
-  
+
 
 
 
   // working one
   // async  downloadPDF() {
   //   console.log("Download PDF");
-  
+
   //   const pdf = new jsPDF('p', 'mm', [250, 200], true); 
   //   const content = document.getElementById('pdf-content');
-  
+
   //   if (!content) {
   //     console.error('PDF generation failed: Element #pdf-content not found');
   //     return;
@@ -922,13 +967,13 @@ export class GhgReportingComponent {
   //   const margin = 1;
   //   const sections = Array.from(content.querySelectorAll('.pdf-section')); 
   //   const chunkSize = 8; 
-  
+
   //   try {
   //     for (let i = 0; i < sections.length; i += chunkSize) {
-      
+
   //       const chunk = sections.slice(i, i + chunkSize);
-  
-      
+
+
   //       const canvasPromises = chunk.map(section =>
   //         html2canvas(section as HTMLElement, {
   //           logging: false,
@@ -938,25 +983,25 @@ export class GhgReportingComponent {
   //           backgroundColor: null
   //         })
   //       );
-  
-      
+
+
   //       const canvases = await Promise.all(canvasPromises);
-  
+
   //       // Add canvases to the PDF
   //       canvases.forEach((canvas, index) => {
   //         console.log('Canvas dimensions:', canvas.width, canvas.height); 
-  
+
   //         if (canvas.width === 0 || canvas.height === 0) {
   //           console.error('Error: Captured canvas has zero width or height');
   //           return;
   //         }
-  
+
   //         if (i + index > 0) pdf.addPage(); 
-  
+
   //         const imgWidth = 230 - (2 * margin); 
-       
+
   //         const imgHeight = (canvas.height * imgWidth) / canvas.width; 
-  
+
   //         pdf.addImage(
   //           canvas.toDataURL('image/jpeg', 0.8), 
   //           'JPEG',
@@ -968,10 +1013,10 @@ export class GhgReportingComponent {
   //           'FAST'
   //         );
   //       });
-  
+
   //       console.log(`Processed chunk ${i / chunkSize + 1} of ${Math.ceil(sections.length / chunkSize)}`);
   //     }
-  
+
   //     pdf.save('GHG_Emission_Report.pdf');
   //   } catch (error) {
   //     console.error('PDF generation failed:', error);
@@ -980,16 +1025,16 @@ export class GhgReportingComponent {
 
 
 
-// latest one working
+  // latest one working
   // async downloadPDF() {
   //   console.log("Download PDF");
-  
+
   //   const content = document.getElementById('pdf-content');
   //   if (!content) {
   //     console.error('PDF generation failed: Element #pdf-content not found');
   //     return;
   //   }
-  
+
   //   try {
   //     const options = {
   //       margin: 10, 
@@ -999,24 +1044,24 @@ export class GhgReportingComponent {
   //       pagebreak: { mode: ['avoid-all', 'css', 'legacy'] },
   //       orientation: 'landscape'
   //     };
-  
+
   //     const sections = content.querySelectorAll('.pdf-section'); 
-  
+
   //     const pdf = new jsPDF('l', 'px', [400,400], true); 
-  
+
   //     for (let i = 0; i < sections.length; i++) {
   //       const section = sections[i] as HTMLElement;
-  
+
   //       // Convert each section to a canvas
   //       const canvas = await html2canvas(section, options.html2canvas);
   //       const imgData = canvas.toDataURL('image/jpeg', 0.7);
   //       const imgWidth = 400;// A4 width in mm
   //       const imgHeight = (canvas.height * imgWidth) / canvas.width; 
-  
+
   //       if (i > 0) pdf.addPage(); 
   //       pdf.addImage(imgData, 'JPEG', 10, 10, imgWidth-20, imgHeight, undefined, 'FAST');
   //     }
-  
+
   //     pdf.save(options.filename);
   //     this.isGenerating = false;
   //     console.log("PDF successfully downloaded!");
@@ -1029,13 +1074,13 @@ export class GhgReportingComponent {
   // latest two working
   // async downloadPDF() {
   //   console.log("Download PDF");
-  
+
   //   const content = document.getElementById('pdf-content');
   //   if (!content) {
   //     console.error('PDF generation failed: Element #pdf-content not found');
   //     return;
   //   }
-  
+
   //   try {
   //     const options = {
   //       margin: 10,
@@ -1086,87 +1131,197 @@ export class GhgReportingComponent {
   //     console.error('PDF generation failed:', error);
   //   }
   // }
-  
+  handleDownload() {
+    this.isGenerating = true;
+    if(this.baseYear && this.selectedMultipleCategories.length ==0){
+      this.remainingTime =25;
+    }else if(!this.baseYear && this.selectedMultipleCategories.length ==0){
+      this.remainingTime =20;
+    }else if(this.baseYear && this.selectedMultipleCategories.length > 3){
+      this.remainingTime =105;
+    }else if(this.baseYear && this.selectedMultipleCategories.length < 3 ){
+      this.remainingTime = 45;
+    }else if(!this.baseYear && this.selectedMultipleCategories.length > 3){
+      this.remainingTime =70;
+    }else if(!this.baseYear && this.selectedMultipleCategories.length < 3){
+      this.remainingTime = 48;
+    }
+    setTimeout(() => {
+      this.downloadPDF();
 
+    }, 400)
+
+  }
+
+
+  // async downloadPDF() {
+
+
+  //   const content = document.getElementById('pdf-content');
+  //   if (!content) {
+  //     console.error('PDF generation failed: Element #pdf-content not found');
+  //     return;
+  //   }
+
+  //   try {
+  //     const options = {
+  //       margin: 10,
+  //       filename: 'GHG_Emission_Report.pdf',
+  //       image: { type: 'jpeg', quality: 1 },
+  //       html2canvas: {
+  //         scale: 1.2,
+  //         useCORS: true,
+  //         logging: false,
+  //         ignoreElements: (element: Element) => element.classList.contains('no-print')
+  //       }
+  //     };
+
+  //     const sections = content.querySelectorAll('.pdf-section');
+  //     const pdf = new jsPDF('l', 'mm'); 
+
+    
+  //     const canvasPromises = Array.from(sections).map(async (section) => {
+  //       const elem = section as HTMLElement;
+
+      
+  //       const contentWidth = elem.scrollWidth;
+  //       const contentHeight = elem.scrollHeight;
+
+  //       return {
+  //         canvas: await html2canvas(elem, {
+  //           ...options.html2canvas,
+  //           windowWidth: contentWidth,
+  //           windowHeight: contentHeight,
+  //           width: contentWidth,
+  //           height: contentHeight
+  //         }),
+  //         originalHeight: contentHeight
+  //       };
+  //     });
+
+  //     const canvasData = await Promise.all(canvasPromises);
+
+  //     canvasData.forEach((data, index) => {
+  //       const canvas = data.canvas;
+  //       const imgData = canvas.toDataURL('image/jpeg', options.image.quality);
+
+     
+  //       const pageWidth = 400; 
+  //       const pageHeight = (data.originalHeight * 0.264583) + (options.margin * 2);
+
+
+  //       if (index > 0) pdf.addPage([pageWidth, pageHeight], 'l');
+
+      
+  //       pdf.setPage(index + 1);
+  //       pdf.internal.pageSize.height = pageHeight;
+  //       pdf.internal.pageSize.width = pageWidth;
+
+       
+  //       const imgWidth = pageWidth - options.margin * 2;
+  //       const imgHeight = pageHeight - options.margin * 2;
+
+      
+  //       pdf.addImage(imgData, 'JPEG',
+  //         options.margin,
+  //         options.margin,
+  //         imgWidth,
+  //         imgHeight,
+  //         undefined,
+  //         'FAST'
+  //       );
+  //     });
+
+  //     pdf.save(options.filename);
+  //     this.isGenerating = false;
+  //     console.log("PDF successfully downloaded!");
+  //   } catch (error) {
+  //     this.isGenerating = false;
+  //     this.notificationService.showWarning('PDF generation failed', 'Error');
+  //     console.error('PDF generation failed:', error);
+  //   }
+  // }
 
   async downloadPDF() {
-    console.log("Download PDF");
-  
     const content = document.getElementById('pdf-content');
     if (!content) {
       console.error('PDF generation failed: Element #pdf-content not found');
       return;
     }
   
+    this.timerInterval = setInterval(() => {
+      if (this.remainingTime > 0) {
+        this.remainingTime--;
+      }
+    }, 1000);
+
     try {
       const options = {
         margin: 10,
         filename: 'GHG_Emission_Report.pdf',
-        image: { type: 'jpeg', quality: 0.8 },
-        html2canvas: { 
-          scale: 1.2,
+        image: { type: 'jpeg', quality: 1 },
+        html2canvas: {
+          scale: 1.5,
           useCORS: true,
           logging: false,
           ignoreElements: (element: Element) => element.classList.contains('no-print')
         }
       };
-
+  
       const sections = content.querySelectorAll('.pdf-section');
       const pdf = new jsPDF('l', 'mm'); // Start with landscape orientation
-
-      // Get all canvas data first
-      const canvasPromises = Array.from(sections).map(async (section) => {
+  
+      const canvasData: { canvas: HTMLCanvasElement, originalHeight: number }[] = [];
+  
+      // Sequential rendering instead of Promise.all
+      for (const section of Array.from(sections)) {
         const elem = section as HTMLElement;
-        
-        // Calculate content dimensions
         const contentWidth = elem.scrollWidth;
         const contentHeight = elem.scrollHeight;
-        
-        return {
-          canvas: await html2canvas(elem, {
-            ...options.html2canvas,
-            windowWidth: contentWidth,
-            windowHeight: contentHeight,
-            width: contentWidth,
-            height: contentHeight
-          }),
+  
+        const canvas = await html2canvas(elem, {
+          ...options.html2canvas,
+          windowWidth: contentWidth,
+          windowHeight: contentHeight,
+          width: contentWidth,
+          height: contentHeight
+        });
+  
+        canvasData.push({
+          canvas,
           originalHeight: contentHeight
-        };
-      });
-
-      const canvasData = await Promise.all(canvasPromises);
-
+        });
+  
+        // Give browser a little time to breathe
+        await new Promise(resolve => setTimeout(resolve, 0));
+      }
+  
       canvasData.forEach((data, index) => {
         const canvas = data.canvas;
         const imgData = canvas.toDataURL('image/jpeg', options.image.quality);
-        
-        // Convert pixels to mm (1px ≈ 0.264583 mm at 96dpi)
+  
         const pageWidth = 400; // Fixed landscape width
         const pageHeight = (data.originalHeight * 0.264583) + (options.margin * 2);
-        
-        // Create new page with dynamic height
+  
         if (index > 0) pdf.addPage([pageWidth, pageHeight], 'l');
-        
-        // Set page dimensions
+  
         pdf.setPage(index + 1);
         pdf.internal.pageSize.height = pageHeight;
         pdf.internal.pageSize.width = pageWidth;
-
-        // Calculate image dimensions
+  
         const imgWidth = pageWidth - options.margin * 2;
         const imgHeight = pageHeight - options.margin * 2;
-
-        // Add image to fill available space
-        pdf.addImage(imgData, 'JPEG', 
-          options.margin, 
-          options.margin, 
-          imgWidth, 
+  
+        pdf.addImage(imgData, 'JPEG',
+          options.margin,
+          options.margin,
+          imgWidth,
           imgHeight,
           undefined,
           'FAST'
         );
       });
-
+  
       pdf.save(options.filename);
       this.isGenerating = false;
       console.log("PDF successfully downloaded!");
@@ -1175,26 +1330,23 @@ export class GhgReportingComponent {
       this.notificationService.showWarning('PDF generation failed', 'Error');
       console.error('PDF generation failed:', error);
     }
+   finally {
+    clearInterval(this.timerInterval);
+    this.isGenerating = false;
+  }
   }
   
 
 
-
-  
-  
-  
-
-  
- 
   limitSelection() {
     if (this.selectedMultipleKPIs.length > 3) {
-      this.selectedMultipleKPIs.pop(); 
+      this.selectedMultipleKPIs.pop();
       alert("You can select a maximum of three KPIs only.");
     }
   };
 
 
-  onCategoriesSelected(){
+  onCategoriesSelected() {
     console.log(this.selectedMultipleCategories);
   }
 

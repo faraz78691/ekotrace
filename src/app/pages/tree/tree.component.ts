@@ -47,6 +47,7 @@ export class TreeComponent {
     oldID = false;
     saveButtton = true;
     treeSection = true;
+    currentZoom = 1;
     constructor(
         private renderer: Renderer2,
         private route: ActivatedRoute,
@@ -91,6 +92,10 @@ export class TreeComponent {
             },
             {
                 "id": '7',
+                "type": "Accommodation"
+            },
+            {
+                "id": '8',
                 "type": "Others"
             },
         ]
@@ -133,7 +138,16 @@ export class TreeComponent {
         );
         FamilyTree.templates.hugo.link_field_0 = '<text width="230" style="font-size: 18px;" fill="#ffffff" x="145" y="150" text-anchor="middle" class="field_0">{val}</text>';
 
+        const savedZoom = localStorage.getItem('treeZoomFactor');
+        if (savedZoom) {
+            this.currentZoom = parseFloat(savedZoom);
+        }
+
+
     };
+
+
+
 
 
 
@@ -215,7 +229,7 @@ export class TreeComponent {
                     FamilyTree.templates.main.field_0 =
                         '<text ' + FamilyTree.attr.width + ' ="250" style="font-size: 14px; " font-variant="all-small-caps" fill="white" x="125" y="16" text-anchor="middle">{val}</text>';
                     FamilyTree.templates.main.field_1 =
-                        '<text ' + FamilyTree.attr.width + ' ="160" data-text-overflow="multiline" style="font-size: 14px; transform: translateX(26px);" fill="black" x="100" y="66" text-anchor="middle">{val}</text>';
+                        '<text ' + FamilyTree.attr.width + ' ="160"  style="font-size: 14px; transform: translateX(26px);" fill="black" x="100" y="66" text-anchor="middle">{val}</text>';
                     FamilyTree.templates.main.field_2 =
                         '<text ' + FamilyTree.attr.width + ' ="160" style="font-size: 10px; transform: translateX(26px)" fill="#b1b9be" x="100" y="95" text-anchor="middle">{val}</text>';
                     FamilyTree.templates.main.field_3 =
@@ -406,14 +420,17 @@ export class TreeComponent {
         })
     };
     createClone() {
-
+        const facilityTypeOptions = this.facilityTypeArray.map(item => ({
+            value: item.type,
+            text: item.type
+        }));
         const nodeForm = new URLSearchParams();
         nodeForm.set('family_id', this.familyId);
         nodeForm.set('tenant_id', this.loginInfo.super_admin_id.toString());
 
         this.familyService.createCloneTree(nodeForm.toString()).subscribe({
             next: res => {
-                console.log(res);
+
                 if (res.success == true) {
                     this.oldID = true;
                     this.newFamilyData = res.familyTreeDetails;
@@ -466,7 +483,7 @@ export class TreeComponent {
                         FamilyTree.templates.main.field_0 =
                             '<text ' + FamilyTree.attr.width + ' ="250" style="font-size: 14px; " font-variant="all-small-caps" fill="white" x="125" y="16" text-anchor="middle">{val}</text>';
                         FamilyTree.templates.main.field_1 =
-                            '<text ' + FamilyTree.attr.width + ' ="160" data-text-overflow="multiline" style="font-size: 14px; transform: translateX(26px);" fill="black" x="100" y="66" text-anchor="middle">{val}</text>';
+                            '<text ' + FamilyTree.attr.width + ' ="190"  style="font-size: 14px; transform: translateX(26px);" fill="black" x="100" y="66" text-anchor="middle">{val}</text>';
                         FamilyTree.templates.main.field_2 =
                             '<text ' + FamilyTree.attr.width + ' ="160" style="font-size: 10px; transform: translateX(26px)" fill="#b1b9be" x="100" y="95" text-anchor="middle">{val}</text>';
                         FamilyTree.templates.main.field_3 =
@@ -478,11 +495,9 @@ export class TreeComponent {
 
 
                         FamilyTree.templates.single = Object.assign({}, FamilyTree.templates.tommy);
-                        FamilyTree.templates.single.size = [150, 150];
+                        FamilyTree.templates.single.size = [250, 160];
 
                         var family = new FamilyTree(tree, {
-
-
                             template: "main",
                             enableSearch: false,
                             nodeBinding: {
@@ -496,6 +511,7 @@ export class TreeComponent {
                                 add: {
                                     text: "Add",
                                     onClick: (node: string) => {
+                                        console.log("node", node);
                                         $(".ct_custom_modal_120").show(500)
                                         var nodeData = family.get(node);
                                         // console.log("nodeData", nodeData);
@@ -525,6 +541,7 @@ export class TreeComponent {
                                     text: "Remove", onClick: callHandler
                                 }
                             },
+                            // this one for facility edit
                             editForm: {
                                 addMoreFieldName: null,
                                 addMore: null,
@@ -532,7 +549,7 @@ export class TreeComponent {
                                 generateElementsFromFields: false,
                                 elements: [
                                     { type: 'textbox', label: 'Name', binding: 'name' },
-                                    { type: 'textbox', label: 'Facility type', binding: 'facility_name', options: ['select'] }
+                                    { type: 'select', label: 'Facility type', binding: 'facility_name', options: facilityTypeOptions }
                                 ],
                                 buttons: {
                                     edit: {
@@ -546,6 +563,7 @@ export class TreeComponent {
 
                                 }
                             },
+
 
                         });
 
@@ -577,6 +595,7 @@ export class TreeComponent {
 
 
                         }
+                      
                         family.onUpdateNode((args) => {
                             const token: string | null = localStorage.getItem('accessToken');
                             var updateNode = args.updateNodesData[0];
@@ -601,13 +620,24 @@ export class TreeComponent {
                                 body: formData
                             })
                                 .then(response => response.json())
-                                .then(data =>  console.log(data))
+                                .then(data => console.log(data))
                                 .catch(error => console.error('Error:', error));
                         }
                         )
                         family.load(
                             this.loadFamilyData
+
                         );
+                        let initialRenderDone = false;
+
+                        family.on('prerender', () => {
+                            if (!initialRenderDone) {
+                                setTimeout(() => {
+                                    this.applyZoomFromStorage();
+                                    initialRenderDone = true;
+                                }, 0);
+                            }
+                        });
                     }
                     $(".ct_custom_modal_120").hide()
                     this.nodeForm.reset();
@@ -682,7 +712,7 @@ export class TreeComponent {
                         FamilyTree.templates.main.field_0 =
                             '<text ' + FamilyTree.attr.width + ' ="250" style="font-size: 14px; " font-variant="all-small-caps" fill="white" x="125" y="16" text-anchor="middle">{val}</text>';
                         FamilyTree.templates.main.field_1 =
-                            '<text ' + FamilyTree.attr.width + ' ="160" data-text-overflow="multiline" style="font-size: 14px; transform: translateX(26px);" fill="black" x="100" y="66" text-anchor="middle">{val}</text>';
+                            '<text ' + FamilyTree.attr.width + ' ="160" style="font-size: 14px; transform: translateX(26px);" fill="black" x="100" y="66" text-anchor="middle">{val}</text>';
                         FamilyTree.templates.main.field_2 =
                             '<text ' + FamilyTree.attr.width + ' ="160" style="font-size: 10px; transform: translateX(26px)" fill="#b1b9be" x="100" y="95" text-anchor="middle">{val}</text>';
                         FamilyTree.templates.main.field_3 =
@@ -801,7 +831,7 @@ export class TreeComponent {
                             console.log(items); // Log the entire response
                             if (items.success) {
                                 this.treeList = items.familyDetails;
-            
+
                                 if (items.familyDetails.length > 1) {
                                     if (this.loginInfo.role == 'Manager' || this.loginInfo.role == 'Admin' || this.loginInfo.role == 'Preparer') {
                                         this.treeSection = false;
@@ -809,7 +839,7 @@ export class TreeComponent {
                                     if (items.new_data == 1) {
                                         this.familyId = items.family_id;
                                         const selectedTempate = items.familyDetails.filter(value => value.family_id == this.familyId);
-            
+
                                         this.selectedTemplateId = selectedTempate[0].id;
                                         this.createClone()
                                     } else {
@@ -873,6 +903,61 @@ export class TreeComponent {
                 console.log(err)
         })
     };
+
+
+    // zoomViewBox(factor: number) {
+    //     const svg = document.querySelector("#tree svg") as SVGSVGElement;
+    //     if (!svg) return; let viewBox = svg.getAttribute("viewBox");
+    //     if (!viewBox) return; let [x, y, width, height] = viewBox.split(",").map(parseFloat); const targetWidth = width / factor; const targetHeight = height / factor; const targetX = x + (width - targetWidth) / 2; const targetY = y + (height - targetHeight) / 2;
+    //     this.animateViewBox(svg, x, y, width, height, targetX, targetY, targetWidth, targetHeight);
+    // }
+
+    zoomViewBox(factor: number) {
+        this.currentZoom *= factor;
+        localStorage.setItem('treeZoomFactor', this.currentZoom.toString());
+
+        const svg = document.querySelector("#tree svg") as SVGSVGElement;
+        if (!svg) return;
+
+        const viewBox = svg.getAttribute("viewBox");
+        if (!viewBox) return;
+
+        let [x, y, width, height] = viewBox.split(",").map(parseFloat);
+        const targetWidth = width / factor;
+        const targetHeight = height / factor;
+        const targetX = x + (width - targetWidth) / 2;
+        const targetY = y + (height - targetHeight) / 2;
+
+        this.animateViewBox(svg, x, y, width, height, targetX, targetY, targetWidth, targetHeight);
+    }
+
+    animateViewBox(svg: SVGSVGElement, x: number, y: number, width: number, height: number, targetX: number, targetY: number, targetWidth: number, targetHeight: number) {
+        const duration = 300; const startTime = performance.now(); const animate = (currentTime: number) => {
+            let progress = (currentTime - startTime) / duration;
+            if (progress > 1) progress = 1; const newX = x + (targetX - x) * progress; const newY = y + (targetY - y) * progress; const newWidth = width + (targetWidth - width) * progress; const newHeight = height + (targetHeight - height) * progress;
+            svg.setAttribute("viewBox", `${newX},${newY},${newWidth},${newHeight}`); if (progress < 1) { requestAnimationFrame(animate); }
+        }; requestAnimationFrame(animate);
+    }
+
+
+    applyZoomFromStorage() {
+
+        const svg = document.querySelector("#tree svg") as SVGSVGElement;
+        if (!svg) return;
+
+        const viewBox = svg.getAttribute("viewBox");
+        if (!viewBox) return;
+
+        let [x, y, width, height] = viewBox.split(",").map(parseFloat);
+        const factor = this.currentZoom;
+        const targetWidth = width / factor;
+        const targetHeight = height / factor;
+        const targetX = x + (width - targetWidth) / 2;
+        const targetY = y + (height - targetHeight) / 2;
+
+        // Apply immediately without animation on init
+        svg.setAttribute("viewBox", `${targetX},${targetY},${targetWidth},${targetHeight}`);
+    }
 
 
 }

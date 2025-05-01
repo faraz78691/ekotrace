@@ -433,6 +433,12 @@ export class TrackingService {
             data
         );
     }
+    public stationaryFuels(data): Observable<any> {
+        return this.http.get(
+            environment.baseUrl + '/GhgSubcategoryTypesByCategoryId?category_id=' + data
+            
+        );
+    }
     public PostRegrigerantDataEntry(data): Observable<any> {
         return this.http.post(
             environment.baseUrl + 'Tracking/SaveRefrigerantDataEntry',
@@ -535,15 +541,15 @@ export class TrackingService {
             'Tracking/GetDeliveryVehicleType')
     };
 
-    public newGetDeliveryVehicleType(): Observable<any> {
-        return this.http.get(environment.baseUrl +'/Getdeliveryvehicletypes')
+    public newGetDeliveryVehicleType(id): Observable<any> {
+        return this.http.get(environment.baseUrl +'/Getdeliveryvehicletypes?facilityId=' + id)
     }
     public getPassengerVehicleType(): Observable<VehicleType[]> {
         return this.http.get<VehicleType[]>(environment.baseUrl +
             'Tracking/GetPassengerVehicleType')
     }
-    public newGetPassengerVehicleType(): Observable<any> {
-        return this.http.get(environment.baseUrl +'/Getpassengervehicletypes')
+    public newGetPassengerVehicleType(id): Observable<any> {
+        return this.http.get(environment.baseUrl +'/Getpassengervehicletypes?facilityId=' + id)
     }
     public getCategory(): Observable<ManageDataPointCategory[]> {
         return this.http.get<ManageDataPointCategory[]>(environment.baseUrl + 'Tracking/GetCategory')
@@ -632,6 +638,17 @@ export class TrackingService {
         ; 
         return this.http.post(
             environment.baseUrl + '/bulk-purchase-goods-upload',
+            formData
+        );
+    };
+    submitPurchaseGoodsAI(formData: any): Observable<any> {
+        const headers = new HttpHeaders()
+        .set('content-type','application/x-www-form-urlencoded')
+        .set('Access-Control-Allow-Origin', '*')
+        ;  
+        ; 
+        return this.http.post(
+            'http://13.200.247.29:5000/ai/matchUnmatchedRecords',
             formData
         );
     };

@@ -50,9 +50,7 @@ export class MenuItemComponent implements OnInit {
         this.router.events
             .pipe(filter((event) => event instanceof NavigationEnd))
             .subscribe((event: NavigationEnd) => {
-              
-              
-             
+            
                 this.calculateIsActive(event.url);
             });
           
@@ -103,6 +101,7 @@ export class MenuItemComponent implements OnInit {
     }
 
      calculateIsActive(url: string) {
+       
       
         this.isMainActive = false;
         this.isOneOfChildrenActive = false;
@@ -111,6 +110,7 @@ export class MenuItemComponent implements OnInit {
                 this.isOneOfChildrenActive = true;
                 this.isMenuExtended = true;
             }else if(url.includes(this.menuItem.path[0])){
+              
                
                 this.isOneOfChildrenActive = true;
                 this.isMenuExtended = true;
@@ -120,8 +120,8 @@ export class MenuItemComponent implements OnInit {
             this.isMainActive = true;
         }
         if (!this.isMainActive && !this.isOneOfChildrenActive) {
+     
             this.isMenuExtended = true;
-            //this.isMenuExtended = false;
         }
     }
 }

@@ -49,7 +49,7 @@ export class HeaderComponent implements OnInit {
     facilityData: Facility[] = [];
     getFacilitystring: string;
     notificationIcon: boolean = false;
-    selectedFacilityID: CustomFacility;
+    selectedFacilityID: any = 2;
     lfgcount: number = 0;
     excludedRole = 'Platform Admin';
     ProfileMenu: MenuItem[] | undefined;
@@ -61,6 +61,7 @@ export class HeaderComponent implements OnInit {
     displayTracker = false;
 
     isActiveLabel = computed(() => this.facilityService.headerTracking());
+    selectedGroupID: any;
 
 
     constructor(
@@ -74,13 +75,13 @@ export class HeaderComponent implements OnInit {
         this.companyDetails = new CompanyDetails();
         this.rootUrl = environment.baseUrl + 'uploads/';
         this.facilityGroup = new FacilityGroupList();
-  
+
     }
     ngOnInit() {
 
         this.facilityService.headerTracking();
         this.href = this.router.url;
-        
+
         this.loginInfo = new LoginInfo();
         if (localStorage.getItem('LoginInfo') != null) {
             let userInfo = localStorage.getItem('LoginInfo');
@@ -105,12 +106,12 @@ export class HeaderComponent implements OnInit {
             this.router.events.pipe(
                 filter(event => event instanceof NavigationEnd)
             ).subscribe(() => {
-              
+
                 this.checkRolesAndLoadData();
             })
-        
 
-           
+
+
         }
         this.ProfileMenu = [
             {
@@ -140,30 +141,36 @@ export class HeaderComponent implements OnInit {
 
     private checkRolesAndLoadData(): void {
         const baseUrl = this.router.url.split('?')[0];
-      
+        
         if (this.loginInfo.role !== 'Manager' &&
             this.loginInfo.role !== 'Preparer' &&
             this.loginInfo.role !== 'Approver') {
-          // this.getTenantById(Number(this.loginInfo.tenantID));
-          // this.GetFacilityGroupList(Number(this.loginInfo.tenantID));
+            // this.getTenantById(Number(this.loginInfo.tenantID));
+            // this.GetFacilityGroupList(Number(this.loginInfo.tenantID));
         }
-    
+
         if (this.router.url === '/finance_emissions') {
             this.facilitygrouplist = [];
-       
-          this.GetSubGroupList(this.loginInfo.tenantID);
-        } else if(this.router.url === '/tracking' || baseUrl == '/tracking-view-requests') {
-            this.facilitysubgrouplist = []
-  
-          this.GetFacilityGroupList(this.loginInfo.tenantID);
-        }
-      }
 
-    checkFacilityID() {
-        this.facilityService.facilitySelected(this.selectedFacilityID?.id)
-     
-        localStorage.setItem('SelectedfacilityID', this.selectedFacilityID?.id);
-       
+            this.GetSubGroupList(this.loginInfo.tenantID);
+        } else if (this.router.url === '/tracking' || baseUrl == '/tracking-view-requests') {
+            this.facilitysubgrouplist = []
+
+            this.GetFacilityGroupList(this.loginInfo.tenantID);
+        }
+    }
+
+    onFacilityChange() {
+        console.log("on facility change", this.selectedFacilityID);
+        this.facilityService.facilitySelected(this.selectedFacilityID)
+
+        localStorage.setItem('SelectedfacilityID', this.selectedFacilityID);
+
+    };
+    onGroupChnage() {
+        console.log("on group change", this.selectedFacilityID);
+        this.facilityService.setGroupId(this.selectedGroupID)
+
     };
 
     logout() {
@@ -206,31 +213,29 @@ export class HeaderComponent implements OnInit {
 
 
     GetFacilityGroupList(tenantID) {
+
+
         this.facilitygrouplist = []
-        this.selectedFacilityID = undefined;
         if (this.loginInfo.role === this.excludedRole) {
             return;
         }
         this.facilityService
             .newGetFacilityByTenant(tenantID)
             .subscribe((res) => {
-                if(res.length >0){
-                 
+                if (res.length > 0) {
+
                     this.facilitygrouplist = res;
-                    this.addFacilitesToSignal(this.facilitygrouplist)
-                    const allOption: any = {
-                        id: 0,
-                        name: 'Select',
-                        AssestType: 'Select',
-                        flag: ''
-                    };
-    
-                   
-                    this.facilitygrouplist.unshift(allOption);
-                    this.lfgcount = this.facilitygrouplist.length;
-                    this.facilityService.facilitySelected(0)
-             
-                    localStorage.setItem('FacilityGroupCount', String(this.lfgcount));
+
+                    const facilityID = localStorage.getItem('SelectedfacilityID');
+
+                    if (facilityID) {
+                        this.selectedFacilityID = Number(facilityID);
+                
+                    }else{
+                        this.selectedFacilityID = Number(this.facilitygrouplist[0].id);
+                        localStorage.setItem('SelectedfacilityID', this.selectedFacilityID);
+                    }
+                    this.facilityService.facilitySelected(this.selectedFacilityID);
 
                 }
             });
@@ -246,26 +251,16 @@ export class HeaderComponent implements OnInit {
         this.facilityService
             .getActualSubGroups(formData.toString())
             .subscribe((res) => {
-            
-                if(res.success == true){
+
+                if (res.success == true) {
                     this.facilitysubgrouplist = res.categories;
-                
-                    const allOption: any = {
-                        id: 0,
-                        name: 'Select',
-                        flag: ''
-                    };
-    
-                    // Add the "All" option to the beginning of the list
-                    this.facilitysubgrouplist.unshift(allOption);
-                  
+
+
+
                 }
             });
     };
 
-    addFacilitesToSignal(facilites: facilities[]) {
-        const editedfacility = facilites.slice(0);
-        this.facilityService.AddFacilites(editedfacility)
-    }
+
 
 }

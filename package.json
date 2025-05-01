@@ -48,6 +48,7 @@
     "ngx-captcha": "^13.0.0",
     "ngx-doc-viewer": "^15.0.1",
     "ngx-extended-pdf-viewer": "^18.0.0-alpha.6",
+    "ngx-spinner": "^16.0.2",
     "ngx-toastr": "16.0.1",
     "primeicons": "^6.0.1",
     "primeng": "^15.2.0",

@@ -234,7 +234,7 @@ export class FinanceEmissionsComponent {
   recycle = false;
   recycleSelectedMethod = '';
   facilityChange = computed(()=>{
-    return this.facilityService.selectedfacilitiesSignal()
+    return this.facilityService.selectedGroupSignal()
   })
 
   storagef_typeValue: string = this.storageGrid[0]?.storagef_type;

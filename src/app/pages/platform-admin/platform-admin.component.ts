@@ -53,7 +53,10 @@ export class PlatformAdminComponent {
     superAdmin = {
         company_name: '',
         email: '',
-        password: ''
+        password: '',
+        username:'',
+        firstname: '',
+        lastname: ''
       };
 
 
@@ -162,6 +165,9 @@ export class PlatformAdminComponent {
         formData.append('companyName', data.value.company_name);
         formData.append('email',data.value.email);
         formData.append('password', data.value.password);
+        formData.append('username', data.value.username);
+        formData.append('firstname', data.value.firstname);
+        formData.append('lastname', data.value.lastname);
 
 
         this.GroupService.createSuperAdmin(formData.toString()).subscribe({
@@ -173,7 +179,7 @@ export class PlatformAdminComponent {
                 this.isloading = false
                 this.notification.showSuccess(
                    response.message,
-                    'Success'
+                ''
                 );
                 this.getSuperAdmin()
             },

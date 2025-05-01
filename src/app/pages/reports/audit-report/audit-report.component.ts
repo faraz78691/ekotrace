@@ -197,7 +197,8 @@ this.GetAllFacility()
         if (this.selectedMultipleCategories.includes(13)) {
             this.modeShow = true;  // Show the mode section if ID 13 is selected
         } else {
-            this.modeShow = false; // Hide the mode section if ID 13 is not selected
+            this.modeShow = false;
+            this.selectMode = null // Hide the mode section if ID 13 is not selected
         }
     }
 
@@ -461,8 +462,6 @@ this.GetAllFacility()
                 "Upstream Leased Assets": "upstreamlease_emission",
                 "Downstream Leased Assets": "downstreamlease_emission",
                 "Waste generated in operations": "waste_generation",
-                "Business Travel": "other_transport",
-                "Other Transportation": "other_transport",
                 "Employee Commuting": "employee_commuting",
                 "Home Office": "home_office",
                 "Use of Sold Products": "sold_products",
@@ -473,7 +472,8 @@ this.GetAllFacility()
                 "Company Owned Vehicles" : "company_owned_vehicles",
                 // "Water Supply and Treatment": "water_supply_treatment",
                 "End-of-Life Treatment of Sold Products": "end_of_life_treatment",
-                "Fire Extinguisher": "fire_extinguisher"
+                "Fire Extinguisher": "fire_extinguisher",
+                "Business Travel": "business_travel",
             };
 
 
@@ -497,8 +497,9 @@ this.GetAllFacility()
              
             reportFormData.set('facility',selectedFacilities)
             reportFormData.set('investment_emission','0')
-            reportFormData.set('flight_travel','0')
-            reportFormData.set('hotel_stays','0')
+            reportFormData.set('flight_travel',this.selectMode == 1 ? '1' : '0')
+            reportFormData.set('hotel_stays',this.selectMode == 2 ? '1' : '0')
+            reportFormData.set('other_transport',this.selectMode == 3 ? '1' : '0')
             reportFormData.set('start_year', startYear)
             reportFormData.set('end_year', endYear)
             reportFormData.set('start_month', this.startMonth.value)

@@ -16,5 +16,6 @@ export class LoginInfo {
     package_name :string;
     package_id:number;
     super_admin_id:number;
-    package_info:any
+    package_info:any;
+    Id:number;
 }

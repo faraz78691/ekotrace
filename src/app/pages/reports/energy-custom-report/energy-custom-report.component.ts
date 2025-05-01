@@ -155,8 +155,7 @@ export class EnergyCustomReportComponent {
             let jsonObj = JSON.parse(userInfo); // string to "any" object first
             this.loginInfo = jsonObj as LoginInfo;
             this.facilityID = localStorage.getItem('SelectedfacilityID');
-
-this.GetAllFacility()
+            this.GetAllFacility()
           
 
         }
@@ -198,12 +197,12 @@ this.GetAllFacility()
     multipleDataPointsChanged(event: any) {
         this.selectedMultipleCategories = event.value; // This stores the selected IDs in the array
       
-        if (this.selectedMultipleCategories.includes(13)) {
-            this.modeShow = true;  // Show the mode section if ID 13 is selected
-        } else {
-            this.modeShow = false; // Hide the mode section if ID 13 is not selected
-        }
-        this.reportData = []
+        // if (this.selectedMultipleCategories.includes(13)) {
+        //     this.modeShow = true;  // Show the mode section if ID 13 is selected
+        // } else {
+        //     this.modeShow = false; // Hide the mode section if ID 13 is not selected
+        // }
+        // this.reportData = []
     }
 
 
@@ -440,7 +439,8 @@ this.GetAllFacility()
     // }
 
     newgenerateReport() {
-     
+     console.log(this.selectMode);
+    
         this.CustomReportData = [];
         const reportFormData = new URLSearchParams();
         // this.selectedCategory = 'Stationary Combustion';
@@ -462,8 +462,6 @@ this.GetAllFacility()
                 "Upstream Leased Assets": "upstreamlease_emission",
                 "Downstream Leased Assets": "downstreamlease_emission",
                 "Waste generated in operations": "waste_generation",
-                "Business Travel": "other_transport",
-                "Other Transportation": "other_transport",
                 "Employee Commuting": "employee_commuting",
                 "Home Office": "home_office",
                 "Use of Sold Products": "sold_products",
@@ -480,6 +478,8 @@ this.GetAllFacility()
                 "Downstream Transportation and Distribution": "downstream",
                 "Franchises": "franchise_emission",
                 "Investment Emissions": "investment_emission",
+                "Business Travel": "business_travel",
+
             };
 
 
@@ -506,8 +506,9 @@ this.GetAllFacility()
         
             reportFormData.set('facility',selectedFacilities)
             reportFormData.set('investment_emission','0')
-            reportFormData.set('flight_travel','0')
-            reportFormData.set('hotel_stays','0')
+            reportFormData.set('flight_travel',this.selectMode == 1 ? '1' : '0')
+            reportFormData.set('hotel_stays',this.selectMode == 2 ? '1' : '0')
+            reportFormData.set('other_transport',this.selectMode == 3 ? '1' : '0')
             reportFormData.set('start_year', startYear)
             reportFormData.set('end_year', endYear)
             reportFormData.set('start_month', this.startMonth.value)

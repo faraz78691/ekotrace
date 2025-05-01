@@ -23,6 +23,20 @@
     box-shadow: 0px 0px 25px rgba(0,0,0,0.09);
     border-top: 3px solid rgba(136, 173, 71, 0.75);
 }
+.ct_how_use_tooltip_main {
+    // width: 100%;
+    // max-width: 300px;
+    position: relative;
+    text-align: end;
+    padding-inline: 25px;
+}
+
+
+.ct_how_use_tooltip_main i {
+    color: rgba(136, 173, 71, 0.75);
+    position: relative;
+    cursor: pointer;
+}
 
 .pdf-section {
     margin-top: 20px;
@@ -33,7 +47,7 @@
   }
 
   .pdf-section {
-    box-shadow: none !important;
+    // box-shadow: none !important;
     opacity: 1 !important;
   }
 
@@ -214,11 +228,11 @@ body {
     
 }
 
- #pdf-content {
-    opacity: 0; 
-    position: fixed; 
-    left: -9999px; 
-  }
+//  #pdf-content {
+//     opacity: 0; 
+//     position: fixed; 
+//     left: -9999px; 
+//   }
 
 
 

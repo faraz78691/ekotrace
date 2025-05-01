@@ -302,8 +302,8 @@ console.log(  this.vendorData );
         this.pieChart2 = {
           series: this.productsEmission,
           chart: {
-            width: "90%",
-            height: 270,
+            width: "300px",
+            height: "350px",
             type: "pie",
 
           },

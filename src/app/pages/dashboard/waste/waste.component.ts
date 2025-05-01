@@ -451,7 +451,7 @@ export class WasteComponent {
             floating: false,
             horizontalAlign: 'left',
           },
-          labels: getHazardType.hazardousmonth,
+          labels: getHazardType.cities,
           colors: ['#F3722C', '#0068F2', '#F8961E','#213D49'],
           responsive: [
             {

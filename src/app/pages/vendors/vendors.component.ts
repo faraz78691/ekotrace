@@ -291,12 +291,12 @@ export class VendorsComponent {
     const countryId = this.countryData.filter(items => items.Name == details.country_name);
 
     let obj = {
-      vendor_name: details.name.trim(),
+      vendor_name: details.name?.trim(),
       refer_id: details.refer_id,
-      address: details.address.trim(),
+      address: details.address?.trim(),
       country: countryId[0].ID,
       scorecard:details.scorecard,
-      targetStatus:details.target_status.trim()
+      targetStatus:details.target_status
     };
 
     this.GroupForm.control.patchValue(obj);

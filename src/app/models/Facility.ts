@@ -22,4 +22,9 @@ export class Facility {
     UserList: AssignedUser[];
     userInfoModels: AssignedUser[];
     manageDataPoints: ManageDataPoint[];
+    total_area:number
+    energy_ref_area:number;
+    total_revenue:number;
+    no_of_employee:number;
+
 }

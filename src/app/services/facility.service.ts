@@ -19,6 +19,7 @@ import { filter } from 'rxjs';
 export class FacilityService {
     facilitiesSignal = signal<facilities[]>([])
     selectedfacilitiesSignal = signal<number>(0)
+    selectedGroupSignal = signal<number>(0)
     headerTracking = signal<boolean>(false);
     targetAllowed = signal<boolean>(false);
     localapiURL = 'http://192.168.1.31:4003';
@@ -98,6 +99,10 @@ export class FacilityService {
 
     facilitySelected(id: number) {
         this.selectedfacilitiesSignal.set(id)
+    };
+    setGroupId(id: number) {
+      
+        this.selectedGroupSignal.set(id)
     };
 
     public gerReport(url, data): Observable<any> {

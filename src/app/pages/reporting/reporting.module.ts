@@ -8,7 +8,8 @@ import { ReportingRoutingModule } from './reporting-routing.module';
   declarations: [],
   imports: [
     CommonModule,
-    ReportingRoutingModule
+    ReportingRoutingModule,
+    
   ]
 })
 export class ReportingModule { }

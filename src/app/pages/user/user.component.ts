@@ -33,7 +33,7 @@ export class UserComponent {
 
     display = 'none';
     visible: boolean;
-    unlock: string = '';
+    unlock: any;
     selectedRole = '';
     Alert: boolean = false;
     RoleIcon: string = '';
@@ -106,8 +106,10 @@ export class UserComponent {
     checkFacilityID() {
 
         if (this.selectedRole == '525debfd-cd64-4936-ae57-346d57de3585') {
-            this.groupId = this.admininfo.group_id['id'];
-            const stringfyIDs = JSON.stringify(this.admininfo.group_id['ID']);
+            const facilityIDs = this.facilityList.filter((item) => item.id == this.admininfo.group_id).map((item) => item.ID);
+      
+            this.groupId = this.admininfo.group_id;
+            const stringfyIDs = JSON.stringify(facilityIDs[0]);
             this.payloadFacilityIds = stringfyIDs;
         } else {
             const stringfyIDs = JSON.stringify([this.admininfo.facilityID.toString()]);
@@ -119,17 +121,34 @@ export class UserComponent {
     };
     //The onSubmit function handles form submission, including validation, user addition, and user update, with success/error notifications.
     onSubmit(x: any) {
+    
         if(this.loginInfo.role == 'Auditor'){
-            this.notification.showWarning('You are not Authorized', 'Warning');
+            this.notification.showInfo('You are not Authorized', '');
             return
         }
-        if (
-            this.admininfo.username.length == 0 &&
-            this.admininfo.firstname.length == 0 &&
-            this.admininfo.lastname.length == 0 &&
-            this.admininfo.email.length == 0
-        ) {
+        if(!this.payloadFacilityIds ){
+            this.notification.showInfo('Please select group or facility', '');
             return
+        }
+        if(!this.FormEdit){
+            if (
+                (!this.admininfo.username || this.admininfo.username == '') ||
+                (!this.admininfo.firstname || this.admininfo.firstname == '') ||
+                (!this.admininfo.lastname || this.admininfo.lastname == '') ||
+               ( !this.admininfo.email || this.admininfo.email == '') || (!this.admininfo.password || this.admininfo.password =='')
+            ) {
+                return
+            }
+
+        }else{
+            if (
+                (!this.admininfo.username || this.admininfo.username == '') ||
+                (!this.admininfo.firstname || this.admininfo.firstname == '') ||
+                (!this.admininfo.lastname || this.admininfo.lastname == '') ||
+               ( !this.admininfo.email || this.admininfo.email == '')
+            ) {
+                return
+            }
         }
         if (this.FormEdit === false) {
             if (
@@ -153,19 +172,17 @@ export class UserComponent {
                 };
 
 
-                
                 const formData = new URLSearchParams();
                 formData.set('email', this.admininfo.email.trim().toLocaleLowerCase())
                 formData.set('username', this.admininfo.username)
                 formData.set('password', this.admininfo.password.trim())
-                formData.set('firstname', this.admininfo.firstname)
+                formData.set('firstname', this.admininfo.firstname.trim())
                 formData.set('lastname', this.admininfo.lastname)
                 formData.set('roleID', this.selectedRole)
                 formData.set('tenantId', this.loginInfo.super_admin_id.toString())
-                formData.set('facilityID', this.payloadFacilityIds)
+                formData.set('facilityID', this.payloadFacilityIds[0])
                 formData.set('package_id', this.loginInfo.package_id.toString())
                 formData.set('group_id', this.groupId?.toString())
-
 
                 this.UserService.newSaveUsers(formData).subscribe({
                     next: (response: any) => {
@@ -179,6 +196,7 @@ export class UserComponent {
                                 this.visible = false;
                                 this.selectedRole = ''
                                 this.isloading = false;
+                                this.payloadFacilityIds = null;
 
                             } else {
                                 this.notification.showError(
@@ -216,13 +234,15 @@ export class UserComponent {
                 const formData = new URLSearchParams();
                 formData.set('email', this.admininfo.email)
                 formData.set('username', this.admininfo.username)
-                formData.set('password', this.admininfo.password)
+                // formData.set('password', this.admininfo.password)
                 formData.set('firstname', this.admininfo.firstname)
                 formData.set('lastname', this.admininfo.lastname)
                 formData.set('roleID', this.selectedRole)
-                formData.set('tenantId', this.loginInfo.tenantID.toString())
-                formData.set('facilityID', this.admininfo.facilityID.toString())
+                formData.set('facilityID', this.payloadFacilityIds)
+                formData.set('group_id', this.groupId?.toString())
                 formData.set('user_id', this.admininfo.user_id.toString())
+            
+
                 this.UserService.NUpdateUsers(formData.toString()).subscribe({
                     next: (response) => {
                         this.notification.showSuccess(
@@ -257,7 +277,10 @@ export class UserComponent {
             if (result.length > 0) {
 
                 this.admininfoList = result;
-                this.userdetails = this.admininfoList[0];
+                this.userdetails = this.admininfoList.find((x) => x.tenant_id == this.loginInfo.Id);
+               
+                this.userdetails.isDisabledDelete = true;
+                this.userdetails.isDisabledEdit = true;
                 if (this.loginInfo.role == 'Super Admin') {
                     if (this.userdetails.role == 'Super Admin') {
                         this.userdetails.isDisabledDelete = true;
@@ -282,7 +305,32 @@ export class UserComponent {
                         this.userdetails.isDisabledEdit = true;
                     }
                 }
-                this.unlock = this.userdetails.userID;
+                if (this.loginInfo.role == 'Admin') {
+                    if (
+                        this.userdetails.role == 'Admin' ||
+                        this.userdetails.role == 'Super Admin'
+                    ) {
+                        this.userdetails.isDisabledDelete = true;
+                        this.userdetails.isDisabledEdit = true;
+                    }
+                    if (this.userdetails.role == 'Approver' && this.userdetails.facilityID == this.loginInfo.facilityID) {
+
+                        this.userdetails.isDisabledDelete = true;
+                        this.userdetails.isDisabledEdit = true;
+                    }
+                    if (this.userdetails.role == 'Preparer' && this.userdetails.facilityID == this.loginInfo.facilityID) {
+
+                        this.userdetails.isDisabledDelete = false;
+                        this.userdetails.isDisabledEdit = false;
+                    }
+                    if (this.userdetails.role == 'Manager' && this.userdetails.facilityID == this.loginInfo.facilityID) {
+
+                        this.userdetails.isDisabledDelete = false;
+                        this.userdetails.isDisabledEdit = false;
+                    }
+                }
+                this.unlock = this.userdetails.user_id;
+                
             } else {
                 this.notification.showWarning(
                     'Users not found',
@@ -323,6 +371,9 @@ export class UserComponent {
         this.facilitydata = false;
         this.facilityService.newGetFacilityByTenant(tenantId).subscribe((response) => {
             this.facilityList = response;
+            const stringfyIDs = JSON.stringify([this.admininfo.facilityID.toString()]);
+            this.payloadFacilityIds = stringfyIDs;
+            console.log(this.payloadFacilityIds);
             if (this.facilityList.length === 0) {
                 this.facilitydata = true;
             }
@@ -338,14 +389,18 @@ export class UserComponent {
             if (this.facilityList.length === 0) {
                 this.facilitydata = true;
             };
-
-            if(this.selectedRole == 'a34d0ecf-4730-4521-82ee-5e3eg28bdfb0'){
-                const filterMainGroup = this.facilityList.find(item => item.is_main_group == 1);
-                this.groupId = filterMainGroup['id'];
-                const stringfyIDs = JSON.stringify(filterMainGroup['ID']);
-                this.payloadFacilityIds = stringfyIDs;
+            const facilityIDs = this.facilityList.filter((item) => item.id == this.admininfo.group_id).map((item) => item.ID)[0];
+       
+            this.groupId = this.admininfo.group_id;
+            const stringfyIDs = JSON.stringify(facilityIDs);
+            this.payloadFacilityIds = stringfyIDs;
+            // if(this.selectedRole == 'a34d0ecf-4730-4521-82ee-5e3eg28bdfb0'){
+            //     const filterMainGroup = this.facilityList.find(item => item.is_main_group == 1);
+            //     this.groupId = filterMainGroup['id'];
+            //     const stringfyIDs = JSON.stringify(filterMainGroup['ID']);
+            //     this.payloadFacilityIds = stringfyIDs;
                 
-            }
+            // }
         });
     };
 
@@ -354,6 +409,13 @@ export class UserComponent {
         this.facilitydata = false;
         this.facilityService.getGroupsForAdmin(tenantId).subscribe((response) => {
             this.facilityList = response;
+            const facilityID = this.facilityList.find((item) => item.id == this.admininfo.group_id && item.ID);
+
+
+            console.log(facilityID);
+            this.groupId = this.admininfo.group_id;
+            const stringfyIDs = JSON.stringify(facilityID);
+            this.payloadFacilityIds = stringfyIDs;
             if (this.facilityList.length === 0) {
                 this.facilitydata = true;
             }
@@ -376,14 +438,18 @@ export class UserComponent {
         }
 
         this.admininfo = userdetails;
-        // console.log(this.admininfo);
+
+       
         this.onEditSelected(this.admininfo.role, this.admininfo.roleId);
     }
 
     // ----Delete user Method ---
 
     deleteUser(event: Event, userid) {
-
+if(this.loginInfo.role == 'Auditor'){
+    this.notification.showInfo('You are not Authorized', '');
+    return
+}
         this.confirmationService.confirm({
             target: event.target,
             message: 'Are you sure that you want to proceed?',
@@ -457,6 +523,8 @@ export class UserComponent {
         } else if (EditRole == 'Preparer') {
             this.GetAllFacility()
 
+        }else{
+            this.notification.showInfo('You are not Authorized', 'Warning');
         }
 
 
@@ -471,6 +539,7 @@ export class UserComponent {
             if (this.selectedRole == '525debfd-cd64-4936-ae57-346d57de3585') {
                 this.GetGroupsForAdmin()
             } else {
+                this.groupId = 0;
                 this.GetAllFacility()
             }
         } else if (this.loginInfo.role == 'Super Admin') {
@@ -482,6 +551,7 @@ export class UserComponent {
                 // auditor role
             }
             else {
+                this.groupId = 0;
                 this.GetAllFacility()
             }
         }
@@ -508,6 +578,11 @@ export class UserComponent {
         ) {
             this.visible = true;
             // this.selectedRole = this.Roleaccess;
+        }else{
+            this.notification.showInfo(
+                'You are not Authorized',
+                ''
+            );
         }
 
     }
@@ -534,8 +609,28 @@ export class UserComponent {
                 user.isDisabledEdit = true;
             }
             if (user.role == 'Preparer' && user.facilityID != this.loginInfo.facilityID) {
+                user.isDisabledDelete = false;
+                user.isDisabledEdit = false;
+                this.userdetails = user;
+            }
+            else {
+                this.userdetails = user;
+            }
+        }
+        if (this.loginInfo.role == 'Preparer') {
+            if (user.role == 'Admin' || user.role == 'Super Admin' || user.role == 'Manager' || user.role == 'Auditor') {
                 user.isDisabledDelete = true;
                 user.isDisabledEdit = true;
+                this.userdetails = user;
+            }
+            if (user.role == 'Approver' && user.facilityID != this.loginInfo.facilityID) {
+                user.isDisabledDelete = true;
+                user.isDisabledEdit = true;
+            }
+            if (user.role == 'Preparer' && user.facilityID != this.loginInfo.facilityID) {
+                user.isDisabledDelete = true;
+                user.isDisabledEdit = true;
+                this.userdetails = user;
             }
             else {
                 this.userdetails = user;
