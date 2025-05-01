@@ -10,11 +10,11 @@
                     <p-dropdown
                         class="finput ct_input_white_bg13 ct_res_100_767 ct_w_150_select_345 ct_select_2_drop_white ct_input_dark_text_145"
                         ngModel placeholder="Select" [options]="dateFormat" optionLabel="shortBy" optionValue="shortBy"
-                        [showClear]="true"  styleClass="facilitydropdown" [(ngModel)]="dateFormatType" (ngModelChange)="onFormatChange($event)"
-                        #country="ngModel" required>
+                        [showClear]="true" styleClass="facilitydropdown" [(ngModel)]="dateFormatType"
+                        (ngModelChange)="onFormatChange($event)" #country="ngModel" required>
                     </p-dropdown>
                 </div>
-             
+
             </div>
         </div>
 
@@ -26,122 +26,133 @@
                     class="form-group d-flex align-items-center ct_gap_10 flex-wrap ct_res_100_767 mb-0 et_flex_wrap_1400">
                     <label for="" class="ct_white_space_nowrape mb-0">Facility
                     </label>
-                   
-                        <p-multiSelect class="ct_select_2_full_width12 ct_input_dark_text_145 ct_multi_select_overlap_text_302 et_select__38_678" [options]="facilityData" placeholder="Select facilities" 
-                        optionLabel="AssestType" optionValue="id" [(ngModel)]="selectedFacility" ngModel (onChange)="onFacilityChange(selectedFacility)"
-                      ></p-multiSelect>
 
-                      <div class="ct_emission_menu_link">
+                    <p-multiSelect
+                        class="ct_select_2_full_width12 ct_input_dark_text_145 ct_multi_select_overlap_text_302 et_select__38_678"
+                        [options]="facilityData" placeholder="Select facilities" optionLabel="AssestType"
+                        optionValue="id" [(ngModel)]="selectedFacility" ngModel
+                        (onChange)="onFacilityChange(selectedFacility)"></p-multiSelect>
+
+                    <div class="ct_emission_menu_link">
                         <ul class="ps-0 mb-0">
                             <li class="mb-0">
-                                <a  style="height: 38px;cursor: pointer;" [ngClass]="selectedFormatType == 'Aggregate' ? 'ct_active' : ''" (click)="onFormatTypeChange('Aggregate')">Aggregate </a>
+                                <a style="height: 38px;cursor: pointer;"
+                                    [ngClass]="selectedFormatType == 'Aggregate' ? 'ct_active' : ''"
+                                    (click)="onFormatTypeChange('Aggregate')">Aggregate </a>
                             </li>
-                            <li  class="mb-0">
-                                <a  [ngClass]="selectedFormatType == 'Compare' ? 'ct_active' : ''"  style="height: 38px;cursor: pointer;" (click)="onFormatTypeChange('Compare')">Compare</a>
+                            <li class="mb-0">
+                                <a [ngClass]="selectedFormatType == 'Compare' ? 'ct_active' : ''"
+                                    style="height: 38px;cursor: pointer;"
+                                    (click)="onFormatTypeChange('Compare')">Compare</a>
                             </li>
-                         
+
                         </ul>
                     </div>
-                 
+
                 </div>
-             
-                <div class="ml-auto d-flex">
-                    <button
-                        class="GroupButton ct_assign_package_btn129 ct_animation_btn_121 w-auto px-3 mt-0" (click)="visible2 = true"> Set Target
-                        
+
+                <div class="ml-auto d-flex align-items-center">
+                    <button class="GroupButton ct_assign_package_btn129 ct_animation_btn_121 w-auto px-3 mt-0"
+                        (click)="visible2 = true"> Set Target
+
                     </button>
                     <div class="ct_how_use_tooltip_main ml-auto">
                         <i class="fa-solid fa-circle-question" (click)="isHowtoUse = !isHowtoUse"></i>
                         <div class="ct_how_use_tooltip_cnt" [ngClass]="isHowtoUse ? 'ct_active' : ''">
                             <div>
-                                <p class="mb-1 ">There are four types of users with different access rights in the tool. This access control system ensures that users have appropriate permissions to view and edit data based on their role and responsibilities within the organization.
+                                <p class="mb-1 ">The <strong>KPI Dashboard</strong> provides a visual overview of your
+                                    organization’s
+                                    emission trends and KPI performance across facilities. It helps in monitoring
+                                    progress, comparing facility performance, and identifying opportunities for emission
+                                    reduction and efficiency improvement.
                                 </p>
-                                <h5 class="ct_fs_16 mt-2 mb-0">1. Super-Admin:
+                                <h5 class="ct_fs_16 mt-3 mb-2">Key Features:
+                                </h5>
+
+                                <ul style="list-style: disc;" class="mb-0 pl-4">
+                                    <li>Interactive graphs and charts displaying GHG emissions and KPI metrics.
+
+                                    </li>
+                                    <li>Choose between:
+                                        <ol style="list-style: numric;" class="mb-0 pl-4">
+                                            <li>Aggregated view of KPIs across multiple facilities.
+                                            </li>
+                                            <li>Comparison view to evaluate performance between two or more facilities.
+                                            </li>
+                                        </ol>
+                                    </li>
+                                    <li>Select time periods: Monthly, Quarterly, or Annual data based on entries made in
+                                        the Emission Inventory section.
+
+                                    </li>
+                                </ul>
+
+                                <h5 class="ct_fs_16 mb-2 mt-3">Target Setting:
+
 
                                 </h5>
-                    
-                                <ol style="list-style: none;"class="mb-0">
-                                    <li>- Has read and edit rights to all sections of the tool, which can be accessed as a part of the package taken by the company
-                    
+                                <ol style="list-style: dics;" class="mb-2 pl-4">
+                                    <li>Users can set targets for specific KPIs by selecting the KPI, entering the
+                                        target value, and choosing the frequency (monthly, quarterly, or annually).
+
                                     </li>
-                                    <li>- Only Super-Admin has access to the 'Tree' and 'set GHG template' section
+                                    <li>Set targets appear as red dotted lines on the KPI graphs for clear visual
+                                        tracking.
+
                                     </li>
-                                    <li>- Can add users as Admins, Managers, and Data Preparers
-                                    </li>
-                                    <li>- Works with Ekobon team to set up organization tree and save GHG templates of Scope1, 2 &3 sub-categories relevant for different facilities.
-                                    </li>
+
                                 </ol>
-                    
-                                <h5 class="ct_fs_16 mb-0 mt-2">2. Admin:
+                                <h5 class="ct_fs_16  mb-2 mt-3">Steps to Use:
+
+
 
                                 </h5>
-                                <ol style="list-style: none;" class="mb-2">
-                                    <li>- Has read and edit rights to associated sub-group and facilities
+                                <ol style="list-style: numric;" class="mb-2 pl-4">
+                                    <li> Select the facility/facilities you want to analyze.
                                     </li>
-                                    <li>- Admin of main group has access to all sub-groups and facilities
-                    
+                                    <li>Choose the KPI from the dropdown list.
                                     </li>
-                                    <li>- Can add users as Admins, Managers, and Data Preparers for sub-groups/facilities they have access to
+                                    <li>Select the timeline (monthly/quarterly/annually) for data visualization.
                                     </li>
-                                </ol>
-                                <h5 class="ct_fs_16  mb-0">3. Manager:
+                                    <li>View graph with actual performance data.
+                                    </li>
+                                    <li>To set a target:
+                                        <ol style="list-style: circle;" class="mb-2 pl-4">
+                                            <li>Tap on the target option.
+                                            </li>
+                                            <li>Select the KPI.
+                                            </li>
+                                            <li>Enter the target value (unit will auto-populate).
+                                            </li>
+                                            <li>Select frequency and save.
+                                            </li>
 
-                    
+                                        </ol>
+                                    </li>
+
+
+                                </ol>
+
+                                <h5 class="ct_fs_16 mb-2 mt-3 ">Access Rights:
                                 </h5>
-                                <ol style="list-style: none;" class="mb-2">
-                                    <li>    - Has read and edit rights only to associated facility
+                                <ol class="pl-4" style="list-style: disc;">
+                                    <li>All user roles (Super-Admin, Admin, Manager, Data Preparer and Auditor) have
+                                        access to view the KPI Dashboard.
 
                                     </li>
-                                    <li>- Can add other Managers and Data Preparers for specific facility
+                                    <li>Target setting can be done by Super-Admin, Admin, and Manager roles only.
 
                                     </li>
-                                  
+
                                 </ol>
-                    
-                                <h5 class="ct_fs_16 mb-2 ">4. Data Preparer:</h5>
-                                <ol class="mb-2">
-                                    <li>    - Has read and edit rights only to associated facility
 
-                                    </li>
-                                    <li>    - Cannot add any users
-
-                                    </li>
-                                   
-                                </ol>
-                                <h5 class="ct_fs_16 ">Additionally, there are specific access rights for GHG Emissions and Financed Emissions:
-
-                                </h5>
-                                <ol class="mb-2">
-                                    <li> GHG Emissions:
-
-                                        <ul style="list-style: none;">
-                                            <li>- Reported at facility level
-
-                                            </li>
-                                            <li> - Can be entered by Super-Admin, Admin, Manager, or Data Preparer
-                                            </li>
-                                           
-                                        </ul>
-                                    </li>
-                                    <li>- Financed Emissions:
- 
-                                        <ul style="list-style: none;">
-                                            <li>    - Reported at sub-group level
-                                            </li>
-                                            <li>    - Only Admins can input data for financed emissions of associated sub-group
-                                            </li>
-                                           
-                                        </ul>
-                                    </li>
-                                   
-                                </ol>
                             </div>
-                           
-                    
-                    
-                    
-                    
-                    
+
+
+
+
+
+
                         </div>
                     </div>
                 </div>
@@ -155,25 +166,20 @@
                     <label for="" class="ct_white_space_nowrape mb-0">Start Date
                     </label>
 
-                    <div class="selectyear ct_calander_input col ct_calender_38 ct_month_light_green ct_calender_font_size">
-                                                    <p-calendar class="w-100" ngModel name="year" year
-                                                        styleClass="pcalender" view="year" [(ngModel)]="startDate"
-                                                        dateFormat="yy" inputId="yearpicker"
-                                                     
-                                                        [showIcon]="true"></p-calendar>
-                                                </div>
+                    <div
+                        class="selectyear ct_calander_input col ct_calender_38 ct_month_light_green ct_calender_font_size">
+                        <p-calendar class="w-100" ngModel name="year" year styleClass="pcalender" view="year"
+                            [(ngModel)]="startDate" dateFormat="yy" inputId="yearpicker" [showIcon]="true"></p-calendar>
+                    </div>
                 </div>
                 <div class="form-group d-flex align-items-center ct_gap_10  ct_res_100_767 mb-0 et_flex_wrap_1400">
                     <label for="" class="ct_white_space_nowrape mb-0">End Date
                     </label>
                     <div
-                    class="selectyear ct_calander_input col ct_calender_38 ct_month_light_green ct_calender_font_size">
-                    <p-calendar class="w-100" ngModel name="year" year [(ngModel)]="endDate"
-                        styleClass="pcalender" view="year"
-                        dateFormat="yy" inputId="yearpicker"
-                       
-                        [showIcon]="true"></p-calendar>
-                </div>
+                        class="selectyear ct_calander_input col ct_calender_38 ct_month_light_green ct_calender_font_size">
+                        <p-calendar class="w-100" ngModel name="year" year [(ngModel)]="endDate" styleClass="pcalender"
+                            view="year" dateFormat="yy" inputId="yearpicker" [showIcon]="true"></p-calendar>
+                    </div>
                 </div>
             </div>
 
@@ -181,32 +187,25 @@
         </div>
 
         <div class="mt-4">
-            <div class="mb-4"><button
-                class="GroupButton ct_assign_package_btn129 ct_animation_btn_121 w-auto px-3 mt-0" (click)="saveKpi()">Save
-            </button></div>
+            <div class="mb-4"><button class="GroupButton ct_assign_package_btn129 ct_animation_btn_121 w-auto px-3 mt-0"
+                    (click)="saveKpi()">Save
+                </button></div>
             <div class="row ">
                 <div class="col-lg-6 mb-4">
                     <div class="form-group mb-0">
 
                         <p-dropdown
                             class="finput ct_res_100_767 ct_input_white_bg13 ct_w_150_select_345 ct_select_2_drop_white ct_input_dark_text_145"
-                            ngModel placeholder="Select KPIs" [options]="kpiList" optionLabel="kpi_name" optionValue="id" [(ngModel)]="selectedKpi1" (ngModelChange)="onGraphChange($event ,'1')"
+                            ngModel placeholder="Select KPIs" [options]="kpiList" optionLabel="kpi_name"
+                            optionValue="id" [(ngModel)]="selectedKpi1" (ngModelChange)="onGraphChange($event ,'1')"
                             styleClass="facilitydropdown" #country="ngModel" required>
                         </p-dropdown>
-                      <div class="mt-4" *ngIf="graph1">
-                        <apx-chart
-                        [series]="graph1.series"
-                        [chart]="graph1.chart"
-                        [dataLabels]="graph1.dataLabels"
-                        [plotOptions]="graph1.plotOptions"
-                        [yaxis]="graph1.yaxis"
-                        [xaxis]="graph1.xaxis"
-                        [annotations]="graph1.annotations"
-                        [legend]="graph1.legend"
-                        [colors]="graph1.colors"
-                        [grid]="graph1.grid"
-                      ></apx-chart>
-                      </div>
+                        <div class="mt-4" *ngIf="graph1">
+                            <apx-chart [series]="graph1.series" [chart]="graph1.chart" [dataLabels]="graph1.dataLabels"
+                                [plotOptions]="graph1.plotOptions" [yaxis]="graph1.yaxis" [xaxis]="graph1.xaxis"
+                                [annotations]="graph1.annotations" [legend]="graph1.legend" [colors]="graph1.colors"
+                                [grid]="graph1.grid"></apx-chart>
+                        </div>
 
                     </div>
                 </div>
@@ -215,23 +214,16 @@
 
                         <p-dropdown
                             class="finput ct_res_100_767 ct_input_white_bg13 ct_w_150_select_345 ct_select_2_drop_white ct_input_dark_text_145"
-                            ngModel placeholder="Select KPIs" [options]="kpiList" optionLabel="kpi_name" optionValue="id" (ngModelChange)="onGraphChange($event ,'2')"
-                            styleClass="facilitydropdown" [(ngModel)]="selectedKpi2"  #country="ngModel" required>
+                            ngModel placeholder="Select KPIs" [options]="kpiList" optionLabel="kpi_name"
+                            optionValue="id" (ngModelChange)="onGraphChange($event ,'2')" styleClass="facilitydropdown"
+                            [(ngModel)]="selectedKpi2" #country="ngModel" required>
                         </p-dropdown>
                         <div class="mt-4" *ngIf="graph2">
-                            <apx-chart
-                            [series]="graph2.series"
-                            [chart]="graph2.chart"
-                            [dataLabels]="graph2.dataLabels"
-                            [plotOptions]="graph2.plotOptions"
-                            [yaxis]="graph2.yaxis"
-                            [xaxis]="graph2.xaxis"
-                            [legend]="graph2.legend"
-                            [annotations]="graph2.annotations"
-                            [colors]="graph2.colors"
-                            [grid]="graph2.grid"
-                          ></apx-chart>
-                          </div>
+                            <apx-chart [series]="graph2.series" [chart]="graph2.chart" [dataLabels]="graph2.dataLabels"
+                                [plotOptions]="graph2.plotOptions" [yaxis]="graph2.yaxis" [xaxis]="graph2.xaxis"
+                                [legend]="graph2.legend" [annotations]="graph2.annotations" [colors]="graph2.colors"
+                                [grid]="graph2.grid"></apx-chart>
+                        </div>
 
                     </div>
                 </div>
@@ -240,88 +232,23 @@
             </div>
         </div>
         <div class=" mt-4">
-           
+
             <div class="row">
                 <div class="col-lg-6 mb-4">
                     <div class="form-group mb-0">
 
                         <p-dropdown
-                        class="finput ct_res_100_767 ct_input_white_bg13 ct_w_150_select_345 ct_select_2_drop_white ct_input_dark_text_145"
-                        ngModel placeholder="Select KPIs" [options]="kpiList" optionLabel="kpi_name" optionValue="id" (ngModelChange)="onGraphChange($event ,'3')"
-                        styleClass="facilitydropdown" [(ngModel)]="selectedKpi3"  #country="ngModel" required>
-                    </p-dropdown>
+                            class="finput ct_res_100_767 ct_input_white_bg13 ct_w_150_select_345 ct_select_2_drop_white ct_input_dark_text_145"
+                            ngModel placeholder="Select KPIs" [options]="kpiList" optionLabel="kpi_name"
+                            optionValue="id" (ngModelChange)="onGraphChange($event ,'3')" styleClass="facilitydropdown"
+                            [(ngModel)]="selectedKpi3" #country="ngModel" required>
+                        </p-dropdown>
                         <div class="mt-4" *ngIf="graph3">
-                            <apx-chart
-                            [series]="graph3.series"
-                            [chart]="graph3.chart"
-                            [dataLabels]="graph3.dataLabels"
-                            [plotOptions]="graph3.plotOptions"
-                            [yaxis]="graph3.yaxis"
-                            [xaxis]="graph3.xaxis"
-                            [legend]="graph3.legend"
-                            [annotations]="graph3.annotations"
-                            [colors]="graph3.colors"
-                            [grid]="graph3.grid"
-                          ></apx-chart>
-                          </div>
-
-                    </div>
-                </div>
-                <div class="col-lg-6 mb-4">
-                    <div class="form-group mb-0">
-
-                        <p-dropdown
-                        class="finput ct_res_100_767 ct_input_white_bg13 ct_w_150_select_345 ct_select_2_drop_white ct_input_dark_text_145"
-                        ngModel placeholder="Select KPIs" [options]="kpiList" optionLabel="kpi_name" optionValue="id" (ngModelChange)="onGraphChange($event ,'4')"
-                        styleClass="facilitydropdown" [(ngModel)]="selectedKpi4"  #country="ngModel" required>
-                    </p-dropdown>
-                        <div class="mt-4" *ngIf="graph4">
-                            <apx-chart
-                            [series]="graph4.series"
-                            [chart]="graph4.chart"
-                            [dataLabels]="graph4.dataLabels"
-                            [plotOptions]="graph4.plotOptions"
-                            [yaxis]="graph4.yaxis"
-                            [xaxis]="graph4.xaxis"
-                            [legend]="graph4.legend"
-                            [annotations]="graph4.annotations"
-                            [colors]="graph4.colors"
-                            [grid]="graph4.grid"
-                          ></apx-chart>
-                          </div>
-
-                    </div>
-                </div>
-
-
-            </div>
-        </div>
-        <div class=" mt-4">
-            
-
-            <div class="row">
-                <div class="col-lg-6 mb-4">
-                    <div class="form-group mb-0">
-
-                        <p-dropdown
-                        class="finput ct_res_100_767 ct_input_white_bg13 ct_w_150_select_345 ct_select_2_drop_white ct_input_dark_text_145"
-                        ngModel placeholder="Select KPIs" [options]="kpiList" optionLabel="kpi_name" optionValue="id" (ngModelChange)="onGraphChange($event ,'5')"
-                        styleClass="facilitydropdown" [(ngModel)]="selectedKpi5"  #country="ngModel" required>
-                    </p-dropdown>
-                        <div class="mt-4" *ngIf="graph5">
-                            <apx-chart
-                            [series]="graph5.series"
-                            [chart]="graph5.chart"
-                            [dataLabels]="graph5.dataLabels"
-                            [plotOptions]="graph5.plotOptions"
-                            [yaxis]="graph5.yaxis"
-                            [xaxis]="graph5.xaxis"
-                            [legend]="graph5.legend"
-                            [annotations]="graph5.annotations"
-                            [colors]="graph5.colors"
-                            [grid]="graph5.grid"
-                          ></apx-chart>
-                          </div>
+                            <apx-chart [series]="graph3.series" [chart]="graph3.chart" [dataLabels]="graph3.dataLabels"
+                                [plotOptions]="graph3.plotOptions" [yaxis]="graph3.yaxis" [xaxis]="graph3.xaxis"
+                                [legend]="graph3.legend" [annotations]="graph3.annotations" [colors]="graph3.colors"
+                                [grid]="graph3.grid"></apx-chart>
+                        </div>
 
                     </div>
                 </div>
@@ -330,23 +257,60 @@
 
                         <p-dropdown
                             class="finput ct_res_100_767 ct_input_white_bg13 ct_w_150_select_345 ct_select_2_drop_white ct_input_dark_text_145"
-                            ngModel placeholder="Select KPIs" [options]="kpiList" optionLabel="kpi_name" optionValue="id" (ngModelChange)="onGraphChange($event ,'6')"
-                            styleClass="facilitydropdown" [(ngModel)]="selectedKpi6"  #country="ngModel" required>
+                            ngModel placeholder="Select KPIs" [options]="kpiList" optionLabel="kpi_name"
+                            optionValue="id" (ngModelChange)="onGraphChange($event ,'4')" styleClass="facilitydropdown"
+                            [(ngModel)]="selectedKpi4" #country="ngModel" required>
+                        </p-dropdown>
+                        <div class="mt-4" *ngIf="graph4">
+                            <apx-chart [series]="graph4.series" [chart]="graph4.chart" [dataLabels]="graph4.dataLabels"
+                                [plotOptions]="graph4.plotOptions" [yaxis]="graph4.yaxis" [xaxis]="graph4.xaxis"
+                                [legend]="graph4.legend" [annotations]="graph4.annotations" [colors]="graph4.colors"
+                                [grid]="graph4.grid"></apx-chart>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <div class=" mt-4">
+
+
+            <div class="row">
+                <div class="col-lg-6 mb-4">
+                    <div class="form-group mb-0">
+
+                        <p-dropdown
+                            class="finput ct_res_100_767 ct_input_white_bg13 ct_w_150_select_345 ct_select_2_drop_white ct_input_dark_text_145"
+                            ngModel placeholder="Select KPIs" [options]="kpiList" optionLabel="kpi_name"
+                            optionValue="id" (ngModelChange)="onGraphChange($event ,'5')" styleClass="facilitydropdown"
+                            [(ngModel)]="selectedKpi5" #country="ngModel" required>
+                        </p-dropdown>
+                        <div class="mt-4" *ngIf="graph5">
+                            <apx-chart [series]="graph5.series" [chart]="graph5.chart" [dataLabels]="graph5.dataLabels"
+                                [plotOptions]="graph5.plotOptions" [yaxis]="graph5.yaxis" [xaxis]="graph5.xaxis"
+                                [legend]="graph5.legend" [annotations]="graph5.annotations" [colors]="graph5.colors"
+                                [grid]="graph5.grid"></apx-chart>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-4">
+                    <div class="form-group mb-0">
+
+                        <p-dropdown
+                            class="finput ct_res_100_767 ct_input_white_bg13 ct_w_150_select_345 ct_select_2_drop_white ct_input_dark_text_145"
+                            ngModel placeholder="Select KPIs" [options]="kpiList" optionLabel="kpi_name"
+                            optionValue="id" (ngModelChange)="onGraphChange($event ,'6')" styleClass="facilitydropdown"
+                            [(ngModel)]="selectedKpi6" #country="ngModel" required>
                         </p-dropdown>
                         <div class="mt-4" *ngIf="graph6">
-                            <apx-chart
-                            [series]="graph6.series"
-                            [chart]="graph6.chart"
-                            [dataLabels]="graph6.dataLabels"
-                            [plotOptions]="graph6.plotOptions"
-                            [yaxis]="graph6.yaxis"
-                            [xaxis]="graph6.xaxis"
-                            [legend]="graph6.legend"
-                            [colors]="graph6.colors"
-                            [annotations]="graph6.annotations"
-                            [grid]="graph6.grid"
-                          ></apx-chart>
-                          </div>
+                            <apx-chart [series]="graph6.series" [chart]="graph6.chart" [dataLabels]="graph6.dataLabels"
+                                [plotOptions]="graph6.plotOptions" [yaxis]="graph6.yaxis" [xaxis]="graph6.xaxis"
+                                [legend]="graph6.legend" [colors]="graph6.colors" [annotations]="graph6.annotations"
+                                [grid]="graph6.grid"></apx-chart>
+                        </div>
 
                     </div>
                 </div>
@@ -417,7 +381,7 @@
 </section>
 
 
-<p-dialog  [(visible)]="visible2" [breakpoints]="{'960px': '75vw'}" [style]="{width: '60vw'}">
+<p-dialog [(visible)]="visible2" [breakpoints]="{'960px': '75vw'}" [style]="{width: '60vw'}">
     <p-header *ngIf="FormEdit === false"> Set Target </p-header>
     <p-header *ngIf="FormEdit === true"> Edit Target </p-header>
 
@@ -426,58 +390,48 @@
             <table class="table ct_home_office_table">
                 <thead class="thead-dark">
                     <tr>
-                      
+
                         <th scope="col">KPI</th>
                         <th scope="col">Target</th>
                         <th scope="col">Unit</th>
-                      
+
                         <th scope="col">Target Type</th>
-                     
+
                     </tr>
                 </thead>
                 <tbody #commuteTable>
-            
+
                     <tr *ngFor="let rows of targerKpisData; index as i">
 
                         <td>
-                            <p-dropdown
-                                class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
-                                [(ngModel)]="rows.kpi_id"
-                                [ngModelOptions]="{standalone: true}"
-                                [options]="kpiList"
-                                (onChange)="onKpiChange(rows.kpi_id , i)"
-                                optionLabel="kpi_name" optionValue="id"
+                            <p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                [(ngModel)]="rows.kpi_id" [ngModelOptions]="{standalone: true}" [options]="kpiList"
+                                (onChange)="onKpiChange(rows.kpi_id , i)" optionLabel="kpi_name" optionValue="id"
                                 placeholder="Select kpi">
                             </p-dropdown>
                         </td>
                         <td>
-                            <input type="text" class="form-control"
-                                style="width:150px;height:38px"
-                                placeholder="Enter value" 
-                                [(ngModel)]="rows.target"   [ngModelOptions]="{standalone: true}">
+                            <input type="text" class="form-control" style="width:150px;height:38px"
+                                placeholder="Enter value" [(ngModel)]="rows.target"
+                                [ngModelOptions]="{standalone: true}">
                         </td>
                         <td>
-                            <input type="text" class="form-control"
-                                style="width:150px;height:38px"
-                                placeholder="Select kpi" disabled
-                                [(ngModel)]="rows.unit"   [ngModelOptions]="{standalone: true}">
+                            <input type="text" class="form-control" style="width:150px;height:38px"
+                                placeholder="Select kpi" disabled [(ngModel)]="rows.unit"
+                                [ngModelOptions]="{standalone: true}">
                         </td>
                         <td>
-                            <p-dropdown
-                            class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
-                            [(ngModel)]="rows.target_type"
-                            [ngModelOptions]="{standalone: true}"
-                            [options]="dateFormat"
-                            
-                            optionLabel="shortBy" optionValue="shortBy"
-                            placeholder="Select type">
-                        </p-dropdown>
+                            <p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                [(ngModel)]="rows.target_type" [ngModelOptions]="{standalone: true}"
+                                [options]="dateFormat" optionLabel="shortBy" optionValue="shortBy"
+                                placeholder="Select type">
+                            </p-dropdown>
                         </td>
-                 
+
                     </tr>
                     <p class=" ml-2 mt-5 trackingsubmitb" (click)="pushTargetKpis()">+ Add KPIs</p>
                 </tbody>
-                
+
                 <p class=" ml-2 mt-5 trackingsubmitb" (click)="submitTarget()">Submit</p>
             </table>
         </div>

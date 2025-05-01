@@ -98,12 +98,12 @@
                                                                                     pTooltip="Direct emissions from owned or controlled stationary sources that emit fugitive emissions"
                                                                                     tooltipPosition="top"
                                                                                     style="color: #88ad47"></i>
-                                                                                <i *ngIf="head.catName == 'Company Owned Vehicles'"
+                                                                                <!-- <i *ngIf="head.catName == 'Company Owned Vehicles'"
                                                                                     class="fa fa-info-circle tooltip-icon"
                                                                                     pTooltip="Emissions from owned mobile sources (both on-road and non-road vehicles) that are within the company’s inventory boundaries.
                                                                                         
                                                                                         " tooltipPosition="top"
-                                                                                    style="color: #88ad47"></i>
+                                                                                    style="color: #88ad47"></i> -->
                                                                                 <i *ngIf="head.catName == 'Fire Extinguisher'"
                                                                                     class="fa fa-info-circle tooltip-icon"
                                                                                     pTooltip="Direct emissions released into the atmosphere from the use and maintenance of fire extinguishers."
@@ -519,9 +519,9 @@
                                             type="button" (click)="bulkUploadCompany('1')">By Vehicle Type</button>
                                         <button class=" mr-2 et_tab_btn" [ngClass]="{'active': multipleCompanyTab}"
                                             type="button" (click)="bulkUploadCompany('2')">By Vehicle Model</button>
-                                        <button class="et_tab_btn" [ngClass]="{'active': bulkCompanyTab}"
-                                            type="button" (click)="bulkUploadCompany('3')"> Bulk Upload</button>
-                                            
+                                        <button class="et_tab_btn" [ngClass]="{'active': bulkCompanyTab}" type="button"
+                                            (click)="bulkUploadCompany('3')"> Bulk Upload</button>
+
 
                                     </div>
                                     <div class="ct_how_use_tooltip_main">
@@ -729,13 +729,7 @@
                                                         purpose.
                                                     </li>
                                                 </ol>
-                                                <h5 class="ct_fs_16">Guidance on input fields
-                                                </h5>
-                                                <p class="mb-0">Charging outside% - For hybrid and EV vehicles, user
-                                                    need to specify the average % of times charging is done outside
-                                                    company campus. Charging inside the campus is considered part of
-                                                    Scope2 emissions.
-                                                </p>
+
                                             </div>
                                             <div *ngIf="categoryId ==3">
                                                 <p class="ct_fs_16 ">Emissions occur directly from the leakage or
@@ -1947,8 +1941,8 @@
                                             <p-dropdown *ngIf="SubCatAllData.manageDataPointSubCategorySeedID != 1002"
                                                 class="ct_select_op_input ct_chev_icon_dark230 
 
-                                            " ngModel [options]="SubCategoryType" optionLabel="Item"
-                                                optionValue="ID" name="subCatType" #subCatType="ngModel"
+                                            " ngModel [options]="SubCategoryType" optionLabel="Item" optionValue="ID"
+                                                name="subCatType" #subCatType="ngModel"
                                                 [(ngModel)]="dataEntry.typeID"></p-dropdown>
 
                                             <p-dropdown *ngIf="SubCatAllData.manageDataPointSubCategorySeedID == 1002"
@@ -1959,11 +1953,9 @@
                                                 (onChange)="marktetTypeChange($event)"></p-dropdown>
 
                                         </div>
-                                        <div class="col-lg-4"
-                                            *ngIf="categoryId==1 ">
+                                        <div class="col-lg-4" *ngIf="categoryId==1 ">
                                             <label for="fname">Type</label>
-                                            <p-dropdown 
-                                                class="ct_select_op_input ct_chev_icon_dark230 
+                                            <p-dropdown class="ct_select_op_input ct_chev_icon_dark230 
 
                                             " ngModel [options]="SubCategoryType" optionLabel="TypeName"
                                                 optionValue="ID" name="subCatType" #subCatType="ngModel"
@@ -2049,10 +2041,11 @@
                                             </p>
                                         </div>
                                         <div class="col-lg-4" *ngIf="categoryId==3">
-                                            <label pTooltip="Quantity of CO2 Makeup" tooltipPosition="top" 
+                                            <label pTooltip="Quantity of CO2 Makeup" tooltipPosition="top"
                                                 for="fname">Amount of C02 used</label>
                                             <div class="position-relative">
-                                                <input required ngModel name="CO2MU" #CO2MU="ngModel" placeholder="Enter value"
+                                                <input required ngModel name="CO2MU" #CO2MU="ngModel"
+                                                    placeholder="Enter value"
                                                     [(ngModel)]="FireExtinguisherDE.quantityOfCO2makeup" CO2MU
                                                     id="search-input" type="number"
                                                     class="form-control Dashboard-tab text-white" />
@@ -2079,74 +2072,78 @@
                                                                 <th scope="col">Trips per vehicle</th>
 
                                                                 <th scope="col">Mode of data entry</th>
-                                                              
+
                                                                 <th scope="col">Value</th>
                                                                 <th scope="col">Unit</th>
-                                                             
+
                                                             </tr>
                                                         </thead>
                                                         <tbody #commuteTable>
-                                                    
+
                                                             <tr *ngFor="let rows of rowsCompany; index as i">
                                                                 <td>{{i +1}}</td>
                                                                 <td>
                                                                     <p-dropdown
-                                                                class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
-                                                                [(ngModel)]="rows.vehicleType"
-                                                                [ngModelOptions]="{standalone: true}"
-                                                                [options]="VehicleType"
-                                                            
-                                                                optionLabel="VehicleType" optionValue="ID"
-                                                                placeholder="Select type">
-                                                            </p-dropdown>
-        
+                                                                        class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                                        [(ngModel)]="rows.vehicleType"
+                                                                        [ngModelOptions]="{standalone: true}"
+                                                                        [options]="VehicleType"
+                                                                        optionLabel="VehicleType" optionValue="ID"
+                                                                        placeholder="Select type">
+                                                                    </p-dropdown>
+
                                                                 </td>
                                                                 <td>
-                                                                 
-                                                                    <input required [(ngModel)]="rows.noOfVehicles"  [ngModelOptions]="{standalone: true}"
-                                                                         id="search-input"
-                                                                        type="number" class="form-control Dashboard-tab text-white"
+
+                                                                    <input required [(ngModel)]="rows.noOfVehicles"
+                                                                        [ngModelOptions]="{standalone: true}"
+                                                                        id="search-input" type="number"
+                                                                        class="form-control Dashboard-tab text-white"
                                                                         placeholder="Enter value" />
-        
+
                                                                 </td>
                                                                 <td>
-                                                                    <input required 
-                                                                        [(ngModel)]="rows.tripsPerVehicle"  [ngModelOptions]="{standalone: true}"  id="search-input"
-                                                                        type="number" class="form-control Dashboard-tab text-white"
+                                                                    <input required [(ngModel)]="rows.tripsPerVehicle"
+                                                                        [ngModelOptions]="{standalone: true}"
+                                                                        id="search-input" type="number"
+                                                                        class="form-control Dashboard-tab text-white"
                                                                         placeholder="Enter value" />
-        
+
                                                                 </td>
                                                                 <td>
                                                                     <p-dropdown
-                                                                    class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
-                                                                    [(ngModel)]="rows.modeOfEntry"
-                                                                    [ngModelOptions]="{standalone: true}"
-                                                                    [options]="ModeType"
-                                                                (ngModelChange)="modeOfEntryChange(rows.modeOfEntry ,rows)"
-                                                                    optionLabel="modeName" optionValue="modeName"
-                                                                    placeholder="Select type">
-                                                                </p-dropdown>
-                                                               
+                                                                        class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                                        [(ngModel)]="rows.modeOfEntry"
+                                                                        [ngModelOptions]="{standalone: true}"
+                                                                        [options]="ModeType"
+                                                                        (ngModelChange)="modeOfEntryChange(rows.modeOfEntry ,rows)"
+                                                                        optionLabel="modeName" optionValue="modeName"
+                                                                        placeholder="Select type">
+                                                                    </p-dropdown>
+
                                                                 </td>
-                                                             
+
                                                                 <td>
-                                                                    <input 
-                                                                        [(ngModel)]="rows.value"   [ngModelOptions]="{standalone: true}"
-                                                                        type="text" class="form-control Dashboard-tab text-white"
+                                                                    <input [(ngModel)]="rows.value"
+                                                                        [ngModelOptions]="{standalone: true}"
+                                                                        type="text"
+                                                                        class="form-control Dashboard-tab text-white"
                                                                         placeholder="Enter value" />
                                                                 </td>
                                                                 <td>
-                                                                    <input disabled required ngModel name="NoOfVehicles" #NoOfVehicles="ngModel"
-                                                                        [(ngModel)]="rows.unit"  [ngModelOptions]="{standalone: true}"  id="search-input"
-                                                                        type="text" class="form-control Dashboard-tab text-white"
+                                                                    <input disabled required ngModel name="NoOfVehicles"
+                                                                        #NoOfVehicles="ngModel" [(ngModel)]="rows.unit"
+                                                                        [ngModelOptions]="{standalone: true}"
+                                                                        id="search-input" type="text"
+                                                                        class="form-control Dashboard-tab text-white"
                                                                         placeholder="Enter value" />
                                                                 </td>
-                                                         
+
                                                             </tr>
-    
+
                                                         </tbody>
                                                         <p class="ml-2 trackingsubmitb" (click)="addCompanyRows()">+</p>
-        
+
                                                     </table>
                                                 </div>
                                             </ng-container>
@@ -2263,61 +2260,64 @@
                                                                 <th scope="col">Vehicle Model</th>
 
                                                                 <th scope="col">Mode of data entry</th>
-                                                              
+
                                                                 <th scope="col">Value</th>
                                                                 <th scope="col">Unit</th>
-                                                             
+
                                                             </tr>
                                                         </thead>
                                                         <tbody #commuteTable>
-                                                    
+
                                                             <tr *ngFor="let rows of rowsCompany; index as i">
                                                                 <td>{{i +1}}</td>
                                                                 <td>
                                                                     <p-dropdown
-                                                                    class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
-                                                                    [(ngModel)]="rows.vehicleType"
-                                                                    [ngModelOptions]="{standalone: true}"
-                                                                    [options]="vehicleModalFleet"
-                                                                
-                                                                    optionLabel="vehicle_model" optionValue="vehicle_model"
-                                                                    placeholder="Select Vehicle model">
-                                                                </p-dropdown>
-        
+                                                                        class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                                        [(ngModel)]="rows.vehicleType"
+                                                                        [ngModelOptions]="{standalone: true}"
+                                                                        [options]="vehicleModalFleet"
+                                                                        optionLabel="vehicle_model"
+                                                                        optionValue="vehicle_model"
+                                                                        placeholder="Select Vehicle model">
+                                                                    </p-dropdown>
+
                                                                 </td>
-                                                            
-                                                            
+
+
                                                                 <td>
                                                                     <p-dropdown
-                                                                    class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
-                                                                    [(ngModel)]="rows.modeOfEntry"
-                                                                    [ngModelOptions]="{standalone: true}"
-                                                                    [options]="ModeType"
-                                                                (ngModelChange)="modeOfEntryChange(rows.modeOfEntry ,rows)"
-                                                                    optionLabel="modeName" optionValue="modeName"
-                                                                    placeholder="Select type">
-                                                                </p-dropdown>
-                                                               
+                                                                        class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                                        [(ngModel)]="rows.modeOfEntry"
+                                                                        [ngModelOptions]="{standalone: true}"
+                                                                        [options]="ModeType"
+                                                                        (ngModelChange)="modeOfEntryChange(rows.modeOfEntry ,rows)"
+                                                                        optionLabel="modeName" optionValue="modeName"
+                                                                        placeholder="Select type">
+                                                                    </p-dropdown>
+
                                                                 </td>
-                                                             
+
                                                                 <td>
-                                                                    <input 
-                                                                        [(ngModel)]="rows.value"   [ngModelOptions]="{standalone: true}"
-                                                                        type="text" class="form-control Dashboard-tab text-white"
+                                                                    <input [(ngModel)]="rows.value"
+                                                                        [ngModelOptions]="{standalone: true}"
+                                                                        type="text"
+                                                                        class="form-control Dashboard-tab text-white"
                                                                         placeholder="Enter value" />
                                                                 </td>
                                                                 <td>
-                                                                    <input disabled required ngModel name="NoOfVehicles" #NoOfVehicles="ngModel"
-                                                                        [(ngModel)]="rows.unit"  [ngModelOptions]="{standalone: true}"  id="search-input"
-                                                                        type="text" class="form-control Dashboard-tab text-white"
+                                                                    <input disabled required ngModel name="NoOfVehicles"
+                                                                        #NoOfVehicles="ngModel" [(ngModel)]="rows.unit"
+                                                                        [ngModelOptions]="{standalone: true}"
+                                                                        id="search-input" type="text"
+                                                                        class="form-control Dashboard-tab text-white"
                                                                         placeholder="Enter value" />
                                                                 </td>
-                                                         
+
                                                             </tr>
-    
+
                                                         </tbody>
                                                         <p class="ml-2 trackingsubmitb" (click)="addCompanyRows()">+</p>
-        
+
                                                     </table>
                                                 </div>
                                             </ng-container>
@@ -2327,15 +2327,16 @@
                                                     <div>
                                                         <div
                                                             class="d-flex justify-content-end border rounded ct_upload_btn1 ct_h_40 ct_svg_icon_white   ">
-                                                            <p-fileUpload #fileUpload mode="basic" accept=".xlsx, .xls" class=""
-                                                                chooseLabel="Please select a File" (onSelect)="onCompanyUpload($event.files,fileUpload)
+                                                            <p-fileUpload #fileUpload mode="basic" accept=".xlsx, .xls"
+                                                                class="" chooseLabel="Please select a File" (onSelect)="onCompanyUpload($event.files,fileUpload)
                                                         "></p-fileUpload>
                                                         </div>
                                                         <!-- <input type="file" class="form-control"  (change)="onPurchaseGoodsUpload($event)" accept=".xlsx, .xls"  id="ct_product_upload_file" > -->
                                                     </div>
                                                     <a [href]="downloadCompanyExcelUrl" download
                                                         class="px-4 trackingsubmitb"><i
-                                                            class="fa-solid fa-download mr-2"></i>Download Vehicle Data Template</a>
+                                                            class="fa-solid fa-download mr-2"></i>Download Vehicle Data
+                                                        Template</a>
 
                                                 </div>
                                                 <div class="col-md-12 table-responsive" style="height: 40vh;">
@@ -2345,20 +2346,20 @@
                                                                 <th scope="col">S.No.</th>
                                                                 <th scope="col">Vehicle Model</th>
                                                                 <th scope="col">Mode of data entry</th>
-                                                              
+
                                                                 <th scope="col">Value</th>
                                                                 <th scope="col">Unit</th>
-                                                             
+
                                                             </tr>
                                                         </thead>
                                                         <tbody #commuteTable>
-                                                    
+
                                                             <tr *ngFor="let rows of jsonCompanyData; index as i">
                                                                 <td>{{i +1}}</td>
                                                                 <td>
                                                                     {{rows.vehicleType}}
-                                                               
-        
+
+
                                                                 </td>
                                                                 <!-- <td>
                                                                     {{rows.noOfVehicles}}
@@ -2372,24 +2373,24 @@
                                                                 </td> -->
                                                                 <td>
                                                                     {{rows.modeOfEntry}}
-                                                                  
-                                                               
+
+
                                                                 </td>
-                                                             
+
                                                                 <td>
                                                                     {{rows.value}}
-                                                                
+
                                                                 </td>
                                                                 <td>
                                                                     {{rows.unit}}
-                                                                 
+
                                                                 </td>
-                                                         
+
                                                             </tr>
-    
+
                                                         </tbody>
                                                         <!-- <p class="ml-2 trackingsubmitb" (click)="addCompanyRows()">+</p> -->
-        
+
                                                     </table>
                                                 </div>
                                             </ng-container>
@@ -2465,9 +2466,9 @@
                                             <div *ngIf="SubCatAllData.manageDataPointSubCategorySeedID == 1002"
                                                 class="col-lg-4">
                                                 <label for="fname">Source</label>
-                                                <p-dropdown class="ct_select_op_input ct_chev_icon_dark230"
-                                                    ngModel [options]="ElectricitySource"
-                                                    optionLabel="sourceName" optionValue="sourceName" name="Source"
+                                                <p-dropdown class="ct_select_op_input ct_chev_icon_dark230" ngModel
+                                                    [options]="ElectricitySource" optionLabel="sourceName"
+                                                    optionValue="sourceName" name="Source"
                                                     #Source="ngModel"></p-dropdown>
                                             </div>
 
@@ -2551,7 +2552,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row mt-3 mx-2" *ngIf="!multipleCompanyTab && !bulkCompanyTab && !singleCompanyTab">
+                                    <div class="row mt-3 mx-2"
+                                        *ngIf="!multipleCompanyTab && !bulkCompanyTab && !singleCompanyTab">
                                         <div class="col">
                                             <label for="fname ">Note</label>
                                             <textarea class="ct_textarea_input" ngModel name="Textarea"
@@ -2576,7 +2578,8 @@
                                                             download>Click here to download</a></button>
                                                 </div>
                                             </div>
-                                            <div class="col-8" *ngIf="!multipleCompanyTab && !bulkCompanyTab && !singleCompanyTab">
+                                            <div class="col-8"
+                                                *ngIf="!multipleCompanyTab && !bulkCompanyTab && !singleCompanyTab">
                                                 <label for="fname ">Attachments</label>
                                                 <p-toast></p-toast>
                                                 <div class="d-flex justify-content-end border rounded ct_upload_btn1">
@@ -2657,7 +2660,8 @@
                                                         class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
                                                         (onChange)="onAnnualChange($event)" [options]="annualEntry"
                                                         ngModel optionLabel="name" optionValue="value"
-                                                        [(ngModel)]="isAnnual" [ngModelOptions]="{standalone: true}" placeholder="Please select">
+                                                        [(ngModel)]="isAnnual" [ngModelOptions]="{standalone: true}"
+                                                        placeholder="Please select">
                                                     </p-dropdown>
 
                                                 </div>
@@ -2785,8 +2789,8 @@
                                                     <div>
                                                         <div
                                                             class="d-flex justify-content-end border rounded ct_upload_btn1">
-                                                            <p-fileUpload #fileUpload mode="basic" accept=".xlsx, .xls" class=""
-                                                                chooseLabel="Please select a File" (onSelect)="onPurchaseGoodsUpload($event.files,fileUpload)
+                                                            <p-fileUpload #fileUpload mode="basic" accept=".xlsx, .xls"
+                                                                class="" chooseLabel="Please select a File" (onSelect)="onPurchaseGoodsUpload($event.files,fileUpload)
                                                         "></p-fileUpload>
                                                         </div>
                                                         <!-- <input type="file" class="form-control"  (change)="onPurchaseGoodsUpload($event)" accept=".xlsx, .xls"  id="ct_product_upload_file" > -->
@@ -2849,7 +2853,8 @@
                                                                     [(ngModel)]="product['Product Category']"
                                                                     [ngModelOptions]="{standalone: true}"
                                                                     class="form-control text-dark"></textarea>
-                                                                <span *ngIf="!product.isEditing">{{ product['Product Category'] }}</span>
+                                                                <span *ngIf="!product.isEditing">{{ product['Product
+                                                                    Category'] }}</span>
                                                             </ng-container>
 
                                                         </td>
@@ -2859,7 +2864,8 @@
                                                                     [(ngModel)]="product['Product Description']"
                                                                     [ngModelOptions]="{standalone: true}"
                                                                     class="form-control text-dark"></textarea>
-                                                                <span *ngIf="!product.isEditing">{{ product['Product Description'] }}</span>
+                                                                <span *ngIf="!product.isEditing">{{ product['Product
+                                                                    Description'] }}</span>
                                                             </ng-container>
 
                                                         </td>
@@ -2899,7 +2905,8 @@
                                                                 [(ngModel)]="product['Value / Quantity']"
                                                                 [ngModelOptions]="{standalone: true}"
                                                                 class="form-control" />
-                                                            <span *ngIf="!product.isEditing">{{ product['Value / Quantity'] }}</span>
+                                                            <span *ngIf="!product.isEditing">{{ product['Value /
+                                                                Quantity'] }}</span>
                                                         </td>
                                                         <td>
                                                             <input *ngIf="product.isEditing" type="text"
@@ -2919,24 +2926,27 @@
                                                         </td>
                                                         <td>
 
-                                                            <span *ngIf="product['Vendor Specific EF'] !==''">{{ product['Vendor Specific EF']}}&nbsp;
+                                                            <span *ngIf="product['Vendor Specific EF'] !==''">{{
+                                                                product['Vendor Specific EF']}}&nbsp;
                                                                 {{product['Vendor Specific Unit'] }}</span>
-                                                                <span *ngIf="product['Vendor Specific EF'] ==''"></span>
+                                                            <span *ngIf="product['Vendor Specific EF'] ==''"></span>
                                                         </td>
                                                         <td>
 
                                                             <span [ngClass]="{'redColor':!product.is_find}">{{
                                                                 product.is_find ? 'Matched' : 'Unmatched' }}</span>
                                                         </td>
-                                                  
+
 
                                                         <td class="d-flex justify-content-center align-items-center">
-                                                            <button  type="button" class="btn btn-sm btn-primary mr-1"
-                                                                (click)="toggleEdit(i, product['S. No.'])"   data-toggle="modal" data-target="#exampleModal">
+                                                            <button type="button" class="btn btn-sm btn-primary mr-1"
+                                                                (click)="toggleEdit(i, product['S. No.'])"
+                                                                data-toggle="modal" data-target="#exampleModal">
                                                                 <i class="fa-solid"
                                                                     [ngClass]="{'fa-sync-alt': !product.isEditing, 'fa-save': product.isEditing}"></i>
                                                             </button>
-                                                            <button *ngIf="!product.is_find" type="button" class="btn btn-sm btn-danger mr-1"
+                                                            <button *ngIf="!product.is_find" type="button"
+                                                                class="btn btn-sm btn-danger mr-1"
                                                                 (click)="deletePSG(product['S. No.'])">
                                                                 <i class="fa-solid fa-trash-can"></i>
                                                             </button>
@@ -2951,8 +2961,8 @@
                                             </table>
                                         </div>
                                     </div>
-                                   
-                                    <div class="col-8" >
+
+                                    <div class="col-8">
                                         <label for="fname ">Attachments</label>
                                         <p-toast></p-toast>
                                         <div class="d-flex justify-content-end border rounded ct_upload_btn1">
@@ -2962,10 +2972,11 @@
                                     </div>
 
                                     <div class="col-12 mt-5">
-                                        <button type="submit" class="px-4 trackingsubmitb" >
+                                        <button type="submit" class="px-4 trackingsubmitb">
                                             Submit
                                         </button>
-                                        <button type="button" class="px-4 trackingsubmitb ml-2" (click)="submitUnmatchWithAI()">
+                                        <button type="button" class="px-4 trackingsubmitb ml-2"
+                                            (click)="submitUnmatchWithAI()">
                                             Submit Unmatch with AI
                                         </button>
                                     </div>
@@ -3962,7 +3973,8 @@
                                                             <label class=" ct_text_wrape">Mass of Products
                                                                 Transported</label>
                                                             <div class="position-relative">
-                                                                <input type="number" placeholder="Enter Mass of Products"
+                                                                <input type="number"
+                                                                    placeholder="Enter Mass of Products"
                                                                     class="form-control Dashboard-tab text-white"
                                                                     name="mass_of_products" required ngModel
                                                                     #mass_of_products="ngModel" />
@@ -5009,231 +5021,237 @@
                                     </div>
                                 </div>
 
-                               
+
                                 <div class="trackingFooter" *ngIf="categoryId ==24">
-                                  
+
                                     <div class="row my-3">
                                         <div class="col-md-4">
                                             <div class="mb-4" style="gap: 10px;">
                                                 <label class=" ct_text_wrape">Flight calc mode</label>
-                                                <p-dropdown
-                                                    class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
-                                                    ngModel [options]="flightsTravelTypes"
-                                                    optionLabel="flightType" optionValue="flightType"
-                                                    name="flightMode" #flightMode="ngModel"
+                                                <p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                    ngModel [options]="flightsTravelTypes" optionLabel="flightType"
+                                                    optionValue="flightType" name="flightMode" #flightMode="ngModel"
                                                     (onChange)="onFlightModeChange($event)">
                                                 </p-dropdown>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-12 mt-3" style="height: 53vh;">
-                                       <div class=" table-responsive" [ngStyle]="{'display': flightDisplay1}">
-                                        <table class="table ct_home_office_table ett_verticle_align_top" style="height:357px"  >
-                                            <thead class="thead-dark">
-                                                <tr>
-                                                    <th scope="col">S.No.</th>
-                                                    <th scope="col">Flight Type</th>
-                                                    <th scope="col">Flight Class</th>
-                                                    <th scope="col">Return Flight</th>
-                                                    <th scope="col">No. of Trips</th>
-                                                    <th scope="col">Month</th>
-                                                    <th scope="col">Cost Centre</th>
-                                                 
-                                                </tr>
-                                            </thead>
-                                            <tbody #commuteTable>
-                                                <tr *ngFor="let row of rowsFlightTravel">
-                                                    <td scope="row">{{ row.id }}</td>
+                                        <div class=" table-responsive" [ngStyle]="{'display': flightDisplay1}">
+                                            <table class="table ct_home_office_table ett_verticle_align_top"
+                                                style="height:357px">
+                                                <thead class="thead-dark">
+                                                    <tr>
+                                                        <th scope="col">S.No.</th>
+                                                        <th scope="col">Flight Type</th>
+                                                        <th scope="col">Flight Class</th>
+                                                        <th scope="col">Return Flight</th>
+                                                        <th scope="col">No. of Trips</th>
+                                                        <th scope="col">Month</th>
+                                                        <th scope="col">Cost Centre</th>
 
-                                              
-                                                    <td>
-                                                        <p-dropdown
-                                                            class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
-                                                            [(ngModel)]="row.flightType"
-                                                            [ngModelOptions]="{standalone: true}"
-                                                            [options]="wasteGrid"
-                                                      
-                                                            optionLabel="flight_type" optionValue="flight_type"
-                                                            placeholder="Select type">
-                                                        </p-dropdown>
-                                                    </td>
-                                                    <td>
-                                                        <p-dropdown
-                                                            class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
-                                                            [(ngModel)]="row.flightClass"
-                                                            [ngModelOptions]="{standalone: true}"
-                                                            [options]="flightClassGrid"
-                                                          
-                                                            optionLabel="classs" optionValue="classs"
-                                                            placeholder="Select class">
-                                                        </p-dropdown>
-                                                    </td>
-                                                    <td>
-                                                        <p-dropdown
-                                                            class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
-                                                            [(ngModel)]="row.return_flight"
-                                                            [ngModelOptions]="{standalone: true}"
-                                                            [options]="annualEntry"
-                                                            (onChange)="onProductStandardChange($event , row)"
-                                                            optionLabel="name" optionValue="name"
-                                                            placeholder="Select return">
-                                                        </p-dropdown>
-                                                    </td>
-                                            
-                                                    <td>
-                                                        <input type="number" class="form-control"
-                                                            style="height:38px"
-                                                            placeholder="Enter no of trips"
-                                                            [(ngModel)]="row.noOfTrips"    [ngModelOptions]="{standalone: true}">
-                                                    </td>
-                                                    <td>
-                                                        <p-dropdown
-                                                            class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
-                                                            [options]="row.month" optionLabel="name"
-                                                            [(ngModel)]="row.selectedMonths"  [ngModelOptions]="{standalone: true}" 
-                                                            optionValue="value"
-                                                           >
-                                                        </p-dropdown>
-    
-                                                    </td>
-                                                    <td>
-                                                        <p-dropdown
-                                                            class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
-                                                            [options]="busineessGrid" optionLabel="cost_center_name"
-                                                            [(ngModel)]="row.costCentre"  [ngModelOptions]="{standalone: true}" 
-                                                            optionValue="cost_centre_name"
-                                                           >
-                                                        </p-dropdown>
-
-                                                    </td>
-                                                 
-                                                
-                                        
-                                                </tr>
+                                                    </tr>
+                                                </thead>
+                                                <tbody #commuteTable>
+                                                    <tr *ngFor="let row of rowsFlightTravel">
+                                                        <td scope="row">{{ row.id }}</td>
 
 
-                                            </tbody>
-                                            <span class="ml-2 trackingsubmitb d-inline-block mt-3 et_plusadd_455" (click)="addrowsFlightTravel()">+</span>
-                                        </table>
-                                       </div>
-                                       <div class=" table-responsive" [ngStyle]="{'display': flightDisplay2}">
-                                        <table class="table ct_home_office_table ett_verticle_align_top" style="height:300px"   >
-                                            <thead class="thead-dark">
-                                                <tr>
-                                                    <th scope="col">S.No.</th>
-                                                    <th scope="col">From</th>
+                                                        <td>
+                                                            <p-dropdown
+                                                                class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                                [(ngModel)]="row.flightType"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                [options]="wasteGrid" optionLabel="flight_type"
+                                                                optionValue="flight_type" placeholder="Select type">
+                                                            </p-dropdown>
+                                                        </td>
+                                                        <td>
+                                                            <p-dropdown
+                                                                class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                                [(ngModel)]="row.flightClass"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                [options]="flightClassGrid" optionLabel="classs"
+                                                                optionValue="classs" placeholder="Select class">
+                                                            </p-dropdown>
+                                                        </td>
+                                                        <td>
+                                                            <p-dropdown
+                                                                class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                                [(ngModel)]="row.return_flight"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                [options]="annualEntry"
+                                                                (onChange)="onProductStandardChange($event , row)"
+                                                                optionLabel="name" optionValue="name"
+                                                                placeholder="Select return">
+                                                            </p-dropdown>
+                                                        </td>
 
-                                                
-                                                    <th scope="col">To</th>
-                                                    <th scope="col">Via(optional)</th>
-                                                    <th scope="col">Flight Class</th>
-                                                
-                                                    <th scope="col">No of passengers</th>
-                                                    <th scope="col">Return Flight</th>
-                                                    <!-- <th scope="col">Reference Id</th> -->
-                                                    <th scope="col">Month</th>
-                                                    <th scope="col">Cost Centre</th>
-                                                 
-                                                </tr>
-                                            </thead>
-                                            <tbody #commuteTable>
-                                                <tr *ngFor="let row of rowsFlightTravel">
-                                                    <td scope="row">{{ row.id }}</td>
+                                                        <td>
+                                                            <input type="number" class="form-control"
+                                                                style="height:38px" placeholder="Enter no of trips"
+                                                                [(ngModel)]="row.noOfTrips"
+                                                                [ngModelOptions]="{standalone: true}">
+                                                        </td>
+                                                        <td>
+                                                            <p-dropdown
+                                                                class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                                [options]="row.month" optionLabel="name"
+                                                                [(ngModel)]="row.selectedMonths"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                optionValue="value">
+                                                            </p-dropdown>
 
-                                              
-                                                    <td>
-                                                        <p-dropdown
-                                                        class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
-                                                        ngModel [options]="airportGrid"   [(ngModel)]="row.from" [ngModelOptions]="{standalone: true}"
-                                                        optionLabel="airport_desc" optionValue="airport_code" placeholder="Select from" [filter]="true"
-                                                        name="classs" #classs="ngModel">
-                                                    </p-dropdown>
-                                                       
-                                                    </td>
-                                                    <td>
-                                                        <p-dropdown
-                                                        class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
-                                                        ngModel [options]="airportGrid"   [(ngModel)]="row.to" [ngModelOptions]="{standalone: true}"
-                                                        optionLabel="airport_desc" optionValue="airport_code"  placeholder="Select to"  [filter]="true"
-                                                        name="classs" #classs="ngModel">
-                                                    </p-dropdown>
-                                                    </td>
-                                                    <td>
-                                                        <p-dropdown
-                                                        class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
-                                                        ngModel [options]="airportGrid"   [(ngModel)]="row.via" [ngModelOptions]="{standalone: true}"
-                                                        optionLabel="airport_desc" optionValue="airport_code" placeholder="Select via"  [filter]="true"
-                                                        name="classs" #classs="ngModel">
-                                                    </p-dropdown>
-                                                    </td>
-                                                    <td>
-                                                        <p-dropdown
-                                                        class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
-                                                        ngModel [options]="flightClassGrid"   [(ngModel)]="row.flight_class" [ngModelOptions]="{standalone: true}"
-                                                        optionLabel="classs" optionValue="classs"
-                                                        name="classs" #classs="ngModel">
-                                                    </p-dropdown>
+                                                        </td>
+                                                        <td>
+                                                            <p-dropdown
+                                                                class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                                [options]="busineessGrid" optionLabel="cost_center_name"
+                                                                [(ngModel)]="row.costCentre"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                optionValue="cost_centre_name">
+                                                            </p-dropdown>
 
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" class="form-control"
-                                                            style="width:200px;height:38px"
-                                                            placeholder="Enter no of passengers"
-                                                            [(ngModel)]="row.no_of_passengers" [ngModelOptions]="{standalone: true}">
-                                                    </td>
-                                                    <td>
-                                                        <p-dropdown
-                                                            class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
-                                                            [(ngModel)]="row.return_flight" name="annualEntry"
-                                                            [ngModelOptions]="{standalone: true}"
-                                                            [options]="annualEntry"
-                                                            (onChange)="onProductStandardChange($event , row)"
-                                                            optionLabel="name" optionValue="name"
-                                                            placeholder="Select return">
-                                                        </p-dropdown>
-                                                    </td>
-                                                    <!-- <td>
+                                                        </td>
+
+
+
+                                                    </tr>
+
+
+                                                </tbody>
+                                                <span class="ml-2 trackingsubmitb d-inline-block mt-3 et_plusadd_455"
+                                                    (click)="addrowsFlightTravel()">+</span>
+                                            </table>
+                                        </div>
+                                        <div class=" table-responsive" [ngStyle]="{'display': flightDisplay2}">
+                                            <table class="table ct_home_office_table ett_verticle_align_top"
+                                                style="height:300px">
+                                                <thead class="thead-dark">
+                                                    <tr>
+                                                        <th scope="col">S.No.</th>
+                                                        <th scope="col">From</th>
+
+
+                                                        <th scope="col">To</th>
+                                                        <th scope="col">Via(optional)</th>
+                                                        <th scope="col">Flight Class</th>
+
+                                                        <th scope="col">No of passengers</th>
+                                                        <th scope="col">Return Flight</th>
+                                                        <!-- <th scope="col">Reference Id</th> -->
+                                                        <th scope="col">Month</th>
+                                                        <th scope="col">Cost Centre</th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody #commuteTable>
+                                                    <tr *ngFor="let row of rowsFlightTravel">
+                                                        <td scope="row">{{ row.id }}</td>
+
+
+                                                        <td>
+                                                            <p-dropdown
+                                                                class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                                ngModel [options]="airportGrid" [(ngModel)]="row.from"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                optionLabel="airport_desc" optionValue="airport_code"
+                                                                placeholder="Select from" [filter]="true" name="classs"
+                                                                #classs="ngModel">
+                                                            </p-dropdown>
+
+                                                        </td>
+                                                        <td>
+                                                            <p-dropdown
+                                                                class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                                ngModel [options]="airportGrid" [(ngModel)]="row.to"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                optionLabel="airport_desc" optionValue="airport_code"
+                                                                placeholder="Select to" [filter]="true" name="classs"
+                                                                #classs="ngModel">
+                                                            </p-dropdown>
+                                                        </td>
+                                                        <td>
+                                                            <p-dropdown
+                                                                class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                                ngModel [options]="airportGrid" [(ngModel)]="row.via"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                optionLabel="airport_desc" optionValue="airport_code"
+                                                                placeholder="Select via" [filter]="true" name="classs"
+                                                                #classs="ngModel">
+                                                            </p-dropdown>
+                                                        </td>
+                                                        <td>
+                                                            <p-dropdown
+                                                                class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                                ngModel [options]="flightClassGrid"
+                                                                [(ngModel)]="row.flight_class"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                optionLabel="classs" optionValue="classs" name="classs"
+                                                                #classs="ngModel">
+                                                            </p-dropdown>
+
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control"
+                                                                style="width:200px;height:38px"
+                                                                placeholder="Enter no of passengers"
+                                                                [(ngModel)]="row.no_of_passengers"
+                                                                [ngModelOptions]="{standalone: true}">
+                                                        </td>
+                                                        <td>
+                                                            <p-dropdown
+                                                                class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                                [(ngModel)]="row.return_flight" name="annualEntry"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                [options]="annualEntry"
+                                                                (onChange)="onProductStandardChange($event , row)"
+                                                                optionLabel="name" optionValue="name"
+                                                                placeholder="Select return">
+                                                            </p-dropdown>
+                                                        </td>
+                                                        <!-- <td>
                                                         <input type="text" class="form-control"
                                                             style="width:200px;height:38px"
                                                             placeholder="Enter Reference id"
                                                             [(ngModel)]="row.reference_id">
                                                     </td> -->
 
-                                             
-                                                   
-                                                    <td>
-                                                        <p-dropdown
-                                                            class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
-                                                            [options]="row.month" optionLabel="name" optionValue="value"
-                                                            [(ngModel)]="row.selectedMonths"  [ngModelOptions]="{standalone: true}"
-                                                            
-                                                           >
-                                                        </p-dropdown>
-    
-                                                    </td>
-                                                    <td>
-                                                        <p-dropdown
-                                                        class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
-                                                        [options]="busineessGrid" optionLabel="cost_center_name"
-                                                        [(ngModel)]="row.costCentre"  [ngModelOptions]="{standalone: true}" 
-                                                        optionValue="cost_centre_name"
-                                                       >
-                                                    </p-dropdown>
-
-                                                    </td>
-
-                                                 
-                                                
-                                        
-                                                </tr>
 
 
-                                            </tbody>
-                                            <span class="ml-2 trackingsubmitb et_plusadd_455" (click)="addrowsFlightTravel()">+</span>
-                                        </table>
-                                       </div>
+                                                        <td>
+                                                            <p-dropdown
+                                                                class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                                [options]="row.month" optionLabel="name"
+                                                                optionValue="value" [(ngModel)]="row.selectedMonths"
+                                                                [ngModelOptions]="{standalone: true}">
+                                                            </p-dropdown>
+
+                                                        </td>
+                                                        <td>
+                                                            <p-dropdown
+                                                                class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                                [options]="busineessGrid" optionLabel="cost_center_name"
+                                                                [(ngModel)]="row.costCentre"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                optionValue="cost_centre_name">
+                                                            </p-dropdown>
+
+                                                        </td>
+
+
+
+
+                                                    </tr>
+
+
+                                                </tbody>
+                                                <span class="ml-2 trackingsubmitb et_plusadd_455"
+                                                    (click)="addrowsFlightTravel()">+</span>
+                                            </table>
+                                        </div>
                                     </div>
-                                    <div class="col-8" >
+                                    <div class="col-8">
                                         <label for="fname ">Attachments</label>
                                         <p-toast></p-toast>
                                         <div class="d-flex justify-content-end border rounded ct_upload_btn1">
@@ -5250,73 +5268,72 @@
                                 <div class="trackingFooter" *ngIf="categoryId ==25">
                                     <!-- rowsHotelStay -->
                                     <div class="col-md-12 table-responsive mt-3" style="height: 45vh;">
-                                    <table class="table ct_home_office_table ett_verticle_align_top" style="height:357px">
-                                        <thead class="thead-dark">
-                                            <tr>
-                                                <th scope="col">S.No.</th>
-                                                <th scope="col">Country Stay</th>
-                                                <th scope="col">Type of hotel</th>
-                                                <th scope="col">No of occupied rooms</th>
-                                                <th scope="col">No. of nights per room</th>
-                                                <th scope="col">Month</th>
-                                            
-                                             
-                                            </tr>
-                                        </thead>
-                                        <tbody #commuteTable>
-                                            <tr *ngFor="let row of rowsHotelStay">
-                                                <td scope="row">{{ row.id }}</td>
-
-                                          
-                                                <td>
-                                                    <p-dropdown
-                                                        class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
-                                                        [(ngModel)]="row.selectedCountry"
-                                                        [ngModelOptions]="{standalone: true}"
-                                                        [options]="countriesList"  [filter]="true"
-                                                      
-                                                        optionLabel="name" optionValue="name"
-                                                        placeholder="Select country">
-                                                    </p-dropdown>
-                                                </td>
-                                                <td>
-                                                    <p-dropdown class="ct_select_op_input ct_chev_icon_dark230"
-                                                                ngModel [options]="hotelTypeGrid"   [(ngModel)]="row.type_of_hotel"
-                                                                optionLabel="hoteltype" optionValue="id"
-                                                                name="hoteltype" #hoteltype="ngModel">
-                                                            </p-dropdown>
-                                                </td>
-                                                <td>
-                                                    <input type="text" class="form-control"
-                                                        style="height:38px"
-                                                        placeholder="Enter no of occupied rooms"
-                                                        [(ngModel)]="row.no_of_occupied_rooms"    [ngModelOptions]="{standalone: true}">
-                                                </td>
-                                                <td>
-                                                    <input type="text" class="form-control"
-                                                        style="height:38px"
-                                                        placeholder="Enter no of nights"
-                                                        [(ngModel)]="row.no_of_nights"  [ngModelOptions]="{standalone: true}">
-                                                </td>
-                                                <td>
-                                                    <p-dropdown
-                                                        class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
-                                                        [options]="row.month" optionLabel="name" optionValue="value"
-                                                        [(ngModel)]="row.selectedMonths"  [ngModelOptions]="{standalone: true}"
-                                                        
-                                                       >
-                                                    </p-dropdown>
-
-                                                </td>
-                                    
-                                            </tr>
+                                        <table class="table ct_home_office_table ett_verticle_align_top"
+                                            style="height:357px">
+                                            <thead class="thead-dark">
+                                                <tr>
+                                                    <th scope="col">S.No.</th>
+                                                    <th scope="col">Country Stay</th>
+                                                    <th scope="col">Type of hotel</th>
+                                                    <th scope="col">No of occupied rooms</th>
+                                                    <th scope="col">No. of nights per room</th>
+                                                    <th scope="col">Month</th>
 
 
-                                        </tbody>
-                                        <span class="ml-2 trackingsubmitb et_plusadd_455" (click)="addrowsHotelStay()">+</span>
-                                    </table>
+                                                </tr>
+                                            </thead>
+                                            <tbody #commuteTable>
+                                                <tr *ngFor="let row of rowsHotelStay">
+                                                    <td scope="row">{{ row.id }}</td>
+
+
+                                                    <td>
+                                                        <p-dropdown
+                                                            class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                            [(ngModel)]="row.selectedCountry"
+                                                            [ngModelOptions]="{standalone: true}"
+                                                            [options]="countriesList" [filter]="true" optionLabel="name"
+                                                            optionValue="name" placeholder="Select country">
+                                                        </p-dropdown>
+                                                    </td>
+                                                    <td>
+                                                        <p-dropdown class="ct_select_op_input ct_chev_icon_dark230"
+                                                            ngModel [options]="hotelTypeGrid"
+                                                            [(ngModel)]="row.type_of_hotel" optionLabel="hoteltype"
+                                                            optionValue="id" name="hoteltype" #hoteltype="ngModel">
+                                                        </p-dropdown>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="form-control" style="height:38px"
+                                                            placeholder="Enter no of occupied rooms"
+                                                            [(ngModel)]="row.no_of_occupied_rooms"
+                                                            [ngModelOptions]="{standalone: true}">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="form-control" style="height:38px"
+                                                            placeholder="Enter no of nights"
+                                                            [(ngModel)]="row.no_of_nights"
+                                                            [ngModelOptions]="{standalone: true}">
+                                                    </td>
+                                                    <td>
+                                                        <p-dropdown
+                                                            class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                            [options]="row.month" optionLabel="name" optionValue="value"
+                                                            [(ngModel)]="row.selectedMonths"
+                                                            [ngModelOptions]="{standalone: true}">
+                                                        </p-dropdown>
+
+                                                    </td>
+
+                                                </tr>
+
+
+                                            </tbody>
+                                            <span class="ml-2 trackingsubmitb et_plusadd_455"
+                                                (click)="addrowsHotelStay()">+</span>
+                                        </table>
                                     </div>
-                                    <div class="col-8" >
+                                    <div class="col-8">
                                         <label for="fname ">Attachments</label>
                                         <p-toast></p-toast>
                                         <div class="d-flex justify-content-end border rounded ct_upload_btn1">
@@ -5332,95 +5349,98 @@
                                 </div>
                                 <div class="trackingFooter" *ngIf="categoryId ==26">
                                     <div class="col-md-12 table-responsive p-4" style="height: 53vh;">
-                                    <table class="table ct_home_office_table ett_verticle_align_top" style="height:357px"  >
-                                        <thead class="thead-dark">
-                                            <tr>
-                                                <th scope="col">S.No.</th>
-                                                <th scope="col">Mode of transport</th>
-                                                <th scope="col">Type</th>
-                                                <th scope="col">Fuel Type</th>
-                                                <th scope="col">No of passengers</th>
-                                                <th scope="col">Distance travelled per trip</th>
-                                                <th scope="col">No of trips</th>
-                                                <th scope="col">Month</th>
-                                             
-                                            </tr>
-                                        </thead>
-                                        <tbody #commuteTable>
-                                            <tr *ngFor="let row of rowsOtherTransport">
-                                                <td scope="row">{{ row.id }}</td>
+                                        <table class="table ct_home_office_table ett_verticle_align_top"
+                                            style="height:357px">
+                                            <thead class="thead-dark">
+                                                <tr>
+                                                    <th scope="col">S.No.</th>
+                                                    <th scope="col">Mode of transport</th>
+                                                    <th scope="col">Type</th>
+                                                    <th scope="col">Fuel Type</th>
+                                                    <th scope="col">No of passengers</th>
+                                                    <th scope="col">Distance travelled per trip</th>
+                                                    <th scope="col">No of trips</th>
+                                                    <th scope="col">Month</th>
 
-                                          
-                                                <td>
-                                                    <p-dropdown
-                                                        class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
-                                                        [(ngModel)]="row.trasnportMode"
-                                                        [ngModelOptions]="{standalone: true}"
-                                                        [options]="ModesTravelGrid"
-                                                        (onChange)="onModesChangeM($event , row)"
-                                                     
-                                                        optionLabel="modes" optionValue="modes"
-                                                        placeholder="Select mode">
-                                                    </p-dropdown>
-                                                </td>
-                                                <td>
-                                                    <p-dropdown
-                                                    class="ct_select_op_input ct_chev_icon_dark230"
-                                                    ngModel [options]="row.mode_type" optionLabel="type"
-                                                    optionValue="type"   [(ngModel)]="row.selectedMode" [ngModelOptions]="{standalone: true}"
-                                                    #cartype="ngModel">
-                                                </p-dropdown>
-                                                </td>
-                                                <td>
-                                                    <p-dropdown
-                                                                    class="ct_select_op_input ct_chev_icon_dark230"
-                                                                    ngModel [options]="row.carFuel_type"   [(ngModel)]="row.selectedFuelType"
-                                                                    [ngModelOptions]="{standalone: true}"
-                                                                    optionLabel="mode_type" optionValue="mode_type"
-                                                                    name="fuelCar_type" #fuelCar_type="ngModel">
-                                                                </p-dropdown>
-                                                </td>
-                                              
-                                              
-                                                <td>
-                                                    <input type="text" class="form-control" 
-                                                        style="width:200px;height:38px"
-                                                        placeholder="Enter no of passengers" [disabled]="row.isDisabled"
-                                                        [(ngModel)]="row.no_of_passengers"  [ngModelOptions]="{standalone: true}">
-                                                </td>
-                                                <td>
-                                                    <input type="text" class="form-control"
-                                                        style="height:38px"
-                                                        placeholder="Enter distance travelled"
-                                                        [(ngModel)]="row.distance_travel_per_trip"  [ngModelOptions]="{standalone: true}" name="distance_{{row.id}}">
-                                                </td>
-                                                <td>
-                                                    <input type="text" class="form-control"
-                                                        style="width:200px;height:38px"
-                                                        placeholder="Enter no of trips"
-                                                        [(ngModel)]="row.noOfTrips"    [ngModelOptions]="{standalone: true}">
-                                                </td>
-                                                <td>
-                                                    <p-dropdown
-                                                        class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
-                                                        [options]="row.month" optionLabel="name"
-                                                        [(ngModel)]="row.selectedMonths"  [ngModelOptions]="{standalone: true}" name="months" ngModel
-                                                        optionValue="value"
-                                                       >
-                                                    </p-dropdown>
-
-                                                </td>
-                                             
-                                            
-                                    
-                                            </tr>
+                                                </tr>
+                                            </thead>
+                                            <tbody #commuteTable>
+                                                <tr *ngFor="let row of rowsOtherTransport">
+                                                    <td scope="row">{{ row.id }}</td>
 
 
-                                        </tbody>
-                                        <span class="ml-2 trackingsubmitb et_plusadd_455" (click)="addrowsOtherModes()">+</span>
-                                    </table>
+                                                    <td>
+                                                        <p-dropdown
+                                                            class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                            [(ngModel)]="row.trasnportMode"
+                                                            [ngModelOptions]="{standalone: true}"
+                                                            [options]="ModesTravelGrid"
+                                                            (onChange)="onModesChangeM($event , row)"
+                                                            optionLabel="modes" optionValue="modes"
+                                                            placeholder="Select mode">
+                                                        </p-dropdown>
+                                                    </td>
+                                                    <td>
+                                                        <p-dropdown class="ct_select_op_input ct_chev_icon_dark230"
+                                                            ngModel [options]="row.mode_type" optionLabel="type"
+                                                            optionValue="type" [(ngModel)]="row.selectedMode"
+                                                            [ngModelOptions]="{standalone: true}" #cartype="ngModel">
+                                                        </p-dropdown>
+                                                    </td>
+                                                    <td>
+                                                        <p-dropdown class="ct_select_op_input ct_chev_icon_dark230"
+                                                            ngModel [options]="row.carFuel_type"
+                                                            [(ngModel)]="row.selectedFuelType"
+                                                            [ngModelOptions]="{standalone: true}"
+                                                            optionLabel="mode_type" optionValue="mode_type"
+                                                            name="fuelCar_type" #fuelCar_type="ngModel">
+                                                        </p-dropdown>
+                                                    </td>
+
+
+                                                    <td>
+                                                        <input type="text" class="form-control"
+                                                            style="width:200px;height:38px"
+                                                            placeholder="Enter no of passengers"
+                                                            [disabled]="row.isDisabled"
+                                                            [(ngModel)]="row.no_of_passengers"
+                                                            [ngModelOptions]="{standalone: true}">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="form-control" style="height:38px"
+                                                            placeholder="Enter distance travelled"
+                                                            [(ngModel)]="row.distance_travel_per_trip"
+                                                            [ngModelOptions]="{standalone: true}"
+                                                            name="distance_{{row.id}}">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="form-control"
+                                                            style="width:200px;height:38px"
+                                                            placeholder="Enter no of trips" [(ngModel)]="row.noOfTrips"
+                                                            [ngModelOptions]="{standalone: true}">
+                                                    </td>
+                                                    <td>
+                                                        <p-dropdown
+                                                            class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
+                                                            [options]="row.month" optionLabel="name"
+                                                            [(ngModel)]="row.selectedMonths"
+                                                            [ngModelOptions]="{standalone: true}" name="months" ngModel
+                                                            optionValue="value">
+                                                        </p-dropdown>
+
+                                                    </td>
+
+
+
+                                                </tr>
+
+
+                                            </tbody>
+                                            <span class="ml-2 trackingsubmitb et_plusadd_455"
+                                                (click)="addrowsOtherModes()">+</span>
+                                        </table>
                                     </div>
-                                    <div class="col-8" >
+                                    <div class="col-8">
                                         <label for="fname ">Attachments</label>
                                         <p-toast></p-toast>
                                         <div class="d-flex justify-content-end border rounded ct_upload_btn1">
@@ -5480,8 +5500,7 @@
                                                 Type
                                                 <!-- <p-sortIcon field="catName"></p-sortIcon> -->
                                             </th>
-                                            <th pSortableColumn="type"
-                                                *ngIf="categoryId == 6">
+                                            <th pSortableColumn="type" *ngIf="categoryId == 6">
 
                                                 Vehicle Model
                                                 <!-- <p-sortIcon field="catName"></p-sortIcon> -->
@@ -6003,11 +6022,10 @@
                                             <td
                                                 *ngIf="categoryId != 8 && categoryId != 7 && categoryId != 10 && categoryId != 12 && categoryId != 14 && categoryId != 15 && categoryId != 16 && categoryId != 17 && categoryId != 18 && categoryId != 19 && categoryId != 20 && categoryId !=21 && categoryId !=22 && categoryId !=11 && categoryId !=23 && categoryId !=24 && categoryId != 25 && categoryId != 26">
                                                 {{ de.subcatName }}</td>
-                                                <td
-                                                    *ngIf="categoryId != 3 && categoryId != 8  && categoryId != 10 && categoryId != 17 && categoryId != 11 && categoryId != 12 && categoryId != 14 && categoryId != 15  &&  categoryId != 24 && categoryId != 16 && categoryId !=18 && categoryId !=19 && categoryId !=20 && categoryId !=21   && categoryId !=22 && categoryId !=23 && categoryId != 25 && categoryId != 26">
-                                                    {{ de.TypeName || '-' }}</td>
                                             <td
-                                                *ngIf="categoryId == 6">
+                                                *ngIf="categoryId != 3 && categoryId != 8  && categoryId != 10 && categoryId != 17 && categoryId != 11 && categoryId != 12 && categoryId != 14 && categoryId != 15  &&  categoryId != 24 && categoryId != 16 && categoryId !=18 && categoryId !=19 && categoryId !=20 && categoryId !=21   && categoryId !=22 && categoryId !=23 && categoryId != 25 && categoryId != 26">
+                                                {{ de.TypeName || '-' }}</td>
+                                            <td *ngIf="categoryId == 6">
                                                 {{ de.vehicle_model }}</td>
 
                                             <td *ngIf="categoryId == 11 ">
@@ -6165,9 +6183,11 @@
                                             </td>
                                             <td *ngIf="categoryId == 24">{{ de.flight_Class }}
                                             </td>
-                                            <td *ngIf="categoryId == 24">{{ de.no_of_trips ? de.no_of_trips:de.no_of_passengers }}
+                                            <td *ngIf="categoryId == 24">{{ de.no_of_trips ?
+                                                de.no_of_trips:de.no_of_passengers }}
                                             </td>
-                                            <td *ngIf="categoryId == 24">{{ de.avg_distance == 0 ? 'NA':de.avg_distance }}
+                                            <td *ngIf="categoryId == 24">{{ de.avg_distance == 0 ? 'NA':de.avg_distance
+                                                }}
                                             </td>
                                             <td *ngIf="categoryId == 24">{{ de.return_Flight == "Yes" ? 'Yes' :'No'}}
                                             </td>
@@ -6478,7 +6498,7 @@
             </div>
         </div>
     </div>
-    </div>
+</div>
 
 
 
@@ -6510,21 +6530,22 @@
 </div> -->
 
 
-<p-dialog  [(visible)]="visible2" [breakpoints]="{'960px': '75vw'}" [style]="{width: '40vw'}">
-    
+<p-dialog [(visible)]="visible2" [breakpoints]="{'960px': '75vw'}" [style]="{width: '40vw'}">
+
     <p-header> Match Product </p-header>
     <div class="modal-body text-white text-style Dashboard-tab ct_vertically_scroll">
-        <form class="col-12" >
+        <form class="col-12">
             <div class="mb-5 pb-0 row">
                 <div class="col-md-12 mb-">
-                 
-                    <p-dropdown class="finput ct_input_white_bg13 ct_city_name_select_2_search       custom_dropdown" ngModel
-                    name="country" placeholder="Select Product" [options]="allPRoducts" [filter]="true" filterBy="product"
-                 [(ngModel)]="psg_product"  [ngModelOptions]="{standalone: true}"
-                    optionLabel="product" styleClass="facilitydropdown" #country="ngModel" required  (onChange)="onAllProductChange()">
-                </p-dropdown>
+
+                    <p-dropdown class="finput ct_input_white_bg13 ct_city_name_select_2_search       custom_dropdown"
+                        ngModel name="country" placeholder="Select Product" [options]="allPRoducts" [filter]="true"
+                        filterBy="product" [(ngModel)]="psg_product" [ngModelOptions]="{standalone: true}"
+                        optionLabel="product" styleClass="facilitydropdown" #country="ngModel" required
+                        (onChange)="onAllProductChange()">
+                    </p-dropdown>
                 </div>
-              
+
 
 
 
@@ -6532,7 +6553,7 @@
             </div>
             <div style="height: 280px;"></div>
 
-          
+
         </form>
     </div>
 </p-dialog>

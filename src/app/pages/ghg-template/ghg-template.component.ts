@@ -28,6 +28,7 @@ import { filter } from 'rxjs';
     styleUrls: ['./ghg-template.component.scss'],
 })
 export class GhgTemplateComponent {
+    isHowtoUse = false
     @ViewChild('addCompForm', { static: false }) addCompForm: NgForm;
     public loginInfo: LoginInfo;
     public userdetails: UserInfo;
@@ -148,7 +149,7 @@ export class GhgTemplateComponent {
         this.updatedtheme = this.themeservice.getValue('theme');
         this.AllCountry();
         this.GetFacilityGroupList(tenantID);
-       
+
     }
 
     ngDoCheck() {
@@ -218,7 +219,7 @@ export class GhgTemplateComponent {
     }
     //method for update a facility by id
     editfacility(id: any, data: NgForm) {
-        if (this.loginInfo.role  == 'Preparer' || this.loginInfo.role  == 'Manager' ) {
+        if (this.loginInfo.role == 'Preparer' || this.loginInfo.role == 'Manager') {
             this.notification.showInfo('You are not authrised to submit form', '')
             return
         }
@@ -288,20 +289,20 @@ export class GhgTemplateComponent {
                     this.NoData = 'none';
                 }
                 if (this.facilityrefresh == true)
-                 this.defaultData();
+                    this.defaultData();
                 localStorage.setItem('FacilityCount', String(this.LocData.length));
             }, error: err => {
                 console.log(err)
             }
         })
-       
+
 
     };
 
     //retrieves users associated with the facility
 
     tableData(data: any) {
-    
+
         this.id_var = data.ID;
         this.selectedValues = data.ID;
         this.GetsavedDataPoint(data.ID)
@@ -374,18 +375,18 @@ export class GhgTemplateComponent {
 
     logSelectedFacilityIds() {
         const selectedFacilityIds = this.selectedScope4.map(facility => facility.id).join(',');
-      
+
     };
 
 
 
-  
+
     //display a dialog for adding a facility
     showAddFacilityDialog() {
         this.visible = true;
-     
+
         this.facilityDetails = new Facility();
-      
+
         this.isEdit = false;
         this.resetForm();
     }
@@ -420,7 +421,7 @@ export class GhgTemplateComponent {
     }
     //method for retrieve all country name
     AllCountry() {
-    
+
         this.facilityService.GetCountry().subscribe({
             next: (response) => {
 
@@ -450,7 +451,7 @@ export class GhgTemplateComponent {
         });
     };
 
-  
+
 
     getAllSeedData2(newfacilityid) {
         this.facilityService.getSeedData().subscribe({
@@ -561,9 +562,9 @@ export class GhgTemplateComponent {
             this.notification.showWarning('You are not allowed to set the tempalte', '');
             return
         }
-        
+
         if (this.selectedValues.length == 0 || this.selectedValues == '') {
-           
+
             return
         }
         const fomdata = new URLSearchParams();
@@ -671,7 +672,7 @@ export class GhgTemplateComponent {
                 .newManageDataPointSave(fomdata.toString())
                 .subscribe({
                     next: (response) => {
-                      
+
                         if (response.success == true) {
                             this.DP_BoxVisible = false;
                             this.notification.showSuccess(
@@ -711,9 +712,9 @@ export class GhgTemplateComponent {
                                     newScope1.push(subcategory.ManageDataPointSubCategorySeedID)
                                 })
                             })
-                           
+
                             this.selectedScope1 = [...newScope1];
-                           
+
                         } else if (items.ScopeID == 2) {
                             const newScope2 = [];
                             items.manageDataPointCategories.forEach((categories: any) => {
@@ -743,7 +744,7 @@ export class GhgTemplateComponent {
     }
 
     scope1Cick() {
-       
+
     }
     //method for update datapoint
     updateDataPoint() {

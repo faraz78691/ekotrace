@@ -18,7 +18,7 @@ import { debounceTime, Subject } from 'rxjs';
 export class KpiInventoryComponent {
 
   // @ViewChild("chart") chart: ChartComponent;
-
+  isHowtoUse =false;
   id: any;
   isgroupExist: boolean = false;
   selectedFaciltiy: any;
