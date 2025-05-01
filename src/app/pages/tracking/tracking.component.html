@@ -508,16 +508,18 @@
                                     <p *ngIf="categoryId ==26" class="mb-2 mt-3 ml-4 text-dark">
                                         Other modes of transport
                                     </p>
-                                    <div *ngIf="categoryId ==8" class="ml-auto">
-                                        <button class="btn ct_scoope_1_tab ct_view_request_btn px-4 trackingsubmitb"
-                                            type="button" (click)="bulkUploadPG()"> {{singlePGSTab ? 'Bulk Upload' :
-                                            'Single Upload'}}</button>
-
-                                    </div>
-                                    <div *ngIf="categoryId ==8" class="ml-auto">
-                                        <button class="btn ct_scoope_1_tab ct_view_request_btn px-4 trackingsubmitb" (click)="openProgresstab()"
-                                            type="button">AI Match Progress</button>
-
+                                    <div class="d-flex align-items-center ml-auto" style="gap:10px">
+                                        <div *ngIf="categoryId ==8" >
+                                            <button class="btn ct_scoope_1_tab ct_view_request_btn px-4 trackingsubmitb"
+                                                type="button" (click)="bulkUploadPG()"> {{singlePGSTab ? 'Bulk Upload' :
+                                                'Single Upload'}}</button>
+    
+                                        </div>
+                                        <div *ngIf="categoryId ==8">
+                                            <button class="btn ct_scoope_1_tab ct_view_request_btn px-4 trackingsubmitb"
+                                                (click)="openProgresstab()" type="button">AI Match Progress</button>
+    
+                                        </div>
                                     </div>
                                     <div *ngIf="categoryId ==6" class="ml-auto">
                                         <button class=" mr-2 et_tab_btn" [ngClass]="{'active': singleCompanyTab}"
@@ -2152,7 +2154,7 @@
                                                     </table>
                                                 </div>
                                             </ng-container>
-                                          
+
                                             <ng-container *ngIf="multipleCompanyTab">
                                                 <div class="col-md-12 table-responsive" style="height: 40vh;">
                                                     <table class="table ct_home_office_table">
@@ -2674,8 +2676,8 @@
                                     <div class="row " *ngIf="!singlePGSTab && !progressPSGTab">
                                         <div class="col-md-12">
                                             <div
-                                                class="d-flex align-items-center justify-content-between ct_gap_10 flex-wrap py-4">
-                                                <div class="mb-4" style="gap: 10px;">
+                                                class="d-flex align-items-center justify-content-between ct_gap_10 flex-wrap py-3">
+                                                <div class="mb-0" style="gap: 10px;">
                                                     <label class="ct_text_wrape">Product Code Conv.</label>
                                                     <div class="position-relative">
                                                         <p-dropdown
@@ -2690,7 +2692,7 @@
                                                 <div class="d-flex align-items-center ct_gap_10 flex-wrap">
                                                     <div>
                                                         <div
-                                                            class="d-flex justify-content-end border rounded ct_upload_btn1">
+                                                            class="d-flex justify-content-end border rounded ct_upload_btn1 en_py_5_btn_new_455">
                                                             <p-fileUpload #fileUpload mode="basic" accept=".xlsx, .xls"
                                                                 class="" chooseLabel="Please select a File" (onSelect)="onPurchaseGoodsUpload($event.files,fileUpload)
                                                         "></p-fileUpload>
@@ -2698,14 +2700,14 @@
                                                         <!-- <input type="file" class="form-control"  (change)="onPurchaseGoodsUpload($event)" accept=".xlsx, .xls"  id="ct_product_upload_file" > -->
                                                     </div>
                                                     <a [href]="downloadExcelUrl" download
-                                                        class="px-4 trackingsubmitb"><i
+                                                        class="px-4 trackingsubmitb en_py_5_btn_new_455"><i
                                                             class="fa-solid fa-download mr-2"></i>Download Template</a>
 
                                                 </div>
                                             </div>
 
                                         </div>
-                                        <div class="col-md-12 table-responsive mt-2" style="height: 53vh;">
+                                        <div class="col-md-12 table-responsive mt-2" style="height: 35vh;">
                                             <table class="table ct_home_office_table">
                                                 <thead class="thead-dark">
                                                     <tr>
@@ -2723,160 +2725,6 @@
                                                         <th scope="col">Vendor</th>
                                                         <th scope="col">Vendor Specific EF</th>
                                                         <th scope="col">Status</th>
-                                                        <th scope="col" class="text-center">Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody #commuteTable>
-                                                    <!-- <tr>
-                                                        <td scope="row">1</td>
-
-                                                        <td>Sports Teams and Clubs</td>
-                                                        <td>25-10-2025</td>
-                                                        <td>50</td>
-                                                        <td>INR</td>
-                                                        <td>Samsung</td>
-                                                        <td>2.00</td>
-                                                        <td>Matched</td>
-                                                      
-                                                        <td class="d-flex justify-content-center align-items-center">
-                                                            <button class="btn btn-sm btn-primary mr-1">  <i class="fa-solid fa-edit"></i></button>
-                                                            <button class="btn btn-sm btn-danger mr-1">  <i class="fa-solid fa-trash-can"></i></button>
-                                                            <button class="btn  btn-sm btn-success"> Add Vendor</button>
-                                                          
-                                                           
-                                                        </td>
-
-                                                    </tr> -->
-                                                    <tr *ngFor="let product of newExcelData; let i = index">
-                                                        <td>{{ i + 1 }}</td>
-                                                        <td>
-                                                            <ng-container>
-                                                                <textarea *ngIf="product.isEditing" type="text"
-                                                                    [(ngModel)]="product['Product Category']"
-                                                                    [ngModelOptions]="{standalone: true}"
-                                                                    class="form-control text-dark"></textarea>
-                                                                <span *ngIf="!product.isEditing">{{ product['Product
-                                                                    Category'] }}</span>
-                                                            </ng-container>
-
-                                                        </td>
-                                                        <td>
-                                                            <ng-container>
-                                                                <textarea *ngIf="product.isEditing" type="text"
-                                                                    [(ngModel)]="product['Product Description']"
-                                                                    [ngModelOptions]="{standalone: true}"
-                                                                    class="form-control text-dark"></textarea>
-                                                                <span *ngIf="!product.isEditing">{{ product['Product
-                                                                    Description'] }}</span>
-                                                            </ng-container>
-
-                                                        </td>
-                                                        <td>
-                                                            <ng-container>
-                                                                <textarea *ngIf="product.isEditing" type="text"
-                                                                    [(ngModel)]="product.productResult.typesofpurchasename"
-                                                                    [ngModelOptions]="{standalone: true}"
-                                                                    class="form-control text-dark"></textarea>
-                                                                <span *ngIf="!product.isEditing">{{
-                                                                    product.productResult.typesofpurchasename }}</span>
-                                                            </ng-container>
-
-                                                        </td>
-                                                        <td>
-                                                            <ng-container>
-                                                                <textarea *ngIf="product.isEditing" type="text"
-                                                                    [(ngModel)]="product.code"
-                                                                    [ngModelOptions]="{standalone: true}"
-                                                                    class="form-control text-dark"></textarea>
-                                                                <span *ngIf="!product.isEditing">{{
-                                                                    product.productResult.product }} {{ product.code
-                                                                    }}</span>
-                                                            </ng-container>
-
-                                                        </td>
-                                                        <td>
-                                                            <input *ngIf="product.isEditing" type="text"
-                                                                [(ngModel)]="product['Purchase Date']"
-                                                                [ngModelOptions]="{standalone: true}"
-                                                                class="form-control" />
-                                                            <span *ngIf="!product.isEditing">{{ product['Purchase Date']
-                                                                }}</span>
-                                                        </td>
-                                                        <td>
-                                                            <input *ngIf="product.isEditing" type="text"
-                                                                [(ngModel)]="product['Value / Quantity']"
-                                                                [ngModelOptions]="{standalone: true}"
-                                                                class="form-control" />
-                                                            <span *ngIf="!product.isEditing">{{ product['Value /
-                                                                Quantity'] }}</span>
-                                                        </td>
-                                                        <td>
-                                                            <input *ngIf="product.isEditing" type="text"
-                                                                [(ngModel)]="product['Unit']"
-                                                                [ngModelOptions]="{standalone: true}"
-                                                                class="form-control" />
-                                                            <span *ngIf="!product.isEditing">{{ product['Unit']
-                                                                }}</span>
-                                                        </td>
-                                                        <td>
-                                                            <input *ngIf="product.isEditing" type="text"
-                                                                [(ngModel)]="product['Vendor']"
-                                                                [ngModelOptions]="{standalone: true}"
-                                                                class="form-control" />
-                                                            <span *ngIf="!product.isEditing">{{ product['Vendor']
-                                                                }}</span>
-                                                        </td>
-                                                        <td>
-
-                                                            <span *ngIf="product['Vendor Specific EF'] !==''">{{
-                                                                product['Vendor Specific EF']}}&nbsp;
-                                                                {{product['Vendor Specific Unit'] }}</span>
-                                                            <span *ngIf="product['Vendor Specific EF'] ==''"></span>
-                                                        </td>
-                                                        <td>
-
-                                                            <span [ngClass]="{'redColor':!product.is_find}">{{
-                                                                product.is_find ? 'Matched' : 'Unmatched' }}</span>
-                                                        </td>
-
-
-                                                        <td class="d-flex justify-content-center align-items-center">
-                                                            <button type="button" class="btn btn-sm btn-primary mr-1"
-                                                                (click)="toggleEdit(i, product['S. No.'])"
-                                                                data-toggle="modal" data-target="#exampleModal">
-                                                                <i class="fa-solid"
-                                                                    [ngClass]="{'fa-sync-alt': !product.isEditing, 'fa-save': product.isEditing}"></i>
-                                                            </button>
-                                                            <button *ngIf="!product.is_find" type="button"
-                                                                class="btn btn-sm btn-danger mr-1"
-                                                                (click)="deletePSG(product['S. No.'])">
-                                                                <i class="fa-solid fa-trash-can"></i>
-                                                            </button>
-                                                            <!-- <button class="btn btn-sm btn-success"> Add Vendor</button> -->
-                                                        </td>
-                                                    </tr>
-
-
-
-                                                </tbody>
-
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <div class="row " *ngIf="progressPSGTab">
-                                    
-                                        <div class="col-md-12 table-responsive mt-2" style="height: 53vh;">
-                                            <table class="table ct_home_office_table">
-                                                <thead class="thead-dark">
-                                                    <tr>
-                                                        <th scope="col">S.No.</th>
-                                                        <th scope="col">File name</th>
-                                                        <th scope="col">Date</th>
-                                                        <th scope="col">No of items</th>
-                                                        <th scope="col">Approx time</th>
-                                                        <th scope="col">Status</th>
-
-                                                      
                                                         <th scope="col" class="text-center">Action</th>
                                                     </tr>
                                                 </thead>
@@ -2979,24 +2827,27 @@
                                                         </td>
                                                         <td>
 
-                                                            <span *ngIf="product['Vendor Specific EF'] !==''">{{ product['Vendor Specific EF']}}&nbsp;
+                                                            <span *ngIf="product['Vendor Specific EF'] !==''">{{
+                                                                product['Vendor Specific EF']}}&nbsp;
                                                                 {{product['Vendor Specific Unit'] }}</span>
-                                                                <span *ngIf="product['Vendor Specific EF'] ==''"></span>
+                                                            <span *ngIf="product['Vendor Specific EF'] ==''"></span>
                                                         </td>
                                                         <td>
 
                                                             <span [ngClass]="{'redColor':!product.is_find}">{{
                                                                 product.is_find ? 'Matched' : 'Unmatched' }}</span>
                                                         </td>
-                                                  
+
 
                                                         <td class="d-flex justify-content-center align-items-center">
-                                                            <button  type="button" class="btn btn-sm btn-primary mr-1"
-                                                                (click)="toggleEdit(i, product['S. No.'])"   data-toggle="modal" data-target="#exampleModal">
+                                                            <button type="button" class="btn btn-sm btn-primary mr-1"
+                                                                (click)="toggleEdit(i, product['S. No.'])"
+                                                                data-toggle="modal" data-target="#exampleModal">
                                                                 <i class="fa-solid"
                                                                     [ngClass]="{'fa-sync-alt': !product.isEditing, 'fa-save': product.isEditing}"></i>
                                                             </button>
-                                                            <button *ngIf="!product.is_find" type="button" class="btn btn-sm btn-danger mr-1"
+                                                            <button *ngIf="!product.is_find" type="button"
+                                                                class="btn btn-sm btn-danger mr-1"
                                                                 (click)="deletePSG(product['S. No.'])">
                                                                 <i class="fa-solid fa-trash-can"></i>
                                                             </button>
@@ -3011,8 +2862,55 @@
                                             </table>
                                         </div>
                                     </div>
-                                   
-                                    <div class="col-8" >
+                                    <div class="row " *ngIf="progressPSGTab">
+
+                                        <div class="col-md-12 table-responsive mt-2" style="height: 35vh;">
+                                            <table class="table ct_home_office_table">
+                                                <thead class="thead-dark">
+                                                    <tr>
+                                                        <th scope="col">S.No.</th>
+                                                        <th scope="col">File name</th>
+                                                        <th scope="col">Date</th>
+                                                        <th scope="col">No of items</th>
+                                                        <th scope="col">Approx time</th>
+                                                        <th scope="col">Status</th>
+
+
+                                                        <th scope="col" class="text-center">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody #commuteTable>
+                                                    <!-- <tr>
+                                                        <td scope="row">1</td>
+
+                                                        <td>Sports Teams and Clubs</td>
+                                                        <td>25-10-2025</td>
+                                                        <td>50</td>
+                                                        <td>INR</td>
+                                                        <td>Samsung</td>
+                                                        <td>2.00</td>
+                                                        <td>Matched</td>
+                                                      
+                                                        <td class="d-flex justify-content-center align-items-center">
+                                                            <button class="btn btn-sm btn-primary mr-1">  <i class="fa-solid fa-edit"></i></button>
+                                                            <button class="btn btn-sm btn-danger mr-1">  <i class="fa-solid fa-trash-can"></i></button>
+                                                            <button class="btn  btn-sm btn-success"> Add Vendor</button>
+                                                          
+                                                           
+                                                        </td>
+
+                                                    </tr> -->
+                                                  
+
+
+
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-8">
                                         <label for="fname ">Attachments</label>
                                         <p-toast></p-toast>
                                         <div class="d-flex justify-content-end border rounded ct_upload_btn1">
@@ -3021,16 +2919,19 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-12 mt-5">
+                                    <div class="col-12 mt-4">
                                         <button type="submit" class="px-4 trackingsubmitb">
                                             Submit
                                         </button>
-<<<<<<< HEAD
-                                        <button *ngIf="!singlePGSTab" type="button" class="px-4 trackingsubmitb ml-2" (click)="submitUnmatchWithAI()">
-=======
-                                        <button type="button" class="px-4 trackingsubmitb ml-2"
+                                        <!-- <button *ngIf="!singlePGSTab" type="button" class="px-4 trackingsubmitb ml-2"
+                                            (click)="submitUnmatchWithAI()"></button> -->
+                                        
+                                        <button *ngIf="!singlePGSTab" type="button" class="px-4 trackingsubmitb ml-2"
                                             (click)="submitUnmatchWithAI()">
-                                            Submit Unmatch with AI
+                                            Submit Unmatch with AI</button>
+                                    </div>
+                                </div>
+                                <div class="trackingFooter" *ngIf="categoryId ==10">
                                     <div class="row mt-4 mb-3  pb-4 mx-2">
                                         <label for="">VEHICLES</label>
                                         <p-inputSwitch [(ngModel)]="vehcilestransporationchecked"

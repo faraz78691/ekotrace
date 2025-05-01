@@ -10204,7 +10204,7 @@ h1.bft-edit-form-title {
   padding-left: 10px;
 }
 
-.ct_how_use_tooltip_cnt ol li {
+.ct_how_use_tooltip_cnt ol li, .ct_how_use_tooltip_cnt ul li {
   padding-top: 10px;
 }
 
@@ -10465,6 +10465,15 @@ h1.bft-edit-form-title {
 
 .et_select__38_678 .p-multiselect .p-multiselect-label {
   padding-block: 7.02px;
+}
+
+.en_py_5_btn_new_455 span.p-ripple.p-element.p-button.p-component.p-fileupload-choose, .en_py_5_btn_new_455 {
+  padding-block: 4px !important;
+  border-radius: 5px !important;
+}
+
+.en_py_5_btn_new_455 {
+  border: 0px !important;
 }
 /*!******************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[5].rules[0].oneOf[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[5].rules[0].oneOf[0].use[2]!./node_modules/ngx-toastr/toastr.css?ngGlobalStyle ***!
