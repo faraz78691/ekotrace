@@ -78,6 +78,8 @@ export class TrackingComponent {
     productID: any;
     checked: boolean = false;
     annualMonths: boolean = false;
+    progressPSGTab: boolean = false;
+    excelPGSTab: boolean = false;
     isAnnual: any
     singlePGSTab: boolean = true;
     multiLevelItems: TreeviewItem[] = [];
@@ -3700,8 +3702,8 @@ export class TrackingComponent {
 
     };
 
-    submitUnmatchWithAI(){
-       
+    submitUnmatchWithAI() {
+
         const payload = this.newExcelData.filter(item => item.is_find == false).map(row => ({
             month: '',
             typeofpurchase: row.productResult.typeofpurchase,
@@ -3728,7 +3730,7 @@ export class TrackingComponent {
         formData.set('jsonData', purchaseTableStringfy);
         formData.set('is_annual', '0');
         formData.set('tenant_id', this.superAdminID.toString());
-        formData.set('user_id',    this.loginInfo.Id.toString());
+        formData.set('user_id', this.loginInfo.Id.toString());
         this.trackingService.submitPurchaseGoodsAI(formData.toString()).subscribe({
             next: (response) => {
 
@@ -4174,66 +4176,7 @@ export class TrackingComponent {
             }
         })
     };
-    //The saveSetting function handles the saving or editing of data entry settings.
-    saveSetting(data: NgForm) {
-        if (this.dataEntrySetting.id === undefined) {
-            this.dataEntrySetting.manageDataPointSubCategoriesID =
-                this.SubCatAllData.id;
-            this.trackingService
-                .postDataEntrySetting(this.dataEntrySetting)
-                .subscribe({
-                    next: (response) => {
-                        if (response === true) {
-                            this.activeindex = 0;
-                            this.notification.showSuccess(
-                                'Setting Added successfully',
-                                'Success'
-                            );
-                        } else {
-                            this.notification.showWarning(
-                                'Setting Added failed',
-                                'Warning'
-                            );
-                        }
-                    },
-                    error: (err) => {
-                        this.notification.showError(
-                            'Setting added failed.',
-                            'Error'
-                        );
-                        console.error('errrrrrr>>>>>>', err);
-                    },
-                    complete: () => console.info('Setting Added')
-                });
-        } else {
-            this.dataEntrySetting.manageDataPointSubCategoriesID =
-                this.SubCatAllData.id;
-            this.trackingService
-                .putDataEntrySetting(
-                    this.dataEntrySetting.id,
-                    this.dataEntrySetting
-                )
-                .subscribe({
-                    next: (response) => {
-                        if (response == true) {
-                            this.activeindex = 0;
-                            this.notification.showSuccess(
-                                'Setting edited successfully',
-                                'Success'
-                            );
-                        }
-                    },
-                    error: (err) => {
-                        this.notification.showError(
-                            'Setting editing failed.',
-                            'Error'
-                        );
-                        console.error('errrrrrr>>>>>>', err);
-                    },
-                    complete: () => console.info('Setting Edited')
-                });
-        }
-    };
+
 
     getFlightType() {
         this.trackingService.getflight_types().subscribe({
@@ -4275,18 +4218,7 @@ export class TrackingComponent {
     ToggleClick() {
         this.isVisited = true;
     }
-    // retrieves the data entry setting for a given subcategory ID.
-    getSetting(subCatId: any) {
-        this.trackingService
-            .getdataEntrySetting(subCatId)
-            .subscribe((response) => {
-                if (response != null) {
-                    this.dataEntrySetting = response;
-                } else {
-                    this.dataEntrySetting = new DataEntrySetting();
-                }
-            });
-    }
+
 
     GetVendors() {
 
@@ -4305,11 +4237,12 @@ export class TrackingComponent {
     };
 
     bulkUploadPG() {
+        this.progressPSGTab = false;
         this.singlePGSTab = !this.singlePGSTab
     }
 
     onPurchaseGoodsUpload(event: any, fileUpload: any) {
-        console.log(event);
+        
         const file = event[0];
         if (!file) return;
 
@@ -4593,13 +4526,7 @@ export class TrackingComponent {
         }
     }
 
-    //triggered when a file is selected from the file input
-    // onFileSelected(files: FileList) {
-    //     const file = files.item(0);
-    //     if (file) {
-    //         this.uploadFiles(files);
-    //     }
-    // }
+
 
     checkVisited() {
         // reverse the value of property
@@ -4847,83 +4774,6 @@ export class TrackingComponent {
     }
 
 
-    getStatusData(categoryIndex: number) {
-        let url = ''
-        if (categoryIndex == 1) {
-            let formData = new URLSearchParams();
-            formData.set('batch', '1');
-            url = 'getPurchaseGoodEmissions';
-            this.trackingService.getPurchaseGoodEmissions(formData).subscribe({
-                next: (response) => {
-
-                    if (response.success == true) {
-                        this.statusData = response.categories;
-                    }
-                }
-            })
-            return
-        }
-        if (categoryIndex == 2) {
-            url = 'getUpstreamEmissions'
-        }
-        if (categoryIndex == 3) {
-            url = 'getUpstreamLeaseEmission'
-        }
-        if (categoryIndex == 4) {
-            url = 'getDownstreamEmissions'
-        }
-        if (categoryIndex == 5) {
-            url = 'getFranchiseEmission'
-        }
-        if (categoryIndex == 6) {
-            url = 'getDownstreamLeaseEmission'
-        }
-        if (categoryIndex == 7) {
-            url = 'getInvestmentEmission'
-        }
-        if (categoryIndex == 8) {
-            url = 'getflight_travel'
-        }
-        if (categoryIndex == 9) {
-            url = 'gethotel_stay'
-        }
-        if (categoryIndex == 10) {
-            url = 'getothermodesofTransport'
-        }
-        if (categoryIndex == 11) {
-            url = 'getwatersupplytreatmentCategory'
-        }
-        if (categoryIndex == 12) {
-            url = 'getwasteGeneratedEmission'
-        }
-        if (categoryIndex == 13) {
-            url = 'getemployeecommutingCategory'
-        }
-        if (categoryIndex == 14) {
-            url = 'gethomeofficeCategory'
-        }
-        if (categoryIndex == 15) {
-            url = 'getprocessing_of_sold_productsCategory'
-        }
-        if (categoryIndex == 17) {
-            url = 'getendof_lifetreatment_category'
-        }
-        this.trackingService.getStatus(url).subscribe({
-            next: (response) => {
-
-                if (response.success == true) {
-                    this.statusData = response.categories;
-                } else {
-                    this.statusData = []
-                }
-            }
-        })
-    };
-
-
-
-
-
     getPassengerVehicleType() {
         try {
             this.VehicleDE.vehicleTypeID = null;
@@ -4940,10 +4790,10 @@ export class TrackingComponent {
             })
         }
         catch (ex) {
-            // // console.log("error", ex);
-        }
 
+        }
     };
+
     getDeliveryVehicleType() {
         try {
             this.VehicleDE.vehicleTypeID = null;
@@ -4960,10 +4810,11 @@ export class TrackingComponent {
             })
         }
         catch (ex) {
-            // // console.log("error", ex);
+
         }
 
-    }
+    };
+
     setDefaultMonth() {
         this.monthString = this.trackingService.getMonthName(this.month);
         this.months.forEach(m => {
@@ -5999,7 +5850,14 @@ export class TrackingComponent {
         const selectedItems = this.multiLevelItems.filter(item => item.checked);
         const placeholder = selectedItems.length > 0 ? `${selectedItems.length} options` : 'Choose product type';
         // // console.log('Placeholder:', placeholder);
-    }
+    };
+
+
+    openProgresstab() {
+        this.singlePGSTab = false;
+        this.progressPSGTab = true;
+
+    };
 
 
 
