@@ -51,7 +51,8 @@ export class KpiInventoryComponent {
   merrgeProgress: any[] = [];
   dataPreparerCustom: any;
   dataPreparer: any;
-  defaultScope = false
+  defaultScope = false;
+  topFuels: any;
   scope3OrderCategories = [
     { index: 0, name: 'Purchased goods and services' },
     { index: 1, name: 'Fuel and Energy-related Activities' },
@@ -424,6 +425,32 @@ export class KpiInventoryComponent {
 
 
   };
+
+  getTopsFuels(facilityID , year) {
+
+
+    const formdata = new URLSearchParams();
+    formdata.set('facilities', facilityID);
+    formdata.set('year', year);
+    this.appService.postAPI('/getKpiInventoryStationaryCombustionde', formdata).subscribe({
+        next: (response: any) => {
+
+            if (response.success == true) {
+              this.topFuels = response.data;
+              this.selectedFuel1 = this.topFuels[0].TypeID || 1;
+              this.selectedFuel2 = this.topFuels[1]?.TypeID || 2;
+              this.selectedFuel3 = this.topFuels[2]?.TypeID || 3;
+              this.getFuelEmissions1( this.selectedFuel1);
+              this.getFuelEmissions2(  this.selectedFuel2);
+              this.getFuelEmissions3(this.selectedFuel3);
+            } else {
+              
+            
+            }
+        }
+    })
+
+};
   onChangeFuelEmissions3(event) {
     const typeId = event;
     this.unitDropdown3 = this.fuelsTypes.find(x => x.ID == typeId).SubCatID;
@@ -760,10 +787,9 @@ export class KpiInventoryComponent {
     this.selectedFuel1 = 2;
     this.selectedFuel2 = 3;
     this.selectedFuel3 = 4;
+    this.getTopsFuels(this.selectedFacility, this.year);
     this.getKPiScopes();
-    this.getFuelEmissions1(2);
-    this.getFuelEmissions2(3);
-    this.getFuelEmissions3(4);
+  
     this.getEnergyEmissions();
     this.getPassengerTypeEmissions();
     this.getVehiclesEmissions();

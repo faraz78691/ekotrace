@@ -1,5 +1,6 @@
 import { Facility } from '@/models/Facility';
 import { GroupMapping } from '@/models/group-mapping';
+import { KpiInventoryResponse } from '@/models/kpiInventory';
 import { LoginInfo } from '@/models/loginInfo';
 import { RoleModel } from '@/models/Roles';
 import { UserInfo } from '@/models/UserInfo';
@@ -12,8 +13,9 @@ import { FacilityService } from '@services/facility.service';
 import { NotificationService } from '@services/notification.service';
 import { ThemeService } from '@services/theme.service';
 import { environment } from 'environments/environment';
-
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-attachments',
@@ -21,62 +23,137 @@ import { ConfirmationService, MessageService } from 'primeng/api';
   styleUrls: ['./attachments.component.scss']
 })
 export class AttachmentsComponent {
-  isHowtoUse = false;
-  @ViewChild('GroupForm', { static: false }) GroupForm: NgForm;
-  @ViewChild('projectionForm', { static: false }) projectionForm: NgForm;
-  public companyDetails: CompanyDetails;
-  companyData: CompanyDetails = new CompanyDetails();
+ 
+  // @ViewChild("chart") chart: ChartComponent;
+  isHowtoUse =false;
+  id: any;
+  isgroupExist: boolean = false;
+  selectedFaciltiy: any;
+  selectedState: any;
+  GroupByValue: string;
+  project_type: string;
+  countryUnique: string[];
+  stateUnique: string[];
+  unlock: string = '';
+  ischecked = true;
+  selectedRowIndex = 0;
+  filledgroup: any;
+  project_details = '';
+  carbon_offset = '';
+  selectedScope: any;
+  superAdminId: any;
+  vendorId: any;
+  carbon_credit_value: string;
+  type: string;
+  date3: string;
+  standard: string;
+  selectedFile: File;
+  attachmentsData: any;
+  facilityData: any[] = [];
+  facilities: any;
+
+  categories =
+  [
+      {
+          "label": "Stationary Combustion", 
+          "value": "stationaryCombustionde"
+      },
+      {
+          "label": "Refrigerants",     
+          "value": "refrigerants"
+      },
+      {
+          "label": "Fire Extinguishers",
+          "value": "fireExtinguisher"
+      },
+      {
+          "label": "Company Owned Vehicles",
+          "value": "companyOwnedVehichle"
+      },
+      {
+          "label": "Electricity",
+          "value": "electricity"
+      },
+      {
+          "label": "Heat and Steam",
+          "value": "heatAndSteam"
+      },
+      {
+          "label": "Purchased Goods and Services",
+          "value": "purchasedGoodsAndServices"
+      },
+      {
+          "label": "Business Travel",
+          "value": "bussinessTravel"
+      },
+     
+  ];
+  selectedCategory = this.categories.map(category => category.value)
+  
   public loginInfo: LoginInfo;
-  public admininfo: UserInfo;
-  public userdetails: UserInfo;
-  public groupdetails: any;
-  public groupMappingDetails: GroupMapping;
-  public admininfoList: UserInfo[] = [];
-  facilityList: Facility[] = [];
-  RolesList: RoleModel[] = [];
-  facilityData: Facility[] = [];
   selectedFacility: any;
-  public updatedtheme: string;
-  public rootUrl: string;
-  public superAdminTenentID: any;
-
-
+  facilityUnit: any;
   constructor(
     private companyService: CompanyService,
-
     private notification: NotificationService,
     private facilityService: FacilityService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private themeservice: ThemeService,
-    private appService: AppService
+    private appService: AppService,
+    private spinner: NgxSpinnerService
+  
   ) {
-    this.admininfo = new UserInfo();
-    this.userdetails = new UserInfo();
-    this.groupdetails = new Array();
-    this.groupMappingDetails = new GroupMapping();
-    this.loginInfo = new LoginInfo();
-    this.companyDetails = new CompanyDetails();
-    this.rootUrl = environment.baseUrl + 'uploads/';
+
+
+
 
   }
   ngOnInit() {
+
+
+
     if (localStorage.getItem('LoginInfo') != null) {
       let userInfo = localStorage.getItem('LoginInfo');
       let jsonObj = JSON.parse(userInfo); // string to "any" object first
       this.loginInfo = jsonObj as LoginInfo;
-      // this.facilityGet(this.loginInfo.tenantID);
+
     }
-
-    // this.GetAllFacility();
     let tenantID = this.loginInfo.tenantID;
-    this.superAdminTenentID = this.loginInfo.super_admin_id;
-
-    this.updatedtheme = this.themeservice.getValue('theme');
-
+    this.superAdminId = this.loginInfo.super_admin_id;
     this.GetFacilityList(tenantID);
+
+ 
+
+  }
+
+
+
+
+  getFacilityUnit(facilityId: any) {
+    const formData = new URLSearchParams();
+    formData.append('facilities', facilityId);
+    this.appService.postAPI(`/getcurrencyByfacilities`, formData).subscribe((res: any) => {
+      this.facilityUnit = res.categories
+
+    });
   };
 
+  onFacilitySelect(facilityId: any) {
+  
+    this.appService.getApi(`/getAttahcmentsbyFacilityID?facilityId=${facilityId}`).subscribe((res: any) => {
+    this.attachmentsData = res.data;
+    
+    });
+  };
+  onCategorySelect(category: any) {
+  
+   
+  };
+
+
+
+  
 
 
 
@@ -88,21 +165,25 @@ export class AttachmentsComponent {
 
           this.facilityData = res;
           this.selectedFacility = this.facilityData[0].id;
+          this.onFacilitySelect(this.selectedFacility);
 
 
         }
       });
   };
 
-
-
-
-
-
-
-
-
-
-
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

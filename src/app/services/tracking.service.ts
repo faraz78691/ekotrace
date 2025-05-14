@@ -644,13 +644,22 @@ export class TrackingService {
     submitPurchaseGoodsAI(formData: any): Observable<any> {
         const headers = new HttpHeaders()
         .set('content-type','application/x-www-form-urlencoded')
-        .set('Access-Control-Allow-Origin', '*')
-        ;  
-        ; 
+        .set('Access-Control-Allow-Origin', '*');  
+
         return this.http.post(
-            'http://13.200.247.29:5000/ai/matchUnmatchedRecords',
+            environment.baseUrl + '/add-purchase-goods-match-unmatch-data',
             formData
         );
+        
+    };
+    triggerAIPRocess(): Observable<any> {
+        const headers = new HttpHeaders()
+        .set('content-type','application/x-www-form-urlencoded')
+        .set('Access-Control-Allow-Origin', '*');  
+
+        return this.http.get(
+           "https://ekotrace.ekobon.com:5000/trigger-call"
+        );  
     };
 
     // http://http://13.200.247.29/:4000/getAllBatches

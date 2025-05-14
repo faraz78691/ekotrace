@@ -10475,6 +10475,26 @@ h1.bft-edit-form-title {
 .en_py_5_btn_new_455 {
   border: 0px !important;
 }
+
+.et_btn_h_38_900, .et_btn_h_38_900 span.p-ripple.p-element.p-button.p-component.p-fileupload-choose {
+  height: 38px;
+}
+
+.en_py_5_btn_new_455 span.p-ripple.p-element.p-button.p-component.p-fileupload-choose, .en_py_5_btn_new_455 {
+  max-width: 15rem !important;
+}
+
+.en_py_5_btn_new_455 .p-button .p-button-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.trackingsubmitb.et_light_blue_123 {
+  background-color: rgba(52, 152, 219, 0.5607843137) !important;
+  border-color: rgba(52, 152, 219, 0.5607843137) !important;
+  padding-block: 4px !important;
+}
 /*!******************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[5].rules[0].oneOf[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[5].rules[0].oneOf[0].use[2]!./node_modules/ngx-toastr/toastr.css?ngGlobalStyle ***!
   \******************************************************************************************************************************************************************************************************************************************/

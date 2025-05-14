@@ -9,6 +9,7 @@ import { CompanyService } from '@services/company.service';
 import { FacilityService } from '@services/facility.service';
 import { NotificationService } from '@services/notification.service';
 import { ThemeService } from '@services/theme.service';
+
 import { environment } from 'environments/environment';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
@@ -123,8 +124,9 @@ export class DataProgressComponent {
             this.transformData(this.dataProgress),
             this.facilityData
           );
-
+        
           this.onFacilityClick(this.transformedData[0].facilityId, 0, this.transformedData[0].facilityName);
+      
         }
       },
       error: (err) => {
@@ -155,7 +157,9 @@ export class DataProgressComponent {
         [facilityKey]: facilityScopes,
         scope1: facility.scope1,
         scope2: facility.scope2,
-        scope3: facility.scope3
+        scope3: facility.scope3,
+        sum: facility.scope3Sum,
+        count: facility.scope3Count
       };
     });
   }
@@ -298,9 +302,9 @@ export class DataProgressComponent {
                }
           }
         
-          this.selectedScope3 = [...tempArr]
+          this.selectedScope3 = [...tempArr];
+    
          
-
           const updatedScope1 = this.dataPreparerCustom[0].scope_1
             .filter(item => this.selectedScope1.includes(item.category))
             .sort((a, b) => this.selectedScope1.indexOf(a.category) - this.selectedScope1.indexOf(b.category));
@@ -314,8 +318,25 @@ export class DataProgressComponent {
             this.dataPreparer[0]['scope_3'] = this.dataPreparerCustom[0].scope_3
               .filter(item => this.selectedScope3.includes(item.category))
               .sort((a, b) => this.selectedScope3.indexOf(a.category) - this.selectedScope3.indexOf(b.category));
+            
+              this.transformedData = this.transformedData.map((item) => {
+                const scope3Categories = item[item.facilityId]?.scope_3 || [];
+              
+                const fuel3 = scope3Categories.filter((cat) => cat.category === 'Fuel and Energy-related Activities');
+              
+                if (fuel3.length > 0) {
+                  
+                  const newScope3 = (item.sum + Number(fuel3[0].percentage)) / (item.count + 1);
+                  
+                  return {
+                    ...item,
+                    scope3: newScope3
+                  };
+                }
+              
+                return item;
+              });
           }, 100)
-
         } else {
           this.defaultScope = true;
         }

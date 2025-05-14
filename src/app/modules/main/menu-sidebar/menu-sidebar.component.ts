@@ -388,6 +388,13 @@ export const menu = [
                 iconSRC: 'assets/img/biling_icon_211.png',
                 path: ['billing']
             },
+            {
+                head: 'Others',
+                name: 'Attachments',
+                iconClasses: 'fa fa-paperclip',
+                iconSRC: 'assets/img/attachments.png',
+                path: ['attachments']
+            },
             // {
             //     name: 'Billing',
             //     iconClasses: 'fas fa-folder',
@@ -1101,6 +1108,13 @@ export const menu = [
                 iconClasses: 'fas fa-folder',
                 iconSRC: 'assets/img/biling_icon_211.png',
                 path: ['billing']
+            },
+            {
+                head: 'Others',
+                name: 'Attachments',
+                iconClasses: 'fas fa-eye',
+                iconSRC: 'assets/img/building.svg',
+                path: ['attachments']
             },
             // {
             //     name: 'Billing',

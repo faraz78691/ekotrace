@@ -68,7 +68,7 @@
     </div>
 </p-dialog>
 
-<div class="ct_custom_modal_120" style="display: none;" id="cancel2" #cancel2>
+<div class="ct_custom_modal_120" style="display: none;" id="cancel2" #cancel2 id="addnodeModal" >
     <form #nodeForm="ngForm" (ngSubmit)="onNodeAdd(nodeForm)">
         <div class="modal-content">
             <div class="modal-header">
@@ -116,6 +116,50 @@
                 </div>
             </div>
 
+        </div>
+    </form>
+</div>
+
+
+<!-- Edit Node Modal -->
+<div class="ct_custom_modal_120" style="display: none;" id="editNodeModal" #editNodeModal>
+    <form #editNodeForm="ngForm" (ngSubmit)="onNodeEdit(editNodeForm)">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Node</h5>
+                <button type="button" class="btn-close ct_modal_close_10" (click)="onEditCancel()" aria-label="Close">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="modal-body mt-4">
+
+                <span class="mb-3 d-block">
+                    <label for="edit-node-name">Node Name</label>
+                    <input id="edit-node-name" type="text" class="form-control"
+                        name="nodeSubtitle" [(ngModel)]="editNodeData.name">
+                </span>
+
+                <!-- <span class="mb-3 d-block" *ngIf="showEditCategory">
+                    <label for="edit-category">Category</label>
+                    <p-dropdown class="ct_select_op_input ct_chev_icon_dark230" [options]="nodeType"
+                        placeholder="Select type" [(ngModel)]="editNodeData.nodetype"
+                        optionLabel="nodetype" optionValue="nodetype" name="nodetype">
+                    </p-dropdown>
+                </span> -->
+
+                <span class="mb-3 d-block" *ngIf="facilityTab">
+                    <label for="edit-facility">Facility Type</label>
+                    <p-dropdown class="ct_select_op_input ct_chev_icon_dark230" [options]="facilityTypeArray"
+                        placeholder="Select facility" [(ngModel)]="editNodeData.facility_name"
+                        optionLabel="type" optionValue="type" name="facilityType">
+                    </p-dropdown>
+                </span>
+
+                <div class="modal-footer border-0 justify-content-center">
+                    <button type="button" class="btn ct_animation_btn_121" (click)="onEditCancel()">Close</button>
+                    <button type="submit" class="btn ct_animation_btn_121 ct_custom_btn121 w-auto">Save Changes</button>
+                </div>
+            </div>
         </div>
     </form>
 </div>

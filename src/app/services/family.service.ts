@@ -41,6 +41,9 @@ public createCloneTree(data): Observable<any> {
 public createChildTree(data): Observable<any> {
   return this.http.post(environment.baseUrl + `/addChildInTree`, data);
 };
+public updateChildTree(data): Observable<any> {
+  return this.http.post(environment.baseUrl + `/UpdateChildInTree`, data);
+};
 public deleteSampleTree(data): Observable<any> {
   return this.http.post(environment.baseUrl + `/deleteFamilyMember`, data);
 };

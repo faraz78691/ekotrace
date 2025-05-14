@@ -72,6 +72,7 @@ import { PdfReportingComponent } from '@pages/pdf-reporting/pdf-reporting.compon
 import { GhgReportingComponent } from '@pages/reporting/ghg-reporting/ghg-reporting.component';
 import { KpiDashboardComponent } from '@pages/kpi-dashboard/kpi-dashboard.component';
 import { KpiInventoryComponent } from '@pages/kpi-inventory/kpi-inventory.component';
+import { AttachmentsComponent } from '@pages/attachments/attachments.component';
 
 const routes: Routes = [
     { path: '', redirectTo: '/dashboard/ghgEmision', pathMatch: 'full' },
@@ -126,6 +127,17 @@ const routes: Routes = [
                 path: 'financeDash',
                 canActivate: [RoleGuard],
                 component: FinanceDashboardComponent,
+                data: { roles: ['Super Admin',
+                'Admin',
+                'Manager',
+                'Preparer',
+                'Approver',
+                'Auditor'] }
+            },
+            {
+                path: 'attachments',
+                canActivate: [RoleGuard],
+                component: AttachmentsComponent,
                 data: { roles: ['Super Admin',
                 'Admin',
                 'Manager',

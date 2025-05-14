@@ -48,6 +48,21 @@ export class TreeComponent {
     saveButtton = true;
     treeSection = true;
     currentZoom = 1;
+    editNodeData = {
+        nodeSubtitle: '',
+        nodetype: '',
+        facilityType: '',
+        id: '',
+        name: '',
+        family_id: '',
+        fid:'',
+        relation: '',
+        facility_name: '',
+        level_at_tree: '',
+        pids:[],
+        main_name: ''
+      };
+      showEditCategory = true;
     constructor(
         private renderer: Renderer2,
         private route: ActivatedRoute,
@@ -347,7 +362,9 @@ export class TreeComponent {
 
 
                     }
-
+                    // update_data: {"id":56,"name":"GEM Institution","family_id":13,"fid":55,"relation":"Sub Group","facility_name":"Educational Campus","level_at_tree":2,"pids":[],"main_name":"Sub Group"}
+                    // new_child: 1
+                    // old_id: 0
 
                     family.onUpdateNode((args) => {
 
@@ -420,6 +437,7 @@ export class TreeComponent {
         })
     };
     createClone() {
+        console.log("it is");
         const facilityTypeOptions = this.facilityTypeArray.map(item => ({
             value: item.type,
             text: item.type
@@ -492,7 +510,12 @@ export class TreeComponent {
                             `<use xlink:href="#base_img_0_stroke" /> 
                            <circle id="base_img_0_stroke" fill="#b1b9be" cx="45" cy="62" r="37"/>
                           <image preserveAspectRatio="xMidYMid slice" clip-path="url(#base_img_0)" xlink:href="{val}" x="10" y="26" width="72" height="72"></image>`;
-
+                        var elemetns = [
+                            { type: 'textbox', label: 'Name', binding: 'name' },
+                            { type: 'select', label: 'Facility type', binding: 'facility_name', options: facilityTypeOptions }
+                        ]
+                        var eleemtns2 = [
+                            { type: 'textbox', label: 'Name', binding: 'name' }]
 
                         FamilyTree.templates.single = Object.assign({}, FamilyTree.templates.tommy);
                         FamilyTree.templates.single.size = [250, 160];
@@ -507,14 +530,21 @@ export class TreeComponent {
                             },
                             nodeMenu: {
                                 details: { text: "Details" },
-                                edit: { text: "Edit" },
+                                edit: {
+                                    text: "Edit",
+                                    onClick: (nodeId: string) => {
+                                      const nodeData = family.get(nodeId);
+                                      console.log("nodeData", nodeData);
+                                      this.onEditClick(nodeData);
+                                    }
+                                  },
                                 add: {
                                     text: "Add",
                                     onClick: (node: string) => {
                                         console.log("node", node);
-                                        $(".ct_custom_modal_120").show(500)
+                                        $("#addnodeModal").show(500)
                                         var nodeData = family.get(node);
-                                        // console.log("nodeData", nodeData);
+                                        console.log("nodeData", nodeData);
                                         localStorage.setItem("selectedNode", node);
                                         var relationCat = nodeData['relation']
                                         if (relationCat == 'Main Group') {
@@ -532,6 +562,7 @@ export class TreeComponent {
                                                 }
                                             ];
                                         } else if (relationCat == 'Facility') {
+                                            this.facilityTab = true;
                                             this.nodeType = [];
                                         }
                                     }
@@ -542,29 +573,9 @@ export class TreeComponent {
                                 }
                             },
                             // this one for facility edit
-                            editForm: {
-                                addMoreFieldName: null,
-                                addMore: null,
-                                addMoreBtn: null,
-                                generateElementsFromFields: false,
-                                elements: [
-                                    { type: 'textbox', label: 'Name', binding: 'name' },
-                                    { type: 'select', label: 'Facility type', binding: 'facility_name', options: facilityTypeOptions }
-                                ],
-                                buttons: {
-                                    edit: {
-                                        icon: FamilyTree.icon.edit(24, 24, '#fff'),
-                                        text: 'Edit',
-                                        hideIfEditMode: true,
-                                        hideIfDetailsMode: false
-                                    },
-                                    share: null,
-                                    pdf: null
+                         
 
-                                }
-                            },
-
-
+                          
                         });
 
                         function callHandler(nodeId) {
@@ -595,7 +606,7 @@ export class TreeComponent {
 
 
                         }
-                      
+
                         family.onUpdateNode((args) => {
                             const token: string | null = localStorage.getItem('accessToken');
                             var updateNode = args.updateNodesData[0];
@@ -867,9 +878,76 @@ export class TreeComponent {
 
             },
         })
-    }
+    };
 
 
+    onNodeEdit(data: any) {
+        if (data.valid) {
+
+            const getSelectedNode = localStorage.getItem("selectedNode");
+            const nodeForm = new URLSearchParams();
+
+            nodeForm.set('update_data', JSON.stringify(this.editNodeData));
+            nodeForm.append('new_child', '1');
+            if (this.oldID == false) {
+                nodeForm.set('old_id', '1');
+            } else {
+                nodeForm.set('old_id', '0');
+            }
+          
+
+            this.familyService.updateChildTree(nodeForm.toString()).subscribe({
+                next: res => {
+                    if (res.success == true) {
+                        this.createClone();
+    
+                    }
+    
+                    // this.getTreeViewByID(this.selectedTemplateId);
+                },
+                error: err =>
+                    console.log(err)
+            })
+          console.log("Edited Node:", this.editNodeData);
+          // Submit updated data here...
+          $('#editNodeModal').hide();
+        }
+      };
+
+
+      onEditCancel() {
+        $('#editNodeModal').hide(500);
+      };
+
+
+      onEditClick(node: any) {
+        console.log("edit openned", node);
+        const relation = node.relation;
+      console.log(node);
+        this.editNodeData = {
+          nodeSubtitle: node.name || '',
+          nodetype: node.nodetype || '',
+          facilityType: node.facility_name,
+          id: node.id,
+          relation: node.relation,
+          family_id: node.family_id,
+          facility_name: node.facility_name,
+          fid: node.fid,
+          name: node.name,
+          pids: node.pids,
+          level_at_tree: node.level_at_tree,
+          main_name: node.relation
+        };
+        console.log(this.editNodeData );
+      
+        this.showEditCategory = !(relation === 'Main Group');
+        this.showEditCategory = !(relation === 'Sub Group');
+        this.showEditCategory = !(relation === 'Facility');
+
+        this.facilityTab = (relation === 'Facility');
+      
+        $('#editNodeModal').show(500);
+      };
 
 
     ngOnDestroy() {

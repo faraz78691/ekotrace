@@ -126,7 +126,7 @@
                                                                         <div id="DPRow" *ngFor="
                                                                                 let child of head.manageDataPointSubCategories
                                                                             "
-                                                                            class="py-2 px-4 border-bottom ct_scoope_1_tab "
+                                                                            class=" px-4 border-bottom ct_scoope_1_tab et_scoope_1_tab_py_8"
                                                                             [ngClass]="{
                                                                                 ct_tab_active_12:
                                                                                     categoryId === child.manageDataPointSubCategorySeedID
@@ -515,11 +515,7 @@
                                                 'Single Upload'}}</button>
     
                                         </div>
-                                        <div *ngIf="categoryId ==8">
-                                            <button class="btn ct_scoope_1_tab ct_view_request_btn px-4 trackingsubmitb"
-                                                (click)="openProgresstab()" type="button">AI Match Progress</button>
-    
-                                        </div>
+                                     
                                     </div>
                                     <div *ngIf="categoryId ==6" class="ml-auto">
                                         <button class=" mr-2 et_tab_btn" [ngClass]="{'active': singleCompanyTab}"
@@ -2689,12 +2685,20 @@
 
                                                     </div>
                                                 </div>
+
+                                                <div *ngIf="categoryId ==8" class="d-flex align-items-center" style="gap:10px">
+                                                    <button class="btn ct_scoope_1_tab ct_view_request_btn px-4 trackingsubmitb  et_light_blue_123"
+                                                        (click)="openProgresstab()" type="button">AI Match Status</button>
+                                                        <button *ngIf="!singlePGSTab" type="button" class="btn ct_scoope_1_tab et_light_blue_123 ct_view_request_btn px-4 trackingsubmitb" (click)="submitUnmatchWithAI()">
+                                                            Run AI Match</button>
+            
+                                                </div>
                                                 <div class="d-flex align-items-center ct_gap_10 flex-wrap">
                                                     <div>
                                                         <div
                                                             class="d-flex justify-content-end border rounded ct_upload_btn1 en_py_5_btn_new_455">
                                                             <p-fileUpload #fileUpload mode="basic" accept=".xlsx, .xls"
-                                                                class="" chooseLabel="Please select a File" (onSelect)="onPurchaseGoodsUpload($event.files,fileUpload)
+                                                                class="" chooseLabel="Upload data file" (onSelect)="onPurchaseGoodsUpload($event.files,fileUpload)
                                                         "></p-fileUpload>
                                                         </div>
                                                         <!-- <input type="file" class="form-control"  (change)="onPurchaseGoodsUpload($event)" accept=".xlsx, .xls"  id="ct_product_upload_file" > -->
@@ -2707,7 +2711,7 @@
                                             </div>
 
                                         </div>
-                                        <div class="col-md-12 table-responsive mt-2" style="height: 35vh;">
+                                        <div class="col-md-12 table-responsive mt-2" style="height: 50vh;">
                                             <table class="table ct_home_office_table">
                                                 <thead class="thead-dark">
                                                     <tr>
@@ -2778,7 +2782,7 @@
                                                                     [ngModelOptions]="{standalone: true}"
                                                                     class="form-control text-dark"></textarea>
                                                                 <span *ngIf="!product.isEditing">{{
-                                                                    product.productResult.typesofpurchasename }}</span>
+                                                                    product.productResult?.typesofpurchasename }}</span>
                                                             </ng-container>
 
                                                         </td>
@@ -2789,7 +2793,7 @@
                                                                     [ngModelOptions]="{standalone: true}"
                                                                     class="form-control text-dark"></textarea>
                                                                 <span *ngIf="!product.isEditing">{{
-                                                                    product.productResult.product }} {{ product.code
+                                                                    product.productResult?.product }} {{ product.code
                                                                     }}</span>
                                                             </ng-container>
 
@@ -2834,17 +2838,15 @@
                                                         </td>
                                                         <td>
 
-                                                            <span [ngClass]="{'redColor':!product.is_find}">{{
-                                                                product.is_find ? 'Matched' : 'Unmatched' }}</span>
+                                                            <span [ngClass]="{'redColor':!product.is_find}">{{product.is_find ? (product.productResult?.other_category_flag == '1' ? 'Matched/Other Cat' : 'Matched') : 'Unmatched' }}</span>
                                                         </td>
 
 
                                                         <td class="d-flex justify-content-center align-items-center">
                                                             <button type="button" class="btn btn-sm btn-primary mr-1"
-                                                                (click)="toggleEdit(i, product['S. No.'])"
+                                                                (click)="toggleEdit(i, product['S. No.'],product.is_find, product.productResult?.other_category_flag)"
                                                                 data-toggle="modal" data-target="#exampleModal">
-                                                                <i class="fa-solid"
-                                                                    [ngClass]="{'fa-sync-alt': !product.isEditing, 'fa-save': product.isEditing}"></i>
+                                                                <i class="fa-solid fa-sync-alt"></i>
                                                             </button>
                                                             <button *ngIf="!product.is_find" type="button"
                                                                 class="btn btn-sm btn-danger mr-1"
@@ -2864,7 +2866,7 @@
                                     </div>
                                     <div class="row " *ngIf="progressPSGTab">
 
-                                        <div class="col-md-12 table-responsive mt-2" style="height: 35vh;">
+                                        <div class="col-md-12 table-responsive mt-2" style="height: 50vh;">
                                             <table class="table ct_home_office_table">
                                                 <thead class="thead-dark">
                                                     <tr>
@@ -2880,26 +2882,26 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody #commuteTable>
-                                                    <!-- <tr>
-                                                        <td scope="row">1</td>
+                                                    <tr *ngFor="let product of psg_ai_progress_data; let i = index">
+                                                        <td scope="row">{{i + 1}}</td>
 
-                                                        <td>Sports Teams and Clubs</td>
-                                                        <td>25-10-2025</td>
-                                                        <td>50</td>
-                                                        <td>INR</td>
-                                                        <td>Samsung</td>
-                                                        <td>2.00</td>
-                                                        <td>Matched</td>
-                                                      
+                                                        <td>{{product.filename}}</td>
+                                                        <td>{{product.created_at | date: 'dd-MM-yyyy'}}</td>
+                                                        <td>{{product.matched_no_of_rows}}/{{product.no_of_rows}}</td>
+                                                        <td>{{getApproxTime(product.no_of_rows)}}</td>
+                                                        <td>{{product.status ? 'Completed' : 'Pending'}}</td>
                                                         <td class="d-flex justify-content-center align-items-center">
-                                                            <button class="btn btn-sm btn-primary mr-1">  <i class="fa-solid fa-edit"></i></button>
-                                                            <button class="btn btn-sm btn-danger mr-1">  <i class="fa-solid fa-trash-can"></i></button>
-                                                            <button class="btn  btn-sm btn-success"> Add Vendor</button>
-                                                          
-                                                           
+                                                            <button type="button" class="btn btn-sm btn-primary mr-1" [disabled]="product.status ? false : true"
+                                                                (click)="loadAIMatchData(product.id)"
+                                                               >
+                                                              Load Data
+                                                            </button>
+                                                     
                                                         </td>
+                                                      
+                                                    
 
-                                                    </tr> -->
+                                                    </tr>
                                                   
 
 
@@ -2908,28 +2910,28 @@
 
                                             </table>
                                         </div>
-                                    </div>
-
-                                    <div class="col-8">
-                                        <label for="fname ">Attachments</label>
-                                        <p-toast></p-toast>
-                                        <div class="d-flex justify-content-end border rounded ct_upload_btn1">
-                                            <p-fileUpload #fileUpload mode="basic" accept=".jpg,.png,.pdf"
-                                                chooseLabel="Please select a File"></p-fileUpload>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 mt-4">
-                                        <button type="submit" class="px-4 trackingsubmitb">
-                                            Submit
+                                        <button type="button" class="px-2 trackingsubmitb" style="margin: 20px;" (click)="refreshPSGStatus()">
+                                            Refresh Status
                                         </button>
-                                        <!-- <button *ngIf="!singlePGSTab" type="button" class="px-4 trackingsubmitb ml-2"
-                                            (click)="submitUnmatchWithAI()"></button> -->
-                                        
-                                        <button *ngIf="!singlePGSTab" type="button" class="px-4 trackingsubmitb ml-2"
-                                            (click)="submitUnmatchWithAI()">
-                                            Submit Unmatch with AI</button>
                                     </div>
+                <ng-container *ngIf="!progressPSGTab">
+                    
+                    <div class="col-12 mt-2 d-flex gap-3 align-items-end">
+                        <div class="col-4 mt-2">
+                            <label for="fname ">Attachments</label>
+                            <p-toast></p-toast>
+                            <div class="d-flex justify-content-end border rounded ct_upload_btn1 et_btn_h_38_900">
+                                <p-fileUpload #fileUpload mode="basic" accept=".jpg,.png,.pdf"
+                                    chooseLabel="Please select a File"  (onSelect)="onFileSelected($event.files)"></p-fileUpload>
+                            </div>
+                        </div>
+                        <button type="submit" class="px-4 trackingsubmitb">
+                            Submit
+                        </button>
+                      
+                    </div>
+                
+                </ng-container>
                                 </div>
                                 <div class="trackingFooter" *ngIf="categoryId ==10">
                                     <div class="row mt-4 mb-3  pb-4 mx-2">
@@ -5206,7 +5208,7 @@
                                         <p-toast></p-toast>
                                         <div class="d-flex justify-content-end border rounded ct_upload_btn1">
                                             <p-fileUpload #fileUpload mode="basic" accept=".jpg,.png,.pdf"
-                                                chooseLabel="Please select a File"></p-fileUpload>
+                                                chooseLabel="Please select a File" (onSelect)="onFileSelected($event.files)"></p-fileUpload>
                                         </div>
                                     </div>
                                     <div class="col-12 mt-4 pt-3 ml-3 text-center">
@@ -5288,7 +5290,7 @@
                                         <p-toast></p-toast>
                                         <div class="d-flex justify-content-end border rounded ct_upload_btn1">
                                             <p-fileUpload #fileUpload mode="basic" accept=".jpg,.png,.pdf"
-                                                chooseLabel="Please select a File"></p-fileUpload>
+                                                chooseLabel="Please select a File" (onSelect)="onFileSelected($event.files)"></p-fileUpload>
                                         </div>
                                     </div>
                                     <div class="col-12 mt-4 pt-3 ml-3 text-center">
@@ -5394,8 +5396,8 @@
                                         <label for="fname ">Attachments</label>
                                         <p-toast></p-toast>
                                         <div class="d-flex justify-content-end border rounded ct_upload_btn1">
-                                            <p-fileUpload #fileUpload mode="basic" accept=".jpg,.png,.pdf"
-                                                chooseLabel="Please select a File"></p-fileUpload>
+
+                                            <p-fileUpload #fileUpload mode="basic" accept=".jpg,.png,.pdf,.csv" chooseLabel="Please select a File" (onSelect)="onFileSelected($event.files)"></p-fileUpload>
                                         </div>
                                     </div>
                                     <div class="col-12 mt-4 pt-3 ml-3 text-center">
@@ -6505,5 +6507,14 @@
 
 
         </form>
+       
+        <p-header> OR </p-header>
+        <button type="button" class="px-4 trackingsubmitb mr-3" (click)="changeStatus()">Change Status to Unmatch</button>
+        <button *ngIf="hideMatchButon" type="button" class="px-4 btn-warning trackingsubmitb" (click)="changeStatustoMatch()">Change Status to Match</button>
     </div>
 </p-dialog>
+
+
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-clip-rotate-pulse" [fullScreen]="true">
+    <p style="color: white">  </p>
+</ngx-spinner>
