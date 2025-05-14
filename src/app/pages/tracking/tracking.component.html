@@ -509,13 +509,13 @@
                                         Other modes of transport
                                     </p>
                                     <div class="d-flex align-items-center ml-auto" style="gap:10px">
-                                        <div *ngIf="categoryId ==8" >
+                                        <div *ngIf="categoryId ==8">
                                             <button class="btn ct_scoope_1_tab ct_view_request_btn px-4 trackingsubmitb"
                                                 type="button" (click)="bulkUploadPG()"> {{singlePGSTab ? 'Bulk Upload' :
                                                 'Single Upload'}}</button>
-    
+
                                         </div>
-                                     
+
                                     </div>
                                     <div *ngIf="categoryId ==6" class="ml-auto">
                                         <button class=" mr-2 et_tab_btn" [ngClass]="{'active': singleCompanyTab}"
@@ -894,7 +894,7 @@
 
                                             </div>
 
-                                            <div *ngIf="categoryId ==8">
+                                            <div *ngIf="categoryId ==8  && singlePGSTab">
                                                 <p class="ct_fs_16 mb-2">
                                                     This category includes all upstream (i.e., cradle-to-gate) emissions
                                                     from the production of products purchased or acquired by the
@@ -979,6 +979,126 @@
                                                         status in ‘Status’ tab
                                                     </li>
                                                 </ol>
+
+                                            </div>
+                                            <div *ngIf="categoryId ==8  && !singlePGSTab">
+                                                <p class="ct_fs_16 mb-2">
+                                                    <span class="ct_fw_600">Bulk upload - </span> Use the Bulk Upload
+                                                    option to quickly
+                                                    enter multiple records
+
+                                                </p>
+
+                                                <p class="mb-0 ct_fs_16">Steps to To enter data in bulk:
+                                                </p>
+                                                <ol>
+                                                    <li>Download the bulk upload template from the tool.</li>
+                                                    <li>Fill in the required fields: product category, description,
+                                                        purchase date, quantity, vendor details, and vendor emission
+                                                        factors (if available).
+                                                    </li>
+                                                    <li>
+                                                        Click on <span class="ct_fw_600">‘Select file to upload’</span>
+                                                        and choose the completed template.
+
+                                                    </li>
+
+                                                </ol>
+                                                <p class="ct_fs_16 mb-0">There are three possible outcomes when the
+                                                    tool maps <span class="ct_fw_600">product categories</span> to
+                                                    <span class="ct_fw_600">product descriptions:</span>
+                                                </p>
+                                                <ul class="pl-3">
+                                                    <li><span class="ct_fw_600">Matched</span> – Category is correctly
+                                                        linked to the
+                                                        description
+
+
+                                                    </li>
+                                                    <li>
+                                                        <span class="ct_fw_600">Unmatched</span> – No category is
+                                                        assigned
+
+                                                    </li>
+                                                    <li>
+                                                        <span class="ct_fw_600">Matched / other category</span>– Scope 3
+                                                        category, other
+                                                        than purchased goods & services and capital goods is assigned
+                                                        (e.g., business travel)
+
+
+                                                    </li>
+
+                                                </ul>
+                                                <p class="mb-2">Only the <span class="ct_fw_600">matched</span> items go
+                                                    for emission
+                                                    calculations.
+                                                </p>
+                                                <p class="mb-2">
+                                                    Tool uses fuzzy search logic to match the entries with database
+                                                    categories. In case of <span class="ct_fw_600">unmatched</span>
+                                                    entries or <span class="ct_fw_600">matched</span>
+                                                    entries where the user is unsatisfied with the match (as the match
+                                                    is not always 100% accurate), they can do manual matching by
+                                                    clicking on the blue ‘action’ button. If there is no match found in
+                                                    the database, the status of the matched item can be changed to
+                                                    unmatched.
+
+                                                </p>
+                                                <p class="mb-2">
+                                                    For <span class="ct_fw_600">matched/other category</span> entries,
+                                                    if the user wants
+                                                    to include it
+                                                    in the purchased goods & services category, they can change the
+                                                    status to <span class="ct_fw_600">matched</span> which makes it a
+                                                    part of the matched
+                                                    list used for
+                                                    emission calculations.
+
+                                                </p>
+                                                <p class="mb-2">
+                                                    In case of <span class="ct_fw_600">unmatched</span> entries, users
+                                                    can
+                                                    use the <span class="ct_fw_600">AI
+                                                        Search</span> to
+                                                    automatically assign correct categories. Steps for AI Run:
+
+                                                </p>
+
+                                                <ol>
+                                                    <li>Tap on the <span class="ct_fw_600">‘Run AI Match’</span> button.
+
+                                                    </li>
+                                                    <li>A new window will open where the AI will begin matching product
+                                                        categories to the descriptions.
+
+                                                    </li>
+                                                    <li>Monitor the AI match progress; click the <span
+                                                            class="ct_fw_600">‘Refresh’</span>
+                                                        button to check the latest status.
+
+                                                    </li>
+                                                    <li>Once the batch process is complete, tap <span
+                                                            class="ct_fw_600">‘Upload
+                                                            Data’</span> to import the matched data into the existing
+                                                        list.
+
+                                                    </li>
+                                                    <li>
+                                                        The AI Run window is <span
+                                                            class="ct_fw_600">user-specific</span> —only the
+                                                        initiating user can
+                                                        access and operate it.
+
+                                                    </li>
+                                                </ol>
+                                                <p class="mb-2">The final list of <span class="ct_fw_600">matched</span>
+                                                    entries (the
+                                                    matched items
+                                                    from manual
+                                                    match plus the ones mapped with AI) will used for emission
+                                                    calculation.
+                                                </p>
 
                                             </div>
 
@@ -2686,12 +2806,17 @@
                                                     </div>
                                                 </div>
 
-                                                <div *ngIf="categoryId ==8" class="d-flex align-items-center" style="gap:10px">
-                                                    <button class="btn ct_scoope_1_tab ct_view_request_btn px-4 trackingsubmitb  et_light_blue_123"
-                                                        (click)="openProgresstab()" type="button">AI Match Status</button>
-                                                        <button *ngIf="!singlePGSTab" type="button" class="btn ct_scoope_1_tab et_light_blue_123 ct_view_request_btn px-4 trackingsubmitb" (click)="submitUnmatchWithAI()">
-                                                            Run AI Match</button>
-            
+                                                <div *ngIf="categoryId ==8" class="d-flex align-items-center"
+                                                    style="gap:10px">
+                                                    <button
+                                                        class="btn ct_scoope_1_tab ct_view_request_btn px-4 trackingsubmitb  et_light_blue_123"
+                                                        (click)="openProgresstab()" type="button">AI Match
+                                                        Status</button>
+                                                    <button *ngIf="!singlePGSTab" type="button"
+                                                        class="btn ct_scoope_1_tab et_light_blue_123 ct_view_request_btn px-4 trackingsubmitb"
+                                                        (click)="submitUnmatchWithAI()">
+                                                        Run AI Match</button>
+
                                                 </div>
                                                 <div class="d-flex align-items-center ct_gap_10 flex-wrap">
                                                     <div>
@@ -2761,7 +2886,8 @@
                                                                     [(ngModel)]="product['Product Category']"
                                                                     [ngModelOptions]="{standalone: true}"
                                                                     class="form-control text-dark"></textarea>
-                                                                <span *ngIf="!product.isEditing">{{ product['Product Category'] }}</span>
+                                                                <span *ngIf="!product.isEditing">{{ product['Product
+                                                                    Category'] }}</span>
                                                             </ng-container>
 
                                                         </td>
@@ -2771,7 +2897,8 @@
                                                                     [(ngModel)]="product['Product Description']"
                                                                     [ngModelOptions]="{standalone: true}"
                                                                     class="form-control text-dark"></textarea>
-                                                                <span *ngIf="!product.isEditing">{{ product['Product Description'] }}</span>
+                                                                <span *ngIf="!product.isEditing">{{ product['Product
+                                                                    Description'] }}</span>
                                                             </ng-container>
 
                                                         </td>
@@ -2811,7 +2938,8 @@
                                                                 [(ngModel)]="product['Value / Quantity']"
                                                                 [ngModelOptions]="{standalone: true}"
                                                                 class="form-control" />
-                                                            <span *ngIf="!product.isEditing">{{ product['Value / Quantity'] }}</span>
+                                                            <span *ngIf="!product.isEditing">{{ product['Value /
+                                                                Quantity'] }}</span>
                                                         </td>
                                                         <td>
                                                             <input *ngIf="product.isEditing" type="text"
@@ -2838,7 +2966,10 @@
                                                         </td>
                                                         <td>
 
-                                                            <span [ngClass]="{'redColor':!product.is_find}">{{product.is_find ? (product.productResult?.other_category_flag == '1' ? 'Matched/Other Cat' : 'Matched') : 'Unmatched' }}</span>
+                                                            <span
+                                                                [ngClass]="{'redColor':!product.is_find}">{{product.is_find
+                                                                ? (product.productResult?.other_category_flag == '1' ?
+                                                                'Matched/Other Cat' : 'Matched') : 'Unmatched' }}</span>
                                                         </td>
 
 
@@ -2891,18 +3022,18 @@
                                                         <td>{{getApproxTime(product.no_of_rows)}}</td>
                                                         <td>{{product.status ? 'Completed' : 'Pending'}}</td>
                                                         <td class="d-flex justify-content-center align-items-center">
-                                                            <button type="button" class="btn btn-sm btn-primary mr-1" [disabled]="product.status ? false : true"
-                                                                (click)="loadAIMatchData(product.id)"
-                                                               >
-                                                              Load Data
+                                                            <button type="button" class="btn btn-sm btn-primary mr-1"
+                                                                [disabled]="product.status ? false : true"
+                                                                (click)="loadAIMatchData(product.id)">
+                                                                Load Data
                                                             </button>
-                                                     
+
                                                         </td>
-                                                      
-                                                    
+
+
 
                                                     </tr>
-                                                  
+
 
 
 
@@ -2910,28 +3041,31 @@
 
                                             </table>
                                         </div>
-                                        <button type="button" class="px-2 trackingsubmitb" style="margin: 20px;" (click)="refreshPSGStatus()">
+                                        <button type="button" class="px-2 trackingsubmitb" style="margin: 20px;"
+                                            (click)="refreshPSGStatus()">
                                             Refresh Status
                                         </button>
                                     </div>
-                <ng-container *ngIf="!progressPSGTab">
-                    
-                    <div class="col-12 mt-2 d-flex gap-3 align-items-end">
-                        <div class="col-4 mt-2">
-                            <label for="fname ">Attachments</label>
-                            <p-toast></p-toast>
-                            <div class="d-flex justify-content-end border rounded ct_upload_btn1 et_btn_h_38_900">
-                                <p-fileUpload #fileUpload mode="basic" accept=".jpg,.png,.pdf"
-                                    chooseLabel="Please select a File"  (onSelect)="onFileSelected($event.files)"></p-fileUpload>
-                            </div>
-                        </div>
-                        <button type="submit" class="px-4 trackingsubmitb">
-                            Submit
-                        </button>
-                      
-                    </div>
-                
-                </ng-container>
+                                    <ng-container *ngIf="!progressPSGTab">
+
+                                        <div class="col-12 mt-2 d-flex gap-3 align-items-end">
+                                            <div class="col-4 mt-2">
+                                                <label for="fname ">Attachments</label>
+                                                <p-toast></p-toast>
+                                                <div
+                                                    class="d-flex justify-content-end border rounded ct_upload_btn1 et_btn_h_38_900">
+                                                    <p-fileUpload #fileUpload mode="basic" accept=".jpg,.png,.pdf"
+                                                        chooseLabel="Please select a File"
+                                                        (onSelect)="onFileSelected($event.files)"></p-fileUpload>
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="px-4 trackingsubmitb">
+                                                Submit
+                                            </button>
+
+                                        </div>
+
+                                    </ng-container>
                                 </div>
                                 <div class="trackingFooter" *ngIf="categoryId ==10">
                                     <div class="row mt-4 mb-3  pb-4 mx-2">
@@ -5208,7 +5342,8 @@
                                         <p-toast></p-toast>
                                         <div class="d-flex justify-content-end border rounded ct_upload_btn1">
                                             <p-fileUpload #fileUpload mode="basic" accept=".jpg,.png,.pdf"
-                                                chooseLabel="Please select a File" (onSelect)="onFileSelected($event.files)"></p-fileUpload>
+                                                chooseLabel="Please select a File"
+                                                (onSelect)="onFileSelected($event.files)"></p-fileUpload>
                                         </div>
                                     </div>
                                     <div class="col-12 mt-4 pt-3 ml-3 text-center">
@@ -5290,7 +5425,8 @@
                                         <p-toast></p-toast>
                                         <div class="d-flex justify-content-end border rounded ct_upload_btn1">
                                             <p-fileUpload #fileUpload mode="basic" accept=".jpg,.png,.pdf"
-                                                chooseLabel="Please select a File" (onSelect)="onFileSelected($event.files)"></p-fileUpload>
+                                                chooseLabel="Please select a File"
+                                                (onSelect)="onFileSelected($event.files)"></p-fileUpload>
                                         </div>
                                     </div>
                                     <div class="col-12 mt-4 pt-3 ml-3 text-center">
@@ -5397,7 +5533,9 @@
                                         <p-toast></p-toast>
                                         <div class="d-flex justify-content-end border rounded ct_upload_btn1">
 
-                                            <p-fileUpload #fileUpload mode="basic" accept=".jpg,.png,.pdf,.csv" chooseLabel="Please select a File" (onSelect)="onFileSelected($event.files)"></p-fileUpload>
+                                            <p-fileUpload #fileUpload mode="basic" accept=".jpg,.png,.pdf,.csv"
+                                                chooseLabel="Please select a File"
+                                                (onSelect)="onFileSelected($event.files)"></p-fileUpload>
                                         </div>
                                     </div>
                                     <div class="col-12 mt-4 pt-3 ml-3 text-center">
@@ -6507,14 +6645,16 @@
 
 
         </form>
-       
+
         <p-header> OR </p-header>
-        <button type="button" class="px-4 trackingsubmitb mr-3" (click)="changeStatus()">Change Status to Unmatch</button>
-        <button *ngIf="hideMatchButon" type="button" class="px-4 btn-warning trackingsubmitb" (click)="changeStatustoMatch()">Change Status to Match</button>
+        <button type="button" class="px-4 trackingsubmitb mr-3" (click)="changeStatus()">Change Status to
+            Unmatch</button>
+        <button *ngIf="hideMatchButon" type="button" class="px-4 btn-warning trackingsubmitb"
+            (click)="changeStatustoMatch()">Change Status to Match</button>
     </div>
 </p-dialog>
 
 
 <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-clip-rotate-pulse" [fullScreen]="true">
-    <p style="color: white">  </p>
+    <p style="color: white"> </p>
 </ngx-spinner>
