@@ -109,7 +109,7 @@ export class WasteReportComponent {
       let userInfo = localStorage.getItem('LoginInfo');
       let jsonObj = JSON.parse(userInfo); // string to "any" object first
       this.loginInfo = jsonObj as LoginInfo;
-      this.facilityID = localStorage.getItem('SelectedfacilityID');
+      this.facilityID = sessionStorage.getItem('SelectedfacilityID');
 
 
       this.GetAllFacility()
@@ -373,6 +373,8 @@ export class WasteReportComponent {
     reportFormData.set('downstream', "0")
     reportFormData.set('process_sold_products', "0")
     reportFormData.set('sold_products', "0")
+    reportFormData.set('water_supply_treatment', "0")
+    reportFormData.set('business_travel', "0")
     reportFormData.set('end_of_life_treatment', "0")
     reportFormData.set('downstreamlease_emission', "0")
     reportFormData.set('franchise_emission', "0")

@@ -40,6 +40,7 @@ import * as XLSX from 'xlsx';
 import { AppService } from '@services/app.service';
 declare var $: any;
 import { NgxSpinnerService } from 'ngx-spinner';
+import { DownloadFileService } from '@services/download-file.service';
 @Component({
     selector: 'app-tracking',
     templateUrl: './tracking.component.html',
@@ -90,6 +91,7 @@ export class TrackingComponent {
     selectedAirport3: string;
     status: TrackingTable[];
     formGroup: FormGroup;
+    upstreamVehicletypeId: any;
     productsExcelData = [
         { category: 'Sports Teams and Clubs', expiryDate: '25-10-2025', quantity: 50, currency: 'INR', brand: 'Samsung', price: 2.00, status: 'Matched', isEditing: false },
         { category: 'Electronics', expiryDate: '30-12-2025', quantity: 100, currency: 'USD', brand: 'Sony', price: 5.00, status: 'Unmatched', isEditing: false }
@@ -114,6 +116,7 @@ export class TrackingComponent {
     dataEntrySetting: DataEntrySetting = new DataEntrySetting();
     dataEntry: DataEntry = new DataEntry();
     selectedVendor: any;
+    APIURL: string = environment.baseUrl;
     // liveUrl: 'http://192.168.29.45:4500';
     liveUrl: 'https://ekotrace.ekobon.com:4000';
     SCdataEntry: StationaryCombustionDE = new StationaryCombustionDE();
@@ -372,12 +375,13 @@ export class TrackingComponent {
         private appService: AppService,
         private cdRef: ChangeDetectorRef,
         private spinner: NgxSpinnerService,
+        private downloadFileService: DownloadFileService
     ) {
 
         effect(() => {
 
             if (this.computedFacilities() != 0) {
-                console.log("calling on facility change effect");
+
                 this.GetAssignedDataPoint(this.computedFacilities())
                 this.facilityID = this.computedFacilities()
             }
@@ -386,26 +390,12 @@ export class TrackingComponent {
         for (let i = 1; i <= 5; i++) {
             this.rows.push({ id: i, subVehicleCategory: [], vehicleType1: null, vehicleType2: null, employeesCommute: '', avgCommute: '' });
         }
-        for (let i = 1; i <= 1; i++) {
-            this.rowsPurchased.push({
-                id: i,
-                multiLevelItems: [],
-                productService: null,
-                productType: null,
-                subVehicleCategory: [],
-                months: '',
-                quantity: '',
-                selectedUnit: '',
-                vendorName: '',
-                vendorspecificEF: '',
-                vendorspecificEFUnit: ''
-            });;
-        };
+
         for (let i = 1; i <= 1; i++) {
             this.rowsHotelStay.push({
                 id: i,
                 country_stay: [],
-                type_of_hotel: null,
+                type_of_hotel: 'star_2',
                 no_of_occupied_rooms: null,
                 no_of_nights: null,
                 selectedCountry: null,
@@ -653,29 +643,6 @@ export class TrackingComponent {
 
             ]
 
-        this.ModesTravelGrid =
-            [
-                {
-                    "id": 1,
-                    "modes": "Car"
-                },
-                {
-                    "id": 2,
-                    "modes": "Rail"
-                },
-                {
-                    "id": 3,
-                    "modes": "Bus"
-                },
-                {
-                    "id": 4,
-                    "modes": "Auto"
-                },
-                {
-                    "id": 4,
-                    "modes": "Ferry"
-                }
-            ]
 
         this.hotelTypeGrid =
             [
@@ -849,7 +816,7 @@ export class TrackingComponent {
             [
                 {
                     "id": 1,
-                    "units": "kg"
+                    "units": "tonnes"
                 },
                 {
                     "id": 2,
@@ -857,7 +824,7 @@ export class TrackingComponent {
                 },
                 {
                     "id": 3,
-                    "units": "litres"
+                    "units": "kg"
                 }
             ]
         this.upstreamMassUnitsGrid =
@@ -953,7 +920,7 @@ export class TrackingComponent {
                     "water_type": "Landfill"
                 },
                 {
-                    "id": 'anaerobic digestion',
+                    "id": 'anaerobic_digestion',
                     "water_type": "Anaerobic digestion"
                 }
             ];
@@ -1083,177 +1050,7 @@ export class TrackingComponent {
 
     };
 
-    // getting status, units, subCategory types where ever required
-    SubCatData(data: any, catID: any, categoryName) {
 
-        this.categoryName = categoryName;
-        this.recycle = false;
-        this.isVisited = false;
-        this.renewableSelected = false;
-        this.supplierSelected = false;
-        this.storageTransporationChecked = false;
-        this.singleCompanyTab = true;
-        this.multipleCompanyTab = false;
-        this.bulkCompanyTab = false;
-
-        this.id_var = data.manageDataPointSubCategorySeedID;
-
-        this.categoryId = catID;
-        this.flightDisplay1 = 'block';
-        this.flightDisplay2 = 'none';
-        this.flightDisplay3 = 'none';
-
-        this.SubCatAllData = data;
-        this.ALLEntries()
-        if (catID == 1) {
-
-            this.getStationaryFuelType(this.SubCatAllData
-                .manageDataPointSubCategorySeedID);
-            this.getUnit(this.SubCatAllData
-                .manageDataPointSubCategorySeedID);
-        }
-
-        if (catID == 2) {
-            this.templateLinks = 'assets/Refrigerant_Template.xlsx'
-            this.getsubCategoryType(this.SubCatAllData
-                .manageDataPointSubCategorySeedID);
-            this.getUnit(this.SubCatAllData
-                .manageDataPointSubCategorySeedID);
-        }
-
-        if (catID == 3) {
-            this.templateLinks = 'assets/FireExtinguisher_Template.xlsx'
-            // this.getsubCategoryType(this.SubCatAllData
-            //     .manageDataPointSubCategorySeedID);
-            this.getUnit(this.SubCatAllData
-                .manageDataPointSubCategorySeedID);
-        }
-
-
-
-        if (catID == 5) {
-
-            this.getRegionName();
-            this.getUnit(this.SubCatAllData
-                .manageDataPointSubCategorySeedID);
-        }
-
-        if (catID == 6) {
-            this.getVehcileFleet(this.facilityID, data.manageDataPointSubCategorySeedID)
-
-            this.downloadCompanyExcelUrl = 'https://ekotrace.ekobon.com:4000/' + `download-excel-vehicle-fleet-by-facility-category-id?facility_id=${this.facilityID}&categoryID=${this.SubCatAllData
-                .manageDataPointSubCategorySeedID == 10 ? '1' : '2'} `;
-            // this.downloadCompanyExcelUrl = 'http://192.168.29.45:4500/' + `download-excel-vehicle-fleet-by-facility-category-id?facility_id=${this.facilityID}&categoryID=${this.SubCatAllData
-            //     .manageDataPointSubCategorySeedID == 10 ? '1' : '2'} `;
-            this.jsonCompanyData = [];
-            this.rowsCompany = [{
-                vehicleType: '',
-                noOfVehicles: null,
-                tripsPerVehicle: null,
-                modeOfEntry: 'Average distance per trip',
-                value: null,
-                unit: 'Km'
-            }];;
-            this.getPurchaseGoodsCurrency()
-            if (data.manageDataPointSubCategorySeedID == 10) {
-                this.getPassengerVehicleType();
-            }
-            else {
-                this.getDeliveryVehicleType();
-            }
-
-            this.getUnit(this.SubCatAllData
-                .manageDataPointSubCategorySeedID);
-
-
-        }
-        if (catID == 7) {
-
-            this.getsubCategoryType(this.SubCatAllData
-                .manageDataPointSubCategorySeedID);
-            this.getUnit(this.SubCatAllData
-                .manageDataPointSubCategorySeedID);
-        }
-        if (catID == 8) {
-            this.downloadExcelUrl = 'https://ekotrace.ekobon.com:4000' + `/get-excelsheet?facility_id=${this.facilityID}`;
-            this.getALlProducts()
-
-            // this.generateExcel();
-            this.months = [
-                { name: 'Jan', value: 'Jan' },
-                { name: 'Feb', value: 'Feb' },
-                { name: 'Mar', value: 'Mar' },
-                { name: 'Apr', value: 'Apr' },
-                { name: 'May', value: 'May' },
-                { name: 'June', value: 'Jun' },
-                { name: 'July', value: 'July' },
-                { name: 'Aug', value: 'Aug' },
-                { name: 'Sep', value: 'Sep' },
-                { name: 'Oct', value: 'Oct' },
-                { name: 'Nov', value: 'Nov' },
-                { name: 'Dec', value: 'Dec' }
-            ];
-            this.GetVendors();
-            this.GetHSN()
-            this.getPurchaseGoodsCurrency()
-        }
-        if (catID == 10) {
-            this.getVehicleTypes();
-            this.getSubVehicleCategory(1)
-        }
-        if (catID == 12) {
-            this.getEndWasteType();
-            this.getWasteSubCategory("1")
-        }
-        if (catID == 13) {
-            this.isVisited = true;
-
-        }
-        if (catID == 14) {
-            this.getEmployeeCommuTypes()
-
-        }
-        if (catID == 17) {
-            this.getVehicleTypes();
-            this.getSubVehicleCategory(1)
-        }
-        if (catID == 18) {
-            this.getPurchaseGoodsCurrency();
-            this.getPurchaseGoodsCategory();
-        }
-        if (catID == 16) {
-            this.getFranchiseType();
-            this.getSubFranchiseCategory('Banking Financial Services');
-            this.getVehicleTypesLease();
-            this.getSubVehicleCategoryLease(15)
-        }
-        if (catID == 19) {
-            this.getProductsEnergyCategory("1")
-        }
-        if (catID == 20) {
-            this.getEndWasteType();
-            this.getWasteSubCategory("1")
-        }
-        if (catID == 21) {
-            this.getFranchiseType();
-            this.getSubFranchiseCategory('Banking Financial Services');
-            this.getVehicleTypesLease();
-            this.getSubVehicleCategoryLease(15)
-        }
-        if (catID == 22) {
-            this.getFranchiseType();
-            this.getSubFranchiseCategory('Banking Financial Services')
-        }
-        if (catID == 23) {
-            this.getInvestmentCategories();
-            this.getInvestmentSubCategory('Coke, Refined Petroleum, and Nuclear Fuel')
-        }
-
-        this.typeEV = false;
-        this.typeBusCoach = false;
-        //   this.checkEntryexist();
-        this.resetForm();
-    };
 
 
     // getting subcategory types
@@ -1267,7 +1064,7 @@ export class TrackingComponent {
 
             },
             error: (err) => {
-                console.error('errrrrrr>>>>>>', err);
+
             }
         })
     };
@@ -1281,7 +1078,7 @@ export class TrackingComponent {
 
             },
             error: (err) => {
-                console.error('errrrrrr>>>>>>', err);
+
             }
         })
     };
@@ -1371,11 +1168,7 @@ export class TrackingComponent {
                         }
                     },
                     error: (err) => {
-                        this.notification.showError(
-                            'Get data Point failed.',
-                            'Error'
-                        );
-                        console.error('errrrrrr>>>>>>', err);
+                        this.notification.showError('Operation failed', 'Error');
                     }
                 });
             return
@@ -1409,11 +1202,7 @@ export class TrackingComponent {
                     }
                 },
                 error: (err) => {
-                    this.notification.showError(
-                        'Get data Point failed.',
-                        'Error'
-                    );
-                    console.error('errrrrrr>>>>>>', err);
+                    this.notification.showError('Operation failed', 'Error');
                 }
             });
 
@@ -1421,2311 +1210,7 @@ export class TrackingComponent {
 
     };
 
-    //entrysave function to save dataentry
-    EntrySave(form: NgForm) {
-        if (this.loginInfo.role == 'Auditor') {
-            this.notification.showError('You are not Authorized', 'Warning');
-            return false
-        }
-        this.dataEntry.month = this.selectMonths.map((month) => month.value)
-            .join(','); //this.getMonthName();
-        this.dataEntry.year = this.year.getFullYear().toString(); //this.getYear();
-        var spliteedMonth = this.dataEntry.month.split(",");
-        var monthString = JSON.stringify(spliteedMonth);
 
-
-        let fId = localStorage.getItem('SelectedfacilityID');
-        if (fId == '0') {
-            this.notification.showInfo(
-                'Select Facility',
-                ''
-            );
-            return
-        }
-        if (this.selectMonths.length == 0 && this.categoryId != 8 && this.categoryId != 14 && this.categoryId != 24 && this.categoryId != 25 && this.categoryId != 26) {
-            this.notification.showInfo(
-                'Select month',
-                ''
-            );
-            return
-        }
-        if (this.categoryId == 1) {
-            if (
-                this.dataEntry.readingValue <= 0 ||
-                this.dataEntry.readingValue === null ||
-                this.dataEntry.readingValue === undefined
-            ) {
-                return;
-            }
-            if (this.selectMonths.length == 0) {
-                this.notification.showInfo(
-                    'Select month',
-                    ''
-                );
-                return
-            }
-            let formData = new FormData();
-            if (this.dataEntryForm.value.calorificValue != '') {
-                formData.set('calorificValue', this.dataEntryForm.value.calorificValue);
-            }
-            if (this.SubCatAllData.subCatName == 'Liquid Fuels') {
-
-                if (this.dataEntry.typeID == 1) {
-                    if (this.SCdataEntry.blendType == 'No Blend') {
-                        this.SCdataEntry.blendID = 1;
-                    }
-                    if (this.SCdataEntry.blendType == 'Average Blend') {
-                        this.SCdataEntry.blendID = 2;
-                    }
-                    if (this.SCdataEntry.blendType == 'Perc. Blend') {
-                        formData.set('blendPercent', this.SCdataEntry.blendPercent.toString());
-                    }
-                }
-                else if (this.dataEntry.typeID == 2) {
-                    if (this.SCdataEntry.blendType == 'No Blend') {
-                        this.SCdataEntry.blendID = 1;
-                    }
-                    if (this.SCdataEntry.blendType == 'Average Blend') {
-                        this.SCdataEntry.blendID = 2;
-
-                    }
-                    if (this.SCdataEntry.blendType == 'Perc. Blend') {
-                        formData.set('blendPercent', this.SCdataEntry.blendPercent.toString());
-
-                    }
-                }
-                else {
-                    this.EmissionFactor.forEach(ef => {
-                        if (ef.subCatTypeID == this.dataEntry.typeID) {
-                            if (this.SCdataEntry.calorificValue != null) {
-                                this.SCdataEntry.gHGEmission = ef.kgCO2e_kwh;
-                                return;
-                            }
-                            if (this.dataEntry.unit == 'tonnes' || this.dataEntry.unit == 'Tonnes') {
-                                this.SCdataEntry.gHGEmission = ef.kgCO2e_tonnes;
-                                return;
-                            }
-                            else {
-                                this.SCdataEntry.gHGEmission = ef.kgCO2e_litre;
-                                return;
-                            }
-                        }
-
-                    })
-
-                }
-
-            }
-            else if (this.SubCatAllData.subCatName == 'Solid Fuels') {
-                this.EmissionFactor.forEach(ef => {
-                    if (ef.subCatTypeID == this.dataEntry.typeID) {
-                        if (this.SCdataEntry.calorificValue != null) {
-                            this.SCdataEntry.gHGEmission = ef.kgCO2e_kwh;
-                            return;
-                        }
-                        if (this.dataEntry.unit == 'tonnes' || this.dataEntry.unit == 'Tonnes') {
-                            this.SCdataEntry.gHGEmission = ef.kgCO2e_tonnes;
-                            return;
-                        }
-                        else {
-                            this.SCdataEntry.gHGEmission = ef.kgCO2e_tonnes;
-                            return;
-                        }
-                    }
-
-                })
-            }
-            else if (this.SubCatAllData.subCatName == 'Gaseous Fuels') {
-                this.EmissionFactor.forEach(ef => {
-                    if (ef.subCatTypeID == this.dataEntry.typeID) {
-                        if (this.dataEntry.unit == 'kwh') {
-                            this.SCdataEntry.gHGEmission = ef.kgCO2e_kwh;
-                            return;
-                        }
-                        if (this.dataEntry.unit == 'tonnes' || this.dataEntry.unit == 'Tonnes') {
-                            this.SCdataEntry.gHGEmission = ef.kgCO2e_tonnes;
-                            return;
-                        }
-                        else {
-                            this.SCdataEntry.gHGEmission = ef.kgCO2e_litre;
-                            return;
-                        }
-                    }
-
-                })
-
-            }
-            else {
-                this.SCdataEntry.calorificValue = null;
-                this.EmissionFactor.forEach(ef => {
-                    if (ef.subCatTypeID == this.dataEntry.typeID) {
-                        if (this.dataEntry.unit == 'kg' || this.dataEntry.unit == 'KG' || this.dataEntry.unit == 'Kg') {
-                            this.SCdataEntry.gHGEmission = ef.kgCO2e_kg;
-                            return;
-                        }
-                        if (this.dataEntry.unit == 'GJ' || this.dataEntry.unit == 'Gj') {
-                            this.SCdataEntry.gHGEmission = ef.kgCO2e_Gj;
-                            return;
-                        }
-                        if (this.dataEntry.unit == 'tonnes' || this.dataEntry.unit == 'Tonnes') {
-                            this.SCdataEntry.gHGEmission = ef.kgCO2e_tonnes;
-                            return;
-
-                        }
-                        else {
-                            this.SCdataEntry.gHGEmission = ef.kgCO2e_litre;
-                            return;
-                        }
-                    }
-
-                })
-            }
-
-            formData.set('subCategoryTypeId', (this.dataEntry.typeID).toString());
-            formData.set('SubCategorySeedID', (this.SubCatAllData
-                .manageDataPointSubCategorySeedID).toString());
-            formData.set('blendType', this.SCdataEntry.blendType);
-
-            formData.set('unit', this.dataEntry.unit);
-            formData.set('readingValue', this.dataEntry.readingValue.toString());
-
-            formData.set('months', monthString);
-            formData.set('year', this.dataEntry.year);
-            formData.set('facility_id', this.facilityID);
-            if (this.selectedFile) {
-
-                formData.set('file', this.selectedFile, this.selectedFile.name);
-            }
-
-
-            this.trackingService.newPostSCDataEntry(formData).subscribe({
-                next: (response) => {
-
-                    if (response.success == true) {
-                        this.notification.showSuccess(
-                            'Data entry added successfully',
-                            'Success'
-                        );
-                        this.resetForm();
-                        this.getStationaryFuelType(this.SubCatAllData
-                            .manageDataPointSubCategorySeedID);
-                        this.ALLEntries();
-                        this.getUnit(this.SubCatAllData
-                            .manageDataPointSubCategorySeedID);
-                        //this.GetAssignedDataPoint(this.facilityID);
-                        // this.trackingService.getrefdataentry(this.SubCatAllData.id, this.loginInfo.tenantID).subscribe({
-                        //     next: (response) => {
-                        //         this.commonDE = response;
-                        //     }
-                        // });
-
-                        this.activeindex = 0;
-                    } else {
-                        this.notification.showError(
-                            response.message,
-                            'Error'
-                        );
-                    }
-                },
-                error: (err) => {
-                    this.notification.showError(
-                        'Data entry added failed.',
-                        'Error'
-                    );
-                    console.error('errrrrrr>>>>>>', err);
-                },
-                complete: () => console.info('Data entry Added')
-            });
-        }
-        if (this.categoryId == 2) {
-            if (this.selectMonths.length == 0) {
-                this.notification.showInfo(
-                    'Select month',
-                    ''
-                );
-                return
-            }
-            let formData = new FormData();
-            this.RefrigerantDE.typeID = this.dataEntry.typeID;
-
-            formData.set('subCategoryTypeId', (this.dataEntry.typeID).toString());
-            formData.set('SubCategorySeedID', this.SubCatAllData
-                .manageDataPointSubCategorySeedID.toString());
-            formData.set('refAmount', this.RefrigerantDE.refAmount.toString());
-
-            formData.set('unit', this.dataEntry.unit);
-            formData.set('facilities', this.facilityID);
-
-            formData.set('months', monthString);
-            formData.set('year', this.dataEntry.year);
-            if (this.selectedFile) {
-                formData.set('file', this.selectedFile, this.selectedFile.name);
-            }
-            this.trackingService.newPostRegrigerantDataEntry(formData).subscribe({
-                next: (response) => {
-                    if (response.success == true) {
-                        this.notification.showSuccess(
-                            'Data entry added successfully',
-                            'Success'
-                        );
-                        this.resetForm();
-                        this.getsubCategoryType(this.SubCatAllData
-                            .manageDataPointSubCategorySeedID);
-                        this.ALLEntries();
-                        this.getUnit(this.SubCatAllData
-                            .manageDataPointSubCategorySeedID);
-                        //this.GetAssignedDataPoint(this.facilityID);
-                        // this.trackingService.getrefdataentry(this.SubCatAllData.id, this.loginInfo.tenantID).subscribe({
-                        //     next: (response) => {
-                        //         this.commonDE = response;
-                        //     }
-                        // });
-
-                        this.activeindex = 0;
-                    } else {
-                        this.notification.showError(
-                            response.message,
-                            'Error'
-                        );
-                    }
-                },
-                error: (err) => {
-                    this.notification.showError(
-                        'Data entry added failed.',
-                        'Error'
-                    );
-                    console.error('errrrrrr>>>>>>', err);
-                },
-                complete: () => console.info('Data entry Added')
-            });
-        }
-        if (this.categoryId == 3) {
-            if (this.selectMonths.length == 0) {
-                this.notification.showInfo(
-                    'Select month',
-                    ''
-                );
-                return
-            }
-            let formData = new FormData();
-            formData.set('NumberOfExtinguisher', this.FireExtinguisherDE.numberOfExtinguisher.toString());
-            formData.set('unit', this.dataEntry.unit);
-            formData.set('quantityOfCO2makeup', this.FireExtinguisherDE.quantityOfCO2makeup.toString());
-            formData.set('fireExtinguisherID', this.FireExtinguisherDE.fireExtinguisherID?.toString());
-            formData.set('facilities', this.facilityID);
-            formData.set('months', monthString);
-            formData.set('year', this.dataEntry.year);
-            formData.set('SubCategorySeedID', this.SubCatAllData.manageDataPointSubCategorySeedID.toString());
-            if (this.selectedFile) {
-                formData.set('file', this.selectedFile, this.selectedFile.name);
-            }
-            this.trackingService.newPostFireExtinguisherDataEntry(formData).subscribe({
-                next: (response) => {
-                    if (response.success == true) {
-                        this.notification.showSuccess(
-                            'Data entry added successfully',
-                            'Success'
-                        );
-                        this.resetForm();
-                        this.ALLEntries();
-                        this.getUnit(this.SubCatAllData
-                            .manageDataPointSubCategorySeedID);
-
-
-                        this.activeindex = 0;
-                    } else {
-                        this.notification.showError(
-                            response.message,
-                            'Error'
-                        );
-                    }
-                },
-                error: (err) => {
-                    this.notification.showError(
-                        'Data entry added failed.',
-                        'Error'
-                    );
-                    console.error('errrrrrr>>>>>>', err);
-                },
-                complete: () => console.info('Data entry Added')
-            });
-        }
-        if (this.categoryId == 6) {
-            if (this.selectMonths.length == 0) {
-                this.notification.showInfo(
-                    'Select month',
-                    ''
-                );
-                return
-            }
-
-            if (this.singleCompanyTab) {
-                var payloads = this.rowsCompany.map(row => ({
-
-                    vehicle_type: row.vehicleType,
-                    no_of_vehicles: row.noOfVehicles,
-                    trip_per_vehicle: row.tripsPerVehicle,
-                    mode_of_data_entry: row.modeOfEntry,
-                    value: row.value,
-                    unit: row.unit,
-                    sub_category: this.SubCatAllData
-                        .manageDataPointSubCategorySeedID,
-                    is_excel: 0
-
-                }));
-
-            }
-            if (this.multipleCompanyTab) {
-                var payloads = this.rowsCompany.map(row => ({
-
-                    vehicle_type: row.vehicleType,
-                    no_of_vehicles: row.noOfVehicles,
-                    trip_per_vehicle: row.tripsPerVehicle,
-                    mode_of_data_entry: row.modeOfEntry,
-                    value: row.value,
-                    unit: row.unit,
-                    sub_category: this.SubCatAllData
-                        .manageDataPointSubCategorySeedID,
-                    is_excel: 1
-
-                }));
-
-            }
-            if (this.bulkCompanyTab) {
-                var payloads = this.jsonCompanyData.map(row => ({
-                    vehicle_type: row.vehicleType,
-                    no_of_vehicles: row.noOfVehicles,
-                    trip_per_vehicle: row.tripsPerVehicle,
-                    mode_of_data_entry: row.modeOfEntry,
-                    value: row.value,
-                    unit: row.unit,
-                    sub_category: this.SubCatAllData
-                        .manageDataPointSubCategorySeedID,
-                    is_excel: 1
-
-                }));
-
-            }
-
-            var companyOwnedVehicles = JSON.stringify(payloads);
-            if (this.selectedFile) {
-                var formData = new FormData();
-                formData.set('file', this.selectedFile, this.selectedFile.name);
-                formData.set('facilityId', this.facilityID);
-                formData.set('month', monthString);
-                formData.set('year', this.dataEntry.year);
-                formData.set('jsonData', companyOwnedVehicles.toString());
-            } else {
-                console.log("tgf");
-                var formData2 = new URLSearchParams();
-                formData2.set('facilityId', this.facilityID);
-                formData2.set('month', monthString);
-                formData2.set('year', this.dataEntry.year);
-                formData2.set('jsonData', companyOwnedVehicles.toString());
-            }
-
-
-            this.appService.postAPI('/add-multiple-company-owned-vehicles', this.selectedFile ? formData : formData2).subscribe({
-                next: (response: any) => {
-                    if (response.success == true) {
-                        this.ALLEntries();
-                        this.notification.showSuccess(
-                            'Data entry added successfully',
-                            'Success'
-                        );
-                        this.resetForm();
-                        this.getUnit(this.SubCatAllData
-                            .manageDataPointSubCategorySeedID);
-                        this.VehicleDE.modeOfDE = this.ModeType[0].modeName;
-
-                        if (this.SubCatAllData.manageDataPointSubCategorySeedID == 10) {
-
-                            this.getPassengerVehicleType();
-                        }
-                        else {
-
-                            this.getDeliveryVehicleType();
-                        }
-                        this.activeindex = 0;
-
-                        this.rowsCompany = [{
-                            vehicleType: null,
-                            noOfVehicles: null,
-                            tripsPerVehicle: null,
-                            modeOfEntry: 'Average distance per trip',
-                            value: null,
-                            unit: 'Km'
-                        }];;
-
-                        this.jsonCompanyData = [];
-                    } else {
-                        this.notification.showError(
-                            'Data entry added failed.',
-                            'Error'
-                        );
-                        this.rowsCompany = [{
-                            vehicleType: null,
-                            noOfVehicles: null,
-                            tripsPerVehicle: null,
-                            modeOfEntry: 'Average distance per trip',
-                            value: null,
-                            unit: 'Km'
-                        }];;
-
-                        this.jsonCompanyData = [];
-                    }
-                },
-                error: (err) => {
-                    this.notification.showError(
-                        'Data entry added failed.',
-                        'Error'
-                    );
-                    console.error('errrrrrr>>>>>>', err);
-                },
-                complete: () => console.info('Data entry Added')
-            });
-            // }
-
-
-        }
-        if (this.categoryId == 5) {
-            if (this.selectMonths.length == 0) {
-                this.notification.showInfo(
-                    'Select month',
-                    ''
-                );
-                return
-            }
-            if (this.SubCatAllData.manageDataPointSubCategorySeedID == 9) {
-                var formData = new FormData();
-                formData.set('RegionID', this.RenewableElectricity.electricityRegionID.toString());
-                formData.set('readingValue', this.dataEntry.readingValue.toString());
-                formData.set('unit', this.dataEntry.unit);
-                formData.set('facilities', this.facilityID);
-                formData.set('months', monthString);
-                formData.set('year', this.dataEntry.year);
-                formData.set('SubCategorySeedID', this.SubCatAllData
-                    .manageDataPointSubCategorySeedID.toString());
-                if (this.selectedFile) {
-                    formData.set('file', this.selectedFile, this.selectedFile.name);
-                }
-                this.trackingService.newPostElectricityDataEntry(formData).subscribe({
-                    next: (response) => {
-                        if (response.success == true) {
-                            this.resetForm();
-                            //this.GetAssignedDataPoint(this.facilityID);
-                            this.getUnit(this.SubCatAllData
-                                .manageDataPointSubCategorySeedID);
-                            this.RenewableElectricity.sourceName = this.ElectricitySource[0].sourceName;
-                            this.activeindex = 0;
-                            this.getRegionName();
-                            this.ALLEntries();
-                            this.renewableSelected = false;
-                            this.supplierSelected = false;
-                            this.notification.showSuccess(
-                                'Data entry added successfully',
-                                'Success'
-                            );
-
-                        } else {
-                            this.notification.showError(
-                                response.message,
-                                'Error'
-                            );
-                        }
-                    },
-                    error: (err) => {
-                        this.notification.showError(
-                            'Data entry added failed.',
-                            'Error'
-                        );
-                        console.error('errrrrrr>>>>>>', err);
-                    },
-                    complete: () => console.info('Data entry Added')
-                });
-
-            }
-            else {
-                var formData = new FormData();
-                formData.set('typeID', form.value.Type);
-                formData.set('readingValue', this.dataEntry.readingValue.toString());
-                formData.set('sourceName', form.value.Source);
-                formData.set('unit', this.dataEntry.unit);
-                formData.set('facilities', this.facilityID);
-                formData.set('months', monthString);
-                formData.set('year', this.dataEntry.year);
-                formData.set('emission_factor', form.value.emission_factorS);
-                formData.set('SubCategorySeedID', this.SubCatAllData
-                    .manageDataPointSubCategorySeedID.toString());
-                if (this.selectedFile) {
-                    formData.set('file', this.selectedFile, this.selectedFile.name);
-                }
-                this.trackingService.newPostElectricityMarket(formData).subscribe({
-                    next: (response) => {
-
-                        if (response.success == true) {
-                            this.resetForm();
-                            //this.GetAssignedDataPoint(this.facilityID);
-                            this.getUnit(this.SubCatAllData
-                                .manageDataPointSubCategorySeedID);
-
-                            this.activeindex = 0;
-                            this.getRegionName();
-                            this.ALLEntries();
-                            this.renewableSelected = false;
-                            this.supplierSelected = false;
-                            this.notification.showSuccess(
-                                'Data entry added successfully',
-                                'Success'
-                            );
-
-
-                        } else {
-                            this.notification.showError(
-                                response.message,
-                                'Error'
-                            );
-                        }
-                        // this.marketEElecID = this.marketTypes[0].id;
-
-
-                    },
-                    error: (err) => {
-                        this.notification.showError(
-                            'Data entry added failed.',
-                            'Error'
-                        );
-                        console.error('errrrrrr>>>>>>', err);
-                    },
-                    complete: () => console.info('Data entry Added')
-                });
-            }
-
-
-
-        }
-        if (this.categoryId == 7) {
-            var formData = new FormData();
-            formData.set('typeID', this.dataEntry.typeID.toString());
-            formData.set('readingValue', this.dataEntry.readingValue.toString());
-            formData.set('unit', this.dataEntry.unit);
-            formData.set('facilities', this.facilityID);
-            formData.set('months', monthString);
-            formData.set('year', this.dataEntry.year);
-            formData.set('SubCategorySeedID', this.SubCatAllData
-                .manageDataPointSubCategorySeedID.toString());
-            if (this.selectedFile) {
-                formData.set('file', this.selectedFile, this.selectedFile.name);
-            }
-
-            this.trackingService.newPostHeatandSteamDataEntry(formData).subscribe({
-                next: (response) => {
-                    if (response.success == true) {
-                        this.resetForm();
-                        this.getsubCategoryType(this.SubCatAllData
-                            .manageDataPointSubCategorySeedID);
-                        this.ALLEntries();
-                        this.getUnit(this.SubCatAllData
-                            .manageDataPointSubCategorySeedID);
-
-                        this.activeindex = 0;
-                        this.notification.showSuccess(
-                            'Data entry added successfully',
-                            'Success'
-                        );
-
-                    } else {
-                        this.notification.showError(
-                            response.message,
-                            'Error'
-                        );
-                    }
-                },
-                error: (err) => {
-                    this.notification.showError(
-                        'Data entry added failed.',
-                        'Error'
-                    );
-                    console.error('errrrrrr>>>>>>', err);
-                },
-                complete: () => console.info('Data entry Added')
-            });
-        }
-        if (this.categoryId == 8) {
-            if (this.singlePGSTab) {
-
-                const filledRows = this.rowsPurchased.filter(row =>
-
-                    row.productType == null
-                );
-
-                if (filledRows.length > 0) {
-                    this.notification.showInfo(
-                        "Please select product service code",
-                        'Warning'
-                    );
-                    return;
-                }
-                if (this.isAnnual == undefined || this.isAnnual == null) {
-                    this.notification.showInfo(
-                        "Please select annual entry",
-                        'Warning'
-                    );
-                    return;
-                }
-                if (this.selectMonths.length == 0 && form.value.annualEntry == 0) {
-                    this.notification.showInfo(
-                        'Select month',
-                        ''
-                    );
-                    return
-                }
-
-                // Prepare the payload
-                const payload = this.rowsPurchased.map(row => ({
-                    month: row.months,
-                    typeofpurchase: row.productService,
-                    valuequantity: row.quantity,
-                    unit: row.selectedUnit,
-                    vendorId: row.vendorName.id,
-                    vendor: row.vendorName.name,
-                    vendorunit: row.vendorspecificEFUnit,
-                    vendorspecificEF: row.vendorspecificEF,
-                    product_category: row.productType
-                }));
-
-                var purchaseTableStringfy = JSON.stringify(payload)
-
-                var formData = new FormData();
-                // formData.set('month', monthString);
-                formData.set('year', this.dataEntry.year);
-                formData.set('productcodestandard', this.productHSNSelect);
-                formData.set('is_annual', this.isAnnual);
-                formData.set('facilities', this.facilityID);
-                formData.set('jsonData', purchaseTableStringfy);
-                formData.set('month', monthString);
-                if (this.selectedFile) {
-                    formData.set('file', this.selectedFile, this.selectedFile.name);
-                }
-
-                this.trackingService.submitPurchaseGoods(formData).subscribe({
-                    next: (response) => {
-
-                        if (response.success == true) {
-                            this.notification.showSuccess(
-                                response.message,
-                                'Success'
-                            );
-                            this.rowsPurchased.forEach(levels => {
-                                levels.productType = null
-                                this.deselectAllItems(levels.multiLevelItems)
-                            })
-                            this.rowsPurchased = [];
-                            for (let i = 1; i <= 1; i++) {
-                                this.rowsPurchased.push({
-                                    id: i,
-                                    multiLevelItems: [],
-                                    productService: null,
-                                    productType: null,
-                                    subVehicleCategory: [],  // Add any other nested dropdown arrays here if needed
-                                    months: '',
-                                    quantity: '',
-                                    selectedUnit: '',
-                                    vendorName: '',
-                                    vendorspecificEF: '',
-                                    vendorspecificEFUnit: '' // Make sure to initialize this as well
-                                });;
-                            }
-                            this.GetHSN();
-                            // this.deselectAllItems(this.rowsPurchased)
-
-                            this.resetForm();
-                            this.ALLEntries();
-
-                        } else {
-                            this.notification.showError(
-                                response.message,
-                                'Error'
-                            );
-
-                        }
-                    },
-                    error: (err) => {
-                        this.notification.showError(
-                            'Data entry added failed.',
-                            'Warning'
-                        );
-                        console.error('errrrrrr>>>>>>', err);
-                    },
-                    complete: () => console.info('Data entry Added')
-                });
-            } else {
-
-                const payload = this.newExcelData.filter(row => row.is_find == true && row.productResult.other_category_flag =='0').map(row => ({
-                    month: '',
-                    typeofpurchase: row.productResult.typeofpurchase,
-                    valuequantity: row['Value / Quantity'],
-                    unit: row['Unit'],
-                    vendorId: '',
-                    vendor: row['Vendor'],
-                    vendorunit: row['Vendor Specific Unit'],
-                    vendorspecificEF: row['Vendor Specific EF'],
-                    product_category: row.productResult.id,
-                    product_description: row['Product / Service Description'],
-                    purchase_date: row['Purchase Date'],
-                    productcode: row.code,
-                    is_find: row.is_find
-                }));
-                var purchaseTableStringfy = JSON.stringify(payload);
-
-             
-                var formData = new FormData();
-
-                formData.set('productcodestandard', this.productHSNSelect);
-                formData.set('facilities', this.facilityID);
-                formData.set('jsonData', purchaseTableStringfy);
-                formData.set('is_annual', '0');
-                formData.set('tenant_id', this.superAdminID.toString());
-                if (this.selectedFile) {
-                    formData.set('file', this.selectedFile, this.selectedFile.name);
-                }
-                this.trackingService.submitPurchaseGoods2(formData).subscribe({
-                    next: (response) => {
-
-                        if (response.success == true) {
-                            this.notification.showSuccess(
-                                response.message,
-                                'Success'
-                            );
-                            this.newExcelData = [];
-
-
-                            this.GetHSN();
-                            // this.deselectAllItems(this.rowsPurchased)
-
-                            this.resetForm();
-                            this.ALLEntries();
-
-                        } else {
-                            this.notification.showError(
-                                response.message,
-                                'Error'
-                            );
-
-                        }
-                    },
-                    error: (err) => {
-                        this.notification.showError(
-                            'Data entry added failed.',
-                            'Error'
-                        );
-                        console.error('errrrrrr>>>>>>', err);
-                    },
-                    complete: () => console.info('Data entry Added')
-                });
-            }
-
-
-        }
-        if (this.categoryId == 10) {
-            let formData = new URLSearchParams();
-
-            if (this.storageTransporationChecked === true && this.vehcilestransporationchecked === true) {
-                formData.set('vehicle_type', this.selectedVehicleType);
-                formData.set('sub_category', this.subVehicleCategoryValue);
-                formData.set('noOfVehicles', form.value.noOfVehicles);
-                formData.set('mass_of_products', form.value.mass_of_products);
-                formData.set('mass_unit', form.value.mass_unit);
-                formData.set('distance_unit', form.value.distance_unit);
-                formData.set('area_occupied_unit', form.value.area_unit);
-                formData.set('distanceInKms', form.value.distanceInKms);
-                formData.set('storagef_type', form.value.storage_type);
-                formData.set('area_occupied', form.value.area_occupied);
-                formData.set('averageNoOfDays', form.value.averageNoOfDays);
-                formData.set('facility_id', this.facilityID);
-                formData.set('month', monthString);
-                formData.set('year', this.dataEntry.year);
-            } else if (this.storageTransporationChecked === true) {
-                formData.set('storagef_type', form.value.storage_type);
-                formData.set('area_occupied', form.value.area_occupied);
-                formData.set('averageNoOfDays', form.value.averageNoOfDays);
-                formData.set('area_occupied_unit', form.value.area_unit);
-                formData.set('facility_id', this.facilityID);
-                formData.set('month', monthString);
-                formData.set('year', this.dataEntry.year);
-            } else if (this.vehcilestransporationchecked == true) {
-                formData.set('vehicle_type', this.selectedVehicleType);
-                formData.set('sub_category', this.subVehicleCategoryValue);
-                formData.set('mass_unit', form.value.mass_unit);
-                formData.set('distance_unit', form.value.distance_unit);
-                formData.set('noOfVehicles', form.value.noOfVehicles);
-                formData.set('mass_of_products', form.value.mass_of_products);
-                formData.set('distanceInKms', form.value.distanceInKms);
-                formData.set('facility_id', this.facilityID);
-                formData.set('month', monthString);
-                formData.set('year', this.dataEntry.year);
-            }
-
-
-            this.trackingService.upStreamTransportation(formData.toString()).subscribe({
-                next: (response) => {
-
-                    if (response.success == true) {
-                        this.notification.showSuccess(
-                            response.message,
-                            'Success'
-                        );
-                        this.dataEntryForm.reset();
-                        this.getSubVehicleCategory(1);
-                        this.getVehicleTypes()
-                        // this.getStatusData(this.activeCategoryIndex)
-                    } else {
-                        this.notification.showError(
-                            response.message,
-                            'Error'
-                        );
-                        this.dataEntryForm.reset();
-                        this.getSubVehicleCategory(1)
-                    }
-                    this.ALLEntries();
-                },
-                error: (err) => {
-                    this.notification.showError(
-                        'Data entry added failed.',
-                        'Error'
-                    );
-                    console.error('errrrrrr>>>>>>', err);
-                },
-                complete: () => console.info('Data entry Added')
-            });
-        }
-        if (this.categoryId == 11) {
-
-
-            if (this.selectMonths.length == 0) {
-                this.notification.showInfo(
-                    'Select month',
-                    ''
-                );
-                return
-            }
-
-            if (form.value.water_supply <= form.value.water_treatment) {
-                this.notification.showInfo(
-                    'Water withdrawn should be greater than or equal to water discharged',
-                    'Error'
-                );
-                return
-            }
-
-
-            if (this.waterSupplyUnit == 'kilo litres') {
-                var allUnits = 1
-            }
-            if (this.waterSupplyUnit == 'cubic m') {
-                var allUnits = 2
-            }
-            var spliteedMonth = this.dataEntry.month.split(",");
-            var monthString = JSON.stringify(spliteedMonth)
-            var waterobj1 = { "type": "Surface water", "kilolitres": form.value.surface_water };
-            var waterobj2 = { "type": "Groundwater", "kilolitres": form.value.groundwater };
-            var waterobj3 = { "type": "Third party water", "kilolitres": form.value.thirdParty };
-            var waterobj4 = { "type": "Sea water / desalinated water", "kilolitres": form.value.seaWater };
-            var waterobj5 = { "type": "Others", "kilolitres": form.value.others };
-
-            const typoOfOffice = [waterobj1, waterobj2, waterobj3, waterobj4, waterobj5]
-            var water_withdrawlStringfy = JSON.stringify(typoOfOffice);
-
-
-            var waterDischargeonlyobj1 = { "type": "Surface water", "kilolitres": form.value.surface_water_dest };
-            var waterDischargeonlyobj2 = { "type": "Groundwater", "kilolitres": form.value.groundwater_dest };
-            var waterDischargeonlyobj3 = { "type": "Third party water", "kilolitres": form.value.thirdParty_dest };
-            var waterDischargeonlyobj4 = { "type": "Sea water / desalinated water", "kilolitres": form.value.seaWater_dest };
-            var waterDischargeonlyobj5 = { "type": "Others", "kilolitres": form.value.others_dest };
-
-            const typoOfDischargeonlyOffice = [waterDischargeonlyobj1, waterDischargeonlyobj2, waterDischargeonlyobj3, waterDischargeonlyobj4, waterDischargeonlyobj5]
-            var water_DischargeonlyStringfy = JSON.stringify(typoOfDischargeonlyOffice);
-
-            var waterDischargeobj1 = { "type": "Into Surface water", "withthtreatment": form.value.surface_withTreatment, "leveloftreatment": form.value.surface_levelTreatment };
-            var waterDischargeobj2 = { "type": "Into Ground water", "withthtreatment": form.value.ground_withTreatment, "leveloftreatment": form.value.ground_levelTreatment };
-            var waterDischargeobj3 = { "type": "Into Seawater", "withthtreatment": form.value.seawater_withTreatment, "leveloftreatment": form.value.seawater_levelTreatment };
-            var waterDischargeobj4 = { "type": "Send to third-parties", "withthtreatment": form.value.third_withTreatment, "leveloftreatment": form.value.third_levelTreatment };
-            var waterDischargeobj5 = { "type": "Others", "withthtreatment": form.value.others_withTreatment, "leveloftreatment": form.value.others_levelTreatment };
-
-            const dischargeWater = [waterDischargeobj1, waterDischargeobj2, waterDischargeobj3, waterDischargeobj4, waterDischargeobj5]
-            var waterDischargeStringfy = JSON.stringify(dischargeWater)
-            let formData = new URLSearchParams();
-
-            formData.set('water_supply', form.value.water_supply);
-            formData.set('water_treatment', form.value.water_treatment);
-            formData.set('water_supply_unit', allUnits.toString());
-            formData.set('water_treatment_unit', allUnits.toString());
-            formData.set('water_withdrawl', water_withdrawlStringfy);
-            formData.set('water_discharge_only', water_DischargeonlyStringfy);
-            formData.set('water_discharge', waterDischargeStringfy);
-            formData.set('facilities', this.facilityID);
-            formData.set('month', monthString);
-            formData.set('year', this.dataEntry.year);
-            formData.set('batch', '1');
-
-
-            this.trackingService.AddwatersupplytreatmentCategory(formData.toString()).subscribe({
-                next: (response) => {
-
-                    if (response.success == true) {
-                        this.notification.showSuccess(
-                            response.message,
-                            'Success'
-                        );
-                        this.dataEntryForm.reset();
-                        this.waterSupplyUnit = 'kilo litres'
-
-                    } else {
-                        this.notification.showError(
-                            response.message,
-                            'Error'
-                        );
-                        this.dataEntryForm.reset();
-                        this.waterSupplyUnit = 'kilo litres'
-
-                    }
-                    this.ALLEntries();
-                },
-                error: (err) => {
-                    this.waterSupplyUnit = 'kilo litres'
-                    this.notification.showError(
-                        'Data entry added failed.',
-                        'Error'
-                    );
-                    this.dataEntryForm.reset();
-
-
-                    console.error('errrrrrr>>>>>>', err);
-                },
-                complete: () => console.info('Data entry Added')
-            })
-        }
-        if (this.categoryId == 12) {
-            if (this.selectMonths.length == 0) {
-                this.notification.showInfo(
-                    'Select month',
-                    ''
-                );
-                return
-            }
-            if (form.value.waste_quantity == null || form.value.waste_quantity == '') {
-                this.notification.showInfo(
-                    'Enter waste quantity',
-                    ''
-                );
-                return
-            }
-            var spliteedMonth = this.dataEntry.month.split(",");
-            var monthString = JSON.stringify(spliteedMonth)
-
-            let formData = new URLSearchParams();
-            if (this.wasteMethod == 'recycling') {
-                formData.set('product', this.waterWasteProduct);
-                formData.set('waste_type', form.value.wasteSubCategory);
-                formData.set('total_waste', form.value.waste_quantity);
-                formData.set('method', this.wasteMethod);
-                formData.set('unit', form.value.wasteUnits);
-                formData.set('waste_loop', this.recycleSelectedMethod);
-                formData.set('id', form.value.wasteType);
-                formData.set('months', monthString);
-                formData.set('year', this.dataEntry.year);
-                formData.set('facility_id', this.facilityID);
-            } else {
-                formData.set('product', this.waterWasteProduct);
-                formData.set('waste_type', form.value.wasteSubCategory);
-                formData.set('total_waste', form.value.waste_quantity);
-                formData.set('method', this.wasteMethod);
-                formData.set('unit', form.value.wasteUnits);
-                formData.set('id', form.value.wasteType);
-                formData.set('months', monthString);
-                formData.set('year', this.dataEntry.year);
-                formData.set('facility_id', this.facilityID);
-            }
-
-
-            this.trackingService.wasteGeneratedEmission(formData.toString()).subscribe({
-                next: (response) => {
-
-                    if (response.success == true) {
-                        this.notification.showSuccess(
-                            response.message,
-                            'Success'
-                        );
-                        this.dataEntryForm.reset();
-                        this.wasteMethod = this.waterWasteMethod[0].water_type
-                        this.getWasteSubCategory("1")
-
-                    } else {
-                        this.notification.showError(
-                            response.message,
-                            'Error'
-                        );
-                        this.dataEntryForm.reset();
-                        this.wasteMethod = this.waterWasteMethod[0].water_type
-
-                    }
-                    this.ALLEntries();
-                    this.recycle = false;
-                },
-                error: (err) => {
-                    this.notification.showError(
-                        'Data entry added failed.',
-                        'Error'
-                    );
-                    this.dataEntryForm.reset();
-
-
-                    console.error('errrrrrr>>>>>>', err);
-                },
-                complete: () => console.info('Data entry Added')
-            })
-        }
-        if (this.categoryId == 14) {
-
-            // Filter out rows where no field is filled
-            const filledRows = this.rows.filter(row =>
-
-                row.vehicleType1 !== null && row.employeesCommute !== ''
-            );
-
-            if (filledRows.length === 0) {
-                this.notification.showWarning(
-                    "Fields are required",
-                    'Warning'
-                );
-                return;
-            }
-
-            // Prepare the payload
-            const payload = filledRows.map(row => ({
-                type: row.vehicleType1,
-                subtype: row.vehicleType2,
-                employeesCommute: row.employeesCommute,
-                avgCommute: row.avgCommute
-            }));
-
-
-            // const typoOfOffice = [empobj1, empobj2, empobj3, empobj4, empobj5, empobj6, empobj7, empobj8, empobj9, empobj10, empobj11, empobj12, empobj13, empobj14, empobj15]
-            var typeoftransportStringfy = JSON.stringify(payload)
-
-
-            let formData = new URLSearchParams();
-
-            formData.set('batch', '1');
-            formData.set('noofemployees', form.value.noofemployees);
-            formData.set('workingdays', form.value.workingdays);
-            formData.set('typeoftransport', typeoftransportStringfy);
-            formData.set('facilities', this.facilityID);
-            formData.set('month', monthString);
-            formData.set('year', this.dataEntry.year);
-
-            this.trackingService.uploadEmployeeCommunity(formData.toString()).subscribe({
-                next: (response) => {
-                    this.ALLEntries();
-                    if (response.success == true) {
-                        this.notification.showSuccess(
-                            response.message,
-                            'Success'
-                        );
-                        this.dataEntryForm.reset();
-
-
-                    } else {
-                        this.notification.showWarning(
-                            response.message,
-                            'Error'
-                        );
-                        this.dataEntryForm.reset();
-
-                    }
-                },
-                error: (err) => {
-                    this.notification.showError(
-                        'Data entry added failed.',
-                        'Error'
-                    );
-                    this.dataEntryForm.reset();
-
-
-                    console.error('errrrrrr>>>>>>', err);
-                },
-                complete: () => console.info('Data entry Added')
-            })
-        }
-        if (this.categoryId == 15) {
-            if ((parseInt(this.noofmonths_1) + parseInt(this.noofmonths_2) + parseInt(this.noofmonths_3)) > 12) {
-                this.notification.showWarning(
-                    'Sum of no of months cant greater than 12',
-                    'Error'
-                );
-                return
-            }
-
-            var obj1 = { "type": "1", "noofemployees": this.noofemployees_1, "noofdays": this.noofdays_1, "noofmonths": this.noofmonths_1 };
-            var obj2 = { "type": "2", "noofemployees": this.noofemployees_2, "noofdays": this.noofdays_2, "noofmonths": this.noofmonths_2 };
-            var obj3 = { "type": "3", "noofemployees": this.noofemployees_3, "noofdays": this.noofdays_3, "noofmonths": this.noofmonths_3 };
-            const typoOfOffice = [obj1, obj2, obj3]
-            var typeofhomeofficeStringfy = JSON.stringify(typoOfOffice)
-
-
-            let formData = new URLSearchParams();
-
-            formData.set('batch', '1');
-            formData.set('typeofhomeoffice', typeofhomeofficeStringfy);
-            formData.set('facilities', this.facilityID);
-            formData.set('month', monthString);
-            formData.set('year', this.dataEntry.year);
-            this.trackingService.uploadHomeOffice(formData.toString()).subscribe({
-                next: (response) => {
-
-                    if (response.success == true) {
-                        this.notification.showSuccess(
-                            response.message,
-                            'Success'
-                        );
-                        this.dataEntryForm.reset();
-                        this.getFranchiseType();
-                        this.getSubFranchiseCategory('Banking Financial Services');
-                        this.averageMethod = false;
-                        this.franchiseMethod = false;
-                        // this.getStatusData(this.activeCategoryIndex)
-                    } else {
-                        this.notification.showError(
-                            response.message,
-                            'Error'
-                        );
-                        this.dataEntryForm.reset();
-                        this.getFranchiseType();
-                        this.getSubFranchiseCategory('Banking Financial Services');
-                        this.averageMethod = false;
-                        this.franchiseMethod = false;
-
-                    }
-                    this.ALLEntries();
-                },
-                error: (err) => {
-                    this.notification.showError(
-                        'Data entry added failed.',
-                        'Error'
-                    );
-                    this.dataEntryForm.reset();
-                    this.getFranchiseType();
-                    this.getSubFranchiseCategory('Banking Financial Services');
-                    this.averageMethod = false;
-                    this.franchiseMethod = false;
-
-                    console.error('errrrrrr>>>>>>', err);
-                },
-                complete: () => console.info('Data entry Added')
-            })
-        }
-        if (this.categoryId == 16) {
-
-            var spliteedMonth = this.dataEntry.month.split(",");
-            var monthString = JSON.stringify(spliteedMonth)
-
-            if (this.selectMonths.length == 0) {
-                this.notification.showInfo(
-                    'Select month',
-                    ''
-                );
-                return
-            }
-            var is_vehicle = 0;
-            var is_facility = 0;
-            if (this.leasefacilitieschecked === true) {
-                is_facility = 1
-            }
-            if (this.leasevehcileschecked === true) {
-                is_vehicle = 1
-            }
-            let formData = new URLSearchParams();
-            if (is_facility == 1 && is_vehicle == 0) {
-                if (this.averageMethod == true) {
-                    formData.set('months', monthString);
-                    formData.set('year', this.dataEntry.year);
-                    formData.set('category', form.value.facilityTypeValue);
-                    formData.set('sub_category', form.value.subfacilityTypeValue);
-                    formData.set('calculation_method', form.value.calculationmethod);
-                    formData.set('franchise_space', form.value.upLeasefranchise_space);
-                    formData.set('unit', form.value.upfacilityUnits);
-                    formData.set('is_vehicle', is_vehicle.toString());
-                    formData.set('is_facility', is_facility.toString());
-                    formData.set('facility_id', this.facilityID);
-                } else if (this.franchiseMethod == true) {
-                    formData.set('months', monthString);
-                    formData.set('year', this.dataEntry.year);
-                    formData.set('category', form.value.facilityTypeValue);
-                    formData.set('sub_category', form.value.subfacilityTypeValue);
-                    formData.set('calculation_method', form.value.calculationmethod);
-                    formData.set('scope1_emission', form.value.scope1_emission);
-                    formData.set('scope2_emission', form.value.scope2_emission);
-                    formData.set('is_vehicle', is_vehicle.toString());
-                    formData.set('is_facility', is_facility.toString());
-                    formData.set('facility_id', this.facilityID);
-                }
-            } else if (is_vehicle == 1 && is_facility == 0) {
-                formData.set('months', monthString);
-                formData.set('year', this.dataEntry.year);
-                formData.set('vehicle_type', this.selectedVehicleType);
-                formData.set('vehicle_subtype', form.value.subvehicle_type);
-                formData.set('no_of_vehicles', form.value.noOfVehicles);
-                formData.set('distance_travelled', form.value.distanceInKms);
-                formData.set('distance_unit', form.value.distanceUnit);
-                formData.set('is_vehicle', is_vehicle.toString());
-                formData.set('is_facility', is_facility.toString());
-                formData.set('facility_id', this.facilityID);
-            }
-            else if (is_vehicle == 1 && is_facility == 1) {
-                if (this.averageMethod == true) {
-                    formData.set('months', monthString);
-                    formData.set('year', this.dataEntry.year);
-                    formData.set('category', form.value.facilityTypeValue);
-                    formData.set('sub_category', form.value.subfacilityTypeValue);
-                    formData.set('calculation_method', form.value.calculationmethod);
-                    formData.set('franchise_space', form.value.upLeasefranchise_space);
-                    formData.set('unit', form.value.upfacilityUnits);
-                    formData.set('vehicle_type', this.selectedVehicleType);
-                    formData.set('vehicle_subtype', form.value.subvehicle_type);
-                    formData.set('no_of_vehicles', form.value.noOfVehicles);
-                    formData.set('distance_travelled', form.value.distanceInKms);
-                    formData.set('distance_unit', form.value.distanceUnit);
-                    formData.set('is_vehicle', is_vehicle.toString());
-                    formData.set('is_facility', is_facility.toString());
-                    formData.set('facility_id', this.facilityID);
-                } else if (this.franchiseMethod == true) {
-                    formData.set('months', monthString);
-                    formData.set('year', this.dataEntry.year);
-                    formData.set('category', form.value.facilityTypeValue);
-                    formData.set('sub_category', form.value.subfacilityTypeValue);
-                    formData.set('calculation_method', form.value.calculationmethod);
-                    formData.set('scope1_emission', form.value.scope1_emission);
-                    formData.set('scope2_emission', form.value.scope2_emission);
-                    formData.set('vehicle_type', this.selectedVehicleType);
-                    formData.set('vehicle_subtype', form.value.subvehicle_type);
-                    formData.set('no_of_vehicles', form.value.noOfVehicles);
-                    formData.set('distance_travelled', form.value.distanceInKms);
-                    formData.set('distance_unit', form.value.distanceUnit);
-                    formData.set('is_vehicle', is_vehicle.toString());
-                    formData.set('is_facility', is_facility.toString());
-                    formData.set('facility_id', this.facilityID);
-                }
-            }
-
-
-
-            this.trackingService.uploadupLeaseEmissionCalculate(formData.toString()).subscribe({
-                next: (response) => {
-
-                    if (response.success == true) {
-                        this.notification.showSuccess(
-                            response.message,
-                            'Success'
-                        );
-                        this.averageMethod = false;
-                        this.franchiseMethod = false;
-                        this.dataEntryForm.reset();
-                        this.getSubVehicleCategoryLease(15);
-                        this.getVehicleTypesLease();
-                        this.getFranchiseType();
-                        this.getSubFranchiseCategory('Banking Financial Services');
-                        // this.getStatusData(this.activeCategoryIndex)
-                    } else {
-                        this.notification.showError(
-                            response.message,
-                            'Error'
-                        );
-                        this.averageMethod = false;
-                        this.franchiseMethod = false;
-                        this.dataEntryForm.reset();
-                        this.getSubVehicleCategoryLease(15);
-                        this.getVehicleTypesLease();
-                        this.getFranchiseType();
-                        this.getSubFranchiseCategory('Banking Financial Services');
-                    }
-                    this.ALLEntries();
-                },
-                error: (err) => {
-                    this.notification.showError(
-                        'Data entry added failed.',
-                        'Error'
-                    );
-                    console.error('errrrrrr>>>>>>', err);
-                },
-                complete: () => console.info('Data entry Added')
-            });
-        }
-        if (this.categoryId == 17) {
-            let formData = new URLSearchParams();
-            if (this.storageTransporationChecked === true && this.vehcilestransporationchecked === true) {
-                formData.set('vehicle_type', this.selectedVehicleType);
-                formData.set('sub_category', this.subVehicleCategoryValue);
-                formData.set('noOfVehicles', form.value.noOfVehicles);
-                formData.set('mass_of_products', form.value.mass_of_products);
-                formData.set('distanceInKms', form.value.distanceInKms);
-                formData.set('storagef_type', form.value.storage_type);
-                formData.set('area_occupied', form.value.area_occupied);
-                formData.set('averageNoOfDays', form.value.averageNoOfDays);
-                formData.set('facility_id', this.facilityID);
-                formData.set('month', monthString);
-                formData.set('year', this.dataEntry.year);
-            } else if (this.storageTransporationChecked === true) {
-                formData.set('storagef_type', form.value.storage_type);
-                formData.set('area_occupied', form.value.area_occupied);
-                formData.set('averageNoOfDays', form.value.averageNoOfDays);
-                formData.set('facility_id', this.facilityID);
-                formData.set('month', monthString);
-                formData.set('year', this.dataEntry.year);
-            } else if (this.vehcilestransporationchecked == true) {
-                formData.set('vehicle_type', this.selectedVehicleType);
-                formData.set('sub_category', this.subVehicleCategoryValue);
-                formData.set('noOfVehicles', form.value.noOfVehicles);
-                formData.set('mass_of_products', form.value.mass_of_products);
-                formData.set('distanceInKms', form.value.distanceInKms);
-                formData.set('facility_id', this.facilityID);
-                formData.set('month', monthString);
-                formData.set('year', this.dataEntry.year);
-            }
-
-
-            this.trackingService.downStreamTransportation(formData.toString()).subscribe({
-                next: (response) => {
-
-                    if (response.success == true) {
-                        this.notification.showSuccess(
-                            response.message,
-                            'Success'
-                        );
-                        this.dataEntryForm.reset();
-                        this.getVehicleTypes()
-                        this.getSubVehicleCategory(1)
-                        // this.getStatusData(this.activeCategoryIndex)
-                    } else {
-                        this.notification.showError(
-                            response.message,
-                            'Error'
-                        );
-                        this.dataEntryForm.reset();
-                        this.getSubVehicleCategory(1)
-                    }
-                    this.ALLEntries();
-                },
-                error: (err) => {
-                    this.notification.showError(
-                        'Data entry added failed.',
-                        'Error'
-                    );
-                    console.error('errrrrrr>>>>>>', err);
-                },
-                complete: () => console.info('Data entry Added')
-            })
-        }
-        if (this.categoryId == 18) {
-            if (this.selectMonths.length == 0) {
-                this.notification.showInfo(
-                    'Select month',
-                    ''
-                );
-                return
-            }
-            var spliteedMonth = this.dataEntry.month.split(",");
-            var monthString = JSON.stringify(spliteedMonth)
-            let formData = new URLSearchParams();
-            if (form.value.industry == 'Other') {
-                if (this.averageMethod == true) {
-                    formData.set('month', monthString);
-                    formData.set('year', this.dataEntry.year);
-                    formData.set('intermediate_category', form.value.industry);
-                    formData.set('processing_acitivity', form.value.processing_acitivity);
-                    formData.set('sub_activity', form.value.sub_activity);
-                    formData.set('other_emission', form.value.emission_factor);
-                    formData.set('other', '1');
-                    formData.set('valueofsoldintermediate', form.value.valueofsoldintermediate);
-                    formData.set('calculation_method', form.value.calculationmethod);
-                    // formData.set('franchise_space', form.value.downLeasefranchise_space);
-                    formData.set('unit', form.value.goodsUnits);
-                    formData.set('batch', '1');
-                    formData.set('facilities', this.facilityID);
-
-                } else if (this.franchiseMethod == true) {
-                    formData.set('month', monthString);
-                    formData.set('year', this.dataEntry.year);
-                    formData.set('intermediate_category', form.value.industry);
-                    formData.set('processing_acitivity', form.value.processing_acitivity);
-                    formData.set('sub_activity', form.value.sub_activity);
-                    formData.set('other_emission', form.value.emission_factor);
-                    formData.set('other', '1');
-                    formData.set('valueofsoldintermediate', form.value.valueofsoldintermediate);
-                    formData.set('calculation_method', form.value.calculationmethod);
-                    formData.set('scope1emissions', form.value.scope1_emission);
-                    formData.set('scope2emissions', form.value.scope2_emission);
-                    formData.set('unit', form.value.goodsUnits);
-                    formData.set('batch', '1');
-                    formData.set('facilities', this.facilityID);
-                }
-
-            } else if (form.value.industry != 'Other') {
-                if (this.averageMethod == true) {
-                    formData.set('month', monthString);
-                    formData.set('year', this.dataEntry.year);
-                    formData.set('intermediate_category', form.value.industry);
-                    formData.set('processing_acitivity', form.value.sector);
-                    formData.set('sub_activity', form.value.sub_sector);
-                    formData.set('calculation_method', form.value.calculationmethod);
-                    formData.set('valueofsoldintermediate', form.value.valueofsoldintermediate);
-                    // formData.set('franchise_space', form.value.downLeasefranchise_space);
-                    formData.set('unit', form.value.goodsUnits);
-                    formData.set('batch', '1');
-                    formData.set('facilities', this.facilityID);
-
-                } else if (this.franchiseMethod == true) {
-                    formData.set('month', monthString);
-                    formData.set('year', this.dataEntry.year);
-                    formData.set('intermediate_category', form.value.industry);
-                    formData.set('processing_acitivity', form.value.sector);
-                    formData.set('sub_activity', form.value.sub_sector);
-                    formData.set('calculation_method', form.value.calculationmethod);
-                    formData.set('valueofsoldintermediate', form.value.valueofsoldintermediate);
-                    formData.set('scope1emissions', form.value.scope1_emission);
-                    formData.set('scope2emissions', form.value.scope2_emission);
-                    formData.set('unit', form.value.goodsUnits);
-                    formData.set('batch', '1');
-                    formData.set('facilities', this.facilityID);
-
-                }
-            }
-
-
-
-            this.trackingService.Addprocessing_of_sold_productsCategory(formData.toString()).subscribe({
-                next: (response) => {
-
-                    if (response.success == true) {
-                        this.notification.showSuccess(
-                            response.message,
-                            'Success'
-                        );
-                        this.dataEntryForm.reset();
-                        this.onIndustrySelected = false;
-                        this.OthersSecledted = false;
-                        this.averageMethod = false;
-                        this.franchiseMethod = false;
-
-
-                    } else {
-                        this.notification.showError(
-                            response.message,
-                            'Error'
-                        );
-                        this.dataEntryForm.reset();
-                        this.onIndustrySelected = false;
-                        this.OthersSecledted = false;
-                        this.averageMethod = false;
-                        this.franchiseMethod = false;
-
-                    }
-                    this.ALLEntries();
-                },
-                error: (err) => {
-                    this.notification.showError(
-                        'Data entry added failed.',
-                        'Error'
-                    );
-                    this.dataEntryForm.reset();
-
-
-                    console.error('errrrrrr>>>>>>', err);
-                },
-                complete: () => console.info('Data entry Added')
-            })
-        }
-        if (this.categoryId == 19) {
-            if (this.selectMonths.length == 0) {
-                this.notification.showInfo(
-                    'Select month',
-                    ''
-                );
-                return
-            }
-            var spliteedMonth = this.dataEntry.month.split(",");
-            var monthString = JSON.stringify(spliteedMonth)
-
-            let formData = new URLSearchParams();
-            if (form.value.noofunits == 1) {
-                formData.set('type', form.value.energyTypes);
-                formData.set('productcategory', form.value.productCategoryitem);
-                formData.set('no_of_Items', form.value.numberofitems);
-                formData.set('no_of_Items_unit', form.value.noofunits);
-                formData.set('expectedlifetimeproduct', form.value.expectedlifetimeproduct);
-                formData.set('expectedlifetime_nooftimesused', form.value.unitsExpElec);
-                formData.set('electricity_use', form.value.electricity_use);
-                formData.set('electricity_usage', form.value.unitsExpElec);
-                formData.set('fuel_type', form.value.fuelItem);
-                formData.set('fuel_consumed', form.value.fuel_consumed);
-                formData.set('fuel_consumed_usage', form.value.unitsExpElec);
-                formData.set('referigentused', form.value.ItemRefrigerant);
-                formData.set('referigerantleakage', form.value.refLeakageValue);
-                formData.set('referigerant_usage', form.value.unitsExpElec);
-                formData.set('batch', '1');
-                formData.set('month', monthString);
-                formData.set('year', this.dataEntry.year);
-                formData.set('facilities', this.facilityID);
-
-            } else {
-                formData.set('type', form.value.energyTypes);
-                formData.set('productcategory', form.value.productCategoryitem);
-                formData.set('no_of_Items', form.value.numberofitems);
-                formData.set('no_of_Items_unit', form.value.noofunits);
-                formData.set('batch', '1');
-                formData.set('month', monthString);
-                formData.set('year', this.dataEntry.year);
-                formData.set('facilities', this.facilityID);
-            }
-
-
-
-            this.trackingService.AddSoldProductsCategory(formData.toString()).subscribe({
-                next: (response) => {
-
-                    if (response.success == true) {
-                        this.notification.showSuccess(
-                            response.message,
-                            'Success'
-                        );
-                        this.dataEntryForm.reset();
-                        this.getProductsEnergyCategory("1")
-                        this.noOfItems = false;
-
-
-
-                    } else {
-                        this.notification.showError(
-                            response.message,
-                            'Error'
-                        );
-                        this.dataEntryForm.reset();
-                        this.noOfItems = false;
-
-                    }
-                    this.ALLEntries();
-                },
-                error: (err) => {
-                    this.notification.showError(
-                        'Data entry added failed.',
-                        'Error'
-                    );
-                    this.dataEntryForm.reset();
-
-
-                    console.error('errrrrrr>>>>>>', err);
-                },
-                complete: () => console.info('Data entry Added')
-            })
-        }
-        if (this.categoryId == 20) {
-            if (this.selectMonths.length == 0) {
-                this.notification.showInfo(
-                    'Select month',
-                    ''
-                );
-                return
-            }
-            var spliteedMonth = this.dataEntry.month.split(",");
-            var monthString = JSON.stringify(spliteedMonth)
-
-            let formData = new URLSearchParams();
-            formData.set('month', monthString);
-            formData.set('year', this.dataEntry.year);
-            formData.set('waste_type', form.value.wasteType);
-            formData.set('subcategory', form.value.wasteSubCategory);
-            formData.set('total_waste', form.value.total_waste);
-            formData.set('waste_unit', form.value.wasteUnits);
-            formData.set('landfill', form.value.landfill);
-            formData.set('combustion', form.value.combustion);
-            formData.set('recycling', form.value.recycling);
-            formData.set('composing', form.value.composing);
-            formData.set('batch', '1');
-            formData.set('facilities', this.facilityID);
-
-
-            this.trackingService.AddendoflifeCategory(formData.toString()).subscribe({
-                next: (response) => {
-
-                    if (response.success == true) {
-                        this.notification.showSuccess(
-                            response.message,
-                            'Success'
-                        );
-                        this.dataEntryForm.reset();
-                        this.getWasteSubCategory("1")
-
-                    } else {
-                        this.notification.showError(
-                            response.message,
-                            'Error'
-                        );
-                        this.dataEntryForm.reset();
-                        this.getWasteSubCategory("1")
-
-                    }
-                    this.ALLEntries();
-                },
-                error: (err) => {
-                    this.notification.showError(
-                        'Data entry added failed.',
-                        'Error'
-                    );
-                    this.dataEntryForm.reset();
-
-
-                    console.error('errrrrrr>>>>>>', err);
-                },
-                complete: () => console.info('Data entry Added')
-            })
-        }
-        if (this.categoryId == 21) {
-            if (this.selectMonths.length == 0) {
-                this.notification.showInfo(
-                    'Select month',
-                    ''
-                );
-                return
-            }
-            var spliteedMonth = this.dataEntry.month.split(",");
-            var monthString = JSON.stringify(spliteedMonth)
-
-            var is_vehicle = 0;
-            var is_facility = 0;
-            if (this.leasefacilitieschecked === true) {
-                is_facility = 1
-            }
-            if (this.leasevehcileschecked === true) {
-                is_vehicle = 1
-            }
-            let formData = new URLSearchParams();
-            if (is_facility == 1 && is_vehicle == 0) {
-                if (this.averageMethod == true) {
-                    formData.set('months', monthString);
-                    formData.set('year', this.dataEntry.year);
-                    formData.set('category', form.value.facilityTypeValue);
-                    formData.set('sub_category', form.value.subfacilityTypeValue);
-                    formData.set('calculation_method', form.value.calculationmethod);
-                    formData.set('franchise_space', form.value.downLeasefranchise_space);
-                    formData.set('unit', form.value.upfacilityUnits);
-                    formData.set('is_vehicle', is_vehicle.toString());
-                    formData.set('distance_unit', '0');
-                    formData.set('is_facility', is_facility.toString());
-                    formData.set('facility_id', this.facilityID);
-                } else if (this.franchiseMethod == true) {
-                    formData.set('months', monthString);
-                    formData.set('year', this.dataEntry.year);
-                    formData.set('category', form.value.facilityTypeValue);
-                    formData.set('sub_category', form.value.subfacilityTypeValue);
-                    formData.set('calculation_method', form.value.calculationmethod);
-                    formData.set('scope1_emission', form.value.scope1_emission);
-                    formData.set('scope2_emission', form.value.scope2_emission);
-                    formData.set('is_vehicle', is_vehicle.toString());
-                    formData.set('is_facility', is_facility.toString());
-                    formData.set('facility_id', this.facilityID);
-                }
-            } else if (is_vehicle == 1 && is_facility == 0) {
-                formData.set('months', monthString);
-                formData.set('year', this.dataEntry.year);
-                formData.set('vehicle_type', this.selectedVehicleType);
-                formData.set('vehicle_subtype', form.value.subvehicle_type);
-                formData.set('no_of_vehicles', form.value.noOfVehicles);
-                formData.set('distance_travelled', form.value.distanceInKms);
-                formData.set('distance_unit', form.value.distanceDUnit);
-                formData.set('is_vehicle', is_vehicle.toString());
-                formData.set('is_facility', is_facility.toString());
-                formData.set('facility_id', this.facilityID);
-            }
-            else if (is_vehicle == 1 && is_facility == 1) {
-                if (this.averageMethod == true) {
-                    formData.set('months', monthString);
-                    formData.set('year', this.dataEntry.year);
-                    formData.set('category', form.value.facilityTypeValue);
-                    formData.set('sub_category', form.value.subfacilityTypeValue);
-                    formData.set('calculation_method', form.value.calculationmethod);
-                    formData.set('franchise_space', form.value.downLeasefranchise_space);
-                    formData.set('unit', form.value.upfacilityUnits);
-                    formData.set('vehicle_type', this.selectedVehicleType);
-                    formData.set('vehicle_subtype', form.value.subvehicle_type);
-                    formData.set('no_of_vehicles', form.value.noOfVehicles);
-                    formData.set('distance_travelled', form.value.distanceInKms);
-                    formData.set('distance_unit', form.value.distanceDUnit);
-                    formData.set('is_vehicle', is_vehicle.toString());
-                    formData.set('is_facility', is_facility.toString());
-                    formData.set('facility_id', this.facilityID);
-                } else if (this.franchiseMethod == true) {
-                    formData.set('months', monthString);
-                    formData.set('year', this.dataEntry.year);
-                    formData.set('category', form.value.facilityTypeValue);
-                    formData.set('sub_category', form.value.subfacilityTypeValue);
-                    formData.set('calculation_method', form.value.calculationmethod);
-                    formData.set('scope1_emission', form.value.scope1_emission);
-                    formData.set('scope2_emission', form.value.scope2_emission);
-                    formData.set('vehicle_type', this.selectedVehicleType);
-                    formData.set('vehicle_subtype', form.value.subvehicle_type);
-                    formData.set('no_of_vehicles', form.value.noOfVehicles);
-                    formData.set('distance_travelled', form.value.distanceInKms);
-                    formData.set('distance_unit', form.value.distanceDUnit);
-                    formData.set('is_vehicle', is_vehicle.toString());
-                    formData.set('is_facility', is_facility.toString());
-                    formData.set('facility_id', this.facilityID);
-                }
-            }
-
-
-            this.trackingService.downstreamLeaseEmissionCalculate(formData.toString()).subscribe({
-                next: (response) => {
-
-                    if (response.success == true) {
-                        this.notification.showSuccess(
-                            response.message,
-                            'Success'
-                        );
-                        this.ALLEntries();
-                        this.averageMethod = false;
-                        this.franchiseMethod = false;
-                        this.dataEntryForm.reset();
-                        this.getSubVehicleCategory(1);
-                        this.getVehicleTypes();
-                        this.getFranchiseType();
-                        this.getSubFranchiseCategory('Banking Financial Services');
-                        // this.getStatusData(this.activeCategoryIndex)
-                    } else {
-                        this.notification.showError(
-                            response.message,
-                            'Error'
-                        );
-                        this.averageMethod = false;
-                        this.franchiseMethod = false;
-                        this.dataEntryForm.reset();
-                        this.getSubVehicleCategory(1);
-                        this.getVehicleTypes();
-                        this.getFranchiseType();
-                        this.getSubFranchiseCategory('Banking Financial Services');
-                    }
-                },
-                error: (err) => {
-                    this.notification.showError(
-                        'Data entry added failed.',
-                        'Error'
-                    );
-                    console.error('errrrrrr>>>>>>', err);
-                },
-                complete: () => console.info('Data entry Added')
-            });
-        }
-        if (this.categoryId == 22) {
-            let formData = new URLSearchParams();
-            if (this.franchiseMethodValue == 'Average data method') {
-                formData.set('franchise_type', this.franchiseCategoryValue);
-                formData.set('sub_category', form.value.sub_categories);
-                formData.set('calculation_method', this.franchiseMethodValue);
-                formData.set('franchise_space', form.value.franchise_space);
-                formData.set('facility_id', this.facilityID);
-                formData.set('unit', form.value.upfacilityUnits);
-                formData.set('month', monthString);
-                formData.set('year', this.dataEntry.year);
-
-            } if (this.franchiseMethodValue == 'Investment Specific method') {
-                formData.set('franchise_type', this.franchiseCategoryValue);
-                formData.set('sub_category', form.value.sub_categories);
-                formData.set('calculation_method', this.franchiseMethodValue);
-                formData.set('scope1_emission', form.value.scope1_emission);
-                formData.set('scope2_emission', form.value.scope2_emission);
-                formData.set('facility_id', this.facilityID);
-                formData.set('unit', form.value.upfacilityUnits);
-                formData.set('month', monthString);
-                formData.set('year', this.dataEntry.year);
-            }
-
-
-            this.trackingService.uploadFranchise(formData.toString()).subscribe({
-                next: (response) => {
-
-                    if (response.success == true) {
-                        this.notification.showSuccess(
-                            response.message,
-                            'Success'
-                        );
-                        this.ALLEntries();
-                        this.dataEntryForm.reset();
-                        this.getFranchiseType();
-                        this.getSubFranchiseCategory('Banking Financial Services');
-                        this.averageMethod = false;
-                        this.franchiseMethod = false;
-                        // this.getStatusData(this.activeCategoryIndex)
-                    } else {
-                        this.notification.showError(
-                            response.message,
-                            'Error'
-                        );
-                        this.dataEntryForm.reset();
-                        this.getFranchiseType();
-                        this.getSubFranchiseCategory('Banking Financial Services');
-                        this.averageMethod = false;
-                        this.franchiseMethod = false;
-
-                    }
-                },
-                error: (err) => {
-                    this.notification.showError(
-                        'Data entry added failed.',
-                        'Error'
-                    );
-                    this.dataEntryForm.reset();
-                    this.getFranchiseType();
-                    this.getSubFranchiseCategory('Banking Financial Services');
-                    this.averageMethod = false;
-                    this.franchiseMethod = false;
-
-                    console.error('errrrrrr>>>>>>', err);
-                },
-                complete: () => console.info('Data entry Added')
-            })
-        }
-        if (this.categoryId == 23) {
-            let formData = new URLSearchParams();
-
-            if (this.franchiseMethodValue == 'Investment Specific method' && this.investmentTypeValue == 'Equity investments') {
-                formData.set('investment_type', form.value.investment_type);
-                formData.set('category', form.value.investment_sector);
-                formData.set('sub_category_id', form.value.broad_categoriesId);
-                formData.set('calculation_method', form.value.calculationmethod);
-                formData.set('scope1_emission', form.value.scope1_emission);
-                formData.set('scope2_emission', form.value.scope2_emission);
-                formData.set('equity_share', form.value.share_Equity);
-                formData.set('facilities', this.facilityID);
-                formData.set('month', monthString);
-                formData.set('year', this.dataEntry.year);
-            } else if (this.investmentTypeValue == 'Equity investments' && this.franchiseMethodValue == 'Average data method') {
-                formData.set('investment_type', form.value.investment_type);
-                formData.set('category', form.value.investment_sector);
-                formData.set('sub_category_id', form.value.broad_categoriesId);
-                formData.set('calculation_method', form.value.calculationmethod);
-                formData.set('investee_company_total_revenue', form.value.investe_company_revenue);
-                formData.set('equity_share', form.value.share_Equity);
-                formData.set('facilities', this.facilityID);
-                formData.set('month', monthString);
-                formData.set('year', this.dataEntry.year);
-            } else if ((this.investmentTypeValue == 'Debt investments' || this.investmentTypeValue == 'Project finance') && this.franchiseMethodValue == 'Average data method') {
-                formData.set('investment_type', form.value.investment_type);
-                formData.set('category', form.value.investment_sector);
-                formData.set('sub_category_id', form.value.broad_categoriesId);
-                formData.set('calculation_method', form.value.calculationmethod);
-                formData.set('project_phase', form.value.projectPhase);
-                formData.set('project_construction_cost', form.value.project_construction_cost);
-                formData.set('equity_project_cost', form.value.equity_project_cost);
-                formData.set('facilities', this.facilityID);
-                formData.set('month', monthString);
-                formData.set('year', this.dataEntry.year);
-            } else if ((this.investmentTypeValue == 'Debt investments' || this.investmentTypeValue == 'Project finance') && this.franchiseMethodValue == 'Investment Specific method') {
-
-                formData.set('investment_type', form.value.investment_type);
-                formData.set('category', form.value.investment_sector);
-                formData.set('sub_category_id', form.value.broad_categoriesId);
-                formData.set('calculation_method', form.value.calculationmethod);
-                formData.set('scope1_emission', form.value.scope1_emission);
-                formData.set('scope2_emission', form.value.scope2_emission);
-                formData.set('equity_project_cost', form.value.project_cost);
-                formData.set('facilities', this.facilityID);
-                formData.set('month', monthString);
-                formData.set('year', this.dataEntry.year);
-
-            }
-
-
-            this.trackingService.calculateInvestmentEmission(formData.toString()).subscribe({
-                next: (response) => {
-
-                    if (response.success == true) {
-                        this.notification.showSuccess(
-                            response.message,
-                            'Success'
-                        );
-                        this.ALLEntries();
-                        this.dataEntryForm.reset();
-                        this.equityInvestmentRow = false;
-                        this.debtInvesmentRow = false;
-                        this.calculationRow = false;
-                        this.averageMethod = false
-                        this.franchiseMethod = false
-                        this.franchiseMethodValue = '';
-                        this.investmentTypeValue = ''
-
-                        // this.getStatusData(this.activeCategoryIndex)
-                    } else {
-                        this.notification.showError(
-                            response.message,
-                            'Error'
-                        );
-                        this.dataEntryForm.reset();
-                        this.equityInvestmentRow = false;
-                        this.debtInvesmentRow = false;
-                        this.calculationRow = false;
-                        this.averageMethod = false
-                        this.franchiseMethod = false;
-                        this.franchiseMethodValue = '';
-                        this.investmentTypeValue = ''
-                    }
-                },
-                error: (err) => {
-                    this.equityInvestmentRow = false;
-                    this.debtInvesmentRow = false;
-                    this.calculationRow = false;
-                    this.averageMethod = false
-                    this.franchiseMethod = false;
-                    this.franchiseMethodValue = '';
-                    this.investmentTypeValue = ''
-                    this.notification.showError(
-                        'Data entry added failed.',
-                        'Error'
-                    );
-                    console.error('errrrrrr>>>>>>', err);
-                },
-                complete: () => console.info('Data entry Added')
-            })
-        }
-        if (this.categoryId == 24) {
-            // if (this.selectMonths.length == 0) {
-            //     this.notification.showInfo(
-            //         'Select month',
-            //         ''
-            //     );
-            //     return
-            // }
-
-
-            if (form.value.flightMode == 'Generic') {
-                if (form.value.no_of_trips === '' || form.value.no_of_trips === null) {
-                    this.notification.showInfo(
-                        "Please select no of trips",
-                        'Warning'
-                    );
-                    return;
-                }
-            }
-            var spliteedMonth = this.dataEntry.month.split(",");
-            var monthString = JSON.stringify(spliteedMonth)
-            let formData =  new FormData();
-
-            if (form.value.flightMode == 'Generic') {
-                const payloadsFlight = this.rowsFlightTravel.map(row => ({
-
-                    flight_type: row.flightType,
-                    flight_class: row.flightClass,
-                    no_of_trips: row.noOfTrips,
-                    return_flight: row.return_flight,
-                    cost_centre: row.costCentre,
-                    batch: 1,
-                    month: row.selectedMonths
-
-                }));
-                formData.set('flight_calc_mode', form.value.flightMode);
-                formData.set('jsonData', JSON.stringify(payloadsFlight));
-                // formData.set('month', monthString);
-                formData.set('year', this.dataEntry.year);
-                formData.set('facilities', this.facilityID);
-                if (this.selectedFile) {
-                    formData.set('file', this.selectedFile, this.selectedFile.name);
-                }
-            } else if (form.value.flightMode == 'To/From') {
-                const payloadsFlight = this.rowsFlightTravel.map(row => ({
-
-                    to: row.to,
-                    from: row.from,
-                    via: row.via,
-                    flight_class: row.flight_class,
-                    no_of_passengers: row.no_of_passengers,
-                    return_flight: row.return_flight,
-                    reference_id: row.reference_id,
-                    cost_centre: row.cost_centre,
-                    batch: 1,
-                    month: row.selectedMonths
-
-                }));
-                formData.set('flight_calc_mode', form.value.flightMode);
-                formData.set('jsonData', JSON.stringify(payloadsFlight));
-                // formData.set('month', monthString);
-                formData.set('year', this.dataEntry.year);
-                formData.set('facilities', this.facilityID);
-                if (this.selectedFile) {
-                    formData.set('file', this.selectedFile, this.selectedFile.name);
-                }
-            } else if (form.value.flightMode == 'Distance') {
-                const payloadsFlight = this.rowsFlightTravel.map(row => ({
-
-                    flight_type: row.flightType,
-                    flight_class: row.flightClass,
-                    no_of_trips: row.noOfTrips,
-                    return_flight: row.returnFlight,
-                    cost_centre: row.costCentre,
-                    batch: 1,
-                    month: row.selectedMonths
-
-                }));
-                formData.set('flight_calc_mode', form.value.flightMode);
-                formData.set('flight_type', form.value.flight_type);
-                formData.set('flight_class', form.value.classs);
-                formData.set('distance', form.value.distance);
-                formData.set('no_of_passengers', form.value.no_of_passengers);
-                formData.set('return_flight', this.storageTransporationChecked.toString());
-                formData.set('reference_id', form.value.reference_id);
-                formData.set('cost_centre', form.value.businessunits);
-                formData.set('batch', '1');
-                formData.set('month', monthString);
-                formData.set('year', this.dataEntry.year);
-                formData.set('facilities', this.facilityID);
-                if (this.selectedFile) {
-                    formData.set('file', this.selectedFile, this.selectedFile.name);
-                }
-            }
-
-
-            this.trackingService.uploadflightTravel(formData).subscribe({
-                next: (response) => {
-
-                    if (response.success == true) {
-                        this.notification.showSuccess(
-                            response.message,
-                            'Success'
-                        );
-                        this.dataEntryForm.reset();
-                        this.ALLEntries();
-                        this.resetForm();
-                        // this.getStatusData(this.activeCategoryIndex);
-                        this.flightDisplay1 = 'block';
-                        this.flightDisplay2 = 'none';
-                        this.flightDisplay3 = 'none';
-                        this.rowsFlightTravel = [{
-                            id: 1,
-                            flightMode: '',
-                            flightType: null,
-                            flightClass: null,
-                            returnFlight: null,
-                            noOfTrips: null,
-                            costCentre: '',
-                            to: null,
-                            from: null,
-                            via: null,
-                            flight_class: null,
-                            no_of_passengers: null,
-                            return_flight: null,
-                            reference_id: null,
-                            cost_centre: null,
-                            batch: 1,
-                            month: this.months,
-                            selectedMonths: null
-
-                        }];
-
-                    } else {
-                        this.notification.showError(
-                            response.message,
-                            'Error'
-                        );
-                        // this.dataEntryForm.reset();
-
-
-                    }
-                },
-                error: (err) => {
-                    this.notification.showError(
-                        "EF not found for this facility",
-                        ''
-                    );
-                    this.dataEntryForm.reset();
-
-
-                    console.error('errrrrrr>>>>>>', err);
-                },
-                complete: () => console.info('Data entry Added')
-            })
-        }
-        if (this.categoryId == 25) {
-
-            var spliteedMonth = this.dataEntry.month.split(",");
-            var monthString = JSON.stringify(spliteedMonth)
-            let formData = new FormData();
-            const payloadsHotelStay = this.rowsHotelStay.map(row => ({
-
-                country_of_stay: row.selectedCountry,
-                type_of_hotel: row.type_of_hotel,
-                no_of_occupied_rooms: row.no_of_occupied_rooms,
-                no_of_nights_per_room: row.no_of_nights,
-                batch: 1,
-                month: row.selectedMonths
-
-            }));
-            // formData.set('country_of_stay', form.value.countryname);
-            // formData.set('type_of_hotel', form.value.hoteltype);
-            // formData.set('no_of_occupied_rooms', form.value.noOfOccoupied);
-            // formData.set('no_of_nights_per_room', form.value.noOfNights);
-
-            formData.set('year', this.dataEntry.year);
-            formData.set('facilities', this.facilityID);
-            formData.set('jsonData', JSON.stringify(payloadsHotelStay));
-            if (this.selectedFile) {
-                formData.set('file', this.selectedFile, this.selectedFile.name);
-            }
-
-
-            this.trackingService.uploadHotelStay(formData).subscribe({
-                next: (response) => {
-
-                    if (response.success == true) {
-                        this.notification.showSuccess(
-                            response.message,
-                            'Success'
-                        );
-                        this.resetForm();
-                        this.dataEntryForm.reset();
-                        this.ALLEntries();
-                        this.rowsHotelStay = [{
-                            id: 1,
-                            country_stay: null,
-                            type_of_hotel: null,
-                            no_of_occupied_rooms: null,
-                            no_of_nights: null,
-                            selectedCountry: null,
-                            month: this.months,
-                            selectedMonths: null
-                        }];
-
-                        // this.getStatusData(this.activeCategoryIndex)
-                    } else {
-                        this.notification.showError(
-                            response.message,
-                            'Error'
-                        );
-                        this.dataEntryForm.reset();
-
-
-                    }
-                },
-                error: (err) => {
-                    this.notification.showError(
-                        'Data entry added failed.',
-                        ''
-                    );
-                    this.dataEntryForm.reset();
-
-
-                    console.error('errrrrrr>>>>>>', err);
-                },
-                complete: () => console.info('Data entry Added')
-            })
-        }
-        if (this.categoryId == 26) {
-
-            var spliteedMonth = this.dataEntry.month.split(",");
-            var monthString = JSON.stringify(spliteedMonth)
-            let formData =  new FormData();
-            // if (this.carMode == true) {
-            //     formData.set('mode_of_trasport', form.value.modes);
-            //     formData.set('type', form.value.cartype);
-            //     formData.set('fuel_type', form.value.fuelCar_type);
-            //     formData.set('distance_travelled', form.value.distance);
-            //     formData.set('no_of_trips', form.value.no_ofTrips);
-            //     formData.set('batch', '1');
-            //     formData.set('month', monthString);
-            //     formData.set('year', this.dataEntry.year);
-            //     formData.set('facilities', this.facilityID);
-            // } else {
-
-            //     formData.set('mode_of_trasport', form.value.modes);
-            //     formData.set('type', form.value.cartype);
-            //     formData.set('no_of_passengers', form.value.no_of_passengers);
-            //     formData.set('distance_travelled', form.value.distance);
-            //     formData.set('no_of_trips', form.value.no_ofTrips);
-            //     formData.set('batch', '1');
-            //     formData.set('month', monthString);
-            //     formData.set('year', this.dataEntry.year);
-            //     formData.set('facilities', this.facilityID);
-            // }
-
-            const payloadsOtherModes = this.rowsOtherTransport.map(row => ({
-
-                mode_of_trasport: row.trasnportMode,
-                type: row.selectedMode,
-                fuel_type: row.selectedFuelType,
-                no_of_passengers: row.no_of_passengers,
-                distance_travelled: row.distance_travel_per_trip,
-                no_of_trips: row.noOfTrips,
-                batch: 1,
-                month: row.selectedMonths
-
-            }));
-            formData.set('jsonData', JSON.stringify(payloadsOtherModes));
-
-            formData.set('year', this.dataEntry.year);
-            formData.set('facilities', this.facilityID);
-            if (this.selectedFile) {
-                formData.set('file', this.selectedFile, this.selectedFile.name);
-            }
-
-            this.trackingService.uploadOtherModes(formData).subscribe({
-                next: (response) => {
-
-                    if (response.success == true) {
-                        this.notification.showSuccess(
-                            response.message,
-                            'Success'
-                        );
-                        this.dataEntryForm.reset();
-                        this.ModeSelected = false;
-                        this.ALLEntries();
-                        this.resetForm();
-                        this.rowsOtherTransport = [{
-                            id: 1,
-                            trasnportMode: null,
-                            modeType: [],
-                            selectedMode: null,
-                            carFuel_type: [],
-                            selectedFuelType: null,
-                            no_of_passengers: null,
-                            distance_travel_per_trip: null,
-                            isDisabled: false,
-                            noOfTrips: null,
-                            month: this.months,
-                            selectedMonths: null,
-                        }];;
-
-                        // this.getStatusData(this.activeCategoryIndex)
-                    } else {
-                        this.notification.showError(
-                            response.message,
-                            ''
-                        );
-                        this.dataEntryForm.reset();
-                        this.ModeSelected = false;
-
-                    }
-                },
-                error: (err) => {
-                    this.notification.showError(
-                        'Data entry added failed.',
-                        'Error'
-                    );
-                    this.dataEntryForm.reset();
-
-
-                    console.error('errrrrrr>>>>>>', err);
-                },
-                complete: () => console.info('Data entry Added')
-            })
-
-        }
-
-    };
 
     submitUnmatchWithAI() {
         if (this.newExcelData.length == 0) return
@@ -3793,7 +1278,7 @@ export class TrackingComponent {
                 );
                 console.error('errrrrrr>>>>>>', err);
             },
-            complete: () => console.info('Data entry Added')
+            complete: () => { }
         });
     };
     // getting units for category 1 and 2
@@ -3801,7 +1286,9 @@ export class TrackingComponent {
         this.trackingService.newgetUnits(subcatId).subscribe({
             next: (Response) => {
                 if (Response) {
+                    console.log(Response);
                     this.units = Response['categories'];
+
                     this.dataEntry.unit = this.units[0].UnitName;
 
                 }
@@ -3912,7 +1399,7 @@ export class TrackingComponent {
         this.rows.push({ id: this.rows.length + 1, subVehicleCategory: [], vehicleType1: null, vehicleType2: null, employeesCommute: '', avgCommute: '' });
     }
     addPurchaseRows() {
-        this.rowsPurchased.push({ id: this.rowsPurchased.length + 1, multiLevelItems: [], productService: null, productType: null, months: '', quantity: '', selectedUnit: '', vendorName: '', vendorspecificEF: '' });
+        this.rowsPurchased.push({ id: this.rowsPurchased.length + 1, multiLevelItems: [], productService: null, productType: null, months: '', quantity: '', selectedUnit: '', vendorName: '', vendorspecificEF: '', vendorspecificEFUnit: `kgCO2e/${this.currency}` });
     };
     addCompanyRows() {
         this.rowsCompany.push({ id: this.rowsCompany.length + 1, vehicleType: null, noOfVehicles: null, tripsPerVehicle: null, modeOfEntry: 'Average distance per trip', chargingOutside: '', value: null, unit: 'Km' });
@@ -3938,7 +1425,7 @@ export class TrackingComponent {
             error: (err) => {
                 console.error('errrrrrr>>>>>>', err);
             },
-            complete: () => console.info('Group Added')
+            complete: () => { }
         });
     };
 
@@ -4205,39 +1692,7 @@ export class TrackingComponent {
         }
     }
 
-    setActive(index: number): void {
 
-        this.categoryId = 13;
-        this.ALLEntries();
-        this.categoryId = index;
-
-        this.noOfItems = false;
-
-        // this.ModeSelected = false;
-        this.calculationRow = false;
-        this.equityInvestmentRow = false;
-
-        if (this.categoryId == 24) {
-
-            this.ModeSelected = false;
-            this.categoryName = 'Flight'
-            // this.SubCatAllData.subCatName = 'Flight'
-            this.getFlightType();
-            this.CostCentre();
-
-
-        } else if (this.categoryId == 25) {
-            this.ModeSelected = false;
-            this.categoryName = 'Hotel Stay';
-            // this.SubCatAllData.subCatName = 'Hotel Stay'
-        } else if (this.categoryId == 26) {
-
-            this.categoryName = 'Other Modes of Transport';
-            // this.SubCatAllData.subCatName = 'Other Modes of Transport'
-        }
-
-
-    };
 
 
     getBusineesUnit() {
@@ -4307,7 +1762,7 @@ export class TrackingComponent {
             error: (err) => {
                 console.error('errrrrrr>>>>>>', err);
             },
-            complete: () => console.info('Group Added')
+            complete: () => { }
         });
     };
 
@@ -4362,7 +1817,7 @@ export class TrackingComponent {
 
 
             const jsonReading = this.convertToKeyValue(this.jsonCompanyData);
-          
+
             this.jsonCompanyData = jsonReading.filter(items => { return items['Vehicle Model'] !== '' });
             console.log(this.jsonCompanyData);
             this.jsonCompanyData = this.jsonCompanyData.map(item => {
@@ -4410,18 +1865,18 @@ export class TrackingComponent {
         });
     }
 
-    toggleEdit(index: number, id: any,productmatch:any, finder: any) {
+    toggleEdit(index: number, id: any, productmatch: any, finder: any) {
         console.log(id);
         this.productID = id;
         this.visible2 = true;
-console.log(productmatch,finder);
-        if(finder == '1' && productmatch == true) {
-      this.hideMatchButon = true;
+
+        if (finder == '1' && productmatch == true) {
+            this.hideMatchButon = true;
         }
-        if(finder == 'delete') {
+        if (finder == 'delete') {
             this.deleteProduct(index);
         }
-        
+
     }
 
     deleteProduct(index: number) {
@@ -4443,7 +1898,7 @@ console.log(productmatch,finder);
             error: (err) => {
                 console.error('errrrrrr>>>>>>', err);
             },
-            complete: () => console.info('Group Added')
+            complete: () => { }
         });
     };
     sendJSON(jsonData: any) {
@@ -4484,7 +1939,7 @@ console.log(productmatch,finder);
                 this.spinner.hide();
                 console.error('errrrrrr>>>>>>', err);
             },
-            complete: () => console.info('Group Added')
+            complete: () => { }
         });
     };
 
@@ -4501,7 +1956,7 @@ console.log(productmatch,finder);
             error: (err) => {
                 console.error('errrrrrr>>>>>>', err);
             },
-            complete: () => console.info('Group Added')
+            complete: () => { }
         });
     };
 
@@ -4639,7 +2094,7 @@ console.log(productmatch,finder);
             error: (err) => {
 
             },
-            complete: () => console.info('Group Added')
+            complete: () => { }
         });
     };
 
@@ -4710,7 +2165,7 @@ console.log(productmatch,finder);
                 );
                 console.error('errrrrrr>>>>>>', err);
             },
-            complete: () => console.info('Data entry Added')
+            complete: () => { }
         });
     };
 
@@ -4799,7 +2254,7 @@ console.log(productmatch,finder);
         this.rowsHotelStay.push({
             id: this.rowsHotelStay.length + 1,
             country_stay: null,
-            type_of_hotel: null,
+            type_of_hotel: 'star_2',
             no_of_occupied_rooms: null,
             no_of_nights: null,
             month: this.months,
@@ -4841,7 +2296,8 @@ console.log(productmatch,finder);
 
             }
         })
-    }
+    };
+
     getElectricitySource() {
         this.trackingService.getElectricitySource().subscribe({
             next: (response) => {
@@ -5030,136 +2486,7 @@ console.log(productmatch,finder);
         }
     };
 
-    onModesChangeM(event: any, row) {
-        const selectedMode = event.value;
-        this.carMode = true;
-        this.autoMode = false;
-        this.ModeSelected = true;
-        if (selectedMode == 'Car') {
-            this.carMode = true;
-            this.autoMode = false;
-            const optionvalue =
-                [{
-                    "id": 1,
-                    "type": "Small"
-                },
-                {
-                    "id": 2,
-                    "type": "Medium"
-                },
-                {
-                    "id": 3,
-                    "type": "Large"
-                }
-                ]
-            const optionvalue2 =
-                [{
-                    "id": 1,
-                    "mode_type": "Petrol"
-                },
-                {
-                    "id": 2,
-                    "mode_type": "Diesel"
-                },
-                {
-                    "id": 3,
-                    "mode_type": "LPG"
-                },
-                {
-                    "id": 4,
-                    "mode_type": "CNG"
-                },
-                {
-                    "id": 5,
-                    "mode_type": "Hybrid"
-                },
-                {
-                    "id": 6,
-                    "mode_type": "Electric"
-                }
-                ]
-            this.mode_name = selectedMode;
 
-            row.mode_type = optionvalue;
-            row.carFuel_type = optionvalue2;
-            row.isDisabled = true;
-            this.cdRef.detectChanges();
-        } else if (selectedMode == 'Auto') {
-            this.autoMode = true;
-            this.carMode = true;
-            const optionvalue =
-                [{
-                    "id": 1,
-                    "type": "Petrol"
-                },
-                {
-                    "id": 2,
-                    "type": "CNG"
-                },
-                {
-                    "id": 3,
-                    "type": "LPG"
-                }
-                ]
-            this.mode_name = selectedMode;
-            row.mode_type = optionvalue;
-            row.carFuel_type = [];
-            row.isDisabled = true;
-        } else if (selectedMode == 'Bus') {
-            this.carMode = false;
-            this.autoMode = true;
-            const optionvalue =
-                [{
-                    "id": 1,
-                    "type": "Local Bus"
-                },
-                {
-                    "id": 2,
-                    "type": "Coach"
-                }
-                ]
-            this.mode_name = selectedMode;
-            row.mode_type = optionvalue;
-            row.carFuel_type = [];
-            row.isDisabled = false;
-        }
-        else if (selectedMode == 'Rail') {
-            this.carMode = false;
-            const optionvalue =
-                [{
-                    "id": 1,
-                    "type": "National"
-                },
-                {
-                    "id": 2,
-                    "type": "International"
-                }
-
-                ]
-            this.mode_name = selectedMode;
-            row.mode_type = optionvalue;
-            row.carFuel_type = [];
-            row.isDisabled = false
-        }
-        else if (selectedMode == 'Ferry') {
-            this.carMode = false;
-            this.autoMode = true;
-            const optionvalue =
-                [{
-                    "id": 1,
-                    "type": "Foot passenger"
-                },
-                {
-                    "id": 2,
-                    "type": "Car passenger"
-                }
-                ]
-            this.mode_name = selectedMode;
-            row.mode_type = optionvalue;
-            row.carFuel_type = [];
-            row.isDisabled = false
-        }
-    };
 
     onUnitChange(row) {
         row.vendorspecificEFUnit = 'kgCO2e/' + row.selectedUnit;
@@ -5322,12 +2649,11 @@ console.log(productmatch,finder);
 
     getSubEmployeeCommuTypes(id, row: any) {
 
-        this.trackingService.getEmployeeSubVehicleCat(id).subscribe({
+        this.trackingService.getEmployeeSubVehicleCat(id, this.facilityID).subscribe({
             next: (response) => {
 
                 if (response.success == true) {
                     row.subVehicleCategory = response.batchIds;
-
                 }
             }
         })
@@ -5341,8 +2667,8 @@ console.log(productmatch,finder);
 
                 if (response.success == true) {
                     this.VehicleGrid = response.categories;
-                    const selectedIndex = this.selectedVehicleIndex;
-                    this.selectedVehicleType = this.VehicleGrid[selectedIndex - 1]?.vehicle_type;
+                    this.upstreamVehicletypeId = this.VehicleGrid[0].id;
+                    this.getSubVehicleCategory(this.upstreamVehicletypeId);
 
 
                 }
@@ -5418,7 +2744,6 @@ console.log(productmatch,finder);
     onVehicleTypeChange(event: any) {
         const selectedIndex = event.value;
         this.selectedVehicleType = this.VehicleGrid[selectedIndex - 1].vehicle_type
-
         this.getSubVehicleCategory(selectedIndex)
     };
 
@@ -5429,7 +2754,7 @@ console.log(productmatch,finder);
     };
 
     getSubVehicleCategory(categoryId: any) {
-        this.trackingService.getSubVehicleCat(categoryId).subscribe({
+        this.trackingService.getSubVehicleCat(categoryId, this.facilityID).subscribe({
             next: (response) => {
                 // // // console.log(response);
                 if (response.success == true) {
@@ -5444,7 +2769,7 @@ console.log(productmatch,finder);
     };
 
     getSubVehicleCategoryLease(categoryId: any) {
-        this.trackingService.getSubVehicleCatLease(categoryId).subscribe({
+        this.trackingService.getSubVehicleCatLease(categoryId, this.facilityID).subscribe({
             next: (response) => {
                 // // // console.log(response);
                 if (response.success == true) {
@@ -5525,7 +2850,7 @@ console.log(productmatch,finder);
     };
 
     getSubFranchiseCategory(category: any) {
-        this.trackingService.getSubFranchiseCat(category).subscribe({
+        this.trackingService.getSubFranchiseCat(category, this.facilityID).subscribe({
             next: (response) => {
                 // // // console.log(response);
                 if (response.success == true) {
@@ -5720,6 +3045,7 @@ console.log(productmatch,finder);
     onCalculationInvestmentMethodChange(event: any) {
         const calMethod = event.value;
         this.franchiseMethodValue = calMethod;
+        console.log(calMethod);
         if (calMethod == 'Investment Specific method') {
             this.franchiseMethod = true;
             this.averageMethod = false
@@ -5870,9 +3196,20 @@ console.log(productmatch,finder);
                         ]
 
                     this.purchaseGoodsUnitsGrid = this.purchaseGoodsUnitsGrid.concat(concatUnits);
-
-
-                }
+                };
+                this.rowsPurchased = [{
+                    id: 1,
+                    multiLevelItems: [],
+                    productService: null,
+                    productType: null,
+                    subVehicleCategory: [],  // Add any other nested dropdown arrays here if needed
+                    months: '',
+                    quantity: '',
+                    selectedUnit: '',
+                    vendorName: '',
+                    vendorspecificEF: '',
+                    vendorspecificEFUnit: `kgCO2e/${this.currency}` // Make sure to initialize this as well
+                }];
             }
         })
     };
@@ -6005,7 +3342,7 @@ console.log(productmatch,finder);
                     productResult: {
                         ...item.productResult,
                         other_category_flag: '0'
-                      
+
                     }
                 };
             }
@@ -6038,7 +3375,2633 @@ console.log(productmatch,finder);
             }
         })
 
-    }
+    };
+
+    downloadPurchaseGoodsExcel() {
+        this.downloadFileService.downloadFile(this.downloadExcelUrl, 'Purchase Goods.xlsx');
+    };
+
+    downloadCompanyExcel() {
+        this.downloadFileService.downloadFile(this.downloadCompanyExcelUrl, this.SubCatAllData
+            .manageDataPointSubCategorySeedID == 10 ? 'Passenger Vehicle' : 'Delivery Vehicle');
+    };
+
+
+    getOtherModesVechile() {
+        const formdata = new URLSearchParams();
+        formdata.set('facility_id', this.facilityID);
+        this.appService.postAPI('/Othermodes_of_transport_type_name', formdata).subscribe({
+            next: (response: any) => {
+                this.ModesTravelGrid = response.data;
+
+            }
+        })
+    };
+
+    onModesChangeM(event: any, row) {
+        const selectedMode = event.value;
+        this.carMode = true;
+        this.autoMode = false;
+        this.ModeSelected = true;
+        let optionvalue = [];
+        const formdata = new URLSearchParams();
+        formdata.set('type_name', selectedMode);
+        formdata.set('facility_id', this.facilityID);
+
+        this.appService.postAPI('/get_Othermodes_of_transport_node_type_by_type_name', formdata).subscribe({
+            next: (response: any) => {
+                optionvalue = response.data;
+                if (selectedMode == 'Car') {
+                    this.carMode = true;
+                    this.autoMode = false;
+
+                    this.mode_name = selectedMode;
+
+                    row.mode_type = optionvalue;
+
+                    row.isDisabled = true;
+                    this.cdRef.detectChanges();
+                } else if (selectedMode == 'Auto') {
+                    this.autoMode = true;
+                    this.carMode = true;
+
+                    this.mode_name = selectedMode;
+                    row.mode_type = optionvalue;
+                    row.carFuel_type = [];
+                    row.isDisabled = true;
+                } else if (selectedMode == 'Bus') {
+                    this.carMode = false;
+                    this.autoMode = true;
+
+                    this.mode_name = selectedMode;
+                    row.mode_type = optionvalue;
+                    row.carFuel_type = [];
+                    row.isDisabled = false;
+                }
+                else if (selectedMode == 'Rail') {
+                    this.carMode = false;
+
+                    this.mode_name = selectedMode;
+                    row.mode_type = optionvalue;
+                    row.carFuel_type = [];
+                    row.isDisabled = false
+                }
+                else if (selectedMode == 'Ferry') {
+                    this.carMode = false;
+                    this.autoMode = true;
+
+                    this.mode_name = selectedMode;
+                    row.mode_type = optionvalue;
+                    row.carFuel_type = [];
+                    row.isDisabled = false
+                }
+            }
+        })
+
+        console.log(row.mode_type);
+    };
+
+
+    setActive(index: number): void {
+
+        this.categoryId = 13;
+        this.ALLEntries();
+        this.categoryId = index;
+
+        this.noOfItems = false;
+
+        // this.ModeSelected = false;
+        this.calculationRow = false;
+        this.equityInvestmentRow = false;
+
+        if (this.categoryId == 24) {
+
+            this.ModeSelected = false;
+            this.categoryName = 'Flight'
+            // this.SubCatAllData.subCatName = 'Flight'
+            this.getFlightType();
+            this.CostCentre();
+
+
+        } else if (this.categoryId == 25) {
+            this.ModeSelected = false;
+            this.categoryName = 'Hotel Stay';
+            // this.SubCatAllData.subCatName = 'Hotel Stay'
+        } else if (this.categoryId == 26) {
+            this.getOtherModesVechile();
+            this.categoryName = 'Other Modes of Transport';
+            // this.SubCatAllData.subCatName = 'Other Modes of Transport'
+        }
+
+
+    };
+
+    //entrysave function to save dataentry
+    EntrySave(form: NgForm) {
+        if (this.loginInfo.role == 'Auditor') {
+            this.notification.showError('You are not Authorized', 'Warning');
+            return false
+        }
+        this.dataEntry.month = this.selectMonths.map((month) => month.value)
+            .join(','); //this.getMonthName();
+        this.dataEntry.year = this.year.getFullYear().toString(); //this.getYear();
+        var spliteedMonth = this.dataEntry.month.split(",");
+        var monthString = JSON.stringify(spliteedMonth);
+
+
+        let fId = sessionStorage.getItem('SelectedfacilityID');
+        if (fId == '0') {
+            this.notification.showInfo(
+                'Select Facility',
+                ''
+            );
+            return
+        }
+        if (this.selectMonths.length == 0 && this.categoryId != 8 && this.categoryId != 14 && this.categoryId != 24 && this.categoryId != 25 && this.categoryId != 26) {
+            this.notification.showInfo(
+                'Select month',
+                ''
+            );
+            return
+        }
+        if (this.categoryId == 1) {
+            if (
+                this.dataEntry.readingValue <= 0 ||
+                this.dataEntry.readingValue === null ||
+                this.dataEntry.readingValue === undefined
+            ) {
+                return;
+            }
+            if (this.selectMonths.length == 0) {
+                this.notification.showInfo(
+                    'Select month',
+                    ''
+                );
+                return
+            }
+            let formData = new FormData();
+
+            if (this.SubCatAllData.subCatName == 'Liquid Fuels') {
+
+                if (this.dataEntry.typeID == 1) {
+                    if (this.SCdataEntry.blendType == 'No Blend') {
+                        this.SCdataEntry.blendID = 1;
+                    }
+                    if (this.SCdataEntry.blendType == 'Average Blend') {
+                        this.SCdataEntry.blendID = 2;
+                    }
+                    if (this.SCdataEntry.blendType == 'Perc. Blend') {
+                        formData.set('blendPercent', this.SCdataEntry.blendPercent.toString());
+                    }
+                }
+                else if (this.dataEntry.typeID == 2) {
+                    if (this.SCdataEntry.blendType == 'No Blend') {
+                        this.SCdataEntry.blendID = 1;
+                    }
+                    if (this.SCdataEntry.blendType == 'Average Blend') {
+                        this.SCdataEntry.blendID = 2;
+
+                    }
+                    if (this.SCdataEntry.blendType == 'Perc. Blend') {
+                        formData.set('blendPercent', this.SCdataEntry.blendPercent.toString());
+
+                    }
+                }
+                else {
+                    this.EmissionFactor.forEach(ef => {
+                        if (ef.subCatTypeID == this.dataEntry.typeID) {
+                            if (this.SCdataEntry.calorificValue != null) {
+                                this.SCdataEntry.gHGEmission = ef.kgCO2e_kwh;
+                                return;
+                            }
+                            if (this.dataEntry.unit == 'tonnes' || this.dataEntry.unit == 'Tonnes') {
+                                this.SCdataEntry.gHGEmission = ef.kgCO2e_tonnes;
+                                return;
+                            }
+                            else {
+                                this.SCdataEntry.gHGEmission = ef.kgCO2e_litre;
+                                return;
+                            }
+                        }
+
+                    })
+
+                }
+
+            }
+            else if (this.SubCatAllData.subCatName == 'Solid Fuels') {
+                this.EmissionFactor.forEach(ef => {
+                    if (ef.subCatTypeID == this.dataEntry.typeID) {
+                        if (this.SCdataEntry.calorificValue != null) {
+                            this.SCdataEntry.gHGEmission = ef.kgCO2e_kwh;
+                            return;
+                        }
+                        if (this.dataEntry.unit == 'tonnes' || this.dataEntry.unit == 'Tonnes') {
+                            this.SCdataEntry.gHGEmission = ef.kgCO2e_tonnes;
+                            return;
+                        }
+                        else {
+                            this.SCdataEntry.gHGEmission = ef.kgCO2e_tonnes;
+                            return;
+                        }
+                    }
+
+                })
+            }
+            else if (this.SubCatAllData.subCatName == 'Gaseous Fuels') {
+                this.EmissionFactor.forEach(ef => {
+                    if (ef.subCatTypeID == this.dataEntry.typeID) {
+                        if (this.dataEntry.unit == 'kwh') {
+                            this.SCdataEntry.gHGEmission = ef.kgCO2e_kwh;
+                            return;
+                        }
+                        if (this.dataEntry.unit == 'tonnes' || this.dataEntry.unit == 'Tonnes') {
+                            this.SCdataEntry.gHGEmission = ef.kgCO2e_tonnes;
+                            return;
+                        }
+                        else {
+                            this.SCdataEntry.gHGEmission = ef.kgCO2e_litre;
+                            return;
+                        }
+                    }
+
+                })
+
+            }
+            else {
+                this.SCdataEntry.calorificValue = null;
+                this.EmissionFactor.forEach(ef => {
+                    if (ef.subCatTypeID == this.dataEntry.typeID) {
+                        if (this.dataEntry.unit == 'kg' || this.dataEntry.unit == 'KG' || this.dataEntry.unit == 'Kg') {
+                            this.SCdataEntry.gHGEmission = ef.kgCO2e_kg;
+                            return;
+                        }
+                        if (this.dataEntry.unit == 'GJ' || this.dataEntry.unit == 'Gj') {
+                            this.SCdataEntry.gHGEmission = ef.kgCO2e_Gj;
+                            return;
+                        }
+                        if (this.dataEntry.unit == 'tonnes' || this.dataEntry.unit == 'Tonnes') {
+                            this.SCdataEntry.gHGEmission = ef.kgCO2e_tonnes;
+                            return;
+
+                        }
+                        else {
+                            this.SCdataEntry.gHGEmission = ef.kgCO2e_litre;
+                            return;
+                        }
+                    }
+
+                })
+            }
+
+            formData.set('subCategoryTypeId', (this.dataEntry.typeID).toString());
+            formData.set('SubCategorySeedID', (this.SubCatAllData
+                .manageDataPointSubCategorySeedID).toString());
+            formData.set('blendType', this.SCdataEntry.blendType);
+            formData.set('calorificValue', this.dataEntryForm.value.calorificValue ? this.dataEntryForm.value.calorificValue : '');
+            formData.set('unit', this.dataEntry.unit);
+            formData.set('readingValue', this.dataEntry.readingValue.toString());
+            formData.set('months', monthString);
+            formData.set('year', this.dataEntry.year);
+            formData.set('facility_id', this.facilityID);
+            if (this.selectedFile) {
+                formData.set('file', this.selectedFile, this.selectedFile.name);
+            }
+            this.trackingService.newPostSCDataEntry(formData).subscribe({
+                next: (response) => {
+
+                    if (response.success == true) {
+                        this.notification.showSuccess(
+                            'Data entry added successfully',
+                            'Success'
+                        );
+                        this.resetForm();
+                        this.getStationaryFuelType(this.SubCatAllData
+                            .manageDataPointSubCategorySeedID);
+                        this.ALLEntries();
+                        this.getUnit(this.SubCatAllData
+                            .manageDataPointSubCategorySeedID);
+                        //this.GetAssignedDataPoint(this.facilityID);
+                        // this.trackingService.getrefdataentry(this.SubCatAllData.id, this.loginInfo.tenantID).subscribe({
+                        //     next: (response) => {
+                        //         this.commonDE = response;
+                        //     }
+                        // });
+
+                        this.activeindex = 0;
+                    } else {
+                        this.notification.showError(
+                            response.message,
+                            'Error'
+                        );
+                    }
+                },
+                error: (err) => {
+                    this.notification.showError(
+                        'Data entry added failed.',
+                        'Error'
+                    );
+                    console.error('errrrrrr>>>>>>', err);
+                },
+                complete: () => { }
+            });
+        }
+        if (this.categoryId == 2) {
+            if (this.selectMonths.length == 0) {
+                this.notification.showInfo(
+                    'Select month',
+                    ''
+                );
+                return
+            }
+            let formData = new FormData();
+            this.RefrigerantDE.typeID = this.dataEntry.typeID;
+
+            formData.set('subCategoryTypeId', (this.dataEntry.typeID).toString());
+            formData.set('SubCategorySeedID', this.SubCatAllData
+                .manageDataPointSubCategorySeedID.toString());
+            formData.set('refAmount', this.RefrigerantDE.refAmount.toString());
+
+            formData.set('unit', this.dataEntry.unit);
+            formData.set('facilities', this.facilityID);
+
+            formData.set('months', monthString);
+            formData.set('year', this.dataEntry.year);
+            if (this.selectedFile) {
+                formData.set('file', this.selectedFile, this.selectedFile.name);
+            }
+            this.trackingService.newPostRegrigerantDataEntry(formData).subscribe({
+                next: (response) => {
+                    if (response.success == true) {
+                        this.notification.showSuccess(
+                            'Data entry added successfully',
+                            'Success'
+                        );
+                        this.resetForm();
+                        this.getsubCategoryType(this.SubCatAllData
+                            .manageDataPointSubCategorySeedID);
+                        this.ALLEntries();
+                        this.getUnit(this.SubCatAllData
+                            .manageDataPointSubCategorySeedID);
+                        //this.GetAssignedDataPoint(this.facilityID);
+                        // this.trackingService.getrefdataentry(this.SubCatAllData.id, this.loginInfo.tenantID).subscribe({
+                        //     next: (response) => {
+                        //         this.commonDE = response;
+                        //     }
+                        // });
+
+                        this.activeindex = 0;
+                    } else {
+                        this.notification.showError(
+                            response.message,
+                            'Error'
+                        );
+                    }
+                },
+                error: (err) => {
+                    this.notification.showError(
+                        'Data entry added failed.',
+                        'Error'
+                    );
+                    console.error('errrrrrr>>>>>>', err);
+                },
+                complete: () => { }
+            });
+        }
+        if (this.categoryId == 3) {
+            if (this.selectMonths.length == 0) {
+                this.notification.showInfo(
+                    'Select month',
+                    ''
+                );
+                return
+            }
+            let formData = new FormData();
+            formData.set('NumberOfExtinguisher', this.FireExtinguisherDE.numberOfExtinguisher.toString());
+            formData.set('unit', this.dataEntry.unit);
+            formData.set('quantityOfCO2makeup', this.FireExtinguisherDE.quantityOfCO2makeup.toString());
+            formData.set('fireExtinguisherID', this.FireExtinguisherDE.fireExtinguisherID?.toString());
+            formData.set('facilities', this.facilityID);
+            formData.set('months', monthString);
+            formData.set('year', this.dataEntry.year);
+            formData.set('SubCategorySeedID', this.SubCatAllData.manageDataPointSubCategorySeedID.toString());
+            if (this.selectedFile) {
+                formData.set('file', this.selectedFile, this.selectedFile.name);
+            }
+            this.trackingService.newPostFireExtinguisherDataEntry(formData).subscribe({
+                next: (response) => {
+                    if (response.success == true) {
+                        this.notification.showSuccess(
+                            'Data entry added successfully',
+                            'Success'
+                        );
+                        this.resetForm();
+                        this.ALLEntries();
+                        this.getUnit(this.SubCatAllData
+                            .manageDataPointSubCategorySeedID);
+
+
+                        this.activeindex = 0;
+                    } else {
+                        this.notification.showError(
+                            response.message,
+                            'Error'
+                        );
+                    }
+                },
+                error: (err) => {
+                    this.notification.showError(
+                        'Data entry added failed.',
+                        'Error'
+                    );
+                    console.error('errrrrrr>>>>>>', err);
+                },
+                complete: () => { }
+            });
+        }
+        if (this.categoryId == 6) {
+            if (this.selectMonths.length == 0) {
+                this.notification.showInfo(
+                    'Select month',
+                    ''
+                );
+                return
+            }
+
+            if (this.singleCompanyTab) {
+                var payloads = this.rowsCompany.map(row => ({
+
+                    vehicle_type: row.vehicleType,
+                    no_of_vehicles: row.noOfVehicles,
+                    trip_per_vehicle: row.tripsPerVehicle,
+                    mode_of_data_entry: row.modeOfEntry,
+                    value: row.value,
+                    unit: row.unit,
+                    sub_category: this.SubCatAllData
+                        .manageDataPointSubCategorySeedID,
+                    is_excel: 0
+
+                }));
+
+            }
+            if (this.multipleCompanyTab) {
+                var payloads = this.rowsCompany.map(row => ({
+
+                    vehicle_type: row.vehicleType,
+                    no_of_vehicles: row.noOfVehicles,
+                    trip_per_vehicle: row.tripsPerVehicle,
+                    mode_of_data_entry: row.modeOfEntry,
+                    value: row.value,
+                    unit: row.unit,
+                    sub_category: this.SubCatAllData
+                        .manageDataPointSubCategorySeedID,
+                    is_excel: 1
+
+                }));
+
+            }
+            if (this.bulkCompanyTab) {
+                var payloads = this.jsonCompanyData.map(row => ({
+                    vehicle_type: row.vehicleType,
+                    no_of_vehicles: row.noOfVehicles,
+                    trip_per_vehicle: row.tripsPerVehicle,
+                    mode_of_data_entry: row.modeOfEntry,
+                    value: row.value,
+                    unit: row.unit,
+                    sub_category: this.SubCatAllData
+                        .manageDataPointSubCategorySeedID,
+                    is_excel: 1
+
+                }));
+
+            }
+
+            var companyOwnedVehicles = JSON.stringify(payloads);
+            if (this.selectedFile) {
+                var formData = new FormData();
+                formData.set('file', this.selectedFile, this.selectedFile.name);
+                formData.set('facilityId', this.facilityID);
+                formData.set('month', monthString);
+                formData.set('year', this.dataEntry.year);
+                formData.set('jsonData', companyOwnedVehicles.toString());
+            } else {
+                console.log("tgf");
+                var formData2 = new URLSearchParams();
+                formData2.set('facilityId', this.facilityID);
+                formData2.set('month', monthString);
+                formData2.set('year', this.dataEntry.year);
+                formData2.set('jsonData', companyOwnedVehicles.toString());
+            }
+
+
+            this.appService.postAPI('/add-multiple-company-owned-vehicles', this.selectedFile ? formData : formData2).subscribe({
+                next: (response: any) => {
+                    if (response.success == true) {
+                        this.ALLEntries();
+                        this.notification.showSuccess(
+                            'Data entry added successfully',
+                            'Success'
+                        );
+                        this.resetForm();
+                        this.getUnit(this.SubCatAllData
+                            .manageDataPointSubCategorySeedID);
+                        this.VehicleDE.modeOfDE = this.ModeType[0].modeName;
+
+                        if (this.SubCatAllData.manageDataPointSubCategorySeedID == 10) {
+
+                            this.getPassengerVehicleType();
+                        }
+                        else {
+
+                            this.getDeliveryVehicleType();
+                        }
+                        this.activeindex = 0;
+
+                        this.rowsCompany = [{
+                            vehicleType: null,
+                            noOfVehicles: null,
+                            tripsPerVehicle: null,
+                            modeOfEntry: 'Average distance per trip',
+                            value: null,
+                            unit: 'Km'
+                        }];;
+
+                        this.jsonCompanyData = [];
+                    } else {
+                        this.notification.showError(
+                            'Data entry added failed.',
+                            'Error'
+                        );
+                        this.rowsCompany = [{
+                            vehicleType: null,
+                            noOfVehicles: null,
+                            tripsPerVehicle: null,
+                            modeOfEntry: 'Average distance per trip',
+                            value: null,
+                            unit: 'Km'
+                        }];;
+
+                        this.jsonCompanyData = [];
+                    }
+                },
+                error: (err) => {
+                    this.notification.showError(
+                        'Data entry added failed.',
+                        'Error'
+                    );
+                    console.error('errrrrrr>>>>>>', err);
+                },
+                complete: () => { }
+            });
+            // }
+
+
+        }
+        if (this.categoryId == 5) {
+            if (this.selectMonths.length == 0) {
+                this.notification.showInfo(
+                    'Select month',
+                    ''
+                );
+                return
+            }
+            if (this.SubCatAllData.manageDataPointSubCategorySeedID == 9) {
+                var formData = new FormData();
+                formData.set('RegionID', this.RenewableElectricity.electricityRegionID.toString());
+                formData.set('readingValue', this.dataEntry.readingValue.toString());
+                formData.set('unit', this.dataEntry.unit);
+                formData.set('facilities', this.facilityID);
+                formData.set('months', monthString);
+                formData.set('year', this.dataEntry.year);
+                formData.set('SubCategorySeedID', this.SubCatAllData
+                    .manageDataPointSubCategorySeedID.toString());
+                if (this.selectedFile) {
+                    formData.set('file', this.selectedFile, this.selectedFile.name);
+                }
+                this.trackingService.newPostElectricityDataEntry(formData).subscribe({
+                    next: (response) => {
+                        if (response.success == true) {
+                            this.resetForm();
+                            //this.GetAssignedDataPoint(this.facilityID);
+                            this.getUnit(this.SubCatAllData
+                                .manageDataPointSubCategorySeedID);
+                            this.RenewableElectricity.sourceName = this.ElectricitySource[0].sourceName;
+                            this.activeindex = 0;
+                            this.getRegionName();
+                            this.ALLEntries();
+                            this.renewableSelected = false;
+                            this.supplierSelected = false;
+                            this.notification.showSuccess(
+                                'Data entry added successfully',
+                                'Success'
+                            );
+
+                        } else {
+                            this.notification.showError(
+                                response.message,
+                                'Error'
+                            );
+                        }
+                    },
+                    error: (err) => {
+                        this.notification.showError(
+                            'Data entry added failed.',
+                            'Error'
+                        );
+                        console.error('errrrrrr>>>>>>', err);
+                    },
+                    complete: () => { }
+                });
+
+            }
+            else {
+                var formData = new FormData();
+                formData.set('typeID', form.value.Type);
+                formData.set('readingValue', this.dataEntry.readingValue.toString());
+                formData.set('sourceName', form.value.Source || '');
+                formData.set('unit', this.dataEntry.unit);
+                formData.set('facilities', this.facilityID);
+                formData.set('months', monthString);
+                formData.set('year', this.dataEntry.year);
+                formData.set('emission_factor', form.value.emission_factorS);
+                formData.set('SubCategorySeedID', this.SubCatAllData
+                    .manageDataPointSubCategorySeedID.toString());
+                if (this.selectedFile) {
+                    formData.set('file', this.selectedFile, this.selectedFile.name);
+                }
+                this.trackingService.newPostElectricityMarket(formData).subscribe({
+                    next: (response) => {
+
+                        if (response.success == true) {
+                            this.resetForm();
+                            //this.GetAssignedDataPoint(this.facilityID);
+                            this.getUnit(this.SubCatAllData
+                                .manageDataPointSubCategorySeedID);
+
+                            this.activeindex = 0;
+                            this.getRegionName();
+                            this.ALLEntries();
+                            this.renewableSelected = false;
+                            this.supplierSelected = false;
+                            this.notification.showSuccess(
+                                'Data entry added successfully',
+                                'Success'
+                            );
+
+
+                        } else {
+                            this.notification.showError(
+                                response.message,
+                                'Error'
+                            );
+                        }
+                        // this.marketEElecID = this.marketTypes[0].id;
+
+
+                    },
+                    error: (err) => {
+                        this.notification.showError(
+                            'Data entry added failed.',
+                            'Error'
+                        );
+                        console.error('errrrrrr>>>>>>', err);
+                    },
+                    complete: () => { }
+                });
+            }
+
+
+
+        }
+        if (this.categoryId == 7) {
+            var formData = new FormData();
+            formData.set('typeID', this.dataEntry.typeID.toString());
+            formData.set('readingValue', this.dataEntry.readingValue.toString());
+            formData.set('unit', this.dataEntry.unit);
+            formData.set('facilities', this.facilityID);
+            formData.set('months', monthString);
+            formData.set('year', this.dataEntry.year);
+            formData.set('SubCategorySeedID', this.SubCatAllData
+                .manageDataPointSubCategorySeedID.toString());
+            if (this.selectedFile) {
+                formData.set('file', this.selectedFile, this.selectedFile.name);
+            }
+
+            this.trackingService.newPostHeatandSteamDataEntry(formData).subscribe({
+                next: (response) => {
+                    if (response.success == true) {
+                        this.resetForm();
+                        this.getsubCategoryType(this.SubCatAllData
+                            .manageDataPointSubCategorySeedID);
+                        this.ALLEntries();
+                        this.getUnit(this.SubCatAllData
+                            .manageDataPointSubCategorySeedID);
+
+                        this.activeindex = 0;
+                        this.notification.showSuccess(
+                            'Data entry added successfully',
+                            'Success'
+                        );
+
+                    } else {
+                        this.notification.showError(
+                            response.message,
+                            'Error'
+                        );
+                    }
+                },
+                error: (err) => {
+                    this.notification.showError(
+                        'Data entry added failed.',
+                        'Error'
+                    );
+                    console.error('errrrrrr>>>>>>', err);
+                },
+                complete: () => { }
+            });
+        }
+        if (this.categoryId == 8) {
+            if (this.singlePGSTab) {
+
+                const filledRows = this.rowsPurchased.filter(row =>
+
+                    row.productType == null
+                );
+
+                if (filledRows.length > 0) {
+                    this.notification.showInfo(
+                        "Please select product service code",
+                        'Warning'
+                    );
+                    return;
+                }
+                if (this.isAnnual == undefined || this.isAnnual == null) {
+                    this.notification.showInfo(
+                        "Please select annual entry",
+                        'Warning'
+                    );
+                    return;
+                }
+                if (this.selectMonths.length == 0 && form.value.annualEntry == 0) {
+                    this.notification.showInfo(
+                        'Select month',
+                        ''
+                    );
+                    return
+                }
+
+                // Prepare the payload
+                const payload = this.rowsPurchased.map(row => ({
+                    month: row.months,
+                    typeofpurchase: row.productService,
+                    valuequantity: row.quantity,
+                    unit: row.selectedUnit,
+                    vendorId: row.vendorName.id,
+                    vendor: row.vendorName.name,
+                    vendorunit: row.vendorspecificEFUnit,
+                    vendorspecificEF: row.vendorspecificEF,
+                    product_category: row.productType
+                }));
+
+                var purchaseTableStringfy = JSON.stringify(payload)
+
+                var formData = new FormData();
+                // formData.set('month', monthString);
+                formData.set('year', this.dataEntry.year);
+                formData.set('productcodestandard', this.productHSNSelect);
+                formData.set('is_annual', this.isAnnual);
+                formData.set('facilities', this.facilityID);
+                formData.set('jsonData', purchaseTableStringfy);
+                formData.set('month', monthString);
+                if (this.selectedFile) {
+                    formData.set('file', this.selectedFile, this.selectedFile.name);
+                }
+
+                this.trackingService.submitPurchaseGoods(formData).subscribe({
+                    next: (response) => {
+
+                        if (response.success == true) {
+                            this.notification.showSuccess(
+                                response.message,
+                                'Success'
+                            );
+                            this.rowsPurchased.forEach(levels => {
+                                levels.productType = null
+                                this.deselectAllItems(levels.multiLevelItems)
+                            })
+
+
+                            this.rowsPurchased = [{
+                                id: 1,
+                                multiLevelItems: [],
+                                productService: null,
+                                productType: null,
+                                subVehicleCategory: [],  // Add any other nested dropdown arrays here if needed
+                                months: '',
+                                quantity: '',
+                                selectedUnit: '',
+                                vendorName: '',
+                                vendorspecificEF: '',
+                                vendorspecificEFUnit: `kgCO2e/${this.currency}` // Make sure to initialize this as well
+                            }];
+
+                            this.GetHSN();
+                            // this.deselectAllItems(this.rowsPurchased)
+
+                            this.resetForm();
+                            this.ALLEntries();
+
+                        } else {
+                            this.notification.showError(
+                                response.message,
+                                'Error'
+                            );
+
+                        }
+                    },
+                    error: (err) => {
+                        this.notification.showError(
+                            'Data entry added failed.',
+                            'Warning'
+                        );
+                        console.error('errrrrrr>>>>>>', err);
+                    },
+                    complete: () => { }
+                });
+            } else {
+
+                const payload = this.newExcelData.filter(row => row.is_find == true && row.productResult.other_category_flag == '0').map(row => ({
+                    month: '',
+                    typeofpurchase: row.productResult.typeofpurchase,
+                    valuequantity: row['Value / Quantity'],
+                    unit: row['Unit'],
+                    vendorId: '',
+                    vendor: row['Vendor'],
+                    vendorunit: row['Vendor Specific Unit'],
+                    vendorspecificEF: row['Vendor Specific EF'],
+                    product_category: row.productResult.id,
+                    product_description: row['Product / Service Description'],
+                    purchase_date: row['Purchase Date'],
+                    productcode: row.code,
+                    is_find: row.is_find
+                }));
+                var purchaseTableStringfy = JSON.stringify(payload);
+
+
+                var formData = new FormData();
+
+                formData.set('productcodestandard', this.productHSNSelect);
+                formData.set('facilities', this.facilityID);
+                formData.set('jsonData', purchaseTableStringfy);
+                formData.set('is_annual', '0');
+                formData.set('tenant_id', this.superAdminID.toString());
+                if (this.selectedFile) {
+                    formData.set('file', this.selectedFile, this.selectedFile.name);
+                }
+                this.trackingService.submitPurchaseGoods2(formData).subscribe({
+                    next: (response) => {
+
+                        if (response.success == true) {
+                            this.notification.showSuccess(
+                                response.message,
+                                'Success'
+                            );
+                            this.newExcelData = [];
+
+
+                            this.GetHSN();
+                            // this.deselectAllItems(this.rowsPurchased)
+
+                            this.resetForm();
+                            this.ALLEntries();
+
+                        } else {
+                            this.notification.showError(
+                                response.message,
+                                'Error'
+                            );
+
+                        }
+                    },
+                    error: (err) => {
+                        this.notification.showError(
+                            'Data entry added failed.',
+                            'Error'
+                        );
+                        console.error('errrrrrr>>>>>>', err);
+                    },
+                    complete: () => { }
+                });
+            }
+
+
+        }
+        if (this.categoryId == 10) {
+            let formData = new URLSearchParams();
+
+            if (this.storageTransporationChecked === true && this.vehcilestransporationchecked === true) {
+                formData.set('vehicle_type', this.upstreamVehicletypeId);
+                formData.set('sub_category', this.subVehicleCategoryValue);
+                formData.set('noOfVehicles', form.value.noOfVehicles);
+                formData.set('mass_of_products', form.value.mass_of_products);
+                formData.set('mass_unit', 'tonnes');
+                formData.set('distance_unit', 'km');
+                formData.set('area_occupied_unit', 'm2');
+                formData.set('distanceInKms', form.value.distanceInKms);
+                formData.set('storagef_type', form.value.storage_type);
+                formData.set('area_occupied', form.value.area_occupied);
+                formData.set('averageNoOfDays', form.value.averageNoOfDays);
+                formData.set('facility_id', this.facilityID);
+                formData.set('month', monthString);
+                formData.set('year', this.dataEntry.year);
+            } else if (this.storageTransporationChecked === true) {
+                formData.set('storagef_type', form.value.storage_type);
+                formData.set('area_occupied', form.value.area_occupied);
+                formData.set('averageNoOfDays', form.value.averageNoOfDays);
+                formData.set('area_occupied_unit', 'm2');
+                formData.set('facility_id', this.facilityID);
+                formData.set('month', monthString);
+                formData.set('year', this.dataEntry.year);
+            } else if (this.vehcilestransporationchecked == true) {
+                formData.set('vehicle_type', this.upstreamVehicletypeId);
+                formData.set('sub_category', this.subVehicleCategoryValue);
+                formData.set('mass_unit', 'tonnes');
+                formData.set('distance_unit', 'km');
+                formData.set('noOfVehicles', form.value.noOfVehicles);
+                formData.set('mass_of_products', form.value.mass_of_products);
+                formData.set('distanceInKms', form.value.distanceInKms);
+                formData.set('facility_id', this.facilityID);
+                formData.set('month', monthString);
+                formData.set('year', this.dataEntry.year);
+            }
+
+
+            this.trackingService.upStreamTransportation(formData.toString()).subscribe({
+                next: (response) => {
+
+                    if (response.success == true) {
+                        this.notification.showSuccess(
+                            response.message,
+                            'Success'
+                        );
+                        this.dataEntryForm.reset();
+                        this.getVehicleTypes()
+                        this.getSubVehicleCategory(1);
+                        // this.getStatusData(this.activeCategoryIndex)
+                    } else {
+                        this.notification.showError(
+                            response.message,
+                            'Error'
+                        );
+                        this.dataEntryForm.reset();
+                        this.getSubVehicleCategory(1)
+                    }
+                    this.ALLEntries();
+                },
+                error: (err) => {
+                    this.notification.showError(
+                        'Data entry added failed.',
+                        'Error'
+                    );
+                    console.error('errrrrrr>>>>>>', err);
+                },
+                complete: () => { }
+            });
+        }
+        if (this.categoryId == 11) {
+
+
+            if (this.selectMonths.length == 0) {
+                this.notification.showInfo(
+                    'Select month',
+                    ''
+                );
+                return
+            }
+
+            if (form.value.water_supply <= form.value.water_treatment) {
+                this.notification.showInfo(
+                    'Water withdrawn should be greater than or equal to water discharged',
+                    'Error'
+                );
+                return
+            }
+            console.log(form.value.water_supply, 'water_supply');
+            console.log(form.value.water_treatment, 'water_treatment');
+            if (form.value.water_supply < 0 || form.value.water_supply == null) {
+                this.notification.showInfo(
+                    'Enter water withdrawn',
+                    'Error'
+                );
+                return
+            }
+            if (form.value.water_treatment < 0 || form.value.water_treatment == null) {
+                this.notification.showInfo(
+                    'Enter water discharged',
+                    'Error'
+                );
+                return
+            }
+
+
+            if (this.waterSupplyUnit == 'kilo litres') {
+                var allUnits = 1
+            }
+            if (this.waterSupplyUnit == 'cubic m') {
+                var allUnits = 2
+            }
+            var spliteedMonth = this.dataEntry.month.split(",");
+            var monthString = JSON.stringify(spliteedMonth)
+            var waterobj1 = { "type": "Surface water", "kilolitres": form.value.surface_water };
+            var waterobj2 = { "type": "Groundwater", "kilolitres": form.value.groundwater };
+            var waterobj3 = { "type": "Third party water", "kilolitres": form.value.thirdParty };
+            var waterobj4 = { "type": "Sea water / desalinated water", "kilolitres": form.value.seaWater };
+            var waterobj5 = { "type": "Others", "kilolitres": form.value.others };
+
+            const typoOfOffice = [waterobj1, waterobj2, waterobj3, waterobj4, waterobj5]
+            var water_withdrawlStringfy = JSON.stringify(typoOfOffice);
+
+
+            var waterDischargeonlyobj1 = { "type": "Surface water", "kilolitres": form.value.surface_water_dest };
+            var waterDischargeonlyobj2 = { "type": "Groundwater", "kilolitres": form.value.groundwater_dest };
+            var waterDischargeonlyobj3 = { "type": "Third party water", "kilolitres": form.value.thirdParty_dest };
+            var waterDischargeonlyobj4 = { "type": "Sea water / desalinated water", "kilolitres": form.value.seaWater_dest };
+            var waterDischargeonlyobj5 = { "type": "Others", "kilolitres": form.value.others_dest };
+
+            const typoOfDischargeonlyOffice = [waterDischargeonlyobj1, waterDischargeonlyobj2, waterDischargeonlyobj3, waterDischargeonlyobj4, waterDischargeonlyobj5]
+            var water_DischargeonlyStringfy = JSON.stringify(typoOfDischargeonlyOffice);
+
+            var waterDischargeobj1 = { "type": "Into Surface water", "withthtreatment": form.value.surface_withTreatment, "leveloftreatment": form.value.surface_levelTreatment };
+            var waterDischargeobj2 = { "type": "Into Ground water", "withthtreatment": form.value.ground_withTreatment, "leveloftreatment": form.value.ground_levelTreatment };
+            var waterDischargeobj3 = { "type": "Into Seawater", "withthtreatment": form.value.seawater_withTreatment, "leveloftreatment": form.value.seawater_levelTreatment };
+            var waterDischargeobj4 = { "type": "Send to third-parties", "withthtreatment": form.value.third_withTreatment, "leveloftreatment": form.value.third_levelTreatment };
+            var waterDischargeobj5 = { "type": "Others", "withthtreatment": form.value.others_withTreatment, "leveloftreatment": form.value.others_levelTreatment };
+
+            const dischargeWater = [waterDischargeobj1, waterDischargeobj2, waterDischargeobj3, waterDischargeobj4, waterDischargeobj5]
+            var waterDischargeStringfy = JSON.stringify(dischargeWater)
+            let formData = new URLSearchParams();
+
+            formData.set('water_supply', form.value.water_supply);
+            formData.set('water_treatment', form.value.water_treatment);
+            formData.set('water_supply_unit', '1');
+            formData.set('water_treatment_unit', '1');
+            formData.set('water_withdrawl', water_withdrawlStringfy);
+            formData.set('water_discharge_only', water_DischargeonlyStringfy);
+            formData.set('water_discharge', waterDischargeStringfy);
+            formData.set('facilities', this.facilityID);
+            formData.set('month', monthString);
+            formData.set('year', this.dataEntry.year);
+            formData.set('batch', '1');
+
+
+            this.trackingService.AddwatersupplytreatmentCategory(formData.toString()).subscribe({
+                next: (response) => {
+
+                    if (response.success == true) {
+                        this.notification.showSuccess(
+                            response.message,
+                            'Success'
+                        );
+                        this.dataEntryForm.reset();
+                        this.waterSupplyUnit = 'kilo litres'
+
+                    } else {
+                        this.notification.showError(
+                            response.message,
+                            'Error'
+                        );
+                        this.dataEntryForm.reset();
+                        this.waterSupplyUnit = 'kilo litres'
+
+                    }
+                    this.ALLEntries();
+                },
+                error: (err) => {
+                    this.waterSupplyUnit = 'kilo litres'
+                    this.notification.showError(
+                        'Data entry added failed.',
+                        'Error'
+                    );
+                    this.dataEntryForm.reset();
+
+
+                    console.error('errrrrrr>>>>>>', err);
+                },
+                complete: () => { }
+            })
+        }
+        if (this.categoryId == 12) {
+            if (this.selectMonths.length == 0) {
+                this.notification.showInfo(
+                    'Select month',
+                    ''
+                );
+                return
+            }
+            if (form.value.waste_quantity == null || form.value.waste_quantity == '') {
+                this.notification.showInfo(
+                    'Enter waste quantity',
+                    ''
+                );
+                return
+            }
+            var spliteedMonth = this.dataEntry.month.split(",");
+            var monthString = JSON.stringify(spliteedMonth)
+
+            let formData = new URLSearchParams();
+            if (this.wasteMethod == 'recycling') {
+                formData.set('product', this.waterWasteProduct);
+                formData.set('waste_type', form.value.wasteSubCategory);
+                formData.set('total_waste', form.value.waste_quantity);
+                formData.set('method', this.wasteMethod);
+                formData.set('unit', 'tonnes');
+                formData.set('waste_loop', this.recycleSelectedMethod);
+                formData.set('id', form.value.wasteType);
+                formData.set('months', monthString);
+                formData.set('year', this.dataEntry.year);
+                formData.set('facility_id', this.facilityID);
+            } else {
+                formData.set('product', this.waterWasteProduct);
+                formData.set('waste_type', form.value.wasteSubCategory);
+                formData.set('total_waste', form.value.waste_quantity);
+                formData.set('method', this.wasteMethod);
+                formData.set('unit', 'tonnes');
+                formData.set('id', form.value.wasteType);
+                formData.set('months', monthString);
+                formData.set('year', this.dataEntry.year);
+                formData.set('facility_id', this.facilityID);
+            }
+
+
+            this.trackingService.wasteGeneratedEmission(formData.toString()).subscribe({
+                next: (response) => {
+
+                    if (response.success == true) {
+                        this.notification.showSuccess(
+                            response.message,
+                            'Success'
+                        );
+                        this.dataEntryForm.reset();
+                        this.wasteMethod = this.waterWasteMethod[0].id
+                        this.getWasteSubCategory("1")
+
+                    } else {
+                        this.notification.showError(
+                            response.message,
+                            'Error'
+                        );
+                        this.dataEntryForm.reset();
+                        this.wasteMethod = this.waterWasteMethod[0].id
+
+                    }
+                    this.ALLEntries();
+                    this.recycle = false;
+                },
+                error: (err) => {
+                    this.notification.showError(
+                        'Data entry added failed.',
+                        'Error'
+                    );
+                    this.dataEntryForm.reset();
+
+
+                    console.error('errrrrrr>>>>>>', err);
+                },
+                complete: () => { }
+            })
+        }
+        if (this.categoryId == 14) {
+
+            // Filter out rows where no field is filled
+            const filledRows = this.rows.filter(row =>
+
+                row.vehicleType1 !== null && row.employeesCommute !== ''
+            );
+
+            if (filledRows.length === 0) {
+                this.notification.showWarning(
+                    "Fields are required",
+                    'Warning'
+                );
+                return;
+            }
+
+            // Prepare the payload
+            const payload = filledRows.map(row => ({
+                type: row.vehicleType1,
+                subtype: row.vehicleType2,
+                employeesCommute: row.employeesCommute,
+                avgCommute: row.avgCommute
+            }));
+
+
+            // const typoOfOffice = [empobj1, empobj2, empobj3, empobj4, empobj5, empobj6, empobj7, empobj8, empobj9, empobj10, empobj11, empobj12, empobj13, empobj14, empobj15]
+            var typeoftransportStringfy = JSON.stringify(payload)
+
+
+            let formData = new URLSearchParams();
+
+            formData.set('batch', '1');
+            formData.set('noofemployees', form.value.noofemployees);
+            formData.set('workingdays', form.value.workingdays);
+            formData.set('typeoftransport', typeoftransportStringfy);
+            formData.set('facilities', this.facilityID);
+            formData.set('month', monthString);
+            formData.set('year', this.dataEntry.year);
+
+            this.trackingService.uploadEmployeeCommunity(formData.toString()).subscribe({
+                next: (response) => {
+                    this.ALLEntries();
+                    if (response.success == true) {
+                        this.notification.showSuccess(
+                            response.message,
+                            'Success'
+                        );
+                        this.dataEntryForm.reset();
+
+
+                    } else {
+                        this.notification.showWarning(
+                            response.message,
+                            'Error'
+                        );
+                        this.dataEntryForm.reset();
+
+                    }
+                },
+                error: (err) => {
+                    this.notification.showError(
+                        'Data entry added failed.',
+                        'Error'
+                    );
+                    this.dataEntryForm.reset();
+
+
+                    console.error('errrrrrr>>>>>>', err);
+                },
+                complete: () => { }
+            })
+        }
+        if (this.categoryId == 15) {
+            if ((parseInt(this.noofmonths_1) + parseInt(this.noofmonths_2) + parseInt(this.noofmonths_3)) > 12) {
+                this.notification.showWarning(
+                    'Sum of no of months cant greater than 12',
+                    'Error'
+                );
+                return
+            }
+
+            var obj1 = { "type": "1", "noofemployees": this.noofemployees_1, "noofdays": this.noofdays_1, "noofmonths": this.noofmonths_1 };
+            var obj2 = { "type": "2", "noofemployees": this.noofemployees_2, "noofdays": this.noofdays_2, "noofmonths": this.noofmonths_2 };
+            var obj3 = { "type": "3", "noofemployees": this.noofemployees_3, "noofdays": this.noofdays_3, "noofmonths": this.noofmonths_3 };
+            const typoOfOffice = [obj1, obj2, obj3]
+            var typeofhomeofficeStringfy = JSON.stringify(typoOfOffice)
+
+
+            let formData = new URLSearchParams();
+
+            formData.set('batch', '1');
+            formData.set('typeofhomeoffice', typeofhomeofficeStringfy);
+            formData.set('facilities', this.facilityID);
+            formData.set('month', monthString);
+            formData.set('year', this.dataEntry.year);
+            this.trackingService.uploadHomeOffice(formData.toString()).subscribe({
+                next: (response) => {
+
+                    if (response.success == true) {
+                        this.notification.showSuccess(
+                            response.message,
+                            'Success'
+                        );
+                        this.dataEntryForm.reset();
+                        this.getFranchiseType();
+                        this.getSubFranchiseCategory('Banking Financial Services');
+                        this.averageMethod = false;
+                        this.franchiseMethod = false;
+                        // this.getStatusData(this.activeCategoryIndex)
+                    } else {
+                        this.notification.showError(
+                            response.message,
+                            'Error'
+                        );
+                        this.dataEntryForm.reset();
+                        this.getFranchiseType();
+                        this.getSubFranchiseCategory('Banking Financial Services');
+                        this.averageMethod = false;
+                        this.franchiseMethod = false;
+
+                    }
+                    this.ALLEntries();
+                },
+                error: (err) => {
+                    this.notification.showError(
+                        'Data entry added failed.',
+                        'Error'
+                    );
+                    this.dataEntryForm.reset();
+                    this.getFranchiseType();
+                    this.getSubFranchiseCategory('Banking Financial Services');
+                    this.averageMethod = false;
+                    this.franchiseMethod = false;
+
+                    console.error('errrrrrr>>>>>>', err);
+                },
+                complete: () => { }
+            })
+        }
+        if (this.categoryId == 16) {
+
+            var spliteedMonth = this.dataEntry.month.split(",");
+            var monthString = JSON.stringify(spliteedMonth)
+
+            if (this.selectMonths.length == 0) {
+                this.notification.showInfo(
+                    'Select month',
+                    ''
+                );
+                return
+            }
+            var is_vehicle = 0;
+            var is_facility = 0;
+            if (this.leasefacilitieschecked === true) {
+                is_facility = 1
+            }
+            if (this.leasevehcileschecked === true) {
+                is_vehicle = 1
+            }
+            let formData = new URLSearchParams();
+            if (is_facility == 1 && is_vehicle == 0) {
+                if (this.averageMethod == true) {
+                    formData.set('months', monthString);
+                    formData.set('year', this.dataEntry.year);
+                    formData.set('category', form.value.facilityTypeValue);
+                    formData.set('sub_category', form.value.subfacilityTypeValue);
+                    formData.set('calculation_method', form.value.calculationmethod);
+                    formData.set('franchise_space', form.value.upLeasefranchise_space);
+                    formData.set('unit', 'm2');
+                    formData.set('is_vehicle', is_vehicle.toString());
+                    formData.set('is_facility', is_facility.toString());
+                    formData.set('facility_id', this.facilityID);
+                } else if (this.franchiseMethod == true) {
+                    formData.set('months', monthString);
+                    formData.set('year', this.dataEntry.year);
+                    formData.set('category', form.value.facilityTypeValue);
+                    formData.set('sub_category', form.value.subfacilityTypeValue);
+                    formData.set('calculation_method', form.value.calculationmethod);
+                    formData.set('scope1_emission', form.value.scope1_emission);
+                    formData.set('scope2_emission', form.value.scope2_emission);
+                    formData.set('is_vehicle', is_vehicle.toString());
+                    formData.set('is_facility', is_facility.toString());
+                    formData.set('facility_id', this.facilityID);
+                }
+            } else if (is_vehicle == 1 && is_facility == 0) {
+                formData.set('months', monthString);
+                formData.set('year', this.dataEntry.year);
+                formData.set('vehicle_type', this.selectedVehicleType);
+                formData.set('vehicle_subtype', form.value.subvehicle_type);
+                formData.set('no_of_vehicles', form.value.noOfVehicles);
+                formData.set('distance_travelled', form.value.distanceInKms);
+                formData.set('distance_unit', 'km');
+                formData.set('is_vehicle', is_vehicle.toString());
+                formData.set('is_facility', is_facility.toString());
+                formData.set('facility_id', this.facilityID);
+            }
+            else if (is_vehicle == 1 && is_facility == 1) {
+                if (this.averageMethod == true) {
+                    formData.set('months', monthString);
+                    formData.set('year', this.dataEntry.year);
+                    formData.set('category', form.value.facilityTypeValue);
+                    formData.set('sub_category', form.value.subfacilityTypeValue);
+                    formData.set('calculation_method', form.value.calculationmethod);
+                    formData.set('franchise_space', form.value.upLeasefranchise_space);
+                    formData.set('unit', 'm2');
+                    formData.set('vehicle_type', this.selectedVehicleType);
+                    formData.set('vehicle_subtype', form.value.subvehicle_type);
+                    formData.set('no_of_vehicles', form.value.noOfVehicles);
+                    formData.set('distance_travelled', form.value.distanceInKms);
+                    formData.set('distance_unit', 'km');
+                    formData.set('is_vehicle', is_vehicle.toString());
+                    formData.set('is_facility', is_facility.toString());
+                    formData.set('facility_id', this.facilityID);
+                } else if (this.franchiseMethod == true) {
+                    formData.set('months', monthString);
+                    formData.set('year', this.dataEntry.year);
+                    formData.set('category', form.value.facilityTypeValue);
+                    formData.set('sub_category', form.value.subfacilityTypeValue);
+                    formData.set('calculation_method', form.value.calculationmethod);
+                    formData.set('scope1_emission', form.value.scope1_emission);
+                    formData.set('scope2_emission', form.value.scope2_emission);
+                    formData.set('vehicle_type', this.selectedVehicleType);
+                    formData.set('vehicle_subtype', form.value.subvehicle_type);
+                    formData.set('no_of_vehicles', form.value.noOfVehicles);
+                    formData.set('distance_travelled', form.value.distanceInKms);
+                    formData.set('distance_unit', 'km');
+                    formData.set('is_vehicle', is_vehicle.toString());
+                    formData.set('is_facility', is_facility.toString());
+                    formData.set('facility_id', this.facilityID);
+                }
+            }
+
+
+
+            this.trackingService.uploadupLeaseEmissionCalculate(formData.toString()).subscribe({
+                next: (response) => {
+
+                    if (response.success == true) {
+                        this.notification.showSuccess(
+                            response.message,
+                            'Success'
+                        );
+                        this.averageMethod = true;
+                        this.franchiseMethod = false;
+                        this.dataEntryForm.reset();
+                        this.getSubVehicleCategoryLease(15);
+                        this.getVehicleTypesLease();
+                        this.getFranchiseType();
+                        this.getSubFranchiseCategory('Banking Financial Services');
+                        // this.getStatusData(this.activeCategoryIndex)
+                    } else {
+                        this.notification.showError(
+                            response.message,
+                            'Error'
+                        );
+                        this.averageMethod = true;
+                        this.franchiseMethod = false;
+                        this.dataEntryForm.reset();
+                        this.getSubVehicleCategoryLease(15);
+                        this.getVehicleTypesLease();
+                        this.getFranchiseType();
+                        this.getSubFranchiseCategory('Banking Financial Services');
+                    }
+                    this.ALLEntries();
+                },
+                error: (err) => {
+                    this.notification.showError(
+                        'Data entry added failed.',
+                        'Error'
+                    );
+                    console.error('errrrrrr>>>>>>', err);
+                },
+                complete: () => { }
+            });
+        }
+        if (this.categoryId == 17) {
+            let formData = new URLSearchParams();
+            if (this.storageTransporationChecked === true && this.vehcilestransporationchecked === true) {
+                formData.set('vehicle_type', this.upstreamVehicletypeId);
+                formData.set('sub_category', this.subVehicleCategoryValue);
+                formData.set('noOfVehicles', form.value.noOfVehicles);
+                formData.set('mass_of_products', form.value.mass_of_products);
+                formData.set('mass_unit', 'tonnes');
+                formData.set('distance_unit', 'km');
+                formData.set('area_occupied_unit', 'm2');
+                formData.set('distanceInKms', form.value.distanceInKms);
+                formData.set('storagef_type', form.value.storage_type);
+                formData.set('area_occupied', form.value.area_occupied);
+                formData.set('averageNoOfDays', form.value.averageNoOfDays);
+                formData.set('facility_id', this.facilityID);
+                formData.set('month', monthString);
+                formData.set('year', this.dataEntry.year);
+            } else if (this.storageTransporationChecked === true) {
+                formData.set('storagef_type', form.value.storage_type);
+                formData.set('area_occupied', form.value.area_occupied);
+                formData.set('averageNoOfDays', form.value.averageNoOfDays);
+                formData.set('area_occupied_unit', 'm2');
+                formData.set('facility_id', this.facilityID);
+                formData.set('month', monthString);
+                formData.set('year', this.dataEntry.year);
+            } else if (this.vehcilestransporationchecked == true) {
+                formData.set('vehicle_type', this.upstreamVehicletypeId);
+                formData.set('sub_category', this.subVehicleCategoryValue);
+                formData.set('noOfVehicles', form.value.noOfVehicles);
+                formData.set('mass_of_products', form.value.mass_of_products);
+                formData.set('mass_unit', 'tonnes');
+                formData.set('distance_unit', 'km');
+                formData.set('distanceInKms', form.value.distanceInKms);
+                formData.set('facility_id', this.facilityID);
+                formData.set('month', monthString);
+                formData.set('year', this.dataEntry.year);
+            }
+
+
+            this.trackingService.downStreamTransportation(formData.toString()).subscribe({
+                next: (response) => {
+
+                    if (response.success == true) {
+                        this.notification.showSuccess(
+                            response.message,
+                            'Success'
+                        );
+                        this.dataEntryForm.reset();
+                        this.getVehicleTypes()
+
+                        // this.getStatusData(this.activeCategoryIndex)
+                    } else {
+                        this.notification.showError(
+                            response.message,
+                            'Error'
+                        );
+                        this.dataEntryForm.reset();
+                        this.getVehicleTypes()
+                    }
+                    this.ALLEntries();
+                },
+                error: (err) => {
+                    this.notification.showError(
+                        'Data entry added failed.',
+                        'Error'
+                    );
+                    console.error('errrrrrr>>>>>>', err);
+                },
+                complete: () => { }
+            })
+        }
+        if (this.categoryId == 18) {
+            if (this.selectMonths.length == 0) {
+                this.notification.showInfo(
+                    'Select month',
+                    ''
+                );
+                return
+            }
+            var spliteedMonth = this.dataEntry.month.split(",");
+            var monthString = JSON.stringify(spliteedMonth)
+            let formData = new URLSearchParams();
+            if (form.value.industry == 'Other') {
+                if (this.averageMethod == true) {
+                    formData.set('month', monthString);
+                    formData.set('year', this.dataEntry.year);
+                    formData.set('intermediate_category', form.value.industry);
+                    formData.set('processing_acitivity', form.value.processing_acitivity);
+                    formData.set('sub_activity', form.value.sub_activity);
+                    formData.set('other_emission', form.value.emission_factor);
+                    formData.set('other', '1');
+                    formData.set('valueofsoldintermediate', form.value.valueofsoldintermediate);
+                    formData.set('calculation_method', form.value.calculationmethod);
+                    // formData.set('franchise_space', form.value.downLeasefranchise_space);
+                    formData.set('unit', form.value.goodsUnits);
+                    formData.set('batch', '1');
+                    formData.set('facilities', this.facilityID);
+
+                } else if (this.franchiseMethod == true) {
+                    formData.set('month', monthString);
+                    formData.set('year', this.dataEntry.year);
+                    formData.set('intermediate_category', form.value.industry);
+                    formData.set('processing_acitivity', form.value.processing_acitivity);
+                    formData.set('sub_activity', form.value.sub_activity);
+                    formData.set('other_emission', form.value.emission_factor);
+                    formData.set('other', '1');
+                    formData.set('valueofsoldintermediate', form.value.valueofsoldintermediate);
+                    formData.set('calculation_method', form.value.calculationmethod);
+                    formData.set('scope1emissions', form.value.scope1_emission);
+                    formData.set('scope2emissions', form.value.scope2_emission);
+                    formData.set('unit', form.value.goodsUnits);
+                    formData.set('batch', '1');
+                    formData.set('facilities', this.facilityID);
+                }
+
+            } else if (form.value.industry != 'Other') {
+                if (this.averageMethod == true) {
+                    formData.set('month', monthString);
+                    formData.set('year', this.dataEntry.year);
+                    formData.set('intermediate_category', form.value.industry);
+                    formData.set('processing_acitivity', form.value.sector);
+                    formData.set('sub_activity', form.value.sub_sector);
+                    formData.set('calculation_method', form.value.calculationmethod);
+                    formData.set('valueofsoldintermediate', form.value.valueofsoldintermediate);
+                    // formData.set('franchise_space', form.value.downLeasefranchise_space);
+                    formData.set('unit', form.value.goodsUnits);
+                    formData.set('batch', '1');
+                    formData.set('facilities', this.facilityID);
+
+                } else if (this.franchiseMethod == true) {
+                    formData.set('month', monthString);
+                    formData.set('year', this.dataEntry.year);
+                    formData.set('intermediate_category', form.value.industry);
+                    formData.set('processing_acitivity', form.value.sector);
+                    formData.set('sub_activity', form.value.sub_sector);
+                    formData.set('calculation_method', form.value.calculationmethod);
+                    formData.set('valueofsoldintermediate', form.value.valueofsoldintermediate);
+                    formData.set('scope1emissions', form.value.scope1_emission);
+                    formData.set('scope2emissions', form.value.scope2_emission);
+                    formData.set('unit', form.value.goodsUnits);
+                    formData.set('batch', '1');
+                    formData.set('facilities', this.facilityID);
+
+                }
+            }
+
+
+
+            this.trackingService.Addprocessing_of_sold_productsCategory(formData.toString()).subscribe({
+                next: (response) => {
+
+                    if (response.success == true) {
+                        this.notification.showSuccess(
+                            response.message,
+                            'Success'
+                        );
+                        this.dataEntryForm.reset();
+                        this.onIndustrySelected = false;
+                        this.OthersSecledted = false;
+                        this.averageMethod = false;
+                        this.franchiseMethod = false;
+
+
+                    } else {
+                        this.notification.showError(
+                            response.message,
+                            'Error'
+                        );
+                        this.dataEntryForm.reset();
+                        this.onIndustrySelected = false;
+                        this.OthersSecledted = false;
+                        this.averageMethod = false;
+                        this.franchiseMethod = false;
+
+                    }
+                    this.ALLEntries();
+                },
+                error: (err) => {
+                    this.notification.showError(
+                        'Data entry added failed.',
+                        'Error'
+                    );
+                    this.dataEntryForm.reset();
+
+
+                    console.error('errrrrrr>>>>>>', err);
+                },
+                complete: () => { }
+            })
+        }
+        if (this.categoryId == 19) {
+            if (this.selectMonths.length == 0) {
+                this.notification.showInfo(
+                    'Select month',
+                    ''
+                );
+                return
+            }
+            var spliteedMonth = this.dataEntry.month.split(",");
+            var monthString = JSON.stringify(spliteedMonth)
+
+            let formData = new URLSearchParams();
+            if (form.value.noofunits == 1) {
+                formData.set('type', form.value.energyTypes);
+                formData.set('productcategory', form.value.productCategoryitem);
+                formData.set('no_of_Items', form.value.numberofitems);
+                formData.set('no_of_Items_unit', form.value.noofunits);
+                formData.set('expectedlifetimeproduct', form.value.expectedlifetimeproduct);
+                formData.set('expectedlifetime_nooftimesused', form.value.unitsExpElec);
+                formData.set('electricity_use', form.value.electricity_use);
+                formData.set('electricity_usage', form.value.unitsExpElec);
+                formData.set('fuel_type', form.value.fuelItem);
+                formData.set('fuel_consumed', form.value.fuel_consumed);
+                formData.set('fuel_consumed_usage', form.value.unitsExpElec);
+                formData.set('referigentused', form.value.ItemRefrigerant);
+                formData.set('referigerantleakage', form.value.refLeakageValue);
+                formData.set('referigerant_usage', form.value.unitsExpElec);
+                formData.set('batch', '1');
+                formData.set('month', monthString);
+                formData.set('year', this.dataEntry.year);
+                formData.set('facilities', this.facilityID);
+
+            } else {
+                formData.set('type', form.value.energyTypes);
+                formData.set('productcategory', form.value.productCategoryitem);
+                formData.set('no_of_Items', form.value.numberofitems);
+                formData.set('no_of_Items_unit', form.value.noofunits);
+                formData.set('batch', '1');
+                formData.set('month', monthString);
+                formData.set('year', this.dataEntry.year);
+                formData.set('facilities', this.facilityID);
+            }
+
+
+
+            this.trackingService.AddSoldProductsCategory(formData.toString()).subscribe({
+                next: (response) => {
+
+                    if (response.success == true) {
+                        this.notification.showSuccess(
+                            response.message,
+                            'Success'
+                        );
+                        this.dataEntryForm.reset();
+                        this.getProductsEnergyCategory("1")
+                        this.noOfItems = false;
+
+
+
+                    } else {
+                        this.notification.showError(
+                            response.message,
+                            'Error'
+                        );
+                        this.dataEntryForm.reset();
+                        this.noOfItems = false;
+
+                    }
+                    this.ALLEntries();
+                },
+                error: (err) => {
+                    this.notification.showError(
+                        'Data entry added failed.',
+                        'Error'
+                    );
+                    this.dataEntryForm.reset();
+
+
+                    console.error('errrrrrr>>>>>>', err);
+                },
+                complete: () => { }
+            })
+        }
+        if (this.categoryId == 20) {
+
+            var total_waste = Number(form.value.landfill) + Number(form.value.combustion) + Number(form.value.recycling) + Number(form.value.composing);
+            if (!form.value.total_waste) {
+                this.notification.showInfo(
+                    'Please enter total waste',
+                    ''
+                );
+                return
+            }
+            if (total_waste > 100) {
+                this.notification.showInfo(
+                    'Waste % cannot be greater than 100%',
+                    ''
+                );
+                return
+            }
+            if (this.selectMonths.length == 0) {
+                this.notification.showInfo(
+                    'Select month',
+                    ''
+                );
+                return
+            }
+            var spliteedMonth = this.dataEntry.month.split(",");
+            var monthString = JSON.stringify(spliteedMonth)
+
+            let formData = new URLSearchParams();
+            formData.set('month', monthString);
+            formData.set('year', this.dataEntry.year);
+            formData.set('waste_type', form.value.wasteType);
+            formData.set('subcategory', form.value.wasteSubCategory);
+            formData.set('total_waste', form.value.total_waste);
+            formData.set('waste_unit', 'tonnes');
+            formData.set('landfill', form.value.landfill || '');
+            formData.set('combustion', form.value.combustion || '');
+            formData.set('recycling', form.value.recycling || '');
+            formData.set('composing', form.value.composing || '');
+            formData.set('batch', '1');
+            formData.set('facilities', this.facilityID);
+
+
+            this.trackingService.AddendoflifeCategory(formData.toString()).subscribe({
+                next: (response) => {
+
+                    if (response.success == true) {
+                        this.notification.showSuccess(
+                            response.message,
+                            'Success'
+                        );
+                        this.dataEntryForm.reset();
+                        this.getWasteSubCategory("1")
+
+                    } else {
+                        this.notification.showError(
+                            response.message,
+                            'Error'
+                        );
+                        this.dataEntryForm.reset();
+                        this.getWasteSubCategory("1")
+
+                    }
+                    this.ALLEntries();
+                },
+                error: (err) => {
+                    this.notification.showError(
+                        'Data entry added failed.',
+                        'Error'
+                    );
+                    this.dataEntryForm.reset();
+
+
+                    console.error('errrrrrr>>>>>>', err);
+                },
+                complete: () => { }
+            })
+        }
+        if (this.categoryId == 21) {
+            if (this.selectMonths.length == 0) {
+                this.notification.showInfo(
+                    'Select month',
+                    ''
+                );
+                return
+            }
+            var spliteedMonth = this.dataEntry.month.split(",");
+            var monthString = JSON.stringify(spliteedMonth)
+
+            var is_vehicle = 0;
+            var is_facility = 0;
+            if (this.leasefacilitieschecked === true) {
+                is_facility = 1
+            }
+            if (this.leasevehcileschecked === true) {
+                is_vehicle = 1
+            }
+            let formData = new URLSearchParams();
+            if (is_facility == 1 && is_vehicle == 0) {
+                if (this.averageMethod == true) {
+                    formData.set('months', monthString);
+                    formData.set('year', this.dataEntry.year);
+                    formData.set('category', form.value.facilityTypeValue);
+                    formData.set('sub_category', form.value.subfacilityTypeValue);
+                    formData.set('calculation_method', form.value.calculationmethod);
+                    formData.set('franchise_space', form.value.downLeasefranchise_space);
+                    formData.set('unit', form.value.upfacilityUnits);
+                    formData.set('is_vehicle', is_vehicle.toString());
+                    formData.set('is_facility', is_facility.toString());
+                    formData.set('facility_id', this.facilityID);
+                } else if (this.franchiseMethod == true) {
+                    formData.set('months', monthString);
+                    formData.set('year', this.dataEntry.year);
+                    formData.set('category', form.value.facilityTypeValue);
+                    formData.set('sub_category', form.value.subfacilityTypeValue);
+                    formData.set('calculation_method', form.value.calculationmethod);
+                    formData.set('scope1_emission', form.value.scope1_emission);
+                    formData.set('scope2_emission', form.value.scope2_emission);
+                    formData.set('is_vehicle', is_vehicle.toString());
+                    formData.set('is_facility', is_facility.toString());
+                    formData.set('facility_id', this.facilityID);
+                }
+            } else if (is_vehicle == 1 && is_facility == 0) {
+                formData.set('months', monthString);
+                formData.set('year', this.dataEntry.year);
+                formData.set('vehicle_type', this.selectedVehicleType);
+                formData.set('vehicle_subtype', form.value.subvehicle_type);
+                formData.set('no_of_vehicles', form.value.noOfVehicles);
+                formData.set('distance_travelled', form.value.distanceInKms);
+                formData.set('distance_unit', 'km');
+                formData.set('is_vehicle', is_vehicle.toString());
+                formData.set('is_facility', is_facility.toString());
+                formData.set('facility_id', this.facilityID);
+            }
+            else if (is_vehicle == 1 && is_facility == 1) {
+                if (this.averageMethod == true) {
+                    formData.set('months', monthString);
+                    formData.set('year', this.dataEntry.year);
+                    formData.set('category', form.value.facilityTypeValue);
+                    formData.set('sub_category', form.value.subfacilityTypeValue);
+                    formData.set('calculation_method', form.value.calculationmethod);
+                    formData.set('franchise_space', form.value.downLeasefranchise_space);
+                    formData.set('unit', form.value.upfacilityUnits);
+                    formData.set('vehicle_type', this.selectedVehicleType);
+                    formData.set('vehicle_subtype', form.value.subvehicle_type);
+                    formData.set('no_of_vehicles', form.value.noOfVehicles);
+                    formData.set('distance_travelled', form.value.distanceInKms);
+                    formData.set('distance_unit', 'km');
+                    formData.set('is_vehicle', is_vehicle.toString());
+                    formData.set('is_facility', is_facility.toString());
+                    formData.set('facility_id', this.facilityID);
+                } else if (this.franchiseMethod == true) {
+                    formData.set('months', monthString);
+                    formData.set('year', this.dataEntry.year);
+                    formData.set('category', form.value.facilityTypeValue);
+                    formData.set('sub_category', form.value.subfacilityTypeValue);
+                    formData.set('calculation_method', form.value.calculationmethod);
+                    formData.set('scope1_emission', form.value.scope1_emission);
+                    formData.set('scope2_emission', form.value.scope2_emission);
+                    formData.set('vehicle_type', this.selectedVehicleType);
+                    formData.set('vehicle_subtype', form.value.subvehicle_type);
+                    formData.set('no_of_vehicles', form.value.noOfVehicles);
+                    formData.set('distance_travelled', form.value.distanceInKms);
+                    formData.set('distance_unit', 'km');
+                    formData.set('is_vehicle', is_vehicle.toString());
+                    formData.set('is_facility', is_facility.toString());
+                    formData.set('facility_id', this.facilityID);
+                }
+            }
+
+
+            this.trackingService.downstreamLeaseEmissionCalculate(formData.toString()).subscribe({
+                next: (response) => {
+
+                    if (response.success == true) {
+                        this.notification.showSuccess(
+                            response.message,
+                            'Success'
+                        );
+                        this.ALLEntries();
+                        this.averageMethod = true;
+                        this.franchiseMethod = false;
+                        this.dataEntryForm.reset();
+                        this.getVehicleTypesLease();
+                        this.getSubVehicleCategoryLease(15)
+                        this.getFranchiseType();
+                        this.getSubFranchiseCategory('Banking Financial Services');
+                        // this.getStatusData(this.activeCategoryIndex)
+                    } else {
+                        this.notification.showError(
+                            response.message,
+                            'Error'
+                        );
+                        this.averageMethod = true;
+                        this.franchiseMethod = false;
+                        this.dataEntryForm.reset();
+                        this.getVehicleTypesLease();
+                        this.getSubVehicleCategoryLease(15)
+                        this.getFranchiseType();
+                        this.getSubFranchiseCategory('Banking Financial Services');
+                    }
+                },
+                error: (err) => {
+                    this.notification.showError(
+                        'Data entry added failed.',
+                        'Error'
+                    );
+                    console.error('errrrrrr>>>>>>', err);
+                },
+                complete: () => { }
+            });
+        }
+        if (this.categoryId == 22) {
+
+            let formData = new URLSearchParams();
+            if (this.averageMethod == true) {
+                formData.set('franchise_type', this.franchiseCategoryValue);
+                formData.set('sub_category', form.value.sub_categories);
+                formData.set('calculation_method', 'Average data method');
+                formData.set('franchise_space', form.value.franchise_space);
+                formData.set('facility_id', this.facilityID);
+                formData.set('unit', 'm2');
+                formData.set('month', monthString);
+                formData.set('year', this.dataEntry.year);
+
+            } else if (this.franchiseMethod == true) {
+                formData.set('franchise_type', this.franchiseCategoryValue);
+                formData.set('sub_category', form.value.sub_categories);
+                formData.set('calculation_method', 'Investment Specific method');
+                formData.set('scope1_emission', form.value.scope1_emission);
+                formData.set('scope2_emission', form.value.scope2_emission);
+                formData.set('facility_id', this.facilityID);
+                formData.set('unit', form.value.upfacilityUnits);
+                formData.set('month', monthString);
+                formData.set('year', this.dataEntry.year);
+            }
+
+
+            this.trackingService.uploadFranchise(formData.toString()).subscribe({
+                next: (response) => {
+
+                    if (response.success == true) {
+                        this.notification.showSuccess(
+                            response.message,
+                            'Success'
+                        );
+                        this.ALLEntries();
+                        this.dataEntryForm.reset();
+                        this.getFranchiseType();
+                        this.getSubFranchiseCategory('Banking Financial Services');
+                        this.averageMethod = true;
+                        this.franchiseMethod = false;
+
+                        // this.getStatusData(this.activeCategoryIndex)
+                    } else {
+                        this.notification.showError(
+                            response.message,
+                            'Error'
+                        );
+                        this.dataEntryForm.reset();
+                        this.getFranchiseType();
+                        this.getSubFranchiseCategory('Banking Financial Services');
+                        this.averageMethod = true;
+                        this.franchiseMethod = false;
+
+                    }
+                },
+                error: (err) => {
+                    this.notification.showError(
+                        'Data entry added failed.',
+                        'Error'
+                    );
+                    this.dataEntryForm.reset();
+                    this.getFranchiseType();
+                    this.getSubFranchiseCategory('Banking Financial Services');
+                    this.averageMethod = true;
+
+                    console.error('errrrrrr>>>>>>', err);
+                },
+                complete: () => { }
+            })
+        }
+        if (this.categoryId == 23) {
+            let formData = new URLSearchParams();
+
+            if (this.franchiseMethodValue == 'Investment Specific method' && this.investmentTypeValue == 'Equity investments') {
+                formData.set('investment_type', form.value.investment_type);
+                formData.set('category', form.value.investment_sector);
+                formData.set('sub_category_id', form.value.broad_categoriesId);
+                formData.set('calculation_method', form.value.calculationmethod);
+                formData.set('scope1_emission', form.value.scope1_emission);
+                formData.set('scope2_emission', form.value.scope2_emission);
+                formData.set('equity_share', form.value.share_Equity);
+                formData.set('facilities', this.facilityID);
+                formData.set('month', monthString);
+                formData.set('year', this.dataEntry.year);
+            } else if (this.investmentTypeValue == 'Equity investments' && this.franchiseMethodValue == 'Average data method') {
+                formData.set('investment_type', form.value.investment_type);
+                formData.set('category', form.value.investment_sector);
+                formData.set('sub_category_id', form.value.broad_categoriesId);
+                formData.set('calculation_method', form.value.calculationmethod);
+                formData.set('investee_company_total_revenue', form.value.investe_company_revenue);
+                formData.set('equity_share', form.value.share_Equity);
+                formData.set('facilities', this.facilityID);
+                formData.set('month', monthString);
+                formData.set('year', this.dataEntry.year);
+            } else if ((this.investmentTypeValue == 'Debt investments' || this.investmentTypeValue == 'Project finance') && this.franchiseMethodValue == 'Average data method') {
+                formData.set('investment_type', form.value.investment_type);
+                formData.set('category', form.value.investment_sector);
+                formData.set('sub_category_id', form.value.broad_categoriesId);
+                formData.set('calculation_method', form.value.calculationmethod);
+                formData.set('project_phase', form.value.projectPhase);
+                formData.set('project_construction_cost', form.value.project_construction_cost);
+                formData.set('equity_project_cost', form.value.equity_project_cost);
+                formData.set('facilities', this.facilityID);
+                formData.set('month', monthString);
+                formData.set('year', this.dataEntry.year);
+            } else if ((this.investmentTypeValue == 'Debt investments' || this.investmentTypeValue == 'Project finance') && this.franchiseMethodValue == 'Investment Specific method') {
+
+                formData.set('investment_type', form.value.investment_type);
+                formData.set('category', form.value.investment_sector);
+                formData.set('sub_category_id', form.value.broad_categoriesId);
+                formData.set('calculation_method', form.value.calculationmethod);
+                formData.set('scope1_emission', form.value.scope1_emission);
+                formData.set('scope2_emission', form.value.scope2_emission);
+                formData.set('equity_project_cost', form.value.project_cost);
+                formData.set('facilities', this.facilityID);
+                formData.set('month', monthString);
+                formData.set('year', this.dataEntry.year);
+
+            }
+
+
+            this.trackingService.calculateInvestmentEmission(formData.toString()).subscribe({
+                next: (response) => {
+
+                    if (response.success == true) {
+                        this.notification.showSuccess(
+                            response.message,
+                            'Success'
+                        );
+                        this.ALLEntries();
+                        this.dataEntryForm.reset();
+                        this.equityInvestmentRow = false;
+                        this.debtInvesmentRow = false;
+                        this.calculationRow = false;
+                        this.averageMethod = false
+                        this.franchiseMethod = false
+                        this.franchiseMethodValue = '';
+                        this.investmentTypeValue = ''
+
+                        // this.getStatusData(this.activeCategoryIndex)
+                    } else {
+                        this.notification.showError(
+                            response.message,
+                            'Error'
+                        );
+                        this.dataEntryForm.reset();
+                        this.equityInvestmentRow = false;
+                        this.debtInvesmentRow = false;
+                        this.calculationRow = false;
+                        this.averageMethod = false
+                        this.franchiseMethod = false;
+                        this.franchiseMethodValue = '';
+                        this.investmentTypeValue = ''
+                    }
+                },
+                error: (err) => {
+                    this.equityInvestmentRow = false;
+                    this.debtInvesmentRow = false;
+                    this.calculationRow = false;
+                    this.averageMethod = false
+                    this.franchiseMethod = false;
+                    this.franchiseMethodValue = '';
+                    this.investmentTypeValue = ''
+                    this.notification.showError(
+                        'Data entry added failed.',
+                        'Error'
+                    );
+                    console.error('errrrrrr>>>>>>', err);
+                },
+                complete: () => { }
+            })
+        }
+        if (this.categoryId == 24) {
+            // if (this.selectMonths.length == 0) {
+            //     this.notification.showInfo(
+            //         'Select month',
+            //         ''
+            //     );
+            //     return
+            // }
+
+
+            if (form.value.flightMode == 'Generic') {
+                if (form.value.no_of_trips === '' || form.value.no_of_trips === null) {
+                    this.notification.showInfo(
+                        "Please select no of trips",
+                        'Warning'
+                    );
+                    return;
+                }
+            }
+            var spliteedMonth = this.dataEntry.month.split(",");
+            var monthString = JSON.stringify(spliteedMonth)
+            let formData = new FormData();
+
+            if (form.value.flightMode == 'Generic') {
+                const payloadsFlight = this.rowsFlightTravel.map(row => ({
+
+                    flight_type: row.flightType,
+                    flight_class: row.flightClass,
+                    no_of_trips: row.noOfTrips,
+                    return_flight: row.return_flight,
+                    cost_centre: row.costCentre,
+                    batch: 1,
+                    month: row.selectedMonths
+
+                }));
+                formData.set('flight_calc_mode', form.value.flightMode);
+                formData.set('jsonData', JSON.stringify(payloadsFlight));
+                // formData.set('month', monthString);
+                formData.set('year', this.dataEntry.year);
+                formData.set('facilities', this.facilityID);
+                if (this.selectedFile) {
+                    formData.set('file', this.selectedFile, this.selectedFile.name);
+                }
+            } else if (form.value.flightMode == 'To/From') {
+                const payloadsFlight = this.rowsFlightTravel.map(row => ({
+
+                    to: row.to,
+                    from: row.from,
+                    via: row.via,
+                    flight_class: row.flight_class,
+                    no_of_passengers: row.no_of_passengers,
+                    return_flight: row.return_flight,
+                    reference_id: row.reference_id,
+                    cost_centre: row.cost_centre,
+                    batch: 1,
+                    month: row.selectedMonths
+
+                }));
+                formData.set('flight_calc_mode', form.value.flightMode);
+                formData.set('jsonData', JSON.stringify(payloadsFlight));
+                // formData.set('month', monthString);
+                formData.set('year', this.dataEntry.year);
+                formData.set('facilities', this.facilityID);
+                if (this.selectedFile) {
+                    formData.set('file', this.selectedFile, this.selectedFile.name);
+                }
+            } else if (form.value.flightMode == 'Distance') {
+                const payloadsFlight = this.rowsFlightTravel.map(row => ({
+
+                    flight_type: row.flightType,
+                    flight_class: row.flightClass,
+                    no_of_trips: row.noOfTrips,
+                    return_flight: row.returnFlight,
+                    cost_centre: row.costCentre,
+                    batch: 1,
+                    month: row.selectedMonths
+
+                }));
+                formData.set('flight_calc_mode', form.value.flightMode);
+                formData.set('flight_type', form.value.flight_type);
+                formData.set('flight_class', form.value.classs);
+                formData.set('distance', form.value.distance);
+                formData.set('no_of_passengers', form.value.no_of_passengers);
+                formData.set('return_flight', this.storageTransporationChecked.toString());
+                formData.set('reference_id', form.value.reference_id);
+                formData.set('cost_centre', form.value.businessunits);
+                formData.set('batch', '1');
+                formData.set('month', monthString);
+                formData.set('year', this.dataEntry.year);
+                formData.set('facilities', this.facilityID);
+                if (this.selectedFile) {
+                    formData.set('file', this.selectedFile, this.selectedFile.name);
+                }
+            }
+
+
+            this.trackingService.uploadflightTravel(formData).subscribe({
+                next: (response) => {
+
+                    if (response.success == true) {
+                        this.notification.showSuccess(
+                            response.message,
+                            'Success'
+                        );
+                        this.dataEntryForm.reset();
+                        this.ALLEntries();
+                        this.resetForm();
+                        // this.getStatusData(this.activeCategoryIndex);
+                        this.flightDisplay1 = 'block';
+                        this.flightDisplay2 = 'none';
+                        this.flightDisplay3 = 'none';
+                        this.rowsFlightTravel = [{
+                            id: 1,
+                            flightMode: '',
+                            flightType: null,
+                            flightClass: null,
+                            returnFlight: null,
+                            noOfTrips: null,
+                            costCentre: '',
+                            to: null,
+                            from: null,
+                            via: null,
+                            flight_class: null,
+                            no_of_passengers: null,
+                            return_flight: null,
+                            reference_id: null,
+                            cost_centre: null,
+                            batch: 1,
+                            month: this.months,
+                            selectedMonths: null
+
+                        }];
+
+                    } else {
+                        this.notification.showError(
+                            response.message,
+                            'Error'
+                        );
+                        // this.dataEntryForm.reset();
+
+
+                    }
+                },
+                error: (err) => {
+                    this.notification.showError(
+                        "EF not found for this facility",
+                        ''
+                    );
+                    this.dataEntryForm.reset();
+
+
+                    console.error('errrrrrr>>>>>>', err);
+                },
+                complete: () => { }
+            })
+        }
+        if (this.categoryId == 25) {
+
+            var spliteedMonth = this.dataEntry.month.split(",");
+            var monthString = JSON.stringify(spliteedMonth);
+
+            let hasNullValue = this.rowsHotelStay.some(row =>
+                row.selectedCountry == null ||
+                row.type_of_hotel == null ||
+                row.no_of_occupied_rooms == null ||
+                row.no_of_nights == null ||
+                row.selectedMonths == null
+            );
+
+            if (hasNullValue) {
+                this.notification.showWarning(
+                    'Error: Some hotel stay fields are missing.',
+                    ''
+                );
+                return; // stop further execution
+            }
+            let formData = new FormData();
+            const payloadsHotelStay = this.rowsHotelStay.map(row => ({
+
+                country_of_stay: row.selectedCountry,
+                type_of_hotel: row.type_of_hotel,
+                no_of_occupied_rooms: row.no_of_occupied_rooms,
+                no_of_nights_per_room: row.no_of_nights,
+                batch: 1,
+                month: row.selectedMonths
+
+            }));
+
+
+            formData.set('year', this.dataEntry.year);
+            formData.set('facilities', this.facilityID);
+            formData.set('jsonData', JSON.stringify(payloadsHotelStay));
+            if (this.selectedFile) {
+                formData.set('file', this.selectedFile, this.selectedFile.name);
+            }
+
+
+            this.trackingService.uploadHotelStay(formData).subscribe({
+                next: (response) => {
+
+                    if (response.success == true) {
+                        this.notification.showSuccess(
+                            response.message,
+                            'Success'
+                        );
+                        this.resetForm();
+                        this.dataEntryForm.reset();
+                        this.ALLEntries();
+                        this.rowsHotelStay = [{
+                            id: 1,
+                            country_stay: null,
+                            type_of_hotel: 'star_2',
+                            no_of_occupied_rooms: null,
+                            no_of_nights: null,
+                            selectedCountry: null,
+                            month: this.months,
+                            selectedMonths: null
+                        }];
+
+                        // this.getStatusData(this.activeCategoryIndex)
+                    } else {
+                        this.notification.showError(
+                            response.message,
+                            'Error'
+                        );
+                        this.dataEntryForm.reset();
+
+
+                    }
+                },
+                error: (err) => {
+                    this.notification.showError(
+                        'Data entry added failed.',
+                        ''
+                    );
+                    this.dataEntryForm.reset();
+
+
+                    console.error('errrrrrr>>>>>>', err);
+                },
+                complete: () => { }
+            })
+        }
+        if (this.categoryId == 26) {
+
+            var spliteedMonth = this.dataEntry.month.split(",");
+            var monthString = JSON.stringify(spliteedMonth)
+            let formData = new FormData();
+
+            const payloadsOtherModes = this.rowsOtherTransport.map(row => ({
+
+                mode_of_trasport: row.trasnportMode,
+                type: row.selectedMode,
+                fuel_type: row.selectedFuelType,
+                no_of_passengers: row.no_of_passengers,
+                distance_travelled: row.distance_travel_per_trip,
+                no_of_trips: row.noOfTrips,
+                batch: 1,
+                month: row.selectedMonths
+
+            }));
+            formData.set('jsonData', JSON.stringify(payloadsOtherModes));
+
+            formData.set('year', this.dataEntry.year);
+            formData.set('facilities', this.facilityID);
+            if (this.selectedFile) {
+                formData.set('file', this.selectedFile, this.selectedFile.name);
+            }
+
+            this.trackingService.uploadOtherModes(formData).subscribe({
+                next: (response) => {
+
+                    if (response.success == true) {
+                        this.notification.showSuccess(
+                            response.message,
+                            'Success'
+                        );
+                        this.dataEntryForm.reset();
+                        this.ModeSelected = false;
+                        this.ALLEntries();
+                        this.resetForm();
+                        this.rowsOtherTransport = [{
+                            id: 1,
+                            trasnportMode: null,
+                            modeType: [],
+                            selectedMode: null,
+                            carFuel_type: [],
+                            selectedFuelType: null,
+                            no_of_passengers: null,
+                            distance_travel_per_trip: null,
+                            isDisabled: false,
+                            noOfTrips: null,
+                            month: this.months,
+                            selectedMonths: null,
+                        }];;
+
+                        // this.getStatusData(this.activeCategoryIndex)
+                    } else {
+                        this.notification.showError(
+                            response.message,
+                            ''
+                        );
+                        this.dataEntryForm.reset();
+                        this.ModeSelected = false;
+
+                    }
+                },
+                error: (err) => {
+                    this.notification.showError(
+                        'Data entry added failed.',
+                        'Error'
+                    );
+                    this.dataEntryForm.reset();
+
+
+                    console.error('errrrrrr>>>>>>', err);
+                },
+                complete: () => { }
+            })
+
+        }
+
+    };
+
+    // getting status, units, subCategory types where ever required
+    SubCatData(data: any, catID: any, categoryName) {
+        this.categoryName = categoryName;
+        this.recycle = false;
+        this.isVisited = false;
+        this.renewableSelected = false;
+        this.supplierSelected = false;
+        this.storageTransporationChecked = false;
+        this.singleCompanyTab = true;
+        this.multipleCompanyTab = false;
+        this.bulkCompanyTab = false;
+
+        this.id_var = data.manageDataPointSubCategorySeedID;
+
+        this.categoryId = catID;
+        this.flightDisplay1 = 'block';
+        this.flightDisplay2 = 'none';
+        this.flightDisplay3 = 'none';
+        this.averageMethod = false;
+        this.franchiseMethod = false;
+
+
+        this.SubCatAllData = data;
+        this.ALLEntries()
+        if (catID == 1) {
+
+            this.getStationaryFuelType(this.SubCatAllData
+                .manageDataPointSubCategorySeedID);
+            this.getUnit(this.SubCatAllData
+                .manageDataPointSubCategorySeedID);
+        }
+
+        if (catID == 2) {
+            this.templateLinks = 'assets/Refrigerant_Template.xlsx'
+            this.getsubCategoryType(this.SubCatAllData
+                .manageDataPointSubCategorySeedID);
+            this.getUnit(this.SubCatAllData
+                .manageDataPointSubCategorySeedID);
+        }
+
+        if (catID == 3) {
+            this.templateLinks = 'assets/FireExtinguisher_Template.xlsx'
+            // this.getsubCategoryType(this.SubCatAllData
+            //     .manageDataPointSubCategorySeedID);
+            this.getUnit(this.SubCatAllData
+                .manageDataPointSubCategorySeedID);
+        }
+
+
+
+        if (catID == 5) {
+
+            this.getRegionName();
+            this.getUnit(this.SubCatAllData
+                .manageDataPointSubCategorySeedID);
+        }
+
+        if (catID == 6) {
+            this.getVehcileFleet(this.facilityID, data.manageDataPointSubCategorySeedID)
+
+            this.downloadCompanyExcelUrl = this.APIURL + `/download-excel-vehicle-fleet-by-facility-category-id?facility_id=${this.facilityID}&categoryID=${this.SubCatAllData
+                .manageDataPointSubCategorySeedID == 10 ? '1' : '2'} `;
+            // this.downloadCompanyExcelUrl = 'http://192.168.29.45:4500/' + `download-excel-vehicle-fleet-by-facility-category-id?facility_id=${this.facilityID}&categoryID=${this.SubCatAllData
+            //     .manageDataPointSubCategorySeedID == 10 ? '1' : '2'} `;
+            this.jsonCompanyData = [];
+            this.rowsCompany = [{
+                vehicleType: '',
+                noOfVehicles: null,
+                tripsPerVehicle: null,
+                modeOfEntry: 'Average distance per trip',
+                value: null,
+                unit: 'Km'
+            }];;
+            this.getPurchaseGoodsCurrency()
+            if (data.manageDataPointSubCategorySeedID == 10) {
+                this.getPassengerVehicleType();
+            }
+            else {
+                this.getDeliveryVehicleType();
+            }
+
+            this.getUnit(this.SubCatAllData
+                .manageDataPointSubCategorySeedID);
+
+
+        }
+        if (catID == 7) {
+
+            this.getsubCategoryType(this.SubCatAllData
+                .manageDataPointSubCategorySeedID);
+            this.getUnit(this.SubCatAllData
+                .manageDataPointSubCategorySeedID);
+        }
+        if (catID == 8) {
+            this.downloadExcelUrl = this.APIURL + `/get-excelsheet?facility_id=${this.facilityID}&tenantID=${this.loginInfo.super_admin_id}`;
+            this.getALlProducts();
+
+            // this.generateExcel();
+            this.months = [
+                { name: 'Jan', value: 'Jan' },
+                { name: 'Feb', value: 'Feb' },
+                { name: 'Mar', value: 'Mar' },
+                { name: 'Apr', value: 'Apr' },
+                { name: 'May', value: 'May' },
+                { name: 'June', value: 'Jun' },
+                { name: 'July', value: 'July' },
+                { name: 'Aug', value: 'Aug' },
+                { name: 'Sep', value: 'Sep' },
+                { name: 'Oct', value: 'Oct' },
+                { name: 'Nov', value: 'Nov' },
+                { name: 'Dec', value: 'Dec' }
+            ];
+            this.GetVendors();
+            this.GetHSN()
+            this.getPurchaseGoodsCurrency()
+        }
+        if (catID == 10) {
+            this.getVehicleTypes();
+            this.getSubVehicleCategory(1)
+        }
+        if (catID == 12) {
+            this.getEndWasteType();
+            this.getWasteSubCategory("1");
+            this.wasteMethod = this.waterWasteMethod[0].id;
+        }
+        if (catID == 13) {
+            this.isVisited = true;
+
+        }
+        if (catID == 14) {
+            this.getEmployeeCommuTypes()
+
+        }
+        if (catID == 17) {
+            this.getVehicleTypes();
+            this.getSubVehicleCategory(1)
+        }
+        if (catID == 18) {
+            this.getPurchaseGoodsCurrency();
+            this.getPurchaseGoodsCategory();
+        }
+        if (catID == 16) {
+            this.getFranchiseType();
+            this.getSubFranchiseCategory('Banking Financial Services');
+            this.getVehicleTypesLease();
+            this.getSubVehicleCategoryLease(15);
+            this.averageMethod = true;
+        }
+        if (catID == 19) {
+            this.getProductsEnergyCategory("1")
+        }
+        if (catID == 20) {
+            this.getEndWasteType();
+            this.getWasteSubCategory("1")
+        }
+        if (catID == 21) {
+            this.getFranchiseType();
+            this.getSubFranchiseCategory('Banking Financial Services');
+            this.getVehicleTypesLease();
+            this.getSubVehicleCategoryLease(15)
+            this.averageMethod = true;
+        }
+        if (catID == 22) {
+            this.getFranchiseType();
+            this.getSubFranchiseCategory('Banking Financial Services')
+            this.averageMethod = true;
+        }
+        if (catID == 23) {
+            this.getInvestmentCategories();
+            this.getInvestmentSubCategory('Coke, Refined Petroleum, and Nuclear Fuel')
+        }
+
+        this.typeEV = false;
+        this.typeBusCoach = false;
+        //   this.checkEntryexist();
+        this.resetForm();
+    };
 
 
 

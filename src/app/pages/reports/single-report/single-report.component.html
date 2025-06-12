@@ -126,7 +126,8 @@
                     <label for="fname " class="text-dark">Mode of Travel</label>
                     <p-dropdown class="ct_input_white_bg13 ct_select_2_drop_white ct_input_dark_text_145"
                         [options]="Modes" defaultLabel="Select Data Points" [(ngModel)]="selectMode"
-                        optionLabel="modeType" optionValue="id" name="datapoint"></p-dropdown>
+                        (onChange)="selectModeChanged($event)" optionLabel="modeType" optionValue="id"
+                        name="datapoint"></p-dropdown>
                 </div>
             </div>
             <div class="row">
@@ -149,63 +150,9 @@
                         class="generateReportButton ct_report_button_12 ct_animation_btn_121 ml-3">Download
                         Report</button>
                 </div>
-                <!-- <div *ngIf="CustomReportData && CustomReportData.length > 0"
-                    class="col d-flex justify-content-end pointer">
-                    Download
-                    <i class="pi pi-download pl-2 pt-1 pointer mb-1" aria-hidden="true" id="downloadIcon"
-                        data-toggle="dropdown" aria-haspopup="true" title="download" aria-expanded="false"></i>
 
-                    <div class="dropdown-menu brsr dropdown-menu-right" aria-labelledby="downloadIcon">
-                        <a class="dropdown-item pointer" value="Download PDF" (click)="downloadAsPDF()">
-                            <i class="fas fa-file-pdf" style="color: red"></i>&nbsp;&nbsp; Download as PDF</a>
-                    </div>
-                </div> -->
             </div>
             <div class="row">
-                <!-- <div class="col p-0 m-0 reporttable">
-                    <div *ngIf="CustomReportData && CustomReportData.length > 0; else emptyList">
-                        <p-table [value]="CustomReportData" [paginator]="true" [rows]="10">
-                            <ng-template pTemplate="header">
-                                <tr>
-                                    <th>DataPoints</th>
-                                    <th>April</th>
-                                    <th>May</th>
-                                    <th>June</th>
-                                    <th>July</th>
-
-
-                                    <th>August</th>
-                                    <th>September</th>
-                                    <th>October</th>
-                                    <th>November</th>
-                                    <th>December</th>
-                                    <th>Januray</th>
-                                    <th>February</th>
-                                    <th>March</th>
-                                </tr>
-                            </ng-template>
-                            <ng-template pTemplate="body" let-report>
-                                <tr>
-                                    <td>{{ report.dataPoint }}</td>
-                                    <td>{{ report.April }}</td>
-                                    <td>{{ report.May }}</td>
-                                    <td>{{ report.June }}</td>
-                                    <td>{{ report.July }}</td>
-                                    <td>{{ report.August }}</td>
-                                    <td>{{ report.September }}</td>
-                                    <td>{{ report.October }}</td>
-                                    <td>{{ report.November }}</td>
-                                    <td>{{ report.December }}</td>
-                                    <td>{{ report.January }}</td>
-                                    <td>{{ report.February }}</td>
-                                    <td>{{ report.March }}</td>
-                                </tr>
-                            </ng-template>
-                        </p-table>
-                    </div>
-                </div> -->
-
-
 
                 <div class="col-md-12" *ngIf="reportData.length >0; else emptyList">
 
@@ -254,7 +201,7 @@
                                     Vehicles
 
                                 </th>
-                            
+
                                 <th *ngIf="selectedCategory == 16 || selectedCategory == 21 ">
                                     No of Vehicles
 
@@ -280,15 +227,16 @@
                                 </th>
                                 <th *ngIf="selectedCategory==13 && selectMode==1">Flight Class</th>
                                 <th *ngIf="selectedCategory==13 && (selectMode==3)">Type</th>
-                                <th *ngIf="selectedCategory==13 && (selectMode==3)">Fuel Type</th>
+
                                 <th *ngIf="selectedCategory==13 && (selectMode==3 || selectMode ==1)">No of
                                     Passengers
                                 </th>
                                 <th *ngIf="selectedCategory==13 && (selectMode==3 || selectMode ==1)">Distance</th>
                                 <th *ngIf="selectedCategory==13 && (selectMode==3 )">No of Trips</th>
-                                <th *ngIf="selectedCategory==13 && (selectMode ==1)">Business unit</th>
-                                <th *ngIf="selectedCategory==14">No of Commutes</th>
-                                <th *ngIf="selectedCategory==14">Avg Commute Distance</th>
+                              
+                                <th *ngIf="selectedCategory==14">Type</th>
+                                <th *ngIf="selectedCategory==14">% of Employee Commute</th>
+                                <th *ngIf="selectedCategory==14">Avg Commute Distance (km)</th>
                                 <th *ngIf="selectedCategory == 15">
                                     Type of Home Office
 
@@ -314,6 +262,9 @@
                                 <th *ngIf="selectedCategory == 10 || selectedCategory == 17">
                                     Sub Category
 
+                                </th>
+                                <th *ngIf="selectedCategory == 12">
+                                    Method
                                 </th>
                                 <th *ngIf="selectedCategory == 10 || selectedCategory == 17">
                                     No of Vehicles
@@ -344,14 +295,14 @@
                                 <th *ngIf="selectedCategory==20">Combustion</th>
                                 <th *ngIf="selectedCategory==20">Recycling</th>
                                 <th *ngIf="selectedCategory==20">Composing</th>
-                                <th>Year</th>
-                                <th *ngIf="selectedCategory !=15">Month</th>
                                 <th *ngIf="selectedCategory==11">
                                     Water Supply
                                 </th>
                                 <th *ngIf="selectedCategory==11">
                                     Water Treated
                                 </th>
+                                <th>Year</th>
+                                <th *ngIf="selectedCategory !=15 && selectedCategory != 14">Month</th>
                                 <th *ngIf="selectedCategory==2">
                                     Refrigerant Amount
                                 </th>
@@ -384,7 +335,7 @@
                                     Energy
                                 </th>
 
-                                <th *ngIf="selectedCategory !=13 && selectedCategory !=15">
+                                <th *ngIf="selectedCategory !=13 && selectedCategory !=15 && selectedCategory !=22">
                                     Unit
                                 </th>
                                 <th pSortableColumn="unit" *ngIf="selectedCategory == 19">
@@ -406,7 +357,7 @@
                                     Refrig. Leak
                                 </th>
                                 <th pTooltip="Amount of Emission" tooltipPosition="top">
-                                    Emission
+                                    Emission (tCO2e)
                                 </th>
 
                                 <th *ngIf="selectedCategory ==8">
@@ -419,178 +370,11 @@
                                     Vendor EF unit
                                 </th>
 
-                                <th >
-                                        User
-                                    </th>
-
-                                <!-- <th  *ngIf="selectedCategory == 11">
-                                    Water Treatment
-                                   
-                                </th>
-                                <th  *ngIf="selectedCategory == 11">
-                                    Water Supply
-                                </th>
-                             
-                                <th  *ngIf="selectedCategory == 20">
-                                    Combustion
-                                </th>
-                                <th  *ngIf="selectedCategory == 20">
-                                    Composing
-                                </th>
-                                <th  *ngIf="selectedCategory == 20">
-                                    Landfill
-                                </th>
-                                <th  *ngIf="selectedCategory == 20">
-                                    Recycling
-                                </th>
-                                <th 
-                                    *ngIf="selectedCategory == 16 || selectedCategory == 21 || selectedCategory == 22 || selectedCategory == 23">
-                                    Sub Category
-                                   
-                                </th> -->
-                                <!-- <th  *ngIf="selectedCategory == 18">
-                                    Sub Activity
-                                   
-                                </th>
-                                <th  *ngIf="selectedCategory == 23">
-                                    Investment type
-                                   
-                                </th>
-                                <th  *ngIf="selectedCategory == 18">
-                                    Processing Activity
-                                    
-                                 </th> -->
-                                <!-- <th 
-                                    *ngIf="selectedCategory == 16 || selectedCategory ==18 || selectedCategory == 21 ||selectedCategory == 22 ||selectedCategory == 23">
-                                    Calculation Method
-                                   
-                                </th>
-                                <th 
-                                    *ngIf="selectedCategory == 16 || selectedCategory == 21 ||selectedCategory == 22">
-                                    Franchise Space
-                                   
-                                </th>
-                                <th 
-                                    *ngIf="selectedCategory == 16 || selectedCategory ==18 || selectedCategory == 21 ||selectedCategory == 22">
-                                    Scope 1 Emission
-                                   
-                                </th>
-                                <th 
-                                    *ngIf="selectedCategory == 16 || selectedCategory ==18 || selectedCategory == 21 ||selectedCategory == 22">
-                                    Scope 2 Emission
-                                   
-                                </th> -->
-                                <!-- <th  *ngIf="selectedCategory == 15">
-                                    Type of Home Office
-                                   
-                                </th>
-                                <th  *ngIf="selectedCategory == 15">
-                                    No of days
-                                   
-                                </th>
-                                <th  *ngIf="selectedCategory == 15">
-                                    No of employees
-                                   
-                                </th> -->
-                                <!-- <th  *ngIf="selectedCategory == 15">
-                                    No of months
-                                   
-                                </th>
-                                <th  *ngIf="selectedCategory == 14">
-                                    Type
-                                   
-                                </th>
-                                <th  *ngIf="selectedCategory == 14">
-                                    Average Employee Commute
-                                   
-                                </th> -->
-                                <!-- <th  *ngIf="selectedCategory == 14">
-                                    Average Commuted Distance
-                                   
-                                </th>
-                                <th  *ngIf="selectedCategory == 14">
-                                    Working Days
-                                   
-                                </th>
-                                <th  *ngIf="selectedCategory == 10 || selectedCategory == 17">
-                                    Vehicle Type
-                                   
-                                </th>
-                                <th  *ngIf="selectedCategory == 12">
-                                    Method
-                                   
-                                </th>
-                                <th  *ngIf="selectedCategory == 12">
-                                    Waste Type
-                                   
-                                </th>
-                          
-                                <th pTooltip="Data Points" tooltipPosition="top" pSortableColumn="subcatName"
-                                    *ngIf="selectedCategory == 1 || selectedCategory == 2 || selectedCategory == 3 || selectedCategory == 4 || selectedCategory == 5 || selectedCategory == 6">
-                                    D.P
-                                   
+                                <th>
+                                    User
                                 </th>
 
-                                <th *ngIf="selectedCategory==1 || selectedCategory==5 || selectedCategory==7 || selectedCategory==8"
-                                    pTooltip="Reading Value" tooltipPosition="top" pSortableColumn="readingValue">
-                            
-                                    Value
-
-                                </th>
-                                <th *ngIf="selectedCategory==1" pTooltip="Blend Type" tooltipPosition="top"
-                                    pSortableColumn="BlendType">
-                         
-                                    Blend
-
-                                </th> -->
-                                <!-- <th *ngIf="selectedCategory==1" style="width: 15%" pTooltip="Blend percent"
-                                    tooltipPosition="top" pSortableColumn="blendPercent">
-                                    <p-sortIcon field="blendPercent"></p-sortIcon>
-                                    %
-
-                                </th> -->
-                                <!-- 
-                                <th *ngIf="selectedCategory==2" pSortableColumn="noofairconnUnits"
-                                    pTooltip="Amount of refrigent used" tooltipPosition="top">
-                                    Refrigerant Amount <p-sortIcon field="noofairconnUnits"></p-sortIcon>
-                                </th>
-                              
-                                <th *ngIf="selectedCategory==3" pSortableColumn="numberOfExtinguisher"
-                                    pTooltip="Number Of Fire Extinguisher" tooltipPosition="top">
-                                    Extinguisher <p-sortIcon field="numberOfExtinguisher"></p-sortIcon>
-                                </th>
-                                <th *ngIf="selectedCategory==3" pSortableColumn="quantityOfCO2makeup"
-                                    pTooltip="Quantity Of CO2 makeup" tooltipPosition="top">
-                                    CO2 MakeUp <p-sortIcon field="quantityOfCO2makeup"></p-sortIcon>
-                                </th>
-                                <th *ngIf="selectedCategory==6" pSortableColumn="noOfVehicles"
-                                    pTooltip="Number Of Vehicles" tooltipPosition="top">
-                                    Vehicles <p-sortIcon field="noOfVehicles"></p-sortIcon>
-                                </th>
-                                <th *ngIf="selectedCategory==6" pSortableColumn="modeOfDE" pTooltip="Mode Of data entry"
-                                    tooltipPosition="top">
-                                    Mode <p-sortIcon field="modeOfDE"></p-sortIcon>
-                                </th>
-                                <th *ngIf="selectedCategory==6" pSortableColumn="amount">
-                                    Amount <p-sortIcon field="amount"></p-sortIcon>
-                                </th>
-                                <th *ngIf="selectedCategory==5" pSortableColumn="sourceName">
-                                    Source <p-sortIcon field="sourceName"></p-sortIcon>
-                                </th> -->
-                                <!-- <th >
-                                    <p-sortIcon pSortableColumn="status" field="status"></p-sortIcon>
-                                    Status
-                                    <p-columnFilter field="status" matchMode="equals" display="menu" [showMenu]="true"
-                                        [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
-                                        <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                                            <p-dropdown [ngModel]="value" [options]="statusOptions"
-                                                (onChange)="filter($event.value)" placeholder="All" [showClear]="false">
-                                            </p-dropdown>
-                                        </ng-template>
-                                    </p-columnFilter>
-
-                                </th> -->
-
+                    
                             </tr>
 
                         </ng-template>
@@ -617,14 +401,16 @@
                                 <td *ngIf="selectedCategory == 13 && (selectMode==1)"> {{de.flight_class}}</td>
                                 <td *ngIf="selectedCategory == 13 && (selectMode==3)"> {{de.vehicle_type}}</td>
                                 <td *ngIf="selectedCategory == 13 && (selectMode==3)"> {{de.type}}</td>
-                                <td *ngIf="selectedCategory == 13 && (selectMode==3)"> {{de.fuel_type}}</td>
+
                                 <td *ngIf="selectedCategory == 13 && (selectMode==3 || selectMode ==1)">
                                     {{de.no_of_passengers}}</td>
                                 <td *ngIf="selectedCategory == 13 && (selectMode==3 || selectMode ==1)">
-                                    {{de.distance}}
+                                    {{de.distance | number: '1.4-4'}}
                                 </td>
                                 <td *ngIf="selectedCategory == 13 && (selectMode==3)"> {{de.no_of_trips}}</td>
-                                <td *ngIf="selectedCategory == 13 && (selectMode==1)"> {{de.business_unit}}</td>
+                              
+
+                                <td *ngIf="selectedCategory == 14"> {{de.category}}-{{de.subcategory}}</td>
                                 <td *ngIf="selectedCategory == 14"> {{de.allemployeescommute}}</td>
                                 <td *ngIf="selectedCategory == 14"> {{de.avgcommutedistance}}</td>
                                 <td *ngIf="selectedCategory == 15 && de.typeofhomeoffice == '1'">With Cooling</td>
@@ -656,26 +442,29 @@
                                 <td
                                     *ngIf="selectedCategory == 1  || selectedCategory == 10 || selectedCategory == 17 || selectedCategory ==23 || selectedCategory ==12 || selectedCategory ==16 || selectedCategory ==20 || selectedCategory ==22 || selectedCategory ==21">
                                     {{ de.subcategory }}</td>
+                                <td *ngIf="selectedCategory == 12">
+                                    {{ de.method }}
+                                </td>
                                 <td *ngIf="selectedCategory == 16 || selectedCategory ==21 ">
                                     -</td>
                                 <td *ngIf="selectedCategory == 16 || selectedCategory ==21 ">
                                     {{
-                                        de.scope1_emission
-                                        }} </td>
+                                    de.scope1_emission
+                                    }} </td>
                                 <td *ngIf="selectedCategory == 16 || selectedCategory ==21 ">
                                     {{
-                                        de.scope2_emission
-                                        }} </td>
+                                    de.scope2_emission
+                                    }} </td>
                                 <td *ngIf="selectedCategory == 16 || selectedCategory ==21 ">
-                                   - </td>
-                                <td *ngIf="selectedCategory == 16 || selectedCategory ==21 ">
-                                    {{
-                                        de.no_of_vehicles
-                                        }} </td>
+                                    - </td>
                                 <td *ngIf="selectedCategory == 16 || selectedCategory ==21 ">
                                     {{
-                                        de.distance_travelled
-                                        }} </td>
+                                    de.no_of_vehicles
+                                    }} </td>
+                                <td *ngIf="selectedCategory == 16 || selectedCategory ==21 ">
+                                    {{
+                                    de.distance_travelled
+                                    }} </td>
                                 <td *ngIf="selectedCategory == 10 || selectedCategory == 17">{{
                                     de.no_of_vehicles
                                     }}</td>
@@ -699,19 +488,18 @@
                                 <td *ngIf="selectedCategory == 20 ">{{ de.composing }}</td>
                                 <td *ngIf="selectedCategory == 20 ">{{ de.landfill }}</td>
                                 <td *ngIf="selectedCategory == 20 ">{{ de.recycling }}</td>
-
+                                <td *ngIf="selectedCategory == 11 ">{{ de.water_supply }}</td>
+                                <td *ngIf="selectedCategory == 11 ">{{ de.water_treatment }}</td>
                                 <td *ngIf="selectedCategory != 8">
                                     {{ de.year }}
                                 </td>
-                                <td
-                                    *ngIf="selectedCategory == 10 || selectedCategory ==22 || selectedCategory ==17 || selectedCategory == 13 || selectedCategory == 19 || selectedCategory == 14  || selectedCategory ==23 || selectedCategory ==1 || selectedCategory ==12 || selectedCategory ==16 || selectedCategory ==18 || selectedCategory ==20 || selectedCategory ==21">
+                                <td *ngIf="isMonthCategory(selectedCategory)">
                                     {{ de.month }}
-                                </td>
-                                <td
-                                    *ngIf="selectedCategory != 8 &&  selectedCategory != 10 && selectedCategory != 19 && selectedCategory != 17 && selectedCategory != 22 && selectedCategory != 13  && selectedCategory != 14  && selectedCategory != 15 &&  selectedCategory !=23  && selectedCategory !=1 && selectedCategory !=12 && selectedCategory !=16 && selectedCategory !=18 && selectedCategory !=20 && selectedCategory !=21 ">
+                                  </td>
+                                  <td *ngIf="isMonthsCategory(selectedCategory)">
                                     {{ de.months }}
-                                </td>
-                                <td *ngIf="selectedCategory == 11 ">{{ de.water_supply }}</td>
+                                  </td>
+
                                 <td *ngIf="selectedCategory == 19 ">{{ de.no_of_Items }}</td>
                                 <td *ngIf="selectedCategory == 19 ">{{ de.no_of_Items_unit }}</td>
                                 <td *ngIf="selectedCategory == 19 ">-</td>
@@ -719,7 +507,7 @@
                                 <td *ngIf="selectedCategory == 19 ">{{ de.fuel_type }}</td>
                                 <td *ngIf="selectedCategory == 19 ">{{ de.referigentused }}</td>
                                 <td *ngIf="selectedCategory == 19 ">{{ de.referigerantleakage }}</td>
-                                <td *ngIf="selectedCategory == 11 ">{{ de.water_treatment }}</td>
+
                                 <td *ngIf="selectedCategory == 2">
                                     {{ de.refamount }}
                                 </td>
@@ -735,132 +523,18 @@
                                 <td *ngIf="selectedCategory==5">{{ de.sourcename }}</td>
                                 <td *ngIf="selectedCategory==5 || selectedCategory==7">{{ de.energy }}</td>
                                 <td
-                                    *ngIf="selectedCategory != 20 && selectedCategory != 15 && selectedCategory != 13 && selectedCategory != 19 ">
+                                    *ngIf="selectedCategory != 20 && selectedCategory != 15 && selectedCategory != 13 && selectedCategory != 19 && selectedCategory != 11 && selectedCategory != 22">
                                     {{ de.unit }}</td>
+
+                                <td *ngIf="selectedCategory == 11 ">KL</td>
                                 <td *ngIf="selectedCategory == 20 ">{{ de.waste_unit }}</td>
                                 <td *ngIf="selectedCategory == 8 "> {{(+de.Emission/1000) | number: '1.4-4'}}</td>
                                 <td *ngIf="selectedCategory != 8 "> {{(+de.emission/1000) | number: '1.4-4'}}</td>
                                 <td *ngIf="selectedCategory == 8 ">{{ de.vendor }}</td>
                                 <td *ngIf="selectedCategory == 8 ">{{ de.vendor_ef }}</td>
                                 <td *ngIf="selectedCategory == 8 ">{{ de.vendor_ef_unit }}</td>
-                                <td >{{ de.user_name }}</td>
-                                <!-- <td *ngIf="selectedCategory == 8"> {{de.typeofpurchase}}</td>s
-                             
-                             
-                          
-                                <td *ngIf="selectedCategory == 22 ">{{ de.franchise_type }}</td>
-                                <td *ngIf="selectedCategory == 22 || selectedCategory == 23 ">{{ de.sub_category }}</td>
-
-                       
-                             
-                                <td *ngIf="selectedCategory == 18">{{ de.intermediate_category }}</td>
-                                <td *ngIf="selectedCategory == 18">{{ de.sub_activity }}</td>
-                                <td *ngIf="selectedCategory == 18">{{ de.processing_acitivity }}</td>
-                                <td *ngIf="selectedCategory == 16 || selectedCategory == 21">{{ de.sub_category }}</td>
-                                <td
-                                    *ngIf="selectedCategory == 16 || selectedCategory ==18 || selectedCategory == 21 ||selectedCategory == 22 ||selectedCategory == 23">
-                                    {{ de.calculation_method }}</td>
-                                <td *ngIf="selectedCategory == 16 || selectedCategory == 21 ||selectedCategory ==22">{{
-                                    de.franchise_space }}</td>
-                                <td *ngIf="selectedCategory == 18 ">{{ de.scope1emissions }}</td>
-                                <td *ngIf="selectedCategory == 18 ">{{ de.scope2emissions }}</td>
-
-                                <td
-                                    *ngIf="selectedCategory == 16 || selectedCategory == 21 || selectedCategory == 22   ">
-                                    {{ de.scope1_emission }}</td>
-                                <td
-                                    *ngIf="selectedCategory == 16 || selectedCategory == 21 || selectedCategory == 22  ">
-                                    {{ de.scope2_emission }}</td>
-                       
-                                <td *ngIf="selectedCategory == 14">{{ de.type }}</td>
-                                <td *ngIf="selectedCategory == 14">{{ de.allemployeescommute }}</td>
-                                <td *ngIf="selectedCategory == 14">{{ de.avgcommutedistance }}</td>
-                                <td *ngIf="selectedCategory == 14">{{ de.workingdays }}</td>
-                                <td *ngIf="selectedCategory == 12">{{ de.method }}</td>
-                                <td *ngIf="selectedCategory == 12">{{ de.waste_type }}</td>
+                                <td>{{ de.user_name }}</td>
                               
-                                <td *ngIf="selectedCategory == 10 || selectedCategory == 17">{{ de.vehicle_type }}</td>
-                                <td *ngIf="selectedCategory == 10 || selectedCategory == 17">{{ de.sub_category }}</td>
-                                <td *ngIf="selectedCategory == 10 || selectedCategory == 17">{{ de.distance_travelled_km
-                                    }}</td>
-                                <td *ngIf="selectedCategory == 10 || selectedCategory == 17">{{ de.mass_of_product_trans
-                                    }}</td>
-                                <td *ngIf="selectedCategory == 10 || selectedCategory == 17">{{ de.storage_facility_type
-                                    }}</td> -->
-
-                                <!-- <td *ngIf="selectedCategory==1 || selectedCategory==5 || selectedCategory==7">
-                                    <p-cellEditor><ng-template pTemplate="input">
-                                            <input name="readingValue_{{ ri }}" id="{{ ri }}" pInputText type="text"
-                                                [(ngModel)]="de.readingValue" ngModel #readingValue="ngModel">
-                                        </ng-template>
-                                        <ng-template pTemplate="output">
-                                            {{ de.readingValue }}
-                                        </ng-template>{{ de.readingValue }}</p-cellEditor>
-                                </td> -->
-                                <!-- <td *ngIf="selectedCategory==1">{{ de.blendType }}</td> -->
-
-                                <!-- <td *ngIf="selectedCategory==1"><p-cellEditor><ng-template pTemplate="input">
-                                            <input name="blendPercent_{{ ri }}" id="{{ ri }}" pInputText type="text"
-                                                [(ngModel)]="de.blendPercent" ngModel #blendPercent="ngModel">
-                                        </ng-template>
-                                        <ng-template pTemplate="output">
-                                            {{ de.blendPercent }}
-                                        </ng-template>{{ de.blendPercent }}</p-cellEditor></td> -->
-
-                                <!-- <td *ngIf="selectedCategory==2"><p-cellEditor><ng-template pTemplate="input">
-                                            <input name="refAmount_{{ ri }}" id="{{ ri }}" pInputText type="text"
-                                                [(ngModel)]="de.refAmount" ngModel #refAmount="ngModel">
-                                        </ng-template>
-                                        <ng-template pTemplate="output">
-                                            {{ de.refAmount }}
-                                        </ng-template>{{ de.refAmount }}</p-cellEditor></td> -->
-                                <!-- <td *ngIf="selectedCategory==2"><p-cellEditor><ng-template pTemplate="input">
-                                            <input name="cO2LeakagePerUnit_{{ ri }}" id="{{ ri }}" pInputText
-                                                type="text" [(ngModel)]="de.cO2LeakagePerUnit" ngModel
-                                                #cO2LeakagePerUnit="ngModel">
-                                        </ng-template>
-                                        <ng-template pTemplate="output">
-                                            {{ de.cO2LeakagePerUnit }}
-                                        </ng-template>{{ de.cO2LeakagePerUnit }}</p-cellEditor></td>
-                                <td *ngIf="selectedCategory==2"><p-cellEditor><ng-template pTemplate="input">
-                                            <input name="capacity_{{ ri }}" id="{{ ri }}" pInputText type="text"
-                                                [(ngModel)]="de.capacity" ngModel #capacity="ngModel">
-                                        </ng-template>
-                                        <ng-template pTemplate="output">
-                                            {{ de.capacity }}
-                                        </ng-template>{{ de.capacity }}</p-cellEditor></td>
-                                <td *ngIf="selectedCategory==2"><p-cellEditor><ng-template pTemplate="input">
-                                            <input name="leakagePerOfCapacity_{{ ri }}" id="{{ ri }}" pInputText
-                                                type="text" [(ngModel)]="de.leakagePerOfCapacity" ngModel
-                                                #leakagePerOfCapacity="ngModel">
-                                        </ng-template>
-                                        <ng-template pTemplate="output">
-                                            {{ de.leakagePerOfCapacity }}
-                                        </ng-template>{{ de.leakagePerOfCapacity }}</p-cellEditor></td> -->
-
-
-                                <!--                                 
-                                <td *ngIf="selectedCategory==6"><p-cellEditor><ng-template pTemplate="input">
-                                            <input name="amount_{{ ri }}" id="{{ ri }}" pInputText type="text"
-                                                [(ngModel)]="de.amount" ngModel #amount="ngModel">
-                                        </ng-template>
-                                        <ng-template pTemplate="output">
-
-                                            {{ de.amount }}
-                                        </ng-template>{{ de.amount }}</p-cellEditor></td>
-                                <td *ngIf="selectedCategory==5">{{ de.sourceName }}</td> -->
-
-
-
-                                <!-- <td>
-                                    <div class="view-details">
-                                        <i class="pi pi-eye pt-2 text-white" title="info"
-                                            [routerLink]="['/tracking-status']"
-                                            [queryParams]="{data:de.subcategoryID}"></i>
-                                        <a *ngIf="de.fileName" (click)="downloadFile(de.fileName)">
-                                            <i class="pi pi-download text-white pl-2" title="download"></i></a>
-                                    </div>
-                                </td> -->
 
                             </tr>
                         </ng-template>

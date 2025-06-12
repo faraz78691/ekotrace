@@ -469,12 +469,12 @@ export class KpiDashboardComponent {
 
     this.appService.postAPI(`/getKpiInventoryDashboard`, formData).subscribe((response: any) => {
 
-      this.graph1 = this.getBarGraphOptions(response.data.first1.series, response.data.first1.time, '#FFEBB2', response.data.first1.kpi_unit, this.dateFormatType, this.selectedFormatType, response.data.first1.target_value);
-      this.graph2 = this.getBarGraphOptions(response.data.first2.series, response.data.first2.time, '#D4E157', response.data.first2.kpi_unit, this.dateFormatType, this.selectedFormatType, response.data.first2.target_value);
-      this.graph3 = this.getBarGraphOptions(response.data.first3.series, response.data.first3.time, '#B2EBF2', response.data.first3.kpi_unit, this.dateFormatType, this.selectedFormatType, response.data.first3.target_value);
-      this.graph4 = this.getBarGraphOptions(response.data.first4.series, response.data.first4.time, '#FFCCBC', response.data.first4.kpi_unit, this.dateFormatType, this.selectedFormatType, response.data.first4.target_value);
-      this.graph5 = this.getBarGraphOptions(response.data.first5.series, response.data.first5.time, '#FFCDD2', response.data.first5.kpi_unit, this.dateFormatType, this.selectedFormatType, response.data.first5.target_value);
-      this.graph6 = this.getBarGraphOptions(response.data.first6.series, response.data.first6.time, '#C5E1A5', response.data.first6.kpi_unit, this.dateFormatType, this.selectedFormatType, response.data.first6.target_value);
+      this.graph1 = this.getBarGraphOptions(response.data.first1.series, response.data.first1.time, '#F2C464', response.data.first1.kpi_unit, this.dateFormatType, this.selectedFormatType, response.data.first1.target_value);
+      this.graph2 = this.getBarGraphOptions(response.data.first2.series, response.data.first2.time, '#A9C34A', response.data.first2.kpi_unit, this.dateFormatType, this.selectedFormatType, response.data.first2.target_value);
+      this.graph3 = this.getBarGraphOptions(response.data.first3.series, response.data.first3.time, '#7BC8D7', response.data.first3.kpi_unit, this.dateFormatType, this.selectedFormatType, response.data.first3.target_value);
+      this.graph4 = this.getBarGraphOptions(response.data.first4.series, response.data.first4.time, '#FFB3A7', response.data.first4.kpi_unit, this.dateFormatType, this.selectedFormatType, response.data.first4.target_value);
+      this.graph5 = this.getBarGraphOptions(response.data.first5.series, response.data.first5.time, '#FF99C9', response.data.first5.kpi_unit, this.dateFormatType, this.selectedFormatType, response.data.first5.target_value);
+      this.graph6 = this.getBarGraphOptions(response.data.first6.series, response.data.first6.time, '#8BC34A', response.data.first6.kpi_unit, this.dateFormatType, this.selectedFormatType, response.data.first6.target_value);
       // this.graph7 = this.getBarGraphOptions(response.data.first1.series, response.data.first1.time, '#CE93D8', "Total Emissions", this.dateFormatType, this.selectedFormatType);
       // this.graph8 = this.getBarGraphOptions(response.data.first1.series, response.data.first1.time, '#FFDDC1', "Total Emissions", this.dateFormatType, this.selectedFormatType);
     })

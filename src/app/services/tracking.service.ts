@@ -630,6 +630,7 @@ export class TrackingService {
             formData
         );
     };
+
     submitPurchaseGoods2(formData: any): Observable<any> {
         const headers = new HttpHeaders()
         .set('content-type','application/x-www-form-urlencoded')
@@ -641,6 +642,7 @@ export class TrackingService {
             formData
         );
     };
+
     submitPurchaseGoodsAI(formData: any): Observable<any> {
         const headers = new HttpHeaders()
         .set('content-type','application/x-www-form-urlencoded')
@@ -649,17 +651,15 @@ export class TrackingService {
         return this.http.post(
             environment.baseUrl + '/add-purchase-goods-match-unmatch-data',
             formData
-        );
-        
+        );  
     };
+
     triggerAIPRocess(): Observable<any> {
         const headers = new HttpHeaders()
         .set('content-type','application/x-www-form-urlencoded')
-        .set('Access-Control-Allow-Origin', '*');  
+        .set('Access-Control-Allow-Origin', '*');
 
-        return this.http.get(
-           "https://ekotrace.ekobon.com:5000/trigger-call"
-        );  
+        return this.http.get(environment.baseUrl2 + '/trigger-call');  
     };
 
     // http://http://13.200.247.29/:4000/getAllBatches
@@ -667,14 +667,11 @@ export class TrackingService {
         return this.http.get(
             environment.baseUrl + '/getAllBatches',
             
-        );
+        )
     };
 
     getAirportCodes(): Observable<any> {
-        return this.http.get(
-            environment.baseUrl + '/getflightairportcode',
-            
-        );
+        return this.http.get(environment.baseUrl + '/getflightairportcode');
     };
 
     getEmployeeType(facilityId): Observable<any> {
@@ -683,8 +680,8 @@ export class TrackingService {
     getPurchaseCategorires(formData: any): Observable<any> {
         return this.http.post(environment.baseUrl + '/purchaseGoodsAllcategories', formData)
     };
-    getEmployeeSubVehicleCat(id:any): Observable<any> {
-        return this.http.get(environment.baseUrl + `/employeeCommunitysubCategory/${id}`)
+    getEmployeeSubVehicleCat(id:any, facility_id:any): Observable<any> {
+        return this.http.get(environment.baseUrl + `/employeeCommunitysubCategory/${id}/${facility_id}`)
     };
     getVehicleType(): Observable<any> {
         return this.http.get(environment.baseUrl + '/vehicleCategories')
@@ -695,11 +692,11 @@ export class TrackingService {
     getVehicleTypeLease(): Observable<any> {
         return this.http.get(environment.baseUrl + '/vehicleCategories_lease')
     };
-    getSubVehicleCat(id:any): Observable<any> {
-        return this.http.get(environment.baseUrl + `/vehicleSubCategories?id=${id}`)
+    getSubVehicleCat(id:any, facility_id:any): Observable<any> {
+        return this.http.get(environment.baseUrl + `/vehicleSubCategories?id=${id}&facility_id=${facility_id}`)
     };
-    getSubVehicleCatLease(id:any): Observable<any> {
-        return this.http.get(environment.baseUrl + `/vehicleSubCategories_lease?id=${id}`)
+    getSubVehicleCatLease(id:any, facility_id:any): Observable<any> {
+        return this.http.get(environment.baseUrl + `/vehicleSubCategories_lease?id=${id}&facility_id=${facility_id}`)
     };
 
     upStreamTransportation(formData: any): Observable<any> {
@@ -726,6 +723,7 @@ export class TrackingService {
         );
     };
     uploadFranchise(formData: any): Observable<any> {
+        console.log(formData);
         return this.http.post(
             environment.baseUrl + '/franchiseEmissionCalculate',
             formData
@@ -826,9 +824,10 @@ export class TrackingService {
         return this.http.get(environment.baseUrl + '/flight_types')
     };
 
-    getSubFranchiseCat(categoryName:any): Observable<any> {
-        return this.http.get(environment.baseUrl + `/franchiseSubCategories?category=${categoryName}`)
+    getSubFranchiseCat(categoryName:any,facility_id:any): Observable<any> {
+        return this.http.get(environment.baseUrl + `/franchiseSubCategories?category=${categoryName}&facility_id=${facility_id}`)
     };
+    
     getInvestmentSubCategory(categoryName:any): Observable<any> {
         return this.http.get(environment.baseUrl + `/getInvestmentSubCategory?category=${categoryName}`)
     };

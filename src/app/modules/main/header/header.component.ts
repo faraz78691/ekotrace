@@ -59,7 +59,6 @@ export class HeaderComponent implements OnInit {
     @ViewChild('menu', { static: true }) menu: any;
     public href: string = null;
     displayTracker = false;
-
     isActiveLabel = computed(() => this.facilityService.headerTracking());
     selectedGroupID: any;
 
@@ -85,9 +84,9 @@ export class HeaderComponent implements OnInit {
         this.loginInfo = new LoginInfo();
         if (localStorage.getItem('LoginInfo') != null) {
             let userInfo = localStorage.getItem('LoginInfo');
-            let jsonObj = JSON.parse(userInfo); // string to "any" object first
+            let jsonObj = JSON.parse(userInfo);
             this.loginInfo = jsonObj as LoginInfo;
-
+          
             this.loginInfo.companyName =
                 this.loginInfo.companyName == ''
                     ? 'System Admin'
@@ -97,16 +96,14 @@ export class HeaderComponent implements OnInit {
                 this.loginInfo.role !== 'Preparer' &&
                 this.loginInfo.role !== 'Approver'
             ) {
-                // this.getTenantById(Number(this.loginInfo.tenantID));
-
-                // this.GetFacilityGroupList(Number(this.loginInfo.tenantID));
+              
             }
 
             this.checkRolesAndLoadData();
             this.router.events.pipe(
                 filter(event => event instanceof NavigationEnd)
             ).subscribe(() => {
-
+              
                 this.checkRolesAndLoadData();
             })
 
@@ -141,35 +138,37 @@ export class HeaderComponent implements OnInit {
 
     private checkRolesAndLoadData(): void {
         const baseUrl = this.router.url.split('?')[0];
-        
-        if (this.loginInfo.role !== 'Manager' &&
-            this.loginInfo.role !== 'Preparer' &&
-            this.loginInfo.role !== 'Approver') {
-            // this.getTenantById(Number(this.loginInfo.tenantID));
-            // this.GetFacilityGroupList(Number(this.loginInfo.tenantID));
-        }
+        let userInfo = localStorage.getItem('LoginInfo');
+        let jsonObj = JSON.parse(userInfo);
+        this.loginInfo = jsonObj as LoginInfo;
+        const tenantID = this.loginInfo.tenantID;
+        if (tenantID) {
+           
+            if (this.router.url === '/finance_emissions') {
+                this.facilitygrouplist = [];
 
-        if (this.router.url === '/finance_emissions') {
-            this.facilitygrouplist = [];
+                this.GetSubGroupList(tenantID);
+            } else if (this.router.url === '/tracking') {
+                this.facilitysubgrouplist = []
 
-            this.GetSubGroupList(this.loginInfo.tenantID);
-        } else if (this.router.url === '/tracking' || baseUrl == '/tracking-view-requests') {
-            this.facilitysubgrouplist = []
+                this.GetFacilityGroupList(tenantID);
+            } else if (this.router.url === '/tracking-view-requests') {
+                this.facilitysubgrouplist = []
 
-            this.GetFacilityGroupList(this.loginInfo.tenantID);
+                this.GetFacilityGroupList(tenantID);
+            }
         }
     }
 
     onFacilityChange() {
-        console.log("on facility change", this.selectedFacilityID);
         this.facilityService.facilitySelected(this.selectedFacilityID)
-
-        localStorage.setItem('SelectedfacilityID', this.selectedFacilityID);
-
+        sessionStorage.setItem('SelectedfacilityID', this.selectedFacilityID);
     };
+
     onGroupChnage() {
-        console.log("on group change", this.selectedFacilityID);
-        this.facilityService.setGroupId(this.selectedGroupID)
+        this.facilityService.setGroupId(this.selectedGroupID);
+        const countryCode = this.facilitysubgrouplist.find(item => item.id === this.selectedGroupID)?.country_code;
+        this.facilityService.setGroupsCountry(countryCode);
 
     };
 
@@ -214,7 +213,6 @@ export class HeaderComponent implements OnInit {
 
     GetFacilityGroupList(tenantID) {
 
-
         this.facilitygrouplist = []
         if (this.loginInfo.role === this.excludedRole) {
             return;
@@ -226,20 +224,21 @@ export class HeaderComponent implements OnInit {
 
                     this.facilitygrouplist = res;
 
-                    const facilityID = localStorage.getItem('SelectedfacilityID');
+                    const facilityID = sessionStorage.getItem('SelectedfacilityID');
 
                     if (facilityID) {
                         this.selectedFacilityID = Number(facilityID);
-                
-                    }else{
+
+                    } else {
                         this.selectedFacilityID = Number(this.facilitygrouplist[0].id);
-                        localStorage.setItem('SelectedfacilityID', this.selectedFacilityID);
+                        sessionStorage.setItem('SelectedfacilityID', this.selectedFacilityID);
                     }
                     this.facilityService.facilitySelected(this.selectedFacilityID);
 
                 }
             });
     };
+
 
     GetSubGroupList(tenantID) {
         this.facilitysubgrouplist = []
@@ -254,9 +253,9 @@ export class HeaderComponent implements OnInit {
 
                 if (res.success == true) {
                     this.facilitysubgrouplist = res.categories;
-
-
-
+                    this.selectedGroupID = this.facilitysubgrouplist[0].id;
+                    this.facilityService.setGroupId(this.selectedGroupID);
+                    this.facilityService.setGroupsCountry(this.facilitysubgrouplist[0].country_code);
                 }
             });
     };

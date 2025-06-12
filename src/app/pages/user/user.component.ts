@@ -50,7 +50,7 @@ export class UserComponent {
     uploadedImageUrl: string;
     groupId: any;
     payloadFacilityIds: any;
-
+selectedFacilityID: any
     constructor(
         private companyService: CompanyService,
         private UserService: UserService,
@@ -103,14 +103,15 @@ export class UserComponent {
     };
 
     //Checks the facility ID and calls the GetAssignedDataPoint function with the provided ID.
-    checkFacilityID() {
-
+    onChangeFacilityId() {
+console.log(this.admininfo.facilityID);
         if (this.selectedRole == '525debfd-cd64-4936-ae57-346d57de3585') {
             const facilityIDs = this.facilityList.filter((item) => item.id == this.admininfo.group_id).map((item) => item.ID);
       
             this.groupId = this.admininfo.group_id;
             const stringfyIDs = JSON.stringify(facilityIDs[0]);
             this.payloadFacilityIds = stringfyIDs;
+            console.log(this.payloadFacilityIds);
         } else {
             const stringfyIDs = JSON.stringify([this.admininfo.facilityID.toString()]);
             this.payloadFacilityIds = stringfyIDs;
@@ -180,7 +181,7 @@ export class UserComponent {
                 formData.set('lastname', this.admininfo.lastname)
                 formData.set('roleID', this.selectedRole)
                 formData.set('tenantId', this.loginInfo.super_admin_id.toString())
-                formData.set('facilityID', this.payloadFacilityIds[0])
+                formData.set('facilityID', this.payloadFacilityIds)
                 formData.set('package_id', this.loginInfo.package_id.toString())
                 formData.set('group_id', this.groupId?.toString())
 
@@ -239,7 +240,7 @@ export class UserComponent {
                 formData.set('lastname', this.admininfo.lastname)
                 formData.set('roleID', this.selectedRole)
                 formData.set('facilityID', this.payloadFacilityIds)
-                formData.set('group_id', this.groupId?.toString())
+            formData.set('group_id', this.groupId?.toString() || '')
                 formData.set('user_id', this.admininfo.user_id.toString())
             
 

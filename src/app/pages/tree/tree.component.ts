@@ -437,7 +437,7 @@ export class TreeComponent {
         })
     };
     createClone() {
-        console.log("it is");
+        
         const facilityTypeOptions = this.facilityTypeArray.map(item => ({
             value: item.type,
             text: item.type
@@ -646,7 +646,7 @@ export class TreeComponent {
                                 setTimeout(() => {
                                     this.applyZoomFromStorage();
                                     initialRenderDone = true;
-                                }, 0);
+                                }, 50);
                             }
                         });
                     }
@@ -779,6 +779,16 @@ export class TreeComponent {
                         family.load(
                             this.loadFamilyData
                         );
+                        let initialRenderDone = false;
+ 
+                        family.on('prerender', () => {
+                            if (!initialRenderDone) {
+                                setTimeout(() => {
+                                    this.applyZoomFromStorage();
+                                    initialRenderDone = true;
+                                }, 50);
+                            }
+                        });
                     }
                     $(".ct_custom_modal_120").hide()
                     this.nodeForm.reset();

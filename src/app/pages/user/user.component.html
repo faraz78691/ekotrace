@@ -354,7 +354,7 @@
                                     placeholder="Select" name="facility" #facility="ngModel" [options]="facilityList"
                                     (onShow)="handleDropdownShow()" (onHide)="handleDropdownHide()"
                                     optionLabel="AssestType" optionValue="id" styleClass="facilitydropdown"
-                                    [(ngModel)]="admininfo.facilityID" (ngModelChange)="checkFacilityID()">
+                                    [(ngModel)]="admininfo.facilityID" (ngModelChange)="onChangeFacilityId()">
                                 </p-dropdown>
 
                             </div>
@@ -374,7 +374,7 @@
                                     placeholder="Select" name="facility" #facility="ngModel" [options]="facilityList"
                                     (onShow)="handleDropdownShow()" (onHide)="handleDropdownHide()" optionLabel="name"
                                     styleClass="facilitydropdown" optionValue="id" [(ngModel)]="admininfo.group_id"
-                                    (ngModelChange)="checkFacilityID()">
+                                    (ngModelChange)="onChangeFacilityId()">
                                 </p-dropdown>
 
                             </div>

@@ -75,7 +75,7 @@ import { KpiInventoryComponent } from '@pages/kpi-inventory/kpi-inventory.compon
 import { AttachmentsComponent } from '@pages/attachments/attachments.component';
 
 const routes: Routes = [
-    { path: '', redirectTo: '/dashboard/ghgEmision', pathMatch: 'full' },
+    { path: '', redirectTo: '/dashboard/ghgEmission', pathMatch: 'full' },
     {
         path: '',
         component: MainComponent,
@@ -99,8 +99,8 @@ const routes: Routes = [
                     ]
                 },
                 children:[
-                    {path:'',redirectTo:'ghgEmision', pathMatch:'full'},
-                    {path:'ghgEmision',component: GhgEmmissionsComponent},
+                    {path:'',redirectTo:'ghgEmission', pathMatch:'full'},
+                    {path:'ghgEmission',component: GhgEmmissionsComponent},
                     {path:'energyEmission',component: EnergyEmmsionsComponent},
                     {path:'businessTravel',component: BusinessTravelComponent},
                     {path:'waterUsage',component: WaterUsageComponent},
@@ -282,18 +282,7 @@ const routes: Routes = [
                 canActivate: [RoleGuard],
                 data: { roles: ['Super Admin', 'Admin', 'Auditor'] }
             },
-            // {
-            //     path: 'group',
-            //     component: GroupComponent,
-            //     canActivate: [RoleGuard],
-            //     data: { roles: ['Super Admin', 'Admin', 'Manager'] }
-            // },
-            // {
-            //     path: 'facility',
-            //     canActivate: [RoleGuard],
-            //     component: FacilityComponent,
-            //     data: { roles: ['Super Admin', 'Admin'] }
-            // },
+       
             {
                 path: 'billing',
                 canActivate: [RoleGuard],
@@ -341,35 +330,6 @@ const routes: Routes = [
                     'Platform Admin'
                 ]
             }, loadChildren: () => import('./pages/platform-admin/platform-admin.module').then(m => m.PlatformAdminModule) },
-            // {
-            //     path: 'tracking',
-            //     canActivate: [RoleGuard],
-            //     component: TrackingComponent,
-            //     data: {
-            //         roles: [
-            //             'Super Admin',
-            //             'Admin',
-            //             'Manager',
-            //             'Preparer',
-            //             'Approver'
-            //         ]
-            //     }
-            // },
-        
-            // {
-            //     path: 'Ntracking',
-            //     canActivate: [RoleGuard],
-            //     component: Scope2TrackingComponent,
-            //     data: {
-            //         roles: [
-            //             'Super Admin',
-            //             'Admin',
-            //             'Manager',
-            //             'Preparer',
-            //             'Approver'
-            //         ]
-            //     }
-            // },
             {
                 path: 'notification',
                 canActivate: [RoleGuard],
@@ -695,7 +655,7 @@ const routes: Routes = [
     { path: 'settings', loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule) },
   
 
-    { path: '**', redirectTo: '/dashboard/ghgEmision' }
+    { path: '**', redirectTo: '/dashboard/ghgEmission' }
 ];
 
 @NgModule({

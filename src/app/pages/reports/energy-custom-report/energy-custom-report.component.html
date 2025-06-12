@@ -107,42 +107,13 @@
                         <p-dropdown class=" finput ct_input_white_bg13 ct_select_2_drop_white ct_input_dark_text_145"
                             name="facility" #facility="ngModel" [options]="facilityData"
                             optionLabel="AssestType" optionValue="id" styleClass="facilitydropdown"
-                            [(ngModel)]="selectedFacilityID" (onChange)="checkFacilityID(selectedFacilityID)">
+                            [(ngModel)]="selectedFacilityID">
                         </p-dropdown>
                     </ng-template>
                 </div>
 
 
-                <!-- <div class="col-md-6 mb-3">
-                    <label class="text-dark">Select Data Input Type</label>
-                    <div>
-                        <input type="radio" id="singleSelect" name="dataInputType" [(ngModel)]="dataInputType" value="single">
-                        <label for="singleSelect"  class="text-dark">Single Select Input Type</label>
-                
-                        <input type="radio" id="multiSelect" name="dataInputType" [(ngModel)]="dataInputType" value="multi">
-                        <label for="multiSelect"  class="text-dark">Multi Select Input Type</label>
-                    </div>
-                </div> -->
-
-                <!-- Single Select Dropdown -->
-                <!-- <div class="col-md-6 mb-3" *ngIf="dataInputType === 'single'">
-                    <label for="fname" class="text-dark">Data points</label>
-                    <p-dropdown class="ct_input_white_bg13 ct_select_2_drop_white ct_input_dark_text_145"
-                        [options]="AssignedDataPoint" defaultLabel="Select Data Points" [(ngModel)]="selectedCategory"
-                        optionLabel="CatName" optionValue="Id" display="chip" name="datapoint"
-                        (onChange)="dataPointChangedID(selectedCategory)">
-                    </p-dropdown>
-                </div> -->
-
-                <!-- Multi Select Dropdown -->
-                <!-- <div class="col-md-6 mb-3" *ngIf="dataInputType === 'multi'">
-                    <label for="multiSelect" class="text-dark">Select Multiple Data Points</label>
-                    <p-multiSelect class="ct_input_white_bg13 ct_select_2_drop_white ct_input_dark_text_145"
-                        [options]="AssignedDataPoint" [(ngModel)]="selectedMultipleCategories" optionLabel="CatName"
-                        optionValue="Id" defaultLabel="Select Multiple Data Points" name="multipleDataPoints"
-                        (onChange)="multipleDataPointsChanged($event)">
-                    </p-multiSelect>
-                </div> -->
+           
 
 
                 <div class="col-md-6 mb-3">
@@ -166,14 +137,7 @@
                 </div>
 
 
-                <!--  <div class="col-md-6 mb-3">
-                    <label for="multiSelect" class="text-dark">Select Multiple Data Points</label>
-                    <p-multiSelect class="ct_input_white_bg13 ct_select_2_drop_white ct_input_dark_text_145"
-                        [options]="AssignedDataPoint" [(ngModel)]="selectedMultipleCategories" optionLabel="CatName"
-                        optionValue="Id" defaultLabel="Select Multiple Data Points" name="multipleDataPoints"
-                        (onChange)="multipleDataPointsChanged($event)">
-                    </p-multiSelect>
-                </div> -->
+         
 
                 <div class="col-md-6 mb-3" *ngIf="modeShow">
                     <label for="fname " class="text-dark">Mode of Travel</label>
@@ -215,48 +179,7 @@
                 </div> -->
             </div>
             <div class="row">
-                <!-- <div class="col p-0 m-0 reporttable">
-                    <div *ngIf="CustomReportData && CustomReportData.length > 0; else emptyList">
-                        <p-table [value]="CustomReportData" [paginator]="true" [rows]="10">
-                            <ng-template pTemplate="header">
-                                <tr>
-                                    <th>DataPoints</th>
-                                    <th>April</th>
-                                    <th>May</th>
-                                    <th>June</th>
-                                    <th>July</th>
-
-
-                                    <th>August</th>
-                                    <th>September</th>
-                                    <th>October</th>
-                                    <th>November</th>
-                                    <th>December</th>
-                                    <th>Januray</th>
-                                    <th>February</th>
-                                    <th>March</th>
-                                </tr>
-                            </ng-template>
-                            <ng-template pTemplate="body" let-report>
-                                <tr>
-                                    <td>{{ report.dataPoint }}</td>
-                                    <td>{{ report.April }}</td>
-                                    <td>{{ report.May }}</td>
-                                    <td>{{ report.June }}</td>
-                                    <td>{{ report.July }}</td>
-                                    <td>{{ report.August }}</td>
-                                    <td>{{ report.September }}</td>
-                                    <td>{{ report.October }}</td>
-                                    <td>{{ report.November }}</td>
-                                    <td>{{ report.December }}</td>
-                                    <td>{{ report.January }}</td>
-                                    <td>{{ report.February }}</td>
-                                    <td>{{ report.March }}</td>
-                                </tr>
-                            </ng-template>
-                        </p-table>
-                    </div>
-                </div> -->
+              
 
                 <ng-container *ngIf="isMultiple else default">
                     <div class="col-md-12" *ngIf="reportData.length >0; else emptyList">

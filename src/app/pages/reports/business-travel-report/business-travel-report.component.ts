@@ -108,7 +108,7 @@ export class BusinessTravelReportComponent {
       let userInfo = localStorage.getItem('LoginInfo');
       let jsonObj = JSON.parse(userInfo); // string to "any" object first
       this.loginInfo = jsonObj as LoginInfo;
-      this.facilityID = localStorage.getItem('SelectedfacilityID');
+      this.facilityID = sessionStorage.getItem('SelectedfacilityID');
 
 
       this.GetAllFacility()
@@ -202,6 +202,7 @@ export class BusinessTravelReportComponent {
     reportFormData.set('flight_travel', this.selectedMode === 1 ? '1' : '0')
     reportFormData.set('hotel_stays', this.selectedMode === 3 ? '1' : '0')
     reportFormData.set('business_travel', '1')
+    reportFormData.set('water_supply_treatment', "0")
     // reportFormData.set('hotel_stays', '1')
     reportFormData.set('other_transport', this.selectedMode === 2 ? '1' : '0')
     reportFormData.set('facility', selectedFacilities)

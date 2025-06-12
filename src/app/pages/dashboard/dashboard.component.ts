@@ -61,7 +61,7 @@ export class DashboardComponent {
             }
 
         }
-        if (this.router.url.includes('dashboard/ghgEmision')) {
+        if (this.router.url.includes('dashboard/ghgEmission')) {
 
             this.isVisited = 'GHG'
 
@@ -77,7 +77,7 @@ export class DashboardComponent {
     ngDoCheck() {
 
         this.updatedtheme = this.themeservice.getValue('theme');
-        let fId = localStorage.getItem('SelectedfacilityID');
+        let fId = sessionStorage.getItem('SelectedfacilityID');
         this.flag = localStorage.getItem('Flag');
        
     };

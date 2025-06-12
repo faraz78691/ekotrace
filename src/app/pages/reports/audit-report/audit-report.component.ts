@@ -54,7 +54,6 @@ export class AuditReportComponent {
     selectReportType = 'Consolidated'
     notevalue: string;
     Datapoints: string;
-    AssignedDataPoint: TrackingDataPoint[] = [];
     selectedFacilityID: any;
     selectedYear: number;
     facilityhavedp = 'none';
@@ -90,6 +89,155 @@ export class AuditReportComponent {
     startYear: any;
     endMonth:any;
     endYear:any;
+    AssignedDataPoint = [
+        {
+            "Id": 1,
+            "CatName": "Stationary Combustion",
+            "ManageScopeId": 1,
+            "ScopeId": 1,
+            "ScopeSeedId": 1
+        },
+        {
+            "Id": 2,
+            "CatName": "Refrigerants",
+            "ManageScopeId": 1,
+            "ScopeId": 1,
+            "ScopeSeedId": 1
+        },
+        {
+            "Id": 3,
+            "CatName": "Fire Extinguisher",
+            "ManageScopeId": 1,
+            "ScopeId": 1,
+            "ScopeSeedId": 1
+        },
+        {
+            "Id": 6,
+            "CatName": "Company Owned Vehicles",
+            "ManageScopeId": 1,
+            "ScopeId": 1,
+            "ScopeSeedId": 1
+        },
+        {
+            "Id": 5,
+            "CatName": "Electricity",
+            "ManageScopeId": 2,
+            "ScopeId": 2,
+            "ScopeSeedId": 2
+        },
+        {
+            "Id": 7,
+            "CatName": "Heat and Steam",
+            "ManageScopeId": 2,
+            "ScopeId": 2,
+            "ScopeSeedId": 2
+        },
+        {
+            "Id": 8,
+            "CatName": "Purchased goods and services",
+            "ManageScopeId": 3,
+            "ScopeId": 3,
+            "ScopeSeedId": 3
+        },
+        {
+            "Id": 9,
+            "CatName": "Fuel and Energy-related Activities",
+            "ManageScopeId": 3,
+            "ScopeId": 3,
+            "ScopeSeedId": 3
+        },
+        {
+            "Id": 10,
+            "CatName": "Upstream Transportation and Distribution",
+            "ManageScopeId": 3,
+            "ScopeId": 3,
+            "ScopeSeedId": 3
+        },
+        {
+            "Id": 11,
+            "CatName": "Water Supply and Treatment",
+            "ManageScopeId": 3,
+            "ScopeId": 3,
+            "ScopeSeedId": 3
+        },
+        {
+            "Id": 12,
+            "CatName": "Waste generated in operations",
+            "ManageScopeId": 3,
+            "ScopeId": 3,
+            "ScopeSeedId": 3
+        },
+        {
+            "Id": 13,
+            "CatName": "Business Travel",
+            "ManageScopeId": 3,
+            "ScopeId": 3,
+            "ScopeSeedId": 3
+        },
+        {
+            "Id": 14,
+            "CatName": "Employee Commuting",
+            "ManageScopeId": 3,
+            "ScopeId": 3,
+            "ScopeSeedId": 3
+        },
+        {
+            "Id": 15,
+            "CatName": "Home Office",
+            "ManageScopeId": 3,
+            "ScopeId": 3,
+            "ScopeSeedId": 3
+        },
+        {
+            "Id": 16,
+            "CatName": "Upstream Leased Assets",
+            "ManageScopeId": 3,
+            "ScopeId": 3,
+            "ScopeSeedId": 3
+        },
+        {
+            "Id": 17,
+            "CatName": "Downstream Transportation and Distribution",
+            "ManageScopeId": 3,
+            "ScopeId": 3,
+            "ScopeSeedId": 3
+        },
+        {
+            "Id": 18,
+            "CatName": "Processing of Sold Products",
+            "ManageScopeId": 3,
+            "ScopeId": 3,
+            "ScopeSeedId": 3
+        },
+        {
+            "Id": 19,
+            "CatName": "Use of Sold Products",
+            "ManageScopeId": 3,
+            "ScopeId": 3,
+            "ScopeSeedId": 3
+        },
+        {
+            "Id": 20,
+            "CatName": "End-of-Life Treatment of Sold Products",
+            "ManageScopeId": 3,
+            "ScopeId": 3,
+            "ScopeSeedId": 3
+        },
+        {
+            "Id": 21,
+            "CatName": "Downstream Leased Assets",
+            "ManageScopeId": 3,
+            "ScopeId": 3,
+            "ScopeSeedId": 3
+        },
+        {
+            "Id": 22,
+            "CatName": "Franchises",
+            "ManageScopeId": 3,
+            "ScopeId": 3,
+            "ScopeSeedId": 3
+        }
+    ]
 
 
     reportmonths: any[] = [
@@ -121,7 +269,7 @@ export class AuditReportComponent {
 
 
 
-        this.AssignedDataPoint = [];
+      
         this.Modes =
             [
 
@@ -150,7 +298,7 @@ export class AuditReportComponent {
             let userInfo = localStorage.getItem('LoginInfo');
             let jsonObj = JSON.parse(userInfo); // string to "any" object first
             this.loginInfo = jsonObj as LoginInfo;
-            this.facilityID = localStorage.getItem('SelectedfacilityID');
+            this.facilityID = sessionStorage.getItem('SelectedfacilityID');
 
 this.GetAllFacility()
           
@@ -167,7 +315,7 @@ this.GetAllFacility()
         let tenantId = this.loginInfo.tenantID;
         this.facilityService.newGetFacilityByTenant(tenantId).subscribe((response) => {
             this.facilityData = response;
-            this.GetAssignedDataPoint(this.facilityData[0].id)
+        
             this.lfcount = this.facilityData.length;
         });
     };
@@ -180,7 +328,6 @@ this.GetAllFacility()
    
 
 
-        this.GetAssignedDataPoint(id);
     };
 
     dataPointChangedID(id) {
@@ -205,47 +352,7 @@ this.GetAllFacility()
 
     dataInputType: string = 'single';
 
-    // multipleDataPointsChanged(id: any){
-    //     if (id == 13) {
-    //         this.modeShow = true
-    //     } else {
-    //         this.modeShow = false
-    //     }
-    // }
-    //method for get assigned datapoint to a facility by facility id
-    // GetAssignedDataPoint(facilityID: number) {
-    //     this.trackingService
-    //         .getSavedDataPointforTracking(facilityID)
-    //         .subscribe({
-    //             next: (response) => {
-    //                 if (response === environment.NoData) {
-    //                     this.AssignedDataPoint = [];
-    //                 } else {
-    //                     this.AssignedDataPoint = response;
-    //                 }
-    //             },
-    //             error: (err) => { }
-    //         });
-    // };
-
-    GetAssignedDataPoint(facilityID: number) {
-      
-        this.trackingService
-            .getDataPointsByFacility(facilityID)
-            .subscribe({
-                next: (response) => {
-
-                    if (response === environment.NoData) {
-                        this.AssignedDataPoint = [];
-                    } else {
-                        this.AssignedDataPoint = response.categories;
-                    }
-                },
-                error: (err) => { }
-            });
-    };
-
-
+  
     //method for download generated report in pdf format
     downloadAsPDF() {
         const doc = new jsPDF({
@@ -324,116 +431,7 @@ this.GetAllFacility()
 
         doc.save('report.pdf');
     };
-    //method for generate a report
-    // generateReport() {
-    //     this.CustomReportData = [];
-
-    //     this.selectedCategory.forEach((element) => {
-    //         var entry: CustomReportModel = {
-    //             dataPoint: element.subCatName,
-    //             April: '',
-    //             May: '',
-    //             June: '',
-    //             July: '',
-    //             August: '',
-    //             September: '',
-    //             October: '',
-    //             November: '',
-    //             December: '',
-    //             January: '',
-    //             February: '',
-    //             March: ''
-    //         };
-
-    //         element.dataEntries.forEach((subelement) => {
-    //             const month = subelement.month;
-    //             const year = subelement.year;
-    //             const reportYear = this.date.getFullYear().toString();
-    //             const readingValue = parseFloat(subelement.readingValue);
-    //             if (!isNaN(readingValue) && year === reportYear) {
-    //                 switch (month) {
-    //                     case 'April':
-    //                         entry.April = this.calculateMonthTotal(
-    //                             entry.April,
-    //                             readingValue
-    //                         );
-    //                         break;
-    //                     case 'May':
-    //                         entry.May = this.calculateMonthTotal(
-    //                             entry.May,
-    //                             readingValue
-    //                         );
-    //                         break;
-    //                     case 'June':
-    //                         entry.June = this.calculateMonthTotal(
-    //                             entry.June,
-    //                             readingValue
-    //                         );
-    //                         break;
-    //                     case 'July':
-    //                         entry.July = this.calculateMonthTotal(
-    //                             entry.July,
-    //                             readingValue
-    //                         );
-    //                         break;
-    //                     case 'August':
-    //                         entry.August = this.calculateMonthTotal(
-    //                             entry.August,
-    //                             readingValue
-    //                         );
-    //                         break;
-    //                     case 'September':
-    //                         entry.September = this.calculateMonthTotal(
-    //                             entry.September,
-    //                             readingValue
-    //                         );
-    //                         break;
-    //                     case 'October':
-    //                         entry.October = this.calculateMonthTotal(
-    //                             entry.October,
-    //                             readingValue
-    //                         );
-    //                         break;
-    //                     case 'November':
-    //                         entry.November = this.calculateMonthTotal(
-    //                             entry.November,
-    //                             readingValue
-    //                         );
-    //                         break;
-    //                     case 'December':
-    //                         entry.December = this.calculateMonthTotal(
-    //                             entry.December,
-    //                             readingValue
-    //                         );
-    //                         break;
-    //                     case 'January':
-    //                         entry.January = this.calculateMonthTotal(
-    //                             entry.January,
-    //                             readingValue
-    //                         );
-    //                         break;
-    //                     case 'February':
-    //                         entry.February = this.calculateMonthTotal(
-    //                             entry.February,
-    //                             readingValue
-    //                         );
-    //                         break;
-    //                     case 'March':
-    //                         entry.March = this.calculateMonthTotal(
-    //                             entry.March,
-    //                             readingValue
-    //                         );
-    //                         break;
-    //                     default:
-    //                         // Handle unknown month value
-    //                         break;
-    //                 }
-    //             }
-    //         });
-
-    //         this.CustomReportData.push(entry);
-    //     });
-    // }
+   
 
     newgenerateReport() {
      
@@ -470,7 +468,7 @@ this.GetAllFacility()
                 "Heat and Steam": "heat_steam",
                 "Electricity": "renewable_electricity",
                 "Company Owned Vehicles" : "company_owned_vehicles",
-                // "Water Supply and Treatment": "water_supply_treatment",
+                "Water Supply and Treatment": "water_supply_treatment",
                 "End-of-Life Treatment of Sold Products": "end_of_life_treatment",
                 "Fire Extinguisher": "fire_extinguisher",
                 "Business Travel": "business_travel",

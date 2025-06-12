@@ -229,7 +229,7 @@ export class GhgReportingComponent {
         this.scopeEmissons = response;
         const pieEmissions = [
           Number(this.scopeEmissons.Scope1[0].total_emission),
-          Number(this.scopeEmissons.Scope2[0].total_emission) + Number(this.scopeEmissons.Scope3[0].total_emission)
+          Number(this.scopeEmissons.Scope2[0].total_emission) , Number(this.scopeEmissons.Scope3[0].total_emission)
         ];
         this.pieChart = {
           dataLabels: { enabled: false },

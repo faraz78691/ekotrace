@@ -96,9 +96,7 @@ export class PlatformAdminComponent {
         this.getSuperAdmin();
         this.updatedtheme = this.themeservice.getValue('theme');
         this.getAllPackages();
-    }
-
-
+    };
 
 
     getSuperAdmin() {
@@ -108,10 +106,6 @@ export class PlatformAdminComponent {
 
                 if (response.success == true) {
                     this.groupsList = response.userinfo;
-
-
-
-
                 }
             },
             error: (err) => {
@@ -128,7 +122,7 @@ export class PlatformAdminComponent {
 
                 if (response.success == true) {
                     this.packageDetails = response.categories
-                    //   this.projectionForm.control.patchValue(obj);
+                 
                 }
             },
             error: (err) => {
@@ -162,12 +156,12 @@ export class PlatformAdminComponent {
         // Simulate a loading state
         const formData = new URLSearchParams();
 
-        formData.append('companyName', data.value.company_name);
-        formData.append('email',data.value.email);
-        formData.append('password', data.value.password);
-        formData.append('username', data.value.username);
-        formData.append('firstname', data.value.firstname);
-        formData.append('lastname', data.value.lastname);
+        formData.append('companyName', data.value.company_name.trim());
+        formData.append('email',data.value.email.trim());
+        formData.append('password', data.value.password.trim());
+        formData.append('username', data.value.username.trim());
+        formData.append('firstname', data.value.firstname.trim());
+        formData.append('lastname', data.value.lastname.trim());
 
 
         this.GroupService.createSuperAdmin(formData.toString()).subscribe({

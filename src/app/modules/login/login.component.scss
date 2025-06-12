@@ -123,10 +123,22 @@ button.loading:before {
 }
 
 
+.cti_login_left_img_12 img {
+  height: 100%;
+  object-fit: cover;
+}
 
-
-
-
+@media screen and (max-width: 767px) {
+  .cti_login_left_img_12 img {
+   display: none;
+  }
+  .cti_login_right_56{
+    width: 100%;
+  }
+  .cti_login_right_56 {
+    width: 100% !important;
+}
+}
 
 
 

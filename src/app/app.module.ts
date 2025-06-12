@@ -145,7 +145,6 @@ registerLocaleData(localeEn, 'en-EN');
         AppComponent,
         MainComponent,
         LoginComponent,
-        
         FooterComponent,
         MenuSidebarComponent,
         BlankComponent,

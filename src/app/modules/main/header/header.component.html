@@ -49,7 +49,7 @@
                         <ng-container *ngIf="facilitysubgrouplist.length > 0">
                             <p-dropdown name="facility" *ngIf="loginInfo.role !== 'Platform Admin'" #facility="ngModel"
                                 [options]="facilitysubgrouplist" optionLabel="name" optionValue="id" styleClass="headerFacility"
-                                [(ngModel)]="selectedGroupID" (ngModelChange)="onGroupChnage()">
+                                [(ngModel)]="selectedGroupID" (onChange)="onGroupChnage()">
                                 <ng-template let-option pTemplate="item" >
                                     <div  class="d-flex justify-content-between">
                                         <div>{{ option.name }}</div>

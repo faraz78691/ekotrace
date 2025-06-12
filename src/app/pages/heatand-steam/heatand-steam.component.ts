@@ -59,7 +59,7 @@ export class HeatandSteamComponent {
   }
   ngDoCheck() {
     this.updatedtheme = this.themeservice.getValue('theme');
-    let fId = localStorage.getItem('SelectedfacilityID');
+    let fId = sessionStorage.getItem('SelectedfacilityID');
     this.flag = localStorage.getItem('Flag');
     if (this.globalFilterID != fId) {
       this.globalFilterID = fId;

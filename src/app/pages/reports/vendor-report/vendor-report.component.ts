@@ -102,7 +102,7 @@ export class VendorReportComponent {
       let userInfo = localStorage.getItem('LoginInfo');
       let jsonObj = JSON.parse(userInfo); // string to "any" object first
       this.loginInfo = jsonObj as LoginInfo;
-      this.facilityID = localStorage.getItem('SelectedfacilityID');
+      this.facilityID = sessionStorage.getItem('SelectedfacilityID');
       this.superAdminId = this.loginInfo.super_admin_id;
     }
 

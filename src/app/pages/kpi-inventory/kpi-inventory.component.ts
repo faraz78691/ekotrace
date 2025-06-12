@@ -437,7 +437,7 @@ export class KpiInventoryComponent {
 
             if (response.success == true) {
               this.topFuels = response.data;
-              this.selectedFuel1 = this.topFuels[0].TypeID || 1;
+              this.selectedFuel1 = this.topFuels[0]?.TypeID || 1;
               this.selectedFuel2 = this.topFuels[1]?.TypeID || 2;
               this.selectedFuel3 = this.topFuels[2]?.TypeID || 3;
               this.getFuelEmissions1( this.selectedFuel1);

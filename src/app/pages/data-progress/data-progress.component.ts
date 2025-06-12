@@ -120,10 +120,12 @@ export class DataProgressComponent {
 
         if (response.success == true) {
           this.dataProgress = response.FinalProgress;
+          
           this.transformedData = this.mergeData(
             this.transformData(this.dataProgress),
             this.facilityData
           );
+        
         
           this.onFacilityClick(this.transformedData[0].facilityId, 0, this.transformedData[0].facilityName);
       
@@ -212,6 +214,7 @@ export class DataProgressComponent {
     const filtered = this.transformedData.filter(items =>
       Object.keys(items)[0] == id
     );
+   
 
 
     this.dataPreparerCustom = [filtered[0][id]];
@@ -226,22 +229,24 @@ export class DataProgressComponent {
     };
 
     scope3Array = this.dataPreparerCustom[0].scope_3;
-
-    // Check if 'Fuel and Energy-related Activities' already exists
-    const existingIndex = scope3Array.findIndex(
-      (obj) => obj.category === 'Fuel and Energy-related Activities'
-    );
-
-    if (existingIndex === -1) {
-      // Find the index of 'Purchase Goods'
-      const index2 = scope3Array.findIndex(
-        (obj) => obj.category === 'Purchased goods and services'
+    if(scope3Array){
+      // Check if 'Fuel and Energy-related Activities' already exists
+      const existingIndex = scope3Array.findIndex(
+        (obj) => obj.category === 'Fuel and Energy-related Activities'
       );
-
-      // Insert the new object after 'Purchase Goods'
-      if (index2 !== -1) {
-        scope3Array.splice(index2 + 1, 0, FuelObject);
+  
+      if (existingIndex === -1) {
+        // Find the index of 'Purchase Goods'
+        const index2 = scope3Array.findIndex(
+          (obj) => obj.category === 'Purchased goods and services'
+        );
+  
+        // Insert the new object after 'Purchase Goods'
+        if (index2 !== -1) {
+          scope3Array.splice(index2 + 1, 0, FuelObject);
+        }
       }
+      
     }
     this.GetsavedDataPoint(id);
 
@@ -311,13 +316,18 @@ export class DataProgressComponent {
           this.dataPreparer = [{ ...this.dataPreparer[0], scope_1: updatedScope1 }];
 
           setTimeout(() => {
+            if(this.dataPreparerCustom[0].scope_2){
             this.dataPreparer[0]['scope_2'] = this.dataPreparerCustom[0].scope_2
               .filter(item => this.selectedScope2.includes(item.category))
               .sort((a, b) => this.selectedScope2.indexOf(a.category) - this.selectedScope2.indexOf(b.category));
-
-            this.dataPreparer[0]['scope_3'] = this.dataPreparerCustom[0].scope_3
-              .filter(item => this.selectedScope3.includes(item.category))
-              .sort((a, b) => this.selectedScope3.indexOf(a.category) - this.selectedScope3.indexOf(b.category));
+            }
+              
+              if(this.dataPreparerCustom[0].scope_3){
+                this.dataPreparer[0]['scope_3'] = this.dataPreparerCustom[0].scope_3
+                  .filter(item => this.selectedScope3.includes(item.category))
+                  .sort((a, b) => this.selectedScope3.indexOf(a.category) - this.selectedScope3.indexOf(b.category));
+                
+              }
             
               this.transformedData = this.transformedData.map((item) => {
                 const scope3Categories = item[item.facilityId]?.scope_3 || [];

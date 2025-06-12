@@ -62,6 +62,7 @@ export class WaterUsageComponent {
   totalTreated: any;
   totalDisposed: any;
   waterTotal: any;
+  totalWithdrawn: any;
 
   constructor(private route: ActivatedRoute,
     private facilityService: FacilityService,
@@ -288,6 +289,7 @@ export class WaterUsageComponent {
       this.totalConsumed = result.water_consumed
       this.totalTreated = result.water_treated
       this.totalDisposed = result.water_withdrawn;
+      this.totalWithdrawn = result.water_withdrawn;
       this.waterTotal = result.water_total;
 
     });

@@ -360,7 +360,12 @@ export class EnergyEmmsionsComponent {
         }
         ,
         yaxis: {
-
+          title: {
+            text: 'tCO2e',
+            style: {
+              fontSize: '13px'
+            }
+          },
           labels: {
             style: {
               fontSize: '13px'

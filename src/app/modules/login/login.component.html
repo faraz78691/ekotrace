@@ -1,9 +1,9 @@
-<div class="test pt-2" [class.disabled]="isLoading">
+<div class="test pt-2 cti_login_left_img_12" [class.disabled]="isLoading">
     <img src="assets/img/Rectangle 174.png" class="img-fluid" />
-    <div class="absolute">
+    <div class="absolute cti_login_right_56">
         <div class="container pt-2">
             <div class="row">
-                <div class="col text-center pt-2">
+                <div class="col text-center pt-2 ">
                     <img src="assets/img/Carbontek.png" style="object-fit: contain;" style="justify-items: center;max-width:500px; width: 100%;" />
                 </div>
             </div>
@@ -21,7 +21,7 @@
                 </div>
             </div>
 
-            <div class="row pr-5">
+            <div class="row pr-md-5 ">
                 <div class="col pt-3">
                     <form [formGroup]="loginForm" (ngSubmit)="loginByAuth()">
                         <div class="form-group">
@@ -29,7 +29,7 @@
                                 [class.error]="loginForm.controls['email'].dirty &&loginForm.hasError('required', 'email')">
                                 <label for="formGroupExampleInput">Email Or Username</label>
                                 <input type="text" formControlName="email" class="form-control text-white pt-1"
-                                    style="background-color: transparent" />
+                                    style="background-color: transparent" placeholder="Enter your registered email or username" />
                             </div>
                         </div>
                         <p class="text-danger mt-0" *ngIf="submitted && loginForm.controls.email.invalid">
@@ -40,7 +40,7 @@
                             <div class="input-field">
                                 <label for="formGroupExampleInput2">Password</label>
                                 <input type="text" autocomplete="off" formControlName="password" type="password"
-                                    class="form-control text-white pt-1" style="background-color: transparent" />
+                                    class="form-control text-white pt-1" style="background-color: transparent" placeholder="Enter your password" />
                             </div>
                         </div>
                         <p *ngIf="submitted && loginForm.controls.password.invalid" class="text-danger pt-0">Password is

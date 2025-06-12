@@ -269,6 +269,8 @@ export class VendorsComponent {
           );
           this.GetVendors();
           this.GroupForm.reset();
+        }else{
+          this.notification.showWarning(response.message, '');
         }
         // return
         //   this.getOffset(this.loginInfo.tenantID);
@@ -364,7 +366,7 @@ if(response.success){
   this.visible = false;
   this.notification.showWarning(
     response.message,
-    'Success'
+    ''
   );
 }
       },

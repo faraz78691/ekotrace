@@ -169,7 +169,7 @@ export class TrackingViewRequestsComponent {
 
     ngDoCheck() {
 
-        let fId = localStorage.getItem('SelectedfacilityID');
+        let fId = sessionStorage.getItem('SelectedfacilityID');
         this.flag = localStorage.getItem('Flag');
         if (this.facilityID != fId) {
             this.ALLEntries(Number(fId));

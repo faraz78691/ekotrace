@@ -66,9 +66,9 @@ export class AuthInterceptor implements HttpInterceptor {
             catchError((error: HttpErrorResponse) => {
                 console.log('An error occurred:', error);
                 if (error.status === 408) {
-                    // Handle 408 (Request Timeout) by logging out the user
-                    console.warn('Session expired. Logging out...');
-                    localStorage.clear();
+                 
+                    // this.appService.logout();
+
                     this.router.navigate(['/login']); // Ensure this method clears the user session
              // Redirect to login page
                 }

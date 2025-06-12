@@ -141,19 +141,7 @@
 
                     <div class="col text-right pt-0 d-flex justify-content-end pr-0">
                         <!-- <span class="mr-2 countrequest"></span> -->
-                        <div class="mr-2 globalsearch">
-                            <div class="table-header">
-                                <span class="p-input-icon-left">
-                                    <i class="pi pi-search "></i>
-                                    <input pInputText class="pl-5 py-1 ct_search_dark33" type="text" (input)="
-                                            dt.filterGlobal(
-                                                $event.target.value,
-                                                'contains'
-                                            )
-                                        " placeholder="Global Search" />
-                                </span>
-                            </div>
-                        </div>
+                       
 
                         <button *ngIf="
                                 loginInfo.role !== Approver &&
@@ -186,143 +174,239 @@
                                 </th>
                                 <th pSortableColumn="catName" *ngIf="selectedCategory == 8">
                                     Type of purchase
-                                    <p-sortIcon field="catName"></p-sortIcon>
+                                   
                                 </th>
+                                <th pTooltip="Data Points" tooltipPosition="top" pSortableColumn="subcatName"
+                                *ngIf="selectedCategory == 1 || selectedCategory == 2 || selectedCategory == 3 || selectedCategory == 4 || selectedCategory == 5 || selectedCategory == 6">
+                                D.P
+                             
+                            </th>
                                 <th pSortableColumn="catName"
                                     *ngIf="selectedCategory != 24 && selectedCategory != 25 && selectedCategory != 26">
                                     Category
-                                    <p-sortIcon field="catName"></p-sortIcon>
+                                   
                                 </th>
                                 <th *ngIf="selectedCategory == 7" pSortableColumn="type">
                                     Type
-                                    <p-sortIcon field="catName"></p-sortIcon>
+                                   
                                 </th>
-                                <th pSortableColumn="catName" *ngIf="selectedCategory == 11">
+                                <!-- <th pSortableColumn="catName" *ngIf="selectedCategory == 11">
                                     Water Treatment
-                                    <p-sortIcon field="catName"></p-sortIcon>
+                                   
                                 </th>
                                 <th pSortableColumn="catName" *ngIf="selectedCategory == 11">
                                     Water Supply
-                                    <p-sortIcon field="catName"></p-sortIcon>
+                                   
+                                </th> -->
+                                <th pSortableColumn="catName" *ngIf="selectedCategory == 11">
+                                    Total Water withdrawn
+                                    <!-- -->
+                                </th>
+                                <th pSortableColumn="catName" *ngIf="selectedCategory == 11">
+                                    Surface water (%)
+
+                                </th>
+                                <th pSortableColumn="catName" *ngIf="selectedCategory == 11">
+                                    Groundwater (%)
+
+                                </th>
+                                <th pSortableColumn="catName" *ngIf="selectedCategory == 11">
+                                    Third party (%)
+
+                                </th>
+                                <th pSortableColumn="catName" *ngIf="selectedCategory == 11">
+                                    Sea water / desalinated water (%)
+
+                                </th>
+                                <th pSortableColumn="catName" *ngIf="selectedCategory == 11">
+                                    Others (%)
+
+                                </th>
+                                <th pSortableColumn="catName" *ngIf="selectedCategory == 11">
+                                    Total Water discharged
+
+                                </th>
+                                <th pSortableColumn="catName" *ngIf="selectedCategory == 11">
+                                    Surface water (%)
+
+                                </th>
+                                <th pSortableColumn="catName" *ngIf="selectedCategory == 11">
+                                    Groundwater (%)
+
+                                </th>
+                                <th pSortableColumn="catName" *ngIf="selectedCategory == 11">
+                                    Third party (%)
+
+                                </th>
+                                <th pSortableColumn="catName" *ngIf="selectedCategory == 11">
+                                    Sea water / desalinated water (%)
+
+                                </th>
+                                <th pSortableColumn="catName" *ngIf="selectedCategory == 11">
+                                    Others (%)
+
+                                </th>
+                                <th pSortableColumn="catName" *ngIf="selectedCategory == 11">
+                                    Total Water Treated
+
+                                </th>
+                                <th pSortableColumn="catName" *ngIf="selectedCategory == 11">
+                                    Surface water (%)
+
+                                </th>
+                                <th pSortableColumn="catName" *ngIf="selectedCategory == 11">
+                                    Treatment
+
+                                </th>
+                                <th pSortableColumn="catName" *ngIf="selectedCategory == 11">
+                                    Groundwater (%)
+
+                                </th>
+                                <th pSortableColumn="catName" *ngIf="selectedCategory == 11">
+                                    Treatment
+
+                                </th>
+                                <th pSortableColumn="catName" *ngIf="selectedCategory == 11">
+                                    Third party (%)
+
+                                </th>
+                                <th pSortableColumn="catName" *ngIf="selectedCategory == 11">
+                                    Treatment
+
+                                </th>
+                                <th pSortableColumn="catName" *ngIf="selectedCategory == 11">
+                                    Sea water / desalinated water (%)
+
+                                </th>
+                                <th pSortableColumn="catName" *ngIf="selectedCategory == 11">
+                                    Treatment
+
+
+                                </th>
+                                <th pSortableColumn="catName" *ngIf="selectedCategory == 11">
+                                    Others (%)
+
+
+                                </th>
+                                <th pSortableColumn="catName" *ngIf="selectedCategory == 11">
+                                    Treatment
+
+
                                 </th>
                                 <th pSortableColumn="catName" *ngIf="selectedCategory == 20">
                                     Combustion
-                                    <p-sortIcon field="catName"></p-sortIcon>
+                                   
                                 </th>
                                 <th pSortableColumn="catName" *ngIf="selectedCategory == 20">
                                     Composing
-                                    <p-sortIcon field="catName"></p-sortIcon>
+                                   
                                 </th>
                                 <th pSortableColumn="catName" *ngIf="selectedCategory == 20">
                                     Landfill
-                                    <p-sortIcon field="catName"></p-sortIcon>
+                                   
                                 </th>
                                 <th pSortableColumn="catName" *ngIf="selectedCategory == 20">
                                     Recycling
-                                    <p-sortIcon field="catName"></p-sortIcon>
+                                   
                                 </th>
                                 <th pSortableColumn="catName"
                                     *ngIf="selectedCategory == 16 || selectedCategory == 21 || selectedCategory == 22 || selectedCategory == 23">
                                     Sub Category
-                                    <p-sortIcon field="catName"></p-sortIcon>
+                                   
                                 </th>
                                 <th pSortableColumn="catName" *ngIf="selectedCategory == 18">
                                     Sub Activity
-                                    <p-sortIcon field="catName"></p-sortIcon>
+                                   
                                 </th>
                                 <th pSortableColumn="catName" *ngIf="selectedCategory == 23">
                                     Investment type
-                                    <p-sortIcon field="catName"></p-sortIcon>
+                                   
                                 </th>
                                 <th pSortableColumn="catName" *ngIf="selectedCategory == 18">
                                     Processing Activity
-                                    <p-sortIcon field="catName"></p-sortIcon>
+                                   
                                 </th>
                                 <th pSortableColumn="catName"
                                     *ngIf="selectedCategory == 16 || selectedCategory ==18 || selectedCategory == 21 ||selectedCategory == 22 ||selectedCategory == 23">
                                     Calculation Method
-                                    <p-sortIcon field="catName"></p-sortIcon>
+                                   
                                 </th>
                                 <th pSortableColumn="catName"
                                     *ngIf="selectedCategory == 16 || selectedCategory == 21 ||selectedCategory == 22">
                                     Franchise Space
-                                    <p-sortIcon field="catName"></p-sortIcon>
+                                   
                                 </th>
                                 <th pSortableColumn="catName"
                                     *ngIf="selectedCategory == 16 || selectedCategory ==18 || selectedCategory == 21 ||selectedCategory == 22">
                                     Scope 1 Emission
-                                    <p-sortIcon field="catName"></p-sortIcon>
+                                   
                                 </th>
                                 <th pSortableColumn="catName"
                                     *ngIf="selectedCategory == 16 || selectedCategory ==18 || selectedCategory == 21 ||selectedCategory == 22">
                                     Scope 2 Emission
-                                    <p-sortIcon field="catName"></p-sortIcon>
+                                   
                                 </th>
                                 <th pSortableColumn="catName" *ngIf="selectedCategory == 15">
                                     Type of Home Office
-                                    <p-sortIcon field="catName"></p-sortIcon>
+                                   
                                 </th>
                                 <th pSortableColumn="catName" *ngIf="selectedCategory == 15">
                                     No of days
-                                    <p-sortIcon field="catName"></p-sortIcon>
+                                   
                                 </th>
                                 <th pSortableColumn="catName" *ngIf="selectedCategory == 15">
                                     No of employees
-                                    <p-sortIcon field="catName"></p-sortIcon>
+                                   
                                 </th>
                                 <th pSortableColumn="catName" *ngIf="selectedCategory == 15">
                                     No of months
-                                    <p-sortIcon field="catName"></p-sortIcon>
+                                  
                                 </th>
                                 <th pSortableColumn="catName" *ngIf="selectedCategory == 14">
                                     Type
-                                    <p-sortIcon field="catName"></p-sortIcon>
+                                   
                                 </th>
                                 <th pSortableColumn="catName" *ngIf="selectedCategory == 14">
-                                    Average Employee Commute
-                                    <p-sortIcon field="catName"></p-sortIcon>
+                                    % of Employee Commute
+                                   
                                 </th>
                                 <th pSortableColumn="catName" *ngIf="selectedCategory == 14">
-                                    Average Commuted Distance
-                                    <p-sortIcon field="catName"></p-sortIcon>
+                                    Average Commuted Distance (km)
+                                   
                                 </th>
                                 <th pSortableColumn="catName" *ngIf="selectedCategory == 14">
                                     Working Days
-                                    <p-sortIcon field="catName"></p-sortIcon>
+                                   
                                 </th>
                                 <th pSortableColumn="catName" *ngIf="selectedCategory == 10 || selectedCategory == 17">
                                     Vehicle Type
-                                    <p-sortIcon field="catName"></p-sortIcon>
+                                    
                                 </th>
                                 <th pSortableColumn="catName" *ngIf="selectedCategory == 12">
                                     Method
-                                    <p-sortIcon field="catName"></p-sortIcon>
+                                  
                                 </th>
                                 <th pSortableColumn="catName" *ngIf="selectedCategory == 12">
                                     Waste Type
-                                    <p-sortIcon field="catName"></p-sortIcon>
+                                  
                                 </th>
                                 <th pSortableColumn="catName" *ngIf="selectedCategory == 10 || selectedCategory == 17">
                                     Sub Category
-                                    <p-sortIcon field="catName"></p-sortIcon>
+                                   
                                 </th>
                                 <th pSortableColumn="catName" *ngIf="selectedCategory == 10 || selectedCategory == 17">
                                     Distance Travelled
-                                    <p-sortIcon field="catName"></p-sortIcon>
+                                   
                                 </th>
                                 <th pSortableColumn="catName" *ngIf="selectedCategory == 10 || selectedCategory == 17">
                                     Mass of Product
-                                    <p-sortIcon field="catName"></p-sortIcon>
+                                   
                                 </th>
                                 <th pSortableColumn="catName" *ngIf="selectedCategory == 10 || selectedCategory == 17">
                                     Storage facility
-                                    <p-sortIcon field="catName"></p-sortIcon>
+                                   
                                 </th>
-                                <th pTooltip="Data Points" tooltipPosition="top" pSortableColumn="subcatName"
-                                    *ngIf="selectedCategory == 1 || selectedCategory == 2 || selectedCategory == 3 || selectedCategory == 4 || selectedCategory == 5 || selectedCategory == 6">
-                                    D.P
-                                    <p-sortIcon field="subcatName"></p-sortIcon>
-                                </th>
+                              
                                 <th pSortableColumn="flightMode" *ngIf="selectedCategory == 13 && this.selectMode == 1">
                                     Flight mode
                                     <p-sortIcon field="flightMode"></p-sortIcon>
@@ -504,8 +588,59 @@
                                     *ngIf="selectedCategory != 24 && selectedCategory != 16 && selectedCategory !=18 && selectedCategory !=20 && selectedCategory !=21   && selectedCategory !=22 && selectedCategory !=23 && selectedCategory != 25 && selectedCategory != 26">
                                     {{ de.catName }}</td>
 
-                                <td *ngIf="selectedCategory == 11 ">{{ de.water_treatment }}</td>
-                                <td *ngIf="selectedCategory == 11 ">{{ de.water_supply }}</td>
+                                <!-- <td *ngIf="selectedCategory == 11 ">{{ de.water_treatment }}</td>
+                                <td *ngIf="selectedCategory == 11 ">{{ de.water_supply }}</td> -->
+                                <td *ngIf="selectedCategory == 11 ">
+                                    {{de.water_supply}}</td>
+                                <td *ngIf="selectedCategory == 11 ">{{
+                                    de.water_withdrawl_by_source[0].totalwaterwithdrawl }}</td>
+                                <td *ngIf="selectedCategory == 11 ">{{
+                                    de.water_withdrawl_by_source[1].totalwaterwithdrawl }}</td>
+                                <td *ngIf="selectedCategory == 11 ">{{
+                                    de.water_withdrawl_by_source[2].totalwaterwithdrawl }}</td>
+                                <td *ngIf="selectedCategory == 11 ">{{
+                                    de.water_withdrawl_by_source[3].totalwaterwithdrawl }}</td>
+                                <td *ngIf="selectedCategory == 11 ">{{
+                                    de.water_withdrawl_by_source[4].totalwaterwithdrawl }}</td>
+                                <td *ngIf="selectedCategory == 11">
+                                    {{de.water_discharged_value}}
+                                </td>
+
+                                <td *ngIf="selectedCategory == 11 ">{{ de.water_discharge[0].totaldischarge }}
+                                </td>
+                                <td *ngIf="selectedCategory == 11 ">{{ de.water_discharge[1].totaldischarge }}
+                                </td>
+                                <td *ngIf="selectedCategory == 11 ">{{ de.water_discharge[2].totaldischarge }}
+                                </td>
+                                <td *ngIf="selectedCategory == 11 ">{{ de.water_discharge[3].totaldischarge }}
+                                </td>
+                                <td *ngIf="selectedCategory == 11 ">{{ de.water_discharge[4].totaldischarge }}
+                                </td>
+                                <td *ngIf="selectedCategory == 11 ">{{ de.water_treatment[0].totalwaterdischarge
+                                    +de.water_treatment[1].totalwaterdischarge+
+                                    de.water_treatment[2].totalwaterdischarge+
+                                    de.water_treatment[3].totalwaterdischarge +
+                                    de.water_treatment[4].totalwaterdischarge }}</td>
+                                <td *ngIf="selectedCategory == 11 ">{{ de.water_treatment[0].totalwaterdischarge
+                                    }}</td>
+                                <td *ngIf="selectedCategory == 11 ">{{ de.water_treatment[0].leveloftreatment }}
+                                </td>
+                                <td *ngIf="selectedCategory == 11 ">{{ de.water_treatment[1].totalwaterdischarge
+                                    }}</td>
+                                <td *ngIf="selectedCategory == 11 ">{{ de.water_treatment[1].leveloftreatment }}
+                                </td>
+                                <td *ngIf="selectedCategory == 11 ">{{ de.water_treatment[2].totalwaterdischarge
+                                    }}</td>
+                                <td *ngIf="selectedCategory == 11 ">{{ de.water_treatment[2].leveloftreatment }}
+                                </td>
+                                <td *ngIf="selectedCategory == 11 ">{{ de.water_treatment[3].totalwaterdischarge
+                                    }}</td>
+                                <td *ngIf="selectedCategory == 11 ">{{ de.water_treatment[3].leveloftreatment }}
+                                </td>
+                                <td *ngIf="selectedCategory == 11 ">{{ de.water_treatment[4].totalwaterdischarge
+                                    }}</td>
+                                <td *ngIf="selectedCategory == 11 ">{{ de.water_treatment[4].leveloftreatment }}
+                                </td>
                                 <td *ngIf="selectedCategory == 23 ">{{ de.category }}</td>
                                 <td *ngIf="selectedCategory == 22 ">{{ de.franchise_type }}</td>
                                 <td *ngIf="selectedCategory == 22 || selectedCategory == 23  ">{{ de.sub_category }}
@@ -543,16 +678,17 @@
                                 <td *ngIf="selectedCategory == 15">{{ de.noofdays }}</td>
                                 <td *ngIf="selectedCategory == 15">{{ de.noofemployees }}</td>
                                 <td *ngIf="selectedCategory == 15">{{ de.noofmonths }}</td>
-                                <td *ngIf="selectedCategory == 14">{{ de.type }}</td>
+                                <td *ngIf="selectedCategory == 14">{{de.category_name}}-{{ de.type }}</td>
                                 <td *ngIf="selectedCategory == 14">{{ de.allemployeescommute }}</td>
                                 <td *ngIf="selectedCategory == 14">{{ de.avgcommutedistance }}</td>
                                 <td *ngIf="selectedCategory == 14">{{ de.workingdays }}</td>
                                 <td *ngIf="selectedCategory == 12">{{ de.method }}</td>
                                 <td *ngIf="selectedCategory == 12">{{ de.waste_type }}</td>
                                 <td
-                                    *ngIf="selectedCategory != 8 && selectedCategory != 7 && selectedCategory != 10 && selectedCategory != 12 && selectedCategory != 13 && selectedCategory != 14 && selectedCategory != 15 && selectedCategory != 16 && selectedCategory != 17 && selectedCategory != 18 && selectedCategory != 19 && selectedCategory != 20 && selectedCategory !=21 && selectedCategory !=22 && selectedCategory !=11 && selectedCategory !=23 && selectedCategory !=24 && selectedCategory != 25 && selectedCategory != 26">
+                                    *ngIf="selectedCategory != 8 && selectedCategory != 2 && selectedCategory != 7 && selectedCategory != 10 && selectedCategory != 12 && selectedCategory != 13 && selectedCategory != 14 && selectedCategory != 15 && selectedCategory != 16 && selectedCategory != 17 && selectedCategory != 18 && selectedCategory != 19 && selectedCategory != 20 && selectedCategory !=21 && selectedCategory !=22 && selectedCategory !=11 && selectedCategory !=23 && selectedCategory !=24 && selectedCategory != 25 && selectedCategory != 26">
                                     {{ de.subcatName }}</td>
-                                <td *ngIf="selectedCategory == 10 || selectedCategory == 17">{{ de.vehicle_type }}</td>
+                                    <td *ngIf="selectedCategory == 2">{{ de.TypeName }}</td>
+                                <td *ngIf="selectedCategory == 10 || selectedCategory == 17">{{ de.vehicle_type_name }}</td>
                                 <td *ngIf="selectedCategory == 10 || selectedCategory == 17">{{ de.sub_category }}</td>
                                 <td *ngIf="selectedCategory == 10 || selectedCategory == 17">{{ de.distance_travelled_km
                                     }}

@@ -2225,7 +2225,7 @@ h1.bft-edit-form-title {
 }
 
 .ct_accordian_height_48vh12 {
-    height: 48vh !important;
+    height: 56vh !important;
 }
 
 @media screen and (max-width:500px) {
@@ -2667,3 +2667,10 @@ h1.bft-edit-form-title {
     border-color: #3498db8f !important;
     padding-block: 4px !important;
 }
+
+.et_select_min_w_600_43 .ng-trigger.ng-trigger-overlayContentAnimation.p-overlay-content.ng-star-inserted {
+    min-width: 600px;
+  }
+  .et_select_min_w_600_43 .ng-trigger.ng-trigger-overlayContentAnimation.p-overlay-content.ng-star-inserted {
+    min-width: 500px;
+  }
