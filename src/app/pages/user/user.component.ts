@@ -30,7 +30,7 @@ export class UserComponent {
     public admininfoList: UserInfo[] = [];
     facilityList: any[] = [];
     RolesList: newRoleModel[] = [];
-
+    inputText: any = ''
     display = 'none';
     visible: boolean;
     unlock: any;
@@ -50,7 +50,7 @@ export class UserComponent {
     uploadedImageUrl: string;
     groupId: any;
     payloadFacilityIds: any;
-selectedFacilityID: any
+    selectedFacilityID: any
     constructor(
         private companyService: CompanyService,
         private UserService: UserService,
@@ -104,10 +104,10 @@ selectedFacilityID: any
 
     //Checks the facility ID and calls the GetAssignedDataPoint function with the provided ID.
     onChangeFacilityId() {
-console.log(this.admininfo.facilityID);
+        console.log(this.admininfo.facilityID);
         if (this.selectedRole == '525debfd-cd64-4936-ae57-346d57de3585') {
             const facilityIDs = this.facilityList.filter((item) => item.id == this.admininfo.group_id).map((item) => item.ID);
-      
+
             this.groupId = this.admininfo.group_id;
             const stringfyIDs = JSON.stringify(facilityIDs[0]);
             this.payloadFacilityIds = stringfyIDs;
@@ -122,31 +122,31 @@ console.log(this.admininfo.facilityID);
     };
     //The onSubmit function handles form submission, including validation, user addition, and user update, with success/error notifications.
     onSubmit(x: any) {
-    
-        if(this.loginInfo.role == 'Auditor'){
+
+        if (this.loginInfo.role == 'Auditor') {
             this.notification.showInfo('You are not Authorized', '');
             return
         }
-        if(!this.payloadFacilityIds ){
+        if (!this.payloadFacilityIds) {
             this.notification.showInfo('Please select group or facility', '');
             return
         }
-        if(!this.FormEdit){
+        if (!this.FormEdit) {
             if (
                 (!this.admininfo.username || this.admininfo.username == '') ||
                 (!this.admininfo.firstname || this.admininfo.firstname == '') ||
                 (!this.admininfo.lastname || this.admininfo.lastname == '') ||
-               ( !this.admininfo.email || this.admininfo.email == '') || (!this.admininfo.password || this.admininfo.password =='')
+                (!this.admininfo.email || this.admininfo.email == '') || (!this.admininfo.password || this.admininfo.password == '')
             ) {
                 return
             }
 
-        }else{
+        } else {
             if (
                 (!this.admininfo.username || this.admininfo.username == '') ||
                 (!this.admininfo.firstname || this.admininfo.firstname == '') ||
                 (!this.admininfo.lastname || this.admininfo.lastname == '') ||
-               ( !this.admininfo.email || this.admininfo.email == '')
+                (!this.admininfo.email || this.admininfo.email == '')
             ) {
                 return
             }
@@ -240,9 +240,9 @@ console.log(this.admininfo.facilityID);
                 formData.set('lastname', this.admininfo.lastname)
                 formData.set('roleID', this.selectedRole)
                 formData.set('facilityID', this.payloadFacilityIds)
-            formData.set('group_id', this.groupId?.toString() || '')
+                formData.set('group_id', this.groupId?.toString() || '')
                 formData.set('user_id', this.admininfo.user_id.toString())
-            
+
 
                 this.UserService.NUpdateUsers(formData.toString()).subscribe({
                     next: (response) => {
@@ -273,13 +273,14 @@ console.log(this.admininfo.facilityID);
         let tenantId = this.loginInfo.super_admin_id;
         const formData = new URLSearchParams();
         formData.set('tenantId', tenantId.toString())
+        formData.set('search', this.inputText)
         this.UserService.newgetUsers(formData.toString()).subscribe((result) => {
 
-            if (result.length > 0) {
+            if (result.success) {
 
-                this.admininfoList = result;
+                this.admininfoList = result.data;
                 this.userdetails = this.admininfoList.find((x) => x.tenant_id == this.loginInfo.Id);
-               
+
                 this.userdetails.isDisabledDelete = true;
                 this.userdetails.isDisabledEdit = true;
                 if (this.loginInfo.role == 'Super Admin') {
@@ -331,12 +332,13 @@ console.log(this.admininfo.facilityID);
                     }
                 }
                 this.unlock = this.userdetails.user_id;
-                
+
             } else {
                 this.notification.showWarning(
                     'Users not found',
                     ''
                 );
+                this.admininfoList = [];
             }
         });
     };
@@ -360,10 +362,7 @@ console.log(this.admininfo.facilityID);
                 );
                 console.error('errrrrrr>>>>>>', err);
             }
-        });
-
-
-
+        })
     };
 
 
@@ -374,34 +373,33 @@ console.log(this.admininfo.facilityID);
             this.facilityList = response;
             const stringfyIDs = JSON.stringify([this.admininfo.facilityID.toString()]);
             this.payloadFacilityIds = stringfyIDs;
-            console.log(this.payloadFacilityIds);
+         
             if (this.facilityList.length === 0) {
                 this.facilitydata = true;
             }
         })
-    }
+    };
     GetGroups() {
         let tenantId = this.loginInfo.tenantID;
         this.facilitydata = false;
         const formData = new URLSearchParams();
         formData.set('tenantID', tenantId.toString())
         this.facilityService.getMainSubGroupByTenantId(tenantId).subscribe((response) => {
-            this.facilityList = response;
+            this.facilityList = response.categories;
             if (this.facilityList.length === 0) {
                 this.facilitydata = true;
             };
             const facilityIDs = this.facilityList.filter((item) => item.id == this.admininfo.group_id).map((item) => item.ID)[0];
-       
+
             this.groupId = this.admininfo.group_id;
             const stringfyIDs = JSON.stringify(facilityIDs);
             this.payloadFacilityIds = stringfyIDs;
-            // if(this.selectedRole == 'a34d0ecf-4730-4521-82ee-5e3eg28bdfb0'){
-            //     const filterMainGroup = this.facilityList.find(item => item.is_main_group == 1);
-            //     this.groupId = filterMainGroup['id'];
-            //     const stringfyIDs = JSON.stringify(filterMainGroup['ID']);
-            //     this.payloadFacilityIds = stringfyIDs;
-                
-            // }
+            if (this.selectedRole == 'a34d0ecf-4730-4521-82ee-5e3eg28bdfb0') {
+                const filterMainGroup = this.facilityList.find(item => item.is_main_group == 1);
+                this.groupId = filterMainGroup['id'];
+                const stringfyIDs = JSON.stringify(filterMainGroup['ID']);
+                this.payloadFacilityIds = stringfyIDs;
+            }
         });
     };
 
@@ -413,7 +411,7 @@ console.log(this.admininfo.facilityID);
             const facilityID = this.facilityList.find((item) => item.id == this.admininfo.group_id && item.ID);
 
 
-            console.log(facilityID);
+           
             this.groupId = this.admininfo.group_id;
             const stringfyIDs = JSON.stringify(facilityID);
             this.payloadFacilityIds = stringfyIDs;
@@ -425,7 +423,7 @@ console.log(this.admininfo.facilityID);
 
     // ----Edit user Method ---
     EditUser(userdetails) {
-        if(this.loginInfo.role == 'Auditor'){
+        if (this.loginInfo.role == 'Auditor') {
             this.notification.showWarning('You are not Authorized', 'Warning');
             return
         }
@@ -440,17 +438,17 @@ console.log(this.admininfo.facilityID);
 
         this.admininfo = userdetails;
 
-       
+
         this.onEditSelected(this.admininfo.role, this.admininfo.roleId);
     }
 
     // ----Delete user Method ---
 
     deleteUser(event: Event, userid) {
-if(this.loginInfo.role == 'Auditor'){
-    this.notification.showInfo('You are not Authorized', '');
-    return
-}
+        if (this.loginInfo.role == 'Auditor') {
+            this.notification.showInfo('You are not Authorized', '');
+            return
+        }
         this.confirmationService.confirm({
             target: event.target,
             message: 'Are you sure that you want to proceed?',
@@ -524,7 +522,7 @@ if(this.loginInfo.role == 'Auditor'){
         } else if (EditRole == 'Preparer') {
             this.GetAllFacility()
 
-        }else{
+        } else {
             this.notification.showInfo('You are not Authorized', 'Warning');
         }
 
@@ -535,6 +533,7 @@ if(this.loginInfo.role == 'Auditor'){
 
     onSelected(value: string): void {
         this.selectedRole = value;
+        console.log(this.selectedRole);
 
         if (this.loginInfo.role == 'Admin') {
             if (this.selectedRole == '525debfd-cd64-4936-ae57-346d57de3585') {
@@ -545,6 +544,7 @@ if(this.loginInfo.role == 'Auditor'){
             }
         } else if (this.loginInfo.role == 'Super Admin') {
             if (this.selectedRole == '525debfd-cd64-4936-ae57-346d57de3585') {
+               
                 //  for admin role
                 this.GetGroups()
             } else if (this.selectedRole == 'a34d0ecf-4730-4521-82ee-5e3eg28bdfb0') {
@@ -579,7 +579,7 @@ if(this.loginInfo.role == 'Auditor'){
         ) {
             this.visible = true;
             // this.selectedRole = this.Roleaccess;
-        }else{
+        } else {
             this.notification.showInfo(
                 'You are not Authorized',
                 ''
@@ -702,5 +702,9 @@ if(this.loginInfo.role == 'Auditor'){
             // console.log('Preventing scroll');
             event.stopPropagation();
         }
+    };
+
+    onSearch(value) {
+        this.GetAllUsers()
     }
 }

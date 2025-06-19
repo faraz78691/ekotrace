@@ -133,7 +133,7 @@ export class FinanceDashboardComponent {
       if (result.success == true) {
     
         this.dashboardData = result.categories;
-        this.selectedSubGrupId = this.dashboardData[0].ID;
+        this.selectedSubGrupId = this.dashboardData[0].id;
       
         this.getFinancedEmission(this.selectedSubGrupId);
         this.GetIndustry(this.selectedSubGrupId);

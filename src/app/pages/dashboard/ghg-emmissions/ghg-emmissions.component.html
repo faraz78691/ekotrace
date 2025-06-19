@@ -160,23 +160,7 @@
 
 
             <div class="mt-4">
-                <!-- <div class="ct_grey_border_1 ct_py_padd">
-                    <div class="ct_d_flex_1">
-                        <div class="d-flex align-items-center ct_gap_20 flex-wrap">
-                            <h5 class="mb-0"><strong>876.465</strong></h5>
-                            <p class="mb-0">tCO2e</p>
-                        </div>
-                        <div class="d-flex align-items-center ct_gap_20 flex-wrap">
-                            <p class="mb-0">12%</p>
-                            <h5 class="mb-0"><strong>876.465</strong></h5>
-                        </div>
-                    </div>
-                    <div class="progress mt-4" style="height: 10px;">
-                        <div class="progress-bar" role="progressbar"
-                            style="width: 25%; " aria-valuenow="25"
-                            aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                </div> -->
+             
                 <div class="ct_grey_border_1 ct_py_padd mt-3 py-2 " (click)="status = 1"
                     [ngClass]="status ==1 ? 'ct_progress_active1': '' ">
                     <div class="">
@@ -247,55 +231,6 @@
 </div>
 
 
-<!-- <div class="row mt-4"> -->
-<!-- <div class="col-xl-8 mb-4">
-        <div class="ct_grey_border_1">
-            <div class="ct_d_flex_1 ct_grey_brdr_btm1 pb-3 mb-3">
-                <div>
-                    <h5><strong>Emissions and Intensity</strong></h5>
-                    <small>Secondary text</small>
-                </div>
-                <div class="ct_info_icon">
-                    <i class="fa-solid fa-info"></i>
-                </div>
-            </div>
-            <div id="ct_chart_Intensity">
-                <apx-chart
-                [series]="lineoptions.series"
-                [chart]="lineoptions.chart"
-                [xaxis]="lineoptions.xaxis"
-                [dataLabels]="lineoptions.dataLabels"
-                [grid]="lineoptions.grid"
-                [stroke]="lineoptions.stroke"
-                [title]="lineoptions.title"
-              ></apx-chart>
-            </div>
-        </div>
-
-
-    </div> -->
-<!-- <div class="col-xl-4 mb-4">
-        <div class="ct_grey_border_1">
-            <div class="ct_d_flex_1 ct_grey_brdr_btm1 pb-3 mb-3">
-                <div>
-                    <h5 class="mb-0"><strong>Path to net-zero</strong></h5>
-                </div>
-                <div class="ct_info_icon">
-                    <i class="fa-solid fa-info"></i>
-                </div>
-            </div>
-            <div id="ct_net_zeo_donut">
-                <apx-chart
-                [series]="donotoptions.series"
-                [chart]="donotoptions.chart"
-                [labels]="donotoptions.labels"
-                [responsive]="donotoptions.responsive"
-              ></apx-chart>
-            </div>
-        </div>
-    </div> -->
-
-<!-- </div> -->
 
 <div class="row">
     <div class="col-xl-4 mb-4">
@@ -337,39 +272,7 @@
 
 </div>
 
-<!-- <div class="row">
-    <div  *ngIf="donotOptions1">
-        <apx-chart
-          [series]="donotOptions1.series"
-          [chart]="donotOptions1.chart"
-          [labels]="donotOptions1.labels"
-          [fill]="donotOptions1.fill"
-          [dataLabels]="donotOptions1.dataLabels"
-          [responsive]="donotOptions1.responsive"
-        ></apx-chart>
-      </div>
-    <div  *ngIf="donotOptions2">
-        <apx-chart
-          [series]="donotOptions2.series"
-          [chart]="donotOptions2.chart"
-          [labels]="donotOptions2.labels"
-          [fill]="donotOptions2.fill"
-          [dataLabels]="donotOptions2.dataLabels"
-          [responsive]="donotOptions2.responsive"
-        ></apx-chart>
-      </div>
-    <div id="chart" *ngIf="donotOptions3">
-        <apx-chart
-          [series]="donotOptions3.series"
-          [chart]="donotOptions3.chart"
-          [labels]="donotOptions3.labels"
-          [fill]="donotOptions3.fill"
-          [dataLabels]="donotOptions3.dataLabels"
-          [responsive]="donotOptions3.responsive"
-        ></apx-chart>
-      </div>
- 
-</div> -->
+
 
 
 
@@ -456,25 +359,7 @@
             </div>
         </div>
     </div>
-    <!-- <div class="col-xl-3 mb-4">
-        <div class="ct_grey_border_1">
-            <div class="ct_d_flex_1 ct_grey_brdr_btm1 pb-3 mb-3">
-                <div>
-                    <h5 class="mb-0"><strong>Emissions by Activity </strong></h5>
-                </div>
-            
-            </div>
-            <div id="ct_net_zeo_donut" *ngIf="donotoptions">
-                <apx-chart
-                [series]="donotoptions.series"
-                [chart]="donotoptions.chart"
-                [labels]="donotoptions.labels"
-                [legend]="donotoptions.legend"
-                [responsive]="donotoptions.responsive"
-              ></apx-chart>
-            </div>
-        </div>
-    </div> -->
+ 
     <div class="col-xl-4 mb-4">
         <div class="ct_grey_border_1">
             <div class="ct_d_flex_1 ct_grey_brdr_btm1 pb-3 mb-3">

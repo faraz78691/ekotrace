@@ -2858,26 +2858,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody #commuteTable>
-                                                    <!-- <tr>
-                                                        <td scope="row">1</td>
-
-                                                        <td>Sports Teams and Clubs</td>
-                                                        <td>25-10-2025</td>
-                                                        <td>50</td>
-                                                        <td>INR</td>
-                                                        <td>Samsung</td>
-                                                        <td>2.00</td>
-                                                        <td>Matched</td>
-                                                      
-                                                        <td class="d-flex justify-content-center align-items-center">
-                                                            <button class="btn btn-sm btn-primary mr-1">  <i class="fa-solid fa-edit"></i></button>
-                                                            <button class="btn btn-sm btn-danger mr-1">  <i class="fa-solid fa-trash-can"></i></button>
-                                                            <button class="btn  btn-sm btn-success"> Add Vendor</button>
-                                                          
-                                                           
-                                                        </td>
-
-                                                    </tr> -->
+                                                  
                                                     <tr *ngFor="let product of newExcelData; let i = index">
                                                         <td>{{ i + 1 }}</td>
                                                         <td>
@@ -6688,10 +6669,12 @@
         </form>
 
         <p-header> OR </p-header>
+       <div class="d-flex gap-3 align-items-center justify-content-center">
         <button type="button" class="px-4 trackingsubmitb mr-3" (click)="changeStatus()">Change Status to
             Unmatch</button>
         <button *ngIf="hideMatchButon" type="button" class="px-4 btn-warning trackingsubmitb"
             (click)="changeStatustoMatch()">Change Status to Match</button>
+       </div>
     </div>
 </p-dialog>
 

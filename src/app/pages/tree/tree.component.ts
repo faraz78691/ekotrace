@@ -600,6 +600,7 @@ export class TreeComponent {
                             })
                                 .then(response => response.json())
                                 .then(data => family.removeNode(nodeId)
+                           
                                     // // console.log(data)
                                 )
                                 .catch(error => console.error('Error:', error));

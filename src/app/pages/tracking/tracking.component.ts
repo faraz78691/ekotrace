@@ -1286,7 +1286,7 @@ export class TrackingComponent {
         this.trackingService.newgetUnits(subcatId).subscribe({
             next: (Response) => {
                 if (Response) {
-                    console.log(Response);
+                    
                     this.units = Response['categories'];
 
                     this.dataEntry.unit = this.units[0].UnitName;
@@ -1496,8 +1496,7 @@ export class TrackingComponent {
                                 // this.facilitynothavedp = environment.none;
                                 // this.forGroup = environment.none;
                             }
-                            // console.log(this.AssignedDataPoint[2]);
-                            // console.log(this.AssignedDataPoint[2]);
+                         
 
                             const findIndexScope3 = this.AssignedDataPoint.findIndex(item => item.ScopeID === 3);
 
@@ -1524,7 +1523,7 @@ export class TrackingComponent {
 
                                         const subCatID = response.categories[i].manageDataPointCategories[j].manageDataPointSubCategories[0].manageDataPointSubCategorySeedID;
                                         this.SubCatAllData = response.categories[i].manageDataPointCategories[j].manageDataPointSubCategories[0];
-                                        console.log(this.SubCatAllData);
+                                       
                                         this.id_var = subCatID;
                                         if ((response.categories)[i].manageDataPointCategories[j].manageDataPointCategorySeedID == 1) {
 
@@ -1791,6 +1790,7 @@ export class TrackingComponent {
 
             // Convert array to key-value pairs
             this.jsonData = this.convertToKeyValue(this.jsonData);
+            console.log("this.jsonData", this.jsonData);
             this.sendJSON(this.jsonData);
             // setTimeout(() => {
             //     fileUpload.clear();
@@ -1819,7 +1819,7 @@ export class TrackingComponent {
             const jsonReading = this.convertToKeyValue(this.jsonCompanyData);
 
             this.jsonCompanyData = jsonReading.filter(items => { return items['Vehicle Model'] !== '' });
-            console.log(this.jsonCompanyData);
+           
             this.jsonCompanyData = this.jsonCompanyData.map(item => {
                 return {
                     vehicleType: item['Vehicle Model'],
@@ -1866,7 +1866,7 @@ export class TrackingComponent {
     }
 
     toggleEdit(index: number, id: any, productmatch: any, finder: any) {
-        console.log(id);
+      
         this.productID = id;
         this.visible2 = true;
 
@@ -1933,7 +1933,7 @@ export class TrackingComponent {
 
                 }
                 this.spinner.hide();
-                console.log("get from api", this.newExcelData);
+              
             },
             error: (err) => {
                 this.spinner.hide();
@@ -2099,8 +2099,7 @@ export class TrackingComponent {
     };
 
     onFileSelected(event: any) {
-        console.log(event[0].file);
-        console.log(event[0]);
+  
         const selectedFile = event[0];
 
         if (selectedFile) {
@@ -2493,7 +2492,7 @@ export class TrackingComponent {
     }
 
     enableCharging(subcatName: any) {
-        console.log(this.VehicleDE.vehicleTypeID);
+      
         if (subcatName == "Passenger Vehicle") {
             if (this.VehicleDE.vehicleTypeID == 7 || this.VehicleDE.vehicleTypeID == 8 || this.VehicleDE.vehicleTypeID == 9 || this.VehicleDE.vehicleTypeID == 12 || this.VehicleDE.vehicleTypeID == 17 || this.VehicleDE.vehicleTypeID == 10) {
 
@@ -3045,7 +3044,7 @@ export class TrackingComponent {
     onCalculationInvestmentMethodChange(event: any) {
         const calMethod = event.value;
         this.franchiseMethodValue = calMethod;
-        console.log(calMethod);
+       
         if (calMethod == 'Investment Specific method') {
             this.franchiseMethod = true;
             this.averageMethod = false
@@ -3363,7 +3362,7 @@ export class TrackingComponent {
         this.appService.postAPI('/get-purchase-good-matched-data-using-payload-id', formdata).subscribe({
             next: (response: any) => {
                 if (response.success == true) {
-                    console.log(response.data);
+                 
                     this.newExcelData = response.data;
                     this.progressPSGTab = false;
                     this.singlePGSTab = !this.singlePGSTab;
@@ -3458,7 +3457,7 @@ export class TrackingComponent {
             }
         })
 
-        console.log(row.mode_type);
+        
     };
 
 
@@ -3885,7 +3884,7 @@ export class TrackingComponent {
                 formData.set('year', this.dataEntry.year);
                 formData.set('jsonData', companyOwnedVehicles.toString());
             } else {
-                console.log("tgf");
+                
                 var formData2 = new URLSearchParams();
                 formData2.set('facilityId', this.facilityID);
                 formData2.set('month', monthString);
@@ -4230,7 +4229,7 @@ export class TrackingComponent {
                 });
             } else {
 
-                const payload = this.newExcelData.filter(row => row.is_find == true && row.productResult.other_category_flag == '0').map(row => ({
+                const payload = this.newExcelData.filter(row => row.is_find == true && (row.productResult.other_category_flag == '0' || row.productResult.other_category_flag == '')).map(row => ({
                     month: '',
                     typeofpurchase: row.productResult.typeofpurchase,
                     valuequantity: row['Value / Quantity'],
@@ -4245,6 +4244,8 @@ export class TrackingComponent {
                     productcode: row.code,
                     is_find: row.is_find
                 }));
+                
+                
                 var purchaseTableStringfy = JSON.stringify(payload);
 
 
@@ -4386,8 +4387,7 @@ export class TrackingComponent {
                 );
                 return
             }
-            console.log(form.value.water_supply, 'water_supply');
-            console.log(form.value.water_treatment, 'water_treatment');
+          
             if (form.value.water_supply < 0 || form.value.water_supply == null) {
                 this.notification.showInfo(
                     'Enter water withdrawn',

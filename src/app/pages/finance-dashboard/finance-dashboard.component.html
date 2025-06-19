@@ -34,7 +34,7 @@
                                         <ng-container  >
                                             <p-dropdown class="ct_select_op_input ct_chev_icon_dark230" required  #country="ngModel"
                                             [options]="dashboardData" optionLabel="name" 
-                                            optionValue="ID" [(ngModel)]="selectedSubGrupId" [ngModelOptions]="{standalone: true}" [scrollable]="true"
+                                            optionValue="id" [(ngModel)]="selectedSubGrupId" [ngModelOptions]="{standalone: true}" [scrollable]="true"
                                             (onChange)="onFacilityChange($event)">
                                             <ng-template let-option pTemplate="item">
                                                 <div class="d-flex justify-content-between">

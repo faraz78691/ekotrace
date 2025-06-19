@@ -147,7 +147,7 @@
                                 this.updatedtheme === 'dark'
                                     ? 'form-controlD'
                                     : 'form-controlL'
-                            " class="form-control text-white" placeholder="Search user" [(ngModel)]="searchData" />
+                            " class="form-control text-white" placeholder="Search user" [(ngModel)]="inputText" (input)="onSearch(inputText)" />
                     </div>
                     <div class="form-group has-search text-light ml-2" *ngIf="loginInfo.role != 'Preparer'">
                         <button class="UserButton ct_animation_btn_121 mt-0 ct_assign_package_btn129"

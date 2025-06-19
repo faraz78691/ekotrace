@@ -15,7 +15,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProfileComponent } from '@pages/profile/profile.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RegisterComponent } from '@modules/register/register.component';
-import { DashboardComponent } from '@pages/dashboard/dashboard.component';
 import { ToastrModule } from 'ngx-toastr';
 import { MessagesComponent } from '@modules/main/header/messages/messages.component';
 import { NotificationsComponent } from '@modules/main/header/notifications/notifications.component';
@@ -136,6 +135,7 @@ import { KpiDashboardComponent } from './pages/kpi-dashboard/kpi-dashboard.compo
 import { KpiInventoryComponent } from './pages/kpi-inventory/kpi-inventory.component';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { AttachmentsComponent } from './pages/attachments/attachments.component';
+import { ViewApproveGroupsComponent } from './pages/view-approve-groups/view-approve-groups.component';
 
 defineCustomElements();
 registerLocaleData(localeEn, 'en-EN');
@@ -150,7 +150,7 @@ registerLocaleData(localeEn, 'en-EN');
         BlankComponent,
         ProfileComponent,
         RegisterComponent,
-        DashboardComponent,
+       
         MessagesComponent,
         NotificationsComponent,
         ForgotPasswordComponent,
@@ -224,7 +224,8 @@ registerLocaleData(localeEn, 'en-EN');
         PdfReportingComponent,
         KpiDashboardComponent,
         KpiInventoryComponent,
-        AttachmentsComponent
+        AttachmentsComponent,
+        ViewApproveGroupsComponent
     ],
     imports: [
         HeaderComponent,

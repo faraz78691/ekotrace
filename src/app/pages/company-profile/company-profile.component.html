@@ -21,7 +21,7 @@
                 <div class="ct_company_profile_input">
                     <label for="industryType" class="mt-3 mb-2">Industry Type</label>
                     <div class="">
-                        <p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230 " defaultLabel="Select Industry Type" [options]="companyProfile" placeholder="Please select"
+                        <p-dropdown class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230 " defaultLabel="Select Industry Type" [options]="category" placeholder="Please select"
                             [(ngModel)]="selectedIndustryTypes" optionLabel="category" name="industryType" (onChange)="onIndustryTypeChange($event)"   optionValue="category"></p-dropdown>
                     </div>
                 </div>

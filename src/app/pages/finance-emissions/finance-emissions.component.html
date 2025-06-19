@@ -4,7 +4,8 @@
 
         <div class="col-lg-10 mx-auto mb-4 px-2">
             <div class="TrackingDiv2-border Dashboard-tab ct_dash_board_tab text-white ct_scroll_dash"
-                style="height: calc(100vh - 210px);">
+               >
+               <!-- style="height: calc(100vh - 210px);" -->
 
                 <p-tabView #dataentryTab activeIndex="{{ activeindex }}">
                     <p-tabPanel header="Data Entry">
@@ -22,64 +23,95 @@
                                         <h5 class="mb-2 ct_fs_16">Financed Emissions
 
                                         </h5>
-                                        <p>Emissions from investments made by the company, including equity investments, loans, and other financial assets. This category covers emissions from the activities of entities in which the company has invested.
+                                        <p>Emissions from investments made by the company, including equity investments,
+                                            loans, and other financial assets. This category covers emissions from the
+                                            activities of entities in which the company has invested.
                                         </p>
 
-                                        <h5 class="mb-2 ct_fs_16">This category divides financial investments into three types:
+                                        <h5 class="mb-2 ct_fs_16">This category divides financial investments into three
+                                            types:
                                         </h5>
-                                  
+
                                         <ol>
-                                            <li>Equity investments – Investment made the company using its own capital. It can be further subcategorised into: a) subsidiaries - where the company has financial control b) associate companies - where company has significant influence but no financial control c) joint ventures - where partners have joined financial control b) other investments - company has neither financial control nor significant influence eg. insurance contracts, credit guarantees. 
+                                            <li>Equity investments – Investment made the company using its own capital.
+                                                It can be further subcategorised into: a) subsidiaries - where the
+                                                company has financial control b) associate companies - where company has
+                                                significant influence but no financial control c) joint ventures - where
+                                                partners have joined financial control b) other investments - company
+                                                has neither financial control nor significant influence eg. insurance
+                                                contracts, credit guarantees.
 
                                             </li>
-                                           <li>Debt investments – Corporate debt holdings held in the company’s portfolio, such as bonds, or commercial loans. 	
-                                        </li>
-                                        <li>
-                                            Project finance - Long-term financing of projects (e.g., infrastructure and industrial projects) by the reporting company as either an equity investor (sponsor) or debt investor (financier)
+                                            <li>Debt investments – Corporate debt holdings held in the company’s
+                                                portfolio, such as bonds, or commercial loans.
+                                            </li>
+                                            <li>
+                                                Project finance - Long-term financing of projects (e.g., infrastructure
+                                                and industrial projects) by the reporting company as either an equity
+                                                investor (sponsor) or debt investor (financier)
 
-                                        </li>
+                                            </li>
                                         </ol>
-                                      
-                                        <h5 class="ct_fs_16 mb-0">To collect emissions data for investments made by the company, follow these steps:
+
+                                        <h5 class="ct_fs_16 mb-0">To collect emissions data for investments made by the
+                                            company, follow these steps:
                                         </h5>
                                         <ol>
                                             <li>
-                                                Decide which financial activity to include in the data collection (e.g., corporate lending, project finance, equity investments, bond underwriting)
+                                                Decide which financial activity to include in the data collection (e.g.,
+                                                corporate lending, project finance, equity investments, bond
+                                                underwriting)
 
                                             </li>
                                             <li>
-                                                Identify company’s proportional share of investment in the investee or total project cost. As the investment portfolios are dynamic, companies should identify investments by choosing a fix point in time such as year-end. 
+                                                Identify company’s proportional share of investment in the investee or
+                                                total project cost. As the investment portfolios are dynamic, companies
+                                                should identify investments by choosing a fix point in time such as
+                                                year-end.
 
                                             </li>
                                             <li>
-                                                Determine the scope of emissions data needed e.g., Scope 1, Scope 2, Scope 3 (if significant)
+                                                Determine the scope of emissions data needed e.g., Scope 1, Scope 2,
+                                                Scope 3 (if significant)
                                             </li>
                                             <li>
-                                                Relevant department for collecting the data – Corporate finance / Treasury team, Accounts department
+                                                Relevant department for collecting the data – Corporate finance /
+                                                Treasury team, Accounts department
 
                                             </li>
-                                          
+
                                         </ol>
                                         <h5 class="ct_fs_16 mb-0">How to use the tool for entering emissions data
 
                                         </h5>
                                         <ol>
                                             <li>
-                                                Choose the type of investment from the drop-down and then select the industry sector that most closely matches the sector in which investment has been done
+                                                Choose the type of investment from the drop-down and then select the
+                                                industry sector that most closely matches the sector in which investment
+                                                has been done
                                             </li>
                                             <li>
-                                                Select the calculation method 
+                                                Select the calculation method
                                                 <ul class="pl-3" style="list-style: lower-roman;">
-                                                    <li>For Investment specific method - collect the scope1 and scope2 emissions data of the investee company for the reporting period and specify the proportional share of equity or project cost to calculate the emissions contribution of the reporting company. 
+                                                    <li>For Investment specific method - collect the scope1 and scope2
+                                                        emissions data of the investee company for the reporting period
+                                                        and specify the proportional share of equity or project cost to
+                                                        calculate the emissions contribution of the reporting company.
                                                     </li>
-                                                    <li>For ‘Average data method’ – Input the investee company total revenue (for equity investment or debt investment when the project is in operational phase) or project construction cost if the project is still in construction phase in the reporting period. Specify the proportional share of equity or project cost to calculate the emissions contribution of the reporting company.
+                                                    <li>For ‘Average data method’ – Input the investee company total
+                                                        revenue (for equity investment or debt investment when the
+                                                        project is in operational phase) or project construction cost if
+                                                        the project is still in construction phase in the reporting
+                                                        period. Specify the proportional share of equity or project cost
+                                                        to calculate the emissions contribution of the reporting
+                                                        company.
                                                     </li>
-                                                   
+
                                                 </ul>
 
                                             </li>
-                                          
-                                          
+
+
                                         </ol>
                                     </div>
                                 </div>
@@ -93,10 +125,10 @@
                             <!-- scope 3 categores stats from here -->
 
                             <div class="trackingFooter">
-                                <div class="row mt-4 mb-3 mb-5 pb-5 mx-2">
-                                  
+                                <div class="row mt-4 mb-3 mb-0 pb-0 mx-2">
+
                                     <div class="col-12">
-                                        
+
                                         <div class="">
                                             <div class="row">
                                                 <div class="col-md-6">
@@ -112,14 +144,15 @@
                                                         </p-dropdown>
                                                     </div>
                                                 </div>
-                                                
+
                                                 <div class="col-md-6">
                                                     <div class="calenderDiv flex">
                                                         <div
                                                             class="selectyear ct_calander_input col ct_calender_38 ct_month_light_green ct_calender_font_size">
                                                             <p-calendar class="w-100" ngModel name="year" year
                                                                 [(ngModel)]="year" styleClass="pcalender" view="year"
-                                                                dateFormat="yy" inputId="yearpicker" placeholder="Select year"
+                                                                dateFormat="yy" inputId="yearpicker"
+                                                                placeholder="Select year"
                                                                 [showIcon]="true"></p-calendar>
                                                         </div>
                                                     </div>
@@ -232,7 +265,7 @@
                                                                     placeholder="Enter total revenue"
                                                                     name="investe_company_revenue" ngModel />
                                                                 <div class="ct_quantity_text">
-                                                                    <p>INR</p>
+                                                                    <p>{{countryCode}}</p>
                                                                 </div>
 
                                                             </div>
@@ -380,7 +413,7 @@
                                         </div>
 
                                     </div>
-                                    <div class="col-12 mt-2 pt-3 ml-3 text-center">
+                                    <div class="col-12 mt-4 pt-3 ml-3 text-center">
                                         <button type="submit" class="px-4 trackingsubmitb">
                                             Submit
                                         </button>
@@ -415,61 +448,56 @@
                                 <ng-template pTemplate="header">
                                     <tr>
 
-                                      
-                                      
-                                      
+
+
+
                                         <th pSortableColumn="type"
                                             *ngIf="categoryId != 3 && categoryId != 10 && categoryId != 11 && categoryId != 10 && categoryId != 12 && categoryId != 14">
 
                                             Investment Type
                                             <p-sortIcon field="catName"></p-sortIcon>
                                         </th>
-                                      
+
                                         <th pSortableColumn="catName"
                                             *ngIf="categoryId == 16 || categoryId == 21 || categoryId == 22 || categoryId == 23">
                                             Industry Sector
-                               
+
                                         </th>
-                                       
+
                                         <th pSortableColumn="catName" *ngIf="categoryId == 23">
                                             Industry Sub sector
-                       
+
                                         </th>
                                         <th pSortableColumn="catName" *ngIf="categoryId == 18">
                                             Processing Activity
-                                           
+
                                         </th>
                                         <th pSortableColumn="catName"
                                             *ngIf="categoryId == 16 || categoryId ==18 || categoryId == 21 ||categoryId == 22 ||categoryId == 23">
                                             Calculation Method
-                                           
+
                                         </th>
-                                        <th pSortableColumn="catName"
-                                            *ngIf="categoryId ==23">
+                                        <th pSortableColumn="catName" *ngIf="categoryId ==23">
                                             Revenue / Project Cost
-                                          
+
                                         </th>
-                                        <th pSortableColumn="catName"
-                                            *ngIf="categoryId ==23">
+                                        <th pSortableColumn="catName" *ngIf="categoryId ==23">
                                             Share equity / Total project%
-                                          
+
                                         </th>
-                                      
-                                        <th pSortableColumn="catName"
-                                            *ngIf="categoryId ==23">
+
+                                        <th pSortableColumn="catName" *ngIf="categoryId ==23">
                                             Project Phase
-                                          
+
                                         </th>
-                                        <th pSortableColumn="catName"
-                                            *ngIf="categoryId == 23">
+                                        <th pSortableColumn="catName" *ngIf="categoryId == 23">
                                             Scope1 (tonnes co2e)
-                                         
+
                                         </th>
-                                        <th pSortableColumn="catName"
-                                            *ngIf="categoryId == 23">
+                                        <th pSortableColumn="catName" *ngIf="categoryId == 23">
                                             Scope2 (tonnes co2e)
-                                         
-                                      
+
+
                                         <th pSortableColumn="year">
                                             <p-sortIcon field="year"></p-sortIcon>
                                             Year
@@ -506,8 +534,8 @@
                                             %
         
                                         </th> -->
-                                    
-                                     
+
+
 
 
 
@@ -541,36 +569,37 @@
                                 <ng-template pTemplate="body" let-de let-editing="editing" let-ri="rowIndex">
                                     <tr [pEditableRow]="de">
 
-                                 
+
                                         <td *ngIf="categoryId == 23">{{ de.investement_type }}</td>
                                         <td *ngIf="categoryId == 23">{{ de.category }}</td>
                                         <td *ngIf="categoryId == 23">{{ de.sub_category }}</td>
                                         <td
                                             *ngIf="categoryId == 16 || categoryId ==18 || categoryId == 21 ||categoryId == 22 ||categoryId == 23">
                                             {{ de.calculation_method }}</td>
-                                            <td *ngIf="categoryId == 23">{{ de.investee_company_total_revenue }}</td>  
-                                            <td *ngIf="categoryId == 23">{{ de.equity_share }}</td>  
-                                            <td *ngIf="categoryId == 23">{{ de.project_phase == null ? '-' : de.project_phase }}</td>  
-                                            <td *ngIf="categoryId == 23">{{ de.scope1_emission }}</td>  
-                                            <td *ngIf="categoryId == 23">{{ de.scope2_emission }}</td>  
-                                     
-                                     
+                                        <td *ngIf="categoryId == 23">{{ de.investee_company_total_revenue }}</td>
+                                        <td *ngIf="categoryId == 23">{{ de.equity_share }}</td>
+                                        <td *ngIf="categoryId == 23">{{ de.project_phase == null ? '-' :
+                                            de.project_phase }}</td>
+                                        <td *ngIf="categoryId == 23">{{ de.scope1_emission }}</td>
+                                        <td *ngIf="categoryId == 23">{{ de.scope2_emission }}</td>
 
-                                   
 
-                                      
 
-                                      
+
+
+
+
+
                                         <td>
                                             {{ de.year }}
                                         </td>
                                         <td *ngIf="categoryId != 8 && categoryId != 14 && categoryId != 15">
                                             {{ de.month }}
                                         </td>
-                                      
-                                     
+
+
                                         <td>{{ de.status }}</td>
-                                        <td>{{ de.emission  }}</td>
+                                        <td>{{ de.emission }}</td>
                                         <td>{{ de.user_name }}</td>
                                         <!-- <td>
                                             <div class="view-details">
@@ -635,8 +664,8 @@
 
 
 
-                                      
-                                   
+
+
 
 
 
@@ -649,7 +678,7 @@
     
                                     </th> -->
 
-                                     
+
                                         <th pSortableColumn="sourceName" pTooltip="tCO2" tooltipPosition="top">
                                             Emission Factor
                                         </th>
@@ -665,22 +694,22 @@
                                 <ng-template pTemplate="body" let-de let-editing="editing" let-ri="rowIndex">
                                     <tr [pEditableRow]="de">
 
-                                       
-                                      
-                                      
+
+
+
 
 
                                         <td *ngIf="categoryId == 23">{{ de.investement_type }}</td>
                                         <td *ngIf="categoryId == 22 || categoryId == 23  ">{{ de.category }}</td>
 
-                                
-                                    
+
+
                                         <td>{{de.emissionFactorUsed != 'NaN' ? (de.emissionFactorUsed | number :'1.2-2')
                                             : '-' }}</td>
-                                       
 
 
-                                        <td >{{ de.emission_factor_unit ? de.emission_factor_unit : '-'
+
+                                        <td>{{ de.emission_factor_unit ? de.emission_factor_unit : '-'
                                             }}</td>
 
 
@@ -697,12 +726,14 @@
                         </div>
                     </p-tabPanel>
                 </p-tabView>
+                <div class="view-request mt-3 ct_view_request_btn d-flex justify-content-center"
+                [routerLink]="['/finance-view-approve-groups', groupId]">
+                    View and Approve Request
+                </div>
             </div>
+           
         </div>
-        <div class="view-request mt-0 ct_view_request_btn d-flex justify-content-center" (click)="showDialog()"
-        [routerLink]="['/tracking-view-requests']" [queryParams]="{data: facilityID}">
-        View and Approve Request
+        
     </div>
-    </div>
-  
+
 </div>

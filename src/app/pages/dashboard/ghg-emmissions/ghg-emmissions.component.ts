@@ -302,7 +302,7 @@ export class GhgEmmissionsComponent implements OnDestroy {
             horizontalAlign: 'left',
           },
           labels: this.labelScopeDonut1,
-          colors: ['#F3722C', '#0068F2', '#F8961E'],
+          colors: ['#5DADE2', '#48C9B0', '#F4D03F', '#EC7063', '#AF7AC5', '#48C9B0', '#F0B27A', '#3498DB', '#73C6B6', '#F8C471', '#9ACD32', '#FF8A65', '#B3B6B7', '#D7BDE2', '#76D7C4'],
           responsive: [
             {
               breakpoint: 480,
@@ -336,7 +336,7 @@ export class GhgEmmissionsComponent implements OnDestroy {
             floating: false,
             horizontalAlign: 'left',
           },
-          colors: ['#F3722C', '#0068F2', '#F8961E', '#ACE1AF', '#7BAFD4', '#B284BE', '#98817B'],
+          colors: ['#5DADE2', '#48C9B0', '#F4D03F', '#EC7063', '#AF7AC5', '#48C9B0', '#F0B27A', '#3498DB', '#73C6B6', '#F8C471', '#9ACD32', '#FF8A65', '#B3B6B7', '#D7BDE2', '#76D7C4'],
           labels: this.labelScopeDonut2,
           responsive: [
             {
@@ -376,7 +376,7 @@ export class GhgEmmissionsComponent implements OnDestroy {
             floating: false,
             horizontalAlign: 'left',
           },
-          colors: ['#F3722C', '#0068F2', '#F4C430', '#ACE1AF', '#7BAFD4', '#B284BE'],
+          colors: ['#5DADE2', '#48C9B0', '#F4D03F', '#EC7063', '#AF7AC5', '#48C9B0', '#F0B27A', '#3498DB', '#73C6B6', '#F8C471', '#9ACD32', '#FF8A65', '#B3B6B7', '#D7BDE2', '#76D7C4'],
           labels: this.labelScopeDonut3,
           responsive: [
             {

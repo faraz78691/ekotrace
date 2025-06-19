@@ -1,120 +1,7 @@
 <div class="container-fluid">
     <div class="d-flex justify-content-center"></div>
     <div class="row d-flex justify-content-center mx-3 my-2">
-        <!-- <input type="date" name="" id="" /> -->
-
-        <!-- <div class="col-10">
-            <div class="row">
-                <div class="col-1">
-                    <div [ngClass]="
-                            this.months.january === true
-                                ? 'filledselectedmonths'
-                                : ''
-                        " class="selectedmonths">
-                        Jan
-                    </div>
-                </div>
-                <div class="col-1">
-                    <div [ngClass]="
-                            this.months.february === true
-                                ? 'filledselectedmonths'
-                                : ''
-                        " class="selectedmonths">
-                        Feb
-                    </div>
-                </div>
-                <div class="col-1">
-                    <div [ngClass]="
-                            this.months.march === true
-                                ? 'filledselectedmonths'
-                                : ''
-                        " class="selectedmonths">
-                        Mar
-                    </div>
-                </div>
-                <div class="col-1">
-                    <div [ngClass]="
-                            this.months.april === true
-                                ? 'filledselectedmonths'
-                                : ''
-                        " class="selectedmonths">
-                        Apr
-                    </div>
-                </div>
-                <div class="col-1">
-                    <div [ngClass]="
-                            this.months.may === true
-                                ? 'filledselectedmonths'
-                                : ''
-                        " class="selectedmonths">
-                        May
-                    </div>
-                </div>
-                <div class="col-1">
-                    <div [ngClass]="
-                            this.months.june === true
-                                ? 'filledselectedmonths'
-                                : ''
-                        " class="selectedmonths">
-                        Jun
-                    </div>
-                </div>
-                <div class="col-1">
-                    <div [ngClass]="
-                            this.months.july === true
-                                ? 'filledselectedmonths'
-                                : ''
-                        " class="selectedmonths">
-                        Jul
-                    </div>
-                </div>
-                <div class="col-1">
-                    <div [ngClass]="
-                            this.months.august === true
-                                ? 'filledselectedmonths'
-                                : ''
-                        " class="selectedmonths">
-                        Aug
-                    </div>
-                </div>
-                <div class="col-1">
-                    <div [ngClass]="
-                            this.months.september === true
-                                ? 'filledselectedmonths'
-                                : ''
-                        " class="selectedmonths">
-                        Sep
-                    </div>
-                </div>
-                <div class="col-1">
-                    <div [ngClass]="
-                            this.months.october === true
-                                ? 'filledselectedmonths'
-                                : ''
-                        " class="selectedmonths">
-                        Oct
-                    </div>
-                </div>
-                <div class="col-1">
-                    <div [ngClass]="
-                            this.months.november === true
-                                ? 'filledselectedmonths'
-                                : ''
-                        " class="selectedmonths">
-                        Nov
-                    </div>
-                </div>
-                <div class="col-1">
-                    <div [ngClass]="
-                            this.months.december === true
-                                ? 'filledselectedmonths'
-                                : ''
-                        " class="selectedmonths">
-                        Dec
-                    </div>
-                </div>
-            </div>
-        </div> -->
+      
     </div>
     <div class="row pt-2 text-white">
         <div class="col mx-4 border rounded Dashboard-tab view-request-col">
@@ -562,9 +449,6 @@
                         <ng-template pTemplate="body" let-de let-editing="editing" let-ri="rowIndex">
                             <tr [pEditableRow]="de">
                                 <td>
-                                    <!-- <p-checkbox name="sendApp" id binary="true"
-                                    [(ngModel)]="de.sendForApproval"></p-checkbox> -->
-                                    <!-- <p-tableCheckbox *ngIf="de.status === false && loginInfo.role !== Approver" [value]="de" [disabled]="isOutOfStock(de)"></p-tableCheckbox> -->
                                     <p-tableCheckbox *ngIf="
                                    de.status === Pending
                                 " [value]="de"></p-tableCheckbox>
@@ -573,15 +457,6 @@
                                             loginInfo.role === Preparer &&
                                             de.status === Pending
                                         ">Sent for Approval</label>
-
-                                    <!-- <p-tableCheckbox *ngIf="
-                                            loginInfo.role === Approver &&
-                                            de.status === Pending
-                                        " [value]="de" [disabled]="isOutOfStock(de)"></p-tableCheckbox> -->
-                                    <!-- <p-tableCheckbox *ngIf="
-                                            loginInfo.role === Manager &&
-                                            de.status === Pending
-                                        " [value]="de"></p-tableCheckbox> -->
                                 </td>
                                 <td *ngIf="selectedCategory == 8"> {{de.typeofpurchase}}</td>
                                 <td
@@ -743,13 +618,7 @@
                                 </td>
                                 <td *ngIf="selectedCategory==1">{{ de.blendType }}</td>
                                 <td *ngIf="selectedCategory==8">{{ de.valuequantity }}</td>
-                                <!-- <td *ngIf="selectedCategory==1"><p-cellEditor><ng-template pTemplate="input">
-                                            <input name="blendPercent_{{ ri }}" id="{{ ri }}" pInputText type="text"
-                                                [(ngModel)]="de.blendPercent" ngModel #blendPercent="ngModel">
-                                        </ng-template>
-                                        <ng-template pTemplate="output">
-                                            {{ de.blendPercent }}
-                                        </ng-template>{{ de.blendPercent }}</p-cellEditor></td> -->
+                               
                                 <td *ngIf="selectedCategory==3"><p-cellEditor><ng-template pTemplate="input">
                                             <input name="numberOfExtinguisher_{{ ri }}" id="{{ ri }}" pInputText
                                                 type="text" [(ngModel)]="de.numberOfExtinguisher" ngModel
@@ -807,25 +676,7 @@
 
                                 <td>
 
-                                    <!-- <div *ngIf="
-                                            de.sendForApproval === false &&
-                                            loginInfo.role !== Preparer
-                                        " class="d-flex font-pera text-center pl-3">
-                                        <div (click)="EditDataEntry(de)">
-                                            <i class="LocButtonEdit pi pi-user-edit pointer d-flex text-white">
-                                                <p class="pl-2">Edit</p>
-                                            </i>
-                                        </div>
-                                        <div
-                                            class="form-group has-search text-light pointer"
-                                        >
-                                            <i
-                                                class="deleteButton pi pi-trash pointer d-flex text-white"
-                                            >
-                                                <p class="pl-2">Delete</p>
-                                            </i>
-                                        </div>
-                                    </div> -->
+                                 
                                     <div *ngIf="
                                     de.status === Pending
                                  " class="d-flex font-pera text-center pl-3 pt-0">
@@ -836,16 +687,6 @@
                                             <i class="fa fa-eject" aria-hidden="true"></i>
                                         </button>
 
-                                        <!-- <div (click)="AcceptSingleEntry(de)">
-                                            <i class="LocButtonEdit pi pi-check pointer d-flex text-white ct_border_radius_8">
-                                                <p class="pl-2">Accept</p>
-                                            </i>
-                                        </div> -->
-                                        <!-- <div (click)="showDialog()" class="form-group has-search text-light pointer">
-                                            <i class="deleteButton pi pi-times pointer d-flex text-white">
-                                                <p class="pl-2">Reject</p>
-                                            </i>
-                                        </div> -->
                                         <p-dialog header="Header" [(visible)]="visible" [style]="{width: '50vw'}">
                                             <ng-template pTemplate="header">
                                                 <span class="text-xl font-bold mx-auto">Reason</span>
@@ -861,14 +702,7 @@
                                                 </p>
                                             </div>
 
-                                            <!-- <ng-template pTemplate="footer">
-                                                <p-button icon="pi pi-check mx-auto" label="Submit" styleClass="p-button-text"
-                                                    (click)="
-                                                        RejectSingleEntry(de)
-                                                    " [disabled]="
-                                                        inputreason.invalid
-                                                    "></p-button>
-                                            </ng-template> -->
+                                           
                                         </p-dialog>
                                     </div>
                                     <label class="sendLable" *ngIf="

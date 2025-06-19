@@ -73,6 +73,7 @@ import { GhgReportingComponent } from '@pages/reporting/ghg-reporting/ghg-report
 import { KpiDashboardComponent } from '@pages/kpi-dashboard/kpi-dashboard.component';
 import { KpiInventoryComponent } from '@pages/kpi-inventory/kpi-inventory.component';
 import { AttachmentsComponent } from '@pages/attachments/attachments.component';
+import { ViewApproveGroupsComponent } from '@pages/view-approve-groups/view-approve-groups.component';
 
 const routes: Routes = [
     { path: '', redirectTo: '/dashboard/ghgEmission', pathMatch: 'full' },
@@ -85,44 +86,21 @@ const routes: Routes = [
         children: [
             {
                 path: 'dashboard',
-                component: DashboardComponent,
+                loadChildren: () =>
+                  import('./pages/dashboard/dashboard.module').then(m => m.DashboardModule),
                 canActivate: [RoleGuard],
                 data: {
-                    roles: [
-                        'Super Admin',
-                        'Admin',
-                        'Manager',
-                        'Preparer',
-                        'Approver',
-                        'Platform Admin',
-                         'Auditor'
-                    ]
+                  roles: [
+                    'Super Admin',
+                    'Admin',
+                    'Manager',
+                    'Preparer',
+                    'Approver',
+                    'Platform Admin',
+                     'Auditor'
+                  ]
                 },
-                children:[
-                    {path:'',redirectTo:'ghgEmission', pathMatch:'full'},
-                    {path:'ghgEmission',component: GhgEmmissionsComponent},
-                    {path:'energyEmission',component: EnergyEmmsionsComponent},
-                    {path:'businessTravel',component: BusinessTravelComponent},
-                    {path:'waterUsage',component: WaterUsageComponent},
-                    {path:'waste',component: WasteComponent}
-                ]
-            },
-            {
-                path: '',
-                canActivate: [RoleGuard],
-                component: DashboardComponent,
-                data: {
-                    roles: [
-                        'Super Admin',
-                        'Admin',
-                        'Manager',
-                        'Preparer',
-                        'Approver',
-                        'Platform Admin',
-                        'Auditor'
-                    ]
-                }
-            },
+              },
             {
                 path: 'financeDash',
                 canActivate: [RoleGuard],
@@ -155,6 +133,13 @@ const routes: Routes = [
                 path: 'finance_emission',
                 canActivate: [RoleGuard],
                 component: FinanceEmissionsComponent,
+                data: { roles: ['Platform Admin','Super Admin',
+                'Admin', 'Auditor']}
+            },
+            {
+                path: 'finance-view-approve-groups/:groupId',
+                canActivate: [RoleGuard],
+                component: ViewApproveGroupsComponent,
                 data: { roles: ['Platform Admin','Super Admin',
                 'Admin', 'Auditor']}
             },

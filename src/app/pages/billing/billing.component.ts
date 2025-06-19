@@ -63,7 +63,6 @@ export class BillingComponent {
         // this.getTenantsById(Number(this.loginInfo.tenantID));
 
         this.updatedtheme = this.themeservice.getValue('theme');
-        this.getAllCountryCode();
         this.getpackagesByusers()
     };
     //runs when any updation detects
@@ -127,13 +126,7 @@ export class BillingComponent {
         });
     }
     //method for get all the country code
-    getAllCountryCode() {
-        this.companyService.GetCountryCode().subscribe({
-            next: (response) => {
-                this.countryCodes = response;
-            }
-        });
-    };
+ 
 
     //Retrieves facility data for the specified tenant ID and updates the UI based on the data availability.
     // facilityGet(tenantId) {

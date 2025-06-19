@@ -38,7 +38,7 @@ export class CompanyService {
             environment.baseUrl + '/updatefinancial_year', data
         );
     };
-    public newgetComapnyProfile(): Observable<any> {
+    public getCompanyCategory(): Observable<any> {
         return this.http.get(
             environment.baseUrl +  '/getComapnyCategory'
         );

@@ -73,8 +73,8 @@ export class BrsrReportComponent {
           
         }
         this.updatedtheme = this.themeservice.getValue('theme');
-        this.getQuestions();
-        this.checkbrsrdata(this.loginInfo.tenantID);
+        // this.getQuestions();
+        // this.checkbrsrdata(this.loginInfo.tenantID);
     }
     ngDoCheck() {
         this.updatedtheme = this.themeservice.getValue('theme');

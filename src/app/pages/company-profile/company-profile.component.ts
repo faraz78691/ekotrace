@@ -29,7 +29,7 @@ export class CompanyProfileComponent {
     selectedSecondaryIndustryTypes: IndustryType[];
     selectedIndustryTypes: IndustryType[];
     uploadedFile: any[] = [];
-    companyProfile: any[] = [];
+    category: any[] = [];
     rootUrl: string;
     updatedtheme: string;
     multiselectcolor: any;
@@ -83,6 +83,7 @@ export class CompanyProfileComponent {
             this.selectedIndustryTypes = JSON.parse(
                 this.companyDetails.industryTypeID
             ) as IndustryType[];
+          
             this.getCompanyCategory();
         });
     }
@@ -222,10 +223,8 @@ export class CompanyProfileComponent {
 
 
     getCompanyCategory() {
-
-        this.companyService.newgetComapnyProfile().subscribe((response) => {
-      
-            this.companyProfile = response.categories;
+        this.companyService.getCompanyCategory().subscribe((response) => {
+            this.category = response.categories;
             this.getCompanySubCategory(this.selectedIndustryTypes)
         });
     }
@@ -234,8 +233,6 @@ export class CompanyProfileComponent {
         formDara.set('category', type)
         this.companyService.newgetSubComapny(formDara.toString()).subscribe((response) => {
             this.industryTypes = response.categories;
-           
-
         });
     }
 }

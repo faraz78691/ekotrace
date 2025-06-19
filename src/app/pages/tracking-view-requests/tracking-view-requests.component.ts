@@ -121,13 +121,6 @@ export class TrackingViewRequestsComponent {
 
         ];
         this.reason = '';
-        this.sendSCelement = new StationaryCombustionDE();
-        this.sendrefelement = new RefrigerantsDE();
-        this.sendfireelement = new FireExtinguisherDE();
-        this.sendvehicleelement = new VehicleDE();
-        this.sendelecelement = new ElectricityDE();
-        this.sendHSelement = new HeatandSteamDE();
-        this.sendelement = new DataEntry();
         this.year = new Date();
         this.months = new months();
         this.globalFilterValue = '';
@@ -159,12 +152,7 @@ export class TrackingViewRequestsComponent {
 
             });
         }
-        // if (this.loginInfo.role == 'Admin' || this.loginInfo.role == 'Super Admin') {
-        //     this.GetAssignedDataPoint(this.facilityID);
-        // }
-        // else {
-        //     this.GetAssignedDataPoint(this.loginInfo.facilityID)
-        // }
+      
     };
 
     ngDoCheck() {
@@ -196,6 +184,7 @@ export class TrackingViewRequestsComponent {
         this.dataEntry = '';
         this.display = 'none';
     };
+
     sendEntryForApproval() {
         if(this.loginInfo.role == 'Auditor'){
             this.notification.showWarning('You are not Authorized', 'Warning');
@@ -250,14 +239,14 @@ export class TrackingViewRequestsComponent {
               
                 if (response.success == true) {
                     this.notification.showSuccess(
-                        'Entries sent for approval',
+                        'Entries approved',
                         'Success'
                     );
                     this.ALLEntries(this.facilityID);
                     var recipient = environment.Approver;
                     var message = environment.SendEntryMessage;
                     var count = this.sendEntries.length;
-                    this.SendNotification(count, recipient, message);
+                   
                     this.sendApprovalEntries = [];
                     this.selectedEntry = []
                 }
@@ -275,9 +264,6 @@ export class TrackingViewRequestsComponent {
     };
 
     ALLEntries(facilityID: number) {
-
-        
-      // console.log("here",facilityID)
         this.modeShow = false;
         this.months = new months();
         this.convertedYear = this.trackingService.getYear(this.year);
@@ -359,7 +345,7 @@ export class TrackingViewRequestsComponent {
                                             this.dataEntriesPending.every(
                                                 (category) =>
                                                     category.status ===
-                                                    "P"
+                                                    "Approved"
                                             );
                                     }
                                 }
@@ -2068,7 +2054,6 @@ export class TrackingViewRequestsComponent {
                     }
                 });
         }
-
     };
     GetsendforApprovalDataPoint(facilityID: number) {
         this.months = new months();
@@ -2651,7 +2636,7 @@ export class TrackingViewRequestsComponent {
                         var count = this.sendSCEntries.length;
                         var recipient = environment.Preparer;
                         var message = environment.SendAcceptMessage;
-                        this.SendNotification(count, recipient, message);
+                       
                     } else {
                         this.notification.showWarning(
                             'Entries not Approved',
@@ -2719,7 +2704,7 @@ export class TrackingViewRequestsComponent {
                         var count = this.sendrefEntries.length;
                         var recipient = environment.Preparer;
                         var message = environment.SendAcceptMessage;
-                        this.SendNotification(count, recipient, message);
+                       
                     } else {
                         this.notification.showWarning(
                             'Entries not Approved',
@@ -2786,7 +2771,7 @@ export class TrackingViewRequestsComponent {
                         var count = this.sendfireEntries.length;
                         var recipient = environment.Preparer;
                         var message = environment.SendAcceptMessage;
-                        this.SendNotification(count, recipient, message);
+                       
                     } else {
                         this.notification.showWarning(
                             'Entries not Approved',
@@ -2858,7 +2843,7 @@ export class TrackingViewRequestsComponent {
                         var count = this.sendvehicleEntries.length;
                         var recipient = environment.Preparer;
                         var message = environment.SendAcceptMessage;
-                        this.SendNotification(count, recipient, message);
+                       
                     } else {
                         this.notification.showWarning(
                             'Entries not Approved',
@@ -2925,7 +2910,7 @@ export class TrackingViewRequestsComponent {
                         var count = this.sendelecEntries.length;
                         var recipient = environment.Preparer;
                         var message = environment.SendAcceptMessage;
-                        this.SendNotification(count, recipient, message);
+                       
                     } else {
                         this.notification.showWarning(
                             'Entries not Approved',
@@ -2989,7 +2974,7 @@ export class TrackingViewRequestsComponent {
                         var count = this.sendHSEntries.length;
                         var recipient = environment.Preparer;
                         var message = environment.SendAcceptMessage;
-                        this.SendNotification(count, recipient, message);
+                       
                     } else {
                         this.notification.showWarning(
                             'Entries not Approved',
@@ -3131,26 +3116,7 @@ export class TrackingViewRequestsComponent {
      
     }
 
-    SendNotification(count, recipient, message) {
-        var currentDate = new Date();
-        this.sendNotificationData = new SendNotification();
-        (this.sendNotificationData.facilityID = this.facilityID),
-            (this.sendNotificationData.message = message);
-        this.sendNotificationData.isRead = false;
-        this.sendNotificationData.count = count;
-        this.sendNotificationData.tenantID = this.loginInfo.tenantID;
-        this.sendNotificationData.createdDate = currentDate;
-        this.sendNotificationData.recipient = recipient;
-        this.notification
-            .SaveNotifications(this.sendNotificationData)
-            .subscribe({
-                next: (response) => { },
-                error: (err) => {
-                    console.error(err);
-                },
-                complete: () => console.info('notification send')
-            });
-    }
+  
     downloadFile(fileName) {
         if (fileName) {
             this.trackingService.downloadFile(fileName).subscribe(
@@ -3176,433 +3142,9 @@ export class TrackingViewRequestsComponent {
     }
     FilterByYear() {
         this.ALLEntries(this.facilityID);
-        return
-        if (this.loginInfo.role == environment.Approver) {
-            this.GetsendforApprovalDataPoint(this.loginInfo.facilityID);
-        }
-        if (this.loginInfo.role == environment.Preparer || this.loginInfo.role == environment.Manager) {
-            this.ALLEntries(this.loginInfo.facilityID);
-
-        } else {
-            this.ALLEntries(this.facilityID);
-        }
+     
     }
-    EditDataEntry(dataEntry: any) {
-        // this.trackingService.dataEntry = dataEntry;
-        // this.router.navigate(['/tracking']);
-    }
-    onRowEditInit(dataEntry: PendingDataEntries) {
-        this.clonedProducts[dataEntry.dataEntryID as any] = { ...dataEntry };
-    }
-
-    onRowEditSave(dataENtry: PendingDataEntries) {
-        if (this.selectedCategory == 1) {
-            this.sendSCelement = {
-                id: dataENtry.dataEntryID,
-                manageDataPointSubCategoriesID: dataENtry.subcategoryID,
-                month: dataENtry.month,
-                note: dataENtry.note,
-                readingValue: dataENtry.readingValue,
-                sendForApproval: dataENtry.sendForApproval,
-                status: dataENtry.status,
-                statusDate: dataENtry.statusDate,
-                submissionDate: dataENtry.submissionDate,
-                unit: dataENtry.unit,
-                year: dataENtry.year,
-                fileName: dataENtry.fileName,
-                filePath: dataENtry.filePath,
-                tenantID: dataENtry.tenantID,
-                gHGEmission: dataENtry.ghgEmission,
-                reason: dataENtry.reason,
-                blendID: dataENtry.blendID,
-                blendPercent: dataENtry.blendPercent,
-                blendType: dataENtry.blendType,
-                typeID: dataENtry.typeID,
-                calorificValue: dataENtry.calorificValue
-            };
-            this.trackingService
-                .sendSCSingleDataforApprove(this.sendSCelement.id, this.sendSCelement)
-                .subscribe({
-                    next: (response) => {
-                        if (response == environment.Updated) {
-                            this.notification.showSuccess(
-                                'Entry Approved',
-                                'Success'
-                            );
-                            if (this.loginInfo.role == environment.Approver) {
-                                this.GetsendforApprovalDataPoint(this.loginInfo.facilityID);
-                            }
-                            if (this.loginInfo.role == environment.Preparer || this.loginInfo.role == environment.Manager) {
-                                this.ALLEntries(this.loginInfo.facilityID);
-
-                            } else {
-                                this.ALLEntries(this.facilityID);
-                            }
-                            var count = 1;
-                            var recipient = environment.Approver;
-                            var message = environment.Updated;
-                            this.SendNotification(count, recipient, message);
-                            this.selectedEntry = [];
-                        } else {
-                            this.notification.showWarning(
-                                'Entry Updated',
-                                'Warning'
-                            );
-                        }
-                    },
-                    error: (err) => {
-                        this.notification.showError(
-                            'Entry update Failed.',
-                            'Error'
-                        );
-                        console.error('errrrrrr>>>>>>', err);
-                    }
-                });
-        }
-        if (this.selectedCategory == 2) {
-            this.sendrefelement = {
-                id: dataENtry.dataEntryID,
-                manageDataPointSubCategoriesID: dataENtry.subcategoryID,
-                month: dataENtry.month,
-                note: dataENtry.note,
-                sendForApproval: dataENtry.sendForApproval,
-                status: dataENtry.status,
-                statusDate: dataENtry.statusDate,
-                submissionDate: dataENtry.submissionDate,
-                unit: dataENtry.unit,
-                year: dataENtry.year,
-                fileName: dataENtry.fileName,
-                filePath: dataENtry.filePath,
-                tenantID: dataENtry.tenantID,
-                gHGEmission: dataENtry.ghgEmission,
-                reason: dataENtry.reason,
-                refAmount: dataENtry.refAmount,
-                typeID: dataENtry.typeID
-                // cO2LeakagePerUnit: dataENtry.cO2LeakagePerUnit,
-                // capacity: dataENtry.capacity,
-                // leakagePerOfCapacity: dataENtry.leakagePerOfCapacity,
-                // airConnIDRef: dataENtry.airConnIDRef
-            };
-            this.trackingService
-                .sendrefSingleDataforApprove(this.sendrefelement.id, this.sendrefelement)
-                .subscribe({
-                    next: (response) => {
-                        if (response == environment.Updated) {
-                            this.notification.showSuccess(
-                                'Entry Updated',
-                                'Success'
-                            );
-                            if (this.loginInfo.role == environment.Approver) {
-                                this.GetsendforApprovalDataPoint(this.loginInfo.facilityID);
-                            }
-                            if (this.loginInfo.role == environment.Preparer || this.loginInfo.role == environment.Manager) {
-                                this.ALLEntries(this.loginInfo.facilityID);
-
-                            } else {
-                                this.ALLEntries(this.facilityID);
-                            }
-                            var count = 1;
-                            var recipient = environment.Approver;
-                            var message = environment.SendAcceptMessage;
-                            this.SendNotification(count, recipient, message);
-                            this.selectedEntry = [];
-                        } else {
-                            this.notification.showWarning(
-                                'Entry not Approved',
-                                'Warning'
-                            );
-                        }
-                    },
-                    error: (err) => {
-                        this.notification.showError(
-                            'Entry update Failed.',
-                            'Error'
-                        );
-                        console.error('errrrrrr>>>>>>', err);
-                    }
-                });
-        }
-        if (this.selectedCategory == 3) {
-            this.sendfireelement = {
-                id: dataENtry.dataEntryID,
-                manageDataPointSubCategoriesID: dataENtry.subcategoryID,
-                month: dataENtry.month,
-                note: dataENtry.note,
-                readingValue: dataENtry.readingValue,
-                sendForApproval: dataENtry.sendForApproval,
-                status: dataENtry.status,
-                statusDate: dataENtry.statusDate,
-                submissionDate: dataENtry.submissionDate,
-                unit: dataENtry.unit,
-                year: dataENtry.year,
-                fileName: dataENtry.fileName,
-                filePath: dataENtry.filePath,
-                tenantID: dataENtry.tenantID,
-                gHGEmission: dataENtry.ghgEmission,
-                reason: dataENtry.reason,
-                numberOfExtinguisher: dataENtry.numberOfExtinguisher,
-                quantityOfCO2makeup: dataENtry.quantityOfCO2makeup,
-                fireExtinguisherID: dataENtry.fireExtinguisherID,
-                typeID: dataENtry.typeID
-            };
-            this.trackingService
-                .sendfireSingleDataforApprove(this.sendfireelement.id, this.sendfireelement)
-                .subscribe({
-                    next: (response) => {
-                        if (response == environment.Updated) {
-                            this.notification.showSuccess(
-                                'Entry Updated',
-                                'Success'
-                            );
-                            if (this.loginInfo.role == environment.Approver) {
-                                this.GetsendforApprovalDataPoint(this.loginInfo.facilityID);
-                            }
-                            if (this.loginInfo.role == environment.Preparer || this.loginInfo.role == environment.Manager) {
-                                this.ALLEntries(this.loginInfo.facilityID);
-
-                            } else {
-                                this.ALLEntries(this.facilityID);
-                            }
-                            var count = 1;
-                            var recipient = environment.Approver;
-                            var message = environment.SendAcceptMessage;
-                            this.SendNotification(count, recipient, message);
-                            this.selectedEntry = [];
-                        } else {
-                            this.notification.showWarning(
-                                'Entry not updated',
-                                'Warning'
-                            );
-                        }
-                    },
-                    error: (err) => {
-                        this.notification.showError(
-                            'Entry updated Failed.',
-                            'Error'
-                        );
-                        console.error('errrrrrr>>>>>>', err);
-                    }
-                });
-        }
-        if (this.selectedCategory == 5) {
-            this.sendelecelement = {
-                id: dataENtry.dataEntryID,
-                manageDataPointSubCategoriesID: dataENtry.subcategoryID,
-                month: dataENtry.month,
-                note: dataENtry.note,
-                readingValue: dataENtry.readingValue,
-                sendForApproval: dataENtry.sendForApproval,
-                status: dataENtry.status,
-                statusDate: dataENtry.statusDate,
-                submissionDate: dataENtry.submissionDate,
-                unit: dataENtry.unit,
-                year: dataENtry.year,
-                fileName: dataENtry.fileName,
-                filePath: dataENtry.filePath,
-                tenantID: dataENtry.tenantID,
-                gHGEmission: dataENtry.ghgEmission,
-                reason: dataENtry.reason,
-                sourceID: dataENtry.sourceID,
-                sourceName: dataENtry.sourceName,
-                typeID: dataENtry.typeID,
-                electricityRegionID: dataENtry.electricityRegionID
-            };
-            this.trackingService
-                .sendelecSingleDataforApprove(this.sendelecelement.id, this.sendelecelement)
-                .subscribe({
-                    next: (response) => {
-                        if (response == environment.Updated) {
-                            this.notification.showSuccess(
-                                'Entry Updated',
-                                'Success'
-                            );
-                            if (this.loginInfo.role == environment.Approver) {
-                                this.GetsendforApprovalDataPoint(this.loginInfo.facilityID);
-                            }
-                            if (this.loginInfo.role == environment.Preparer || this.loginInfo.role == environment.Manager) {
-                                this.ALLEntries(this.loginInfo.facilityID);
-
-                            } else {
-                                this.ALLEntries(this.facilityID);
-                            }
-                            var count = 1;
-                            var recipient = environment.Approver;
-                            var message = environment.SendAcceptMessage;
-                            this.SendNotification(count, recipient, message);
-                            this.selectedEntry = [];
-                        } else {
-                            this.notification.showWarning(
-                                'Entry not updated',
-                                'Warning'
-                            );
-                        }
-                    },
-                    error: (err) => {
-                        this.notification.showError(
-                            'Entry update Failed.',
-                            'Error'
-                        );
-                        console.error('errrrrrr>>>>>>', err);
-                    }
-                });
-        }
-        if (this.selectedCategory == 6) {
-            this.sendvehicleelement = {
-                id: dataENtry.dataEntryID,
-                manageDataPointSubCategoriesID: dataENtry.subcategoryID,
-                month: dataENtry.month,
-                note: dataENtry.note,
-                readingValue: dataENtry.readingValue,
-                sendForApproval: dataENtry.sendForApproval,
-                status: dataENtry.status,
-                statusDate: dataENtry.statusDate,
-                submissionDate: dataENtry.submissionDate,
-                unit: dataENtry.unit,
-                year: dataENtry.year,
-                fileName: dataENtry.fileName,
-                filePath: dataENtry.filePath,
-                tenantID: dataENtry.tenantID,
-                gHGEmission: dataENtry.ghgEmission,
-                reason: dataENtry.reason,
-                noOfVehicles: dataENtry.noOfVehicles,
-                modeOfDE: dataENtry.modeOfDE,
-                value: dataENtry.value,
-                modeofDEID: dataENtry.modeofDEID,
-                vehicleTypeID: dataENtry.vehicleTypeID,
-                avgPeoplePerTrip: dataENtry.avgPeoplePerTrip,
-                totalnoOftripsPerVehicle: dataENtry.totalnoOftripsPerVehicle,
-                chargingPerc: dataENtry.chargingPerc,
-                typeID: dataENtry.typeID
-            };
-            this.trackingService
-                .sendvehicleSingleDataforApprove(this.sendvehicleelement.id, this.sendvehicleelement)
-                .subscribe({
-                    next: (response) => {
-                        if (response == environment.Updated) {
-                            this.notification.showSuccess(
-                                'Entry Updated',
-                                'Success'
-                            );
-                            if (this.loginInfo.role == environment.Approver) {
-                                this.GetsendforApprovalDataPoint(this.loginInfo.facilityID);
-                            }
-                            if (this.loginInfo.role == environment.Preparer || this.loginInfo.role == environment.Manager) {
-                                this.ALLEntries(this.loginInfo.facilityID);
-
-                            } else {
-                                this.ALLEntries(this.facilityID);
-                            }
-                            var count = 1;
-                            var recipient = environment.Approver;
-                            var message = environment.SendAcceptMessage;
-                            this.SendNotification(count, recipient, message);
-                            this.selectedEntry = [];
-                        } else {
-                            this.notification.showWarning(
-                                'Entry not Updated',
-                                'Warning'
-                            );
-                        }
-                    },
-                    error: (err) => {
-                        this.notification.showError(
-                            'Entry Update Failed.',
-                            'Error'
-                        );
-                        console.error('errrrrrr>>>>>>', err);
-                    }
-                });
-        }
-        if (this.selectedCategory == 7) {
-            this.sendHSelement = {
-                id: dataENtry.dataEntryID,
-                manageDataPointSubCategoriesID: dataENtry.subcategoryID,
-                month: dataENtry.month,
-                note: dataENtry.note,
-                readingValue: dataENtry.readingValue,
-                sendForApproval: dataENtry.sendForApproval,
-                status: dataENtry.status,
-                statusDate: dataENtry.statusDate,
-                submissionDate: dataENtry.submissionDate,
-                unit: dataENtry.unit,
-                year: dataENtry.year,
-                fileName: dataENtry.fileName,
-                filePath: dataENtry.filePath,
-                tenantID: dataENtry.tenantID,
-                gHGEmission: dataENtry.ghgEmission,
-                reason: dataENtry.reason,
-                typeID: dataENtry.typeID
-            };
-            this.trackingService
-                .sendHSSingleDataforApprove(this.sendHSelement.id, this.sendHSelement)
-                .subscribe({
-                    next: (response) => {
-                        if (response == environment.Updated) {
-                            this.notification.showSuccess(
-                                'Entry Updated',
-                                'Success'
-                            );
-                            if (this.loginInfo.role == environment.Approver) {
-                                this.GetsendforApprovalDataPoint(this.loginInfo.facilityID);
-                            }
-                            if (this.loginInfo.role == environment.Preparer || this.loginInfo.role == environment.Manager) {
-                                this.ALLEntries(this.loginInfo.facilityID);
-
-                            } else {
-                                this.ALLEntries(this.facilityID);
-                            }
-                            var count = 1;
-                            var recipient = environment.Approver;
-                            var message = environment.SendAcceptMessage;
-                            this.SendNotification(count, recipient, message);
-                            this.selectedEntry = [];
-                        } else {
-                            this.notification.showWarning(
-                                'Entry not Updated',
-                                'Warning'
-                            );
-                        }
-                    },
-                    error: (err) => {
-                        this.notification.showError(
-                            'Entry Update Failed.',
-                            'Error'
-                        );
-                        console.error('errrrrrr>>>>>>', err);
-                    }
-                });
-        }
-    }
-    DeleteEntry(dataENtry: PendingDataEntries) {
-        this.trackingService.DeleteEntry(dataENtry.dataEntryID, this.selectedCategory).subscribe({
-            next: (response) => {
-                if (response == true) {
-                    this.notification.showSuccess('Entry Updated', 'Success');
-                    if (this.loginInfo.role == environment.Approver) {
-                        this.GetsendforApprovalDataPoint(this.loginInfo.facilityID);
-                    }
-                    if (this.loginInfo.role == environment.Preparer || this.loginInfo.role == environment.Manager) {
-                        this.ALLEntries(this.loginInfo.facilityID);
-
-                    } else {
-                        this.ALLEntries(this.facilityID);
-                    }
-                } else {
-                    this.notification.showWarning(
-                        'Entry not apdated',
-                        'Warning'
-                    );
-                }
-            },
-            error: (err) => {
-                this.notification.showError('Entry Update Failed.', 'Error');
-                console.error('errrrrrr>>>>>>', err);
-            }
-        });
-    }
-
-    onRowEditCancel(dataENtry: PendingDataEntries, index: number) { }
-    onRowDelete(de) { }
+ 
     getCat() {
         this.trackingService.newgetCategory().subscribe({
             next: (response) => {

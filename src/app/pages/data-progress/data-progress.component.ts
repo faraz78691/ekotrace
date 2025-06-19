@@ -214,12 +214,13 @@ export class DataProgressComponent {
     const filtered = this.transformedData.filter(items =>
       Object.keys(items)[0] == id
     );
-   
+   console.log(filtered);
 
 
     this.dataPreparerCustom = [filtered[0][id]];
+    console.log(this.dataPreparerCustom);
 
-    const filterStationary = this.dataPreparerCustom[0].scope_1.find(items => items.category == 'Stationary Combustion');
+    const filterStationary = this.dataPreparerCustom[0].scope_1?.find(items => items.category == 'Stationary Combustion');
 
     const FuelObject = {
       category: 'Fuel and Energy-related Activities',
@@ -235,7 +236,7 @@ export class DataProgressComponent {
         (obj) => obj.category === 'Fuel and Energy-related Activities'
       );
   
-      if (existingIndex === -1) {
+      if (existingIndex === -1 ) {
         // Find the index of 'Purchase Goods'
         const index2 = scope3Array.findIndex(
           (obj) => obj.category === 'Purchased goods and services'
