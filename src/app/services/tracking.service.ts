@@ -286,7 +286,7 @@ export class TrackingService {
     public newSendSCSingleDataforApprove(dataentry): Observable<any> {
         const headers = new HttpHeaders()
         .set('content-type','application/json')
-        .set('Access-Control-Allow-Origin', '*');  
+        
         ; 
         return this.http.post<any>(
             environment.baseUrl + '/UpdateelecEntry',
@@ -541,15 +541,15 @@ export class TrackingService {
             'Tracking/GetDeliveryVehicleType')
     };
 
-    public newGetDeliveryVehicleType(id): Observable<any> {
-        return this.http.get(environment.baseUrl +'/Getdeliveryvehicletypes?facilityId=' + id)
+    public newGetDeliveryVehicleType(id , year): Observable<any> {
+        return this.http.get(environment.baseUrl +'/Getdeliveryvehicletypes?facilityId=' + id + '&year=' + year)
     }
     public getPassengerVehicleType(): Observable<VehicleType[]> {
         return this.http.get<VehicleType[]>(environment.baseUrl +
             'Tracking/GetPassengerVehicleType')
     }
-    public newGetPassengerVehicleType(id): Observable<any> {
-        return this.http.get(environment.baseUrl +'/Getpassengervehicletypes?facilityId=' + id)
+    public newGetPassengerVehicleType(id , year): Observable<any> {
+        return this.http.get(environment.baseUrl +'/Getpassengervehicletypes?facilityId=' + id + '&year=' + year)
     }
     public getCategory(): Observable<ManageDataPointCategory[]> {
         return this.http.get<ManageDataPointCategory[]>(environment.baseUrl + 'Tracking/GetCategory')
@@ -596,11 +596,11 @@ export class TrackingService {
     public getsubCatType(subCatID): Observable<any> {
         return this.http.get<any>(environment.baseUrl + 'Tracking/GetSubCategoryTypes/' + subCatID)
     }
-    public newgetsubCatType(subCatID , facility_id): Observable<any> {
-        return this.http.get<any>(environment.baseUrl + '/GetSubCategoryTypes/' + subCatID + '?facilityId=' + facility_id)
+    public newgetsubCatType(subCatID , facility_id,year): Observable<any> {
+        return this.http.get<any>(environment.baseUrl + '/GetSubCategoryTypes/' + subCatID + '?facilityId=' + facility_id + '&year=' + year)
     }
     public newGetRegionType(facility): Observable<any> {
-        return this.http.post<any>(environment.baseUrl + '/electricitygridType', facility)
+        return this.http.post<any>(environment.baseUrl + '/electricitygridType', facility )
     }
    
 
@@ -680,14 +680,14 @@ export class TrackingService {
     getPurchaseCategorires(formData: any): Observable<any> {
         return this.http.post(environment.baseUrl + '/purchaseGoodsAllcategories', formData)
     };
-    getEmployeeSubVehicleCat(id:any, facility_id:any): Observable<any> {
-        return this.http.get(environment.baseUrl + `/employeeCommunitysubCategory/${id}/${facility_id}`)
+    getEmployeeSubVehicleCat(id:any, facility_id:any,year): Observable<any> {
+        return this.http.get(environment.baseUrl + `/employeeCommunitysubCategory/${id}/${facility_id}/${year}`)
     };
     getVehicleType(): Observable<any> {
         return this.http.get(environment.baseUrl + '/vehicleCategories')
     };
-    getAllProductsPG(): Observable<any> {
-        return this.http.get(environment.baseUrl + '/get-all-purchase-categories-ef')
+    getAllProductsPG(form): Observable<any> {
+        return this.http.post(environment.baseUrl + '/get-all-purchase-categories-ef', form)
     };
     getVehicleTypeLease(): Observable<any> {
         return this.http.get(environment.baseUrl + '/vehicleCategories_lease')
@@ -702,7 +702,7 @@ export class TrackingService {
     upStreamTransportation(formData: any): Observable<any> {
         const headers = new HttpHeaders()
         .set('content-type','application/x-www-form-urlencoded')
-        .set('Access-Control-Allow-Origin', '*');  
+        // .set('Access-Control-Allow-Origin', '*');  
         ; 
         return this.http.post(
             environment.baseUrl + '/upStreamTransportation',
@@ -824,8 +824,8 @@ export class TrackingService {
         return this.http.get(environment.baseUrl + '/flight_types')
     };
 
-    getSubFranchiseCat(categoryName:any,facility_id:any): Observable<any> {
-        return this.http.get(environment.baseUrl + `/franchiseSubCategories?category=${categoryName}&facility_id=${facility_id}`)
+    getSubFranchiseCat(categoryName:any,facility_id:any, year:any): Observable<any> {
+        return this.http.get(environment.baseUrl + `/franchiseSubCategories?category=${categoryName}&facility_id=${facility_id}&year=${year}`)
     };
     
     getInvestmentSubCategory(categoryName:any): Observable<any> {

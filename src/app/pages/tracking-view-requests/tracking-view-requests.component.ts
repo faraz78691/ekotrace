@@ -36,7 +36,7 @@ export class TrackingViewRequestsComponent {
     flag;
     modeShow = false;
     AssignedDataPoint: TrackingDataPoint[] = [];;
-    dataEntriesPending: PendingDataEntries[]=[];
+    dataEntriesPending: PendingDataEntries[] = [];
     selectedEntry: PendingDataEntries[] = [];
     selectedScEntry: StationaryCombustionDE;
     selectedObjectEntry: selectedObjectEntry;
@@ -95,7 +95,7 @@ export class TrackingViewRequestsComponent {
     dataEntry: any;
     display = 'none'
     Modes: any[] = [];
-    selectMode: number =1
+    selectMode: number = 1
     constructor(
         private route: ActivatedRoute,
         private router: Router,
@@ -104,22 +104,22 @@ export class TrackingViewRequestsComponent {
         private toastr: ToastrService
     ) {
         this.Modes =
-        [
+            [
 
-            {
-                "id": 1,
-                "modeType": "Flight"
-            },
-            {
-                "id": 2,
-                "modeType": "Hotel Stay"
-            },
-            {
-                "id": 3,
-                "modeType": "Other Modes"
-            }
+                {
+                    "id": 1,
+                    "modeType": "Flight"
+                },
+                {
+                    "id": 2,
+                    "modeType": "Hotel Stay"
+                },
+                {
+                    "id": 3,
+                    "modeType": "Other Modes"
+                }
 
-        ];
+            ];
         this.reason = '';
         this.year = new Date();
         this.months = new months();
@@ -152,7 +152,7 @@ export class TrackingViewRequestsComponent {
 
             });
         }
-      
+
     };
 
     ngDoCheck() {
@@ -186,11 +186,13 @@ export class TrackingViewRequestsComponent {
     };
 
     sendEntryForApproval() {
-        if(this.loginInfo.role == 'Auditor'){
+        console.log(this.selectedEntry);
+
+        if (this.loginInfo.role == 'Auditor') {
             this.notification.showWarning('You are not Authorized', 'Warning');
             return
         }
-        if(this.loginInfo.role =='Preparer'){
+        if (this.loginInfo.role == 'Preparer') {
             this.notification.showWarning(
                 'You are not Authorized to approve entry',
                 'Warning'
@@ -202,30 +204,32 @@ export class TrackingViewRequestsComponent {
             return
         }
         if (this.selectedEntry[0].ID == undefined || this.selectedEntry[0].ID == null) {
-       
+            this.sendApprovalEntries = [];
             this.sendSCEntries = [];
             this.selectedEntry.forEach((element) => {
-                this.selectedObjectEntry = {
-                    // Create a new object for each iteration
-                    id: element.id,
-                    categoryID: element.categoryID,
-                    tablename: element.tablename
-                };
-                this.sendApprovalEntries.push(this.selectedObjectEntry); // Add the new object to the sendEntries array
+                if (element.status === 'Pending') {
+                    const selectedObject = {
+                        id: element.id,
+                        categoryID: element.categoryID,
+                        tablename: element.tablename
+                    };
+                    this.sendApprovalEntries.push(selectedObject);
+                }
             });
         } else {
-          
+            console.log(this.selectedEntry);
             this.sendSCEntries = [];
-            
+
             this.sendApprovalEntries = [];
             this.selectedEntry.forEach((element) => {
-                this.selectedObjectEntry = {
-                    // Create a new object for each iteration
-                    id: element.ID,
-                    categoryID: element.categoryID,
-                    tablename: element.tablename
-                };
-                this.sendApprovalEntries.push(this.selectedObjectEntry); // Add the new object to the sendEntries array
+                if (element.status === 'Pending') {
+                    const selectedObject = {
+                        id: element.id,
+                        categoryID: element.categoryID,
+                        tablename: element.tablename
+                    };
+                    this.sendApprovalEntries.push(selectedObject);
+                }
             });
         }
 
@@ -236,7 +240,7 @@ export class TrackingViewRequestsComponent {
 
         this.trackingService.newUpdateSCEntry(formURlData).subscribe({
             next: (response: any) => {
-              
+
                 if (response.success == true) {
                     this.notification.showSuccess(
                         'Entries approved',
@@ -246,7 +250,7 @@ export class TrackingViewRequestsComponent {
                     var recipient = environment.Approver;
                     var message = environment.SendEntryMessage;
                     var count = this.sendEntries.length;
-                   
+
                     this.sendApprovalEntries = [];
                     this.selectedEntry = []
                 }
@@ -259,7 +263,7 @@ export class TrackingViewRequestsComponent {
                 console.error('errrrrrr>>>>>>', err);
             }
         });
-     
+
 
     };
 
@@ -280,7 +284,7 @@ export class TrackingViewRequestsComponent {
                             this.dataEntriesPending = null;
                         } else {
                             this.dataEntriesPending = response.categories;
-                          
+
                             if (Array.isArray(this.dataEntriesPending)) {
                                 for (var i = 0; i < this.mandatorySCDP.length; i++) {
                                     for (var j = 0; j < this.dataEntriesPending.length; j++) {
@@ -371,7 +375,7 @@ export class TrackingViewRequestsComponent {
                             this.dataEntriesPending = null;
                         } else {
                             this.dataEntriesPending = response.categories;
-                          
+
                             if (Array.isArray(this.dataEntriesPending)) {
                                 for (let d of this.dataEntriesPending) {
                                     if (d.status === environment.approved) {
@@ -451,7 +455,7 @@ export class TrackingViewRequestsComponent {
                             this.dataEntriesPending = null;
                         } else {
                             this.dataEntriesPending = response.categories;
-                          
+
                             if (Array.isArray(this.dataEntriesPending)) {
                                 for (let d of this.dataEntriesPending) {
                                     if (d.status === environment.approved) {
@@ -531,7 +535,7 @@ export class TrackingViewRequestsComponent {
                             this.dataEntriesPending = null;
                         } else {
                             this.dataEntriesPending = response.categories;
-                          
+
                             if (Array.isArray(this.dataEntriesPending)) {
                                 for (let d of this.dataEntriesPending) {
                                     if (d.status === environment.approved) {
@@ -611,7 +615,7 @@ export class TrackingViewRequestsComponent {
                             this.dataEntriesPending = null;
                         } else {
                             this.dataEntriesPending = response.categories;
-                          
+
                             if (Array.isArray(this.dataEntriesPending)) {
                                 for (let d of this.dataEntriesPending) {
                                     if (d.status === environment.approved) {
@@ -691,7 +695,7 @@ export class TrackingViewRequestsComponent {
                             this.dataEntriesPending = null;
                         } else {
                             this.dataEntriesPending = response.categories;
-                          
+
                             if (Array.isArray(this.dataEntriesPending)) {
                                 for (let d of this.dataEntriesPending) {
                                     if (d.status === environment.approved) {
@@ -771,7 +775,7 @@ export class TrackingViewRequestsComponent {
                             this.dataEntriesPending = null;
                         } else {
                             this.dataEntriesPending = response.categories;
-                          
+
                             if (Array.isArray(this.dataEntriesPending)) {
                                 for (let d of this.dataEntriesPending) {
                                     if (d.status === environment.approved) {
@@ -851,7 +855,7 @@ export class TrackingViewRequestsComponent {
                             this.dataEntriesPending = null;
                         } else {
                             this.dataEntriesPending = response.categories;
-                          
+
                             if (Array.isArray(this.dataEntriesPending)) {
                                 for (let d of this.dataEntriesPending) {
                                     if (d.status === environment.approved) {
@@ -931,7 +935,7 @@ export class TrackingViewRequestsComponent {
                             this.dataEntriesPending = null;
                         } else {
                             this.dataEntriesPending = response.categories;
-                          
+
                             if (Array.isArray(this.dataEntriesPending)) {
                                 for (let d of this.dataEntriesPending) {
                                     if (d.status === environment.approved) {
@@ -1011,7 +1015,7 @@ export class TrackingViewRequestsComponent {
                             this.dataEntriesPending = null;
                         } else {
                             this.dataEntriesPending = response.categories;
-                          
+
                             if (Array.isArray(this.dataEntriesPending)) {
                                 for (let d of this.dataEntriesPending) {
                                     if (d.status === environment.approved) {
@@ -1091,7 +1095,7 @@ export class TrackingViewRequestsComponent {
                             this.dataEntriesPending = null;
                         } else {
                             this.dataEntriesPending = response.categories;
-                          
+
                             if (Array.isArray(this.dataEntriesPending)) {
                                 for (let d of this.dataEntriesPending) {
                                     if (d.status === environment.approved) {
@@ -1177,13 +1181,13 @@ export class TrackingViewRequestsComponent {
                             } else if (this.selectMode == 2) {
                                 this.dataEntriesPending = (response.categories).filter(items => items.tablename == 'hotel_stay');
                             } else if (this.selectMode == 3) {
-    
+
                                 this.dataEntriesPending = (response.categories).filter(items => items.tablename == 'other_modes_of_transport');
                             } else {
                                 this.dataEntriesPending = response.categories;
                             }
                             // this.dataEntriesPending = response.categories;
-                            
+
                             if (Array.isArray(this.dataEntriesPending)) {
                                 for (let d of this.dataEntriesPending) {
                                     if (d.status === environment.approved) {
@@ -1263,7 +1267,7 @@ export class TrackingViewRequestsComponent {
                             this.dataEntriesPending = null;
                         } else {
                             this.dataEntriesPending = response.categories;
-                          
+
                             if (Array.isArray(this.dataEntriesPending)) {
                                 for (let d of this.dataEntriesPending) {
                                     if (d.status === environment.approved) {
@@ -1343,7 +1347,7 @@ export class TrackingViewRequestsComponent {
                             this.dataEntriesPending = null;
                         } else {
                             this.dataEntriesPending = response.categories;
-                          
+
                             if (Array.isArray(this.dataEntriesPending)) {
                                 for (let d of this.dataEntriesPending) {
                                     if (d.status === environment.approved) {
@@ -1423,7 +1427,7 @@ export class TrackingViewRequestsComponent {
                             this.dataEntriesPending = null;
                         } else {
                             this.dataEntriesPending = response.categories;
-                          
+
                             if (Array.isArray(this.dataEntriesPending)) {
                                 for (let d of this.dataEntriesPending) {
                                     if (d.status === environment.approved) {
@@ -1503,7 +1507,7 @@ export class TrackingViewRequestsComponent {
                             this.dataEntriesPending = null;
                         } else {
                             this.dataEntriesPending = response.categories;
-                          
+
                             if (Array.isArray(this.dataEntriesPending)) {
                                 for (let d of this.dataEntriesPending) {
                                     if (d.status === environment.approved) {
@@ -1583,7 +1587,7 @@ export class TrackingViewRequestsComponent {
                             this.dataEntriesPending = null;
                         } else {
                             this.dataEntriesPending = response.categories;
-                          
+
                             if (Array.isArray(this.dataEntriesPending)) {
                                 for (let d of this.dataEntriesPending) {
                                     if (d.status === environment.approved) {
@@ -1663,7 +1667,7 @@ export class TrackingViewRequestsComponent {
                             this.dataEntriesPending = null;
                         } else {
                             this.dataEntriesPending = response.categories;
-                          
+
                             if (Array.isArray(this.dataEntriesPending)) {
                                 for (let d of this.dataEntriesPending) {
                                     if (d.status === environment.approved) {
@@ -1743,7 +1747,7 @@ export class TrackingViewRequestsComponent {
                             this.dataEntriesPending = null;
                         } else {
                             this.dataEntriesPending = response.categories;
-                          
+
                             if (Array.isArray(this.dataEntriesPending)) {
                                 for (let d of this.dataEntriesPending) {
                                     if (d.status === environment.approved) {
@@ -1823,7 +1827,7 @@ export class TrackingViewRequestsComponent {
                             this.dataEntriesPending = null;
                         } else {
                             this.dataEntriesPending = response.categories;
-                          
+
                             if (Array.isArray(this.dataEntriesPending)) {
                                 for (let d of this.dataEntriesPending) {
                                     if (d.status === environment.approved) {
@@ -1903,7 +1907,7 @@ export class TrackingViewRequestsComponent {
                             this.dataEntriesPending = null;
                         } else {
                             this.dataEntriesPending = response.categories;
-                          
+
                             if (Array.isArray(this.dataEntriesPending)) {
                                 for (let d of this.dataEntriesPending) {
                                     if (d.status === environment.approved) {
@@ -1983,7 +1987,7 @@ export class TrackingViewRequestsComponent {
                             this.dataEntriesPending = null;
                         } else {
                             this.dataEntriesPending = response.categories;
-                          
+
                             if (Array.isArray(this.dataEntriesPending)) {
                                 for (let d of this.dataEntriesPending) {
                                     if (d.status === environment.approved) {
@@ -2580,421 +2584,9 @@ export class TrackingViewRequestsComponent {
     isOutOfStock(data) {
         return data.inventoryStatus === 'OUTOFSTOCK';
     };
-    AcceptAllEntry() {
-        if (this.selectedEntry.length === 0) {
-            this.notification.showWarning('Please select any entry', 'Warning');
-            return;
-        }
-        if (this.selectedCategory == 1) {
-            this.sendSCEntries = []; // Clear the sendEntries array before populating it again
-            this.selectedEntry.forEach((element) => {
-                this.sendSCelement = {
-                    // Create a new object for each iteration
-                    id: element.dataEntryID,
-                    manageDataPointSubCategoriesID: element.subcategoryID,
-                    month: element.month,
-                    note: element.note,
-                    readingValue: element.readingValue,
-                    sendForApproval: element.sendForApproval,
-                    status: environment.approved,
-                    statusDate: new Date(),
-                    submissionDate: element.submissionDate,
-                    unit: element.unit,
-                    year: element.year,
-                    fileName: element.fileName,
-                    filePath: element.filePath,
-                    tenantID: element.tenantID,
-                    gHGEmission: element.ghgEmission,
-                    reason: this.sendSCelement.reason,
-                    blendID: element.blendID,
-                    blendPercent: element.blendPercent,
-                    blendType: element.blendType,
-                    typeID: element.typeID,
-                    calorificValue: element.calorificValue
-                };
-                if (element.status == 'pending') {
-                    this.sendSCEntries.push(this.sendSCelement); // Add the new object to the sendEntries array
-                }
-            });
-
-            this.trackingService.UpdateSCEntry(this.sendSCEntries).subscribe({
-                next: (response) => {
-                    if (response == environment.EntrySended) {
-                        this.notification.showSuccess(
-                            'Entries Approved',
-                            'Success'
-                        );
-                        if (this.loginInfo.role == environment.Approver) {
-                            this.GetsendforApprovalDataPoint(this.loginInfo.facilityID);
-                        }
-                        if (this.loginInfo.role == environment.Preparer || this.loginInfo.role == environment.Manager) {
-                            this.ALLEntries(this.loginInfo.facilityID);
-
-                        } else {
-                            this.ALLEntries(this.facilityID);
-                        }
-                        var count = this.sendSCEntries.length;
-                        var recipient = environment.Preparer;
-                        var message = environment.SendAcceptMessage;
-                       
-                    } else {
-                        this.notification.showWarning(
-                            'Entries not Approved',
-                            'Warning'
-                        );
-                    }
-                },
-                error: (err) => {
-                    this.notification.showError(
-                        'Entries Approval Failed.',
-                        'Error'
-                    );
-                    console.error('errrrrrr>>>>>>', err);
-                }
-            });
-        }
-        if (this.selectedCategory == 2) {
-            this.sendrefEntries = []; // Clear the sendEntries array before populating it again
-            this.selectedEntry.forEach((element) => {
-                this.sendrefelement = {
-                    // Create a new object for each iteration
-                    id: element.dataEntryID,
-                    manageDataPointSubCategoriesID: element.subcategoryID,
-                    month: element.month,
-                    note: element.note,
-                    sendForApproval: element.sendForApproval,
-                    status: environment.approved,
-                    statusDate: new Date(),
-                    submissionDate: element.submissionDate,
-                    unit: element.unit,
-                    year: element.year,
-                    fileName: element.fileName,
-                    filePath: element.filePath,
-                    tenantID: element.tenantID,
-                    gHGEmission: element.ghgEmission,
-                    reason: this.sendSCelement.reason,
-                    refAmount: element.refAmount,
-                    typeID: element.typeID
-                    // cO2LeakagePerUnit: element.cO2LeakagePerUnit,
-                    // capacity: element.capacity,
-                    // leakagePerOfCapacity: element.leakagePerOfCapacity,
-                    // airConnIDRef: element.airConnIDRef
-                };
-                if (element.status == 'pending') {
-                    this.sendrefEntries.push(this.sendrefelement); // Add the new object to the sendEntries array
-                }
-            });
-
-            this.trackingService.UpdaterefEntry(this.sendrefEntries).subscribe({
-                next: (response) => {
-                    if (response == environment.EntrySended) {
-                        this.notification.showSuccess(
-                            'Entries Approved',
-                            'Success'
-                        );
-                        if (this.loginInfo.role == environment.Approver) {
-                            this.GetsendforApprovalDataPoint(this.loginInfo.facilityID);
-                        }
-                        if (this.loginInfo.role == environment.Preparer || this.loginInfo.role == environment.Manager) {
-                            this.ALLEntries(this.loginInfo.facilityID);
-
-                        } else {
-                            this.ALLEntries(this.facilityID);
-                        }
-                        var count = this.sendrefEntries.length;
-                        var recipient = environment.Preparer;
-                        var message = environment.SendAcceptMessage;
-                       
-                    } else {
-                        this.notification.showWarning(
-                            'Entries not Approved',
-                            'Warning'
-                        );
-                    }
-                },
-                error: (err) => {
-                    this.notification.showError(
-                        'Entries Approval Failed.',
-                        'Error'
-                    );
-                    console.error('errrrrrr>>>>>>', err);
-                }
-            });
-        }
-        if (this.selectedCategory == 3) {
-            this.sendfireEntries = []; // Clear the sendEntries array before populating it again
-            this.selectedEntry.forEach((element) => {
-                this.sendfireelement = {
-                    // Create a new object for each iteration
-                    id: element.dataEntryID,
-                    manageDataPointSubCategoriesID: element.subcategoryID,
-                    month: element.month,
-                    note: element.note,
-                    sendForApproval: element.sendForApproval,
-                    status: environment.approved,
-                    statusDate: new Date(),
-                    submissionDate: element.submissionDate,
-                    unit: element.unit,
-                    year: element.year,
-                    fileName: element.fileName,
-                    filePath: element.filePath,
-                    tenantID: element.tenantID,
-                    gHGEmission: element.ghgEmission,
-                    reason: this.sendSCelement.reason,
-                    readingValue: element.readingValue,
-                    numberOfExtinguisher: element.numberOfExtinguisher,
-                    quantityOfCO2makeup: element.quantityOfCO2makeup,
-                    fireExtinguisherID: element.fireExtinguisherID,
-                    typeID: element.typeID
-                };
-                if (element.status == 'pending') {
-                    this.sendfireEntries.push(this.sendfireelement); // Add the new object to the sendEntries array
-                }
-            });
-
-            this.trackingService.UpdatefireEntry(this.sendfireEntries).subscribe({
-                next: (response) => {
-                    if (response == environment.EntrySended) {
-                        this.notification.showSuccess(
-                            'Entries Approved',
-                            'Success'
-                        );
-                        if (this.loginInfo.role == environment.Approver) {
-                            this.GetsendforApprovalDataPoint(this.loginInfo.facilityID);
-                        }
-                        if (this.loginInfo.role == environment.Preparer || this.loginInfo.role == environment.Manager) {
-                            this.ALLEntries(this.loginInfo.facilityID);
-
-                        } else {
-                            this.ALLEntries(this.facilityID);
-                        }
-                        var count = this.sendfireEntries.length;
-                        var recipient = environment.Preparer;
-                        var message = environment.SendAcceptMessage;
-                       
-                    } else {
-                        this.notification.showWarning(
-                            'Entries not Approved',
-                            'Warning'
-                        );
-                    }
-                },
-                error: (err) => {
-                    this.notification.showError(
-                        'Entries Approval Failed.',
-                        'Error'
-                    );
-                    console.error('errrrrrr>>>>>>', err);
-                }
-            });
-        }
-        if (this.selectedCategory == 6) {
-            this.sendvehicleEntries = []; // Clear the sendEntries array before populating it again
-            this.selectedEntry.forEach((element) => {
-                this.sendvehicleelement = {
-                    // Create a new object for each iteration
-                    id: element.dataEntryID,
-                    manageDataPointSubCategoriesID: element.subcategoryID,
-                    month: element.month,
-                    note: element.note,
-                    sendForApproval: element.sendForApproval,
-                    status: environment.approved,
-                    statusDate: new Date(),
-                    submissionDate: element.submissionDate,
-                    unit: element.unit,
-                    year: element.year,
-                    fileName: element.fileName,
-                    filePath: element.filePath,
-                    tenantID: element.tenantID,
-                    gHGEmission: element.ghgEmission,
-                    reason: this.sendSCelement.reason,
-                    readingValue: element.readingValue,
-                    noOfVehicles: element.noOfVehicles,
-                    modeOfDE: element.modeOfDE,
-                    value: element.value,
-                    modeofDEID: element.modeofDEID,
-                    vehicleTypeID: element.vehicleTypeID,
-                    avgPeoplePerTrip: element.avgPeoplePerTrip,
-                    totalnoOftripsPerVehicle: element.totalnoOftripsPerVehicle,
-                    chargingPerc: element.chargingPerc,
-                    typeID: element.typeID
-                };
-                if (element.status == 'pending') {
-                    this.sendvehicleEntries.push(this.sendvehicleelement); // Add the new object to the sendEntries array
-                }
-            });
-
-            this.trackingService.UpdatevehicleEntry(this.sendvehicleEntries).subscribe({
-                next: (response) => {
-                    if (response == environment.EntrySended) {
-                        this.notification.showSuccess(
-                            'Entries Approved',
-                            'Success'
-                        );
-                        if (this.loginInfo.role == environment.Approver) {
-                            this.GetsendforApprovalDataPoint(this.loginInfo.facilityID);
-                        }
-                        if (this.loginInfo.role == environment.Preparer || this.loginInfo.role == environment.Manager) {
-                            this.ALLEntries(this.loginInfo.facilityID);
-
-                        } else {
-                            this.ALLEntries(this.facilityID);
-                        }
-                        var count = this.sendvehicleEntries.length;
-                        var recipient = environment.Preparer;
-                        var message = environment.SendAcceptMessage;
-                       
-                    } else {
-                        this.notification.showWarning(
-                            'Entries not Approved',
-                            'Warning'
-                        );
-                    }
-                },
-                error: (err) => {
-                    this.notification.showError(
-                        'Entries Approval Failed.',
-                        'Error'
-                    );
-                    console.error('errrrrrr>>>>>>', err);
-                }
-            });
-        }
-        if (this.selectedCategory == 5) {
-            this.sendelecEntries = []; // Clear the sendEntries array before populating it again
-            this.selectedEntry.forEach((element) => {
-                this.sendelecelement = {
-                    // Create a new object for each iteration
-                    id: element.dataEntryID,
-                    manageDataPointSubCategoriesID: element.subcategoryID,
-                    month: element.month,
-                    note: element.note,
-                    sendForApproval: element.sendForApproval,
-                    status: environment.approved,
-                    statusDate: new Date(),
-                    submissionDate: element.submissionDate,
-                    unit: element.unit,
-                    year: element.year,
-                    fileName: element.fileName,
-                    filePath: element.filePath,
-                    tenantID: element.tenantID,
-                    gHGEmission: element.ghgEmission,
-                    reason: this.sendSCelement.reason,
-                    readingValue: element.readingValue,
-                    sourceID: element.sourceID,
-                    sourceName: element.sourceName,
-                    typeID: element.typeID,
-                    electricityRegionID: element.electricityRegionID
-                };
-                if (element.status == 'pending') {
-                    this.sendelecEntries.push(this.sendelecelement); // Add the new object to the sendEntries array
-                }
-            });
-
-            this.trackingService.UpdateelecEntry(this.sendelecEntries).subscribe({
-                next: (response) => {
-                    if (response == environment.EntrySended) {
-                        this.notification.showSuccess(
-                            'Entries Approved',
-                            'Success'
-                        );
-                        if (this.loginInfo.role == environment.Approver) {
-                            this.GetsendforApprovalDataPoint(this.loginInfo.facilityID);
-                        }
-                        if (this.loginInfo.role == environment.Preparer || this.loginInfo.role == environment.Manager) {
-                            this.ALLEntries(this.loginInfo.facilityID);
-
-                        } else {
-                            this.ALLEntries(this.facilityID);
-                        }
-                        var count = this.sendelecEntries.length;
-                        var recipient = environment.Preparer;
-                        var message = environment.SendAcceptMessage;
-                       
-                    } else {
-                        this.notification.showWarning(
-                            'Entries not Approved',
-                            'Warning'
-                        );
-                    }
-                },
-                error: (err) => {
-                    this.notification.showError(
-                        'Entries Approval Failed.',
-                        'Error'
-                    );
-                    console.error('errrrrrr>>>>>>', err);
-                }
-            });
-        }
-        if (this.selectedCategory == 7) {
-            this.sendHSEntries = []; // Clear the sendEntries array before populating it again
-            this.selectedEntry.forEach((element) => {
-                this.sendHSelement = {
-                    // Create a new object for each iteration
-                    id: element.dataEntryID,
-                    manageDataPointSubCategoriesID: element.subcategoryID,
-                    month: element.month,
-                    note: element.note,
-                    sendForApproval: element.sendForApproval,
-                    status: environment.approved,
-                    statusDate: new Date(),
-                    submissionDate: element.submissionDate,
-                    unit: element.unit,
-                    year: element.year,
-                    fileName: element.fileName,
-                    filePath: element.filePath,
-                    tenantID: element.tenantID,
-                    gHGEmission: element.ghgEmission,
-                    reason: this.sendSCelement.reason,
-                    readingValue: element.readingValue,
-                    typeID: element.typeID
-                };
-                if (element.status == 'pending') {
-                    this.sendHSEntries.push(this.sendHSelement); // Add the new object to the sendEntries array
-                }
-            });
-
-            this.trackingService.UpdateHSEntry(this.sendHSEntries).subscribe({
-                next: (response) => {
-                    if (response == environment.EntrySended) {
-                        this.notification.showSuccess(
-                            'Entries Approved',
-                            'Success'
-                        );
-                        if (this.loginInfo.role == environment.Approver) {
-                            this.GetsendforApprovalDataPoint(this.loginInfo.facilityID);
-                        }
-                        if (this.loginInfo.role == environment.Preparer || this.loginInfo.role == environment.Manager) {
-                            this.ALLEntries(this.loginInfo.facilityID);
-
-                        } else {
-                            this.ALLEntries(this.facilityID);
-                        }
-                        var count = this.sendHSEntries.length;
-                        var recipient = environment.Preparer;
-                        var message = environment.SendAcceptMessage;
-                       
-                    } else {
-                        this.notification.showWarning(
-                            'Entries not Approved',
-                            'Warning'
-                        );
-                    }
-                },
-                error: (err) => {
-                    this.notification.showError(
-                        'Entries Approval Failed.',
-                        'Error'
-                    );
-                    console.error('errrrrrr>>>>>>', err);
-                }
-            });
-        }
-
-    }
+   
     AcceptSingleEntry() {
-        if(this.loginInfo.role =='Preparer'){
+        if (this.loginInfo.role == 'Preparer') {
             this.notification.showWarning(
                 'You are not authorized to approve entry',
                 'Warning'
@@ -3040,6 +2632,7 @@ export class TrackingViewRequestsComponent {
                         this.onClose2();
                         this.sendApprovalEntries = [];
                        
+
                         this.selectedEntry = [];
                     } else {
                         this.notification.showWarning(
@@ -3048,6 +2641,7 @@ export class TrackingViewRequestsComponent {
                         );
                         this.onClose2();
                     }
+                    this.sendApprovalEntries = [];
                 },
                 error: (err) => {
                     this.notification.showError(
@@ -3095,14 +2689,16 @@ export class TrackingViewRequestsComponent {
                         this.visible = false;
 
                         this.onClose2();
-       
+
                         this.selectedEntry = [];
+                        this.sendApprovalEntries = [];
                     } else {
                         this.notification.showWarning(
                             'Entry not Rejected',
                             'Warning'
                         );
                     }
+                    this.sendApprovalEntries = [];
                 },
                 error: (err) => {
                     this.notification.showError(
@@ -3113,10 +2709,10 @@ export class TrackingViewRequestsComponent {
                 }
             });
         return
-     
+
     }
 
-  
+
     downloadFile(fileName) {
         if (fileName) {
             this.trackingService.downloadFile(fileName).subscribe(
@@ -3142,9 +2738,9 @@ export class TrackingViewRequestsComponent {
     }
     FilterByYear() {
         this.ALLEntries(this.facilityID);
-     
+
     }
- 
+
     getCat() {
         this.trackingService.newgetCategory().subscribe({
             next: (response) => {
@@ -3243,9 +2839,9 @@ export class TrackingViewRequestsComponent {
     }
 
 
-    getModesEntry(){
+    getModesEntry() {
         if (this.selectMode == 1) {
-            this.dataEntriesPending =  this.BusinessEntires.filter(items => items.tablename == 'flight_travel');
+            this.dataEntriesPending = this.BusinessEntires.filter(items => items.tablename == 'flight_travel');
         } else if (this.selectMode == 2) {
             this.dataEntriesPending = this.BusinessEntires.filter(items => items.tablename == 'hotel_stay');
         } else if (this.selectMode == 3) {

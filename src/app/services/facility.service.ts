@@ -21,6 +21,7 @@ export class FacilityService {
     selectedfacilitiesSignal = signal<number>(0)
     selectedGroupSignal = signal<number | null>(null);
     groupsCountrySignal = signal<string | null>('');
+    countryCodeSignal = signal<string | null>(null);
     headerTracking = signal<boolean>(false);
     targetAllowed = signal<boolean>(false);
     localapiURL = 'http://192.168.1.31:4003';
@@ -106,6 +107,10 @@ export class FacilityService {
     };
     setGroupsCountry(country: string | null) {
         this.groupsCountrySignal.set(country)
+    };
+
+    setFacilityCountryCode(code: string | null) {
+        this.countryCodeSignal.set(code)
     };
 
     public gerReport(url, data): Observable<any> {

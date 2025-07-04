@@ -91,10 +91,10 @@ export class MenuSidebarComponent implements OnInit {
                             menu.find((item) => item.role === this.loginInfo.role && item.haveMainGorup == this.haveMainGroup)
                                 ?.items || [];
                         }else{
+                        
                             this.menu =
                                 menu.find((item) => item.role === this.loginInfo.role && item.package_name == this.loginInfo.package_name && item.haveMainGorup == this.haveMainGroup)
                                     ?.items || [];
-
                         }
                     }
 
@@ -109,6 +109,8 @@ export class MenuSidebarComponent implements OnInit {
             this.classes = `${BASE_CLASSES} ${state.sidebarSkin}`;
         });
         this.user = this.appService.user;
+
+       
     }
 
     handleActiveClass() {
@@ -167,7 +169,8 @@ export class MenuSidebarComponent implements OnInit {
 
             if (result.success == true) {
                 if(result.categories.length > 0){
-                    this.haveMainGroup = result.categories[0].is_subgroup
+                    // this.haveMainGroup = result.categories[0].is_subgroup;
+                    // console.log(this.haveMainGroup);
                   
                 }
 

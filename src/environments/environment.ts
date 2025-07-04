@@ -4,19 +4,19 @@
 
 export const environment = {
     production: false,
-    // baseUrl: 'http://localhost:4000',
-    baseUrl: 'http://192.168.29.44:4000',
-    baseUrl2: 'http://192.168.29.44:5000',
-    // baseUrl: 'https://13.200.247.29:4000',
+    
+    baseUrl: 'http://192.168.29.241:3000',
+    // baseUrl2: 'http://192.168.29.241:5000',
+    
 
+  
 
-    // baseUrl: 'https://ekotrace.ekobon.com:4000',
-    // baseUrl2: 'https://ekotrace.ekobon.com:5000',
+//    baseUrl: 'https://ekotrace.ekobon.com:4000',
+//    baseUrl2: 'https://ekotrace.ekobon.com:5000',
 
     // baseUrl: 'https://newportal.net0carbontek.com:4000',
-    // baseUrl2: 'https://newportal.net0carbontek.com:5000',
-   
- 
+    baseUrl2: 'https://newportal.net0carbontek.com:5000',
+
     NoData: 'No Data Point',
     none: 'none',
     flex: 'flex',

@@ -584,14 +584,14 @@ export class FinanceEmissionsComponent {
                         response.message,
                         'Error'
                     );
-                    this.dataEntryForm.reset();
-                    this.equityInvestmentRow = false;
-                    this.debtInvesmentRow = false;
-                    this.calculationRow = false;
-                    this.averageMethod = false
-                    this.franchiseMethod = false;
-                    this.franchiseMethodValue = '';
-                    this.investmentTypeValue = ''
+                    // this.dataEntryForm.reset();
+                    // this.equityInvestmentRow = false;
+                    // this.debtInvesmentRow = false;
+                    // this.calculationRow = false;
+                    // this.averageMethod = false
+                    // this.franchiseMethod = false;
+                    // this.franchiseMethodValue = '';
+                    // this.investmentTypeValue = ''
                 }
             },
             error: (err) => {

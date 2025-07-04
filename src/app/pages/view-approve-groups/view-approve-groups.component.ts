@@ -145,7 +145,6 @@ export class ViewApproveGroupsComponent {
   };
 
   sendEntryForApproval() {
-    console.log(this.selectedEntry);
     if (this.loginInfo.role == 'Auditor') {
       this.notification.showWarning('You are not Authorized', 'Warning');
       return
@@ -158,36 +157,38 @@ export class ViewApproveGroupsComponent {
       return false
     }
     if (this.selectedEntry.length === 0) {
-      this.notification.showWarning('Please select any entry', 'Warning');
       return
     }
     if (this.selectedEntry[0].ID == undefined || this.selectedEntry[0].ID == null) {
 
-        
-        this.selectedEntry.forEach((element) => {
-          this.selectedObjectEntry = {
-            // Create a new object for each iteration
-            id: element.id,
-            categoryID: element.categoryID,
-            tablename: element.tablename
-          };
-          this.sendApprovalEntries.push(this.selectedObjectEntry); // Add the new object to the sendEntries array
-        });
+      this.sendApprovalEntries = [];
+      this.selectedEntry.forEach((element) => {
+        if (element.status === 'Pending') {
+            const selectedObject = {
+                id: element.id,
+                categoryID: element.categoryID,
+                tablename: element.tablename
+            };
+            this.sendApprovalEntries.push(selectedObject);
+        }
+    });
       } else {
 
         this.sendApprovalEntries = [];
         this.selectedEntry.forEach((element) => {
-          this.selectedObjectEntry = {
-            // Create a new object for each iteration
-            id: element.ID,
-            categoryID: element.categoryID,
-            tablename: element.tablename
-          };
-          this.sendApprovalEntries.push(this.selectedObjectEntry); // Add the new object to the sendEntries array
-        });
+          if (element.status === 'Pending') {
+              const selectedObject = {
+                  id: element.id,
+                  categoryID: element.categoryID,
+                  tablename: element.tablename
+              };
+              this.sendApprovalEntries.push(selectedObject);
+          }
+      });
       }
 
-      let stringfyUrlData = JSON.stringify(this.sendApprovalEntries)
+
+      let stringfyUrlData = JSON.stringify(this.sendApprovalEntries);
       const formURlData = new URLSearchParams();
       formURlData.set('updateJson', stringfyUrlData);
       formURlData.set('categoryID', this.selectedEntry[0].categoryID.toString());
@@ -248,7 +249,7 @@ export class ViewApproveGroupsComponent {
         tablename: entry.tablename
       };
     }
-    this.sendApprovalEntries.push(this.selectedObjectEntry); // Add the new object to the sendEntries array
+    this.sendApprovalEntries.push(this.selectedObjectEntry);
 
     let stringfyUrlData = JSON.stringify(this.sendApprovalEntries)
     const formURlData = new URLSearchParams();
@@ -301,9 +302,9 @@ export class ViewApproveGroupsComponent {
       tablename: entry.tablename,
       Reason: entry.reason
     };
-    this.sendApprovalEntries.push(this.selectedObjectEntry); // Add the new object to the sendEntries array
+    this.sendApprovalEntries.push(this.selectedObjectEntry); 
 
-    let stringfyUrlData = JSON.stringify(this.sendApprovalEntries)
+    let stringfyUrlData = JSON.stringify(this.sendApprovalEntries);
     const formURlData = new URLSearchParams();
     formURlData.set('updateJson', stringfyUrlData);
     formURlData.set('categoryID', entry.categoryID);

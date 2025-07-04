@@ -104,14 +104,14 @@ export class UserComponent {
 
     //Checks the facility ID and calls the GetAssignedDataPoint function with the provided ID.
     onChangeFacilityId() {
-        console.log(this.admininfo.facilityID);
+     
         if (this.selectedRole == '525debfd-cd64-4936-ae57-346d57de3585') {
             const facilityIDs = this.facilityList.filter((item) => item.id == this.admininfo.group_id).map((item) => item.ID);
 
             this.groupId = this.admininfo.group_id;
             const stringfyIDs = JSON.stringify(facilityIDs[0]);
             this.payloadFacilityIds = stringfyIDs;
-            console.log(this.payloadFacilityIds);
+            
         } else {
             const stringfyIDs = JSON.stringify([this.admininfo.facilityID.toString()]);
             this.payloadFacilityIds = stringfyIDs;
@@ -371,6 +371,7 @@ export class UserComponent {
         this.facilitydata = false;
         this.facilityService.newGetFacilityByTenant(tenantId).subscribe((response) => {
             this.facilityList = response;
+          
             const stringfyIDs = JSON.stringify([this.admininfo.facilityID.toString()]);
             this.payloadFacilityIds = stringfyIDs;
          
@@ -386,6 +387,7 @@ export class UserComponent {
         formData.set('tenantID', tenantId.toString())
         this.facilityService.getMainSubGroupByTenantId(tenantId).subscribe((response) => {
             this.facilityList = response.categories;
+           
             if (this.facilityList.length === 0) {
                 this.facilitydata = true;
             };
@@ -409,9 +411,7 @@ export class UserComponent {
         this.facilityService.getGroupsForAdmin(tenantId).subscribe((response) => {
             this.facilityList = response;
             const facilityID = this.facilityList.find((item) => item.id == this.admininfo.group_id && item.ID);
-
-
-           
+            
             this.groupId = this.admininfo.group_id;
             const stringfyIDs = JSON.stringify(facilityID);
             this.payloadFacilityIds = stringfyIDs;
@@ -445,6 +445,7 @@ export class UserComponent {
     // ----Delete user Method ---
 
     deleteUser(event: Event, userid) {
+     
         if (this.loginInfo.role == 'Auditor') {
             this.notification.showInfo('You are not Authorized', '');
             return
@@ -533,7 +534,7 @@ export class UserComponent {
 
     onSelected(value: string): void {
         this.selectedRole = value;
-        console.log(this.selectedRole);
+      
 
         if (this.loginInfo.role == 'Admin') {
             if (this.selectedRole == '525debfd-cd64-4936-ae57-346d57de3585') {

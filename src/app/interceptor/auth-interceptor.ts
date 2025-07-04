@@ -35,8 +35,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
         } else if (request.body instanceof URLSearchParams) {
             const modifiedHeaders = request.headers.set(
-                'Content-Type', 'application/x-www-form-urlencoded')
-                .set('Access-Control-Allow-Origin', '*');
+                'Content-Type', 'application/x-www-form-urlencoded');
             request = request.clone({
                 headers: modifiedHeaders
             });
@@ -47,7 +46,7 @@ export class AuthInterceptor implements HttpInterceptor {
             // Assuming here that request.body is a JSON object
             const modifiedHeaders = request.headers.set(
                 'Content-Type', 'application/json'
-            ).set('Access-Control-Allow-Origin', '*');
+            );
             request = request.clone({
                 headers: modifiedHeaders
             });
@@ -67,7 +66,7 @@ export class AuthInterceptor implements HttpInterceptor {
                 console.log('An error occurred:', error);
                 if (error.status === 408) {
                  
-                    // this.appService.logout();
+                    this.appService.logout();
 
                     this.router.navigate(['/login']); // Ensure this method clears the user session
              // Redirect to login page

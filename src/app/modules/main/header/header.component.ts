@@ -61,6 +61,7 @@ export class HeaderComponent implements OnInit {
     displayTracker = false;
     isActiveLabel = computed(() => this.facilityService.headerTracking());
     selectedGroupID: any;
+    facilityCountryCode:any;
 
 
     constructor(
@@ -86,7 +87,7 @@ export class HeaderComponent implements OnInit {
             let userInfo = localStorage.getItem('LoginInfo');
             let jsonObj = JSON.parse(userInfo);
             this.loginInfo = jsonObj as LoginInfo;
-          
+
             this.loginInfo.companyName =
                 this.loginInfo.companyName == ''
                     ? 'System Admin'
@@ -96,14 +97,14 @@ export class HeaderComponent implements OnInit {
                 this.loginInfo.role !== 'Preparer' &&
                 this.loginInfo.role !== 'Approver'
             ) {
-              
+
             }
 
             this.checkRolesAndLoadData();
             this.router.events.pipe(
                 filter(event => event instanceof NavigationEnd)
             ).subscribe(() => {
-              
+
                 this.checkRolesAndLoadData();
             })
 
@@ -143,7 +144,7 @@ export class HeaderComponent implements OnInit {
         this.loginInfo = jsonObj as LoginInfo;
         const tenantID = this.loginInfo.tenantID;
         if (tenantID) {
-           
+
             if (this.router.url === '/finance_emissions') {
                 this.facilitygrouplist = [];
 
@@ -163,6 +164,9 @@ export class HeaderComponent implements OnInit {
     onFacilityChange() {
         this.facilityService.facilitySelected(this.selectedFacilityID)
         sessionStorage.setItem('SelectedfacilityID', this.selectedFacilityID);
+        const countryCode = this.facilitygrouplist.find(item => item.id === this.selectedFacilityID)?.country_code;
+        console.log(countryCode);
+         this.facilityService.setFacilityCountryCode(countryCode);
     };
 
     onGroupChnage() {
@@ -221,11 +225,9 @@ export class HeaderComponent implements OnInit {
             .newGetFacilityByTenant(tenantID)
             .subscribe((res) => {
                 if (res.length > 0) {
-
                     this.facilitygrouplist = res;
-
                     const facilityID = sessionStorage.getItem('SelectedfacilityID');
-
+                  
                     if (facilityID) {
                         this.selectedFacilityID = Number(facilityID);
 
@@ -234,6 +236,8 @@ export class HeaderComponent implements OnInit {
                         sessionStorage.setItem('SelectedfacilityID', this.selectedFacilityID);
                     }
                     this.facilityService.facilitySelected(this.selectedFacilityID);
+                    this.facilityCountryCode = this.facilitygrouplist.find(item => item.id === this.selectedFacilityID)?.country_code;
+                    this.facilityService.setFacilityCountryCode(this.facilityCountryCode);
 
                 }
             });
