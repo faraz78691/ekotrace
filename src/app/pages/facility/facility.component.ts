@@ -80,6 +80,7 @@ export class FacilityComponent {
     scope1Category: any[] = [];
     scope2Category: any[] = [];
     scope3Category: any[] = [];
+    originalFacilties: any[] = [];
     savedData: savedDataPoint[] = [];
     public manageDataPoint1: ManageDataPoint1[] = [];
     public savedDataPoint: savedDataPoint[] = [];
@@ -287,7 +288,7 @@ export class FacilityComponent {
     facilityGet(tenantId) {
         this.facilityService.nFacilityDataGet(tenantId).subscribe({
             next: (response: any) => {
-
+              this.originalFacilties = response.categories;  
                 this.LocData = response.categories;
                 if (this.LocData.length == 0) {
 
@@ -893,5 +894,17 @@ export class FacilityComponent {
       
       set isWaterStreenArea(value: boolean) {
         this.facilityDetails.IsWaterStreenArea = value.toString();
+      }
+
+
+      onInputSearch(value: string) {
+        const search = value?.trim().toLowerCase() || '';
+        if (!search) {
+          this.LocData = this.originalFacilties;
+        } else {
+          this.LocData = this.originalFacilties.filter(item =>
+            (item.AssestName || '').toLowerCase().includes(search)
+          );
+        }
       }
 }

@@ -62,7 +62,7 @@ export class FinanceDashboardComponent {
   public areaBusinesschart: Partial<ChartAreaOptions>;
   public donotOptions1: Partial<ChartOptions2>;
   public pieChart: Partial<ChartOptions2>;
-  dashboardData: any[] = [];
+  groupsData: any[] = [];
   public loginInfo: LoginInfo;
   selectedSubGrupId:number;
   year: Date;
@@ -129,11 +129,11 @@ export class FinanceDashboardComponent {
     const formData = new URLSearchParams();
     formData.set('tenantID', tenantId.toString())
     this.facilityService.getSubGroupsByTenantId(formData.toString()).subscribe((result: any) => {
-     
       if (result.success == true) {
     
-        this.dashboardData = result.categories;
-        this.selectedSubGrupId = this.dashboardData[0].id;
+        this.groupsData = result.categories;
+        console.log(this.groupsData);
+        this.selectedSubGrupId = this.groupsData[0].id;
       
         this.getFinancedEmission(this.selectedSubGrupId);
         this.GetIndustry(this.selectedSubGrupId);
@@ -149,8 +149,6 @@ export class FinanceDashboardComponent {
    
     let tenantId = this.loginInfo.tenantID;
     const formData = new URLSearchParams();
-   
-    // formData.set('year', this.year.getFullYear().toString());
     formData.set('year', this.year.getFullYear().toString());
     formData.set('sub_group_id', subGroupID);
     this.dashboardService.financeEmissionDashType(formData.toString()).subscribe((result: any) => {
@@ -257,8 +255,19 @@ export class FinanceDashboardComponent {
 
 
   onFacilityChange(event: any) {
-    this.getFinancedEmission(this.selectedSubGrupId)
-    this.GetIndustry(this.selectedSubGrupId)
+    console.log(this.selectedSubGrupId);
+
+    const selecteddata = this.groupsData.filter(items=> items.id == this.selectedSubGrupId);
+    console.log(selecteddata[0]);
+    if(selecteddata[0].group_by ==2){
+      this.getFinancedEmission(selecteddata[0].ID)
+      this.GetIndustry(selecteddata[0].ID)
+    }else{
+      this.getFinancedEmission(this.selectedSubGrupId)
+      this.GetIndustry(this.selectedSubGrupId)
+
+    }
+    // console.log(finalID);
   
   };
 

@@ -139,6 +139,7 @@ export class TrackingComponent {
     facilityID;
     subCatID;
     flag;
+    sourceName;
     facilitynothavedp = 'flex';
     forGroup = 'none';
     entryExist: boolean = false;
@@ -304,6 +305,7 @@ export class TrackingComponent {
     config: any;
     values: number[];
     currency: any;
+    facilityCountryCode: any;
     annualEntry: any[] = [
         { name: 'Yes', value: 1 },
         { name: 'No', value: 0 },
@@ -383,7 +385,10 @@ export class TrackingComponent {
             if (this.computedFacilities() != 0) {
 
                 this.GetAssignedDataPoint(this.computedFacilities())
-                this.facilityID = this.computedFacilities()
+                this.facilityID = this.computedFacilities();
+                this.facilityCountryCode = this.facilityService.countryCodeSignal();
+                console.log("country code", this.facilityCountryCode);
+
             }
         });
         // Initialize with the first 5 rows
@@ -424,7 +429,7 @@ export class TrackingComponent {
                 batch: 1,
                 month: this.months,
                 selectedMonths: null
-            });;
+            })
         };
 
         for (let i = 1; i <= 1; i++) {
@@ -440,8 +445,8 @@ export class TrackingComponent {
                 isDisabled: false,
                 noOfTrips: null,
                 month: this.months,
-                selectedMonths: null,
-            });;
+                selectedMonths: null
+            })
         };
         for (let i = 1; i <= 1; i++) {
             this.rowsCompany.push({
@@ -452,7 +457,7 @@ export class TrackingComponent {
                 modeOfEntry: 'Average distance per trip',
                 value: null,
                 unit: 'Km'
-            });;
+            })
         }
 
         this.facilityService.headerTracking.set(true);
@@ -482,7 +487,6 @@ export class TrackingComponent {
         this.VehicleType = [];
         this.dataEntry.unit = "";
         this.SubCategoryType = [];
-
         this.isInputEdited;
         this.dataEntry.typeID;
 
@@ -1057,10 +1061,15 @@ export class TrackingComponent {
     getsubCategoryType(subCatID: number) {
 
         this.dataEntry.typeID = null;
-        this.trackingService.newgetsubCatType(subCatID, this.facilityID).subscribe({
+        this.trackingService.newgetsubCatType(subCatID, this.facilityID, this.year.getFullYear().toString()).subscribe({
             next: (response) => {
-                this.SubCategoryType = response.categories;
-                this.dataEntry.typeID = this.SubCategoryType[0]?.subCatTypeID;
+                if (response.success) {
+                    this.SubCategoryType = response.categories;
+                    this.dataEntry.typeID = this.SubCategoryType[0]?.subCatTypeID;
+                } else {
+                    this.toastr.warning(response.message);
+                    this.SubCategoryType = [];
+                }
 
             },
             error: (err) => {
@@ -1088,10 +1097,17 @@ export class TrackingComponent {
 
         let formData = new URLSearchParams();
         formData.set('facilities', this.facilityID);
+        formData.set('year', this.year.getFullYear().toString());
         this.trackingService.newGetRegionType(formData.toString()).subscribe({
             next: (response) => {
-                this.regionType = response.categories;
-                this.RenewableElectricity.electricityRegionID = this.regionType[0].RegionID;
+                if (response.success) {
+                    this.regionType = response.categories;
+                    this.RenewableElectricity.electricityRegionID = this.regionType[0].RegionID;
+
+                } else {
+                    this.regionType = [];
+                    // this.toastr.warning(response.message);
+                }
 
             },
             error: (err) => {
@@ -1228,9 +1244,10 @@ export class TrackingComponent {
             purchase_date: row['Purchase Date'],
             product_code: row.code,
             is_find: row.is_find,
-            facilityID: this.facilityID
+            facilityID: this.facilityID,
+            product_name :row.productResult?.product
         }));
-
+console.log("payload",payload);
         var purchaseTableStringfy = JSON.stringify(payload);
 
         let formData = new URLSearchParams();
@@ -1286,7 +1303,7 @@ export class TrackingComponent {
         this.trackingService.newgetUnits(subcatId).subscribe({
             next: (Response) => {
                 if (Response) {
-                    
+
                     this.units = Response['categories'];
 
                     this.dataEntry.unit = this.units[0].UnitName;
@@ -1496,7 +1513,7 @@ export class TrackingComponent {
                                 // this.facilitynothavedp = environment.none;
                                 // this.forGroup = environment.none;
                             }
-                         
+
 
                             const findIndexScope3 = this.AssignedDataPoint.findIndex(item => item.ScopeID === 3);
 
@@ -1523,7 +1540,7 @@ export class TrackingComponent {
 
                                         const subCatID = response.categories[i].manageDataPointCategories[j].manageDataPointSubCategories[0].manageDataPointSubCategorySeedID;
                                         this.SubCatAllData = response.categories[i].manageDataPointCategories[j].manageDataPointSubCategories[0];
-                                       
+
                                         this.id_var = subCatID;
                                         if ((response.categories)[i].manageDataPointCategories[j].manageDataPointCategorySeedID == 1) {
 
@@ -1819,7 +1836,7 @@ export class TrackingComponent {
             const jsonReading = this.convertToKeyValue(this.jsonCompanyData);
 
             this.jsonCompanyData = jsonReading.filter(items => { return items['Vehicle Model'] !== '' });
-           
+
             this.jsonCompanyData = this.jsonCompanyData.map(item => {
                 return {
                     vehicleType: item['Vehicle Model'],
@@ -1866,7 +1883,7 @@ export class TrackingComponent {
     }
 
     toggleEdit(index: number, id: any, productmatch: any, finder: any) {
-      
+
         this.productID = id;
         this.visible2 = true;
 
@@ -1907,6 +1924,8 @@ export class TrackingComponent {
         const jsonDataString = JSON.stringify(json);
         const formData = new URLSearchParams();
         formData.append('product', jsonDataString);
+        formData.append('country_code', this.facilityCountryCode);
+        formData.append('year', this.year.getFullYear().toString());
 
         this.GroupService.uploadJsonData(formData).subscribe({
             next: (response) => {
@@ -1933,7 +1952,7 @@ export class TrackingComponent {
 
                 }
                 this.spinner.hide();
-              
+
             },
             error: (err) => {
                 this.spinner.hide();
@@ -1963,7 +1982,7 @@ export class TrackingComponent {
 
 
     getRefrigerantsubCategoryType(subCatID: number) {
-        this.trackingService.newgetsubCatType(subCatID, this.facilityID).subscribe({
+        this.trackingService.newgetsubCatType(subCatID, this.facilityID, this.year.getFullYear().toString()).subscribe({
             next: (response) => {
                 this.SubCategoryType = response.categories;
             },
@@ -2006,7 +2025,8 @@ export class TrackingComponent {
             this.dataEntry.year,
             this.SubCatAllData.id
         );
-        this.ALLEntries()
+        // this.ALLEntries();
+        this.SubCatData(this.SubCatAllData, this.categoryId, this.categoryName);
     }
 
     //---method for file upload---
@@ -2099,7 +2119,7 @@ export class TrackingComponent {
     };
 
     onFileSelected(event: any) {
-  
+
         const selectedFile = event[0];
 
         if (selectedFile) {
@@ -2316,13 +2336,14 @@ export class TrackingComponent {
     getPassengerVehicleType() {
         try {
             this.VehicleDE.vehicleTypeID = null;
-            this.trackingService.newGetPassengerVehicleType(this.facilityID).subscribe({
+            this.trackingService.newGetPassengerVehicleType(this.facilityID, this.year.getFullYear().toString()).subscribe({
                 next: (response) => {
-                    if (response) {
+                    if (response.success) {
                         this.VehicleType = response.categories;
                         this.VehicleDE.vehicleTypeID = this.VehicleType[0].ID
                     }
                     else {
+                        this.toastr.warning(response.message);
                         this.VehicleType = [];
                     }
                 }
@@ -2336,7 +2357,7 @@ export class TrackingComponent {
     getDeliveryVehicleType() {
         try {
             this.VehicleDE.vehicleTypeID = null;
-            this.trackingService.newGetDeliveryVehicleType(this.facilityID).subscribe({
+            this.trackingService.newGetDeliveryVehicleType(this.facilityID, this.year.getFullYear().toString()).subscribe({
                 next: (response) => {
                     if (response) {
                         this.VehicleType = response.categories;
@@ -2492,7 +2513,7 @@ export class TrackingComponent {
     }
 
     enableCharging(subcatName: any) {
-      
+
         if (subcatName == "Passenger Vehicle") {
             if (this.VehicleDE.vehicleTypeID == 7 || this.VehicleDE.vehicleTypeID == 8 || this.VehicleDE.vehicleTypeID == 9 || this.VehicleDE.vehicleTypeID == 12 || this.VehicleDE.vehicleTypeID == 17 || this.VehicleDE.vehicleTypeID == 10) {
 
@@ -2614,6 +2635,9 @@ export class TrackingComponent {
 
         formData.set('product_code_id', this.productHSNSelect);
         formData.set('typeofpurchase', standardType);
+        formData.set('country_id', this.facilityCountryCode);
+        formData.set('year', this.year.getFullYear().toString());
+
         this.trackingService.getPurchaseCategorires(formData.toString()).subscribe({
             next: (response) => {
 
@@ -2648,11 +2672,14 @@ export class TrackingComponent {
 
     getSubEmployeeCommuTypes(id, row: any) {
 
-        this.trackingService.getEmployeeSubVehicleCat(id, this.facilityID).subscribe({
+        this.trackingService.getEmployeeSubVehicleCat(id, this.facilityID, this.year.getFullYear()).subscribe({
             next: (response) => {
 
                 if (response.success == true) {
                     row.subVehicleCategory = response.batchIds;
+                } else {
+                    this.toastr.warning(response.message);
+                    row.subVehicleCategory = [];
                 }
             }
         })
@@ -2675,12 +2702,17 @@ export class TrackingComponent {
         })
     };
     getALlProducts() {
-        this.trackingService.getAllProductsPG().subscribe({
+        const formData = new URLSearchParams();
+        formData.set('country_code', this.facilityCountryCode);
+        formData.set('year', this.year.getFullYear().toString());
+        this.trackingService.getAllProductsPG(formData).subscribe({
             next: (response) => {
 
                 if (response.success == true) {
                     this.allPRoducts = response.data;
 
+                } else {
+                    this.allPRoducts = [];
                 }
             }
         })
@@ -2760,8 +2792,6 @@ export class TrackingComponent {
                     // this.VehicleGrid = response.categories;
                     this.subVehicleCategory = response.categories;
                     this.subVehicleCategoryValue = this.subVehicleCategory[0].vehicle_type
-
-
                 }
             }
         })
@@ -2792,9 +2822,11 @@ export class TrackingComponent {
     };
 
     getWasteSubCategory(typeId: any) {
+
         let formData = new URLSearchParams();
 
         formData.set('type', typeId);
+        formData.set('year', this.year.getFullYear().toString());
         this.trackingService.getWasteSubCategory(formData).subscribe({
             next: (response) => {
 
@@ -2802,6 +2834,8 @@ export class TrackingComponent {
                     // // console.log(response);
                     this.wasteSubTypes = response.categories;
 
+                } else {
+                    this.wasteSubTypes = [];
                 }
             }
         })
@@ -2849,12 +2883,14 @@ export class TrackingComponent {
     };
 
     getSubFranchiseCategory(category: any) {
-        this.trackingService.getSubFranchiseCat(category, this.facilityID).subscribe({
+        this.trackingService.getSubFranchiseCat(category, this.facilityID,this.year.getFullYear().toString()).subscribe({
             next: (response) => {
                 // // // console.log(response);
                 if (response.success == true) {
                     this.subFranchiseCategory = response.categories;
 
+                }else{
+                    this.subFranchiseCategory = [];
                 }
             }
         })
@@ -2906,12 +2942,17 @@ export class TrackingComponent {
         let formData = new URLSearchParams();
 
         formData.set('type', typeId);
+        formData.set('country_code', this.facilityCountryCode);
+        formData.set('year', this.year.getFullYear().toString());
+
         this.trackingService.getProductsEnergy(formData).subscribe({
             next: (response) => {
                 // // // console.log(response);
                 if (response.success == true) {
                     this.prodductEnergySubTypes = response.categories;
 
+                }else{
+                    this.prodductEnergySubTypes = [];
                 }
             }
         })
@@ -3044,7 +3085,7 @@ export class TrackingComponent {
     onCalculationInvestmentMethodChange(event: any) {
         const calMethod = event.value;
         this.franchiseMethodValue = calMethod;
-       
+
         if (calMethod == 'Investment Specific method') {
             this.franchiseMethod = true;
             this.averageMethod = false
@@ -3362,7 +3403,7 @@ export class TrackingComponent {
         this.appService.postAPI('/get-purchase-good-matched-data-using-payload-id', formdata).subscribe({
             next: (response: any) => {
                 if (response.success == true) {
-                 
+
                     this.newExcelData = response.data;
                     this.progressPSGTab = false;
                     this.singlePGSTab = !this.singlePGSTab;
@@ -3457,7 +3498,7 @@ export class TrackingComponent {
             }
         })
 
-        
+
     };
 
 
@@ -3653,6 +3694,9 @@ export class TrackingComponent {
                 })
             }
 
+
+            console.log("type", this.dataEntry.typeID);
+           
             formData.set('subCategoryTypeId', (this.dataEntry.typeID).toString());
             formData.set('SubCategorySeedID', (this.SubCatAllData
                 .manageDataPointSubCategorySeedID).toString());
@@ -3674,9 +3718,10 @@ export class TrackingComponent {
                             'Data entry added successfully',
                             'Success'
                         );
+                        console.log("coming here");
                         this.resetForm();
-                        this.getStationaryFuelType(this.SubCatAllData
-                            .manageDataPointSubCategorySeedID);
+                        // this.getStationaryFuelType(this.SubCatAllData
+                        //     .manageDataPointSubCategorySeedID);
                         this.ALLEntries();
                         this.getUnit(this.SubCatAllData
                             .manageDataPointSubCategorySeedID);
@@ -3737,18 +3782,11 @@ export class TrackingComponent {
                             'Success'
                         );
                         this.resetForm();
-                        this.getsubCategoryType(this.SubCatAllData
-                            .manageDataPointSubCategorySeedID);
+                     
                         this.ALLEntries();
                         this.getUnit(this.SubCatAllData
                             .manageDataPointSubCategorySeedID);
-                        //this.GetAssignedDataPoint(this.facilityID);
-                        // this.trackingService.getrefdataentry(this.SubCatAllData.id, this.loginInfo.tenantID).subscribe({
-                        //     next: (response) => {
-                        //         this.commonDE = response;
-                        //     }
-                        // });
-
+                     
                         this.activeindex = 0;
                     } else {
                         this.notification.showError(
@@ -3884,7 +3922,7 @@ export class TrackingComponent {
                 formData.set('year', this.dataEntry.year);
                 formData.set('jsonData', companyOwnedVehicles.toString());
             } else {
-                
+
                 var formData2 = new URLSearchParams();
                 formData2.set('facilityId', this.facilityID);
                 formData2.set('month', monthString);
@@ -3981,15 +4019,14 @@ export class TrackingComponent {
                     next: (response) => {
                         if (response.success == true) {
                             this.resetForm();
-                            //this.GetAssignedDataPoint(this.facilityID);
+                          
                             this.getUnit(this.SubCatAllData
                                 .manageDataPointSubCategorySeedID);
-                            this.RenewableElectricity.sourceName = this.ElectricitySource[0].sourceName;
+                          
                             this.activeindex = 0;
-                            this.getRegionName();
+                
                             this.ALLEntries();
-                            this.renewableSelected = false;
-                            this.supplierSelected = false;
+                          
                             this.notification.showSuccess(
                                 'Data entry added successfully',
                                 'Success'
@@ -4015,9 +4052,9 @@ export class TrackingComponent {
             }
             else {
                 var formData = new FormData();
-                formData.set('typeID', form.value.Type);
+                formData.set('typeID', this.marketEElecID);
                 formData.set('readingValue', this.dataEntry.readingValue.toString());
-                formData.set('sourceName', form.value.Source || '');
+                formData.set('sourceName', this.sourceName || '');
                 formData.set('unit', this.dataEntry.unit);
                 formData.set('facilities', this.facilityID);
                 formData.set('months', monthString);
@@ -4038,10 +4075,9 @@ export class TrackingComponent {
                                 .manageDataPointSubCategorySeedID);
 
                             this.activeindex = 0;
-                            this.getRegionName();
+                       
                             this.ALLEntries();
-                            this.renewableSelected = false;
-                            this.supplierSelected = false;
+                          
                             this.notification.showSuccess(
                                 'Data entry added successfully',
                                 'Success'
@@ -4242,10 +4278,11 @@ export class TrackingComponent {
                     product_description: row['Product / Service Description'],
                     purchase_date: row['Purchase Date'],
                     productcode: row.code,
-                    is_find: row.is_find
+                    is_find: row.is_find,
+                    product_name :row.productResult?.product
                 }));
-                
-                
+
+
                 var purchaseTableStringfy = JSON.stringify(payload);
 
 
@@ -4255,7 +4292,10 @@ export class TrackingComponent {
                 formData.set('facilities', this.facilityID);
                 formData.set('jsonData', purchaseTableStringfy);
                 formData.set('is_annual', '0');
-                formData.set('tenant_id', this.superAdminID.toString());
+                formData.set('tenant_id', this.loginInfo.tenantID.toString());
+                formData.set('super_tenant_id', this.superAdminID.toString());
+
+
                 if (this.selectedFile) {
                     formData.set('file', this.selectedFile, this.selectedFile.name);
                 }
@@ -4387,7 +4427,7 @@ export class TrackingComponent {
                 );
                 return
             }
-          
+
             if (form.value.water_supply < 0 || form.value.water_supply == null) {
                 this.notification.showInfo(
                     'Enter water withdrawn',
@@ -4571,18 +4611,29 @@ export class TrackingComponent {
             })
         }
         if (this.categoryId == 14) {
-
+          
             // Filter out rows where no field is filled
-            const filledRows = this.rows.filter(row =>
+            const filledRows = this.rows.filter(row =>row.vehicleType1 != null );
 
-                row.vehicleType1 !== null && row.employeesCommute !== ''
-            );
-
+            
             if (filledRows.length === 0) {
                 this.notification.showWarning(
-                    "Fields are required",
+                    "Select at least one vehicle type",
                     'Warning'
                 );
+                return;
+            }
+
+            const isValid = filledRows.every(row =>
+                row.vehicleType1 &&
+                row.vehicleType2 &&
+                row.employeesCommute &&
+                row.avgCommute
+            );
+            
+            if (!isValid) {
+                this.toastr.warning('All fields in each selected row must be filled!');
+                // Show user feedback or stop form submission
                 return;
             }
 
@@ -4595,10 +4646,8 @@ export class TrackingComponent {
             }));
 
 
-            // const typoOfOffice = [empobj1, empobj2, empobj3, empobj4, empobj5, empobj6, empobj7, empobj8, empobj9, empobj10, empobj11, empobj12, empobj13, empobj14, empobj15]
+ 
             var typeoftransportStringfy = JSON.stringify(payload)
-
-
             let formData = new URLSearchParams();
 
             formData.set('batch', '1');
@@ -4654,7 +4703,18 @@ export class TrackingComponent {
             var obj1 = { "type": "1", "noofemployees": this.noofemployees_1, "noofdays": this.noofdays_1, "noofmonths": this.noofmonths_1 };
             var obj2 = { "type": "2", "noofemployees": this.noofemployees_2, "noofdays": this.noofdays_2, "noofmonths": this.noofmonths_2 };
             var obj3 = { "type": "3", "noofemployees": this.noofemployees_3, "noofdays": this.noofdays_3, "noofmonths": this.noofmonths_3 };
-            const typoOfOffice = [obj1, obj2, obj3]
+            const typoOfOffice = [obj1, obj2, obj3];
+
+            const isValid = typoOfOffice.every(row =>
+                row.noofemployees != null && row.noofemployees !== '' &&
+                row.noofdays != null && row.noofdays !== '' &&
+                row.noofmonths != null && row.noofmonths !== ''
+              );
+              
+              if (!isValid) {
+                this.toastr.warning('All fields must be filled!');
+                return;
+              }
             var typeofhomeofficeStringfy = JSON.stringify(typoOfOffice)
 
 
@@ -5836,6 +5896,7 @@ export class TrackingComponent {
         this.singleCompanyTab = true;
         this.multipleCompanyTab = false;
         this.bulkCompanyTab = false;
+        this.marketEElecID = null;
 
         this.id_var = data.manageDataPointSubCategorySeedID;
 
@@ -5922,21 +5983,21 @@ export class TrackingComponent {
             this.downloadExcelUrl = this.APIURL + `/get-excelsheet?facility_id=${this.facilityID}&tenantID=${this.loginInfo.super_admin_id}`;
             this.getALlProducts();
 
-            // this.generateExcel();
-            this.months = [
-                { name: 'Jan', value: 'Jan' },
-                { name: 'Feb', value: 'Feb' },
-                { name: 'Mar', value: 'Mar' },
-                { name: 'Apr', value: 'Apr' },
-                { name: 'May', value: 'May' },
-                { name: 'June', value: 'Jun' },
-                { name: 'July', value: 'July' },
-                { name: 'Aug', value: 'Aug' },
-                { name: 'Sep', value: 'Sep' },
-                { name: 'Oct', value: 'Oct' },
-                { name: 'Nov', value: 'Nov' },
-                { name: 'Dec', value: 'Dec' }
-            ];
+            // // this.generateExcel();
+            // this.months = [
+            //     { name: 'Jan', value: 'Jan' },
+            //     { name: 'Feb', value: 'Feb' },
+            //     { name: 'Mar', value: 'Mar' },
+            //     { name: 'Apr', value: 'Apr' },
+            //     { name: 'May', value: 'May' },
+            //     { name: 'June', value: 'Jun' },
+            //     { name: 'July', value: 'July' },
+            //     { name: 'Aug', value: 'Aug' },
+            //     { name: 'Sep', value: 'Sep' },
+            //     { name: 'Oct', value: 'Oct' },
+            //     { name: 'Nov', value: 'Nov' },
+            //     { name: 'Dec', value: 'Dec' }
+            // ];
             this.GetVendors();
             this.GetHSN()
             this.getPurchaseGoodsCurrency()

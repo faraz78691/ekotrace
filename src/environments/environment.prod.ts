@@ -1,18 +1,20 @@
 export const environment = {
     production: true,
-    // baseUrl: 'http://ec2-3-110-165-252.ap-south-1.compute.amazonaws.com/api/',
+    // baseUrl: 'http://localhost:3000',
+    baseUrl: 'http://192.168.29.241:4000',
+    // baseUrl2: 'http://192.168.29.44:5000',
+
     // baseUrl: 'https://13.200.247.29:4000',
 
-    
-    baseUrl: 'https://ekotrace.ekobon.com:4000',
-    baseUrl2: 'https://ekotrace.ekobon.com:5000',
-    
+    // baseUrl: 'http://89.116.21.92:5500',
+    // baseUrl2: 'http://89.116.21.92:5000',
 
+    // baseUrl: 'https://ekotrace.ekobon.com:4000',
+    // baseUrl2: 'https://ekotrace.ekobon.com:5000',
 
     // baseUrl: 'https://newportal.net0carbontek.com:4000',
-    // baseUrl2: 'https://newportal.net0carbontek.com:5000',
-    // baseUrl: 'http://192.168.29.45:4500',
-      // baseUrl: 'http://localhost:4500',
+    baseUrl2: 'https://newportal.net0carbontek.com:5000',
+   
     NoData: 'No Data Point',
     none: 'none',
     flex: 'flex',

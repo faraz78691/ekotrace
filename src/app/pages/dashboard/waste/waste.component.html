@@ -102,7 +102,7 @@
                     <div class="ct_d_flex_1 ct_grey_brdr_btm1 pb-3 mb-3 ">
                         <div>
                             <h5 class="ct_font_16"><strong>Emissions from Waste types</strong></h5>
-                            <h3><strong>{{totaltype | number:'1.2-2'}}</strong></h3>
+                            <!-- <h3><strong>{{totaltype | number:'1.2-2'}}</strong></h3> -->
                             <p class="mb-0">tCO2e</p>
                         </div>
 
@@ -117,7 +117,7 @@
                                 <h5 class="mb-1">{{vendorItems.wasteName}}</h5>
                             </div>
                             <div>
-                                <p class="mb-0 d-flex align-items-center">{{vendorItems.emission}}&nbsp;
+                                <p class="mb-0 d-flex align-items-center">{{vendorItems.emission | number:'1.4-4'}}&nbsp;
                                     {{vendorItems.unit}} </p>
                             </div>
                         </div>

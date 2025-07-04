@@ -2064,25 +2064,22 @@
                                             <p-dropdown *ngIf="SubCatAllData.manageDataPointSubCategorySeedID != 1002"
                                                 class="ct_select_op_input ct_chev_icon_dark230 
 
-                                            " ngModel [options]="SubCategoryType" optionLabel="Item" optionValue="ID"
-                                                name="subCatType" #subCatType="ngModel"
-                                                [(ngModel)]="dataEntry.typeID"></p-dropdown>
+                                            "  [options]="SubCategoryType" optionLabel="Item" optionValue="ID"
+                                                
+                                                [(ngModel)]="dataEntry.typeID" [ngModelOptions]="{standalone: true}"></p-dropdown>
 
                                             <p-dropdown *ngIf="SubCatAllData.manageDataPointSubCategorySeedID == 1002"
                                                 class="ct_select_op_input ct_chev_icon_dark230 
-                                            " placeholder="Select type" ngModel [options]="marketTypes"
-                                                optionLabel="Type" optionValue="id" name="Type" #Type="ngModel"
-                                                [(ngModel)]="marketEElecID"
-                                                (onChange)="marktetTypeChange($event)"></p-dropdown>
-
+                                            " placeholder="Select type"  [options]="marketTypes"
+                                                optionLabel="Type" optionValue="id" 
+                                                [(ngModel)]="marketEElecID" [ngModelOptions]="{standalone: true}"
+                                                (onChange)="marktetTypeChange($event)" ></p-dropdown>
                                         </div>
                                         <div class="col-lg-4" *ngIf="categoryId==1 ">
                                             <label for="fname">Type</label>
-                                            <p-dropdown class="ct_select_op_input ct_chev_icon_dark230 
-
-                                            " ngModel [options]="SubCategoryType" optionLabel="TypeName"
-                                                optionValue="ID" name="subCatType" #subCatType="ngModel"
-                                                [(ngModel)]="dataEntry.typeID"></p-dropdown>
+                                            <p-dropdown class="ct_select_op_input ct_chev_icon_dark230"  [options]="SubCategoryType" optionLabel="TypeName"
+                                                optionValue="ID" 
+                                                [(ngModel)]="dataEntry.typeID" [ngModelOptions]="{standalone: true}" ></p-dropdown>
                                         </div>
                                         <div class="col-lg-4"
                                             *ngIf="categoryId==1  || categoryId == 7 || (categoryId == 5 && SubCatAllData.manageDataPointSubCategorySeedID != 1002)">
@@ -2114,10 +2111,10 @@
                                         <div *ngIf="categoryId == 5 && SubCatAllData.manageDataPointSubCategorySeedID != 1002"
                                             class="col-lg-4">
                                             <label for="fname">Grid</label>
-                                            <p-dropdown class="ct_select_op_input ct_chev_icon_dark230 " ngModel
+                                            <p-dropdown class="ct_select_op_input ct_chev_icon_dark230 " 
                                                 [options]="regionType" optionLabel="RegionName" optionValue="RegionID"
-                                                name="RegionID" #RegionID="ngModel"
-                                                [(ngModel)]="RenewableElectricity.electricityRegionID"></p-dropdown>
+                                                
+                                                [(ngModel)]="RenewableElectricity.electricityRegionID" [ngModelOptions]="{standalone: true}" [disabled]></p-dropdown>
                                         </div>
 
                                         <div class="col-lg-5" *ngIf="categoryId==2">
@@ -2212,7 +2209,7 @@
                                                                         [ngModelOptions]="{standalone: true}"
                                                                         [options]="VehicleType"
                                                                         optionLabel="VehicleType" optionValue="ID"
-                                                                        placeholder="Select type">
+                                                                        placeholder="Select type" appendTo="body">
                                                                     </p-dropdown>
 
                                                                 </td>
@@ -2241,7 +2238,7 @@
                                                                         [options]="ModeType"
                                                                         (ngModelChange)="modeOfEntryChange(rows.modeOfEntry ,rows)"
                                                                         optionLabel="modeName" optionValue="modeName"
-                                                                        placeholder="Select type">
+                                                                        placeholder="Select type" appendTo="body">
                                                                     </p-dropdown>
 
                                                                 </td>
@@ -2298,7 +2295,7 @@
                                                                         [options]="vehicleModalFleet"
                                                                         optionLabel="vehicle_model"
                                                                         optionValue="vehicle_model"
-                                                                        placeholder="Select Vehicle model">
+                                                                        placeholder="Select Vehicle model" appendTo="body">
                                                                     </p-dropdown>
 
                                                                 </td>
@@ -2312,7 +2309,7 @@
                                                                         [options]="ModeType"
                                                                         (ngModelChange)="modeOfEntryChange(rows.modeOfEntry ,rows)"
                                                                         optionLabel="modeName" optionValue="modeName"
-                                                                        placeholder="Select type">
+                                                                        placeholder="Select type" appendTo="body">
                                                                     </p-dropdown>
 
                                                                 </td>
@@ -2486,10 +2483,10 @@
                                             <div *ngIf="SubCatAllData.manageDataPointSubCategorySeedID == 1002"
                                                 class="col-lg-4">
                                                 <label for="fname">Source</label>
-                                                <p-dropdown class="ct_select_op_input ct_chev_icon_dark230" ngModel
+                                                <p-dropdown class="ct_select_op_input ct_chev_icon_dark230" 
                                                     [options]="ElectricitySource" optionLabel="sourceName"
-                                                    optionValue="sourceName" name="Source"
-                                                    #Source="ngModel"></p-dropdown>
+                                                    optionValue="sourceName" [(ngModel)]="sourceName" [ngModelOptions]="{standalone: true}"
+                                                    ></p-dropdown>
                                             </div>
 
                                         </div>
@@ -2666,7 +2663,7 @@
                                                         class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
                                                         (onChange)="onProductHSNChange($event)" ngModel
                                                         [(ngModel)]="productHSNSelect" [options]="purchaseHSNCode"
-                                                        optionLabel="code" optionValue="id" name="HSNCode">
+                                                        optionLabel="code" optionValue="id" name="HSNCode"  appendTo="body">
                                                     </p-dropdown>
 
                                                 </div>
@@ -2715,7 +2712,7 @@
                                                                 [options]="purchaseProductTypes"
                                                                 (onChange)="onProductStandardChange($event , row)"
                                                                 optionLabel="typesofpurchasename" optionValue="id"
-                                                                placeholder="Select type">
+                                                                placeholder="Select type" appendTo="body">
                                                             </p-dropdown>
                                                         </td>
                                                         <td>
@@ -2755,7 +2752,7 @@
                                                                 [options]="purchaseGoodsUnitsGrid" optionLabel="units"
                                                                 [(ngModel)]="row.selectedUnit"
                                                                 (ngModelChange)="onUnitChange(row)" optionValue="units"
-                                                                name="unit_{{row.id}}">
+                                                                name="unit_{{row.id}}" appendTo="body">
                                                             </p-dropdown>
 
                                                         </td>
@@ -2764,7 +2761,7 @@
                                                                 class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
                                                                 [options]="vendorList" optionLabel="name"
                                                                 [(ngModel)]="row.vendorName" name="vendor_{{row.id}}"
-                                                                placeholder="Select vendor">
+                                                                placeholder="Select vendor" appendTo="body">
                                                             </p-dropdown>
                                                         </td>
                                                         <td>
@@ -3674,7 +3671,7 @@
                                                                             optionLabel="category" optionValue="id"
                                                                             name="vehicle_type_{{row.id}}"
                                                                             placeholder="Select type"
-                                                                            (onChange)="onEmpTypeChange($event , row)">
+                                                                            (onChange)="onEmpTypeChange($event , row)" >
                                                                         </p-dropdown>
                                                                     </td>
                                                                     <td>
@@ -3688,14 +3685,20 @@
                                                                         </p-dropdown>
                                                                     </td>
                                                                     <td>
-                                                                        <input type="number" class="form-control"
-                                                                            name="employeescommute_{{row.id}}"
-                                                                            [(ngModel)]="row.employeesCommute">
-                                                                    </td>
+                                                                        <div style="position: relative;">
+                                                                          <input type="number"
+                                                                                 class="form-control"
+                                                                                 name="employeescommute_{{row.id}}"
+                                                                                 [(ngModel)]="row.employeesCommute"
+                                                                                 placeholder="Enter value"
+                                                                                 style="padding-right: 25px;" />
+                                                                          <span style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: #6c757d;">%</span>
+                                                                        </div>
+                                                                      </td>
                                                                     <td>
                                                                         <input type="number" class="form-control"
                                                                             name="avgcommute_{{row.id}}"
-                                                                            [(ngModel)]="row.avgCommute">
+                                                                            [(ngModel)]="row.avgCommute" placeholder="Enter km value">
                                                                     </td>
                                                                 </tr>
 
@@ -3709,7 +3712,7 @@
                                             </div>
 
                                         </div>
-                                        <div class="col-12 mt-4 pt-3 ml-3 text-center">
+                                        <div class="col-12 mt-1 pt-3 ml-3 text-center">
                                             <button type="submit" class="px-4 trackingsubmitb">
                                                 Submit
                                             </button>
@@ -5139,7 +5142,7 @@
                                                                 [(ngModel)]="row.flightType"
                                                                 [ngModelOptions]="{standalone: true}"
                                                                 [options]="wasteGrid" optionLabel="flight_type"
-                                                                optionValue="flight_type" placeholder="Select type">
+                                                                optionValue="flight_type" placeholder="Select type" appendTo="body">
                                                             </p-dropdown>
                                                         </td>
                                                         <td>
@@ -5148,7 +5151,7 @@
                                                                 [(ngModel)]="row.flightClass"
                                                                 [ngModelOptions]="{standalone: true}"
                                                                 [options]="flightClassGrid" optionLabel="classs"
-                                                                optionValue="classs" placeholder="Select class">
+                                                                optionValue="classs" placeholder="Select class" appendTo="body">
                                                             </p-dropdown>
                                                         </td>
                                                         <td>
@@ -5159,7 +5162,7 @@
                                                                 [options]="annualEntry"
                                                                 (onChange)="onProductStandardChange($event , row)"
                                                                 optionLabel="name" optionValue="name"
-                                                                placeholder="Select return">
+                                                                placeholder="Select return" appendTo="body">
                                                             </p-dropdown>
                                                         </td>
 
@@ -5175,7 +5178,7 @@
                                                                 [options]="row.month" optionLabel="name"
                                                                 [(ngModel)]="row.selectedMonths"
                                                                 [ngModelOptions]="{standalone: true}"
-                                                                optionValue="value">
+                                                                optionValue="value" appendTo="body">
                                                             </p-dropdown>
 
                                                         </td>
@@ -5185,7 +5188,7 @@
                                                                 [options]="busineessGrid" optionLabel="cost_center_name"
                                                                 [(ngModel)]="row.costCentre"
                                                                 [ngModelOptions]="{standalone: true}"
-                                                                optionValue="cost_centre_name">
+                                                                optionValue="cost_centre_name" appendTo="body">
                                                             </p-dropdown>
 
                                                         </td>
@@ -5234,7 +5237,7 @@
                                                                 optionLabel="airport_desc" optionValue="airport_code"
                                                                 placeholder="Select from" [filter]="true" name="classs"  [virtualScroll]="true"
                                                                 [virtualScrollItemSize]="38"
-                                                                #classs="ngModel">
+                                                                #classs="ngModel" appendTo="body">
                                                             </p-dropdown>
 
                                                         </td>
@@ -5246,7 +5249,7 @@
                                                                 optionLabel="airport_desc" optionValue="airport_code"
                                                                 placeholder="Select to" [filter]="true" name="classs"     [virtualScroll]="true"
                                                                 [virtualScrollItemSize]="38"
-                                                                #classs="ngModel">
+                                                                #classs="ngModel" appendTo="body">
                                                             </p-dropdown>
                                                         </td>
                                                         <td>
@@ -5257,7 +5260,7 @@
                                                                 optionLabel="airport_desc" optionValue="airport_code"
                                                                 placeholder="Select via" [filter]="true" name="classs"    [virtualScroll]="true"
                                                                 [virtualScrollItemSize]="38"
-                                                                #classs="ngModel">
+                                                                #classs="ngModel" appendTo="body">
                                                             </p-dropdown>
                                                         </td>
                                                         <td>
@@ -5267,7 +5270,7 @@
                                                                 [(ngModel)]="row.flight_class"
                                                                 [ngModelOptions]="{standalone: true}"
                                                                 optionLabel="classs" optionValue="classs" name="classs"
-                                                                #classs="ngModel">
+                                                                #classs="ngModel" appendTo="body">
                                                             </p-dropdown>
 
                                                         </td>
@@ -5286,7 +5289,7 @@
                                                                 [options]="annualEntry"
                                                                 (onChange)="onProductStandardChange($event , row)"
                                                                 optionLabel="name" optionValue="name"
-                                                                placeholder="Select return">
+                                                                placeholder="Select return" appendTo="body">
                                                             </p-dropdown>
                                                         </td>
                                                         <!-- <td>
@@ -5303,7 +5306,7 @@
                                                                 class="ct_select_op_input ct_flex_1 ct_chev_icon_dark230"
                                                                 [options]="row.month" optionLabel="name"
                                                                 optionValue="value" [(ngModel)]="row.selectedMonths"
-                                                                [ngModelOptions]="{standalone: true}">
+                                                                [ngModelOptions]="{standalone: true}" appendTo="body">
                                                             </p-dropdown>
 
                                                         </td>
@@ -5313,7 +5316,7 @@
                                                                 [options]="busineessGrid" optionLabel="cost_center_name"
                                                                 [(ngModel)]="row.costCentre"
                                                                 [ngModelOptions]="{standalone: true}"
-                                                                optionValue="cost_centre_name">
+                                                                optionValue="cost_centre_name" appendTo="body">
                                                             </p-dropdown>
 
                                                         </td>
@@ -6109,7 +6112,7 @@
                                         <tr [pEditableRow]="de">
 
                                             <td *ngIf="categoryId == 8"> {{de.typeofpurchase}}</td>
-                                            <td *ngIf="categoryId == 8"> {{de.product_category_name}}</td>
+                                            <td *ngIf="categoryId == 8"> {{de.product_category_name}} {{de.productcode}}</td>
                                             <td *ngIf="categoryId == 8"> {{de.code_name}}</td>
                                             <td
                                                 *ngIf="categoryId != 8 && categoryId != 7 && categoryId != 10 && categoryId != 12 && categoryId != 14 && categoryId != 15 && categoryId != 16 && categoryId != 17 && categoryId != 18 && categoryId != 19 && categoryId != 20 && categoryId !=21 && categoryId !=22 && categoryId !=11 && categoryId !=23 && categoryId !=24 && categoryId != 25 && categoryId != 26">
@@ -6122,11 +6125,11 @@
                                             <td *ngIf="categoryId == 6">
                                                 {{ de.vehicle_model }}</td>
 
-                                            <td *ngIf="categoryId == 11 ">
+                                            <td *ngIf="categoryId == 11">
                                                 {{de.water_supply}}</td>
-                                            <td *ngIf="categoryId == 11 ">{{
+                                            <td *ngIf="categoryId == 11">{{
                                                 de.water_withdrawl_by_source[0].totalwaterwithdrawl }}</td>
-                                            <td *ngIf="categoryId == 11 ">{{
+                                            <td *ngIf="categoryId == 11">{{
                                                 de.water_withdrawl_by_source[1].totalwaterwithdrawl }}</td>
                                             <td *ngIf="categoryId == 11 ">{{
                                                 de.water_withdrawl_by_source[2].totalwaterwithdrawl }}</td>
@@ -6560,7 +6563,10 @@
                                             <td *ngIf="categoryId == 26">{{ de.mode_of_trasport }}
                                             </td>
                                    
-                                            <td *ngIf="categoryId != 10 && categoryId !=11 && categoryId !=17 && categoryId != 16 && categoryId != 21 && categoryId != 20">{{de.emissionFactorUsed ? de.emissionFactorUsed : '-' }}</td>
+                                            <td *ngIf="categoryId != 10 && categoryId !=11 && categoryId !=17 && categoryId != 16 && categoryId != 21 && categoryId != 20 && categoryId != 15 && categoryId != 14 && categoryId != 5">{{de.emissionFactorUsed ? de.emissionFactorUsed : '-' }}</td>
+                                            <td *ngIf="categoryId == 5">{{de.emission_factor}}
+                                            </td>
+                                            <td *ngIf="categoryId == 14"> {{ de.EFs}}</td>
                                             <td *ngIf="categoryId == 16 || categoryId == 21">{{de.emission_factor_lease  ? de.emission_factor_lease : '-' }}</td>
                                             <td *ngIf="categoryId == 16 || categoryId == 21">{{de.emission_factor_lease_unit  ? de.emission_factor_lease_unit : '-' }}</td>
                                             <td *ngIf="categoryId == 16 || categoryId == 21">{{de.emission_factor_vehichle  ? de.emission_factor_vehichle : '-' }}</td>
@@ -6590,6 +6596,8 @@
                                                 de.no_of_Items_unit }}
                                             </td>
                                             <td *ngIf=" categoryId ==20">{{de.emission_factor_lan}}, {{de.emission_factor_combustion}}, {{de.emission_factor_recycling}}, {{de.emission_factor_composing}}
+                                            </td>
+                                            <td *ngIf="categoryId == 15">{{de.emission_factor}}
                                             </td>
                                             <td *ngIf=" categoryId ==20 || categoryId == 15">{{de.emission_factor_unit}}
                                             </td>
